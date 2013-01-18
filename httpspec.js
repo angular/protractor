@@ -2,13 +2,23 @@ var webdriver = require('/Users/ralphj/selenium/selenium-read-only/build/javascr
 var assert = require('assert');
 var util = require('util')
 
-var waitForAngular = function() {
-    util.puts('Starting waitForAngular');
-    driver.executeAsyncScript(function() {
-	    var callback = arguments[arguments.length - 1];
-	    angular.element(document.body).injector().get('$browser').notifyWhenNoOutstandingRequests(callback);
-	});
-    util.puts('Ending waitForAngular');
+
+var makeProtractar = function(driver) {
+    var driver = driver;
+
+    var waitForAngular = function() {
+	return driver.executeAsyncScript(function() {
+		var callback = arguments[arguments.length - 1];
+		angular.element(document.body).injector().get('$browser').notifyWhenNoOutstandingRequests(callback);
+	    });
+    };
+
+    return {
+	findElement: function(locator, varArgs) {
+	    waitForAngular();
+	    return driver.findElement(locator, varArgs);
+	}
+    };
 };
 
 
@@ -21,6 +31,8 @@ var driver = new webdriver.Builder().
 	    'javascriptEnabled': true
 	}).
     build();
+
+var protractar = makeProtractar(driver);
 
 driver.manage().timeouts().setScriptTimeout(10000);
 
@@ -37,10 +49,10 @@ var fetchButton = driver.findElement(webdriver.By.id('fetch'));
 fetchButton.click();
 
 // The quick RPC works fine.
-driver.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
+protractar.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
 	assert.equal('200', text);
     });
-driver.findElement(webdriver.By.id('data')).getText().then(function(text) {
+protractar.findElement(webdriver.By.id('data')).getText().then(function(text) {
 	assert.equal('diablo', text);
     });
 
@@ -48,14 +60,14 @@ driver.findElement(webdriver.By.id('data')).getText().then(function(text) {
 sample2Button.click();
 fetchButton.click();
 // Would normally need driver.sleep(2) or something.
-waitForAngular();
-driver.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
+protractar.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
 	assert.equal('200', text);
     });
-waitForAngular();
-driver.findElement(webdriver.By.id('data')).getText().then(function(text) {
+protractar.findElement(webdriver.By.id('data')).getText().then(function(text) {
         assert.equal('hello now', text);
     });
+
+// Better way to write this - protractar.findElement(...)?
 
 
 driver.quit();
