@@ -1,0 +1,11 @@
+
+<span ng-repeat="ball in planets">
+  <span>{{ball.radius}}</span>
+</span>
+<select ng-model="planet" ng-options="planet.name for planet in planets">
+</select>
+<div>
+  <div>Planet: {{planet}}</div>
+  <div>{{planet.name}}</div>
+  <div>Radius: {{getRadiusKm()}}</div>
+</div>
