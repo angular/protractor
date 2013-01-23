@@ -28,3 +28,11 @@
   content: "";
   padding: 0;
 }
+
+.ng-scope {
+  background-color: rgba(100,100,200,.15);
+}
+
+.ng-binding {
+  border: 2px solid rgba(50, 200, 50, .8);
+}

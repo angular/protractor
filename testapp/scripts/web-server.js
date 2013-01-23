@@ -91,8 +91,6 @@ StaticServlet.prototype.handleRequest = function(req, res) {
     return String.fromCharCode(parseInt(hex, 16));
   });
 
-  util.puts("PATH AFTER EDITING: " + path);
-
   // Test handlers.
   if (path == "./fastcall") {
     res.writeHead(200, {

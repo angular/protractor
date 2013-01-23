@@ -18,21 +18,6 @@
       console.log("  document.readyState = " + document.readyState);
     });
 
-    //document.ready(function() {
-    //  console.log("document.ready callback fired");
-    //  console.log("  document.readyState = " + document.readyState);
-    //});
-
-    //window.load(function() {
-    //  console.log("window.load callback fired");
-    //  console.log("  document.readyState = " + document.readyState);
-    //});
-
-    window.onload = function() {
-      console.log("window.onload callback fired");
-      console.log("  document.readyState = " + document.readyState);
-    }; // Maybe Angular is overwriting this? 
-
     var bodyload = function() {
       console.log("bodyload callback fired");
       console.log("  document.readyState = " + document.readyState);
@@ -41,8 +26,9 @@
 </head>
 <body onload="bodyload()">
   <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
+    <li><a href="#/http">http</a></li>
+    <li><a href="#/repeater">repeater</a></li>
+    <li><a href="#/bindings">bindings</a></li>
   </ul>
 
   <div ng-view></div>
