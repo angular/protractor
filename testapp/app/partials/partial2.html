@@ -1,0 +1,11 @@
+<p>This is the partial for view 2.</p>
+<p>
+  Showing of 'interpolate' filter:
+  {{ 'Current version is v%VERSION%.' | interpolate }}
+  <button ng-click="addOne()">Add One</button>
+  <table>
+    <tr><th>A</th><th>B</th><th>C</th></tr>
+    <tr data-ng-repeat="foo in foos | orderBy:'b'">
+      <th>{{foo.a}}</th><th>{{foo.b}}</th><th>{{foo.c}}</th>
+    </tr>
+</p>

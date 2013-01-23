@@ -1,0 +1,16 @@
+<p>This is the partial for view 1 - it is where the http test is.</p>
+
+<div ng-controller="FetchCtrl">
+  <select ng-model="method">
+    <option>GET</option>
+    <option>JSONP</option>
+  </select>
+  <input type="text" ng-model="url" size="80"/>
+  <button id="fetch" ng-click="fetch()">fetch</button><br>
+  <button id="sample1" ng-click="updateModel('GET', '/cafe')">Sample GET</button>
+  <button id="sample2" ng-click="updateModel('GET', '/wait2')">Sample slow GET</button>
+  <button ng-click="updateModel('JSONP', 'http://angularjs.org/greet.php?callback=JSON_CALLBACK&name=Super%20Hero')">Sample JSONP</button>
+  <button ng-click="updateModel('JSONP', 'http://angularjs.org/doesntexist&callback=JSON_CALLBACK')">Invalid JSONP</button>
+  <pre>http status code: <span id="statuscode">{{status}}</span></pre>
+  <pre>http response data: <span id="data">{{data}}</span></pre>
+</div>

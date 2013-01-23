@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="css/app.css"/>
+  <script>
+    console.log("starting the inline script");
+    console.log("  document.readyState = " + document.readyState);
+
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("DOMContentLoaded event fired");
+      console.log("  document.readyState = " + document.readyState);
+    });
+
+    document.addEventListener("load", function() {
+      console.log("load event fired");
+      console.log("  document.readyState = " + document.readyState);
+    });
+
+    //document.ready(function() {
+    //  console.log("document.ready callback fired");
+    //  console.log("  document.readyState = " + document.readyState);
+    //});
+
+    //window.load(function() {
+    //  console.log("window.load callback fired");
+    //  console.log("  document.readyState = " + document.readyState);
+    //});
+
+    window.onload = function() {
+      console.log("window.onload callback fired");
+      console.log("  document.readyState = " + document.readyState);
+    }; // Maybe Angular is overwriting this? 
+
+    var bodyload = function() {
+      console.log("bodyload callback fired");
+      console.log("  document.readyState = " + document.readyState);
+    };
+  </script>
+</head>
+<body onload="bodyload()">
+  <ul class="menu">
+    <li><a href="#/view1">view1</a></li>
+    <li><a href="#/view2">view2</a></li>
+  </ul>
+
+  <div ng-view></div>
+
+  <div>Angular seed app: v<span app-version></span></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+  -->
+  <script src="lib/angular/angular.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+</body>
+</html>
