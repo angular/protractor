@@ -937,12 +937,13 @@ function bootstrap(element, modules) {
     return injector;
   };
 
-  if (document.baseURI.match(/_WAITFORMODULES$/)) {
-    // TODO(julie): Need to remove the extra URL bit, otherwise angular will route back
+  if (window.location.hash.match(/_WAITFORMODULES$/)) {
+    // Need to remove the extra URL bit, otherwise angular will route back
     // to default.
+    window.location.hash = window.location.hash.replace('_WAITFORMODULES', '');
+
     // Should there be a safety check to not do this after Angular has loaded?
     window.angular.loadExtraModules = function(extraModules) {
-      // Can I just push the array? I think the injector takes arrays of modules.
       forEach(extraModules, function(module) {
 	modules.push(module);
       });
@@ -950,9 +951,7 @@ function bootstrap(element, modules) {
     };
     return null;
   }
-  else {
-    return continueBootstrap();
-  }
+  return continueBootstrap();
 }
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
@@ -998,6 +997,7 @@ function assertArgFn(arg, name, acceptArrayAnnotation) {
   if (acceptArrayAnnotation && isArray(arg)) {
       arg = arg[arg.length - 1];
   }
+
   assertArg(isFunction(arg), name, 'not a function, got ' +
       (arg && typeof arg == 'object' ? arg.constructor.name || 'Object' : typeof arg));
   return arg;

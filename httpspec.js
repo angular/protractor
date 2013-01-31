@@ -71,4 +71,11 @@ ptar.findElement(webdriver.By.id('data')).getText().then(function(text) {
   assert.equal('finally done', text);
 });
 
+driver.get('http://www.google.com'); // need to navigate away from an Angular page so that it will
+                                     // bootstrap again.
+
+ptar.getWithMockModules('http://localhost:8000/app/index.html#/bindings', [mockModuleA]);
+
+driver.sleep(4000);
+
 driver.quit();
