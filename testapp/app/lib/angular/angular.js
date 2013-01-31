@@ -918,22 +918,41 @@ function angularInit(element, bootstrap) {
  * @returns {AUTO.$injector} Returns the newly created injector for this app.
  */
 function bootstrap(element, modules) {
-  element = jqLite(element);
-  modules = modules || [];
-  modules.unshift(['$provide', function($provide) {
-    $provide.value('$rootElement', element);
-  }]);
-  modules.unshift('ng');
-  var injector = createInjector(modules);
-  injector.invoke(
-    ['$rootScope', '$rootElement', '$compile', '$injector', function(scope, element, compile, injector){
-      scope.$apply(function() {
-        element.data('$injector', injector);
-        compile(element)(scope);
+  var continueBootstrap = function() {
+    element = jqLite(element);
+    modules = modules || [];
+    modules.unshift(['$provide', function($provide) {
+      $provide.value('$rootElement', element);
+    }]);
+    modules.unshift('ng');
+    var injector = createInjector(modules);
+    injector.invoke(
+      ['$rootScope', '$rootElement', '$compile', '$injector', function(scope, element, compile, injector){
+	scope.$apply(function() {
+          element.data('$injector', injector);
+          compile(element)(scope);
+	});
+      }]
+    );
+    return injector;
+  };
+
+  if (document.baseURI.match(/_WAITFORMODULES$/)) {
+    // TODO(julie): Need to remove the extra URL bit, otherwise angular will route back
+    // to default.
+    // Should there be a safety check to not do this after Angular has loaded?
+    window.angular.loadExtraModules = function(extraModules) {
+      // Can I just push the array? I think the injector takes arrays of modules.
+      forEach(extraModules, function(module) {
+	modules.push(module);
       });
-    }]
-  );
-  return injector;
+      continueBootstrap();
+    };
+    return null;
+  }
+  else {
+    return continueBootstrap();
+  }
 }
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
@@ -979,7 +998,6 @@ function assertArgFn(arg, name, acceptArrayAnnotation) {
   if (acceptArrayAnnotation && isArray(arg)) {
       arg = arg[arg.length - 1];
   }
-
   assertArg(isFunction(arg), name, 'not a function, got ' +
       (arg && typeof arg == 'object' ? arg.constructor.name || 'Object' : typeof arg));
   return arg;
