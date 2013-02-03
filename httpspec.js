@@ -19,12 +19,9 @@ var ptar = protractar.wrapDriver(driver);
 driver.manage().timeouts().setScriptTimeout(10000);
 
 // A module to override the 'version' service. 
-var mockModuleA = {
-  name: 'jModule',
-  loadFn: function() {
-    var jModule = angular.module('jModule', []);
-    jModule.value('version', '98.6');
-  }
+var mockModuleA = function() {
+  var jModule = angular.module('jModule', []);
+  jModule.value('version', '98.6');
 };
 
 // A second module overriding the 'version' service. 
@@ -32,13 +29,14 @@ var mockModuleA = {
 // function.
 // TODO(julie): Consider this syntax. Should we allow loading the
 // modules from files? Provide helpers?
-var mockModuleB = {
-  name: 'module2',
-  loadFn: "angular.module('module2', []).value('version', '5');"
-};
+var mockModuleB =
+  "angular.module('module2', []).value('version', '5');";
+
+ptar.addMockModule('jModule', mockModuleA);
+ptar.addMockModule('module2', mockModuleB);
 
 // The value of version will be '5' because mockModuleB is loaded last.
-ptar.getWithMockModules('http://localhost:8000/app/index.html', [mockModuleA, mockModuleB]);
+ptar.get('http://localhost:8000/app/index.html');
 
 // Could still use driver.get to get a URL normally, without injecting modules.
 
@@ -50,6 +48,7 @@ var fetchButton = driver.findElement(webdriver.By.id('fetch'));
 fetchButton.click();
 
 // var status = ptar.getBinding('status');
+
 // util.puts(status.toString);
 
 // The quick RPC works fine.
@@ -74,8 +73,6 @@ ptar.findElement(webdriver.By.id('data')).getText().then(function(text) {
 driver.get('http://www.google.com'); // need to navigate away from an Angular page so that it will
                                      // bootstrap again.
 
-ptar.getWithMockModules('http://localhost:8000/app/index.html#/bindings', [mockModuleA]);
-
-driver.sleep(4000);
+ptar.get('http://localhost:8000/app/index.html#/bindings');
 
 driver.quit();
