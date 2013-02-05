@@ -66,8 +66,31 @@ exports.wrapDriver = function(webdriver) {
 };
 
 exports.By = {
-  binding: 0,
-  select: 1,
+  /** Usage: 
+   * driver.findElement(protractar.By.binding(), "{{myBinding}}");
+   */
+  binding: function() {
+    return {
+      using: 'js',
+      value: function() {
+	var bindings = document.getElementsByClassName('ng-binding');
+	var matches = [];
+	var binding = arguments[0];
+	for (var i = 0; i < bindings.length; ++i) {
+	  if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+	    matches.push(bindings[i]);
+	  }
+	}
+	return matches[0]; // We can only return one with webdriver.findElement.
+      }
+    };
+  },
+  select: function() {
+    return {
+      using: 'css',
+      value: ''
+    };
+  },
   repeater: 2,
   input: 3
 };

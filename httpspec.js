@@ -47,15 +47,17 @@ sample1Button.click();
 var fetchButton = driver.findElement(webdriver.By.id('fetch'));
 fetchButton.click();
 
-// var status = ptar.getBinding('status');
-
-// util.puts(status.toString);
 
 // The quick RPC works fine.
 ptar.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
   assert.equal('200', text);
 });
-ptar.findElement(webdriver.By.id('data')).getText().then(function(text) {
+// This does the same thing but doesn't require an ID.
+var status = ptar.findElement(protractar.By.binding(), '{{status}}');
+status.getText().then(function(text) {
+  assert.equal('200', text);
+});
+ptar.findElement(protractar.By.binding(), "{{data}}").getText().then(function(text) {
   assert.equal('done', text);
 });
 
