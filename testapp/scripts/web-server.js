@@ -108,7 +108,7 @@ StaticServlet.prototype.handleRequest = function(req, res) {
   } else if (path.match(/\.\/(\d+)seccall/)) {
     var seconds = parseInt(path.match(/^\.\/(\d+)/)[1]);
     setTimeout(function() {
-      res.write('finally done');
+      res.write('done after ' + seconds + ' seconds');
       res.end();
     }, seconds * 1000);
     return;

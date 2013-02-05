@@ -97,6 +97,11 @@ exports.By = {
       value: 'select[ng-model=' + model + '] option[selected]'
     };
   },
-  repeater: 2,
-  input: 3
+  repeater: null,
+  input: function(model) {
+    return {
+      using: 'css selector',
+      value: 'input[ng-model=' + model + ']'
+    };
+  }
 };

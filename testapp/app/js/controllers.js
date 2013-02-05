@@ -7,8 +7,8 @@ function FetchCtrl($scope, $http) {
   $scope.url = '/fastcall';
  
   $scope.fetch = function() {
-    $scope.code = null;
-    $scope.response = null;
+    $scope.status = null;
+    $scope.data = null;
  
     $http({method: $scope.method, url: $scope.url}).
 	success(function(data, status) {
