@@ -918,7 +918,7 @@ function angularInit(element, bootstrap) {
  * @returns {AUTO.$injector} Returns the newly created injector for this app.
  */
 function bootstrap(element, modules) {
-  var continueBootstrap = function() {
+  var resumeBootstrapInternal = function() {
     element = jqLite(element);
     modules = modules || [];
     modules.unshift(['$provide', function($provide) {
@@ -938,20 +938,18 @@ function bootstrap(element, modules) {
   };
 
   if (window.location.hash.match(/_WAITFORMODULES$/)) {
-    // Need to remove the extra URL bit, otherwise angular will route back
-    // to default.
     window.location.hash = window.location.hash.replace('_WAITFORMODULES', '');
 
     // Should there be a safety check to not do this after Angular has loaded?
-    window.angular.loadExtraModules = function(extraModules) {
+    window.angular.resumeBootstrapWithExtraModules = function(extraModules) {
       forEach(extraModules, function(module) {
 	modules.push(module);
       });
-      continueBootstrap();
+      resumeBootstrapInternal();
     };
     return null;
   }
-  return continueBootstrap();
+  return resumeBootstrapInternal();
 }
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;

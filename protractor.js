@@ -8,7 +8,7 @@ exports.wrapDriver = function(webdriver) {
       moduleNames = [],
       moduleScripts = [];
 
-  var PROTRACTAR_URL_LABEL = '_WAITFORMODULES';
+  var PROTRACTOR_URL_LABEL = '_WAITFORMODULES';
 
   var waitForAngular = function() {
     return driver.executeAsyncScript(function() {
@@ -40,16 +40,16 @@ exports.wrapDriver = function(webdriver) {
 
     /**
      * Usage: 
-     * protractar.addMockModule(moduleA);
-     * protractar.addMockModule(moduleB);
-     * protractar.get('foo.com'); 
+     * protractor.addMockModule(moduleA);
+     * protractor.addMockModule(moduleB);
+     * protractor.get('foo.com'); 
      */
     get: function(destination) {
       var parsed = url.parse(destination);
-      parsed.hash = (parsed.hash ? parsed.hash : '#') + PROTRACTAR_URL_LABEL;
+      parsed.hash = (parsed.hash ? parsed.hash : '#') + PROTRACTOR_URL_LABEL;
       var modifiedUrl = url.format(parsed);
       driver.get(modifiedUrl);
-      // At this point, Angular will pause for us, until angular.loadExtraModules is called.
+      // At this point, Angular will pause for us, until angular.resumeBootstrapWithExtraModules is called.
 
       for (var i = 0; i < moduleScripts.length; ++i) {
 	driver.executeScript(moduleScripts[i]); // Should this be async?
@@ -58,7 +58,7 @@ exports.wrapDriver = function(webdriver) {
       driver.executeAsyncScript(function() {
 	var callback = arguments[arguments.length - 1];
 	// Continue to bootstrap Angular.
-	angular.loadExtraModules(arguments[0]);
+	angular.resumeBootstrapWithExtraModules(arguments[0]);
 	callback();
       }, moduleNames);
     }
@@ -67,7 +67,7 @@ exports.wrapDriver = function(webdriver) {
 
 exports.By = {
   /** Usage: 
-   * driver.findElement(protractar.By.binding(), "{{myBinding}}");
+   * driver.findElement(protractor.By.binding(), "{{myBinding}}");
    */
   binding: function() {
     return {

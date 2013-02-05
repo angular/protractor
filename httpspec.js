@@ -1,7 +1,7 @@
 // Change to the location of your webdriverjs module.
 var webdriver =
   require('/Users/ralphj/selenium/selenium-read-only/build/javascript/node/webdriver');
-var protractar = require('./protractar.js');
+var protractor = require('./protractor.js');
 var assert = require('assert');
 var util = require('util');
 
@@ -14,7 +14,7 @@ var driver = new webdriver.Builder().
       'javascriptEnabled': true
     }).build();
 
-var ptar = protractar.wrapDriver(driver);
+var ptor = protractor.wrapDriver(driver);
 
 driver.manage().timeouts().setScriptTimeout(10000);
 
@@ -32,11 +32,11 @@ var mockModuleA = function() {
 var mockModuleB =
   "angular.module('module2', []).value('version', '5');";
 
-ptar.addMockModule('jModule', mockModuleA);
-ptar.addMockModule('module2', mockModuleB);
+ptor.addMockModule('jModule', mockModuleA);
+ptor.addMockModule('module2', mockModuleB);
 
 // The value of version will be '5' because mockModuleB is loaded last.
-ptar.get('http://localhost:8000/app/index.html');
+ptor.get('http://localhost:8000/app/index.html');
 
 // Could still use driver.get to get a URL normally, without injecting modules.
 
@@ -49,15 +49,15 @@ fetchButton.click();
 
 
 // The quick RPC works fine.
-ptar.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
+ptor.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
   assert.equal('200', text);
 });
 // This does the same thing but doesn't require an ID.
-var status = ptar.findElement(protractar.By.binding(), '{{status}}');
+var status = ptor.findElement(protractor.By.binding(), '{{status}}');
 status.getText().then(function(text) {
   assert.equal('200', text);
 });
-ptar.findElement(protractar.By.binding(), "{{data}}").getText().then(function(text) {
+ptor.findElement(protractor.By.binding(), "{{data}}").getText().then(function(text) {
   assert.equal('done', text);
 });
 
@@ -65,16 +65,16 @@ ptar.findElement(protractar.By.binding(), "{{data}}").getText().then(function(te
 sample2Button.click();
 fetchButton.click();
 // Would normally need driver.sleep(2) or something.
-ptar.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
+ptor.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
   assert.equal('200', text);
 });
-ptar.findElement(webdriver.By.id('data')).getText().then(function(text) {
+ptor.findElement(webdriver.By.id('data')).getText().then(function(text) {
   assert.equal('finally done', text);
 });
 
 driver.get('http://www.google.com'); // need to navigate away from an Angular page so that it will
                                      // bootstrap again.
 
-ptar.get('http://localhost:8000/app/index.html#/bindings');
+ptor.get('http://localhost:8000/app/index.html#/bindings');
 
 driver.quit();
