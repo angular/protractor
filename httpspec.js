@@ -76,5 +76,17 @@ driver.get('http://www.google.com'); // need to navigate away from an Angular pa
                                      // bootstrap again.
 
 ptor.get('http://localhost:8000/app/index.html#/bindings');
+ptor.findElement(protractor.By.select('planet')).
+    findElements(webdriver.By.tagName("option")).then(function(planetOptions) {
+      util.puts(planetOptions);
+      for (var i = 0; i < planetOptions.length; ++i) {
+	planetOptions[i].getText().then(function(text) {
+	  util.puts(text);
+	});
+      }
+}); // Prints out the list of planet names.
+ptor.findElement(protractor.By.selectedOption('planet')).getText().then(function(text) {
+  assert.equal('Mercury', text);
+});
 
 driver.quit();

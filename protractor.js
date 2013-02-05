@@ -85,10 +85,16 @@ exports.By = {
       }
     };
   },
-  select: function() {
+  select: function(model) {
     return {
-      using: 'css',
-      value: ''
+      using: 'css selector',
+      value: 'select[ng-model=' + model + ']'
+    };
+  },
+  selectedOption: function(model) {
+    return {
+      using: 'css selector',
+      value: 'select[ng-model=' + model + '] option[selected]'
     };
   },
   repeater: 2,
