@@ -1,6 +1,4 @@
-// Change to the location of your webdriverjs module.
-var webdriver =
-  require('/Users/ralphj/selenium/selenium-read-only/build/javascript/node/webdriver');
+var webdriver = require('selenium-webdriver');
 var protractor = require('./protractor.js');
 var assert = require('assert');
 var util = require('util');
