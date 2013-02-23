@@ -3,7 +3,7 @@
   "description" : "End to End test helpers for Angular.",
   "homepage" : "https://github.com/juliemr/protractor",
   "keywords" : ["angular", "test", "testing", "webdriver", "selenium"],
-  "author" : "Julie Ralph <ju.ralph@gmail.com>"
+  "author" : "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies" : {
     "selenium-webdriver" : "2.30.0"
   },
