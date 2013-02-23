@@ -5,12 +5,12 @@
   "keywords" : ["angular", "test", "testing", "webdriver", "selenium"],
   "author" : "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies" : {
-    "selenium-webdriver" : "2.30.0"
+    "selenium-webdriver" : "2.30.x"
   },
   "repository" : {
     "type": "git",
     "url": "git://github.com/juliemr/protractor.git"
   },
   "main" : "protractor.js",
-  "version" : "0.1.0"
+  "version" : "0.1.1"
 }
