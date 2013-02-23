@@ -23,3 +23,22 @@ You can access the test app at
 Run the tests with
 
     node httpspec.js
+
+To just use Protractor
+----------------------
+
+Start a selenium server.
+
+Install the npm modules for selenium-webdriver and protractor:
+
+    npm install selenium-webdriver
+    npm install protractor
+
+In your test file, set up protractor:
+
+    var webdriver = require('selenium-webdriver');
+    var protractor = require('./protractor.js');
+    // Configure and build your webdriver instance.
+    var ptor = protractor.wrapDriver(driver);
+
+See httpspec.js for examples of use.
