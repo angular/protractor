@@ -8,7 +8,7 @@ exports.wrapDriver = function(webdriver) {
       moduleNames = [],
       moduleScripts = [];
 
-  var PROTRACTOR_URL_LABEL = '_WAITFORMODULES';
+  var DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
 
   var waitForAngular = function() {
     return driver.executeAsyncScript(function() {
@@ -45,11 +45,10 @@ exports.wrapDriver = function(webdriver) {
      * protractor.get('foo.com'); 
      */
     get: function(destination) {
-      var parsed = url.parse(destination);
-      parsed.hash = (parsed.hash ? parsed.hash : '#') + PROTRACTOR_URL_LABEL;
-      var modifiedUrl = url.format(parsed);
-      driver.get(modifiedUrl);
-      // At this point, Angular will pause for us, until angular.resumeBootstrapWithExtraModules is called.
+      driver.get('about:blank');
+      driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
+			   'window.location.href = "' + destination + '"');
+      // At this point, Angular will pause for us, until angular.resumeBootstrap is called.
 
       for (var i = 0; i < moduleScripts.length; ++i) {
 	driver.executeScript(moduleScripts[i]); // Should this be async?
@@ -58,7 +57,7 @@ exports.wrapDriver = function(webdriver) {
       driver.executeAsyncScript(function() {
 	var callback = arguments[arguments.length - 1];
 	// Continue to bootstrap Angular.
-	angular.resumeBootstrapWithExtraModules(arguments[0]);
+	angular.resumeBootstrap(arguments[0]);
 	callback();
       }, moduleNames);
     }

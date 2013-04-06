@@ -80,7 +80,7 @@ ptor.findElement(webdriver.By.id('data')).getText().then(function(text) {
 ptor.clearMockModules();
 ptor.addMockModule('moduleA', mockModuleA);
 
-driver.get('http://www.google.com'); // need to navigate away from an Angular page so that it will
+//driver.get('http://www.google.com'); // need to navigate away from an Angular page so that it will
                                      // bootstrap again.
 
 ptor.get('http://localhost:8000/app/index.html#/bindings');
