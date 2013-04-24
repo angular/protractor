@@ -37,15 +37,15 @@ ptor.get('http://localhost:8000/app/index.html');
 
 // Could still use driver.get to get a URL normally, without injecting modules.
 
-ptor.findElement(webdriver.By.css('[app-version]')).getText().then(function(text) {
+ptor.findElement(protractor.By.css('[app-version]')).getText().then(function(text) {
   assert.equal('3', text);
 });
 
-var sample1Button = driver.findElement(webdriver.By.id('sample1'));
-var sample2Button = driver.findElement(webdriver.By.id('sample2'));
+var sample1Button = driver.findElement(protractor.By.id('sample1'));
+var sample2Button = driver.findElement(protractor.By.id('sample2'));
 sample1Button.click();
 
-var fetchButton = driver.findElement(webdriver.By.id('fetch'));
+var fetchButton = driver.findElement(protractor.By.id('fetch'));
 fetchButton.click();
 
 // The quick RPC works fine.
@@ -61,10 +61,10 @@ ptor.findElement(protractor.By.binding(), "{{data}}").getText().then(function(te
 sample2Button.click();
 fetchButton.click();
 // Would normally need driver.sleep(2) or something.
-ptor.findElement(webdriver.By.id('statuscode')).getText().then(function(text) {
+ptor.findElement(protractor.By.id('statuscode')).getText().then(function(text) {
   assert.equal('200', text);
 });
-ptor.findElement(webdriver.By.id('data')).getText().then(function(text) {
+ptor.findElement(protractor.By.id('data')).getText().then(function(text) {
   assert.equal('finally done', text);
 });
 
@@ -73,7 +73,7 @@ var urlBox = ptor.findElement(protractor.By.input('url'));
 urlBox.clear();
 urlBox.sendKeys('/3seccall');
 fetchButton.click();
-ptor.findElement(webdriver.By.id('data')).getText().then(function(text) {
+ptor.findElement(protractor.By.id('data')).getText().then(function(text) {
   assert.equal('done after 3 seconds', text);
 });
 
@@ -86,12 +86,12 @@ ptor.addMockModule('moduleA', mockModuleA);
 ptor.get('http://localhost:8000/app/index.html#/bindings');
 
 // Now, version should be 2, since only moduleA has been loaded.
-ptor.findElement(webdriver.By.css('[app-version]')).getText().then(function(text) {
+ptor.findElement(protractor.By.css('[app-version]')).getText().then(function(text) {
   assert.equal('2', text);
 });
 
 ptor.findElement(protractor.By.select('planet')).
-    findElements(webdriver.By.tagName("option")).then(function(planetOptions) {
+    findElements(protractor.By.tagName("option")).then(function(planetOptions) {
       for (var i = 0; i < planetOptions.length; ++i) {
 	planetOptions[i].getText().then(function(text) {
 	  util.puts(text);
