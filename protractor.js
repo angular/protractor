@@ -64,43 +64,50 @@ exports.wrapDriver = function(webdriver) {
   };
 };
 
-exports.By = {
-  /** Usage: 
-   * driver.findElement(protractor.By.binding(), "{{myBinding}}");
-   */
-  binding: function() {
-    return {
-      using: 'js',
-      value: function() {
-	var bindings = document.getElementsByClassName('ng-binding');
-	var matches = [];
-	var binding = arguments[0];
-	for (var i = 0; i < bindings.length; ++i) {
-	  if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
-	    matches.push(bindings[i]);
-	  }
-	}
-	return matches[0]; // We can only return one with webdriver.findElement.
+function By () {}
+function ByWrapper () {};
+ByWrapper.prototype = require('selenium-webdriver').By;
+
+util.inherits(By, ByWrapper);
+
+By.prototype.binding = function() {
+  return {
+    using: 'js',
+    value: function() {
+      var bindings = document.getElementsByClassName('ng-binding');
+      var matches = [];
+      var binding = arguments[0];
+      for (var i = 0; i < bindings.length; ++i) {
+        if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+          matches.push(bindings[i]);
+        }
       }
-    };
-  },
-  select: function(model) {
-    return {
-      using: 'css selector',
-      value: 'select[ng-model=' + model + ']'
-    };
-  },
-  selectedOption: function(model) {
-    return {
-      using: 'css selector',
-      value: 'select[ng-model=' + model + '] option[selected]'
-    };
-  },
-  repeater: null,
-  input: function(model) {
-    return {
-      using: 'css selector',
-      value: 'input[ng-model=' + model + ']'
-    };
-  }
+      
+      return matches[0]; // We can only return one with webdriver.findElement.
+    }
+  };
 };
+
+By.prototype.select = function(model) {
+  return {
+    using: 'css selector',
+    value: 'select[ng-model=' + model + ']'
+  };
+};
+
+By.prototype.selectedOption = function(model) {
+  return {
+    using: 'css selector',
+    value: 'select[ng-model=' + model + '] option[selected]'
+  };
+};
+
+By.prototype.input = function(model) {
+  return {
+    using: 'css selector',
+    value: 'input[ng-model=' + model + ']'
+  };
+}
+By.prototype.repeater = null;
+
+exports.By = new By();
