@@ -64,13 +64,13 @@ exports.wrapDriver = function(webdriver) {
   };
 };
 
-var By = function() {}
-var ByWrapper = function() {};
-ByWrapper.prototype = require('selenium-webdriver').By;
+var ProtractorBy = function() {}
+var WebdriverBy = function() {};
+WebdriverBy.prototype = require('selenium-webdriver').By;
 
-util.inherits(By, ByWrapper);
+util.inherits(ProtractorBy, WebdriverBy);
 
-By.prototype.binding = function() {
+ProtractorBy.prototype.binding = function() {
   return {
     using: 'js',
     value: function() {
@@ -88,26 +88,26 @@ By.prototype.binding = function() {
   };
 };
 
-By.prototype.select = function(model) {
+ProtractorBy.prototype.select = function(model) {
   return {
     using: 'css selector',
     value: 'select[ng-model=' + model + ']'
   };
 };
 
-By.prototype.selectedOption = function(model) {
+ProtractorBy.prototype.selectedOption = function(model) {
   return {
     using: 'css selector',
     value: 'select[ng-model=' + model + '] option[selected]'
   };
 };
 
-By.prototype.input = function(model) {
+ProtractorBy.prototype.input = function(model) {
   return {
     using: 'css selector',
     value: 'input[ng-model=' + model + ']'
   };
 }
-By.prototype.repeater = null;
+ProtractorBy.prototype.repeater = null;
 
-exports.By = new By();
+exports.By = new ProtractorBy();
