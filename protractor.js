@@ -64,8 +64,8 @@ exports.wrapDriver = function(webdriver) {
   };
 };
 
-function By () {}
-function ByWrapper () {};
+var By = function() {}
+var ByWrapper = function() {};
 ByWrapper.prototype = require('selenium-webdriver').By;
 
 util.inherits(By, ByWrapper);
