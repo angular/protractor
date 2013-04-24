@@ -64,43 +64,50 @@ exports.wrapDriver = function(webdriver) {
   };
 };
 
-exports.By = {
-  /** Usage: 
-   * driver.findElement(protractor.By.binding(), "{{myBinding}}");
-   */
-  binding: function() {
-    return {
-      using: 'js',
-      value: function() {
-	var bindings = document.getElementsByClassName('ng-binding');
-	var matches = [];
-	var binding = arguments[0];
-	for (var i = 0; i < bindings.length; ++i) {
-	  if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
-	    matches.push(bindings[i]);
-	  }
-	}
-	return matches[0]; // We can only return one with webdriver.findElement.
+var ProtractorBy = function() {}
+var WebdriverBy = function() {};
+WebdriverBy.prototype = require('selenium-webdriver').By;
+
+util.inherits(ProtractorBy, WebdriverBy);
+
+ProtractorBy.prototype.binding = function() {
+  return {
+    using: 'js',
+    value: function() {
+      var bindings = document.getElementsByClassName('ng-binding');
+      var matches = [];
+      var binding = arguments[0];
+      for (var i = 0; i < bindings.length; ++i) {
+        if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+          matches.push(bindings[i]);
+        }
       }
-    };
-  },
-  select: function(model) {
-    return {
-      using: 'css selector',
-      value: 'select[ng-model=' + model + ']'
-    };
-  },
-  selectedOption: function(model) {
-    return {
-      using: 'css selector',
-      value: 'select[ng-model=' + model + '] option[selected]'
-    };
-  },
-  repeater: null,
-  input: function(model) {
-    return {
-      using: 'css selector',
-      value: 'input[ng-model=' + model + ']'
-    };
-  }
+      
+      return matches[0]; // We can only return one with webdriver.findElement.
+    }
+  };
 };
+
+ProtractorBy.prototype.select = function(model) {
+  return {
+    using: 'css selector',
+    value: 'select[ng-model=' + model + ']'
+  };
+};
+
+ProtractorBy.prototype.selectedOption = function(model) {
+  return {
+    using: 'css selector',
+    value: 'select[ng-model=' + model + '] option[selected]'
+  };
+};
+
+ProtractorBy.prototype.input = function(model) {
+  return {
+    using: 'css selector',
+    value: 'input[ng-model=' + model + ']'
+  };
+}
+ProtractorBy.prototype.repeater = null;
+
+exports.By = new ProtractorBy();
