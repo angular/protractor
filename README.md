@@ -29,9 +29,8 @@ To just use Protractor
 
 Start a selenium server.
 
-Install the npm modules for selenium-webdriver and protractor:
+Install the npm modules for protractor, which will install selenium-webdriver if it's not already there:
 
-    npm install selenium-webdriver
     npm install protractor
 
 In your test file, set up protractor:
