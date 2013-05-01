@@ -2,15 +2,15 @@
   "name" : "protractor",
   "description" : "End to End test helpers for Angular.",
   "homepage" : "https://github.com/juliemr/protractor",
-  "keywords" : ["angular", "test", "testing", "webdriver", "selenium"],
+  "keywords" : ["angular", "test", "testing", "webdriver", "webdriverjs", "selenium"],
   "author" : "Julie Ralph <ju.ralph@gmail.com>",
-  "dependencies" : {
-    "selenium-webdriver" : "2.30.x"
+  "peerDependencies" : {
+    "selenium-webdriver" : "~2.32.1"
   },
   "repository" : {
-    "type": "git",
-    "url": "git://github.com/juliemr/protractor.git"
+    "type" : "git",
+    "url" : "git://github.com/juliemr/protractor.git"
   },
   "main" : "protractor.js",
-  "version" : "0.1.1"
+  "version" : "0.1.2"
 }
