@@ -48,7 +48,7 @@ Appendix A: Setting up a standalone selenium server
 WebdriverJS does not natively include the selenium server - you must start a standalone selenium server.
 Download the selenium server. All you need is the latest [selenium-server-standalone.](https://code.google.com/p/selenium/downloads/list)
 
-To use with chrome browsers, [download chromedriver](https://code.google.com/p/chromedriver/downloads/list)
+To use with chrome browsers, [download chromedriver](https://code.google.com/p/chromedriver/downloads/list).
 [More information about chromedriver](https://code.google.com/p/selenium/wiki/ChromeDriver)
 
 Start the selenium standalone with 

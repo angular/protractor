@@ -1,69 +1,67 @@
-var url = require('url');
 var util = require('util');
 
-exports.wrapDriver = function(webdriver) {
-  // should this delegate to all functions on the webdriver? Should it
-  // actually modify the input driver? 
-  var driver = webdriver,
-      moduleNames = [],
-      moduleScripts = [];
+var DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
+/**
+ * @param {webdriver.WebDriver} webdriver
+ * @constructor
+ */
+var Protractor = function(webdriver) {
+  this.driver = webdriver;
 
-  var DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
+  this.moduleNames_ = [];
 
-  var waitForAngular = function() {
-    return driver.executeAsyncScript(function() {
-      var callback = arguments[arguments.length - 1];
-      angular.element(document.body).injector().get('$browser').
-	  notifyWhenNoOutstandingRequests(callback);
-    });
-  }; 
-
-  return {
-    findElement: function(locator, varArgs) {
-      waitForAngular();
-      return driver.findElement(locator, varArgs);
-    },
-
-    /**
-     * @param <string> name
-     * @param <Function|string> script
-     */
-    addMockModule: function(name, script) {
-      moduleNames.push(name);
-      moduleScripts.push(script);
-    },
-
-    clearMockModules: function() {
-      moduleNames = [];
-      moduleScripts = [];
-    },
-
-    /**
-     * Usage: 
-     * protractor.addMockModule(moduleA);
-     * protractor.addMockModule(moduleB);
-     * protractor.get('foo.com'); 
-     */
-    get: function(destination) {
-      driver.get('about:blank');
-      driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
-			   'window.location.href = "' + destination + '"');
-      // At this point, Angular will pause for us, until angular.resumeBootstrap is called.
-
-      for (var i = 0; i < moduleScripts.length; ++i) {
-	driver.executeScript(moduleScripts[i]); // Should this be async?
-      }
-
-      driver.executeAsyncScript(function() {
-	var callback = arguments[arguments.length - 1];
-	// Continue to bootstrap Angular.
-	angular.resumeBootstrap(arguments[0]);
-	callback();
-      }, moduleNames);
-    }
-  };
+  this.moduleScripts_ = [];
 };
 
+Protractor.prototype.waitForAngular = function() {
+  return this.driver.executeAsyncScript(function() {
+    var callback = arguments[arguments.length - 1];
+    angular.element(document.body).injector().get('$browser').
+    notifyWhenNoOutstandingRequests(callback);
+  });
+};
+
+Protractor.prototype.findElement = function(locator, varArgs) {
+  this.waitForAngular();
+  return this.driver.findElement(locator, varArgs);
+};
+
+Protractor.prototype.addMockModule = function(name, script) {
+  this.moduleNames_.push(name);
+  this.moduleScripts_.push(script);
+};
+
+Protractor.prototype.clearMockModules = function() {
+  this.moduleNames_ = [];
+  this.moduleScripts_ = [];
+};
+
+Protractor.prototype.get = function(destination) {
+  this.driver.get('about:blank');
+  this.driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
+      'window.location.href = "' + destination + '"');
+      // At this point, Angular will pause for us, until angular.resumeBootstrap is called.
+
+  for (var i = 0; i < this.moduleScripts_.length; ++i) {
+    this.driver.executeScript(this.moduleScripts_[i]);
+  }
+
+  this.driver.executeAsyncScript(function() {
+    var callback = arguments[arguments.length - 1];
+    // Continue to bootstrap Angular.
+    angular.resumeBootstrap(arguments[0]);
+    callback();
+  }, this.moduleNames_);
+};
+
+exports.wrapDriver = function(webdriver) {
+  return new Protractor(webdriver);
+};
+
+
+/**
+ * Locators.
+ */
 var ProtractorBy = function() {}
 var WebdriverBy = function() {};
 WebdriverBy.prototype = require('selenium-webdriver').By;
@@ -107,7 +105,7 @@ ProtractorBy.prototype.input = function(model) {
     using: 'css selector',
     value: 'input[ng-model=' + model + ']'
   };
-}
+};
 ProtractorBy.prototype.repeater = null;
 
 exports.By = new ProtractorBy();
