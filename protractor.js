@@ -109,6 +109,15 @@ var WebdriverBy = function() {};
 WebdriverBy.prototype = webdriver.By;
 util.inherits(ProtractorBy, WebdriverBy);
 
+/**
+ * Usage:
+ *   <span>{{status}}</span>
+ *   var status = ptor.findElement(protractor.By.binding(), '{{status}}');
+ *
+ * Note: The name of the binding should be the second argument to
+ * findElement, NOT an argument to binding().
+ * TODO(juliemr): This is confusing, can we get around it?
+ */
 ProtractorBy.prototype.binding = function() {
   return {
     using: 'js',
