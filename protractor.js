@@ -1,4 +1,5 @@
 var util = require('util');
+var webdriver = require('selenium-webdriver');
 
 var DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
 /**
@@ -40,7 +41,8 @@ Protractor.prototype.get = function(destination) {
   this.driver.get('about:blank');
   this.driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
       'window.location.href = "' + destination + '"');
-      // At this point, Angular will pause for us, until angular.resumeBootstrap is called.
+      // At this point, Angular will pause for us, until angular.resumeBootstrap
+      // is called.
 
   for (var i = 0; i < this.moduleScripts_.length; ++i) {
     this.driver.executeScript(this.moduleScripts_[i]);
@@ -64,7 +66,7 @@ exports.wrapDriver = function(webdriver) {
  */
 var ProtractorBy = function() {}
 var WebdriverBy = function() {};
-WebdriverBy.prototype = require('selenium-webdriver').By;
+WebdriverBy.prototype = webdriver.By;
 
 util.inherits(ProtractorBy, WebdriverBy);
 
@@ -106,6 +108,7 @@ ProtractorBy.prototype.input = function(model) {
     value: 'input[ng-model=' + model + ']'
   };
 };
+
 ProtractorBy.prototype.repeater = null;
 
 exports.By = new ProtractorBy();
