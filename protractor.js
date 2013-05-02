@@ -14,35 +14,65 @@ var Protractor = function(webdriver) {
   this.moduleScripts_ = [];
 };
 
+/**
+ * Instruct webdriver to wait until Angular has finished rendering and has
+ * no outstanding $http calls before continuing.
+ *
+ * @return {!webdriver.promise.Promise} A promise that will resolve to the
+ *    scripts return value.
+ */
 Protractor.prototype.waitForAngular = function() {
   return this.driver.executeAsyncScript(function() {
     var callback = arguments[arguments.length - 1];
     angular.element(document.body).injector().get('$browser').
-    notifyWhenNoOutstandingRequests(callback);
+        notifyWhenNoOutstandingRequests(callback);
   });
 };
 
+/**
+ * See webdriver.WebDriver.findElement
+ *
+ * Waits for Angular to finish rendering before searching for elements.
+ */
 Protractor.prototype.findElement = function(locator, varArgs) {
   this.waitForAngular();
   return this.driver.findElement(locator, varArgs);
 };
 
+/**
+ * Add a module to load before Angular whenever Protractor.get is called.
+ * Modules will be registered after existing modules already on the page,
+ * so any module registered here will override preexisting modules with the same
+ * name.
+ *
+ * @param {!string} name The name of the module to load or override.
+ * @param {!string|Function} script The JavaScript to load the module.
+ */
 Protractor.prototype.addMockModule = function(name, script) {
   this.moduleNames_.push(name);
   this.moduleScripts_.push(script);
 };
 
+/**
+ * Clear the list of registered mock modules.
+ */
 Protractor.prototype.clearMockModules = function() {
   this.moduleNames_ = [];
   this.moduleScripts_ = [];
 };
 
+/**
+ * See webdriver.WebDriver.get
+ *
+ * Navigate to the given destination and loads mock modules before
+ * Angular.
+ */
 Protractor.prototype.get = function(destination) {
   this.driver.get('about:blank');
   this.driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
       'window.location.href = "' + destination + '"');
-      // At this point, Angular will pause for us, until angular.resumeBootstrap
-      // is called.
+  // At this point, Angular will pause for us, until angular.resumeBootstrap
+  // is called.
 
   for (var i = 0; i < this.moduleScripts_.length; ++i) {
     this.driver.executeScript(this.moduleScripts_[i]);
@@ -56,6 +86,11 @@ Protractor.prototype.get = function(destination) {
   }, this.moduleNames_);
 };
 
+/**
+ * Create a new instance of Protractor by wrapping a webdriver instance.
+ *
+ * @param {webdriver.WebDriver} webdriver The configured webdriver instance.
+ */
 exports.wrapDriver = function(webdriver) {
   return new Protractor(webdriver);
 };
@@ -66,8 +101,12 @@ exports.wrapDriver = function(webdriver) {
  */
 var ProtractorBy = function() {}
 var WebdriverBy = function() {};
-WebdriverBy.prototype = webdriver.By;
 
+/**
+ * webdriver's By is an enum of locator functions, so we must set it to
+ * a prototype before inheriting from it.
+ */
+WebdriverBy.prototype = webdriver.By;
 util.inherits(ProtractorBy, WebdriverBy);
 
 ProtractorBy.prototype.binding = function() {
