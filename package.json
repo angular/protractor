@@ -1,6 +1,6 @@
 {
   "name" : "protractor",
-  "description" : "End to End test helpers for Angular.",
+  "description" : "Webdriver E2E test wrapper for Angular.",
   "homepage" : "https://github.com/juliemr/protractor",
   "keywords" : ["angular", "test", "testing", "webdriver", "webdriverjs", "selenium"],
   "author" : "Julie Ralph <ju.ralph@gmail.com>",
