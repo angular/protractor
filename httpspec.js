@@ -88,10 +88,13 @@ ptor.findElement(protractor.By.css('[app-version]')).getText().then(function(tex
 });
 
 // Test using selects.
-var planetSelector = ptor.findElement(protractor.By.select('planet'))
-planetSelector.findElement(protractor.By.css('option[value="4"]')).click();
+ptor.findElement(protractor.By.selectedOption('planet')).getText().then(function(text) {
+  assert.equal('Mercury', text);
+});
 
-// Selected doesn't update when you change the dropdown???
+ptor.findElement(protractor.By.select('planet'))
+    .findElement(protractor.By.css('option[value="4"]')).click(); // There must be a better way to do this.
+
 ptor.findElement(protractor.By.selectedOption('planet')).getText().then(function(text) {
   assert.equal('Jupiter', text);
 });
