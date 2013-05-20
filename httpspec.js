@@ -56,7 +56,7 @@ status.getText().then(function(text) {
 ptor.findElement(protractor.By.binding("{{data}}")).getText().then(function(text) {
   assert.equal('done', text);
 });
-/*
+
 // Slow RPC.
 sample2Button.click();
 fetchButton.click();
@@ -75,13 +75,10 @@ urlBox.sendKeys('/3seccall');
 fetchButton.click();
 ptor.findElement(protractor.By.id('data')).getText().then(function(text) {
   assert.equal('done after 3 seconds', text);
-});*/
+});
 
 ptor.clearMockModules();
 ptor.addMockModule('moduleA', mockModuleA);
-
-//driver.get('http://www.google.com'); // need to navigate away from an Angular page so that it will
-                                     // bootstrap again.
 
 ptor.get('http://localhost:8000/app/index.html#/bindings');
 
@@ -109,19 +106,10 @@ ptor.findElement(protractor.By.repeater('ball in planets').row(3)).getText()
       assert.equal('Earth:3', text);
     });
 
-ptor.findElement(protractor.By.repeater('ball in planets').row(3)).toWireValue().then(function(json) {
-  console.log("Wire Value: %j", json);
-});
-
-// Returns 
-//ptor.findElement(protractor.By.repeater('planet in planets').row(2).column('{{ball.name}}'))
-//    .getText().then(function(text) {
-//      assert.equal('Venus', text);
-//    });
-
-//ptor.findElement(protractor.By.repeater('planet in planets').row(2).column('{{ball.name}}'))
-//    .getText().then(function(text) {
-//      assert.equal('Venus', text);
-//    });
+// Returns the element in row 2 and the column with binding {{ball.name}}
+ptor.findElement(protractor.By.repeater('ball in planets').row(2).column('{{ball.name}}'))
+    .getText().then(function(text) {
+      assert.equal('Venus', text);
+    });
 
 driver.quit();
