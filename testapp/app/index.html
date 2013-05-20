@@ -4,27 +4,8 @@
   <meta charset="utf-8">
   <title>My AngularJS App</title>
   <link rel="stylesheet" href="css/app.css"/>
-  <script>
-    console.log("starting the inline script");
-    console.log("  document.readyState = " + document.readyState);
-
-    document.addEventListener("DOMContentLoaded", function() {
-      console.log("DOMContentLoaded event fired");
-      console.log("  document.readyState = " + document.readyState);
-    });
-
-    document.addEventListener("load", function() {
-      console.log("load event fired");
-      console.log("  document.readyState = " + document.readyState);
-    });
-
-    var bodyload = function() {
-      console.log("bodyload callback fired");
-      console.log("  document.readyState = " + document.readyState);
-    };
-  </script>
 </head>
-<body onload="bodyload()">
+<body>
   <ul class="menu">
     <li><a href="#/http">http</a></li>
     <li><a href="#/repeater">repeater</a></li>
@@ -36,7 +17,7 @@
   <div>Angular seed app: v<span app-version></span></div>
 
   <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
   -->
   <script src="lib/angular_v1.0.6/angular.js"></script>
   <script src="js/app.js"></script>
