@@ -188,7 +188,8 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
         // Could try to use the webdriver api to find the row, then 
         // search within somehow. Can't use JS to search within an element,
         // and all I know about it is relative info (no ID by which to get
-        // it again.)
+        // the elem).
+        // To find the binding, MUST use JS.
         column: function(binding) {
           return {
             findOverride: function(driver) {
@@ -198,6 +199,9 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
                 var index = arguments[1];
                 var binding = arguments[2];
 
+                var rows = document.querySelectorAll('[ng-repeat="'
+                    + repeater + '"]');
+                var row = rows[index - 1];
                 var bindings = row.getElementsByClassName('ng-binding');
                 for (var i = 0; i < bindings.length; ++i) {
                   if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
