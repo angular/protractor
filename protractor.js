@@ -36,6 +36,9 @@ Protractor.prototype.waitForAngular = function() {
  */
 Protractor.prototype.findElement = function(locator, varArgs) {
   this.waitForAngular();
+  if (locator.findOverride) {
+    return locator.findOverride(this.driver);
+  }
   return this.driver.findElement(locator, varArgs);
 };
 
@@ -112,30 +115,30 @@ util.inherits(ProtractorBy, WebdriverBy);
 /**
  * Usage:
  *   <span>{{status}}</span>
- *   var status = ptor.findElement(protractor.By.binding(), '{{status}}');
- *
- * Note: The name of the binding should be the second argument to
- * findElement, NOT an argument to binding().
- * TODO(juliemr): This is confusing, can we get around it?
+ *   var status = ptor.findElement(protractor.By.binding('{{status}}'));
+ * 
+ * Note: This currently ignores parent element restrictions if called with
+ * WebElement.findElement. TODO(juliemr): Can we get around this?
  */
-ProtractorBy.prototype.binding = function() {
+ProtractorBy.prototype.binding = function(bindingDescriptor) {
   return {
-    using: 'js',
-    value: function() {
-      var bindings = document.getElementsByClassName('ng-binding');
-      var matches = [];
-      var binding = arguments[0];
-      for (var i = 0; i < bindings.length; ++i) {
-        if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
-          matches.push(bindings[i]);
+    findOverride: function(driver) {
+      return driver.findElement(webdriver.By.js(function() {
+        var bindings = document.getElementsByClassName('ng-binding');
+        var matches = [];
+        var binding = arguments[0];
+        for (var i = 0; i < bindings.length; ++i) {
+          if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+            matches.push(bindings[i]);
+          }
         }
-      }
       
-      return matches[0]; // We can only return one with webdriver.findElement.
+        return matches[0]; // We can only return one with webdriver.findElement.
+      }), bindingDescriptor);
     }
   };
 };
-
+ 
 ProtractorBy.prototype.select = function(model) {
   return {
     using: 'css selector',
@@ -157,6 +160,59 @@ ProtractorBy.prototype.input = function(model) {
   };
 };
 
-ProtractorBy.prototype.repeater = null;
+/**
+ * Usage:
+ * <div ng-repeat = "cat in pets">
+ *   <span>{{cat.name}}</span>
+ *   <span>{{cat.age}}</span>
+ * </div>
+ *
+ * // Returns the DIV for the second cat.
+ * var secondCat = ptor.findElement(
+ *     protractor.By.repeater("cat in pets").row(2));
+ * // Returns the SPAN for the first cat's name.
+ * var firstCatName = ptor.findElement(
+ *     protractor.By.repeater("cat in pets").row(1).column("{{cat.name}}"));
+ */
+ProtractorBy.prototype.repeater = function(repeatDescriptor) {
+  return {
+    row: function(index) {
+      return {
+        using: 'css selector',
+        value: '[ng-repeat="' + repeatDescriptor
+            + '"]:nth-of-type(' + index + ')',
+
+        // Notes to self: Could try to find the parent element using
+        // native commands.
+        //
+        // Could try to use the webdriver api to find the row, then 
+        // search within somehow. Can't use JS to search within an element,
+        // and all I know about it is relative info (no ID by which to get
+        // it again.)
+        column: function(binding) {
+          return {
+            findOverride: function(driver) {
+              return driver.findElement(webdriver.By.js(function() {
+                var matches = [];
+                var repeater = arguments[0];
+                var index = arguments[1];
+                var binding = arguments[2];
+
+                var bindings = row.getElementsByClassName('ng-binding');
+                for (var i = 0; i < bindings.length; ++i) {
+                  if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+                    matches.push(bindings[i]);
+                  }
+                }
+                // We can only return one with webdriver.findElement.
+                return matches[0]; 
+              }), repeatDescriptor, index, binding);
+            }
+          };
+        }
+      };
+    }
+  };
+};
 
 exports.By = new ProtractorBy();

@@ -49,14 +49,14 @@ var fetchButton = driver.findElement(protractor.By.id('fetch'));
 fetchButton.click();
 
 // The quick RPC works fine.
-var status = ptor.findElement(protractor.By.binding(), '{{status}}');
+var status = ptor.findElement(protractor.By.binding('{{status}}'));
 status.getText().then(function(text) {
   assert.equal('200', text);
 });
-ptor.findElement(protractor.By.binding(), "{{data}}").getText().then(function(text) {
+ptor.findElement(protractor.By.binding("{{data}}")).getText().then(function(text) {
   assert.equal('done', text);
 });
-
+/*
 // Slow RPC.
 sample2Button.click();
 fetchButton.click();
@@ -75,7 +75,7 @@ urlBox.sendKeys('/3seccall');
 fetchButton.click();
 ptor.findElement(protractor.By.id('data')).getText().then(function(text) {
   assert.equal('done after 3 seconds', text);
-});
+});*/
 
 ptor.clearMockModules();
 ptor.addMockModule('moduleA', mockModuleA);
@@ -93,14 +93,35 @@ ptor.findElement(protractor.By.css('[app-version]')).getText().then(function(tex
 ptor.findElement(protractor.By.select('planet')).
     findElements(protractor.By.tagName("option")).then(function(planetOptions) {
       for (var i = 0; i < planetOptions.length; ++i) {
-	planetOptions[i].getText().then(function(text) {
-	  util.puts(text);
-	});
+	      planetOptions[i].getText().then(function(text) {
+	        util.puts(text);
+	      });
       }
 }); // Prints out the list of planet names.
 
 ptor.findElement(protractor.By.selectedOption('planet')).getText().then(function(text) {
   assert.equal('Mercury', text);
 });
+
+// Returns the element for the entire row.
+ptor.findElement(protractor.By.repeater('ball in planets').row(3)).getText()
+    .then(function(text) {
+      assert.equal('Earth:3', text);
+    });
+
+ptor.findElement(protractor.By.repeater('ball in planets').row(3)).toWireValue().then(function(json) {
+  console.log("Wire Value: %j", json);
+});
+
+// Returns 
+//ptor.findElement(protractor.By.repeater('planet in planets').row(2).column('{{ball.name}}'))
+//    .getText().then(function(text) {
+//      assert.equal('Venus', text);
+//    });
+
+//ptor.findElement(protractor.By.repeater('planet in planets').row(2).column('{{ball.name}}'))
+//    .getText().then(function(text) {
+//      assert.equal('Venus', text);
+//    });
 
 driver.quit();
