@@ -117,8 +117,8 @@ util.inherits(ProtractorBy, WebdriverBy);
  *   <span>{{status}}</span>
  *   var status = ptor.findElement(protractor.By.binding('{{status}}'));
  * 
- * Note: This currently ignores parent element restrictions if called with
- * WebElement.findElement. TODO(juliemr): Can we get around this?
+ * Note: This ignores parent element restrictions if called with
+ * WebElement.findElement.
  */
 ProtractorBy.prototype.binding = function(bindingDescriptor) {
   return {
@@ -139,6 +139,11 @@ ProtractorBy.prototype.binding = function(bindingDescriptor) {
   };
 };
  
+/**
+ * Usage:
+ * <select ng-model="user" ng-options="user.name for user in users"></select>
+ * ptor.findElement(protractor.By.select("user"));
+ */
 ProtractorBy.prototype.select = function(model) {
   return {
     using: 'css selector',
@@ -149,7 +154,7 @@ ProtractorBy.prototype.select = function(model) {
 ProtractorBy.prototype.selectedOption = function(model) {
   return {
     using: 'css selector',
-    value: 'select[ng-model=' + model + '] option[selected]'
+    value: 'select[ng-model=' + model + '] option:checked'
   };
 };
 
@@ -181,15 +186,6 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
         using: 'css selector',
         value: '[ng-repeat="' + repeatDescriptor
             + '"]:nth-of-type(' + index + ')',
-
-        // Notes to self: Could try to find the parent element using
-        // native commands.
-        //
-        // Could try to use the webdriver api to find the row, then 
-        // search within somehow. Can't use JS to search within an element,
-        // and all I know about it is relative info (no ID by which to get
-        // the elem).
-        // To find the binding, MUST use JS.
         column: function(binding) {
           return {
             findOverride: function(driver) {
