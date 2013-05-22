@@ -2,6 +2,78 @@ var util = require('util');
 var webdriver = require('selenium-webdriver');
 
 var DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
+
+/**
+ * All scripts to be run on the client via executeAsyncScript or
+ * executeScript should be put here. These scripts are transmitted over
+ * the wire using their toString representation, and cannot reference
+ * external variables. They can, however use the array passed in to
+ * arguments. Instead of params, all functions on clientSideScripts
+ * should list the arguments array they expect.
+ */
+var clientSideScripts = {};
+
+/**
+ * Wait until Angular has finished rendering and has
+ * no outstanding $http calls before continuing.
+ *
+ * arguments none
+ */
+clientSideScripts.waitForAngular = function() {
+  var callback = arguments[arguments.length - 1];
+  angular.element(document.body).injector().get('$browser').
+      notifyWhenNoOutstandingRequests(callback);
+};
+
+/**
+ * Find an element in the page by their angular binding.
+ * 
+ * arguments[0] {string} The binding, e.g. {{cat.name}}
+ *
+ * @return {WebElement} The element containing the binding
+ */
+clientSideScripts.findBindings = function() {
+  var bindings = document.getElementsByClassName('ng-binding');
+  var matches = [];
+  var binding = arguments[0];
+  for (var i = 0; i < bindings.length; ++i) {
+    if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+      matches.push(bindings[i]);
+    }
+  }
+  return matches[0]; // We can only return one with webdriver.findElement.
+};
+
+/**
+ * Find an element within an ng-repeat by its row and column.
+ *
+ * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
+ * arguments[1] {number} The row index
+ * arguments[2] {string} The column binding, e.g. '{{cat.name}}'
+ *
+ * @return {WebElement} The element
+ */
+clientSideScripts.findRepeaterElement = function() {
+  var matches = [];
+  var repeater = arguments[0];
+  var index = arguments[1];
+  var binding = arguments[2];
+
+  var rows = document.querySelectorAll('[ng-repeat="'
+    + repeater + '"]');
+  var row = rows[index - 1];
+  var bindings = row.getElementsByClassName('ng-binding');
+  for (var i = 0; i < bindings.length; ++i) {
+    if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+      matches.push(bindings[i]);
+    }
+  }
+  // We can only return one with webdriver.findElement.
+  return matches[0];
+};
+
+
+
 /**
  * @param {webdriver.WebDriver} webdriver
  * @constructor
@@ -22,11 +94,7 @@ var Protractor = function(webdriver) {
  *    scripts return value.
  */
 Protractor.prototype.waitForAngular = function() {
-  return this.driver.executeAsyncScript(function() {
-    var callback = arguments[arguments.length - 1];
-    angular.element(document.body).injector().get('$browser').
-        notifyWhenNoOutstandingRequests(callback);
-  });
+  return this.driver.executeAsyncScript(clientSideScripts.waitForAngular);
 };
 
 /**
@@ -123,18 +191,8 @@ util.inherits(ProtractorBy, WebdriverBy);
 ProtractorBy.prototype.binding = function(bindingDescriptor) {
   return {
     findOverride: function(driver) {
-      return driver.findElement(webdriver.By.js(function() {
-        var bindings = document.getElementsByClassName('ng-binding');
-        var matches = [];
-        var binding = arguments[0];
-        for (var i = 0; i < bindings.length; ++i) {
-          if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
-            matches.push(bindings[i]);
-          }
-        }
-      
-        return matches[0]; // We can only return one with webdriver.findElement.
-      }), bindingDescriptor);
+      return driver.findElement(webdriver.By.js(clientSideScripts.findBindings),
+          bindingDescriptor);
     }
   };
 };
@@ -189,24 +247,9 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
         column: function(binding) {
           return {
             findOverride: function(driver) {
-              return driver.findElement(webdriver.By.js(function() {
-                var matches = [];
-                var repeater = arguments[0];
-                var index = arguments[1];
-                var binding = arguments[2];
-
-                var rows = document.querySelectorAll('[ng-repeat="'
-                    + repeater + '"]');
-                var row = rows[index - 1];
-                var bindings = row.getElementsByClassName('ng-binding');
-                for (var i = 0; i < bindings.length; ++i) {
-                  if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
-                    matches.push(bindings[i]);
-                  }
-                }
-                // We can only return one with webdriver.findElement.
-                return matches[0]; 
-              }), repeatDescriptor, index, binding);
+              return driver.findElement(
+                  webdriver.By.js(clientSideScripts.findRepeaterElement),
+                  repeatDescriptor, index, binding);
             }
           };
         }
