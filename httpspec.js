@@ -111,4 +111,25 @@ ptor.findElement(protractor.By.repeater('ball in planets').row(2).column('{{ball
       assert.equal('Venus', text);
     });
 
+// Returns the entire column.
+ptor.findElements(protractor.By.repeater('ball in planets').column('{{ball.name}}'))
+    .then(function(arr) {
+      arr[1].getText().then(function(text) {
+        assert.equal('Venus', text);
+      });
+      arr[2].getText().then(function(text) {
+        assert.equal('Earth', text);
+      });
+    });
+
+// Test getting multiple elements via a binding.
+ptor.findElements(protractor.By.binding('{{moon}}'))
+    .then(function(arr) {
+      arr[0].getText().then(function(text) {
+        assert.equal('Europa', text);
+      });
+      arr[2].getText().then(function(text) {
+        assert.equal('Ganymede', text);
+      })
+    })
 driver.quit();

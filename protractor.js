@@ -32,7 +32,7 @@ clientSideScripts.waitForAngular = function() {
  *
  * @return {WebElement} The element containing the binding
  */
-clientSideScripts.findBindings = function() {
+clientSideScripts.findBinding = function() {
   var bindings = document.getElementsByClassName('ng-binding');
   var matches = [];
   var binding = arguments[0];
@@ -45,13 +45,32 @@ clientSideScripts.findBindings = function() {
 };
 
 /**
+ * Find a list of elements in the page by their angular binding.
+ *
+ * arguments[0] {string} The binding, e.g. {{cat.name}}
+ *
+ * @return {Array.<WebElement>} The elements containing the binding
+ */
+clientSideScripts.findBindings = function() {
+  var bindings = document.getElementsByClassName('ng-binding');
+  var matches = [];
+  var binding = arguments[0];
+  for (var i = 0; i < bindings.length; ++i) {
+    if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+      matches.push(bindings[i]);
+    }
+  }
+  return matches; // Return the whole array for webdriver.findElements.
+};
+
+/**
  * Find an element within an ng-repeat by its row and column.
  *
  * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
  * arguments[1] {number} The row index
  * arguments[2] {string} The column binding, e.g. '{{cat.name}}'
  *
- * @return {WebElement} The element
+ * @return {Element} The element
  */
 clientSideScripts.findRepeaterElement = function() {
   var matches = [];
@@ -72,6 +91,31 @@ clientSideScripts.findRepeaterElement = function() {
   return matches[0];
 };
 
+/**
+ * Find the elements in a column of an ng-repeat.
+ *
+ * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
+ * arguments[1] {string} The column binding, e.g. '{{cat.name}}'
+ *
+ * @return {Array.<Element>} The elements in the column
+ */
+ clientSideScripts.findRepeaterColumn = function() {
+  var matches = [];
+  var repeater = arguments[0];
+  var binding = arguments[1];
+
+  var rows = document.querySelectorAll('[ng-repeat="'
+    + repeater + '"]');
+  for (var i = 0; i < rows.length; ++i) {
+    var bindings = rows[i].getElementsByClassName('ng-binding');
+    for (var j = 0; j < bindings.length; ++j) {
+      if (angular.element(bindings[j]).data().$binding[0].exp == binding) {
+        matches.push(bindings[j]);
+      }
+    }
+  }
+  return matches;
+ };
 
 
 /**
@@ -108,6 +152,19 @@ Protractor.prototype.findElement = function(locator, varArgs) {
     return locator.findOverride(this.driver);
   }
   return this.driver.findElement(locator, varArgs);
+};
+
+/**
+ * See webdriver.WebDriver.findElements
+ *
+ * Waits for Angular to finish rendering before searching for elements.
+ */
+Protractor.prototype.findElements = function(locator, varArgs) {
+  this.waitForAngular();
+  if (locator.findArrayOverride) {
+    return locator.findArrayOverride(this.driver);
+  }
+  return this.driver.findElements(locator, varArgs);
 };
 
 /**
@@ -191,7 +248,12 @@ util.inherits(ProtractorBy, WebdriverBy);
 ProtractorBy.prototype.binding = function(bindingDescriptor) {
   return {
     findOverride: function(driver) {
-      return driver.findElement(webdriver.By.js(clientSideScripts.findBindings),
+      return driver.findElement(webdriver.By.js(clientSideScripts.findBinding),
+          bindingDescriptor);
+    },
+    findArrayOverride: function(driver) {
+      return driver.findElements(
+          webdriver.By.js(clientSideScripts.findBindings),
           bindingDescriptor);
     }
   };
@@ -236,6 +298,9 @@ ProtractorBy.prototype.input = function(model) {
  * // Returns the SPAN for the first cat's name.
  * var firstCatName = ptor.findElement(
  *     protractor.By.repeater("cat in pets").row(1).column("{{cat.name}}"));
+ * // Returns an array of WebElements from a column
+ * var ages = ptor.findElements(
+ *     protractor.By.repeater("cat in pets").column("{{cat.age}}"));
  */
 ProtractorBy.prototype.repeater = function(repeatDescriptor) {
   return {
@@ -254,6 +319,15 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
           };
         }
       };
+    },
+    column: function(binding) {
+      return {
+        findArrayOverride: function(driver) {
+          return driver.findElements(
+              webdriver.By.js(clientSideScripts.findRepeaterColumn),
+              repeatDescriptor, binding);
+        }
+      }
     }
   };
 };
