@@ -2,3 +2,4 @@ testapp/
 
 .npmignore
 httpspec.js
+externalhttpspec.js

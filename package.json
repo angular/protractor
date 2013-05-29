@@ -7,10 +7,13 @@
   "peerDependencies" : {
     "selenium-webdriver" : "~2.32.1"
   },
+  "devDependencies" : {
+    "jasmine-node" : "~1.8.0"
+  },
   "repository" : {
     "type" : "git",
     "url" : "git://github.com/juliemr/protractor.git"
   },
   "main" : "protractor.js",
-  "version" : "0.1.3"
+  "version" : "0.1.4"
 }
