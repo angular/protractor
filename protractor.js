@@ -119,6 +119,33 @@ clientSideScripts.findRepeaterElement = function() {
 
 
 /**
+ * Tests whether the angular global variable is present on a page. Retries
+ * twice in case the page is just loading slowly.
+ *
+ * arguments none
+ *
+ * @return {boolean} true if angular was found.
+ */
+ clientSideScripts.testForAngular = function() {
+  var callback = arguments[arguments.length - 1];
+  var retry = function(n) {
+    if (window.angular && window.angular.resumeBootstrap) {
+      callback(true);
+    } else if (n < 1) {
+      callback(false)
+    } else {
+      window.setTimeout(function() {retry(n - 1)}, 1000);
+    }
+  }
+  if (window.angular && window.angular.resumeBootstrap) {
+    callback(true);
+  } else {
+    retry(3);
+  }
+}
+
+
+/**
  * @param {webdriver.WebDriver} webdriver
  * @constructor
  */
@@ -199,9 +226,18 @@ Protractor.prototype.get = function(destination) {
   this.driver.get('about:blank');
   this.driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
       'window.location.href = "' + destination + '"');
+
+  // Make sure the page is an Angular page.
+  this.driver.executeAsyncScript(clientSideScripts.testForAngular).
+      then(function(hasAngular) {
+        if (!hasAngular) {
+          throw new Error("Angular could not be found on the page " +
+              destination);
+        }
+      });
+
   // At this point, Angular will pause for us, until angular.resumeBootstrap
   // is called.
-
   for (var i = 0; i < this.moduleScripts_.length; ++i) {
     this.driver.executeScript(this.moduleScripts_[i]);
   }
