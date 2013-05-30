@@ -22,7 +22,8 @@ You can access the test app at
 
 Run the tests with
 
-    node httpspec.js
+    jasmine-node httpspec.js
+    jasmine-node externalhttpspec.js
 
 To just use Protractor
 ----------------------
@@ -36,7 +37,7 @@ Install the npm modules for protractor, which will install selenium-webdriver if
 In your test file, set up protractor:
 
     var webdriver = require('selenium-webdriver');
-    var protractor = require('./protractor.js');
+    var protractor = require('protractor');
     // Configure and build your webdriver instance.
     var ptor = protractor.wrapDriver(driver);
 
