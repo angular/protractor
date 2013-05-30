@@ -42,6 +42,7 @@ describe('angularjs homepage', function() {
   }, 10000);
 
   // Uncomment to see failures.
+  /*
   it('should greet using binding - this one fails', function(done) {
     ptor.get('http://www.angularjs.org');
 
@@ -53,6 +54,7 @@ describe('angularjs homepage', function() {
           done();
         });
   });
+  */
   
 
   it('afterAll', function() {
