@@ -1,6 +1,5 @@
 var util = require('util');
 
-
 describe('angularjs homepage', function() {
   var webdriver = require('selenium-webdriver');
   var protractor = require('./protractor.js');
