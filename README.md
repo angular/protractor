@@ -1,7 +1,7 @@
 Protractor
 ==========
 
-Protractor is an end to end test framework for Angular applications built on top of [webdriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). It is still quite in progress.
+Protractor is an end to end test framework for Angular applications built on top of [webdriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). 
 
 To run the sample tests
 -----------------------
@@ -22,8 +22,8 @@ You can access the test app at
 
 Run the tests with
 
-    jasmine-node httpspec.js
-    jasmine-node externalhttpspec.js
+    jasmine-node spec
+    mocha test
 
 To just use Protractor
 ----------------------
@@ -41,7 +41,7 @@ In your test file, set up protractor:
     // Configure and build your webdriver instance.
     var ptor = protractor.wrapDriver(driver);
 
-See httpspec.js for examples of use.
+See spec/testAppSpec.js for examples of use.
 
 Appendix A: Setting up a standalone selenium server
 ---------------------------------------------------
