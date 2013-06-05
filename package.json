@@ -8,7 +8,9 @@
     "selenium-webdriver" : "~2.32.1"
   },
   "devDependencies" : {
-    "jasmine-node" : "~1.8.0"
+    "jasmine-node" : "~1.8.0",
+    "expect.js" : "~0.2.0",
+    "mocha" : "~1.10.0"
   },
   "repository" : {
     "type" : "git",
