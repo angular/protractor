@@ -33,30 +33,27 @@ MyCtrl1.$inject = [];
 
 
 function MyCtrl2($scope) {
-  var formatNum = function(num) {
-    var string =  num.toString();
-    var triplets = [''];
-    while (string.length > 3) {
-      triplets.push(string.substr(-3));
-      string = string.substr(0, string.length - 3);
-    }
-    return string + (triplets.length > 1 ? triplets.join(',') : '');
-  };
-  var bigfoo = [];
-  for (var i = 0; i < 2500; i+=5) {
-    bigfoo[i] = {
+  function fib(n) {
+    if (n <= 1) return 1;
+    return fib(n - 1) + fib(n - 2);
+  }
+
+  $scope.foos = [];
+  for (var i = 0; i < 35; i++) {
+    $scope.foos[i] = {
       a: i,
-      b: formatNum(i),
-      c: formatNum(i * i)
+      b: fib(i),
     };
   }
-  $scope.foos = bigfoo;
 
   $scope.addOne = function() {
-    bigfoo.push({
-      a: bigfoo.length, b: 'new', c: 'entry'});
+    $scope.foos.push({
+      a: $scope.foos.length,
+      b: fib($scope.foos.length)
+    });
   };
 }
+
 MyCtrl2.$inject = ['$scope'];
 
 function BindingsCtrl($scope) {
@@ -65,12 +62,11 @@ function BindingsCtrl($scope) {
       radius: 1516
     },
     { name: "Venus",
-      radius: 3760,
-      moons: ["Europa", "Io", "Ganymede", "Castillo"]
+      radius: 3760
     },
     { name: "Earth",
       radius: 3959,
-      moons: ["Moon"]
+      moons: ["Luna"]
     },
     { name: "Mars",
       radius: 2106,
@@ -79,6 +75,18 @@ function BindingsCtrl($scope) {
     { name: "Jupiter",
       radius: 43441,
       moons: ["Europa", "Io", "Ganymede", "Castillo"]
+    },
+    { name: "Saturn",
+      radius: 36184,
+      moons: ["Titan", "Rhea", "Iapetus", "Dione"]
+    },
+    { name: "Uranus",
+      radius: 15759,
+      moons: ["Titania", "Oberon", "Umbriel", "Ariel"]
+    },
+    { name: "Neptune",
+      radius: 15299,
+      moons: ["Triton", "Proteus", "Nereid", "Larissa"]
     }
   ];
 
@@ -89,3 +97,12 @@ function BindingsCtrl($scope) {
   };
 }
 BindingsCtrl.$inject = ['$scope'];
+
+function FormCtrl($scope) {
+  $scope.greeting = "Hiya";
+  $scope.username = "Anon";
+  $scope.color = "blue";
+  $scope.show = true;
+}
+FormCtrl.$inject = ['$scope'];
+

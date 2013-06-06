@@ -1,8 +1,9 @@
 
-<div>Possible Planets: <div ng-repeat="ball in planets">
+<div>Planets <li ng-repeat="ball in planets">
   <span>{{ball.name}}</span>:<span>{{$index + 1}}</span>
-</div></div>
-<div>Details for: <select ng-model="planet" ng-options="planet.name for planet in planets">
+</li></div>
+<div>Details for:
+  <select ng-model="planet" ng-options="planet.name for planet in planets">
 </select>
 <div>
   <div>{{planet.name}}</div>
