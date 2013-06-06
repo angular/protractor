@@ -2,7 +2,10 @@ var webdriver = require('selenium-webdriver');
 var protractor = require('../protractor.js');
 var util = require('util');
 
-var driver = new webdriver.Builder().
+var driver, ptor;
+
+(function before() {
+  driver = new webdriver.Builder().
     usingServer('http://localhost:4444/wd/hub').
     withCapabilities({
       'browserName': 'chrome',
@@ -11,23 +14,55 @@ var driver = new webdriver.Builder().
       'javascriptEnabled': true
     }).build();
 
-var ptor = protractor.wrapDriver(driver);
+  ptor = protractor.wrapDriver(driver);
 
-driver.manage().timeouts().setScriptTimeout(10000);
+  driver.manage().timeouts().setScriptTimeout(10000);
+}());
 
 describe('test application', function() {
-  describe('finding elements', function() {
+  describe('finding elements in forms', function() {
     beforeEach(function() {
-      ptor.get('http://localhost:8000/app/index.html#/bindings');
+      ptor.get('http://localhost:8000/app/index.html#/form');
     });
 
     it('should find an element by binding', function(done) {
-      done();
+      ptor.findElement(protractor.By.binding('{{greeting}}')).
+          getText().then(function(text) {
+            expect(text).toEqual('Hiya');
+            done();
+          });
     });
 
-    it('should find an element by input model', function(done) {
-      expect(true).toEqual(true);
-      done();
+    it('should find an element by text input model', function(done) {
+      var username = ptor.findElement(protractor.By.input('username'));
+      username.clear();
+      username.sendKeys('Jane Doe');
+
+      ptor.findElement(protractor.By.binding('{{username}}')).
+          getText().then(function(text) {
+            expect(text).toEqual('Jane Doe');
+            done();
+          });
+    });
+
+    it('should find an element by checkbox input model', function(done) {
+      ptor.findElement(protractor.By.id('shower')).
+          isDisplayed().then(function(displayed) {
+            expect(displayed).toBe(true);
+          });
+      var colors = ptor.findElement(protractor.By.input('show')).
+          click();
+      ptor.findElement(protractor.By.id('shower')).
+          isDisplayed().then(function(displayed) {
+            expect(displayed).toBe(false);
+            done();
+          });
+    });
+  });
+
+  describe('finding elements', function() {
+    beforeEach(function() {
+      ptor.get('http://localhost:8000/app/index.html#/bindings');
     });
 
     it('should find elements using a select', function(done) {
@@ -140,42 +175,65 @@ describe('test application', function() {
   });
 
   describe('synchronizing with Angular', function() {
-    beforeEach(function() {
-      ptor.get('http://localhost:8000/app/index.html');
-    });
-
-    it('should wait for slow RPCs', function(done) {
-      var sample1Button = driver.findElement(protractor.By.id('sample1'));
-      var sample2Button = driver.findElement(protractor.By.id('sample2'));
-      sample1Button.click();
-
-      var fetchButton = driver.findElement(protractor.By.id('fetch'));
-      fetchButton.click();
-
-      // The quick RPC works fine.
-      var status = ptor.findElement(protractor.By.binding('{{status}}'));
-      status.getText().then(function(text) {
-        expect(text).toEqual('200');
+    describe('http calls', function() {
+      beforeEach(function() {
+        ptor.get('http://localhost:8000/app/index.html');
       });
-      ptor.findElement(protractor.By.binding("{{data}}")).
-          getText().then(function(text) {
-            expect(text).toEqual('done');
-          });
 
-      // Slow RPC.
-      sample2Button.click();
-      fetchButton.click();
-      // Would normally need driver.sleep(2) or something.
-      ptor.findElement(protractor.By.id('statuscode')).
-          getText().then(function(text) {
-            expect(text).toEqual('200');
-          });
-      ptor.findElement(protractor.By.id('data')).getText().
-          then(function(text) {
-            expect(text).toEqual('finally done');
-            done();
-          });
+      it('should wait for slow RPCs', function(done) {
+        var sample1Button = driver.findElement(protractor.By.id('sample1'));
+        var sample2Button = driver.findElement(protractor.By.id('sample2'));
+        sample1Button.click();
+
+        var fetchButton = driver.findElement(protractor.By.id('fetch'));
+        fetchButton.click();
+
+        // The quick RPC works fine.
+        var status = ptor.findElement(protractor.By.binding('{{status}}'));
+        status.getText().then(function(text) {
+          expect(text).toEqual('200');
+        });
+        ptor.findElement(protractor.By.binding("{{data}}")).
+            getText().then(function(text) {
+              expect(text).toEqual('done');
+            });
+
+        // Slow RPC.
+        sample2Button.click();
+        fetchButton.click();
+        // Would normally need driver.sleep(2) or something.
+        ptor.findElement(protractor.By.id('statuscode')).
+            getText().then(function(text) {
+              expect(text).toEqual('200');
+            });
+        ptor.findElement(protractor.By.id('data')).getText().
+            then(function(text) {
+              expect(text).toEqual('finally done');
+              done();
+            });
+      });
     });
+
+    describe('slow rendering', function() {
+      beforeEach(function() {
+        ptor.get('http://localhost:8000/app/index.html#/repeater');
+      });
+
+      it('should synchronize with a slow action', function(done) {
+        var addOneButton = ptor.findElement(protractor.By.id('addone'));
+        addOneButton.click();
+        ptor.findElement(protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
+            column('{{foo.b}}')).getText().then(function(text) {
+              expect(text).toEqual('14930352');
+            });
+        addOneButton.click();
+        ptor.findElement(protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
+            column('{{foo.b}}')).getText().then(function(text) {
+              expect(text).toEqual('24157817');
+              done();
+            });
+      });
+    })
   });
 
   it('afterAll', function() {

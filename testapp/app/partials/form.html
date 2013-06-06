@@ -1,0 +1,11 @@
+<p><span>{{greeting}}</span><span>{{username}}</span> - this uses different types of input.</p>
+<div>Username
+  <input ng-model="username" type="text"/>
+</div>
+<div ng-style="{'color': color}">Color <br/>
+  <input ng-model="color" value="blue" type="radio"/> blue <br/>
+  <input ng-model="color" value="green" type="radio"/> green <br/>
+  <input ng-model="color" value="red" type="radio"/> red <br/>
+</div>
+<input ng-model="show" type="checkbox"/> Show?
+<span id="shower" ng-show="show">Shown!!</span>

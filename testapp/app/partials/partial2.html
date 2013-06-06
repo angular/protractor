@@ -1,11 +1,9 @@
-<p>This is the partial for view 2.</p>
+<p>Add one to try some increasingly slow actions.</p>
 <p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-  <button ng-click="addOne()">Add One</button>
+  <button id="addone" ng-click="addOne()">Add One</button>
   <table>
-    <tr><th>A</th><th>B</th><th>C</th></tr>
-    <tr data-ng-repeat="foo in foos | orderBy:'b'">
-      <th>{{foo.a}}</th><th>{{foo.b}}</th><th>{{foo.c}}</th>
+    <tr><th>#</th><th>Fib</th></tr>
+    <tr ng-repeat="foo in foos | orderBy:'a':true">
+      <th>{{foo.a}}</th><th>{{foo.b}}</th>
     </tr>
 </p>
