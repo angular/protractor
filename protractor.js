@@ -37,7 +37,9 @@ clientSideScripts.findBinding = function() {
   var matches = [];
   var binding = arguments[0];
   for (var i = 0; i < bindings.length; ++i) {
-    if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+    if (angular.element(bindings[i]).data().$binding == binding) {
+      matches.push(bindings[i]);
+    } else if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
       matches.push(bindings[i]);
     }
   }
@@ -56,7 +58,9 @@ clientSideScripts.findBindings = function() {
   var matches = [];
   var binding = arguments[0];
   for (var i = 0; i < bindings.length; ++i) {
-    if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+    if (angular.element(bindings[i]).data().$binding == binding) {
+      matches.push(bindings[i]);
+    } else if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
       matches.push(bindings[i]);
     }
   }
