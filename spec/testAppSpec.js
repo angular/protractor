@@ -19,6 +19,13 @@ var driver, ptor;
   driver.manage().timeouts().setScriptTimeout(10000);
 }());
 
+var catchPromiseErrors = function(done) {
+  webdriver.promise.controlFlow().
+    on('uncaughtException', function(e) {
+        done(e);
+    });
+};
+
 describe('test application', function() {
   describe('finding elements in forms', function() {
     beforeEach(function() {
@@ -26,6 +33,7 @@ describe('test application', function() {
     });
 
     it('should find an element by binding', function(done) {
+      catchPromiseErrors(done);
       ptor.findElement(protractor.By.binding('{{greeting}}')).
           getText().then(function(text) {
             expect(text).toEqual('Hiya');
@@ -33,12 +41,22 @@ describe('test application', function() {
           });
     });
 
+    it('should find an element by binding with attribute', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(protractor.By.binding('username')).
+          getText().then(function(text) {
+            expect(text).toEqual('Anon');
+            done();
+          });
+    });
+
     it('should find an element by text input model', function(done) {
+      catchPromiseErrors(done);
       var username = ptor.findElement(protractor.By.input('username'));
       username.clear();
       username.sendKeys('Jane Doe');
 
-      ptor.findElement(protractor.By.binding('{{username}}')).
+      ptor.findElement(protractor.By.binding('username')).
           getText().then(function(text) {
             expect(text).toEqual('Jane Doe');
             done();
@@ -46,6 +64,7 @@ describe('test application', function() {
     });
 
     it('should find an element by checkbox input model', function(done) {
+      catchPromiseErrors(done);
       ptor.findElement(protractor.By.id('shower')).
           isDisplayed().then(function(displayed) {
             expect(displayed).toBe(true);
@@ -58,6 +77,66 @@ describe('test application', function() {
             done();
           });
     });
+
+    xit('should find a repeater using data-ng-repeat', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(protractor.By.repeater('day in days').row(3)).
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+      ptor.findElement(protractor.By.repeater('day in days').row(3).
+          column('day')).
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+    });
+
+    xit('should find a repeater using ng:repeat', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(protractor.By.repeater('bar in days').row(3)).
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+      ptor.findElement(protractor.By.repeater('bar in days').row(3).
+          column('bar')).
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+    });
+
+    xit('should find a repeater using ng_repeat', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(protractor.By.repeater('foo in days').row(3)).
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+      ptor.findElement(protractor.By.repeater('foo in days').row(3)).
+          column('foo').
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+    });
+
+    xit('should find a repeater using x-ng-repeat', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(protractor.By.repeater('qux in days').row(3)).
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+      ptor.findElement(protractor.By.repeater('qux in days').row(3)).
+          column('quz').
+          getText().then(function(text) {
+            expect(text).toEqual('Wed');
+            done();
+          });
+    });
   });
 
   describe('finding elements', function() {
@@ -66,6 +145,7 @@ describe('test application', function() {
     });
 
     it('should find elements using a select', function(done) {
+      catchPromiseErrors(done);
       ptor.findElement(protractor.By.selectedOption('planet')).
           getText().then(function(text) {
             expect(text).toEqual('Mercury');
@@ -83,6 +163,7 @@ describe('test application', function() {
     });
 
     it('should find elements using a repeater', function(done) {
+      catchPromiseErrors(done);
       // Returns the element for the entire row.
       ptor.findElement(protractor.By.repeater('ball in planets').row(3)).
           getText().then(function(text) {
@@ -111,6 +192,7 @@ describe('test application', function() {
     });
 
     it('should find multiple elements by binding', function(done) {
+      catchPromiseErrors(done);
       // There must be a better way to do this.
       ptor.findElement(protractor.By.select('planet'))
           .findElement(protractor.By.css('option[value="4"]')).click();
@@ -149,6 +231,7 @@ describe('test application', function() {
     });
 
     it('should override services via mock modules', function(done) {
+      catchPromiseErrors(done);
       ptor.addMockModule('moduleA', mockModuleA);
 
       ptor.get('http://localhost:8000/app/index.html');
@@ -161,6 +244,7 @@ describe('test application', function() {
     });
 
     it('should have the version of the last loaded module', function(done) {
+      catchPromiseErrors(done);
       ptor.addMockModule('moduleA', mockModuleA);
       ptor.addMockModule('moduleB', mockModuleB);
 
@@ -181,6 +265,7 @@ describe('test application', function() {
       });
 
       it('should wait for slow RPCs', function(done) {
+        catchPromiseErrors(done);
         var sample1Button = driver.findElement(protractor.By.id('sample1'));
         var sample2Button = driver.findElement(protractor.By.id('sample2'));
         sample1Button.click();
@@ -220,14 +305,17 @@ describe('test application', function() {
       });
 
       it('should synchronize with a slow action', function(done) {
+        catchPromiseErrors(done);
         var addOneButton = ptor.findElement(protractor.By.id('addone'));
         addOneButton.click();
-        ptor.findElement(protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
+        ptor.findElement(
+            protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
             column('{{foo.b}}')).getText().then(function(text) {
               expect(text).toEqual('14930352');
             });
         addOneButton.click();
-        ptor.findElement(protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
+        ptor.findElement(
+            protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
             column('{{foo.b}}')).getText().then(function(text) {
               expect(text).toEqual('24157817');
               done();
