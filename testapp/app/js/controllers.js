@@ -103,6 +103,7 @@ function FormCtrl($scope) {
   $scope.username = "Anon";
   $scope.color = "blue";
   $scope.show = true;
+  $scope.days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 }
 FormCtrl.$inject = ['$scope'];
 
