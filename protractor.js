@@ -17,7 +17,7 @@ var clientSideScripts = {};
  * Wait until Angular has finished rendering and has
  * no outstanding $http calls before continuing.
  *
- * arguments none
+ * arguments none.
  */
 clientSideScripts.waitForAngular = function() {
   var callback = arguments[arguments.length - 1];
@@ -27,10 +27,10 @@ clientSideScripts.waitForAngular = function() {
 
 /**
  * Find an element in the page by their angular binding.
- * 
- * arguments[0] {string} The binding, e.g. {{cat.name}}
  *
- * @return {WebElement} The element containing the binding
+ * arguments[0] {string} The binding, e.g. {{cat.name}}.
+ *
+ * @return {WebElement} The element containing the binding.
  */
 clientSideScripts.findBinding = function() {
   var bindings = document.getElementsByClassName('ng-binding');
@@ -49,9 +49,9 @@ clientSideScripts.findBinding = function() {
 /**
  * Find a list of elements in the page by their angular binding.
  *
- * arguments[0] {string} The binding, e.g. {{cat.name}}
+ * arguments[0] {string} The binding, e.g. {{cat.name}}.
  *
- * @return {Array.<WebElement>} The elements containing the binding
+ * @return {Array.<WebElement>} The elements containing the binding.
  */
 clientSideScripts.findBindings = function() {
   var bindings = document.getElementsByClassName('ng-binding');
@@ -70,10 +70,10 @@ clientSideScripts.findBindings = function() {
 /**
  * Find a row within an ng-repeat.
  *
- * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
- * arguments[1] {number} The row index
+ * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'.
+ * arguments[1] {number} The row index.
  *
- * @return {Element} The row element
+ * @return {Element} The row element.
  */
  clientSideScripts.findRepeaterRow = function() {
   var repeater = arguments[0];
@@ -97,11 +97,11 @@ clientSideScripts.findBindings = function() {
 /**
  * Find an element within an ng-repeat by its row and column.
  *
- * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
- * arguments[1] {number} The row index
- * arguments[2] {string} The column binding, e.g. '{{cat.name}}'
+ * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'.
+ * arguments[1] {number} The row index.
+ * arguments[2] {string} The column binding, e.g. '{{cat.name}}'.
  *
- * @return {Element} The element
+ * @return {Element} The element.
  */
 clientSideScripts.findRepeaterElement = function() {
   var matches = [];
@@ -144,10 +144,10 @@ clientSideScripts.findRepeaterElement = function() {
 /**
  * Find the elements in a column of an ng-repeat.
  *
- * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
- * arguments[1] {string} The column binding, e.g. '{{cat.name}}'
+ * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'.
+ * arguments[1] {string} The column binding, e.g. '{{cat.name}}'.
  *
- * @return {Array.<Element>} The elements in the column
+ * @return {Array.<Element>} The elements in the column.
  */
 clientSideScripts.findRepeaterColumn = function() {
   var matches = [];
@@ -189,7 +189,7 @@ clientSideScripts.findRepeaterColumn = function() {
 /**
  * Find an input element by model name.
  *
- * arguments[0] {string} The model name
+ * arguments[0] {string} The model name.
  *
  * @return {Element} The first matching input element.
 */
@@ -208,7 +208,7 @@ clientSideScripts.findInput = function() {
  /**
   * Find an select element by model name.
   *
-  * arguments[0] {string} The model name
+  * arguments[0] {string} The model name.
   *
   * @return {Element} The first matching select element.
   */
@@ -227,7 +227,7 @@ clientSideScripts.findSelect = function() {
 /**
   * Find an selected option element by model name.
   *
-  * arguments[0] {string} The model name
+  * arguments[0] {string} The model name.
   *
   * @return {Element} The first matching input element.
   */
@@ -248,9 +248,7 @@ clientSideScripts.findSelectedOption = function() {
  * Tests whether the angular global variable is present on a page. Retries
  * twice in case the page is just loading slowly.
  *
- * arguments none
- *
- * @return {boolean} true if angular was found.
+ * arguments none.
  */
  clientSideScripts.testForAngular = function() {
   var callback = arguments[arguments.length - 1];
@@ -258,17 +256,17 @@ clientSideScripts.findSelectedOption = function() {
     if (window.angular && window.angular.resumeBootstrap) {
       callback(true);
     } else if (n < 1) {
-      callback(false)
+      callback(false);
     } else {
       window.setTimeout(function() {retry(n - 1)}, 1000);
     }
-  }
+  };
   if (window.angular && window.angular.resumeBootstrap) {
     callback(true);
   } else {
     retry(3);
   }
-}
+};
 
 
 /**
@@ -350,14 +348,14 @@ Protractor.prototype.clearMockModules = function() {
  */
 Protractor.prototype.get = function(destination) {
   this.driver.get('about:blank');
-  this.driver.executeScript('window.name += "' + DEFER_LABEL + '";' + 
+  this.driver.executeScript('window.name += "' + DEFER_LABEL + '";' +
       'window.location.href = "' + destination + '"');
 
   // Make sure the page is an Angular page.
   this.driver.executeAsyncScript(clientSideScripts.testForAngular).
       then(function(hasAngular) {
         if (!hasAngular) {
-          throw new Error("Angular could not be found on the page " +
+          throw new Error('Angular could not be found on the page ' +
               destination);
         }
       });
@@ -389,7 +387,7 @@ exports.wrapDriver = function(webdriver) {
 /**
  * Locators.
  */
-var ProtractorBy = function() {}
+var ProtractorBy = function() {};
 var WebdriverBy = function() {};
 
 /**
@@ -403,7 +401,7 @@ util.inherits(ProtractorBy, WebdriverBy);
  * Usage:
  *   <span>{{status}}</span>
  *   var status = ptor.findElement(protractor.By.binding('{{status}}'));
- * 
+ *
  * Note: This ignores parent element restrictions if called with
  * WebElement.findElement.
  */
@@ -420,7 +418,7 @@ ProtractorBy.prototype.binding = function(bindingDescriptor) {
     }
   };
 };
- 
+
 /**
  * Usage:
  * <select ng-model="user" ng-options="user.name for user in users"></select>
@@ -497,7 +495,7 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
               webdriver.By.js(clientSideScripts.findRepeaterColumn),
               repeatDescriptor, binding);
         }
-      }
+      };
     }
   };
 };
