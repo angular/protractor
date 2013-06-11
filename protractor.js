@@ -80,10 +80,14 @@ clientSideScripts.findBindings = function() {
   var index = arguments[1];
 
   var rows = [];
-  var repeatElems = document.querySelectorAll('[ng-repeat]');
-  for (var i = 0; i < repeatElems.length; ++i) {
-    if (repeatElems[i].getAttribute('ng-repeat').indexOf(repeater) != -1) {
-      rows.push(repeatElems[i]);
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  for (var p = 0; p < prefixes.length; ++p) {
+    var attr = prefixes[p] + 'repeat';
+    var repeatElems = document.querySelectorAll('[' + attr + ']');
+    for (var i = 0; i < repeatElems.length; ++i) {
+      if (repeatElems[i].getAttribute(attr).indexOf(repeater) != -1) {
+        rows.push(repeatElems[i]);
+      }
     }
   }
   return rows[index - 1];
@@ -105,10 +109,14 @@ clientSideScripts.findRepeaterElement = function() {
   var binding = arguments[2];
 
   var rows = [];
-  var repeatElems = document.querySelectorAll('[ng-repeat]');
-  for (var i = 0; i < repeatElems.length; ++i) {
-    if (repeatElems[i].getAttribute('ng-repeat').indexOf(repeater) != -1) {
-      rows.push(repeatElems[i]);
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  for (var p = 0; p < prefixes.length; ++p) {
+    var attr = prefixes[p] + 'repeat';
+    var repeatElems = document.querySelectorAll('[' + attr + ']');
+    for (var i = 0; i < repeatElems.length; ++i) {
+      if (repeatElems[i].getAttribute(attr).indexOf(repeater) != -1) {
+        rows.push(repeatElems[i]);
+      }
     }
   }
   var row = rows[index - 1];
@@ -145,10 +153,14 @@ clientSideScripts.findRepeaterElement = function() {
   var binding = arguments[1];
 
   var rows = [];
-  var repeatElems = document.querySelectorAll('[ng-repeat]');
-  for (var i = 0; i < repeatElems.length; ++i) {
-    if (repeatElems[i].getAttribute('ng-repeat').indexOf(repeater) != -1) {
-      rows.push(repeatElems[i]);
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  for (var p = 0; p < prefixes.length; ++p) {
+    var attr = prefixes[p] + 'repeat';
+    var repeatElems = document.querySelectorAll('[' + attr + ']');
+    for (var i = 0; i < repeatElems.length; ++i) {
+      if (repeatElems[i].getAttribute(attr).indexOf(repeater) != -1) {
+        rows.push(repeatElems[i]);
+      }
     }
   }
   for (var i = 0; i < rows.length; ++i) {
