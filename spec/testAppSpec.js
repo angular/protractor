@@ -105,9 +105,14 @@ describe('test application', function() {
         expect(text).toBe('xy');
       });
 
+      ptor.findElement(protractor.By.input('wcheck')).click();
+      letterList.getText().then(function(text) {
+        expect(text).toBe('wxy');
+      });
+
       ptor.findElement(protractor.By.input('zcheck')).click();
       letterList.getText().then(function(text) {
-        expect(text).toBe('xyz');
+        expect(text).toBe('wxyz');
         done();
       });
     });
@@ -150,7 +155,7 @@ describe('test application', function() {
           });
     });
 
-    xit('should find a repeater using ng:repeat', function(done) {
+    it('should find a repeater using ng:repeat', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('bar in days').row(3)).
           getText().then(function(text) {
