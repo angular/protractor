@@ -9,7 +9,7 @@
 </div>
 <input ng-model="show" type="checkbox"/> Show?
 <span id="shower" ng-show="show">Shown!!</span>
-<ul><li ng-repeat="baz in days | filter:'T'"><span>{{baz}}</span></li></ul>
+<ul><li ng-repeat="baz in days | filter:'T'">{{baz}}</li></ul>
 <ul><li data-ng-repeat="day in days">{{day}}</li></ul>
 <ul><li ng:repeat="bar in days">{{bar}}</li></ul>
 <ul><li ng_repeat="foo in days">{{foo}}</li></ul>

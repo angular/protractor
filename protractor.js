@@ -112,7 +112,14 @@ clientSideScripts.findRepeaterElement = function() {
     }
   }
   var row = rows[index - 1];
-  var bindings = row.getElementsByClassName('ng-binding');
+  var bindings = [];
+  if (row.className.indexOf('ng-binding') != -1) {
+    bindings.push(row);
+  }
+  var childBindings = row.getElementsByClassName('ng-binding');
+  for (var i = 0; i < childBindings.length; ++i) {
+    bindings.push(childBindings[i]);
+  }
   for (var i = 0; i < bindings.length; ++i) {
     var bindingName = angular.element(bindings[i]).data().$binding[0].exp ||
         angular.element(bindings[i]).data().$binding;
@@ -145,7 +152,14 @@ clientSideScripts.findRepeaterElement = function() {
     }
   }
   for (var i = 0; i < rows.length; ++i) {
-    var bindings = rows[i].getElementsByClassName('ng-binding');
+    var bindings = [];
+    if (rows[i].className.indexOf('ng-binding') != -1) {
+      bindings.push(rows[i]);
+    }
+    var childBindings = rows[i].getElementsByClassName('ng-binding');
+    for (var k = 0; k < childBindings.length; ++k) {
+      bindings.push(childBindings[k]);
+    }
     for (var j = 0; j < bindings.length; ++j) {
       var bindingName = angular.element(bindings[j]).data().$binding[0].exp ||
           angular.element(bindings[j]).data().$binding;
