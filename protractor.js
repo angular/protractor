@@ -37,9 +37,9 @@ clientSideScripts.findBinding = function() {
   var matches = [];
   var binding = arguments[0];
   for (var i = 0; i < bindings.length; ++i) {
-    if (angular.element(bindings[i]).data().$binding == binding) {
-      matches.push(bindings[i]);
-    } else if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+    var bindingName = angular.element(bindings[i]).data().$binding[0].exp ||
+        angular.element(bindings[i]).data().$binding;
+    if (bindingName.indexOf(binding) != -1) {
       matches.push(bindings[i]);
     }
   }
@@ -58,14 +58,36 @@ clientSideScripts.findBindings = function() {
   var matches = [];
   var binding = arguments[0];
   for (var i = 0; i < bindings.length; ++i) {
-    if (angular.element(bindings[i]).data().$binding == binding) {
-      matches.push(bindings[i]);
-    } else if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+    var bindingName = angular.element(bindings[i]).data().$binding[0].exp ||
+        angular.element(bindings[i]).data().$binding;
+    if (bindingName.indexOf(binding) != -1) {
       matches.push(bindings[i]);
     }
   }
   return matches; // Return the whole array for webdriver.findElements.
 };
+
+/**
+ * Find a row within an ng-repeat.
+ *
+ * arguments[0] {string} The text of the repeater, e.g. 'cat in cats'
+ * arguments[1] {number} The row index
+ *
+ * @return {Element} The row element
+ */
+ clientSideScripts.findRepeaterRow = function() {
+  var repeater = arguments[0];
+  var index = arguments[1];
+
+  var rows = [];
+  var repeatElems = document.querySelectorAll('[ng-repeat]');
+  for (var i = 0; i < repeatElems.length; ++i) {
+    if (repeatElems[i].getAttribute('ng-repeat').indexOf(repeater) != -1) {
+      rows.push(repeatElems[i]);
+    }
+  }
+  return rows[index - 1];
+ };
 
 /**
  * Find an element within an ng-repeat by its row and column.
@@ -82,12 +104,19 @@ clientSideScripts.findRepeaterElement = function() {
   var index = arguments[1];
   var binding = arguments[2];
 
-  var rows = document.querySelectorAll('[ng-repeat="'
-    + repeater + '"]');
+  var rows = [];
+  var repeatElems = document.querySelectorAll('[ng-repeat]');
+  for (var i = 0; i < repeatElems.length; ++i) {
+    if (repeatElems[i].getAttribute('ng-repeat').indexOf(repeater) != -1) {
+      rows.push(repeatElems[i]);
+    }
+  }
   var row = rows[index - 1];
   var bindings = row.getElementsByClassName('ng-binding');
   for (var i = 0; i < bindings.length; ++i) {
-    if (angular.element(bindings[i]).data().$binding[0].exp == binding) {
+    var bindingName = angular.element(bindings[i]).data().$binding[0].exp ||
+        angular.element(bindings[i]).data().$binding;
+    if (bindingName.indexOf(binding) != -1) {
       matches.push(bindings[i]);
     }
   }
@@ -108,12 +137,19 @@ clientSideScripts.findRepeaterElement = function() {
   var repeater = arguments[0];
   var binding = arguments[1];
 
-  var rows = document.querySelectorAll('[ng-repeat="'
-    + repeater + '"]');
+  var rows = [];
+  var repeatElems = document.querySelectorAll('[ng-repeat]');
+  for (var i = 0; i < repeatElems.length; ++i) {
+    if (repeatElems[i].getAttribute('ng-repeat').indexOf(repeater) != -1) {
+      rows.push(repeatElems[i]);
+    }
+  }
   for (var i = 0; i < rows.length; ++i) {
     var bindings = rows[i].getElementsByClassName('ng-binding');
     for (var j = 0; j < bindings.length; ++j) {
-      if (angular.element(bindings[j]).data().$binding[0].exp == binding) {
+      var bindingName = angular.element(bindings[j]).data().$binding[0].exp ||
+          angular.element(bindings[j]).data().$binding;
+      if (bindingName.indexOf(binding) != -1) {
         matches.push(bindings[j]);
       }
     }
@@ -346,9 +382,11 @@ ProtractorBy.prototype.repeater = function(repeatDescriptor) {
   return {
     row: function(index) {
       return {
-        using: 'css selector',
-        value: '[ng-repeat="' + repeatDescriptor
-            + '"]:nth-of-type(' + index + ')',
+        findOverride: function(driver) {
+          return driver.findElement(
+              webdriver.By.js(clientSideScripts.findRepeaterRow),
+              repeatDescriptor, index);
+        },
         column: function(binding) {
           return {
             findOverride: function(driver) {
