@@ -7,8 +7,16 @@
   <input ng-model="color" value="green" type="radio"/> green <br/>
   <input ng-model="color" value="red" type="radio"/> red <br/>
 </div>
+<div>
 <input ng-model="show" type="checkbox"/> Show?
 <span id="shower" ng-show="show">Shown!!</span>
+</div>
+
+<input data-ng-model="xcheck" ng-true-value="x" type="checkbox"/> X
+<input x-ng-model="ycheck" ng-true-value="y" type="checkbox"/> Y
+<input ng_model="zcheck" ng-true-value="z" type="checkbox"/> Z
+<span id="letterlist">{{xcheck}}{{ycheck}}{{zcheck}}</span>
+
 <ul><li ng-repeat="baz in days | filter:'T'">{{baz}}</li></ul>
 <ul><li data-ng-repeat="day in days">{{day}}</li></ul>
 <ul><li ng:repeat="bar in days">{{bar}}</li></ul>

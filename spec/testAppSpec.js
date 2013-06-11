@@ -87,6 +87,31 @@ describe('test application', function() {
           });
     });
 
+    it('should find inputs with alternate attribute forms', function(done) {
+      catchPromiseErrors(done);
+
+      var letterList = ptor.findElement(protractor.By.id('letterlist'));
+      letterList.getText().then(function(text) {
+        expect(text).toBe('');
+      });
+
+      ptor.findElement(protractor.By.input('xcheck')).click();
+      letterList.getText().then(function(text) {
+        expect(text).toBe('x');
+      });
+
+      ptor.findElement(protractor.By.input('ycheck')).click();
+      letterList.getText().then(function(text) {
+        expect(text).toBe('xy');
+      });
+
+      ptor.findElement(protractor.By.input('zcheck')).click();
+      letterList.getText().then(function(text) {
+        expect(text).toBe('xyz');
+        done();
+      });
+    });
+
     it('should find a repeater by partial match', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(
@@ -168,7 +193,7 @@ describe('test application', function() {
     });
   });
 
-  describe('finding elements', function() {
+  describe('finding elements - further examples', function() {
     beforeEach(function() {
       ptor.get('http://localhost:8000/app/index.html#/bindings');
     });

@@ -147,7 +147,7 @@ clientSideScripts.findRepeaterElement = function() {
  *
  * @return {Array.<Element>} The elements in the column
  */
- clientSideScripts.findRepeaterColumn = function() {
+clientSideScripts.findRepeaterColumn = function() {
   var matches = [];
   var repeater = arguments[0];
   var binding = arguments[1];
@@ -181,8 +181,65 @@ clientSideScripts.findRepeaterElement = function() {
     }
   }
   return matches;
- };
+};
 
+/**
+ * Find an input element by model name.
+ *
+ * arguments[0] {string} The model name
+ *
+ * @return {Element} The first matching input element.
+*/
+clientSideScripts.findInput = function() {
+  var model = arguments[0];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  for (var p = 0; p < prefixes.length; ++p) {
+    var selector = 'input[' + prefixes[p] + 'model=' + model + ']';
+    var inputs = document.querySelectorAll(selector);
+    if (inputs.length) {
+      return inputs[0];
+    }
+  }
+};
+
+ /**
+  * Find an select element by model name.
+  *
+  * arguments[0] {string} The model name
+  *
+  * @return {Element} The first matching select element.
+  */
+clientSideScripts.findSelect = function() {
+  var model = arguments[0];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  for (var p = 0; p < prefixes.length; ++p) {
+    var selector = 'select[' + prefixes[p] + 'model=' + model + ']';
+    var inputs = document.querySelectorAll(selector);
+    if (inputs.length) {
+      return inputs[0];
+    }
+  }
+};
+
+/**
+  * Find an selected option element by model name.
+  *
+  * arguments[0] {string} The model name
+  *
+  * @return {Element} The first matching input element.
+  */
+clientSideScripts.findSelectedOption = function() {
+  var model = arguments[0];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  for (var p = 0; p < prefixes.length; ++p) {
+    var selector =
+        'select[' + prefixes[p] + 'model=' + model + '] option:checked';
+    var inputs = document.querySelectorAll(selector);
+    if (inputs.length) {
+      return inputs[0];
+    }
+  }
+};
 
 /**
  * Tests whether the angular global variable is present on a page. Retries
@@ -368,22 +425,28 @@ ProtractorBy.prototype.binding = function(bindingDescriptor) {
  */
 ProtractorBy.prototype.select = function(model) {
   return {
-    using: 'css selector',
-    value: 'select[ng-model=' + model + ']'
+    findOverride: function(driver) {
+      return driver.findElement(
+        webdriver.By.js(clientSideScripts.findSelect), model);
+    }
   };
 };
 
 ProtractorBy.prototype.selectedOption = function(model) {
   return {
-    using: 'css selector',
-    value: 'select[ng-model=' + model + '] option:checked'
+    findOverride: function(driver) {
+      return driver.findElement(
+        webdriver.By.js(clientSideScripts.findSelectedOption), model);
+    }
   };
 };
 
 ProtractorBy.prototype.input = function(model) {
   return {
-    using: 'css selector',
-    value: 'input[ng-model=' + model + ']'
+    findOverride: function(driver) {
+      return driver.findElement(
+          webdriver.By.js(clientSideScripts.findInput), model);
+    }
   };
 };
 
