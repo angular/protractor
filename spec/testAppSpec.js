@@ -41,6 +41,15 @@ describe('test application', function() {
           });
     });
 
+    it('should find a binding by partial match', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(protractor.By.binding('greet')).
+          getText().then(function(text) {
+            expect(text).toEqual('Hiya');
+            done();
+          });
+    })
+
     it('should find an element by binding with attribute', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(protractor.By.binding('username')).
@@ -78,13 +87,36 @@ describe('test application', function() {
           });
     });
 
+    it('should find a repeater by partial match', function(done) {
+      catchPromiseErrors(done);
+      ptor.findElement(
+          protractor.By.repeater('baz in days | filter:\'T\'').
+              row(1).column('{{baz}}')).
+          getText().then(function(text) {
+            expect(text).toEqual('Tue');
+          });
+
+      ptor.findElement(
+          protractor.By.repeater('baz in days').row(1).column('b')).
+          getText().then(function(text) {
+            expect(text).toEqual('Tue');
+          });
+
+      ptor.findElement(
+          protractor.By.repeater('baz in days').row(1)).
+          getText().then(function(text) {
+            expect(text).toEqual('Tue');
+            done();
+          });
+    });
+
     xit('should find a repeater using data-ng-repeat', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('day in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
+
       ptor.findElement(protractor.By.repeater('day in days').row(3).
           column('day')).
           getText().then(function(text) {
@@ -98,7 +130,6 @@ describe('test application', function() {
       ptor.findElement(protractor.By.repeater('bar in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
       ptor.findElement(protractor.By.repeater('bar in days').row(3).
           column('bar')).
@@ -113,7 +144,6 @@ describe('test application', function() {
       ptor.findElement(protractor.By.repeater('foo in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
       ptor.findElement(protractor.By.repeater('foo in days').row(3)).
           column('foo').
@@ -128,7 +158,6 @@ describe('test application', function() {
       ptor.findElement(protractor.By.repeater('qux in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
       ptor.findElement(protractor.By.repeater('qux in days').row(3)).
           column('quz').
