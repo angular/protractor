@@ -110,7 +110,7 @@ describe('test application', function() {
           });
     });
 
-    xit('should find a repeater using data-ng-repeat', function(done) {
+    it('should find a repeater using data-ng-repeat', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('day in days').row(3)).
           getText().then(function(text) {
@@ -139,28 +139,28 @@ describe('test application', function() {
           });
     });
 
-    xit('should find a repeater using ng_repeat', function(done) {
+    it('should find a repeater using ng_repeat', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('foo in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
           });
-      ptor.findElement(protractor.By.repeater('foo in days').row(3)).
-          column('foo').
+      ptor.findElement(protractor.By.repeater('foo in days').row(3).
+          column('foo')).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
             done();
           });
     });
 
-    xit('should find a repeater using x-ng-repeat', function(done) {
+    it('should find a repeater using x-ng-repeat', function(done) {
       catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('qux in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
           });
-      ptor.findElement(protractor.By.repeater('qux in days').row(3)).
-          column('quz').
+      ptor.findElement(protractor.By.repeater('qux in days').row(3).
+          column('qux')).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
             done();
