@@ -80,10 +80,11 @@ clientSideScripts.findBindings = function() {
   var index = arguments[1];
 
   var rows = [];
-  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var attr = prefixes[p] + 'repeat';
     var repeatElems = document.querySelectorAll('[' + attr + ']');
+    attr = attr.replace(/\\/g, '');
     for (var i = 0; i < repeatElems.length; ++i) {
       if (repeatElems[i].getAttribute(attr).indexOf(repeater) != -1) {
         rows.push(repeatElems[i]);
@@ -109,10 +110,11 @@ clientSideScripts.findRepeaterElement = function() {
   var binding = arguments[2];
 
   var rows = [];
-  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var attr = prefixes[p] + 'repeat';
     var repeatElems = document.querySelectorAll('[' + attr + ']');
+    attr = attr.replace(/\\/g, '');
     for (var i = 0; i < repeatElems.length; ++i) {
       if (repeatElems[i].getAttribute(attr).indexOf(repeater) != -1) {
         rows.push(repeatElems[i]);
@@ -153,10 +155,11 @@ clientSideScripts.findRepeaterColumn = function() {
   var binding = arguments[1];
 
   var rows = [];
-  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var attr = prefixes[p] + 'repeat';
     var repeatElems = document.querySelectorAll('[' + attr + ']');
+    attr = attr.replace(/\\/g, '');
     for (var i = 0; i < repeatElems.length; ++i) {
       if (repeatElems[i].getAttribute(attr).indexOf(repeater) != -1) {
         rows.push(repeatElems[i]);
@@ -192,7 +195,7 @@ clientSideScripts.findRepeaterColumn = function() {
 */
 clientSideScripts.findInput = function() {
   var model = arguments[0];
-  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var selector = 'input[' + prefixes[p] + 'model=' + model + ']';
     var inputs = document.querySelectorAll(selector);
@@ -211,7 +214,7 @@ clientSideScripts.findInput = function() {
   */
 clientSideScripts.findSelect = function() {
   var model = arguments[0];
-  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var selector = 'select[' + prefixes[p] + 'model=' + model + ']';
     var inputs = document.querySelectorAll(selector);
@@ -230,7 +233,7 @@ clientSideScripts.findSelect = function() {
   */
 clientSideScripts.findSelectedOption = function() {
   var model = arguments[0];
-  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-'];
+  var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var selector =
         'select[' + prefixes[p] + 'model=' + model + '] option:checked';
