@@ -197,7 +197,7 @@ clientSideScripts.findInput = function() {
   var model = arguments[0];
   var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
-    var selector = 'input[' + prefixes[p] + 'model=' + model + ']';
+    var selector = 'input[' + prefixes[p] + 'model="' + model + '"]';
     var inputs = document.querySelectorAll(selector);
     if (inputs.length) {
       return inputs[0];
@@ -216,7 +216,7 @@ clientSideScripts.findSelect = function() {
   var model = arguments[0];
   var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
-    var selector = 'select[' + prefixes[p] + 'model=' + model + ']';
+    var selector = 'select[' + prefixes[p] + 'model="' + model + '"]';
     var inputs = document.querySelectorAll(selector);
     if (inputs.length) {
       return inputs[0];
@@ -236,7 +236,7 @@ clientSideScripts.findSelectedOption = function() {
   var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
   for (var p = 0; p < prefixes.length; ++p) {
     var selector =
-        'select[' + prefixes[p] + 'model=' + model + '] option:checked';
+        'select[' + prefixes[p] + 'model="' + model + '"] option:checked';
     var inputs = document.querySelectorAll(selector);
     if (inputs.length) {
       return inputs[0];
