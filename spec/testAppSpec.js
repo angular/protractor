@@ -95,22 +95,22 @@ describe('test application', function() {
         expect(text).toBe('');
       });
 
-      ptor.findElement(protractor.By.input('xcheck')).click();
+      ptor.findElement(protractor.By.input('check.w')).click();
       letterList.getText().then(function(text) {
-        expect(text).toBe('x');
+        expect(text).toBe('w');
       });
 
-      ptor.findElement(protractor.By.input('ycheck')).click();
+      ptor.findElement(protractor.By.input('check.x')).click();
       letterList.getText().then(function(text) {
-        expect(text).toBe('xy');
+        expect(text).toBe('wx');
       });
 
-      ptor.findElement(protractor.By.input('wcheck')).click();
+      ptor.findElement(protractor.By.input('check.y')).click();
       letterList.getText().then(function(text) {
         expect(text).toBe('wxy');
       });
 
-      ptor.findElement(protractor.By.input('zcheck')).click();
+      ptor.findElement(protractor.By.input('check.z')).click();
       letterList.getText().then(function(text) {
         expect(text).toBe('wxyz');
         done();
