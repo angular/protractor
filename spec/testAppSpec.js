@@ -1,5 +1,5 @@
 var webdriver = require('selenium-webdriver');
-var protractor = require('../protractor.js');
+var protractor = require('../lib/protractor.js');
 var util = require('util');
 
 var driver, ptor;
@@ -26,14 +26,29 @@ var catchPromiseErrors = function(done) {
     });
 };
 
+var originalIt = it;
+
+it = function(desc, testFn) {
+  originalIt(desc, function(done) {
+    catchPromiseErrors(done);
+    testFn(done);
+  });
+}
+
 describe('test application', function() {
+
   describe('finding elements in forms', function() {
     beforeEach(function() {
       ptor.get('http://localhost:8000/app/index.html#/form');
     });
 
     it('should find an element by binding', function(done) {
-      catchPromiseErrors(done);
+      // $('{{greeting}}')
+      // $('form.foo > input{{greeting}}')
+      // $('ul > *{{student in students}}*')
+      // $('ul').repeater('student in students')
+      // $('button#submit')
+
       ptor.findElement(protractor.By.binding('{{greeting}}')).
           getText().then(function(text) {
             expect(text).toEqual('Hiya');
@@ -42,7 +57,6 @@ describe('test application', function() {
     });
 
     it('should find a binding by partial match', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.binding('greet')).
           getText().then(function(text) {
             expect(text).toEqual('Hiya');
@@ -51,7 +65,6 @@ describe('test application', function() {
     })
 
     it('should find an element by binding with attribute', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.binding('username')).
           getText().then(function(text) {
             expect(text).toEqual('Anon');
@@ -60,7 +73,6 @@ describe('test application', function() {
     });
 
     it('should find an element by text input model', function(done) {
-      catchPromiseErrors(done);
       var username = ptor.findElement(protractor.By.input('username'));
       username.clear();
       username.sendKeys('Jane Doe');
@@ -73,7 +85,6 @@ describe('test application', function() {
     });
 
     it('should find an element by checkbox input model', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.id('shower')).
           isDisplayed().then(function(displayed) {
             expect(displayed).toBe(true);
@@ -88,8 +99,6 @@ describe('test application', function() {
     });
 
     it('should find inputs with alternate attribute forms', function(done) {
-      catchPromiseErrors(done);
-
       var letterList = ptor.findElement(protractor.By.id('letterlist'));
       letterList.getText().then(function(text) {
         expect(text).toBe('');
@@ -118,7 +127,6 @@ describe('test application', function() {
     });
 
     it('should find a repeater by partial match', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(
           protractor.By.repeater('baz in days | filter:\'T\'').
               row(1).column('{{baz}}')).
@@ -141,7 +149,6 @@ describe('test application', function() {
     });
 
     it('should find a repeater using data-ng-repeat', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('day in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -156,7 +163,6 @@ describe('test application', function() {
     });
 
     it('should find a repeater using ng:repeat', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('bar in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -170,7 +176,6 @@ describe('test application', function() {
     });
 
     it('should find a repeater using ng_repeat', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('foo in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -184,7 +189,6 @@ describe('test application', function() {
     });
 
     it('should find a repeater using x-ng-repeat', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.repeater('qux in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -204,7 +208,6 @@ describe('test application', function() {
     });
 
     it('should find elements using a select', function(done) {
-      catchPromiseErrors(done);
       ptor.findElement(protractor.By.selectedOption('planet')).
           getText().then(function(text) {
             expect(text).toEqual('Mercury');
@@ -222,7 +225,6 @@ describe('test application', function() {
     });
 
     it('should find elements using a repeater', function(done) {
-      catchPromiseErrors(done);
       // Returns the element for the entire row.
       ptor.findElement(protractor.By.repeater('ball in planets').row(3)).
           getText().then(function(text) {
@@ -251,7 +253,6 @@ describe('test application', function() {
     });
 
     it('should find multiple elements by binding', function(done) {
-      catchPromiseErrors(done);
       // There must be a better way to do this.
       ptor.findElement(protractor.By.select('planet'))
           .findElement(protractor.By.css('option[value="4"]')).click();
@@ -290,7 +291,6 @@ describe('test application', function() {
     });
 
     it('should override services via mock modules', function(done) {
-      catchPromiseErrors(done);
       ptor.addMockModule('moduleA', mockModuleA);
 
       ptor.get('http://localhost:8000/app/index.html');
@@ -303,7 +303,6 @@ describe('test application', function() {
     });
 
     it('should have the version of the last loaded module', function(done) {
-      catchPromiseErrors(done);
       ptor.addMockModule('moduleA', mockModuleA);
       ptor.addMockModule('moduleB', mockModuleB);
 
@@ -324,7 +323,6 @@ describe('test application', function() {
       });
 
       it('should wait for slow RPCs', function(done) {
-        catchPromiseErrors(done);
         var sample1Button = driver.findElement(protractor.By.id('sample1'));
         var sample2Button = driver.findElement(protractor.By.id('sample2'));
         sample1Button.click();
@@ -364,7 +362,6 @@ describe('test application', function() {
       });
 
       it('should synchronize with a slow action', function(done) {
-        catchPromiseErrors(done);
         var addOneButton = ptor.findElement(protractor.By.id('addone'));
         addOneButton.click();
         ptor.findElement(
@@ -383,7 +380,7 @@ describe('test application', function() {
     })
   });
 
-  it('afterAll', function() {
+  originalIt('afterAll', function() {
     // Stupid hack, remove when afterAll is available in jasmine-node
     driver.quit();
   });

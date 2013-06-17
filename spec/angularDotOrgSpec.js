@@ -2,7 +2,7 @@ var util = require('util');
 
 describe('angularjs homepage', function() {
   var webdriver = require('selenium-webdriver');
-  var protractor = require('../protractor.js');
+  var protractor = require('../lib/protractor.js');
 
   var driver = new webdriver.Builder().
       usingServer('http://localhost:4444/wd/hub').
@@ -15,6 +15,8 @@ describe('angularjs homepage', function() {
 
   driver.manage().timeouts().setScriptTimeout(10000);
   var ptor = protractor.wrapDriver(driver);
+
+  //ptor.setup();
 
   it('should greet using binding', function(done) {
     ptor.get('http://www.angularjs.org');

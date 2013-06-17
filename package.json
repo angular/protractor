@@ -16,6 +16,7 @@
     "type" : "git",
     "url" : "git://github.com/juliemr/protractor.git"
   },
-  "main" : "protractor.js",
+  "bin" : "bin/protractor",
+  "main" : "lib/protractor.js",
   "version" : "0.2.1"
 }
