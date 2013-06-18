@@ -16,8 +16,6 @@ describe('angularjs homepage', function() {
           expect(text).toEqual('Hello Julie!');
           done();
         });
-
-
   }, 10000);
 
   it('should greet using binding - #2', function(done) {
