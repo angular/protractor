@@ -1,22 +1,10 @@
 var util = require('util');
+var protractor = require('../lib/protractor.js');
+
 
 describe('angularjs homepage', function() {
-  var webdriver = require('selenium-webdriver');
-  var protractor = require('../lib/protractor.js');
-
-  var driver = new webdriver.Builder().
-      usingServer('http://localhost:4444/wd/hub').
-      withCapabilities({
-        'browserName': 'chrome',
-        'version': '',
-        'platform': 'ANY',
-        'javascriptEnabled': true
-      }).build();
-
-  driver.manage().timeouts().setScriptTimeout(10000);
-  var ptor = protractor.wrapDriver(driver);
-
-  //ptor.setup();
+  var ptor = process.protractorInstance;
+  //var ptor = protractor.getInstance();
 
   it('should greet using binding', function(done) {
     ptor.get('http://www.angularjs.org');
@@ -28,6 +16,8 @@ describe('angularjs homepage', function() {
           expect(text).toEqual('Hello Julie!');
           done();
         });
+
+
   }, 10000);
 
   it('should greet using binding - #2', function(done) {
@@ -56,11 +46,4 @@ describe('angularjs homepage', function() {
         });
   });
   */
-  
-
-  it('afterAll', function() {
-    // This is a sad hack to do any shutdown of the server.
-    // TODO(juliemr): Add afterall functionality to jasmine-node
-    driver.quit();
-  })
 });
