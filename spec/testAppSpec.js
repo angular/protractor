@@ -1,26 +1,9 @@
-var webdriver = require('selenium-webdriver');
+var webptor = require('selenium-webptor');
 var protractor = require('../lib/protractor.js');
 var util = require('util');
 
-var driver, ptor;
-
-(function before() {
-  driver = new webdriver.Builder().
-    usingServer('http://localhost:4444/wd/hub').
-    withCapabilities({
-      'browserName': 'chrome',
-      'version': '',
-      'platform': 'ANY',
-      'javascriptEnabled': true
-    }).build();
-
-  ptor = protractor.wrapDriver(driver);
-
-  driver.manage().timeouts().setScriptTimeout(10000);
-}());
-
 var catchPromiseErrors = function(done) {
-  webdriver.promise.controlFlow().
+  webptor.promise.controlFlow().
     on('uncaughtException', function(e) {
         done(e);
     });
@@ -36,6 +19,7 @@ it = function(desc, testFn) {
 }
 
 describe('test application', function() {
+  var ptor = process.protractorInstance;
 
   describe('finding elements in forms', function() {
     beforeEach(function() {
@@ -323,11 +307,11 @@ describe('test application', function() {
       });
 
       it('should wait for slow RPCs', function(done) {
-        var sample1Button = driver.findElement(protractor.By.id('sample1'));
-        var sample2Button = driver.findElement(protractor.By.id('sample2'));
+        var sample1Button = ptor.findElement(protractor.By.id('sample1'));
+        var sample2Button = ptor.findElement(protractor.By.id('sample2'));
         sample1Button.click();
 
-        var fetchButton = driver.findElement(protractor.By.id('fetch'));
+        var fetchButton = ptor.findElement(protractor.By.id('fetch'));
         fetchButton.click();
 
         // The quick RPC works fine.
@@ -343,7 +327,7 @@ describe('test application', function() {
         // Slow RPC.
         sample2Button.click();
         fetchButton.click();
-        // Would normally need driver.sleep(2) or something.
+        // Would normally need ptor.sleep(2) or something.
         ptor.findElement(protractor.By.id('statuscode')).
             getText().then(function(text) {
               expect(text).toEqual('200');
@@ -378,10 +362,5 @@ describe('test application', function() {
             });
       });
     })
-  });
-
-  originalIt('afterAll', function() {
-    // Stupid hack, remove when afterAll is available in jasmine-node
-    driver.quit();
   });
 });
