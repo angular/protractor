@@ -1,8 +1,15 @@
+/**
+ * This example shows how to use the protractor library in a jasmine-node test.
+ * It assumes that a selenium server is running at localhost:4444.
+ * Run this test with:
+ *   jasmine-node onJasmineNodeSpec.js
+ */
+
 var util = require('util');
+var webdriver = require('selenium-webdriver');
+var protractor = require('../lib/protractor.js');
 
 describe('angularjs homepage', function() {
-  var webdriver = require('selenium-webdriver');
-  var protractor = require('../lib/protractor.js');
 
   var driver = new webdriver.Builder().
       usingServer('http://localhost:4444/wd/hub').
@@ -28,16 +35,16 @@ describe('angularjs homepage', function() {
         });
   }, 10000);
 
-  it('should greet using binding - #2', function(done) {
+  it('should list todos', function(done) {
     ptor.get('http://www.angularjs.org');
 
-    ptor.findElement(protractor.By.input("yourName")).sendKeys("Jane");
+    var todo = ptor.findElement(
+        protractor.By.repeater('todo in todos').row(2));
 
-    ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
-        getText().then(function(text) {
-          expect(text).toEqual('Hello Jane!');
-          done();
-        });
+    todo.getText().then(function(text) {
+      expect(text).toEqual('build an angular app');
+      done();
+    });
   }, 10000);
 
   // Uncomment to see failures.
