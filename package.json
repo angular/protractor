@@ -10,7 +10,7 @@
   "dependencies" : {
     "saucelabs" : "~0.1.0",
     "jasmine-node" : "~1.9.0"
-  }
+  },
   "devDependencies" : {
     "expect.js" : "~0.2.0",
     "mocha" : "~1.10.0"
