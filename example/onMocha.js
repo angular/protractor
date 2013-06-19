@@ -1,7 +1,7 @@
 var util = require('util');
 var expect = require('expect.js');
 var webdriver = require('selenium-webdriver');
-var protractor = require('../protractor.js');
+var protractor = require('../lib/protractor.js');
 
 describe('angularjs homepage', function() {
   this.timeout(8000);
