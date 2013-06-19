@@ -23,7 +23,7 @@ describe('test application', function() {
 
   describe('finding elements in forms', function() {
     beforeEach(function() {
-      ptor.get('http://localhost:8000/app/index.html#/form');
+      ptor.get('app/index.html#/form');
     });
 
     it('should find an element by binding', function(done) {
@@ -188,7 +188,7 @@ describe('test application', function() {
 
   describe('finding elements - further examples', function() {
     beforeEach(function() {
-      ptor.get('http://localhost:8000/app/index.html#/bindings');
+      ptor.get('app/index.html#/bindings');
     });
 
     it('should find elements using a select', function(done) {
@@ -277,7 +277,7 @@ describe('test application', function() {
     it('should override services via mock modules', function(done) {
       ptor.addMockModule('moduleA', mockModuleA);
 
-      ptor.get('http://localhost:8000/app/index.html');
+      ptor.get('app/index.html');
 
       ptor.findElement(protractor.By.css('[app-version]')).
           getText().then(function(text) {
@@ -290,7 +290,7 @@ describe('test application', function() {
       ptor.addMockModule('moduleA', mockModuleA);
       ptor.addMockModule('moduleB', mockModuleB);
 
-      ptor.get('http://localhost:8000/app/index.html');
+      ptor.get('app/index.html');
 
       ptor.findElement(protractor.By.css('[app-version]')).
           getText().then(function(text) {
@@ -303,7 +303,7 @@ describe('test application', function() {
   describe('synchronizing with Angular', function() {
     describe('http calls', function() {
       beforeEach(function() {
-        ptor.get('http://localhost:8000/app/index.html');
+        ptor.get('app/index.html');
       });
 
       it('should wait for slow RPCs', function(done) {
@@ -342,7 +342,7 @@ describe('test application', function() {
 
     describe('slow rendering', function() {
       beforeEach(function() {
-        ptor.get('http://localhost:8000/app/index.html#/repeater');
+        ptor.get('app/index.html#/repeater');
       });
 
       it('should synchronize with a slow action', function(done) {

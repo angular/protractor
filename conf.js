@@ -14,6 +14,10 @@ exports.config = {
   // seleniumServerJar and seleniumPort will be ignored.
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
+  // A base URL for your application under test. Calls to protractor.get()
+  // with relative paths will be prepended with this.
+  baseUrl: 'http://localhost:8000',
+
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
     'browserName': 'chrome'
