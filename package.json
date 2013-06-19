@@ -7,8 +7,11 @@
   "peerDependencies" : {
     "selenium-webdriver" : "~2.32.1"
   },
+  "dependencies" : {
+    "saucelabs" : "~0.1.0",
+    "jasmine-node" : "~1.9.0"
+  }
   "devDependencies" : {
-    "jasmine-node" : "~1.8.0",
     "expect.js" : "~0.2.0",
     "mocha" : "~1.10.0"
   },
@@ -18,5 +21,5 @@
   },
   "bin" : "bin/protractor",
   "main" : "lib/protractor.js",
-  "version" : "0.2.1"
+  "version" : "0.3.0"
 }
