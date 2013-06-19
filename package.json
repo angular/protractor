@@ -5,7 +5,7 @@
   "keywords" : ["angular", "test", "testing", "webdriver", "webdriverjs", "selenium"],
   "author" : "Julie Ralph <ju.ralph@gmail.com>",
   "peerDependencies" : {
-    "selenium-webdriver" : "~2.32.1"
+    "selenium-webdriver" : ">2.32.1"
   },
   "dependencies" : {
     "saucelabs" : "~0.1.0",
