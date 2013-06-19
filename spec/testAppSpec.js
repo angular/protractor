@@ -1,4 +1,4 @@
-var webptor = require('selenium-webptor');
+var webptor = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
 var util = require('util');
 
@@ -19,7 +19,7 @@ it = function(desc, testFn) {
 }
 
 describe('test application', function() {
-  var ptor = process.protractorInstance;
+  var ptor = protractor.getInstance();
 
   describe('finding elements in forms', function() {
     beforeEach(function() {
