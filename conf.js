@@ -23,7 +23,7 @@ exports.config = {
   jasmineNodeOpts: {
     // Spec folders are relative to the current working directly when
     // protractor is called.
-    specFolders: ['spec/angularDotOrgSpec.js'],
+    specFolders: ['spec'],
     // onComplete will be called before the driver quits.
     onComplete: null,
     isVerbose: false,

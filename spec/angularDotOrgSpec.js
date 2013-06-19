@@ -3,8 +3,7 @@ var protractor = require('../lib/protractor.js');
 
 
 describe('angularjs homepage', function() {
-  var ptor = process.protractorInstance;
-  //var ptor = protractor.getInstance();
+  var ptor = protractor.getInstance();
 
   it('should greet using binding', function(done) {
     ptor.get('http://www.angularjs.org');
