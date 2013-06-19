@@ -7,6 +7,9 @@ exports.config = {
   // find its own unused port.
   seleniumPort: null,
 
+  sauceUser: null,
+  sauceKey: null,
+
   // The address of a running selenium server. If this is specified,
   // seleniumServerJar and seleniumPort will be ignored.
   seleniumAddress: 'http://localhost:4444/wd/hub',

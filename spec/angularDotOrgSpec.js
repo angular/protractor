@@ -16,7 +16,7 @@ describe('angularjs homepage', function() {
           expect(text).toEqual('Hello Julie!');
           done();
         });
-  }, 10000);
+  }, 100000);
 
   it('should greet using binding - #2', function(done) {
     ptor.get('http://www.angularjs.org');
@@ -28,20 +28,20 @@ describe('angularjs homepage', function() {
           expect(text).toEqual('Hello Jane!');
           done();
         });
-  }, 10000);
+  }, 100000);
 
   // Uncomment to see failures.
-  /*
-  it('should greet using binding - this one fails', function(done) {
-    ptor.get('http://www.angularjs.org');
 
-    ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
+  // it('should greet using binding - this one fails', function(done) {
+  //   ptor.get('http://www.angularjs.org');
 
-    ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
-        getText().then(function(text) {
-          expect(text).toEqual('Hello Jack');
-          done();
-        });
-  });
-  */
+  //   ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
+
+  //   ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
+  //       getText().then(function(text) {
+  //         expect(text).toEqual('Hello Jack');
+  //         done();
+  //       });
+  // });
+
 });
