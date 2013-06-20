@@ -15,7 +15,7 @@ Start up a selenium server. By default, the tests expect the selenium server to 
 
 The example folder contains multiple versions of a simple test which runs against angularjs.org. 
 
-onJasmineNodeSpec.js and onMocha.js show how to use the Protractor library with jasmine-node and mocha. Run these with:
+`onJasmineNodeSpec.js` and `onMocha.js` show how to use the Protractor library with jasmine-node and mocha. Run these with:
 
     jasmine-node example/onJasmineNodeSpec.js
     mocha example/onMocha.js
