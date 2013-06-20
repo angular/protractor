@@ -35,6 +35,7 @@ Create a configuration file - an example is shown in `node_modules/protractor/co
     cp node_modules/protractor/conf.js myConf.js
 
 Edit the configuration file to point to your tests.
+
     exports.config = {
       jasmineNodeOpts: {
         specFolders: ['myTest.js', 'myOtherTestFolder']
