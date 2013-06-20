@@ -4,10 +4,8 @@
   "homepage" : "https://github.com/juliemr/protractor",
   "keywords" : ["angular", "test", "testing", "webdriver", "webdriverjs", "selenium"],
   "author" : "Julie Ralph <ju.ralph@gmail.com>",
-  "peerDependencies" : {
-    "selenium-webdriver" : ">2.32.1"
-  },
   "dependencies" : {
+    "selenium-webdriver" : ">2.32.1",
     "saucelabs" : "~0.1.0",
     "jasmine-node" : "~1.9.0"
   },
