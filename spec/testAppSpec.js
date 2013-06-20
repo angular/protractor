@@ -11,11 +11,11 @@ var catchPromiseErrors = function(done) {
 
 var originalIt = it;
 
-it = function(desc, testFn) {
+it = function(desc, testFn, timeout) {
   originalIt(desc, function(done) {
     catchPromiseErrors(done);
     testFn(done);
-  });
+  }, timeout);
 }
 
 describe('test application', function() {
@@ -361,6 +361,35 @@ describe('test application', function() {
               done();
             });
       });
-    })
+    });
   });
+});
+
+describe('protractor library', function() {
+  var ptor = protractor.getInstance();
+
+  it('should wrap webdriver', function(done) {
+    ptor.get('app/index.html');
+    ptor.getTitle().then(function(title) {
+      expect(title).toEqual('My AngularJS App');
+      done();
+    });
+  });
+
+  it('should allow a mix of using protractor and using the driver directly',
+    function(done) {
+      ptor.get('app/index.html');
+      ptor.getCurrentUrl().then(function(url) {
+        expect(url).toEqual('http://localhost:8000/app/index.html#/http')
+      });
+      ptor.driver.findElement(protractor.By.linkText('repeater')).click();
+      ptor.driver.getCurrentUrl().then(function(url) {
+        expect(url).toEqual('http://localhost:8000/app/index.html#/repeater');
+      });
+      ptor.navigate().back();
+      ptor.driver.getCurrentUrl().then(function(url) {
+        expect(url).toEqual('http://localhost:8000/app/index.html#/http');
+        done();
+      });
+    });
 });
