@@ -17,17 +17,17 @@ describe('angularjs homepage', function() {
         });
   }, 100000);
 
-  it('should greet using binding - #2', function(done) {
+  it('should list todos', function(done) {
     ptor.get('http://www.angularjs.org');
 
-    ptor.findElement(protractor.By.input("yourName")).sendKeys("Jane");
+    var todo = ptor.findElement(
+        protractor.By.repeater('todo in todos').row(2));
 
-    ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
-        getText().then(function(text) {
-          expect(text).toEqual('Hello Jane!');
-          done();
-        });
-  }, 100000);
+    todo.getText().then(function(text) {
+      expect(text).toEqual('build an angular app');
+      done();
+    });
+  }, 10000);
 
   // Uncomment to see failures.
 
