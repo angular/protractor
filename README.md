@@ -34,7 +34,14 @@ Create a configuration file - an example is shown in `node_modules/protractor/co
 
     cp node_modules/protractor/conf.js myConf.js
 
-Edit the configuration file to point to your tests. The configuration file must also specify a way of connection to webdriver. This can be
+Edit the configuration file to point to your tests.
+    exports.config = {
+      jasmineNodeOpts: {
+        specFolders: ['myTest.js', 'myOtherTestFolder']
+      }
+    }
+
+The configuration file must also specify a way of connection to webdriver. This can be
  *   `seleniumAddress`: The address of a running selenium standalone server.
  *   `seleniumServerJar`: The location of the selenium standalone .jar file on your machine. Protractor will use this to start up the selenium server.
  *   `sauceUser` and `sauceKey`: The username and key for a SauceLabs account. Protractor will use this to run tests on SauceLabs.
