@@ -16,10 +16,12 @@ Start up a selenium server. By default, the tests expect the selenium server to 
 The example folder contains multiple versions of a simple test which runs against angularjs.org. 
 
 onJasmineNodeSpec.js and onMocha.js show how to use the Protractor library with jasmine-node and mocha. Run these with:
+
     jasmine-node example/onJasmineNodeSpec.js
     mocha example/onMocha.js
 
 You can also run the example tests using the Protractor runner. The runner accepts a configuration file, which runs the tests at `example/onProtractor.js`.
+
     bin/protractor example/protractorConf.js
 
 Using the Protractor runner
@@ -28,6 +30,7 @@ Using the Protractor runner
 The Protractor runner is a binary which accepts a config file. The Protractor runner runs tests written in Jasmine, but other adapters may be added in the future.
 
 Install protractor with
+
     npm install protractor
 
 Create a configuration file - an example is shown in `node_modules/protractor/conf.js`.
@@ -45,9 +48,10 @@ Edit the configuration file to point to your tests.
 The configuration file must also specify a way of connection to webdriver. This can be
  *   `seleniumAddress`: The address of a running selenium standalone server.
  *   `seleniumServerJar`: The location of the selenium standalone .jar file on your machine. Protractor will use this to start up the selenium server.
- *   `sauceUser` and `sauceKey`: The username and key for a SauceLabs account. Protractor will use this to run tests on SauceLabs.
+ *   `sauceUser` and `sauceKey`: The username and key for a [SauceLabs](http://www.saucelabs.com) account. Protractor will use this to run tests on SauceLabs.
 
 Run with
+
     node_modules/protractor/bin/protractor myConf.js
 
 
@@ -57,9 +61,11 @@ Using the Protractor library
 Use the Protractor library if you would like to manage webdriverJs yourself.
 
 Install protractor with
+
     npm install protractor
 
 In your test, set up a webdriver instance, then wrap it with protractor.
+
     var protractor = require('protractor');
     var driver;
     // Set up driver as a webdriver however you'd like.
