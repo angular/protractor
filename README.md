@@ -52,7 +52,11 @@ The configuration file must also specify a way of connection to webdriver. This 
 
 Run with
 
-    node_modules/protractor/bin/protractor myConf.js
+    node_modules/.bin/protractor myConf.js
+
+Or, if you installed protractor globally (using `npm install -g protractor`)
+
+    protractor myConf.js
 
 
 Using the Protractor library
