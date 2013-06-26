@@ -3,9 +3,11 @@ var protractor = require('../lib/protractor.js');
 
 
 describe('angularjs homepage', function() {
-  var ptor = protractor.getInstance();
+  var ptor;
 
   it('should greet using binding', function(done) {
+    ptor = protractor.getInstance();
+
     ptor.get('http://www.angularjs.org');
 
     ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
