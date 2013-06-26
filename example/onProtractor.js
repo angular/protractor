@@ -1,13 +1,12 @@
 var util = require('util');
 var protractor = require('../lib/protractor.js');
-
+require('../jasminewd');
 
 describe('angularjs homepage', function() {
   var ptor;
 
-  it('should greet using binding', function(done) {
+  it('should greet using binding', function() {
     ptor = protractor.getInstance();
-
     ptor.get('http://www.angularjs.org');
 
     ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
@@ -15,11 +14,10 @@ describe('angularjs homepage', function() {
     ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
         getText().then(function(text) {
           expect(text).toEqual('Hello Julie!');
-          done();
         });
   }, 100000);
 
-  it('should list todos', function(done) {
+  it('should list todos', function() {
     ptor.get('http://www.angularjs.org');
 
     var todo = ptor.findElement(
@@ -27,13 +25,12 @@ describe('angularjs homepage', function() {
 
     todo.getText().then(function(text) {
       expect(text).toEqual('build an angular app');
-      done();
     });
   }, 10000);
 
   // Uncomment to see failures.
 
-  // it('should greet using binding - this one fails', function(done) {
+  // it('should greet using binding - this one fails', function() {
   //   ptor.get('http://www.angularjs.org');
 
   //   ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
@@ -41,7 +38,6 @@ describe('angularjs homepage', function() {
   //   ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
   //       getText().then(function(text) {
   //         expect(text).toEqual('Hello Jack');
-  //         done();
   //       });
   // });
 
