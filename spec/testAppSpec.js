@@ -1,22 +1,7 @@
 var webptor = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
 var util = require('util');
-
-var catchPromiseErrors = function(done) {
-  webptor.promise.controlFlow().
-    on('uncaughtException', function(e) {
-        done(e);
-    });
-};
-
-var originalIt = it;
-
-it = function(desc, testFn, timeout) {
-  originalIt(desc, function(done) {
-    catchPromiseErrors(done);
-    testFn(done);
-  }, timeout);
-}
+require('../jasminewd');
 
 describe('test application', function() {
   var ptor;
@@ -27,37 +12,28 @@ describe('test application', function() {
       ptor.get('app/index.html#/form');
     });
 
-    it('should find an element by binding', function(done) {
-      // $('{{greeting}}')
-      // $('form.foo > input{{greeting}}')
-      // $('ul > *{{student in students}}*')
-      // $('ul').repeater('student in students')
-      // $('button#submit')
-
+    it('should find an element by binding', function() {
       ptor.findElement(protractor.By.binding('{{greeting}}')).
           getText().then(function(text) {
             expect(text).toEqual('Hiya');
-            done();
           });
     });
 
-    it('should find a binding by partial match', function(done) {
+    it('should find a binding by partial match', function() {
       ptor.findElement(protractor.By.binding('greet')).
           getText().then(function(text) {
             expect(text).toEqual('Hiya');
-            done();
           });
     })
 
-    it('should find an element by binding with attribute', function(done) {
+    it('should find an element by binding with attribute', function() {
       ptor.findElement(protractor.By.binding('username')).
           getText().then(function(text) {
             expect(text).toEqual('Anon');
-            done();
           });
     });
 
-    it('should find an element by text input model', function(done) {
+    it('should find an element by text input model', function() {
       var username = ptor.findElement(protractor.By.input('username'));
       username.clear();
       username.sendKeys('Jane Doe');
@@ -65,11 +41,10 @@ describe('test application', function() {
       ptor.findElement(protractor.By.binding('username')).
           getText().then(function(text) {
             expect(text).toEqual('Jane Doe');
-            done();
           });
     });
 
-    it('should find an element by checkbox input model', function(done) {
+    it('should find an element by checkbox input model', function() {
       ptor.findElement(protractor.By.id('shower')).
           isDisplayed().then(function(displayed) {
             expect(displayed).toBe(true);
@@ -79,11 +54,10 @@ describe('test application', function() {
       ptor.findElement(protractor.By.id('shower')).
           isDisplayed().then(function(displayed) {
             expect(displayed).toBe(false);
-            done();
           });
     });
 
-    it('should find inputs with alternate attribute forms', function(done) {
+    it('should find inputs with alternate attribute forms', function() {
       var letterList = ptor.findElement(protractor.By.id('letterlist'));
       letterList.getText().then(function(text) {
         expect(text).toBe('');
@@ -107,11 +81,10 @@ describe('test application', function() {
       ptor.findElement(protractor.By.input('check.z')).click();
       letterList.getText().then(function(text) {
         expect(text).toBe('wxyz');
-        done();
       });
     });
 
-    it('should find a repeater by partial match', function(done) {
+    it('should find a repeater by partial match', function() {
       ptor.findElement(
           protractor.By.repeater('baz in days | filter:\'T\'').
               row(1).column('{{baz}}')).
@@ -129,11 +102,10 @@ describe('test application', function() {
           protractor.By.repeater('baz in days').row(1)).
           getText().then(function(text) {
             expect(text).toEqual('Tue');
-            done();
           });
     });
 
-    it('should find a repeater using data-ng-repeat', function(done) {
+    it('should find a repeater using data-ng-repeat', function() {
       ptor.findElement(protractor.By.repeater('day in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -143,11 +115,10 @@ describe('test application', function() {
           column('day')).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
     });
 
-    it('should find a repeater using ng:repeat', function(done) {
+    it('should find a repeater using ng:repeat', function() {
       ptor.findElement(protractor.By.repeater('bar in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -156,11 +127,10 @@ describe('test application', function() {
           column('bar')).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
     });
 
-    it('should find a repeater using ng_repeat', function(done) {
+    it('should find a repeater using ng_repeat', function() {
       ptor.findElement(protractor.By.repeater('foo in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -169,11 +139,10 @@ describe('test application', function() {
           column('foo')).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
     });
 
-    it('should find a repeater using x-ng-repeat', function(done) {
+    it('should find a repeater using x-ng-repeat', function() {
       ptor.findElement(protractor.By.repeater('qux in days').row(3)).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
@@ -182,7 +151,6 @@ describe('test application', function() {
           column('qux')).
           getText().then(function(text) {
             expect(text).toEqual('Wed');
-            done();
           });
     });
   });
@@ -192,7 +160,7 @@ describe('test application', function() {
       ptor.get('app/index.html#/bindings');
     });
 
-    it('should find elements using a select', function(done) {
+    it('should find elements using a select', function() {
       ptor.findElement(protractor.By.selectedOption('planet')).
           getText().then(function(text) {
             expect(text).toEqual('Mercury');
@@ -205,11 +173,10 @@ describe('test application', function() {
       ptor.findElement(protractor.By.selectedOption('planet')).
           getText().then(function(text) {
             expect(text).toEqual('Jupiter');
-            done();
           });
     });
 
-    it('should find elements using a repeater', function(done) {
+    it('should find elements using a repeater', function() {
       // Returns the element for the entire row.
       ptor.findElement(protractor.By.repeater('ball in planets').row(3)).
           getText().then(function(text) {
@@ -232,12 +199,11 @@ describe('test application', function() {
               });
               arr[2].getText().then(function(text) {
                 expect(text).toEqual('Earth');
-                done();
               });
             });
     });
 
-    it('should find multiple elements by binding', function(done) {
+    it('should find multiple elements by binding', function() {
       // There must be a better way to do this.
       ptor.findElement(protractor.By.select('planet'))
           .findElement(protractor.By.css('option[value="4"]')).click();
@@ -249,7 +215,6 @@ describe('test application', function() {
             });
             arr[2].getText().then(function(text) {
               expect(text).toEqual('Ganymede');
-              done();
             })
           });
     });
@@ -275,7 +240,7 @@ describe('test application', function() {
       ptor.clearMockModules();
     });
 
-    it('should override services via mock modules', function(done) {
+    it('should override services via mock modules', function() {
       ptor.addMockModule('moduleA', mockModuleA);
 
       ptor.get('app/index.html');
@@ -283,11 +248,10 @@ describe('test application', function() {
       ptor.findElement(protractor.By.css('[app-version]')).
           getText().then(function(text) {
             expect(text).toEqual('2');
-            done();
           });
     });
 
-    it('should have the version of the last loaded module', function(done) {
+    it('should have the version of the last loaded module', function() {
       ptor.addMockModule('moduleA', mockModuleA);
       ptor.addMockModule('moduleB', mockModuleB);
 
@@ -296,7 +260,6 @@ describe('test application', function() {
       ptor.findElement(protractor.By.css('[app-version]')).
           getText().then(function(text) {
             expect(text).toEqual('3');
-            done();
           });
     });
   });
@@ -307,7 +270,7 @@ describe('test application', function() {
         ptor.get('app/index.html');
       });
 
-      it('should wait for slow RPCs', function(done) {
+      it('should wait for slow RPCs', function() {
         var sample1Button = ptor.findElement(protractor.By.id('sample1'));
         var sample2Button = ptor.findElement(protractor.By.id('sample2'));
         sample1Button.click();
@@ -336,7 +299,6 @@ describe('test application', function() {
         ptor.findElement(protractor.By.id('data')).getText().
             then(function(text) {
               expect(text).toEqual('finally done');
-              done();
             });
       });
     });
@@ -346,7 +308,7 @@ describe('test application', function() {
         ptor.get('app/index.html#/repeater');
       });
 
-      it('should synchronize with a slow action', function(done) {
+      it('should synchronize with a slow action', function() {
         var addOneButton = ptor.findElement(protractor.By.id('addone'));
         addOneButton.click();
         ptor.findElement(
@@ -359,7 +321,6 @@ describe('test application', function() {
             protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
             column('{{foo.b}}')).getText().then(function(text) {
               expect(text).toEqual('24157817');
-              done();
             });
       });
     });
@@ -369,16 +330,15 @@ describe('test application', function() {
 describe('protractor library', function() {
   var ptor = protractor.getInstance();
 
-  it('should wrap webdriver', function(done) {
+  it('should wrap webdriver', function() {
     ptor.get('app/index.html');
     ptor.getTitle().then(function(title) {
       expect(title).toEqual('My AngularJS App');
-      done();
     });
   });
 
   it('should allow a mix of using protractor and using the driver directly',
-    function(done) {
+    function() {
       ptor.get('app/index.html');
       ptor.getCurrentUrl().then(function(url) {
         expect(url).toEqual('http://localhost:8000/app/index.html#/http')
@@ -390,7 +350,6 @@ describe('protractor library', function() {
       ptor.navigate().back();
       ptor.driver.getCurrentUrl().then(function(url) {
         expect(url).toEqual('http://localhost:8000/app/index.html#/http');
-        done();
       });
     });
 });
