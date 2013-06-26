@@ -19,9 +19,10 @@ it = function(desc, testFn, timeout) {
 }
 
 describe('test application', function() {
-  var ptor = protractor.getInstance();
-
+  var ptor;
   describe('finding elements in forms', function() {
+    ptor = protractor.getInstance();
+
     beforeEach(function() {
       ptor.get('app/index.html#/form');
     });
