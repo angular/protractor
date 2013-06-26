@@ -9,20 +9,23 @@ Protractor can be run as a standalone binary runner, or included into your tests
 To run the sample tests
 -----------------------
 
-Clone the github repository.
+Install protractor with.
 
-Start up a selenium server. By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`.
+    npm install protractor
 
-The example folder contains multiple versions of a simple test which runs against angularjs.org. 
+Start up a selenium server (See the appendix below for help with this). By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`.
+
+The example folder contains multiple versions of a simple test suite which runs against angularjs.org. 
 
 `onJasmineNodeSpec.js` and `onMocha.js` show how to use the Protractor library with jasmine-node and mocha. Run these with:
 
     jasmine-node example/onJasmineNodeSpec.js
     mocha example/onMocha.js
 
-You can also run the example tests using the Protractor runner. The runner accepts a configuration file, which runs the tests at `example/onProtractor.js`.
+You can also run the example suite using the Protractor runner. The runner accepts a configuration file, which runs the tests at `example/onProtractor.js`.
 
     bin/protractor example/protractorConf.js
+
 
 Using the Protractor runner
 ---------------------------
@@ -74,6 +77,26 @@ In your test, set up a webdriver instance, then wrap it with protractor.
     var driver;
     // Set up driver as a webdriver however you'd like.
     var ptor = protractor.wrapDriver(driver);
+
+
+Cloning and running Protractor's own tests
+------------------------------------------
+Clone the github repository.
+
+    git clone https://github.com/juliemr/protractor.git
+    cd protractor
+    npm install
+
+Start up a selenium server. By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`.
+
+Protractor's test suite runs against the included testapp. Start that up with
+
+    cd testapp
+    scripts/web-server.js
+
+Then run the tests with
+
+    bin/protractor conf.js
 
 
 Appendix A: Setting up a standalone selenium server
