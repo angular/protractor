@@ -19,5 +19,5 @@
   },
   "bin" : "bin/protractor",
   "main" : "lib/protractor.js",
-  "version" : "0.3.0"
+  "version" : "0.4.0"
 }
