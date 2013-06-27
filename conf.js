@@ -2,7 +2,7 @@
 exports.config = {
 
   // The location of the selenium standalone server .jar file.
-  seleniumServerJar: '../selenium/selenium-server-standalone-2.28.0.jar',
+  seleniumServerJar: './selenium/selenium-server-standalone-2.33.0.jar',
   // The port to start the selenium server on, or null if the server should
   // find its own unused port.
   seleniumPort: null,

@@ -102,12 +102,15 @@ Then run the tests with
 Appendix A: Setting up a standalone selenium server
 ---------------------------------------------------
 
-WebdriverJS does not natively include the selenium server - you must start a standalone selenium server.
-Download the selenium server. All you need is the latest [selenium-server-standalone.](https://code.google.com/p/selenium/downloads/list)
+WebdriverJS does not natively include the selenium server - you must start a standalone selenium server. All you need is the latest [selenium-server-standalone.](https://code.google.com/p/selenium/downloads/list)
 
 To use with chrome browsers, [download chromedriver](https://code.google.com/p/chromedriver/downloads/list).
 [More information about chromedriver](https://code.google.com/p/selenium/wiki/ChromeDriver)
 
+A script is included to install - run with (omit the --cd option if you do not want to install ChromeDriver)
+
+    ./node_modules/protractor/bin/install_selenium_standalone --cd
+
 Start the selenium standalone with 
 
-    java -jar selenium-server-standalone-2.x.x.jar
+    java -jar selenium/selenium-server-standalone-2.33.0.jar
