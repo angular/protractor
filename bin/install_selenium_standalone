@@ -6,6 +6,8 @@ var url = require('url');
 var http = require('http');
 var AdmZip = require('adm-zip')
 
+// Download the Selenium Standalone jar and the ChromeDriver binary to
+// ./selenium/
 // Thanks to http://www.hacksparrow.com/using-node-js-to-download-files.html
 // for the outline of this code.
 var SELENIUM_URL =
@@ -16,7 +18,7 @@ var CHROMEDRIVER_URL_LINUX32 =
     'https://chromedriver.googlecode.com/files/chromedriver_linux32_2.0.zip';
 var CHROMEDRIVER_URL_LINUX64 =
     'https://chromedriver.googlecode.com/files/chromedriver_linux64_2.0.zip';
-var CHROMEDRIVER_URL_WINDOWS = 
+var CHROMEDRIVER_URL_WINDOWS =
     'https://chromedriver.googlecode.com/files/chromedriver_win32_2.0.zip';
 
 var DOWNLOAD_DIR = './selenium/';
@@ -54,7 +56,7 @@ var download_file_httpget = function(file_url, callback) {
 
 download_file_httpget(SELENIUM_URL);
 
-if (process.argv[2] == '--cd') {
+if (!(process.argv[2] == '--nocd')) {
   if (os.type() == 'Darwin') {
     chromedriver_url = CHROMEDRIVER_URL_MAC;
   } else if (os.type() == 'Linux') {
@@ -72,5 +74,8 @@ if (process.argv[2] == '--cd') {
   download_file_httpget(chromedriver_url, function(file_name) {
     var zip = new AdmZip(file_name);
     zip.extractAllTo(DOWNLOAD_DIR);
+    if (os.type() != 'Windows_NT') {
+      fs.chmod(DOWNLOAD_DIR + 'chromedriver', 0755);
+    }
   });
 }
