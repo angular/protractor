@@ -6,8 +6,9 @@
   "author" : "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies" : {
     "selenium-webdriver" : ">2.32.1",
+    "jasmine-node" : "~1.9.0",
     "saucelabs" : "~0.1.0",
-    "jasmine-node" : "~1.9.0"
+    "adm-zip" : ">=0.4.2"
   },
   "devDependencies" : {
     "expect.js" : "~0.2.0",
@@ -19,5 +20,5 @@
   },
   "bin" : "bin/protractor",
   "main" : "lib/protractor.js",
-  "version" : "0.4.0"
+  "version" : "0.4.1"
 }

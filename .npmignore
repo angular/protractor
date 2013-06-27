@@ -1,4 +1,5 @@
 testapp/
 spec/
+selenium/
 
 .npmignore
