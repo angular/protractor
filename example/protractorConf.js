@@ -15,9 +15,9 @@ exports.config = {
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
-    // Spec folders are relative to the current working directly when
-    // protractor is called. This can be folders or files.
-    specFolders: ['example/onProtractor.js'],
+    // Spec patterns are relative to the current working directly when
+    // protractor is called.
+    specs: ['example/onProtractor.js'],
     isVerbose: false,
     showColors: true,
     includeStackTrace: true
