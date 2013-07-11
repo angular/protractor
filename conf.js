@@ -28,7 +28,7 @@ exports.config = {
   sauceKey: null,
 
   // The address of a running selenium server.
-  // seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: 'http://localhost:4444/wd/hub',
 
   // ----- Capabilities to be passed to the webdriver instance.
   // For a full list of available capabilities, see
@@ -41,11 +41,11 @@ exports.config = {
   // with relative paths will be prepended with this.
   baseUrl: 'http://localhost:8000',
 
-  // ----- Options to be passed to Jasmine-node.
+  // ----- Options to be passed to minijasminenode.
   jasmineNodeOpts: {
-    // Spec folders are relative to the current working directly when
+    // Spec patterns are relative to the current working directly when
     // protractor is called.
-    specFolders: ['spec'],
+    specs: ['spec/testAppSpec.js'],
     // onComplete will be called before the driver quits.
     onComplete: null,
     isVerbose: false,

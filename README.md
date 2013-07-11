@@ -44,7 +44,7 @@ Edit the configuration file to point to your tests.
 
     exports.config = {
       jasmineNodeOpts: {
-        specFolders: ['myTest.js', 'myOtherTestFolder']
+        specs: ['myTest.js', 'myFolder/myOtherTest.js']
       }
     }
 
@@ -114,4 +114,3 @@ A script is included to do the download for you - run with (add the --nocd optio
 Start the selenium standalone with 
 
     java -jar selenium/selenium-server-standalone-2.33.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver
-
