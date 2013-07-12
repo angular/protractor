@@ -13,11 +13,12 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  // Spec patterns are relative to the current working directly when
+  // protractor is called.
+  specs: ['example/onProtractor.js'],
+
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
-    // Spec patterns are relative to the current working directly when
-    // protractor is called.
-    specs: ['example/onProtractor.js'],
     isVerbose: false,
     showColors: true,
     includeStackTrace: true
