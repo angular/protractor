@@ -1,28 +1,36 @@
 {
-  "name" : "protractor",
-  "description" : "Webdriver E2E test wrapper for Angular.",
-  "homepage" : "https://github.com/juliemr/protractor",
-  "keywords" : ["angular", "test", "testing", "webdriver", "webdriverjs", "selenium"],
-  "author" : "Julie Ralph <ju.ralph@gmail.com>",
-  "dependencies" : {
-    "selenium-webdriver" : ">2.32.1",
-    "minijasminenode" : "~0.2.0",
-    "saucelabs" : "~0.1.0",
-    "adm-zip" : ">=0.4.2"
+  "name": "protractor",
+  "description": "Webdriver E2E test wrapper for Angular.",
+  "homepage": "https://github.com/juliemr/protractor",
+  "keywords": [
+    "angular",
+    "test",
+    "testing",
+    "webdriver",
+    "webdriverjs",
+    "selenium"
+  ],
+  "author": "Julie Ralph <ju.ralph@gmail.com>",
+  "dependencies": {
+    "selenium-webdriver": ">2.32.1",
+    "minijasminenode": "~0.2.0",
+    "saucelabs": "~0.1.0",
+    "adm-zip": ">=0.4.2"
   },
-  "devDependencies" : {
-    "expect.js" : "~0.2.0",
-    "jasmine-node" : "~1.9.0",
-    "mocha" : "~1.10.0"
+  "devDependencies": {
+    "expect.js": "~0.2.0",
+    "jasmine-node": "~1.9.0",
+    "mocha": "~1.10.0",
+    "express": "~3.3.4"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "git://github.com/juliemr/protractor.git"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/juliemr/protractor.git"
   },
-  "bin" : "bin/protractor",
-  "main" : "lib/protractor.js",
-  "scripts" : {
-    "test" : "node lib/cli.js conf.js"
+  "bin": "bin/protractor",
+  "main": "lib/protractor.js",
+  "scripts": {
+    "test": "node lib/cli.js conf.js"
   },
-  "version" : "0.6.1"
+  "version": "0.6.1"
 }
