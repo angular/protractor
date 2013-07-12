@@ -1,7 +1,7 @@
 Protractor
 ==========
 
-Protractor is an end to end test framework for Angular applications built on top of [webdriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). 
+Protractor is an end to end test framework for Angular applications built on top of [webdriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs).
 
 Protractor can be run as a standalone binary runner, or included into your tests as a library. Use Protractor as a library if you would like to manage WebDriver and your test setup yourself.
 
@@ -15,7 +15,7 @@ Install protractor with.
 
 Start up a selenium server (See the appendix below for help with this). By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`.
 
-The example folder contains multiple versions of a simple test suite which runs against angularjs.org. 
+The example folder contains multiple versions of a simple test suite which runs against angularjs.org.
 
 `onJasmineNodeSpec.js` and `onMocha.js` show how to use the Protractor library with jasmine-node and mocha. Run these with:
 
@@ -92,11 +92,11 @@ Start up a selenium server. By default, the tests expect the selenium server to 
 Protractor's test suite runs against the included testapp. Start that up with
 
     cd testapp
-    scripts/web-server.js
+    ./scripts/web-server.js
 
 Then run the tests with
 
-    bin/protractor conf.js
+    npm test
 
 
 Appendix A: Setting up a standalone selenium server
@@ -111,6 +111,6 @@ A script is included to do the download for you - run with (add the --nocd optio
 
     ./node_modules/protractor/bin/install_selenium_standalone
 
-Start the selenium standalone with 
+Start the selenium standalone with
 
     java -jar selenium/selenium-server-standalone-2.33.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver
