@@ -21,5 +21,8 @@
   },
   "bin" : "bin/protractor",
   "main" : "lib/protractor.js",
+  "scripts" : {
+    "test" : "node lib/cli.js conf.js"
+  },
   "version" : "0.6.0"
 }
