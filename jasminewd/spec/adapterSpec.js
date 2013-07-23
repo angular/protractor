@@ -40,6 +40,12 @@ var getFakeDriver = function() {
 
 var fakeDriver = getFakeDriver();
 
+describe('webdriverJS Jasmine adapter plain', function() {
+  it('should pass normal synchronous tests', function() {
+    expect(true).toBe(true);
+  });
+});
+
 
 describe('webdriverJS Jasmine adapter', function() {
   // Shorten this and you should see tests timing out.
