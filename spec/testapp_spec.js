@@ -1,4 +1,3 @@
-var webdriver = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
 var util = require('util');
 require('../jasminewd');
@@ -23,26 +22,19 @@ describe('longer example', function() {
 
         // The quick RPC works fine.
         var status = ptor.findElement(protractor.By.binding('{{status}}'));
-        status.getText().then(function(text) {
-          expect(text).toEqual('200');
-        });
-        ptor.findElement(protractor.By.binding("{{data}}")).
-            getText().then(function(text) {
-              expect(text).toEqual('done');
-            });
+        expect(status.getText()).toEqual('200');
+        expect(ptor.findElement(protractor.By.binding('data')).getText()).
+            toEqual('done');
 
         // Slow RPC.
         sample2Button.click();
         fetchButton.click();
         // Would normally need ptor.sleep(2) or something.
-        ptor.findElement(protractor.By.id('statuscode')).
-            getText().then(function(text) {
-              expect(text).toEqual('200');
-            });
-        ptor.findElement(protractor.By.id('data')).getText().
-            then(function(text) {
-              expect(text).toEqual('finally done');
-            });
+        expect(ptor.findElement(protractor.By.id('statuscode')).getText()).
+            toEqual('200');
+        
+        expect(ptor.findElement(protractor.By.id('data')).getText()).
+            toEqual('finally done');
       });
     }); 
 
@@ -54,17 +46,19 @@ describe('longer example', function() {
       it('should synchronize with a slow action', function() {
         var addOneButton = ptor.findElement(protractor.By.id('addone'));
         addOneButton.click();
-        ptor.findElement(
-            protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
-            column('{{foo.b}}')).getText().then(function(text) {
-              expect(text).toEqual('14930352');
-            });
+        var topNumber = ptor.findElement(
+            protractor.By.repeater('foo in foos').row(1).
+            column('{{foo.b}}'));
+
+        expect(topNumber.getText()).toEqual('14930352');
+
         addOneButton.click();
-        ptor.findElement(
-            protractor.By.repeater("foo in foos | orderBy:'a':true").row(1).
-            column('{{foo.b}}')).getText().then(function(text) {
-              expect(text).toEqual('24157817');
-            });
+
+        topNumber = ptor.findElement(
+            protractor.By.repeater('foo in foos').row(1).
+            column('{{foo.b}}'));
+
+        expect(topNumber.getText()).toEqual('24157817');
       });
     });
   });
