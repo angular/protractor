@@ -6,7 +6,7 @@ describe('mock modules', function() {
   var ptor = protractor.getInstance();
 
   // A module to override the 'version' service. This function will be
-  // executd in the context of the application under test, so it may
+  // executed in the context of the application under test, so it may
   // not refer to any local variables.
   var mockModuleA = function() {
     var newModule = angular.module('moduleA', []);
@@ -29,10 +29,8 @@ describe('mock modules', function() {
 
     ptor.get('app/index.html');
 
-    ptor.findElement(protractor.By.css('[app-version]')).
-        getText().then(function(text) {
-          expect(text).toEqual('2');
-        });
+    expect(ptor.findElement(protractor.By.css('[app-version]')).getText()).
+        toEqual('2');
   });
 
   it('should have the version of the last loaded module', function() {
@@ -41,9 +39,7 @@ describe('mock modules', function() {
 
     ptor.get('app/index.html');
 
-    ptor.findElement(protractor.By.css('[app-version]')).
-        getText().then(function(text) {
-          expect(text).toEqual('3');
-        });
+    expect(ptor.findElement(protractor.By.css('[app-version]')).getText()).
+        toEqual('3');
   });
 });

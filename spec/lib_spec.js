@@ -13,24 +13,21 @@ describe('protractor library', function() {
 
   it('should wrap webdriver', function() {
     ptor.get('app/index.html');
-    ptor.getTitle().then(function(title) {
-      expect(title).toEqual('My AngularJS App');
-    });
+    expect(ptor.getTitle()).toEqual('My AngularJS App');
   });
 
   it('should allow a mix of using protractor and using the driver directly',
     function() {
       ptor.get('app/index.html');
-      ptor.getCurrentUrl().then(function(url) {
-        expect(url).toEqual('http://localhost:8000/app/index.html#/http')
-      });
+      expect(ptor.getCurrentUrl()).
+          toEqual('http://localhost:8000/app/index.html#/http')
+
       ptor.driver.findElement(protractor.By.linkText('repeater')).click();
-      ptor.driver.getCurrentUrl().then(function(url) {
-        expect(url).toEqual('http://localhost:8000/app/index.html#/repeater');
-      });
+      expect(ptor.driver.getCurrentUrl()).
+          toEqual('http://localhost:8000/app/index.html#/repeater');
+
       ptor.navigate().back();
-      ptor.driver.getCurrentUrl().then(function(url) {
-        expect(url).toEqual('http://localhost:8000/app/index.html#/http');
-      });
+      expect(ptor.driver.getCurrentUrl()).
+          toEqual('http://localhost:8000/app/index.html#/http');
     });
 });

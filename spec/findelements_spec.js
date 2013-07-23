@@ -12,29 +12,22 @@ describe('finding elements', function() {
       ptor.get('app/index.html#/form');
     });
 
-    it('should still do normal tests', function() {
-      expect(true).toBe(true);
-    });
-
     it('should find an element by binding', function() {
-      ptor.findElement(protractor.By.binding('{{greeting}}')).
-          getText().then(function(text) {
-            expect(text).toEqual('Hiya');
-          });
+      var greeting = ptor.findElement(protractor.By.binding('{{greeting}}'));
+
+      expect(greeting.getText()).toEqual('Hiya');
     });
 
     it('should find a binding by partial match', function() {
-      ptor.findElement(protractor.By.binding('greet')).
-          getText().then(function(text) {
-            expect(text).toEqual('Hiya');
-          });
-    })
+      var greeting = ptor.findElement(protractor.By.binding('greet'));
+
+      expect(greeting.getText()).toEqual('Hiya');
+    });
 
     it('should find an element by binding with attribute', function() {
-      ptor.findElement(protractor.By.binding('username')).
-          getText().then(function(text) {
-            expect(text).toEqual('Anon');
-          });
+      var name = ptor.findElement(protractor.By.binding('username'));
+
+      expect(name.getText()).toEqual('Anon');
     });
 
     it('should find an element by text input model', function() {
@@ -42,120 +35,95 @@ describe('finding elements', function() {
       username.clear();
       username.sendKeys('Jane Doe');
 
-      ptor.findElement(protractor.By.binding('username')).
-          getText().then(function(text) {
-            expect(text).toEqual('Jane Doe');
-          });
+      var name = ptor.findElement(protractor.By.binding('username'));
+
+      expect(name.getText()).toEqual('Jane Doe');
     });
 
     it('should find an element by checkbox input model', function() {
-      ptor.findElement(protractor.By.id('shower')).
-          isDisplayed().then(function(displayed) {
-            expect(displayed).toBe(true);
-          });
-      var colors = ptor.findElement(protractor.By.input('show')).
-          click();
-      ptor.findElement(protractor.By.id('shower')).
-          isDisplayed().then(function(displayed) {
-            expect(displayed).toBe(false);
-          });
+      expect(ptor.findElement(protractor.By.id('shower')).isDisplayed()).
+          toBe(true);
+
+      var colors = ptor.findElement(protractor.By.input('show')).click();
+
+      expect(ptor.findElement(protractor.By.id('shower')).isDisplayed()).
+          toBe(false);
     });
 
     it('should find inputs with alternate attribute forms', function() {
       var letterList = ptor.findElement(protractor.By.id('letterlist'));
-      letterList.getText().then(function(text) {
-        expect(text).toBe('');
-      });
+      expect(letterList.getText()).toBe('');
 
       ptor.findElement(protractor.By.input('check.w')).click();
-      letterList.getText().then(function(text) {
-        expect(text).toBe('w');
-      });
+      expect(letterList.getText()).toBe('w');
 
       ptor.findElement(protractor.By.input('check.x')).click();
-      letterList.getText().then(function(text) {
-        expect(text).toBe('wx');
-      });
+      expect(letterList.getText()).toBe('wx');
 
       ptor.findElement(protractor.By.input('check.y')).click();
-      letterList.getText().then(function(text) {
-        expect(text).toBe('wxy');
-      });
+      expect(letterList.getText()).toBe('wxy');
 
       ptor.findElement(protractor.By.input('check.z')).click();
-      letterList.getText().then(function(text) {
-        expect(text).toBe('wxyz');
-      });
+      expect(letterList.getText()).toBe('wxyz');
     });
 
     it('should find a repeater by partial match', function() {
-      ptor.findElement(
+      var fullMatch = ptor.findElement(
           protractor.By.repeater('baz in days | filter:\'T\'').
-              row(1).column('{{baz}}')).
-          getText().then(function(text) {
-            expect(text).toEqual('Tue');
-          });
+              row(1).column('{{baz}}'));
+      expect(fullMatch.getText()).toEqual('Tue');
 
-      ptor.findElement(
-          protractor.By.repeater('baz in days').row(1).column('b')).
-          getText().then(function(text) {
-            expect(text).toEqual('Tue');
-          });
+      var partialMatch = ptor.findElement(
+          protractor.By.repeater('baz in days').row(1).column('b'));
+      expect(partialMatch.getText()).toEqual('Tue');
 
-      ptor.findElement(
-          protractor.By.repeater('baz in days').row(1)).
-          getText().then(function(text) {
-            expect(text).toEqual('Tue');
-          });
+      var partialRowMatch = ptor.findElement(
+          protractor.By.repeater('baz in days').row(1));
+      expect(partialRowMatch.getText()).toEqual('Tue');
     });
 
     it('should find a repeater using data-ng-repeat', function() {
-      ptor.findElement(protractor.By.repeater('day in days').row(3)).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
+      var byRow =
+        ptor.findElement(protractor.By.repeater('day in days').row(3));
+      expect(byRow.getText()).toEqual('Wed');
 
-      ptor.findElement(protractor.By.repeater('day in days').row(3).
-          column('day')).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
+      var byCol = 
+          ptor.findElement(protractor.By.repeater('day in days').row(3).
+          column('day'));
+      expect(byCol.getText()).toEqual('Wed');
     });
 
     it('should find a repeater using ng:repeat', function() {
-      ptor.findElement(protractor.By.repeater('bar in days').row(3)).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
-      ptor.findElement(protractor.By.repeater('bar in days').row(3).
-          column('bar')).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
+      var byRow =
+        ptor.findElement(protractor.By.repeater('bar in days').row(3));
+      expect(byRow.getText()).toEqual('Wed');
+
+      var byCol = 
+          ptor.findElement(protractor.By.repeater('bar in days').row(3).
+          column('bar'));
+      expect(byCol.getText()).toEqual('Wed');
     });
 
     it('should find a repeater using ng_repeat', function() {
-      ptor.findElement(protractor.By.repeater('foo in days').row(3)).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
-      ptor.findElement(protractor.By.repeater('foo in days').row(3).
-          column('foo')).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
+      var byRow =
+        ptor.findElement(protractor.By.repeater('foo in days').row(3));
+      expect(byRow.getText()).toEqual('Wed');
+
+      var byCol = 
+          ptor.findElement(protractor.By.repeater('foo in days').row(3).
+          column('foo'));
+      expect(byCol.getText()).toEqual('Wed');
     });
 
     it('should find a repeater using x-ng-repeat', function() {
-      ptor.findElement(protractor.By.repeater('qux in days').row(3)).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
-      ptor.findElement(protractor.By.repeater('qux in days').row(3).
-          column('qux')).
-          getText().then(function(text) {
-            expect(text).toEqual('Wed');
-          });
+      var byRow =
+        ptor.findElement(protractor.By.repeater('qux in days').row(3));
+      expect(byRow.getText()).toEqual('Wed');
+
+      var byCol = 
+          ptor.findElement(protractor.By.repeater('qux in days').row(3).
+          column('qux'));
+      expect(byCol.getText()).toEqual('Wed');
     });
   });
 
@@ -165,34 +133,29 @@ describe('finding elements', function() {
     });
 
     it('should find elements using a select', function() {
-      ptor.findElement(protractor.By.selectedOption('planet')).
-          getText().then(function(text) {
-            expect(text).toEqual('Mercury');
-          });
+      expect(ptor.findElement(protractor.By.selectedOption('planet')).
+          getText()).
+          toEqual('Mercury');
 
       // There must be a better way to do this.
       ptor.findElement(protractor.By.select('planet'))
           .findElement(protractor.By.css('option[value="4"]')).click();
 
-      ptor.findElement(protractor.By.selectedOption('planet')).
-          getText().then(function(text) {
-            expect(text).toEqual('Jupiter');
-          });
+      expect(ptor.findElement(protractor.By.selectedOption('planet')).
+          getText()).
+          toEqual('Jupiter');
     });
 
     it('should find elements using a repeater', function() {
       // Returns the element for the entire row.
-      ptor.findElement(protractor.By.repeater('ball in planets').row(3)).
-          getText().then(function(text) {
-            expect(text).toEqual('Earth:3');
-          });
+      expect(
+          ptor.findElement(protractor.By.repeater('ball in planets').row(3)).
+          getText()).toEqual('Earth:3');
 
       // Returns the element in row 2 and the column with binding {{ball.name}}
-      ptor.findElement(protractor.By.repeater('ball in planets').row(2).
-          column('{{ball.name}}'))
-            .getText().then(function(text) {
-              expect(text).toEqual('Venus');
-            });
+      expect(
+          ptor.findElement(protractor.By.repeater('ball in planets').row(2).
+          column('{{ball.name}}')).getText()).toEqual('Venus');
 
       // Returns the entire column.
       ptor.findElements(protractor.By.repeater('ball in planets').
