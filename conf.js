@@ -32,7 +32,13 @@ exports.config = {
 
   // Spec patterns are relative to the current working directly when
   // protractor is called.
-  specs: ['spec/testAppSpec.js'],
+  specs: [
+    'spec/findelements_spec.js',
+    'spec/lib_spec.js',
+    'spec/mockmodule_spec.js',
+    'spec/synchronize_spec.js',
+    'spec/testapp_spec.js'
+  ],
 
   // ----- Capabilities to be passed to the webdriver instance.
   // For a full list of available capabilities, see
