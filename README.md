@@ -83,7 +83,7 @@ Cloning and running Protractor's own tests
 ------------------------------------------
 Clone the github repository.
 
-    git clone https://github.com/juliemr/protractor.git
+    git clone https://github.com/angular/protractor.git
     cd protractor
     npm install
 
