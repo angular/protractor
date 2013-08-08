@@ -15,6 +15,7 @@
     "selenium-webdriver": ">2.32.1",
     "minijasminenode": "~0.2.0",
     "saucelabs": "~0.1.0",
+    "glob": ">=3.1.14",
     "adm-zip": ">=0.4.2"
   },
   "devDependencies": {
@@ -32,5 +33,5 @@
   "scripts": {
     "test": "node lib/cli.js conf.js"
   },
-  "version": "0.6.1"
+  "version": "0.6.2"
 }
