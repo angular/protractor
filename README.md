@@ -61,6 +61,8 @@ Or, if you installed protractor globally (using `npm install -g protractor`)
 
     protractor myConf.js
 
+When using the runner, the protractor library is exported to the global namespace as `protractor`. The current instance can be grabbed with `ptor = protractor.getInstance()`.
+
 
 Using the Protractor library
 ----------------------------
