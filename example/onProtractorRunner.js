@@ -1,6 +1,4 @@
 var util = require('util');
-var protractor = require('../lib/protractor.js');
-require('../jasminewd');
 
 describe('angularjs homepage', function() {
   var ptor;

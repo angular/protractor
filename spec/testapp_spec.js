@@ -1,7 +1,4 @@
-var protractor = require('../lib/protractor.js');
 var util = require('util');
-require('../jasminewd');
-
 
 describe('longer example', function() {
   var ptor = protractor.getInstance();
@@ -63,5 +60,3 @@ describe('longer example', function() {
     });
   });
 });
-
-

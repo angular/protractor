@@ -22,7 +22,7 @@ The example folder contains multiple versions of a simple test suite which runs 
     jasmine-node example/onJasmineNodeSpec.js
     mocha example/onMocha.js
 
-You can also run the example suite using the Protractor runner. The runner accepts a configuration file, which runs the tests at `example/onProtractor.js`.
+You can also run the example suite using the Protractor runner. The runner accepts a configuration file, which runs the tests at `example/onProtractorRunner.js`.
 
     bin/protractor example/protractorConf.js
 
