@@ -1,6 +1,4 @@
-var protractor = require('../lib/protractor.js');
 var util = require('util');
-require('../jasminewd');
 
 describe('mock modules', function() {
   var ptor = protractor.getInstance();

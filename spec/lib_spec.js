@@ -1,6 +1,4 @@
-var protractor = require('../lib/protractor.js');
 var util = require('util');
-require('../jasminewd');
 
 describe('no ptor at all', function() {
   it('should still do normal tests', function() {
