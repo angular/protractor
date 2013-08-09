@@ -4,13 +4,13 @@ _Note: Major version 0 releases are for initial development, and backwards compa
 
 ## Features
 
-- 7966912 Updating to Selenium 2.24.
-- 90f0a94 Instead of having tests run with the protractor runner need to require()
+- 796691205795d93fe12c998d20a58c8220ac6fb7 Updating to Selenium 2.24.
+- 90f0a942b09faff5924674a20ce7705b6d685eba Instead of having tests run with the protractor runner need to require()
 the protractor library, publish it to the global namespace. This insures
 the instance of protractor used within the tests is the same as the
 one used on the command line. Closes #36. Version bump for incompatible
 API changes.
-- cb373c9 Adding glob matching to the spec files from the config. Closes #29.
+- cb373c99a7e33c5514bf1d2728a64f631ec8784c Adding glob matching to the spec files from the config. Closes #29.
 
 
 ## Breaking changes
