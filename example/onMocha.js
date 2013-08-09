@@ -18,12 +18,7 @@ describe('angularjs.org homepage', function() {
   before(function() {
     driver = new webdriver.Builder().
         usingServer('http://localhost:4444/wd/hub').
-        withCapabilities({
-          'browserName': 'chrome',
-          'version': '',
-          'platform': 'ANY',
-          'javascriptEnabled': true
-        }).build();
+        withCapabilities(webdriver.Capabilities.chrome()).build();
 
     driver.manage().timeouts().setScriptTimeout(10000);
     ptor = protractor.wrapDriver(driver);
