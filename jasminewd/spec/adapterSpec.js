@@ -104,7 +104,11 @@ describe('webdriverJS Jasmine adapter', function() {
   // }, 200);
 
   // it('should timeout after 300ms', function() {
-  //   fakeDriver.sleep(999);
+  //   fakeDriver.sleep(9999);
   //   expect(fakeDriver.getValueB()).toEqual('b');
   // }, 300);
+
+  it('should pass after the timed out tests', function() {
+    expect(true).toEqual(true);
+  });
 });
