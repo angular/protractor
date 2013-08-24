@@ -106,3 +106,43 @@ global.expect = function(actual) {
     return originalExpect(actual);
   }
 };
+
+/**
+ * A Jasmine reporter which does nothing but execute the input function
+ * on a timeout failure.
+ */
+var OnTimeoutReporter = function(fn) {
+  this.callback = fn;
+};
+
+OnTimeoutReporter.prototype.reportRunnerStarting = function() {};
+OnTimeoutReporter.prototype.reportRunnerResults = function() {};
+OnTimeoutReporter.prototype.reportSuiteResults = function() {};
+OnTimeoutReporter.prototype.reportSpecStarting = function() {};
+OnTimeoutReporter.prototype.reportSpecResults = function(spec) {
+  if (!spec.results().passed()) {
+    var result = spec.results();
+    var failureItem = null;
+
+    var items_length = result.getItems().length;
+    for (var i = 0; i < items_length; i++) {
+      if (result.getItems()[i].passed_ === false) {
+        failureItem = result.getItems()[i];
+
+        if (failureItem.toString().match(/timeout/)) {
+          this.callback();
+        }
+      }
+    }
+  }
+};
+OnTimeoutReporter.prototype.log = function() {};
+
+// On timeout, the flow should be reset. This will prevent webdriver tasks
+// from overflowing into the next test and causing it to fail or timeout
+// as well. This is done in the reporter instead of an afterEach block
+// to ensure that it runs after any afterEach() blocks with webdriver tasks
+// get to complete first.
+jasmine.getEnv().addReporter(new OnTimeoutReporter(function() {
+  flow.reset();
+}));
