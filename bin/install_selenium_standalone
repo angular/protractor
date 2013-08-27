@@ -11,15 +11,15 @@ var AdmZip = require('adm-zip')
 // Thanks to http://www.hacksparrow.com/using-node-js-to-download-files.html
 // for the outline of this code.
 var SELENIUM_URL =
-    'http://selenium.googlecode.com/files/selenium-server-standalone-2.34.0.jar';
+    'http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar';
 var CHROMEDRIVER_URL_MAC =
-    'https://chromedriver.googlecode.com/files/chromedriver_mac32_2.0.zip';
+    'https://chromedriver.googlecode.com/files/chromedriver_mac32_2.2.zip';
 var CHROMEDRIVER_URL_LINUX32 =
-    'https://chromedriver.googlecode.com/files/chromedriver_linux32_2.0.zip';
+    'https://chromedriver.googlecode.com/files/chromedriver_linux32_2.2.zip';
 var CHROMEDRIVER_URL_LINUX64 =
-    'https://chromedriver.googlecode.com/files/chromedriver_linux64_2.0.zip';
+    'https://chromedriver.googlecode.com/files/chromedriver_linux64_2.2.zip';
 var CHROMEDRIVER_URL_WINDOWS =
-    'https://chromedriver.googlecode.com/files/chromedriver_win32_2.0.zip';
+    'https://chromedriver.googlecode.com/files/chromedriver_win32_2.2.zip';
 
 var DOWNLOAD_DIR = './selenium/';
 var chromedriver_url = '';
