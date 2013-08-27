@@ -1,5 +1,5 @@
 /**
- * Adapts Jasmine-Node tests to work better with WebDriverJS. Borrows
+ * Adapts Mocha tests to work better with WebDriverJS. Borrows
  * heavily from the mocha WebDriverJS adapter at
  * https://code.google.com/p/selenium/source/browse/javascript/node/selenium-webdriver/testing/index.js
  */
@@ -38,11 +38,6 @@ function wrapInControlFlow(globalFn) {
                 globalFn(arguments[0], asyncTestFn(arguments[1]));
                 break;
 
-            case 3:
-                // The third variable should be the timeout in ms.
-                globalFn(arguments[0], asyncTestFn(arguments[1]), arguments[2]);
-                break;
-
             default:
                 throw Error('Invalid # arguments: ' + arguments.length);
         }
@@ -61,6 +56,9 @@ function wrapInControlFlow(globalFn) {
 global.it = wrapInControlFlow(global.it);
 global.beforeEach = wrapInControlFlow(global.beforeEach);
 global.afterEach = wrapInControlFlow(global.afterEach);
+global.after = wrapInControlFlow(global.after);
+global.before = wrapInControlFlow(global.before);
+
 
 
 /**
