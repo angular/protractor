@@ -28,4 +28,10 @@ describe('protractor library', function() {
       expect(ptor.driver.getCurrentUrl()).
           toEqual('http://localhost:8000/app/index.html#/http');
     });
+
+  it('should export other webdriver classes onto the global protractor',
+      function() {
+        expect(protractor.ActionSequence).toBeDefined();
+        expect(protractor.Key.RETURN).toEqual('\uE006');
+    });
 });
