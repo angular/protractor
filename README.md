@@ -115,4 +115,4 @@ A script is included to do the download for you - run with (add the --nocd optio
 
 Start the selenium standalone with
 
-    java -jar selenium/selenium-server-standalone-2.34.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver
+    java -jar selenium/selenium-server-standalone-2.35.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver
