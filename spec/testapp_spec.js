@@ -2,7 +2,7 @@ var util = require('util');
 
 describe('longer example', function() {
   var ptor = protractor.getInstance();
-  
+
   describe('synchronizing with Angular', function() {
     describe('http calls', function() {
       beforeEach(function() {
@@ -29,11 +29,11 @@ describe('longer example', function() {
         // Would normally need ptor.sleep(2) or something.
         expect(ptor.findElement(protractor.By.id('statuscode')).getText()).
             toEqual('200');
-        
+
         expect(ptor.findElement(protractor.By.id('data')).getText()).
             toEqual('finally done');
       });
-    }); 
+    });
 
     describe('slow rendering', function() {
       beforeEach(function() {
@@ -59,4 +59,5 @@ describe('longer example', function() {
       });
     });
   });
+
 });
