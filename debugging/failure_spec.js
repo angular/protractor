@@ -19,7 +19,7 @@ describe('modes of failure', function() {
 
   it('should fail to use protractor on a non-Angular site', function() {
     ptor.get('http://www.google.com');
-  });
+  }, 20000);
 
   it('should fail an assertion', function() {
     ptor.get('app/index.html#/form');
