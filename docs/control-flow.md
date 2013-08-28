@@ -2,7 +2,7 @@ The Webdriver Control Flow
 ==========================
 
 The WebDriverJS API is based on promises, which are managed by a control flow.
-I highly recommend reading the (WebDriverJS documentation)[https://code.google.com/p/selenium/wiki/WebDriverJs#Understanding_the_API]
+I highly recommend reading the [WebDriverJS documentation](https://code.google.com/p/selenium/wiki/WebDriverJs#Understanding_the_API)
 on this topic. A short summary, and how Protractor interacts with the control
 flow, is presented below.
 
@@ -10,7 +10,7 @@ Promises and the Control Flow
 -----------------------------
 
 WebDriverJS (and thus, Protractor) APIs are entirely asynchronous. All functions
-return (promises)[https://github.com/kriskowal/q]. 
+return [promises](https://github.com/kriskowal/q). 
 
 WebDriverJS maintains a queue of pending promises, called the control flow,
 to keep execution organized. For example, consider the test
