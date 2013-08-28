@@ -10,9 +10,9 @@ When writing tests, it's important to remember that Protractor is a wrapper
 around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). 
 
 -  The test code and the browser code are separated, and only communicate
-   through the [WebDriver wire protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/css/:propertyName). 
+   through the [WebDriver wire protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol). 
 -  WebDriver commands are scheduled on a control flow and return promises. See
-   the [control flow doc](/control-flow.md) for more info.
+   the [control flow doc](docs/control-flow.md) for more info.
 -  To run tests, WebDriverJS needs to talk to a selenium standalone server
    running as a separate process.
 
@@ -23,7 +23,7 @@ Install Protractor with
 
     npm install -g protractor
 
-(or omit the -g if you'd prefer not to intall globally). 
+(or omit the -g if you'd prefer not to install globally). 
 
 The example test expects a selenium standalone server to be running at 
 localhost:8888. Protractor comes with a script to help download and install
@@ -108,7 +108,7 @@ specific strategies:
    either from `ng-bind` or `{{}}` notation in the template.
 -  `protractor.By.input` searches for elements by input `ng-model`.
 -  `protractor.By.repeater` seraches for `ng-repeat` elements. For example,
-   `protractor.By.repeater('phone in phones').row(12).column('price') returns
+   `protractor.By.repeater('phone in phones').row(12).column('price')` returns
    the element in the 12th row of the `ng-repeat = "phone in phones"` repeater
    with the binding matching `{{phone.price}}`.
 
