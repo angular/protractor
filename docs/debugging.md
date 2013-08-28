@@ -20,7 +20,7 @@ protractor debugging/failure_conf.js
 
 then look at all the pretty stack traces!
 
-This test suite shows what happens when
+This test suite shows various types of failure:
 -  Webdriver throws an error. When a command cannot be completed, for example
    an element is not found, webdriver throws an error.
 -  Protractor will fail when it cannot find the Angular library on a page.
@@ -73,6 +73,7 @@ used from the browser's console.
 ```javascript
 // In the browser console
 > window.clientSideScripts.findInput('user.name');
+// Should return the input element with model 'user.name'.
 ```
 
 Taking Screenshots
@@ -96,3 +97,7 @@ Jasmine tests have a timeout which can be set
 - By setting `jasmine.getEnv().defaultTimeoutInterval = myNumber;` in your test
 - By adding a third parameter, timeout in ms, to your spec
   `it('should pass', function() {...}, 5555);`
+
+Webdriver has a timeout for script execution, which can be set with
+`driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 100
+seconds by default, so usually Jasmine will time out first.
