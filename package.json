@@ -31,7 +31,7 @@
   "bin": "bin/protractor",
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js conf.js"
+    "test": "node lib/cli.js config/conf.js; node lib/cli.js config/nested-conf.js;"
   },
   "version": "0.7.0"
 }
