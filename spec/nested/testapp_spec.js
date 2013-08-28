@@ -2,11 +2,11 @@ var util = require('util');
 
 describe('longer example', function() {
   var ptor = protractor.getInstance();
-  
+
   describe('synchronizing with Angular', function() {
     describe('http calls', function() {
       beforeEach(function() {
-        ptor.get('app/index.html');
+        ptor.get('app/nested.html');
       });
 
       it('should wait for slow RPCs', function() {
@@ -29,15 +29,15 @@ describe('longer example', function() {
         // Would normally need ptor.sleep(2) or something.
         expect(ptor.findElement(protractor.By.id('statuscode')).getText()).
             toEqual('200');
-        
+
         expect(ptor.findElement(protractor.By.id('data')).getText()).
             toEqual('finally done');
       });
-    }); 
+    });
 
     describe('slow rendering', function() {
       beforeEach(function() {
-        ptor.get('app/index.html#/repeater');
+        ptor.get('app/nested.html#/repeater');
       });
 
       it('should synchronize with a slow action', function() {
@@ -59,4 +59,5 @@ describe('longer example', function() {
       });
     });
   });
+
 });
