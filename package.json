@@ -22,7 +22,9 @@
     "expect.js": "~0.2.0",
     "jasmine-node": "~1.9.0",
     "mocha": "~1.10.0",
-    "express": "~3.3.4"
+    "express": "~3.3.4",
+    "chai": "~1.7.2",
+    "promise-testing": "0.0.1"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,8 @@
   "bin": "bin/protractor",
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js conf.js"
+    "test": "node lib/cli.js conf.js",
+    "testMocha": "node ./node_modules/.bin/mocha -r ./mochachaiwd/bootstrap.js ./mochachaiwd/onMocha.js"
   },
   "version": "0.7.0"
 }
