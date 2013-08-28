@@ -9,11 +9,10 @@ describe('angularjs homepage', function() {
 
     ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
 
-    ptor.findElement(protractor.By.binding("Hello {{yourName}}!")).
-        getText().then(function(text) {
-          expect(text).toEqual('Hello Julie!');
-        });
-  }, 100000);
+    var greeting = ptor.findElement(protractor.By.binding("{{yourName}}!"));
+
+    expect(greeting.getText()).toEqual('Hello Julie!');
+  });
 
   it('should list todos', function() {
     ptor.get('http://www.angularjs.org');
@@ -21,10 +20,8 @@ describe('angularjs homepage', function() {
     var todo = ptor.findElement(
         protractor.By.repeater('todo in todos').row(2));
 
-    todo.getText().then(function(text) {
-      expect(text).toEqual('build an angular app');
-    });
-  }, 10000);
+    expect(todo.getText()).toEqual('build an angular app');
+  });
 
   // Uncomment to see failures.
 
