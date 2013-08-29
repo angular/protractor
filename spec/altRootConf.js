@@ -5,10 +5,9 @@ exports.config = {
 
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
-  // Spec patterns are relative to the current working directly when
-  // protractor is called.
+  // Spec patterns are relative to this config.
   specs: [
-    'spec/altRoot/*_spec.js',
+    'altRoot/*_spec.js',
   ],
 
   capabilities: {

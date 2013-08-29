@@ -35,8 +35,7 @@ exports.config = {
 
   // ----- What tests to run -----
   //
-  // Spec patterns are relative to the current working directly when
-  // protractor is called.
+  // Spec patterns are relative to the location of this config.
   specs: [
     'spec/*_spec.js',
   ],
@@ -56,7 +55,7 @@ exports.config = {
   baseUrl: 'http://localhost:8000',
 
   // Selector for the element housing the angular app - this defaults to
-  // body, but is necessary if ng-app is on a descendant of <body>
+  // body, but is necessary if ng-app is on a descendant of <body>  
   rootElement: 'body',
 
   // ----- Options to be passed to minijasminenode -----
