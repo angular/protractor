@@ -31,7 +31,7 @@
   "bin": "bin/protractor",
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js;"
+    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js"
   },
   "version": "0.7.0"
 }
