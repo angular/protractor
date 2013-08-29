@@ -38,9 +38,9 @@ Install protractor with
 
     npm install protractor
 
-Create a configuration file - an example is shown in `node_modules/protractor/conf.js`.
+Create a configuration file - an example is shown in `node_modules/protractor/referenceConf.js`.
 
-    cp node_modules/protractor/conf.js myConf.js
+    cp node_modules/protractor/referenceConf.js myConf.js
 
 Edit the configuration file to point to your tests.
 

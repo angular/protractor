@@ -42,7 +42,8 @@ a configuration file.
     protractor example/protractorConf.js
 
 The configuration file tells Protractor what tests to run, how to connect to a
-webdriver server, and various other options for reporting. See [conf.js](https://github.com/angular/protractor/blob/master/conf.js)
+webdriver server, and various other options for reporting. See
+[referenceConf.js](https://github.com/angular/protractor/blob/master/referenceConf.js)
 for an example and explanation of the options. This simple configuration is
 
 ```javascript
