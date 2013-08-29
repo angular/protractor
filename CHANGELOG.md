@@ -5,9 +5,27 @@ _Note: Major version 0 releases are for initial development, and backwards compa
 ## Docs
 - Added documentation to the [docs folder](https://github.com/angular/protractor/tree/master/docs).
 
+- ([08ef244](https://github.com/angular/protractor/commit/08ef244217fb83206c818c84cbe8f07999116ee3)) Adding debugging tests showing different types of timeouts, and fixing
+a bug where scheduled tasks from a previous it block would run into
+the next in case of a timeout.
+
 ## Features
 
+- ([1c7eae0](https://github.com/angular/protractor/commit/1c7eae0c09f13b7068f81324f24967709e264241)) Updating the binary script to understand debug, so that
+protractor debug conf.js works.
+
+- ([7a59479](https://github.com/angular/protractor/commit/7a594791b5ac6616de9c98dcd7d44ecaffb0e8a3)) Adding a 'debug' function to protractor. This schedules a debugger pause
+within the webdriver control flow.
+
+- ([679c82d](https://github.com/angular/protractor/commit/679c82d510ea016690fba259db50b4afa36154cc)) Mixing in all webdriver exports to protractor. This means that webdriver
+classes such as ActionSequence and Keys are accessible on the global
+protractor.
+
 - ([3c76246](https://github.com/angular/protractor/commit/3c76246a01e584bc30da645a36e75920b5397251)) Added nested angular app (ng-app on an element other than <html> or <body>) capability via conf file.
+
+## Bug fixes
+
+([1c9b98d](https://github.com/angular/protractor/commit/1c9b98d0464bbe57194cf340c6e5942cbe7c8385)) Fixed Sauce issues: low timeouts, shutdown and init order.
 
 ## Breaking Changes
 
