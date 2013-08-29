@@ -62,13 +62,17 @@ protractor debug debugging/failure_conf.js
 This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
 `c` to start execution and continue after the breakpoint.
 
-Protractor's `debugger` function works by adding a node debug breakpoint
-to the control flow. Inserting `debugger;` directly would pause the test
-before any of the webdriver commands ran.
+We use `ptor.debugger();` instead of node's `debugger;` statement so that
+the test pauses after the get command has been *executed*. Using `debugger;`
+pauses the test after the get command is *scheduled* but has not yet
+been sent to the browser.
+
+Protractor's `debugger` method works by scheduling a node debug breakpoint
+on the control flow.
 
 When `debugger()` is called, it also inserts all the client side scripts
 from Protractor into the browser as `window.clientSideScripts`. They can be
-used from the browser's console. 
+used from the browser's console.
 
 ```javascript
 // In the browser console
@@ -93,8 +97,9 @@ protractor debugging/timeout_conf.js
 ```
 
 Jasmine tests have a timeout which can be set
-- By setting `jasmineNodeOpts.defaultTimeoutInterval` in the config
-- By setting `jasmine.getEnv().defaultTimeoutInterval = myNumber;` in your test
+- By setting `jasmineNodeOpts.defaultTimeoutInterval` in the config, or
+- By setting `jasmine.getEnv().defaultTimeoutInterval = myNumber;` in your test,
+  or
 - By adding a third parameter, timeout in ms, to your spec
   `it('should pass', function() {...}, 5555);`
 

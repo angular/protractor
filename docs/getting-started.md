@@ -7,12 +7,14 @@ WebDriverJS
 -----------
 
 When writing tests, it's important to remember that Protractor is a wrapper
-around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). 
+around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). When
+writing tests, keep the following in mind:
 
--  The test code and the browser code are separated, and only communicate
-   through the [WebDriver wire protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol). 
--  WebDriver commands are scheduled on a control flow and return promises. See
-   the [control flow doc](docs/control-flow.md) for more info.
+-  The test code and scripts running in the browser are separated, and only
+   communicate through the [WebDriver wire protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol).
+-  WebDriver commands are scheduled on a control flow and return promises, not
+   primitive values. See the [control flow doc](docs/control-flow.md) for more
+   info.
 -  To run tests, WebDriverJS needs to talk to a selenium standalone server
    running as a separate process.
 
@@ -26,7 +28,7 @@ Install Protractor with
 (or omit the -g if you'd prefer not to install globally). 
 
 The example test expects a selenium standalone server to be running at 
-localhost:8888. Protractor comes with a script to help download and install
+localhost:4444. Protractor comes with a script to help download and install
 the standalone server. Run
 
     node_modules/protractor/bin/install_selenium_standalone
@@ -57,9 +59,9 @@ exports.config = {
     'browserName': 'chrome'
   },
 
-  // Spec patterns are relative to the current working directly when
-  // protractor is called.
-  specs: ['example/onProtractorRunner.js'],
+  // Spec patterns are relative to the location of the spec file. They may
+  // include glob patterns.
+  specs: ['onProtractorRunner.js'],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
@@ -72,10 +74,10 @@ Writing tests
 -------------
 
 By default, Protractor uses [Jasmine](http://pivotal.github.io/jasmine/) as its
-test framework. The `protractor` variable is exposed globally an can be used
+test scaffolding. The `protractor` variable is exposed globally and can be used
 to grab an instance of Protractor (which is called `ptor` in the docs). 
 
-Take this example:
+Take this example, which tests the 'Basics' example on the AngularJS homepage:
 
 ```javascript
 describe('angularjs homepage', function() {
@@ -83,17 +85,21 @@ describe('angularjs homepage', function() {
 
   it('should greet using binding', function() {
     ptor = protractor.getInstance();
+
+    // Load the AngularJS homepage.
     ptor.get('http://www.angularjs.org');
 
+    // Find the element with ng-model matching 'yourName', and then
+    // type 'Julie' into it.
     ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
 
-    var greeting = ptor.findElement(protractor.By.binding("yourName!"));
+    // Find the element with binding matching 'yourName' - this will
+    // find the <h1>Hello {{yourName}}!</h1> element.
+    var greeting = ptor.findElement(protractor.By.binding("yourName"));
 
     expect(greeting.getText()).toEqual('Hello Julie!');
   });
 ```
-
-The instance `ptor` is set up with `protractor.getInstance()`.
 
 The `get` method loads a page. Protractor expects Angular to be present on a
 page, so it will throw an error if the page it is attempting to load does
