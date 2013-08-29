@@ -1,3 +1,20 @@
+# 0.8.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Docs
+- Added documentation to the [docs folder](https://github.com/angular/protractor/tree/master/docs).
+
+## Features
+
+- ([3c76246](https://github.com/angular/protractor/commit/3c76246a01e584bc30da645a36e75920b5397251)) Added nested angular app (ng-app on an element other than <html> or <body>) capability via conf file.
+
+## Breaking Changes
+
+- Now running selenium 2.25. Requires updating WebDriverJS and the selenium standalone binary and chromedriver binary.
+
+- ([a54abfb](https://github.com/angular/protractor/commit/a54abfbbfd3b13be5144e64e52a267c73d409a81)) Spec paths in configuration files are now resolved from the location of the spec file instead of the current working directory when the command line is run.
+
 # 0.7.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
