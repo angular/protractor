@@ -184,4 +184,29 @@ describe('finding elements', function() {
           });
     });
   });
+
+  describe('evaluating statements', function() {
+    // ptor = protractor.getInstance();
+
+    beforeEach(function() {
+      ptor.get('app/index.html#/bindings');
+    });
+
+    it('should evaluate statements in the context of an elmeent', function() {
+      var element = ptor.findElement(protractor.By.binding('planet.name'));
+
+      ptor.evaluate(element, 'planet.radius').then(function(output) {
+        expect(output).toEqual(1516); // radius of Mercury.
+      });
+
+      expect(ptor.evaluate(element, 'planet.radius')).toEqual(1516);
+
+      // Better syntax
+      // element.evaluate('show').then(function(output) {
+      //   expect(output).toEqual(true);
+      // });
+      // or
+      // expect(element.evaluate()).toEqual(true);
+    });
+  });
 });
