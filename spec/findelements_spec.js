@@ -123,6 +123,12 @@ describe('finding elements', function() {
           column('qux'));
       expect(byCol.getText()).toEqual('Wed');
     });
+
+    it('should determine if an element is present', function() {
+      expect(ptor.isElementPresent(protractor.By.binding('greet'))).toBe(true);
+      expect(ptor.isElementPresent(protractor.By.binding('nopenopenope'))).
+          toBe(false);
+    });
   });
 
   describe('further examples', function() {
@@ -204,7 +210,6 @@ describe('finding elements', function() {
 
     it('should find multiple elements scoped properly with chaining',
       function() {
-        ptor.debugger();
         ptor.findElements(protractor.By.binding('item')).then(function(elems) {
           expect(elems.length).toEqual(4);
         });
@@ -214,6 +219,16 @@ describe('finding elements', function() {
               expect(elems.length).toEqual(2);
             });
       });
+
+    it('should determine element presence properly with chaining', function() {
+      expect(ptor.findElement(protractor.By.id('baz')).
+          isElementPresent(protractor.By.binding('item.resuedBinding'))).
+          toBe(true);
+
+      expect(ptor.findElement(protractor.By.id('baz')).
+        isElementPresent(protractor.By.binding('nopenopenope'))).
+        toBe(false);
+    })
   });
 
   describe('evaluating statements', function() {
