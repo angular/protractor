@@ -15,7 +15,6 @@ describe('synchronizing with slow pages', function() {
     expect(status.getText()).toEqual('not started');
 
     button.click();
-    ptor.waitForAngular();
 
     expect(status.getText()).toEqual('done');
   });
@@ -29,7 +28,6 @@ describe('synchronizing with slow pages', function() {
     expect(status.getText()).toEqual('not started');
 
     button.click();
-    ptor.waitForAngular();
 
     expect(status.getText()).toEqual('done');
   });
@@ -43,7 +41,6 @@ describe('synchronizing with slow pages', function() {
     expect(status.getText()).toEqual('not started');
 
     button.click();
-    ptor.waitForAngular();
 
     expect(status.getText()).toEqual('pending...');
   });
@@ -57,7 +54,6 @@ describe('synchronizing with slow pages', function() {
     expect(status.getText()).toEqual('not started');
 
     button.click();
-    ptor.waitForAngular();
 
     expect(status.getText()).toEqual('done');
   });
@@ -73,7 +69,6 @@ describe('synchronizing with slow pages', function() {
     expect(status.getText()).toEqual('not started');
 
     button.click();
-    ptor.waitForAngular();
 
     expect(status.getText()).toEqual('done');
   });
@@ -87,7 +82,6 @@ describe('synchronizing with slow pages', function() {
     expect(status.getText()).toEqual('not started');
 
     button.click();
-    ptor.waitForAngular();
 
     expect(status.getText()).toEqual('done');
   });
