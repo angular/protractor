@@ -185,28 +185,51 @@ describe('finding elements', function() {
     });
   });
 
-  describe('evaluating statements', function() {
-    // ptor = protractor.getInstance();
+  describe('chaining findElements', function() {
+    beforeEach(function() {
+      ptor.get('app/index.html#/conflict');
+    });
 
+    it('should differentiate elements with the same binding by chaining',
+      function() {
+        expect(ptor.findElement(
+          protractor.By.binding('item.reusedBinding')).getText()).
+            toEqual('Outer: outer');
+
+          expect(ptor.findElement(protractor.By.id('baz')).
+              findElement(protractor.By.binding('item.resuedBinding')).
+              getText()).
+              toEqual('Inner: inner');
+    });
+
+    it('should find multiple elements scoped properly with chaining',
+      function() {
+        ptor.debugger();
+        ptor.findElements(protractor.By.binding('item')).then(function(elems) {
+          expect(elems.length).toEqual(4);
+        });
+        ptor.findElement(protractor.By.id('baz')).
+            findElements(protractor.By.binding('item')).
+            then(function(elems) {
+              expect(elems.length).toEqual(2);
+            });
+      });
+  });
+
+  describe('evaluating statements', function() {
     beforeEach(function() {
       ptor.get('app/index.html#/bindings');
     });
 
-    it('should evaluate statements in the context of an elmeent', function() {
+    it('should evaluate statements in the context of an element', function() {
       var element = ptor.findElement(protractor.By.binding('planet.name'));
 
-      ptor.evaluate(element, 'planet.radius').then(function(output) {
+      element.evaluate('planet.radius').then(function(output) {
         expect(output).toEqual(1516); // radius of Mercury.
       });
 
-      expect(ptor.evaluate(element, 'planet.radius')).toEqual(1516);
-
-      // Better syntax
-      // element.evaluate('show').then(function(output) {
-      //   expect(output).toEqual(true);
-      // });
-      // or
-      // expect(element.evaluate()).toEqual(true);
+      // Make sure it works with a promise expectation.
+      expect(element.evaluate('planet.radius')).toEqual(1516);
     });
   });
 });

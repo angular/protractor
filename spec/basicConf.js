@@ -7,7 +7,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'findelements_spec.js',
+    '*_spec.js',
   ],
 
   capabilities: {
