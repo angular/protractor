@@ -5,7 +5,7 @@ Protractor is an end to end test framework for [Angular](http://angularjs.org/) 
 
 Protractor can be run as a standalone binary runner, or included into your tests as a library. Use Protractor as a library if you would like to manage WebDriver and your test setup yourself.
 
-For more information, [read the docs](https://github.com/angular/protractor/tree/master/docs).
+For more information, [read the docs](https://github.com/angular/protractor/tree/master/docs), or head over to the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
 
 To run the sample tests
