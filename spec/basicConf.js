@@ -7,7 +7,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    '*_spec.js',
+    '*_spec.js'
   ],
 
   capabilities: {
@@ -15,11 +15,4 @@ exports.config = {
   },
 
   baseUrl: 'http://localhost:8000',
-
-  jasmineNodeOpts: {
-    onComplete: null,
-    isVerbose: false,
-    showColors: true,
-    includeStackTrace: true,
-  }
 };
