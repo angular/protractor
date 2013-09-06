@@ -1,3 +1,30 @@
+# 0.9.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([0e8de99](https://github.com/angular/protractor/commit/0e8de99eb0d8a0db4f6d3538dd051c94f35775f5)) Wrap WebElements with Protractor specific features. This change allows
+chained findElement calls to work with Protractor locators. It also
+adds a function, evaluate, to evaluate an angular expression in the context
+of a WebElement's scope.
+
+- ([9f53118](https://github.com/angular/protractor/commit/9f5311812cbae5122ce2c6ebe522132273b0ebcc)) Improving the command line interface (adding more options). This allows
+the --spec option to be passed with test files that will be resolved
+relative to the current directory. Smarter merging of default config
+values. Closes #65.
+
+- ([73821fb](https://github.com/angular/protractor/commit/73821fb6b6d252a93cc15ce990b4ec4738b87b95)) Adding an 'ignoreSynchronization' property to turn off Protractor's attempt to
+wait for Angular to be ready on a page. This can be used to test pages that
+poll with $timeout or $http.
+
+## Bug fixes
+
+- ([cfc6438](https://github.com/angular/protractor/commit/cfc6438e80e77387afae776f289cd55813e9b2d9)) Adding support for isElementPresent with Protractor locators.
+Closes #11.
+
+- ([8329b01](https://github.com/angular/protractor/commit/8329b01865074c32f7a261fe9bbf2c151b704a34)) Adding waitForAngular calls before WebElement functions. Closes #37.
+
 # 0.8.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
