@@ -7,7 +7,7 @@ describe('synchronizing with pages that poll', function() {
     ptor.get('app/index.html#/polling');
   });
 
-  it('times out :(', function() {
+  it('avoids timeouts using ignoreSynchronization', function() {
     var startButton =
       ptor.findElement(protractor.By.id('pollstarter'));
 
@@ -16,8 +16,22 @@ describe('synchronizing with pages that poll', function() {
 
     startButton.click();
 
+    // Turn this on to see timeouts.
+    ptor.ignoreSynchronization = true;
+
     count.getText().then(function(text) {
-      expect(text).toBeGreaterThan(2);
+      expect(text).toBeGreaterThan(-1);
     });
+
+    ptor.sleep(2000);
+
+    count.getText().then(function(text) {
+      expect(text).toBeGreaterThan(1);
+    });
+  });
+
+  afterEach(function() {
+    // Remember to turn it off when you're done!
+    ptor.ignoreSynchronization = false;
   });
 });
