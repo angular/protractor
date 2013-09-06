@@ -10,5 +10,6 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
     $routeProvider.when('/form', {templateUrl: 'partials/form.html', controller: FormCtrl});
     $routeProvider.when('/async', {templateUrl: 'partials/async.html', controller: AsyncCtrl});
     $routeProvider.when('/conflict', {templateUrl: 'partials/conflict.html', controller: ConflictCtrl});
+    $routeProvider.when('/polling', {templateUrl: 'partials/polling.html', controller: PollingCtrl});
     $routeProvider.otherwise({redirectTo: '/http'});
   }]);
