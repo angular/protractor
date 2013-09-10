@@ -65,6 +65,12 @@ describe('finding elements', function() {
       expect(letterList.getText()).toBe('wxyz');
     });
 
+    it('should find multiple inputs', function() {
+      ptor.findElements(protractor.By.input('color')).then(function(arr) {
+        expect(arr.length).toEqual(3);
+      });
+    });
+
     it('should find a repeater by partial match', function() {
       var fullMatch = ptor.findElement(
           protractor.By.repeater('baz in days | filter:\'T\'').
