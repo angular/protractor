@@ -111,10 +111,13 @@ WebdriverJS does not natively include the selenium server - you must start a sta
 To use with chrome browsers, [download chromedriver](https://code.google.com/p/chromedriver/downloads/list).
 [More information about chromedriver](https://code.google.com/p/selenium/wiki/ChromeDriver)
 
-A script is included to do the download for you - run with (add the --nocd option if you do not want to install ChromeDriver)
+A script is included to do the download for you - run (add the --nocd option if you do not want to install ChromeDriver)
 
     ./node_modules/protractor/bin/install_selenium_standalone
 
 Start the selenium standalone with
 
     java -jar selenium/selenium-server-standalone-2.35.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver
+
+For alternate ways to download and start the selenium standalone, see
+[the webdriver docs](http://docs.seleniumhq.org/docs/03_webdriver.jsp#running-standalone-selenium-server-for-use-with-remotedrivers).
