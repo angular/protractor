@@ -48,6 +48,17 @@ describe('finding elements', function() {
           toBe(false);
     });
 
+    it('should find an element by textarea model', function() {
+      var about = ptor.findElement(protractor.By.textarea('aboutbox'));
+      expect(about.getAttribute('value')).toEqual('This is a text box');
+
+      about.clear();
+      about.sendKeys('Something else to write about');
+
+      var textarea = ptor.findElement(protractor.By.textarea('aboutbox'));
+      expect(textarea.getAttribute('value')).toEqual('Something else to write about');
+    });
+
     it('should find inputs with alternate attribute forms', function() {
       var letterList = ptor.findElement(protractor.By.id('letterlist'));
       expect(letterList.getText()).toBe('');
