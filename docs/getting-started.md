@@ -103,6 +103,7 @@ describe('angularjs homepage', function() {
 
     expect(greeting.getText()).toEqual('Hello Julie!');
   });
+});
 ```
 
 The `get` method loads a page. Protractor expects Angular to be present on a
