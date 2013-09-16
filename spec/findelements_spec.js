@@ -82,6 +82,21 @@ describe('finding elements', function() {
       });
     });
 
+    it('should find multiple selects', function() {
+      ptor.findElements(protractor.By.select('dc.color')).then(function(arr) {
+        expect(arr.length).toEqual(3);
+      });
+    });
+
+    it('should find multiple selected options', function() {
+      ptor.findElements(protractor.By.selectedOption('dc.color')).then(function(arr) {
+        expect(arr.length).toEqual(3);
+        expect(arr[0].getText()).toBe('red');
+        expect(arr[1].getText()).toBe('green');
+        expect(arr[2].getText()).toBe('blue');
+      });
+    });
+
     it('should find a repeater by partial match', function() {
       var fullMatch = ptor.findElement(
           protractor.By.repeater('baz in days | filter:\'T\'').
