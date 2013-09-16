@@ -105,6 +105,7 @@ function FormCtrl($scope) {
   $scope.color = "blue";
   $scope.show = true;
   $scope.days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  $scope.colors = ['red', 'green', 'blue'];
 }
 FormCtrl.$inject = ['$scope'];
 

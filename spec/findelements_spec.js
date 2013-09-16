@@ -82,6 +82,12 @@ describe('finding elements', function() {
       });
     });
 
+    it('should find multiple selects', function() {
+      ptor.findElements(protractor.By.select('dayColor')).then(function(arr) {
+        expect(arr.length).toEqual(5);
+      });
+    });
+
     it('should find a repeater by partial match', function() {
       var fullMatch = ptor.findElement(
           protractor.By.repeater('baz in days | filter:\'T\'').
