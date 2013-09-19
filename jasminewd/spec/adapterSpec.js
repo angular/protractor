@@ -34,6 +34,11 @@ var getFakeDriver = function() {
       return flow.execute(function() {
         return webdriver.promise.fulfilled('b');
       });
+    },
+    getBigNumber: function() {
+      return flow.execute(function() {
+        return webdriver.promise.fulfilled(1111);
+      });
     }
   };
 };
@@ -96,7 +101,13 @@ describe('webdriverJS Jasmine adapter', function() {
   it('should allow scheduling of tasks', function() {
     fakeDriver.sleep(300);
     expect(fakeDriver.getValueB()).toEqual('b');
-  })
+  });
+
+  it('should allow the use of custom matchers', function() {
+    expect(500).toBeLotsMoreThan(3);
+    expect(fakeDriver.getBigNumber()).toBeLotsMoreThan(33);
+  });
+
 
   // Uncomment to see timeout failures.
   // it('should timeout after 200ms', function() {
