@@ -24,6 +24,6 @@ In summary, this style is
     <BLANK LINE>
     <footer>
 
-Where <type> is one of [feat, fix, docs, style, refactor, test, chore] and
-<scope> is a quick descriptor of the location of the change, such as cli,
+Where `<type>` is one of [feat, fix, docs, style, refactor, test, chore] and
+`<scope>` is a quick descriptor of the location of the change, such as cli,
 jasminewd, clientSideScripts, findElements.
