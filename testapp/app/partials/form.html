@@ -10,6 +10,7 @@
   <input ng-model="color" value="green" type="radio"/> green <br/>
   <input ng-model="color" value="red" type="radio"/> red <br/>
 </div>
+<ul><li ng-repeat="dc in dayColors"><select ng-model="dc.color" ng-options="c for c in colors"></select></li></ul>
 <div>
 <input ng-model="show" type="checkbox"/> Show?
 <span id="shower" ng-show="show">Shown!!</span>
