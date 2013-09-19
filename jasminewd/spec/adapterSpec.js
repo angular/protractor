@@ -98,6 +98,12 @@ describe('webdriverJS Jasmine adapter', function() {
     expect(fakeDriver.getValueB()).toEqual('b');
   })
 
+  it('should allow the use of custom matchers', function() {
+    var customMatcher = expect(fakeDriver.getValueA()).toBeLotsMoreThan;
+    expect(customMatcher).toBeDefined()
+  })
+
+
   // Uncomment to see timeout failures.
   // it('should timeout after 200ms', function() {
   //   expect(fakeDriver.getValueA()).toEqual('a');
