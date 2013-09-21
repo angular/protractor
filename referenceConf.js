@@ -60,6 +60,15 @@ exports.config = {
   // body, but is necessary if ng-app is on a descendant of <body>  
   rootElement: 'body',
 
+  // A callback function called once protractor is ready and available, and
+  // before the specs are executed
+  onPrepare: function() {
+    // At this point, global 'protractor' object will be set up, and jasmine
+    // will be available. For example, you can add a Jasmine reporter with:
+    //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
+    //         'outputdir/', true, true));
+  },
+  
   // ----- Options to be passed to minijasminenode -----
   jasmineNodeOpts: {
     // onComplete will be called just before the driver quits.
