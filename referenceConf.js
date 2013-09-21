@@ -58,6 +58,12 @@ exports.config = {
   // body, but is necessary if ng-app is on a descendant of <body>  
   rootElement: 'body',
 
+  // optional: a callback function called once protractor is ready and available, and before the 
+  // specs are executed
+  // onPrepare: function() {
+    // use protractor here
+  //}
+  
   // ----- Options to be passed to minijasminenode -----
   jasmineNodeOpts: {
     // onComplete will be called just before the driver quits.
