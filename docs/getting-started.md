@@ -40,7 +40,7 @@ the standalone server. Run
 This installs selenium standalone server and chromedriver to `./selenium`. Start
 the server with
 
-    java -jar selenium/selenium-server-standalone-2.35.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver
+    ./selenium/start
 
 Protractor is now available as a command line program which takes one argument,
 a configuration file. 
