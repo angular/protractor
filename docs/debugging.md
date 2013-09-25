@@ -104,7 +104,7 @@ Jasmine tests have a timeout which can be set
   `it('should pass', function() {...}, 5555);`
 
 Webdriver has a timeout for script execution, which can be set with
-`driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 5
+`driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 11
 seconds by default.
 
 Protractor attempts to synchronize with your page before performing actions.
