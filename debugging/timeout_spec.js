@@ -29,6 +29,26 @@ describe('timeout possibilities', function() {
     expect(true).toEqual(true);
   });
 
+  describe('waitForAngular', function() {
+    it('should timeout and give a reasonable message', function() {
+
+      ptor.driver.manage().timeouts().setScriptTimeout(55);
+
+      ptor.get('app/index.html#/async');
+
+
+      var status =
+        ptor.findElement(protractor.By.binding('slowHttpStatus'));
+      var button = ptor.findElement(protractor.By.css('[ng-click="slowHttp()"]'));
+
+      expect(status.getText()).toEqual('not started');
+
+      button.click();
+
+      expect(status.getText()).toEqual('done');
+    }, 5000); // The 5000 here sets the Jasmine spec timeout.
+  });
+
   it('should timeout due to Jasmine spec timeout', function() {
     ptor.driver.sleep(1000);
     expect(true).toBe(true);

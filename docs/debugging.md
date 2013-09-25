@@ -104,8 +104,14 @@ Jasmine tests have a timeout which can be set
   `it('should pass', function() {...}, 5555);`
 
 Webdriver has a timeout for script execution, which can be set with
-`driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 100
-seconds by default, so usually Jasmine will time out first.
+`driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 5
+seconds by default.
+
+Protractor attempts to synchronize with your page before performing actions.
+This means waiting for all $timeout or $http requests to resolve, as well as
+letting the current $digest cycle finish. If your page has not synchronized
+within the script execution timeout, Protractor will fail with the message
+'Timed out waiting for Protractor to synchronize with the page'.
 
 If your website uses $timeout or $http to continuously poll, Protractor will
 interpret that as your site being busy and will time out on all requests. See
