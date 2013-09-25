@@ -1,3 +1,77 @@
+# 0.10.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([881759e](https://github.com/angular/protractor/commit/881759e77462dc8e1001eb77008668ae6dc552cd)) feat(timeouts): add a unique error message when waitForAngular times out
+
+To improve the readability of error messages, when waitForAngular times out
+it now produces a custom message. This should help clarify confusion
+for pages that continually poll using $interval. This change also adds more
+documentation on timeouts. See issue #109.
+
+- ([37e0f1a](https://github.com/angular/protractor/commit/37e0f1af196c3c0bf54dcddf0088a8c16602e5f2)) feat(install selenium): better communication in the install script
+
+Adds better messages in the selenium server install script, and also
+makes the script output a 'start' executable which can be used to quickly
+start up the selenium standalone. *not yet windows friendly*. Closes #108.
+
+- ([b32f5a5](https://github.com/angular/protractor/commit/b32f5a59169f1324271bd5abc09c17fcd9c4f249)) feat(config): add exmples for dealing with log-in
+
+Adds examples for how to log in when the login page is not written
+in Angular. New examples are in spec/login.
+
+- ([1b7675a](https://github.com/angular/protractor/commit/1b7675aab7846bee54117876887bfec07ce31745)) feat(cli): add an onPrepare callback to the config
+
+This onPrepare callback is useful when you want to do something with
+protractor before running the specs. For example, you might want
+to monkey-patch protractor with custom functions used by all the
+specs, or add the protractor instance to the globals.
+An example usage is shown in the spec/onPrepareConf.js file and its
+associated spec.
+
+## Bug fixes
+
+- ([256b21c](https://github.com/angular/protractor/commit/256b21cf8c744a200892e6b7f9172150b2f4fe8d)) fix(cli): allow passing the config file before the options
+
+The cli usage says:
+> USAGE: protractor configFile [options]
+However, the options passed as argument are merged into the default
+configuration as soon as the configFile is met in the args parsing
+loop.
+This fix merges the options in the default configuration only after
+the loop, allowing to pass the options to the cli before or after,
+or around the config file.
+
+- ([6223825](https://github.com/angular/protractor/commit/62238252c7fc68c6a5941883f6a272e95997a8ff)) fix(jasminewd): allow use of custom matchers
+
+Using jasmine.Matchers.prototype to generate the chained methods for
+expect() calls is flawed because it does not pick up custom matchers
+defined using addMatcher.  Instead, use either the matchersClass for
+the current spec or from the environment.
+
+- ([c22fc38](https://github.com/angular/protractor/commit/c22fc387bc0ef7a07371e023d39a6ce58dfa56c9)) fix(sync): getCurrentUrl and friends should sync with Angular first
+
+getCurrentUrl, getPageSource, and getTitle should sync with Angular
+before executing. Closes #92.
+
+- ([dd06756](https://github.com/angular/protractor/commit/dd067561cf9fe0a765e98605b9ebdd8fbfef04d3)) fix(clientsidescripts): findElements and isElementPresent for protractor.By.select
+
+- ([c607459](https://github.com/angular/protractor/commit/c60745945c6514e25403783eab3de5873e15758b)) fix (navigation): The defer label should appear before other window names,
+not after.
+
+- ([806f381](https://github.com/angular/protractor/commit/806f38113c675a26171776a559a20bf3899aa2cc)) Fix: findElements() and isElementPresent() now work for protractor.By.input.
+Closes #79.
+
+## Breaking changes
+
+- ([881759e](https://github.com/angular/protractor/commit/881759e77462dc8e1001eb77008668ae6dc552cd)) feat(timeouts): add a unique error message when waitForAngular times out
+
+This changes the default script timeout from 100 seconds down to 11. Tests
+which relied on extremely long timeouts will need to change the default script
+timeout with `driver.manage().timeouts().setScriptTimeout(<bigNumber>)`.
+
 # 0.9.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
