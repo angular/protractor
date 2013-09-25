@@ -8,7 +8,7 @@ WebDriverJS
 
 When writing tests, it's important to remember that Protractor is a wrapper
 around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs).
-Selenium-Webdriver is a is a browser automation framework. Tests are written
+Selenium-Webdriver is a browser automation framework. Tests are written
 with the WebDriver API, which communicates with a Selenium server to control
 the browser under test.
 
