@@ -1,5 +1,6 @@
 testapp/
 spec/
+debugging/
 selenium/
 
 .npmignore
