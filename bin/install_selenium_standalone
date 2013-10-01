@@ -20,23 +20,18 @@ var CHROMEDRIVER_URL_LINUX64 =
     'https://chromedriver.googlecode.com/files/chromedriver_linux64_2.2.zip';
 var CHROMEDRIVER_URL_WINDOWS =
     'https://chromedriver.googlecode.com/files/chromedriver_win32_2.2.zip';
+var IEXPLOREDRIVER_URL_WINDOWS =
+    'https://selenium.googlecode.com/files/IEDriverServer_Win32_2.35.3.zip';
 
 var DOWNLOAD_DIR = './selenium/';
-var START_SCRIPT_FILENAME = DOWNLOAD_DIR + 'start';
 var chromedriver_url = '';
-var start_script = 'java -jar selenium/selenium-server-standalone-2.35.0.jar';
-
 
 if (!fs.existsSync(DOWNLOAD_DIR) || !fs.statSync(DOWNLOAD_DIR).isDirectory()) {
   fs.mkdirSync(DOWNLOAD_DIR);
 }
 
-console.log(
-  'When finished, start the Selenium Standalone Server with ./selenium/start \n');
-
 // Function to download file using HTTP.get
 var download_file_httpget = function(file_url, callback) {
-  console.log('downloading ' + file_url + '...');
   var options = {
     host: url.parse(file_url).host,
     port: 80,
@@ -77,7 +72,6 @@ if (!(process.argv[2] == '--nocd')) {
   }
 
   var chromedriver_zip = chromedriver_url.split('/').pop();
-  start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
 
   download_file_httpget(chromedriver_url, function(file_name) {
     var zip = new AdmZip(file_name);
@@ -86,10 +80,20 @@ if (!(process.argv[2] == '--nocd')) {
       fs.chmod(DOWNLOAD_DIR + 'chromedriver', 0755);
     }
   });
-}
 
-var start_script_file = fs.createWriteStream(START_SCRIPT_FILENAME);
-start_script_file.write(start_script);
-start_script_file.end(function() {
-  fs.chmod(START_SCRIPT_FILENAME, 0755);
-});
+  console.log(os.type());
+  
+
+  if (os.type() == 'Windows_NT') {
+
+    iexploredriver_url = IEXPLOREDRIVER_URL_WINDOWS;
+
+    var iexploredriver_zip = iexploredriver_url.split('/').pop();
+
+    download_file_httpget(iexploredriver_url, function(file_name) {
+    var zip = new AdmZip(file_name);
+    zip.extractAllTo(DOWNLOAD_DIR);
+  });
+
+
+}
