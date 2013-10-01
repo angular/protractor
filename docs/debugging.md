@@ -118,3 +118,15 @@ If your website uses $timeout or $http to continuously poll, Protractor will
 interpret that as your site being busy and will time out on all requests. See
 [this issue](https://github.com/angular/protractor/issues/49) for more
 information.
+
+Setting up WebStorm for debugging
+---------------------------------
+
+1. Open Run/Debug Configurations dialog
+2. Add new Node.js configuration
+3. On Configuration tab set:
+ - **Node Interpreter**: path to node executable
+ - **Working directory**: your project base path
+ - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\lib\cli.js*)
+ - **Application parameters**: path to your Protractor configuration file (e.g. *protractorConfig.js*)
+4. Click OK, place some breakpoints and start debugging
