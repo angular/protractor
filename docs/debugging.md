@@ -80,6 +80,21 @@ used from the browser's console.
 // Should return the input element with model 'user.name'.
 ```
 
+
+Setting up WebStorm for debugging
+---------------------------------
+
+1. Open Run/Debug Configurations dialog
+2. Add new Node.js configuration
+3. On Configuration tab set:
+ - **Node Interpreter**: path to node executable
+ - **Working directory**: your project base path
+ - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\lib\cli.js*)
+ - **Application parameters**: path to your Protractor configuration file (e.g.
+ *protractorConfig.js*)
+4. Click OK, place some breakpoints and start debugging
+
+
 Testing out Protractor interactively
 ------------------------------------
 
