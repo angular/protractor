@@ -80,7 +80,7 @@ if (!(process.argv[2] == '--nocd')) {
   } else if (os.type() == 'Windows_NT') {
     chromedriver_url = CHROMEDRIVER_URL_WINDOWS;
   }
-
+console.log(os.type());
   var chromedriver_zip = chromedriver_url.split('/').pop();
   start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
 
@@ -95,6 +95,7 @@ if (!(process.argv[2] == '--nocd')) {
 
   // if windows
   if (os.type() == 'Windows_NT') {
+      iexploredriver_url = IEXPLOREDRIVER_URL_WINDOWS;
       download_file_httpget(iexploredriver_url, function(file_name) {
         var zip = new AdmZip(file_name);
         zip.extractAllTo(DOWNLOAD_DIR);
