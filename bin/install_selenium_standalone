@@ -80,7 +80,8 @@ if (!(process.argv[2] == '--nocd')) {
   } else if (os.type() == 'Windows_NT') {
     chromedriver_url = CHROMEDRIVER_URL_WINDOWS;
   }
-console.log(os.type());
+
+  
   var chromedriver_zip = chromedriver_url.split('/').pop();
   start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
 
