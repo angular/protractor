@@ -9,6 +9,17 @@ performing any action (such as finding an element or sending a command to
 an element). If your application continuously polls $timeout or $http, it will
 never be registered as completely loaded. Discussion of this is in [issue 59](https://github.com/angular/protractor/issues/49).
 
+You may also be running into a timeout because your page is slow to load
+or perform actions. By default, Protractor sets the timeout for actions to
+11 seconds. You can change this in your `onPrepare` configuration block as
+below:
+
+```javascript
+  onPrepare: function() {
+    // Override the timeout for webdriver.
+    ptor.driver.manage().timeouts().setScriptTimeout(60000);
+  },
+```
 
 _How do I deal with my log-in page?_
 
