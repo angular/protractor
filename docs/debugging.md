@@ -105,7 +105,8 @@ Jasmine tests have a timeout which can be set
 
 Webdriver has a timeout for script execution, which can be set with
 `driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 11
-seconds by default.
+seconds by default. If you need a longer timeout, consider setting this in
+the `onPrepare` function in your configuration file.
 
 Protractor attempts to synchronize with your page before performing actions.
 This means waiting for all $timeout or $http requests to resolve, as well as
