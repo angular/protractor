@@ -12,108 +12,108 @@ This file provides an overview and links on where to get more information.
 API methods and members that are modified or added by Protractor are marked
 with a `P`.
 
+Documentation generated at e804f6a0ca9eccc7914d562fada84dfee2c87e50
+
 [WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js) and [Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js)
 ------------------
 
 Methods
 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#241)
+controlFlow   ->_!webdriver.promise.ControlFlow_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#246)
-controlFlow = function()
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#250)
+schedule _!webdriver.Command_ _string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#259)
-schedule = function(command, description)
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#302)
+getSession   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#306)
-getSession = function()
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#310)
+getCapabilities   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#315)
-getCapabilities = function()
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#321)
+getCapability _string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#330)
-getCapability = function(name)
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#336)
+quit   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#344)
-quit = function()
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#355)
+actions   ->_!webdriver.ActionSequence_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#369)
-actions = function()
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#373)
+executeScript _!(string|Function)_ _...*_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#411)
-executeScript = function(script, var_args)
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#422)
+executeAsyncScript _!(string|Function)_ _...*_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#502)
-executeAsyncScript = function(script, var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#513)
+call _!Function_ _Object=_ _...*_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#522)
-call = function(fn, opt_scope, var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#532)
+wait _function():boolean_ _number_ _string=_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#544)
-wait = function(fn, timeout, opt_message) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#548)
+sleep _number_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#555)
-sleep = function(ms) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#559)
+getWindowHandle   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#565)
-getWindowHandle = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#571)
+getAllWindowHandles   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#577)
-getAllWindowHandles = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#583)
+getPageSource   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#592)
-getPageSource = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#598)
+close   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#604)
-close = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#609) [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L279)
+get _string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#616)
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L286)
-get = function(url) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#620)
+getCurrentUrl   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#626)
-getCurrentUrl = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#632)
+getTitle   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#638)
-getTitle = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#643)
+findElement _!(webdriver.Locator|Object.&lt;string&gt;|Element)_ _..._   ->_!webdriver.WebElement_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#680)
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L214)
-findElement = function(locatorOrElement)
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#717)
+findDomElement_ _!Element_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#781)
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L248)
-isElementPresent = function(locatorOrElement)
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#765)
+isElementPresent _!(webdriver.Locator|Object.&lt;string&gt;|Element)_ _..._   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#803)
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L228)
-findElements = function(locator, var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#792)
+findElements _webdriver.Locator|Object.&lt;string&gt;_ _..._   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#842)
-takeScreenshot = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#828)
+takeScreenshot   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#852)
-manage = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#847)
+manage   ->_!webdriver.WebDriver.Options_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#861)
-navigate = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#856)
+navigate   ->_!webdriver.WebDriver.Navigation_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#870)
-switchTo = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#865)
+switchTo   ->_!webdriver.WebDriver.TargetLocator_
 
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L106)
-waitForAngular = function()
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L98)
+waitForAngular   ->_!webdriver.promise.Promise_
 
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L128)
-wrapWebElement = function(element) 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L122)
+wrapWebElement _webdriver.WebElement_  
 
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L267)
-addMockModule = function(name, script) 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L257)
+addMockModule _!string_ _!string|Function_  
 
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L275)
-clearMockModules = function() 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L271)
+clearMockModules  
 
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L333)
-debugger = function() 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L314)
+debugger  
 
 
 Locator Strategies
@@ -123,47 +123,30 @@ The `findElement`, `findElements`, and `isElementPresent` functions take
 a _locator strategy_ as their parameter. The following locator strategies
 are avaiable)
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.id
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.css
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.className
+Protractor.By.id  
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.name
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.tagName
+Protractor.By.css  
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.xpath
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.partialLinkText
+Protractor.By.xpath  
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#66)
-WebDriver.By.js
 
-[P](https://github.com/angular/protractor/blob/master/lib/locator.js#L30)
-Protractor.By.binding = function(bindingDescriptor) 
+Protractor.By.name  
 
-[P](https://github.com/angular/protractor/blob/master/lib/locator.js#L49)
-Protractor.By.select = function(model) 
 
-[P](https://github.com/angular/protractor/blob/master/lib/locator.js#L62)
-Protractor.By.selectedOption = function(model) 
+Protractor.By.tagName  
 
-[P](https://github.com/angular/protractor/blob/master/lib/locator.js#L75)
-Protractor.By.input = function(model) 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;locators.js#L21)
+Protractor.By.binding  
 
-[P](https://github.com/angular/protractor/blob/master/lib/locator.js#L88)
-Protractor.By.textarea = function(model) 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;locators.js#L43)
+Protractor.By.select  
 
-[P](https://github.com/angular/protractor/blob/master/lib/locator.js#L114)
-Protractor.By.repeater = function(repeatDescriptor) 
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;locators.js#L96)
+Protractor.By.repeater  
 
 
 
@@ -173,68 +156,71 @@ WebElements
 The `findElement`, `findElements`, and `isElementPresent` functions return
 a WebElement object. The following functions are available on WebElements.
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1560)
-getDriver = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1556)
+WebElement.getDriver   ->_!webdriver.WebDriver_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1570)
-toWireValue = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1564)
+WebElement.toWireValue   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1586)
-schedule_ = function(command, description) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1574)
+WebElement.schedule_ _!webdriver.Command_ _string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1621)
-findElement = function(locator, var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1591) [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L208)
+WebElement.findElement _webdriver.Locator|Object.&lt;string&gt;_ _..._   ->_webdriver.WebElement_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1649)
-isElementPresent = function(locator, var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1634) [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L241)
+WebElement.isElementPresent _webdriver.Locator|Object.&lt;string&gt;_ _..._   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1674)
-findElements = function(locator, var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1659) [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L221)
+WebElement.findElements _webdriver.Locator|Object.&lt;string&gt;_ _..._   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1692)
-click = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1686)
+WebElement.click   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1739)
-sendKeys = function(var_args) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1698)
+WebElement.sendKeys _...string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1761)
-getTagName = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1755)
+WebElement.getTagName   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1783)
-getCssValue = function(cssStyleProperty) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1767)
+WebElement.getCssValue _string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1819)
-getAttribute = function(attributeName) 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1791)
+WebElement.getAttribute _string_   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1833)
-getText = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1826)
+WebElement.getText   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1846)
-getSize = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1839)
+WebElement.getSize   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1858)
-getLocation = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1852)
+WebElement.getLocation   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1871)
-isEnabled = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1864)
+WebElement.isEnabled   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1883)
-isSelected = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1877)
+WebElement.isSelected   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1897)
-submit = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1889)
+WebElement.submit   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1911)
-clear = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1903)
+WebElement.clear   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1923)
-isDisplayed = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1917)
+WebElement.isDisplayed   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1935)
-getOuterHtml = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1929)
+WebElement.getOuterHtml   ->_!webdriver.promise.Promise_
 
-[WD](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1954)
-getInnerHtml = function() 
+[WD](https:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;source&#x2F;browse&#x2F;javascript&#x2F;webdriver&#x2F;webdriver.js?name=selenium-2.35.0#1948)
+WebElement.getInnerHtml   ->_!webdriver.promise.Promise_
 
-[P](https://github.com/angular/protractor/blob/master/lib/protractor.js#L200)
-evaluate = function(expression)
+ [P](https:&#x2F;&#x2F;github.com&#x2F;angular&#x2F;protractor&#x2F;blob&#x2F;e804f6a0ca9eccc7914d562fada84dfee2c87e50&#x2F;lib&#x2F;protractor.js#L189)
+WebElement.evaluate _string_   ->_!webdriver.promise.Promise_
+
+
+
