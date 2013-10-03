@@ -32,3 +32,9 @@ once before any of your tests. See [this example](https://github.com/angular/pro
 
 If you would like to do your login in your test suite itself, see
 [this example](https://github.com/angular/protractor/blob/master/spec/login/viaTestSpec.js).
+
+_The result of `getText` from an input element is always empty_
+
+This is a [webdriver quirk](http://grokbase.com/t/gg/webdriver/12bcmvwhcm/extarcting-text-from-the-input-field).
+`<input>` and `<textarea>` elements always have
+empty `getText` values. Instead, try `element.getAttribute('value')`.
