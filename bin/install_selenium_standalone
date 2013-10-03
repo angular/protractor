@@ -50,6 +50,13 @@ var download_file_httpget = function(file_url, callback) {
 
   var file_name = url.parse(file_url).pathname.split('/').pop();
   var file_path = DOWNLOAD_DIR + file_name;
+  
+  if (fs.existsSync(file_path)){
+    console.log(file_name+" already exists in directory");
+    return;
+  }
+    
+  
   var file = fs.createWriteStream(file_path);
 
   http.get(options, function(res) {
