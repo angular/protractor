@@ -83,7 +83,7 @@ var files = {
 
 var docInfo;
 
-var wdInfo = getInfoFromFile(files['wd'], 'https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js?name=selenium-2.35.0#');
+var wdInfo = getInfoFromFile(files['wd'], 'https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#');
 var protractorInfo = getInfoFromFile(files['protractor'], 'https://github.com/angular/protractor/blob/' + versionHash + '/lib/protractor.js#L');
 var locatorInfo = getInfoFromFile(files['locators'], 'https://github.com/angular/protractor/blob/' + versionHash + '/lib/locators.js#L');
 
