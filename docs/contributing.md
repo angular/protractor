@@ -1,7 +1,7 @@
-Contributing
-============
+Contributing to Source Code
+===========================
 
-Loosely, follow the (Angular contribution rules)[http://docs.angularjs.org/misc/contribute]. 
+Loosely, follow the [Angular contribution rules](http://docs.angularjs.org/misc/contribute). 
 
 Protractor specific rules
 -------------------------
