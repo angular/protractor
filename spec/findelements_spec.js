@@ -300,5 +300,63 @@ describe('finding elements', function() {
         });
       });
     });
+
+    describe("when querying against a found element", function() {
+      beforeEach(function() {
+        this.info = ptor.findElement(protractor.By.css('.planet-info'));
+      });
+
+      describe("when querying for a single element", function() {
+        describe("when ng using a locator that specifies an override", function() {
+          beforeEach(function() {
+            this.planetName = this.info.findElement(protractor.By.binding('planet.name'));
+          });
+
+          it('should wrap the result', function() {
+            expect(typeof this.planetName.evaluate).toBe("function")
+          });
+        });
+
+        describe("when querying using a locator that does not specify an override", function() {
+          beforeEach(function() {
+            this.moons = this.info.findElement(protractor.By.css('div:last-child'));
+          });
+
+          it('should wrap the result', function() {
+            expect(typeof this.moons.evaluate).toBe("function")
+          });
+        });
+      });
+
+      describe("when querying for a many elements", function() {
+        describe("when ng using a locator that specifies an override", function() {
+          beforeEach(function() {
+            this.planetName = this.info.findElements(protractor.By.binding('planet.name'));
+          });
+
+          it('should wrap the result', function() {
+            this.planetName.then(function(planetName) {
+              for (var i = 0; i < planetName.length; ++i) {
+                expect(typeof planetName[i].evaluate).toBe("function");
+              }
+            });
+          });
+        });
+
+        describe("when querying using a locator that does not specify an override", function() {
+          beforeEach(function() {
+            this.moons = this.info.findElements(protractor.By.css('div:last-child'));
+          });
+
+          it('should wrap the result', function() {
+            this.moons.then(function(moons) {
+              for (var i = 0; i < moons.length; ++i) {
+                expect(typeof moons[i].evaluate).toBe("function");
+              }
+            });
+          });
+        });
+      });
+    });
   });
 });
