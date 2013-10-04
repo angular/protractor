@@ -104,6 +104,8 @@ describe('angularjs homepage', function() {
     // find the <h1>Hello {{yourName}}!</h1> element.
     var greeting = ptor.findElement(protractor.By.binding("yourName"));
 
+    // Assert that the text element has the expected value.
+    // Protractor patches 'expect' to understand promises.
     expect(greeting.getText()).toEqual('Hello Julie!');
   });
 });
