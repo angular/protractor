@@ -7,8 +7,11 @@ WebDriverJS
 -----------
 
 When writing tests, it's important to remember that Protractor is a wrapper
-around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs).
-Selenium-Webdriver is a is a browser automation framework. Tests are written
+around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). It's
+highly recommended to skim the intro to WebDriverJS before starting with
+protractor.
+
+Selenium-Webdriver is a browser automation framework. Tests are written
 with the WebDriver API, which communicates with a Selenium server to control
 the browser under test.
 
@@ -113,7 +116,7 @@ page, you may access the wrapped webdriver instance directly with
 `ptor.driver`).
 
 The `findElement` method searches for an element on the page. It requires one
-parameter, a strategy for locating the element. Protractor offers Angular
+parameter, a *locator strategy* for locating the element. Protractor offers Angular
 specific strategies:
 
 -  `protractor.By.binding` searches for elements by matching binding names,
@@ -128,12 +131,12 @@ You may also use plain old WebDriver strategies such as `protractor.By.id` and
 `protractor.By.css`.
 
 Once you have an element, you can interact with it with methods such as
-`sendKeys`, `getText`, and `click`. I recommend referencing the
-[WebDriverJS code](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js)
-to find the latest and best documentation on these methods.
+`sendKeys`, `getText`, and `click`. Check out the [API](/api.md) for a list of
+all available methods.
 
 See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/findelements_spec.js)
 for more examples.
+
 
 Further Reading
 ---------------
