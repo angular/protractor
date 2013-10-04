@@ -132,6 +132,8 @@ specific strategies:
 You may also use plain old WebDriver strategies such as `protractor.By.id` and
 `protractor.By.css`.
 
+Also note that `expect().toEqual` has been [argumented to understand promises](docs/control-flow.md#protractor-adaptations)
+
 Once you have an element, you can interact with it with methods such as
 `sendKeys`, `getText`, and `click`. Check out the [API](/api.md) for a list of
 all available methods.
@@ -146,3 +148,4 @@ Further Reading
 - [WebDriverJS User's Guide](https://code.google.com/p/selenium/wiki/WebDriverJs)
 - [WebDriver FAQ](https://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions)
 - [w3 WebDriver Working Draft](http://www.w3.org/TR/webdriver/)
+- [Old listing of webdriver.js selector methods](https://github.com/dmachi/webdriver-js)
