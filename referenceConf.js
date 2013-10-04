@@ -35,6 +35,10 @@ exports.config = {
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
 
+  // The timeout for each script run on the browser. This should be longer
+  // than the maximum time your application needs to stabilize between tasks.
+  allScriptsTimeout = 11000,
+
   // ----- What tests to run -----
   //
   // Spec patterns are relative to the location of this config.
