@@ -278,5 +278,95 @@ describe('finding elements', function() {
       // Make sure it works with a promise expectation.
       expect(element.evaluate('planet.radius')).toEqual(1516);
     });
+
+    describe('when wrapping all elements', function() {
+      describe('when querying using a locator that specifies an override', function() {
+        it('should wrap the results', function() {
+          ptor.findElements(protractor.By.binding('planet.name')).then(function(elements) {
+            for (var i = 0; i < elements.length; i++) {
+              expect(typeof elements[i].evaluate).toBe('function');
+            }
+          });
+        });
+      });
+
+      describe('when querying using a locator that does not specify an override', function() {
+        it('should wrap the results', function() {
+          ptor.findElements(protractor.By.css('option[value="4"]')).then(function(elements) {
+            for (var i = 0; i < elements.length; i++) {
+              expect(typeof elements[i].evaluate).toBe('function');
+            }
+          });
+        });
+      });
+    });
+
+    describe('when querying against a found element', function() {
+      var info;
+
+      beforeEach(function() {
+        info = ptor.findElement(protractor.By.css('.planet-info'));
+      });
+
+      describe('when querying for a single element', function() {
+        describe('when ng using a locator that specifies an override', function() {
+          var planetName;
+
+          beforeEach(function() {
+            planetName = info.findElement(protractor.By.binding('planet.name'));
+          });
+
+          it('should wrap the result', function() {
+            expect(typeof planetName.evaluate).toBe("function")
+          });
+        });
+
+        describe('when querying using a locator that does not specify an override', function() {
+          var moons;
+
+          beforeEach(function() {
+            moons = info.findElement(protractor.By.css('div:last-child'));
+          });
+
+          it('should wrap the result', function() {
+            expect(typeof moons.evaluate).toBe("function")
+          });
+        });
+      });
+
+      describe('when querying for many elements', function() {
+        describe('when using a locator that specifies an override', function() {
+          var planetName;
+
+          beforeEach(function() {
+            planetName = info.findElements(protractor.By.binding('planet.name'));
+          });
+
+          it('should wrap the result', function() {
+            planetName.then(function(result) {
+              for (var i = 0; i < result.length; ++i) {
+                expect(typeof result[i].evaluate).toBe("function");
+              }
+            });
+          });
+        });
+
+        describe('when querying using a locator that does not specify an override', function() {
+          var moons;
+
+          beforeEach(function() {
+            moons = info.findElements(protractor.By.css('div:last-child'));
+          });
+
+          it('should wrap the result', function() {
+            moons.then(function(result) {
+              for (var i = 0; i < result.length; ++i) {
+                expect(typeof result[i].evaluate).toBe("function");
+              }
+            });
+          });
+        });
+      });
+    });
   });
 });
