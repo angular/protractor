@@ -278,5 +278,27 @@ describe('finding elements', function() {
       // Make sure it works with a promise expectation.
       expect(element.evaluate('planet.radius')).toEqual(1516);
     });
+
+    describe("when finding all elements", function() {
+      describe("when querying using a locator that specifies an override", function() {
+        it('should wrap the results', function() {
+          ptor.findElements(protractor.By.binding('planet.name')).then(function(elements) {
+            for (var i = 0; i < elements.length; i++) {
+              expect(typeof elements[i].evaluate).toBe('function');
+            }
+          });
+        });
+      });
+
+      describe("when querying using a locator that does not specify an override", function() {
+        it('should wrap the results', function() {
+          ptor.findElements(protractor.By.css('option[value="4"]')).then(function(elements) {
+            for (var i = 0; i < elements.length; i++) {
+              expect(typeof elements[i].evaluate).toBe('function');
+            }
+          });
+        });
+      });
+    });
   });
 });
