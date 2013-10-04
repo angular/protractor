@@ -279,8 +279,8 @@ describe('finding elements', function() {
       expect(element.evaluate('planet.radius')).toEqual(1516);
     });
 
-    describe("when finding all elements", function() {
-      describe("when querying using a locator that specifies an override", function() {
+    describe('when wrapping all elements', function() {
+      describe('when querying using a locator that specifies an override', function() {
         it('should wrap the results', function() {
           ptor.findElements(protractor.By.binding('planet.name')).then(function(elements) {
             for (var i = 0; i < elements.length; i++) {
@@ -290,7 +290,7 @@ describe('finding elements', function() {
         });
       });
 
-      describe("when querying using a locator that does not specify an override", function() {
+      describe('when querying using a locator that does not specify an override', function() {
         it('should wrap the results', function() {
           ptor.findElements(protractor.By.css('option[value="4"]')).then(function(elements) {
             for (var i = 0; i < elements.length; i++) {
@@ -301,57 +301,67 @@ describe('finding elements', function() {
       });
     });
 
-    describe("when querying against a found element", function() {
+    describe('when querying against a found element', function() {
+      var info;
+
       beforeEach(function() {
-        this.info = ptor.findElement(protractor.By.css('.planet-info'));
+        info = ptor.findElement(protractor.By.css('.planet-info'));
       });
 
-      describe("when querying for a single element", function() {
-        describe("when ng using a locator that specifies an override", function() {
+      describe('when querying for a single element', function() {
+        describe('when ng using a locator that specifies an override', function() {
+          var planetName;
+
           beforeEach(function() {
-            this.planetName = this.info.findElement(protractor.By.binding('planet.name'));
+            planetName = info.findElement(protractor.By.binding('planet.name'));
           });
 
           it('should wrap the result', function() {
-            expect(typeof this.planetName.evaluate).toBe("function")
+            expect(typeof planetName.evaluate).toBe("function")
           });
         });
 
-        describe("when querying using a locator that does not specify an override", function() {
+        describe('when querying using a locator that does not specify an override', function() {
+          var moons;
+
           beforeEach(function() {
-            this.moons = this.info.findElement(protractor.By.css('div:last-child'));
+            moons = info.findElement(protractor.By.css('div:last-child'));
           });
 
           it('should wrap the result', function() {
-            expect(typeof this.moons.evaluate).toBe("function")
+            expect(typeof moons.evaluate).toBe("function")
           });
         });
       });
 
-      describe("when querying for a many elements", function() {
-        describe("when ng using a locator that specifies an override", function() {
+      describe('when querying for many elements', function() {
+        describe('when using a locator that specifies an override', function() {
+          var planetName;
+
           beforeEach(function() {
-            this.planetName = this.info.findElements(protractor.By.binding('planet.name'));
+            planetName = info.findElements(protractor.By.binding('planet.name'));
           });
 
           it('should wrap the result', function() {
-            this.planetName.then(function(planetName) {
-              for (var i = 0; i < planetName.length; ++i) {
-                expect(typeof planetName[i].evaluate).toBe("function");
+            planetName.then(function(result) {
+              for (var i = 0; i < result.length; ++i) {
+                expect(typeof result[i].evaluate).toBe("function");
               }
             });
           });
         });
 
-        describe("when querying using a locator that does not specify an override", function() {
+        describe('when querying using a locator that does not specify an override', function() {
+          var moons;
+
           beforeEach(function() {
-            this.moons = this.info.findElements(protractor.By.css('div:last-child'));
+            moons = info.findElements(protractor.By.css('div:last-child'));
           });
 
           it('should wrap the result', function() {
-            this.moons.then(function(moons) {
-              for (var i = 0; i < moons.length; ++i) {
-                expect(typeof moons[i].evaluate).toBe("function");
+            moons.then(function(result) {
+              for (var i = 0; i < result.length; ++i) {
+                expect(typeof result[i].evaluate).toBe("function");
               }
             });
           });
