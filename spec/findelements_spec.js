@@ -278,24 +278,120 @@ describe('finding elements', function() {
       // Make sure it works with a promise expectation.
       expect(element.evaluate('planet.radius')).toEqual(1516);
     });
+  });
 
-    describe('when wrapping all elements', function() {
-      describe('when querying using a locator that specifies an override', function() {
+  describe('finding an element by css', function() {
+    beforeEach(function() {
+      ptor.get('app/index.html#/bindings');
+    });
+
+    describe('via the driver', function() {
+      it('should return the same results as web driver', function() {
+        ptor.findElement(protractor.By.css('.planet-info')).getText().then(function(textFromLongForm) {
+          var textFromShortcut = ptor.$('.planet-info').getText();
+          expect(textFromShortcut).toEqual(textFromLongForm);
+        });
+      });
+    });
+
+    describe('via a web element', function() {
+      var select;
+
+      beforeEach(function() {
+        select = ptor.findElement(protractor.By.css('select'));
+      });
+
+      it('should return the same results as web driver', function() {
+        select.findElement(protractor.By.css('option[value="4"]')).getText().then(function(textFromLongForm) {
+          var textFromShortcut = select.$('option[value="4"]').getText();
+          expect(textFromShortcut).toEqual(textFromLongForm);
+        });
+      });
+    });
+  });
+
+  describe('finding elements by css', function() {
+    beforeEach(function() {
+      ptor.get('app/index.html#/bindings');
+    });
+
+    describe('via the driver', function() {
+      it('should return the same results as web driver', function() {
+        ptor.findElements(protractor.By.css('option')).then(function(optionsFromLongForm) {
+          ptor.$$('option').then(function(optionsFromShortcut) {
+            expect(optionsFromShortcut.length).toEqual(optionsFromLongForm.length);
+
+            optionsFromLongForm.forEach(function(option, i) {
+              option.getText().then(function(textFromLongForm) {
+                expect(optionsFromShortcut[i].getText()).toEqual(textFromLongForm);
+              });
+            });
+          });
+        });
+      });
+    });
+
+    describe('via a web element', function() {
+      var select;
+
+      beforeEach(function() {
+        select = ptor.findElement(protractor.By.css('select'));
+      });
+
+      it('should return the same results as web driver', function() {
+        select.findElements(protractor.By.css('option')).then(function(optionsFromLongForm) {
+          select.$$('option').then(function(optionsFromShortcut) {
+            expect(optionsFromShortcut.length).toEqual(optionsFromLongForm.length);
+
+            optionsFromLongForm.forEach(function(option, i) {
+              option.getText().then(function(textFromLongForm) {
+                expect(optionsFromShortcut[i].getText()).toEqual(textFromLongForm);
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
+  describe('wrapping web driver elements', function() {
+    var verifyMethodsAdded = function(result) {
+      expect(typeof result.evaluate).toBe('function');
+      expect(typeof result.$).toBe('function');
+      expect(typeof result.$$).toBe('function');
+    }
+
+    beforeEach(function() {
+      ptor.get('app/index.html#/bindings');
+    });
+
+    describe('when found via #findElement', function() {
+      describe('when using a locator that specifies an override', function() {
+        it('should wrap the result', function() {
+          ptor.findElement(protractor.By.binding('planet.name')).then(verifyMethodsAdded);
+        });
+      });
+
+      describe('when using a locator that does not specify an override', function() {
+        it('should wrap the result', function() {
+          ptor.findElement(protractor.By.css('option[value="4"]')).then(verifyMethodsAdded);
+        });
+      });
+    });
+
+    describe('when found via #findElements', function() {
+      describe('when using a locator that specifies an override', function() {
         it('should wrap the results', function() {
-          ptor.findElements(protractor.By.binding('planet.name')).then(function(elements) {
-            for (var i = 0; i < elements.length; i++) {
-              expect(typeof elements[i].evaluate).toBe('function');
-            }
+          ptor.findElements(protractor.By.binding('planet.name')).then(function(results) {
+            results.forEach(verifyMethodsAdded);
           });
         });
       });
 
-      describe('when querying using a locator that does not specify an override', function() {
+      describe('when using a locator that does not specify an override', function() {
         it('should wrap the results', function() {
-          ptor.findElements(protractor.By.css('option[value="4"]')).then(function(elements) {
-            for (var i = 0; i < elements.length; i++) {
-              expect(typeof elements[i].evaluate).toBe('function');
-            }
+          ptor.findElements(protractor.By.css('option[value="4"]')).then(function(results) {
+            results.forEach(verifyMethodsAdded);
           });
         });
       });
@@ -308,61 +404,33 @@ describe('finding elements', function() {
         info = ptor.findElement(protractor.By.css('.planet-info'));
       });
 
-      describe('when querying for a single element', function() {
-        describe('when ng using a locator that specifies an override', function() {
-          var planetName;
-
-          beforeEach(function() {
-            planetName = info.findElement(protractor.By.binding('planet.name'));
-          });
-
+      describe('when found via #findElement', function() {
+        describe('when using a locator that specifies an override', function() {
           it('should wrap the result', function() {
-            expect(typeof planetName.evaluate).toBe("function")
+            info.findElement(protractor.By.binding('planet.name')).then(verifyMethodsAdded);
           });
         });
 
-        describe('when querying using a locator that does not specify an override', function() {
-          var moons;
-
-          beforeEach(function() {
-            moons = info.findElement(protractor.By.css('div:last-child'));
-          });
-
+        describe('when using a locator that does not specify an override', function() {
           it('should wrap the result', function() {
-            expect(typeof moons.evaluate).toBe("function")
+            info.findElement(protractor.By.css('div:last-child')).then(verifyMethodsAdded);
           });
         });
       });
 
       describe('when querying for many elements', function() {
         describe('when using a locator that specifies an override', function() {
-          var planetName;
-
-          beforeEach(function() {
-            planetName = info.findElements(protractor.By.binding('planet.name'));
-          });
-
           it('should wrap the result', function() {
-            planetName.then(function(result) {
-              for (var i = 0; i < result.length; ++i) {
-                expect(typeof result[i].evaluate).toBe("function");
-              }
+            info.findElements(protractor.By.binding('planet.name')).then(function(results) {
+              results.forEach(verifyMethodsAdded);
             });
           });
         });
 
-        describe('when querying using a locator that does not specify an override', function() {
-          var moons;
-
-          beforeEach(function() {
-            moons = info.findElements(protractor.By.css('div:last-child'));
-          });
-
+        describe('when using a locator that does not specify an override', function() {
           it('should wrap the result', function() {
-            moons.then(function(result) {
-              for (var i = 0; i < result.length; ++i) {
-                expect(typeof result[i].evaluate).toBe("function");
-              }
+            info.findElements(protractor.By.css('div:last-child')).then(function(results) {
+              results.forEach(verifyMethodsAdded);
             });
           });
         });
