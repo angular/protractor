@@ -101,15 +101,15 @@ describe('finding elements', function() {
       it('should find by partial match', function() {
         var fullMatch = ptor.findElement(
             protractor.By.repeater('baz in days | filter:\'T\'').
-                row(1).column('{{baz}}'));
+                row(0).column('{{baz}}'));
         expect(fullMatch.getText()).toEqual('Tue');
 
         var partialMatch = ptor.findElement(
-            protractor.By.repeater('baz in days').row(1).column('b'));
+            protractor.By.repeater('baz in days').row(0).column('b'));
         expect(partialMatch.getText()).toEqual('Tue');
 
         var partialRowMatch = ptor.findElement(
-            protractor.By.repeater('baz in days').row(1));
+            protractor.By.repeater('baz in days').row(0));
         expect(partialRowMatch.getText()).toEqual('Tue');
       });
 
@@ -137,20 +137,20 @@ describe('finding elements', function() {
 
       it('should return a single row', function() {
         var secondRow = ptor.findElement(
-            protractor.By.repeater('dayColor in dayColors').row(2));
+            protractor.By.repeater('dayColor in dayColors').row(1));
         expect(secondRow.getText()).toEqual('Tue green');
       });
 
       it('should return an individual cell', function() {
         var secondColor = ptor.findElement(
             protractor.By.repeater('dayColor in dayColors').
-            row(2).
+            row(1).
             column('color'));
 
         var secondColorByColumnFirst = ptor.findElement(
             protractor.By.repeater('dayColor in dayColors').
             column('color').
-            row(2));
+            row(1));
 
         expect(secondColor.getText()).toEqual('green');
         expect(secondColorByColumnFirst.getText()).toEqual('green');
@@ -158,44 +158,44 @@ describe('finding elements', function() {
 
       it('should find a using data-ng-repeat', function() {
         var byRow =
-          ptor.findElement(protractor.By.repeater('day in days').row(3));
+          ptor.findElement(protractor.By.repeater('day in days').row(2));
         expect(byRow.getText()).toEqual('Wed');
 
         var byCol =
-            ptor.findElement(protractor.By.repeater('day in days').row(3).
+            ptor.findElement(protractor.By.repeater('day in days').row(2).
             column('day'));
         expect(byCol.getText()).toEqual('Wed');
       });
 
       it('should find using ng:repeat', function() {
         var byRow =
-          ptor.findElement(protractor.By.repeater('bar in days').row(3));
+          ptor.findElement(protractor.By.repeater('bar in days').row(2));
         expect(byRow.getText()).toEqual('Wed');
 
         var byCol =
-            ptor.findElement(protractor.By.repeater('bar in days').row(3).
+            ptor.findElement(protractor.By.repeater('bar in days').row(2).
             column('bar'));
         expect(byCol.getText()).toEqual('Wed');
       });
 
       it('should find using ng_repeat', function() {
         var byRow =
-          ptor.findElement(protractor.By.repeater('foo in days').row(3));
+          ptor.findElement(protractor.By.repeater('foo in days').row(2));
         expect(byRow.getText()).toEqual('Wed');
 
         var byCol =
-            ptor.findElement(protractor.By.repeater('foo in days').row(3).
+            ptor.findElement(protractor.By.repeater('foo in days').row(2).
             column('foo'));
         expect(byCol.getText()).toEqual('Wed');
       });
 
       it('should find using x-ng-repeat', function() {
         var byRow =
-          ptor.findElement(protractor.By.repeater('qux in days').row(3));
+          ptor.findElement(protractor.By.repeater('qux in days').row(2));
         expect(byRow.getText()).toEqual('Wed');
 
         var byCol =
-            ptor.findElement(protractor.By.repeater('qux in days').row(3).
+            ptor.findElement(protractor.By.repeater('qux in days').row(2).
             column('qux'));
         expect(byCol.getText()).toEqual('Wed');
       });
@@ -230,12 +230,12 @@ describe('finding elements', function() {
     it('should find elements using a repeater', function() {
       // Returns the element for the entire row.
       expect(
-          ptor.findElement(protractor.By.repeater('ball in planets').row(3)).
+          ptor.findElement(protractor.By.repeater('ball in planets').row(2)).
           getText()).toEqual('Earth:3');
 
       // Returns the element in row 2 and the column with binding {{ball.name}}
       expect(
-          ptor.findElement(protractor.By.repeater('ball in planets').row(2).
+          ptor.findElement(protractor.By.repeater('ball in planets').row(1).
           column('{{ball.name}}')).getText()).toEqual('Venus');
 
       // Returns the entire column.
