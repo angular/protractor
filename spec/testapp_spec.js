@@ -44,7 +44,7 @@ describe('longer example', function() {
         var addOneButton = ptor.findElement(protractor.By.id('addone'));
         addOneButton.click();
         var topNumber = ptor.findElement(
-            protractor.By.repeater('foo in foos').row(1).
+            protractor.By.repeater('foo in foos').row(0).
             column('{{foo.b}}'));
 
         expect(topNumber.getText()).toEqual('14930352');
@@ -52,7 +52,7 @@ describe('longer example', function() {
         addOneButton.click();
 
         topNumber = ptor.findElement(
-            protractor.By.repeater('foo in foos').row(1).
+            protractor.By.repeater('foo in foos').row(0).
             column('{{foo.b}}'));
 
         expect(topNumber.getText()).toEqual('24157817');
