@@ -97,63 +97,108 @@ describe('finding elements', function() {
       });
     });
 
-    it('should find a repeater by partial match', function() {
-      var fullMatch = ptor.findElement(
-          protractor.By.repeater('baz in days | filter:\'T\'').
-              row(1).column('{{baz}}'));
-      expect(fullMatch.getText()).toEqual('Tue');
+    describe('by repeater', function() {
+      it('should find by partial match', function() {
+        var fullMatch = ptor.findElement(
+            protractor.By.repeater('baz in days | filter:\'T\'').
+                row(1).column('{{baz}}'));
+        expect(fullMatch.getText()).toEqual('Tue');
 
-      var partialMatch = ptor.findElement(
-          protractor.By.repeater('baz in days').row(1).column('b'));
-      expect(partialMatch.getText()).toEqual('Tue');
+        var partialMatch = ptor.findElement(
+            protractor.By.repeater('baz in days').row(1).column('b'));
+        expect(partialMatch.getText()).toEqual('Tue');
 
-      var partialRowMatch = ptor.findElement(
-          protractor.By.repeater('baz in days').row(1));
-      expect(partialRowMatch.getText()).toEqual('Tue');
-    });
+        var partialRowMatch = ptor.findElement(
+            protractor.By.repeater('baz in days').row(1));
+        expect(partialRowMatch.getText()).toEqual('Tue');
+      });
 
-    it('should find a repeater using data-ng-repeat', function() {
-      var byRow =
-        ptor.findElement(protractor.By.repeater('day in days').row(3));
-      expect(byRow.getText()).toEqual('Wed');
+      it('should return all rows when unmodified', function() {
+        var all =
+            ptor.findElements(protractor.By.repeater('dayColor in dayColors'));
+        all.then(function(arr) {
+          expect(arr.length).toEqual(3);
+          expect(arr[0].getText()).toEqual('Mon red');
+          expect(arr[1].getText()).toEqual('Tue green');
+          expect(arr[2].getText()).toEqual('Wed blue');
+        });
+      });
 
-      var byCol = 
-          ptor.findElement(protractor.By.repeater('day in days').row(3).
-          column('day'));
-      expect(byCol.getText()).toEqual('Wed');
-    });
+      it('should return a single column', function() {
+        var colors = ptor.findElements(
+            protractor.By.repeater('dayColor in dayColors').column('color'));
+        colors.then(function(arr) {
+          expect(arr.length).toEqual(3);
+          expect(arr[0].getText()).toEqual('red');
+          expect(arr[1].getText()).toEqual('green');
+          expect(arr[2].getText()).toEqual('blue');
+        });
+      });
 
-    it('should find a repeater using ng:repeat', function() {
-      var byRow =
-        ptor.findElement(protractor.By.repeater('bar in days').row(3));
-      expect(byRow.getText()).toEqual('Wed');
+      it('should return a single row', function() {
+        var secondRow = ptor.findElement(
+            protractor.By.repeater('dayColor in dayColors').row(2));
+        expect(secondRow.getText()).toEqual('Tue green');
+      });
 
-      var byCol = 
-          ptor.findElement(protractor.By.repeater('bar in days').row(3).
-          column('bar'));
-      expect(byCol.getText()).toEqual('Wed');
-    });
+      it('should return an individual cell', function() {
+        var secondColor = ptor.findElement(
+            protractor.By.repeater('dayColor in dayColors').
+            row(2).
+            column('color'));
 
-    it('should find a repeater using ng_repeat', function() {
-      var byRow =
-        ptor.findElement(protractor.By.repeater('foo in days').row(3));
-      expect(byRow.getText()).toEqual('Wed');
+        var secondColorByColumnFirst = ptor.findElement(
+            protractor.By.repeater('dayColor in dayColors').
+            column('color').
+            row(2));
 
-      var byCol = 
-          ptor.findElement(protractor.By.repeater('foo in days').row(3).
-          column('foo'));
-      expect(byCol.getText()).toEqual('Wed');
-    });
+        expect(secondColor.getText()).toEqual('green');
+        expect(secondColorByColumnFirst.getText()).toEqual('green');
+      });
 
-    it('should find a repeater using x-ng-repeat', function() {
-      var byRow =
-        ptor.findElement(protractor.By.repeater('qux in days').row(3));
-      expect(byRow.getText()).toEqual('Wed');
+      it('should find a using data-ng-repeat', function() {
+        var byRow =
+          ptor.findElement(protractor.By.repeater('day in days').row(3));
+        expect(byRow.getText()).toEqual('Wed');
 
-      var byCol = 
-          ptor.findElement(protractor.By.repeater('qux in days').row(3).
-          column('qux'));
-      expect(byCol.getText()).toEqual('Wed');
+        var byCol =
+            ptor.findElement(protractor.By.repeater('day in days').row(3).
+            column('day'));
+        expect(byCol.getText()).toEqual('Wed');
+      });
+
+      it('should find using ng:repeat', function() {
+        var byRow =
+          ptor.findElement(protractor.By.repeater('bar in days').row(3));
+        expect(byRow.getText()).toEqual('Wed');
+
+        var byCol =
+            ptor.findElement(protractor.By.repeater('bar in days').row(3).
+            column('bar'));
+        expect(byCol.getText()).toEqual('Wed');
+      });
+
+      it('should find using ng_repeat', function() {
+        var byRow =
+          ptor.findElement(protractor.By.repeater('foo in days').row(3));
+        expect(byRow.getText()).toEqual('Wed');
+
+        var byCol =
+            ptor.findElement(protractor.By.repeater('foo in days').row(3).
+            column('foo'));
+        expect(byCol.getText()).toEqual('Wed');
+      });
+
+      it('should find using x-ng-repeat', function() {
+        var byRow =
+          ptor.findElement(protractor.By.repeater('qux in days').row(3));
+        expect(byRow.getText()).toEqual('Wed');
+
+        var byCol =
+            ptor.findElement(protractor.By.repeater('qux in days').row(3).
+            column('qux'));
+        expect(byCol.getText()).toEqual('Wed');
+      });
     });
 
     it('should determine if an element is present', function() {
