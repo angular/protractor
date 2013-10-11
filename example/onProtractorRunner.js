@@ -9,7 +9,8 @@ describe('angularjs homepage', function() {
 
     ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
 
-    var greeting = ptor.findElement(protractor.By.binding("{{yourName}}!"));
+    var greeting = ptor.findElement(
+        protractor.By.binding("yourName"));
 
     expect(greeting.getText()).toEqual('Hello Julie!');
   });
