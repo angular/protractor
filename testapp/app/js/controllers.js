@@ -127,7 +127,7 @@ function AsyncCtrl($scope, $http, $timeout) {
 
   $scope.slowFunction = function() {
     $scope.slowFunctionStatus = 'pending...';
-    for (var i = 0, t = 0; i < 1000000000; ++i) {
+    for (var i = 0, t = 0; i < 500000000; ++i) {
       t++;
     }
     $scope.slowFunctionStatus = 'done';
