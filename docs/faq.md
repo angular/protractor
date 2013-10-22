@@ -1,9 +1,8 @@
 FAQ
 ===
 
-My tests time out in Protractor, but everything's working fine when running
-manually. What's up?
---------------------
+My tests time out in Protractor, but everything's working fine when running manually. What's up?
+---------------------------------------------------
 
 Protractor attempts to wait until the page is completely loaded before
 performing any action (such as finding an element or sending a command to
