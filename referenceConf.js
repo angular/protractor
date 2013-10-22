@@ -90,6 +90,8 @@ exports.config = {
   }
   
   // ----- Options to be passed to minijasminenode -----
+  //
+  // See the full list at https://github.com/juliemr/minijasminenode
   jasmineNodeOpts: {
     // onComplete will be called just before the driver quits.
     onComplete: null,
