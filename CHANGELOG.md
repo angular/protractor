@@ -1,3 +1,75 @@
+# 0.11.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([02cb819](https://github.com/angular/protractor/commit/02cb8199d89c6645d0bc9dbb39e5cb27517bfaf3)) feat(cli): allow passing params directly to your test
+
+Adds a config object 'params' which is passed directly
+to instances of protractor. 'params' may contain nested
+objects, and can be changed via the command line as:
+
+  --params.login.user 'Joe' --params.login.password 'abc'
+
+This change also switches to using optimist to parse
+command line flags for more flexibility and better usage
+documentation. Closes #32.
+
+- ([c025ddb](https://github.com/angular/protractor/commit/c025ddbe617b977908db509f365cc882924b196f)) feat(findElements): $ & $$ shortcuts.
+
+Introducing the $ shortcut method for finding a single element by css
+without having to call protractor.By.css.  Additionally $$ for finding
+all elements by css.
+
+Examples:
+- ptor.$('.some .selector')
+- ptor.$$('.some .selector')
+
+- ([7d74184](https://github.com/angular/protractor/commit/7d7418411ea4a9d696855f755899161ecb36818d)) feat(explorer): add an interactive element explorer
+
+When debugging or first writing test suites, you may find it helpful to
+try out Protractor commands without starting up the entire test suite. You can
+do this with the element explorer. This change introduces a first version
+of the element explorer. Closes #107
+
+## Bug Fixes
+
+- ([e45ceaa](https://github.com/angular/protractor/commit/e45ceaae825cce0ec69580b8f6e93d102d4d61f1)) fix(repeaters): allow finding all rows of a repeater
+
+Now, finding an element with the strategy 'protractor.By.repeater()' returns
+a promise which will resolve to an array of WebElements, where each WebElement
+is a row in the repeater. Closes #149.
+
+- ([b501ceb](https://github.com/angular/protractor/commit/b501ceb7b776a5d9f1c2659326577601d0fbce5a)) fix(findElements): Consistently include evaluate.
+
+When using findElements with a css locator, wrap the returned list of
+elements with protractor specific functionality.
+
+- ([c17ac12](https://github.com/angular/protractor/commit/c17ac12c2a213a7b6f8c236e81ba5cb2db542fd0)) fix(cli): allow running from command line without a config file
+
+If all necessary fields are specified (e.g. seleniumAddress and at least
+one spec), a config file shouldn't be necessary.
+
+## Breaking Changes
+
+- ([421d623](https://github.com/angular/protractor/commit/421d6232fe0b45ca1758afd634997da644f2e1db)) fix(repeat): use 0-based indexing for repeater rows
+
+BREAKING CHANGE: Finding rows with protractor.By.repeater now
+indexes from 0 instead of 1. This should be more familiar to most
+modern programmers. You will need to edit existing tests. Closes #90.
+
+Before:
+```
+// The fourth foo
+ptor.findElement(protractor.By.repeater('foo in foos').row(4));
+```
+After:
+```
+// The fourth foo
+ptor.findElement(protractor.By.repeater('foo in foos').row(3));
+```
+
 # 0.10.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
