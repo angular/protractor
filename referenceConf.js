@@ -56,6 +56,8 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  // ----- More information for your tests ----
+  //
   // A base URL for your application under test. Calls to protractor.get()
   // with relative paths will be prepended with this.
   baseUrl: 'http://localhost:8000',
@@ -74,6 +76,18 @@ exports.config = {
     //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
     //         'outputdir/', true, true));
   },
+
+  // The params object will be passed directly to the protractor instance,
+  // and can be accessed from your test. It is an arbitrary object and can
+  // contain anything you my need in your test.
+  // This can be changed via the command line as:
+  //   --params.login.user 'Joe'
+  params: {
+    login: {
+      user: 'Jane',
+      password: '1234'
+    }
+  }
   
   // ----- Options to be passed to minijasminenode -----
   jasmineNodeOpts: {

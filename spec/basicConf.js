@@ -15,4 +15,11 @@ exports.config = {
   },
 
   baseUrl: 'http://localhost:8000',
+
+  params: {
+    login: {
+      user: 'Jane',
+      password: '1234'
+    }
+  }
 };

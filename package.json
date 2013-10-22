@@ -16,7 +16,8 @@
     "minijasminenode": "~0.2.4",
     "saucelabs": "~0.1.0",
     "glob": ">=3.1.14",
-    "adm-zip": ">=0.4.2"
+    "adm-zip": ">=0.4.2",
+    "optimist": "~0.6.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",

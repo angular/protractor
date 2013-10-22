@@ -14,6 +14,12 @@ describe('protractor library', function() {
     expect(ptor.getTitle()).toEqual('My AngularJS App');
   });
 
+  it('should export custom parameters to the protractor instance', function() {
+    expect(ptor.params.login).toBeDefined();
+    expect(ptor.params.login.user).toEqual('Jane');
+    expect(ptor.params.login.password).toEqual('1234');
+  });
+
   it('should allow a mix of using protractor and using the driver directly',
     function() {
       ptor.get('app/index.html');
