@@ -17,13 +17,13 @@ to keep execution organized. For example, consider the test
 
 ```javascript
   it('should find an element by text input model', function() {
-    ptor.get('app/index.html#/form');
+    browser.get('app/index.html#/form');
 
-    var username = ptor.findElement(protractor.By.input('username'));
+    var username = element(by.input('username'));
     username.clear();
     username.sendKeys('Jane Doe');
 
-    var name = ptor.findElement(protractor.By.binding('username'));
+    var name = element(by.binding('username'));
 
     expect(name.getText()).toEqual('Jane Doe');
 
@@ -31,7 +31,7 @@ to keep execution organized. For example, consider the test
   });
 ```
 
-At Point A, none of the tasks have executed yet. The `ptor.get` call is at
+At Point A, none of the tasks have executed yet. The `browser.get` call is at
 the front of the control flow queue, and the `name.getText()` call is at the
 back. The value of `name.getText()` at point A is an unresolved promise
 object.

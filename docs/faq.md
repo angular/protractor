@@ -1,8 +1,7 @@
 FAQ
 ===
 
-My tests time out in Protractor, but everything's working fine when running
-manually. What's up?
+My tests time out in Protractor, but everything's working fine when running manually. What's up?
 --------------------
 
 Protractor attempts to wait until the page is completely loaded before
@@ -46,7 +45,7 @@ How do I deal with my log-in page?
 
 If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you'll need to interact with it via 
-unwrapped webdriver, which can be accessed like `ptor.driver.get()`. 
+unwrapped webdriver, which can be accessed like `browser.driver.get()`. 
 
 You can put your log-in code into an `onPrepare` function, which will be run
 once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/login/viaConfigConf.js).

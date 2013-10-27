@@ -25,7 +25,7 @@ This test suite shows various types of failure:
    an element is not found, webdriver throws an error.
 -  Protractor will fail when it cannot find the Angular library on a page.
    If your test needs to interact with a non-angular page, access the webdriver
-   instance directly with `ptor.driver`.
+   instance directly with `browser.driver`.
 -  An expectation failure. This shows what a normal expectation failure looks
    like.
 
@@ -33,23 +33,21 @@ Pausing to debug
 ----------------
 
 Protractor allows you to pause your test at any point and interact with the
-browser. To do this insert `ptor.debugger();` into your test where you wish
+browser. To do this insert `browser.debugger();` into your test where you wish
 to break.
 
 ```javascript
-ptor = protractor.getInstance();
-
 it('should fail to find a non-existent element', function() {
-  ptor.get('app/index.html#/form');
+  browser.get('app/index.html#/form');
 
   // Run this statement before the line which fails. If protractor is run
   // with the debugger (protractor debug debugging/conf.js), the test
   // will pause after loading the webpage but before trying to find the
   // element.
-  ptor.debugger();
+  browser.debugger();
 
   // This element doesn't exist, so this fails.
-  var nonExistant = ptor.findElement(protractor.By.binding('nopenopenope'));
+  var nonExistant = element(by.binding('nopenopenope'));
 });
 ```
 
@@ -62,7 +60,7 @@ protractor debug debugging/failure_conf.js
 This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
 `c` to start execution and continue after the breakpoint.
 
-We use `ptor.debugger();` instead of node's `debugger;` statement so that
+We use `browser.debugger();` instead of node's `debugger;` statement so that
 the test pauses after the get command has beenexecuted*. Using `debugger;`
 pauses the test after the get command isscheduled* but has not yet
 been sent to the browser.
@@ -102,7 +100,6 @@ When debugging or first writing test suites, you may find it helpful to
 try out Protractor commands without starting up the entire test suite. You can
 do this with the element explorer.
 
-
 Currently, the explorer runs only with chrome and expects a selenium standalone
 server to be running at http://localhost:4444.
 
@@ -111,18 +108,18 @@ From protractor directory, run with:
     ./bin/elementexplorer.js <urL>
 
 This will load up the URL on webdriver and put the terminal into a REPL loop.
-You will see a > prompt. The `ptor` and `protractor` variables will
+You will see a > prompt. The `browser`, `element` and `protractor` variables will
 be available. Enter a command such as:
 
-    > ptor.findElement(protractor.By.id('foobar')).getText()
+    > element(by.id('foobar')).getText()
 
 or
 
-    > ptor.get('http://www.angularjs.org')
+    > browser.get('http://www.angularjs.org')
 
 try just
 
-    > ptor
+    > browser
 
 to get a list of functions you can call.
 
@@ -132,7 +129,7 @@ elements.
 Taking Screenshots
 ------------------
 
-Webdriver can snap a screenshot with `WebDriver.prototype.takeScreenshot()`.
+Webdriver can snap a screenshot with `browser.takeScreenshot()`.
 This returns a promise which will resolve to the screenshot as a base-64
 encoded PNG.
 

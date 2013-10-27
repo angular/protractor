@@ -1,6 +1,6 @@
 var util = require('util');
 
-describe('no ptor at all', function() {
+describe('no protractor at all', function() {
   it('should still do normal tests', function() {
     expect(true).toBe(true);
   });
