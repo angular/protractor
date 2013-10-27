@@ -14,18 +14,18 @@
  *     ./bin/elementexplorer.js <urL>
  *
  * This will load up the URL on webdriver and put the terminal into a REPL loop.
- * You will see a > prompt. The `ptor` and `protractor` variables will
- * be available. Enter a command such as:
+ * You will see a > prompt. The `browser`, `element` and `protractor` variables
+ * will be available. Enter a command such as:
  *
- *     > ptor.findElement(protractor.By.id('foobar')).getText()
+ *     > element(by.id('foobar')).getText()
  *
  * or
  *
- *     > ptor.get('http://www.angularjs.org')
+ *     > browser.get('http://www.angularjs.org')
  *
  * try just
  *
- *     > ptor
+ *     > browser
  *
  * to get a list of functions you can call.
  *
@@ -39,23 +39,23 @@ var repl = require('repl');
 var util = require('util');
 var vm = require('vm');
 
-var driver, ptor;
+var driver, browser;
 
 var INITIAL_SUGGESTIONS = [
-  'ptor.findElement(protractor.By.id(\'\'))',
-  'ptor.findElement(protractor.By.css(\'\'))',
-  'ptor.findElement(protractor.By.name(\'\'))',
-  'ptor.findElement(protractor.By.binding(\'\'))',
-  'ptor.findElement(protractor.By.input(\'\'))',
-  'ptor.findElement(protractor.By.select(\'\'))',
-  'ptor.findElement(protractor.By.textarea(\'\'))',
-  'ptor.findElement(protractor.By.xpath(\'\'))',
-  'ptor.findElement(protractor.By.tagName(\'\'))',
-  'ptor.findElement(protractor.By.className(\'\'))'
+  'element(by.id(\'\'))',
+  'element(by.css(\'\'))',
+  'element(by.name(\'\'))',
+  'element(by.binding(\'\'))',
+  'element(by.input(\'\'))',
+  'element(by.select(\'\'))',
+  'element(by.textarea(\'\'))',
+  'element(by.xpath(\'\'))',
+  'element(by.tagName(\'\'))',
+  'element(by.className(\'\'))'
 ];
 
 var list = function(locator) {
-  return ptor.findElements(locator).then(function(arr) {
+  return browser.findElements(locator).then(function(arr) {
     var found = [];
     for (var i = 0; i < arr.length; ++i) {
       arr[i].getText().then(function(text) {
@@ -124,17 +124,22 @@ var startUp = function() {
   driver.getSession().then(function(session) {
     driver.manage().timeouts().setScriptTimeout(11000);
 
-    ptor = protractor.wrapDriver(driver);
+    browser = protractor.wrapDriver(driver);
 
     // Set up globals to be available from the command line.
     global.driver = driver;
-    global.ptor = ptor;
     global.protractor = protractor;
+    global.browser = browser;
+    global.$ = browser.$;
+    global.$$ = browser.$$;
+    global.element = browser.element;
+    global.by = protractor.By;
     global.list = list;
+
 
     util.puts('Type <tab> to see a list of locator strategies.');
     util.puts('Use the `list` helper function to find elements by strategy:');
-    util.puts('  e.g., list(protractor.By.binding(\'\')) gets all bindings.');
+    util.puts('  e.g., list(by.binding(\'\')) gets all bindings.');
     util.puts('');
 
     var url = process.argv[2] || 'about:blank';

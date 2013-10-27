@@ -48,7 +48,7 @@ the server with
 Protractor is now available as a command line program which takes one argument,
 a configuration file. 
 
-    protractor example/protractorConf.js
+    protractor node_modules/protractor/example/protractorConf.js
 
 The configuration file tells Protractor what tests to run, how to connect to a
 webdriver server, and various other options for reporting. See
@@ -68,7 +68,7 @@ exports.config = {
 
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
-  specs: ['onProtractorRunner.js'],
+  specs: ['example-spec.js'],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
@@ -81,63 +81,107 @@ Writing tests
 -------------
 
 By default, Protractor uses [Jasmine](http://pivotal.github.io/jasmine/) as its
-test scaffolding. The `protractor` variable is exposed globally and can be used
-to grab an instance of Protractor (which is called `ptor` in the docs). 
+test scaffolding. Protractor exposes several global variables.
+
+ * `browser` this is the a wrapper around an instance of webdriver. Used for
+ navigation and page-wide information.
+
+ * `element` is a helper function for finding and interacting with elements
+ on the page you are testing.
+
+ * `by` is a collection of element locator strategies. For example, elements
+ can be found by CSS selector, by ID, or by the attribute they are bound to with
+ ng-model.
+
+ * `protractor` is the protractor namespace which wraps the webdriver namespace.
+ This contains static variables and classes, such as `protractor.Key` which
+ enumerates the codes for special keybord signals.
 
 Take this example, which tests the 'Basics' example on the AngularJS homepage:
 
 ```javascript
 describe('angularjs homepage', function() {
-  var ptor;
-
-  it('should greet using binding', function() {
-    ptor = protractor.getInstance();
-
+  it('should greet the named user', function() {
     // Load the AngularJS homepage.
-    ptor.get('http://www.angularjs.org');
+    browser.get('http://www.angularjs.org');
 
     // Find the element with ng-model matching 'yourName', and then
     // type 'Julie' into it.
-    ptor.findElement(protractor.By.input("yourName")).sendKeys("Julie");
+    element(by.model('yourName')).sendKeys('Julie');
 
     // Find the element with binding matching 'yourName' - this will
     // find the <h1>Hello {{yourName}}!</h1> element.
-    var greeting = ptor.findElement(protractor.By.binding("yourName"));
+    var greeting = element(by.binding('yourName'));
 
     // Assert that the text element has the expected value.
     // Protractor patches 'expect' to understand promises.
     expect(greeting.getText()).toEqual('Hello Julie!');
   });
 });
+
 ```
 
-The `get` method loads a page. Protractor expects Angular to be present on a
-page, so it will throw an error if the page it is attempting to load does
-not containt he Angular library. (If you need to interact with a non-Angular
+The `browser.get` method loads a page. Protractor expects Angular to be present on a page, so it will throw an error if the page it is attempting to load does
+not contain the Angular library. (If you need to interact with a non-Angular
 page, you may access the wrapped webdriver instance directly with
-`ptor.driver`).
+`browser.driver`).
 
-The `findElement` method searches for an element on the page. It requires one
-parameter, a *locator strategy* for locating the element. Protractor offers Angular
-specific strategies:
+The `element` method searches for an element on the page. It requires one
+parameter, a *locator* strategy for locating the element. Protractor offers Angular specific strategies:
 
--  `protractor.By.binding` searches for elements by matching binding names,
+-  `by.binding` searches for elements by matching binding names,
    either from `ng-bind` or `{{}}` notation in the template.
--  `protractor.By.input` searches for elements by input `ng-model`.
--  `protractor.By.repeater` seraches for `ng-repeat` elements. For example,
-   `protractor.By.repeater('phone in phones').row(12).column('price')` returns
+-  `by.model` searches for elements by input `ng-model`.
+-  `by.repeater` searches for `ng-repeat` elements. For example,
+   `by.repeater('phone in phones').row(12).column('price')` returns
    the element in the 12th row of the `ng-repeat = "phone in phones"` repeater
    with the binding matching `{{phone.price}}`.
 
-You may also use plain old WebDriver strategies such as `protractor.By.id` and
-`protractor.By.css`.
+You may also use plain old WebDriver strategies such as `by.id` and
+`by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `$element.by.css`.
 
-Once you have an element, you can interact with it with methods such as
+`element` returns an ElementFinder. This is an object which allows you to interact with the element on your page, but since all interaction with the browser must be done over webdriver, it is important to remember that this is *not* a DOM element. You can interact with it with methods such as
 `sendKeys`, `getText`, and `click`. Check out the [API](/api.md) for a list of
 all available methods.
 
 See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/findelements_spec.js)
 for more examples.
+
+
+Organizing Real Tests: Page Objects
+-----------------------------------
+
+When writing real tests scripts for your page, it's best to use the [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects) pattern to make your tests more readable. In Protractor, this could look like:
+
+```javascript
+var AngularHomepage = {
+  this.nameInput = element(by.model('yourName'));
+  this.greeting = element(by.binding('yourName'));
+
+  this.get = function() {
+    browser.get('http://www.angularjs.org');
+  };
+
+  this.setName = function(name) {
+    this.nameInput.sendKeys(name);
+  };
+};
+```
+
+Your test then becomes:
+
+```javascript
+describe('angularjs homepage', function() {
+  it('should greet the named user', function() {
+    var angularHomepage = new AngularHomepage();
+    angularHomepage.get();
+
+    angularHomepage.setName('Julie');
+
+    expect(angularHomepage.greeting.getText()).toEqual('Hello Julie!');
+  });
+});
+```
 
 
 Further Reading
