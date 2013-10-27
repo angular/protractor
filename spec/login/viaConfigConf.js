@@ -15,18 +15,17 @@ exports.config = {
   },
 
   onPrepare: function() {
-    var ptor = protractor.getInstance();
-    ptor.driver.get('http://localhost:8000/app/login.html');
+    browser.driver.get('http://localhost:8000/app/login.html');
 
-    ptor.driver.findElement(protractor.By.id('username')).sendKeys('Jane');
-    ptor.driver.findElement(protractor.By.id('password')).sendKeys('1234');
-    ptor.driver.findElement(protractor.By.id('clickme')).click();
+    browser.driver.findElement(by.id('username')).sendKeys('Jane');
+    browser.driver.findElement(by.id('password')).sendKeys('1234');
+    browser.driver.findElement(by.id('clickme')).click();
 
     // Login takes some time, so wait until it's done.
     // For the test app's login, we know it's done when it redirects to
     // index.html.
-    ptor.wait(function() {
-      return ptor.driver.getCurrentUrl().then(function(url) {
+    browser.driver.wait(function() {
+      return browser.driver.getCurrentUrl().then(function(url) {
         return /index/.test(url);
       });
     });
