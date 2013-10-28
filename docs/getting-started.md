@@ -25,8 +25,8 @@ When writing tests, keep the following in mind:
 -  To run tests, WebDriverJS needs to talk to a selenium standalone server
    running as a separate process.
 
-Setup and Run
--------------
+Setup and Config
+----------------
 
 Install Protractor with
 
@@ -138,13 +138,13 @@ parameter, a *locator* strategy for locating the element. Protractor offers Angu
    with the binding matching `{{phone.price}}`.
 
 You may also use plain old WebDriver strategies such as `by.id` and
-`by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `$element.by.css`.
+`by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `element.by.css`.
 
 `element` returns an ElementFinder. This is an object which allows you to interact with the element on your page, but since all interaction with the browser must be done over webdriver, it is important to remember that this is *not* a DOM element. You can interact with it with methods such as
 `sendKeys`, `getText`, and `click`. Check out the [API](/api.md) for a list of
 all available methods.
 
-See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/findelements_spec.js)
+See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/basic/findelements_spec.js)
 for more examples.
 
 
@@ -154,7 +154,7 @@ Organizing Real Tests: Page Objects
 When writing real tests scripts for your page, it's best to use the [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects) pattern to make your tests more readable. In Protractor, this could look like:
 
 ```javascript
-var AngularHomepage = {
+var AngularHomepage = function() {
   this.nameInput = element(by.model('yourName'));
   this.greeting = element(by.binding('yourName'));
 
