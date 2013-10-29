@@ -48,7 +48,7 @@ the server with
 Protractor is now available as a command line program which takes one argument,
 a configuration file. 
 
-    protractor node_modules/protractor/example/protractorConf.js
+    protractor node_modules/protractor/example/conf.js
 
 The configuration file tells Protractor what tests to run, how to connect to a
 webdriver server, and various other options for reporting. See
