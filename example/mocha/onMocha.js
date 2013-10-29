@@ -8,7 +8,7 @@
 var util = require('util');
 var expect = require('expect.js');
 var webdriver = require('selenium-webdriver');
-var protractor = require('../lib/protractor.js');
+var protractor = require('../../lib/protractor.js');
 
 describe('angularjs.org homepage', function() {
   this.timeout(80000);
@@ -44,7 +44,7 @@ describe('angularjs.org homepage', function() {
     ptor.get('http://www.angularjs.org');
 
     var todo = ptor.findElement(
-        protractor.By.repeater('todo in todos').row(2));
+        protractor.By.repeater('todo in todos').row(1));
 
     todo.getText().then(function(text) {
       expect(text).to.eql('build an angular app');
