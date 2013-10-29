@@ -1,3 +1,37 @@
+# 0.12.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+This change introduces major syntax updates. Using the new syntax is recommeded, but the old version is still supported for now. Note also that the test application, docs, and example tests have been updated.
+
+## Features
+
+- ([a2cd6c8](https://github.com/angular/protractor/commit/a2cd6c8baf242a81c4efea1f55249d597de95329)) feat(syntax): big syntax reboot, expose global $, $$, element, and by
+
+In an effort to make tests more readable and clear, a few more global variables
+will now be exported.
+
+`browser` is an instance of protractor. This was previously accessed using
+`protractor.getInstance`.
+
+`by` is a collection of element locators. Previously, this was `protractor.By`.
+
+`$` is a shortcut for getting elements by css. `$('.foo')` === `element(by.css('.foo'))`
+
+All changes should be backwards compatible, as tested with the new 'backwardscompat'
+tests.
+
+## Bug fixes
+
+- ([8c87ae6](https://github.com/angular/protractor/commit/8c87ae6b430479445744a2f5c8eaca7f5f03d61d)) fix(onPrepare): onPrepare with a string argument should resolve from the config directory
+
+onPrepare can take a string, which is a filename containing a script to load adn execute
+before any tests run. This fixes the string to resolve the filename relative to the
+config file, instead of relative to the current working directory where protractor
+is called.
+
+
+
 # 0.11.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
