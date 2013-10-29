@@ -19,7 +19,7 @@ Start up a selenium server (See the appendix below for help with this). By defau
 
 The example folder contains a simple test suite which runs against angularjs.org. Run with: 
 
-    protractor example/protractorConf.js
+    protractor example/conf.js
 
 
 Using the Protractor runner
