@@ -1,0 +1,59 @@
+function AsyncCtrl($scope, $http, $timeout) {
+  $scope.slowHttpStatus = 'not started';
+  $scope.slowFunctionStatus = 'not started';
+  $scope.slowTimeoutStatus = 'not started';
+  $scope.slowAngularTimeoutStatus = 'not started';
+  $scope.slowAngularTimeoutPromiseStatus = 'not started';
+  $scope.slowHttpPromiseStatus = 'not started';
+
+  $scope.slowHttp = function() {
+    $scope.slowHttpStatus = 'pending...';
+    $http({method: 'GET', url: '/slowcall'}).success(function() {
+      $scope.slowHttpStatus = 'done';
+    })
+  };
+
+  $scope.slowFunction = function() {
+    $scope.slowFunctionStatus = 'pending...';
+    for (var i = 0, t = 0; i < 500000000; ++i) {
+      t++;
+    }
+    $scope.slowFunctionStatus = 'done';
+  }
+
+  $scope.slowTimeout = function() {
+    $scope.slowTimeoutStatus = 'pending...';
+    window.setTimeout(function() {
+      $scope.$apply(function() {
+        $scope.slowTimeoutStatus = 'done';
+      });
+    }, 2000);
+  };
+
+  $scope.slowAngularTimeout = function() {
+    $scope.slowAngularTimeoutStatus = 'pending...';
+    $timeout(function() {
+      $scope.slowAngularTimeoutStatus = 'done';
+    }, 2000);
+  };
+
+  $scope.slowAngularTimeoutPromise = function() {
+    $scope.slowAngularTimeoutPromiseStatus = 'pending...';
+    $timeout(function() {
+      // intentionally empty
+    }, 2000).then(function() {
+      $scope.slowAngularTimeoutPromiseStatus = 'done';
+    });
+  };
+
+  $scope.slowHttpPromise = function() {
+    $scope.slowHttpPromiseStatus = 'pending...';
+    $http({method: 'GET', url: '/slowcall'}).success(function() {
+      // intentionally empty
+    }).then(function() {
+      $scope.slowHttpPromiseStatus = 'done';
+    });
+  }
+};
+
+AsyncCtrl.$inject = ['$scope', '$http', '$timeout'];

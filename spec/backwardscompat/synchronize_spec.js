@@ -4,7 +4,7 @@ describe('synchronizing with slow pages', function() {
   var ptor = protractor.getInstance();
 
   beforeEach(function() {
-    ptor.get('app/index.html#/async');
+    ptor.get('index.html#/async');
   });
 
   it('waits for http calls', function() {

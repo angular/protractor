@@ -4,7 +4,7 @@ describe('synchronizing with pages that poll', function() {
   var ptor = protractor.getInstance();
 
   beforeEach(function() {
-    ptor.get('app/index.html#/polling');
+    ptor.get('index.html#/polling');
   });
 
   it('avoids timeouts using ignoreSynchronization', function() {

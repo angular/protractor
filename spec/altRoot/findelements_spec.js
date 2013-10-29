@@ -5,7 +5,7 @@ describe('finding elements when ng-app is nested', function() {
   describe('in forms', function() {
 
     beforeEach(function() {
-      browser.get('app/alt_root_index.html#/form');
+      browser.get('alt_root_index.html#/form');
     });
 
     it('should find an element by binding', function() {

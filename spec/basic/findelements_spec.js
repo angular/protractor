@@ -2,7 +2,7 @@ var util = require('util');
 
 describe('locators', function() {
   beforeEach(function() {
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
   });
 
   describe('by binding', function() {
@@ -208,7 +208,7 @@ describe('locators', function() {
 
 describe('chaining find elements', function() {
   beforeEach(function() {
-    browser.get('app/index.html#/conflict');
+    browser.get('index.html#/conflict');
   });
 
   it('should differentiate elements with the same binding by chaining',
@@ -248,7 +248,7 @@ describe('chaining find elements', function() {
 
 describe('global element function', function() {
   it('should return the same result as browser.findElement', function() {
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
     var nameByElement = element(by.binding('username'));
     expect(nameByElement.getText()).toEqual(
         browser.findElement(by.binding('username')).getText());
@@ -261,7 +261,7 @@ describe('global element function', function() {
     var usernameInput = element(by.model('username'));
     var name = element(by.binding('username'));
 
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
 
     expect(name.getText()).toEqual('Anon');
 
@@ -271,7 +271,7 @@ describe('global element function', function() {
   });
 
   it('should count all elements', function() {
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
 
     element.all(by.model('color')).count().then(function(num) {
       expect(num).toEqual(3);
@@ -284,7 +284,7 @@ describe('global element function', function() {
   it('should get an element from an array', function() {
     var colorList = element.all(by.binding('dayColor.color'));
 
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
 
     expect(colorList.get(0).getText()).toEqual('red');
     expect(colorList.get(1).getText()).toEqual('green');
@@ -299,7 +299,7 @@ describe('global element function', function() {
 
 describe('evaluating statements', function() {
   beforeEach(function() {
-    browser.get('app/index.html#/bindings');
+    browser.get('index.html#/bindings');
   });
 
   it('should evaluate statements in the context of an element', function() {
@@ -316,7 +316,7 @@ describe('evaluating statements', function() {
 
 describe('shortcut css notation', function() {
   beforeEach(function() {
-    browser.get('app/index.html#/bindings');
+    browser.get('index.html#/bindings');
   });
 
   describe('via the driver', function() {
@@ -380,7 +380,7 @@ describe('wrapping web driver elements', function() {
   }
 
   beforeEach(function() {
-    browser.get('app/index.html#/bindings');
+    browser.get('index.html#/bindings');
   });
 
   describe('when found via #findElement', function() {

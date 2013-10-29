@@ -6,7 +6,7 @@ describe('longer example', function() {
   describe('synchronizing with Angular', function() {
     describe('http calls', function() {
       beforeEach(function() {
-        ptor.get('app/index.html');
+        ptor.get('index.html');
       });
 
       it('should wait for slow RPCs', function() {
@@ -37,7 +37,7 @@ describe('longer example', function() {
 
     describe('slow rendering', function() {
       beforeEach(function() {
-        ptor.get('app/index.html#/repeater');
+        ptor.get('index.html#/repeater');
       });
 
       it('should synchronize with a slow action', function() {

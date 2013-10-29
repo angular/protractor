@@ -7,7 +7,7 @@ var util = require('util');
  */
 describe('synchronizing with pages that poll', function() {
   beforeEach(function() {
-    browser.get('app/index.html#/polling');
+    browser.get('index.html#/polling');
   });
 
   it('avoids timeouts using ignoreSynchronization', function() {

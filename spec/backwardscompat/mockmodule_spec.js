@@ -25,7 +25,7 @@ describe('mock modules', function() {
   it('should override services via mock modules', function() {
     ptor.addMockModule('moduleA', mockModuleA);
 
-    ptor.get('app/index.html');
+    ptor.get('index.html');
 
     expect(ptor.findElement(protractor.By.css('[app-version]')).getText()).
         toEqual('2');
@@ -35,7 +35,7 @@ describe('mock modules', function() {
     ptor.addMockModule('moduleA', mockModuleA);
     ptor.addMockModule('moduleB', mockModuleB);
 
-    ptor.get('app/index.html');
+    ptor.get('index.html');
 
     expect(ptor.findElement(protractor.By.css('[app-version]')).getText()).
         toEqual('3');
