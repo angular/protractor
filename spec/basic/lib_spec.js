@@ -16,7 +16,7 @@ describe('protractor library', function() {
   });
 
   it('should wrap webdriver', function() {
-    browser.get('app/index.html');
+    browser.get('index.html');
     expect(browser.getTitle()).toEqual('My AngularJS App');
   });
 
@@ -28,17 +28,17 @@ describe('protractor library', function() {
 
   it('should allow a mix of using protractor and using the driver directly',
     function() {
-      browser.get('app/index.html');
+      browser.get('index.html');
       expect(browser.getCurrentUrl()).
-          toEqual('http://localhost:8000/app/index.html#/http')
+          toEqual('http://localhost:8000/index.html#/http')
 
       browser.driver.findElement(protractor.By.linkText('repeater')).click();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:8000/app/index.html#/repeater');
+          toEqual('http://localhost:8000/index.html#/repeater');
 
       browser.navigate().back();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:8000/app/index.html#/http');
+          toEqual('http://localhost:8000/index.html#/http');
     });
 
   it('should export other webdriver classes onto the global protractor',

@@ -7,7 +7,7 @@ describe('finding elements', function() {
     ptor = protractor.getInstance();
 
     beforeEach(function() {
-      ptor.get('app/index.html#/form');
+      ptor.get('index.html#/form');
     });
 
     it('should find an element by binding', function() {
@@ -210,7 +210,7 @@ describe('finding elements', function() {
 
   describe('further examples', function() {
     beforeEach(function() {
-      ptor.get('app/index.html#/bindings');
+      ptor.get('index.html#/bindings');
     });
 
     it('should find elements using a select', function() {
@@ -270,7 +270,7 @@ describe('finding elements', function() {
 
   describe('chaining findElements', function() {
     beforeEach(function() {
-      ptor.get('app/index.html#/conflict');
+      ptor.get('index.html#/conflict');
     });
 
     it('should differentiate elements with the same binding by chaining',
@@ -310,7 +310,7 @@ describe('finding elements', function() {
 
   describe('evaluating statements', function() {
     beforeEach(function() {
-      ptor.get('app/index.html#/bindings');
+      ptor.get('index.html#/bindings');
     });
 
     it('should evaluate statements in the context of an element', function() {
@@ -327,7 +327,7 @@ describe('finding elements', function() {
 
   describe('finding an element by css', function() {
     beforeEach(function() {
-      ptor.get('app/index.html#/bindings');
+      ptor.get('index.html#/bindings');
     });
 
     describe('via the driver', function() {
@@ -357,7 +357,7 @@ describe('finding elements', function() {
 
   describe('finding elements by css', function() {
     beforeEach(function() {
-      ptor.get('app/index.html#/bindings');
+      ptor.get('index.html#/bindings');
     });
 
     describe('via the driver', function() {
@@ -407,7 +407,7 @@ describe('finding elements', function() {
     }
 
     beforeEach(function() {
-      ptor.get('app/index.html#/bindings');
+      ptor.get('index.html#/bindings');
     });
 
     describe('when found via #findElement', function() {

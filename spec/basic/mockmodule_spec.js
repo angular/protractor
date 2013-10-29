@@ -23,7 +23,7 @@ describe('mock modules', function() {
   it('should override services via mock modules', function() {
     browser.addMockModule('moduleA', mockModuleA);
 
-    browser.get('app/index.html');
+    browser.get('index.html');
 
     expect(element(by.css('[app-version]')).getText()).toEqual('2');
   });
@@ -32,7 +32,7 @@ describe('mock modules', function() {
     browser.addMockModule('moduleA', mockModuleA);
     browser.addMockModule('moduleB', mockModuleB);
 
-    browser.get('app/index.html');
+    browser.get('index.html');
 
     expect(element(by.css('[app-version]')).getText()).toEqual('3');
   });
