@@ -1,33 +1,46 @@
-<p><span>{{greeting}}</span><span data-ng-bind="username"></span> - this uses different types of input.</p>
-<div>Username
+<p>Forms using different types of input</p>
+
+<div>
+  <h4>Bindings</h4>
+  <span>{{greeting}}</span>
+  <span data-ng-bind="username"></span>
+</div>
+
+<div>
+  <h4>Text</h4>
+  <label>Username</label>
   <input ng-model="username" type="text"/>
 </div>
-<div>Textarea
+
+<div>
+  <h4>Textarea</h4>
   <textarea ng-model="aboutbox"></textarea>
 </div>
-<div ng-style="{'color': color}">Color <br/>
-  <input ng-model="color" value="blue" type="radio"/> blue <br/>
-  <input ng-model="color" value="green" type="radio"/> green <br/>
-  <input ng-model="color" value="red" type="radio"/> red <br/>
-</div>
-<ul><li ng-repeat="dc in dayColors"><select ng-model="dc.color" ng-options="c for c in colors"></select></li></ul>
+
 <div>
-<input ng-model="show" type="checkbox"/> Show?
-<span id="shower" ng-show="show">Shown!!</span>
+  <h4>Multiple input radio</h4>
+  <div ng-style="{'color': color}">Color <br/>
+    <input ng-model="color" value="blue" type="radio"/> blue <br/>
+    <input ng-model="color" value="green" type="radio"/> green <br/>
+    <input ng-model="color" value="red" type="radio"/> red <br/>
+  </div>
 </div>
 
-<input ng:model="check.w" ng-true-value="w" type="checkbox"/> W
-<input data-ng-model="check.x" ng-true-value="x" type="checkbox"/> X
-<input x-ng-model="check.y" ng-true-value="y" type="checkbox"/> Y
-<input ng_model="check.z" ng-true-value="z" type="checkbox"/> Z
-<span id="letterlist">{{check.w}}{{check.x}}{{check.y}}{{check.z}}</span>
+<div>
+  <h4>Selects</h4>
+  <div ng-repeat="dayColor in dayColors">
+    <select ng-model="dayColor.color" ng-options="c for c in colors"></select>
+  </div>
+</div>
 
-<ul><li ng-repeat="baz in days | filter:'T'">{{baz}}</li></ul>
-<ul><li ng-repeat="dayColor in dayColors">
-  <span>{{dayColor.day}}</span>
-  <span>{{dayColor.color}}</span>
-</li></ul>
-<ul><li data-ng-repeat="day in days">{{day}}</li></ul>
-<ul><li ng:repeat="bar in days">{{bar}}</li></ul>
-<ul><li ng_repeat="foo in days">{{foo}}</li></ul>
-<ul><li x-ng-repeat="qux in days">{{qux}}</li></ul>
+<div id="checkboxes">
+  <h4>Checkboxes</h4>
+  <input ng-model="show" type="checkbox"/> Show?
+  <span id="shower" ng-show="show">Shown!!</span>
+  <input ng:model="check.w" ng-true-value="w" type="checkbox"/> W
+  <input data-ng-model="check.x" ng-true-value="x" type="checkbox"/> X
+  <input x-ng-model="check.y" ng-true-value="y" type="checkbox"/> Y
+  <input ng_model="check.z" ng-true-value="z" type="checkbox"/> Z
+
+  <span id="letterlist">{{check.w}}{{check.x}}{{check.y}}{{check.z}}</span>
+</div>
