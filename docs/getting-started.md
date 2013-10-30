@@ -188,5 +188,6 @@ Further Reading
 ---------------
 
 - [WebDriverJS User's Guide](https://code.google.com/p/selenium/wiki/WebDriverJs)
-- [WebDriver FAQ](https://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions)
+- [WebDriver FAQ](httpsAn Introduction to AngularJS End to End Testing with Protractor://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions)
 - [w3 WebDriver Working Draft](http://www.w3.org/TR/webdriver/)
+- [An Introduction to AngularJS End to End Testing with Protractor (video)](http://codingsmackdown.tv/blog/2013/08/16/an-introduction-to-angularjs-end-to-end-testing-with-protractor/)
