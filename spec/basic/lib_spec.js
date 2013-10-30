@@ -30,7 +30,7 @@ describe('protractor library', function() {
     function() {
       browser.get('index.html');
       expect(browser.getCurrentUrl()).
-          toEqual('http://localhost:8000/index.html#/http')
+          toEqual('http://localhost:8000/index.html#/form')
 
       browser.driver.findElement(protractor.By.linkText('repeater')).click();
       expect(browser.driver.getCurrentUrl()).
@@ -38,7 +38,7 @@ describe('protractor library', function() {
 
       browser.navigate().back();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:8000/index.html#/http');
+          toEqual('http://localhost:8000/index.html#/form');
     });
 
   it('should export other webdriver classes onto the global protractor',

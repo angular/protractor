@@ -18,7 +18,8 @@ describe('locators', function() {
       expect(greeting.getText()).toEqual('Hiya');
     });
 
-    it('should find an element by binding with attribute', function() {
+    it('should find an element by binding with ng-binding attribute',
+        function() {
       var name = element(by.binding('username'));
 
       expect(name.getText()).toEqual('Anon');
@@ -81,13 +82,14 @@ describe('locators', function() {
     });
 
     it('should find multiple selects', function() {
-      browser.findElements(by.select('dc.color')).then(function(arr) {
+      browser.findElements(by.select('dayColor.color')).then(function(arr) {
         expect(arr.length).toEqual(3);
       });
     });
 
     it('should find multiple selected options', function() {
-      browser.findElements(by.selectedOption('dc.color')).then(function(arr) {
+      browser.findElements(
+          by.selectedOption('dayColor.color')).then(function(arr) {
         expect(arr.length).toEqual(3);
         expect(arr[0].getText()).toBe('red');
         expect(arr[1].getText()).toBe('green');
@@ -97,106 +99,119 @@ describe('locators', function() {
   });
 
   describe('by repeater', function() {
+    beforeEach(function() {
+      browser.get('index.html#/repeater');
+    });
+
     it('should find by partial match', function() {
       var fullMatch = element(
           by.repeater('baz in days | filter:\'T\'').
-              row(0).column('{{baz}}'));
-      expect(fullMatch.getText()).toEqual('Tue');
+              row(0).column('{{baz.initial}}'));
+      expect(fullMatch.getText()).toEqual('T');
 
       var partialMatch = element(
           by.repeater('baz in days').row(0).column('b'));
-      expect(partialMatch.getText()).toEqual('Tue');
+      expect(partialMatch.getText()).toEqual('T');
 
       var partialRowMatch = element(
           by.repeater('baz in days').row(0));
-      expect(partialRowMatch.getText()).toEqual('Tue');
+      expect(partialRowMatch.getText()).toEqual('T');
     });
 
     it('should return all rows when unmodified', function() {
       var all =
-          browser.findElements(by.repeater('dayColor in dayColors'));
+          browser.findElements(by.repeater('allinfo in days'));
       all.then(function(arr) {
-        expect(arr.length).toEqual(3);
-        expect(arr[0].getText()).toEqual('Mon red');
-        expect(arr[1].getText()).toEqual('Tue green');
-        expect(arr[2].getText()).toEqual('Wed blue');
+        expect(arr.length).toEqual(5);
+        expect(arr[0].getText()).toEqual('M Monday');
+        expect(arr[1].getText()).toEqual('T Tuesday');
+        expect(arr[2].getText()).toEqual('W Wednesday');
       });
     });
 
     it('should return a single column', function() {
-      var colors = browser.findElements(
-          by.repeater('dayColor in dayColors').column('color'));
-      colors.then(function(arr) {
-        expect(arr.length).toEqual(3);
-        expect(arr[0].getText()).toEqual('red');
-        expect(arr[1].getText()).toEqual('green');
-        expect(arr[2].getText()).toEqual('blue');
+      var initials = browser.findElements(
+          by.repeater('allinfo in days').column('initial'));
+      initials.then(function(arr) {
+        expect(arr.length).toEqual(5);
+        expect(arr[0].getText()).toEqual('M');
+        expect(arr[1].getText()).toEqual('T');
+        expect(arr[2].getText()).toEqual('W');
+      });
+
+      var names = browser.findElements(
+          by.repeater('allinfo in days').column('name'));
+      names.then(function(arr) {
+        expect(arr.length).toEqual(5);
+        expect(arr[0].getText()).toEqual('Monday');
+        expect(arr[1].getText()).toEqual('Tuesday');
+        expect(arr[2].getText()).toEqual('Wednesday');
       });
     });
 
     it('should return a single row', function() {
       var secondRow = element(
-          by.repeater('dayColor in dayColors').row(1));
-      expect(secondRow.getText()).toEqual('Tue green');
+          by.repeater('allinfo in days').row(1));
+      expect(secondRow.getText()).toEqual('T Tuesday');
     });
 
     it('should return an individual cell', function() {
-      var secondColor = element(
-          by.repeater('dayColor in dayColors').
+      var secondNameByRowFirst = element(
+          by.repeater('allinfo in days').
           row(1).
-          column('color'));
+          column('name'));
 
-      var secondColorByColumnFirst = element(
-          by.repeater('dayColor in dayColors').
-          column('color').
+      var secondNameByColumnFirst = element(
+          by.repeater('allinfo in days').
+          column('name').
           row(1));
 
-      expect(secondColor.getText()).toEqual('green');
-      expect(secondColorByColumnFirst.getText()).toEqual('green');
+      expect(secondNameByRowFirst.getText()).toEqual('Tuesday');
+      expect(secondNameByColumnFirst.getText()).toEqual('Tuesday');
     });
 
     it('should find a using data-ng-repeat', function() {
       var byRow =
         element(by.repeater('day in days').row(2));
-      expect(byRow.getText()).toEqual('Wed');
+      expect(byRow.getText()).toEqual('W');
 
       var byCol =
           element(by.repeater('day in days').row(2).
           column('day'));
-      expect(byCol.getText()).toEqual('Wed');
+      expect(byCol.getText()).toEqual('W');
     });
 
     it('should find using ng:repeat', function() {
       var byRow =
         element(by.repeater('bar in days').row(2));
-      expect(byRow.getText()).toEqual('Wed');
+      expect(byRow.getText()).toEqual('W');
 
       var byCol =
           element(by.repeater('bar in days').row(2).
           column('bar'));
-      expect(byCol.getText()).toEqual('Wed');
+      expect(byCol.getText()).toEqual('W');
     });
 
     it('should find using ng_repeat', function() {
       var byRow =
         element(by.repeater('foo in days').row(2));
-      expect(byRow.getText()).toEqual('Wed');
+      expect(byRow.getText()).toEqual('W');
 
       var byCol =
           element(by.repeater('foo in days').row(2).
           column('foo'));
-      expect(byCol.getText()).toEqual('Wed');
+      expect(byCol.getText()).toEqual('W');
     });
 
     it('should find using x-ng-repeat', function() {
       var byRow =
         element(by.repeater('qux in days').row(2));
-      expect(byRow.getText()).toEqual('Wed');
+      expect(byRow.getText()).toEqual('W');
 
       var byCol =
           element(by.repeater('qux in days').row(2).
           column('qux'));
-      expect(byCol.getText()).toEqual('Wed');
+      expect(byCol.getText()).toEqual('W');
     });
   });
 
@@ -243,7 +258,7 @@ describe('chaining find elements', function() {
     expect(element(by.id('baz')).
       isElementPresent(by.binding('nopenopenope'))).
       toBe(false);
-  })
+  });
 });
 
 describe('global element function', function() {
@@ -282,13 +297,13 @@ describe('global element function', function() {
   });
 
   it('should get an element from an array', function() {
-    var colorList = element.all(by.binding('dayColor.color'));
+    var colorList = element.all(by.model('color'));
 
     browser.get('index.html#/form');
 
-    expect(colorList.get(0).getText()).toEqual('red');
-    expect(colorList.get(1).getText()).toEqual('green');
-    expect(colorList.get(2).getText()).toEqual('blue');
+    expect(colorList.get(0).getAttribute('value')).toEqual('blue');
+    expect(colorList.get(1).getAttribute('value')).toEqual('green');
+    expect(colorList.get(2).getAttribute('value')).toEqual('red');
   });
 
   it('should export an isPresent helper', function() {
@@ -299,18 +314,18 @@ describe('global element function', function() {
 
 describe('evaluating statements', function() {
   beforeEach(function() {
-    browser.get('index.html#/bindings');
+    browser.get('index.html#/form');
   });
 
   it('should evaluate statements in the context of an element', function() {
-    var firstPlanet = element(by.binding('planet.name'));
+    var checkboxElem = element(by.id('checkboxes'));
 
-    firstPlanet.evaluate('planet.radius').then(function(output) {
-      expect(output).toEqual(1516); // radius of Mercury.
+    checkboxElem.evaluate('show').then(function(output) {
+      expect(output).toBe(true);
     });
 
     // Make sure it works with a promise expectation.
-    expect(firstPlanet.evaluate('planet.radius')).toEqual(1516);
+    expect(checkboxElem.evaluate('show')).toBe(true);
   });
 });
 
@@ -384,31 +399,36 @@ describe('wrapping web driver elements', function() {
   });
 
   describe('when found via #findElement', function() {
-    describe('when using a locator that specifies an override', function() {
-      it('should wrap the result', function() {
-        browser.findElement(by.binding('planet.name')).then(verifyMethodsAdded);
-      });
+    it('should wrap the result', function() {
+      browser.findElement(by.binding('planet.name')).then(verifyMethodsAdded);
+
+      browser.findElement(by.css('option[value="4"]')).then(verifyMethodsAdded);
     });
 
-    describe('when using a locator that does not specify an override', function() {
+    describe('when found with global element', function() {
       it('should wrap the result', function() {
-        browser.findElement(by.css('option[value="4"]')).then(verifyMethodsAdded);
+        element(by.binding('planet.name')).find().then(verifyMethodsAdded);
+        element(by.css('option[value="4"]')).find().then(verifyMethodsAdded);
       });
     });
   });
 
   describe('when found via #findElements', function() {
-    describe('when using a locator that specifies an override', function() {
-      it('should wrap the results', function() {
-        browser.findElements(by.binding('planet.name')).then(function(results) {
-          results.forEach(verifyMethodsAdded);
-        });
+    it('should wrap the results', function() {
+      browser.findElements(by.binding('planet.name')).then(function(results) {
+        results.forEach(verifyMethodsAdded);
+      });
+      browser.findElements(by.css('option[value="4"]')).then(function(results) {
+        results.forEach(verifyMethodsAdded);
       });
     });
 
-    describe('when using a locator that does not specify an override', function() {
-      it('should wrap the results', function() {
-        browser.findElements(by.css('option[value="4"]')).then(function(results) {
+    describe('when found with global element', function() {
+      it('should wrap the result', function() {
+        element.all(by.binding('planet.name')).then(function(results) {
+          results.forEach(verifyMethodsAdded);
+        });
+        element.all(by.css('option[value="4"]')).then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
       });
