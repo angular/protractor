@@ -1,0 +1,10 @@
+<p>A series of repeaters used in tests.</p>
+<ul><li ng-repeat="allinfo in days">
+  <span>{{allinfo.initial}}</span>
+  <span>{{allinfo.name}}</span>
+</li></ul>
+<ul><li ng-repeat="baz in days | filter:'T'">{{baz.initial}}</li></ul>
+<ul><li data-ng-repeat="day in days">{{day.initial}}</li></ul>
+<ul><li ng:repeat="bar in days">{{bar.initial}}</li></ul>
+<ul><li ng_repeat="foo in days">{{foo.initial}}</li></ul>
+<ul><li x-ng-repeat="qux in days">{{qux.initial}}</li></ul>

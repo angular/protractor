@@ -1,0 +1,46 @@
+<p>Forms using different types of input</p>
+
+<div>
+  <h4>Bindings</h4>
+  <span>{{greeting}}</span>
+  <span data-ng-bind="username"></span>
+</div>
+
+<div>
+  <h4>Text</h4>
+  <label>Username</label>
+  <input ng-model="username" type="text"/>
+</div>
+
+<div>
+  <h4>Textarea</h4>
+  <textarea ng-model="aboutbox"></textarea>
+</div>
+
+<div>
+  <h4>Multiple input radio</h4>
+  <div ng-style="{'color': color}">Color <br/>
+    <input ng-model="color" value="blue" type="radio"/> blue <br/>
+    <input ng-model="color" value="green" type="radio"/> green <br/>
+    <input ng-model="color" value="red" type="radio"/> red <br/>
+  </div>
+</div>
+
+<div>
+  <h4>Selects</h4>
+  <div ng-repeat="dayColor in dayColors">
+    <select ng-model="dayColor.color" ng-options="c for c in colors"></select>
+  </div>
+</div>
+
+<div id="checkboxes">
+  <h4>Checkboxes</h4>
+  <input ng-model="show" type="checkbox"/> Show?
+  <span id="shower" ng-show="show">Shown!!</span>
+  <input ng:model="check.w" ng-true-value="w" type="checkbox"/> W
+  <input data-ng-model="check.x" ng-true-value="x" type="checkbox"/> X
+  <input x-ng-model="check.y" ng-true-value="y" type="checkbox"/> Y
+  <input ng_model="check.z" ng-true-value="z" type="checkbox"/> Z
+
+  <span id="letterlist">{{check.w}}{{check.x}}{{check.y}}{{check.z}}</span>
+</div>

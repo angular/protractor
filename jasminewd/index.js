@@ -90,7 +90,10 @@ function wrapMatcher(matcher, actualPromise) {
  */
 function promiseMatchers(actualPromise) {
   var promises = {};
-  for (matcher in jasmine.Matchers.prototype) {
+  var env = jasmine.getEnv();
+  var matchersClass = env.currentSpec.matchersClass || env.matchersClass;
+
+  for (matcher in matchersClass.prototype) {
     promises[matcher] = wrapMatcher(matcher, actualPromise);
   };
 
@@ -101,6 +104,10 @@ originalExpect = global.expect;
 
 global.expect = function(actual) {
   if (actual instanceof webdriver.promise.Promise) {
+    if (actual instanceof webdriver.WebElement) {
+      throw 'expect called with WebElement argment, expected a Promise. ' + 
+          'Did you mean to use .getText()?';
+    }
     return promiseMatchers(actual);
   } else {
     return originalExpect(actual);

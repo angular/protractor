@@ -10,6 +10,9 @@ var webdriver = require('selenium-webdriver');
 var getFakeDriver = function() {
   var flow = webdriver.promise.controlFlow();
   return {
+    controlFlow: function() {
+      return flow;
+    },
     sleep: function(ms) {
       return flow.timeout(ms);
     },
@@ -33,6 +36,11 @@ var getFakeDriver = function() {
     getValueB: function() {
       return flow.execute(function() {
         return webdriver.promise.fulfilled('b');
+      });
+    },
+    getBigNumber: function() {
+      return flow.execute(function() {
+        return webdriver.promise.fulfilled(1111);
       });
     }
   };
@@ -96,7 +104,21 @@ describe('webdriverJS Jasmine adapter', function() {
   it('should allow scheduling of tasks', function() {
     fakeDriver.sleep(300);
     expect(fakeDriver.getValueB()).toEqual('b');
-  })
+  });
+
+  it('should allow the use of custom matchers', function() {
+    expect(500).toBeLotsMoreThan(3);
+    expect(fakeDriver.getBigNumber()).toBeLotsMoreThan(33);
+  });
+
+  it('should throw an error with a WebElement actual value', function() {
+    var webElement = new webdriver.WebElement(fakeDriver, 'idstring');
+
+    expect(function() {
+      expect(webElement).toEqual(4);
+    }).toThrow('expect called with WebElement argment, expected a Promise. ' +
+        'Did you mean to use .getText()?');
+  });
 
   // Uncomment to see timeout failures.
   // it('should timeout after 200ms', function() {

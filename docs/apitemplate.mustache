@@ -1,0 +1,53 @@
+Protractor API
+==============
+
+Note: in this documentation, `protractor` and `webdriver` refer to namespaces,
+and `ptor` and `driver` refer to instances of the Protractor and Webdriver
+classes.
+
+Protractor is a wrapper around WebDriver, so anything available on WebDriver
+is available on Protractor. The best documentation for both is the code itself.
+This file provides an overview and links on where to get more information.
+
+API methods and members that are modified or added by Protractor are marked
+with a `P`.
+
+Documentation generated at {{versionHash}}
+
+[WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js) and [Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js)
+------------------
+
+{{#baseInfos}}
+{{#wd}}[**WD**]({{&link}}) {{/wd}}{{#p}}[**P**]({{&link}}){{/p}} : 
+`{{name}}` function( {{#params}}_{{type}}_ {{/params}} ) {{#returnValue}} -> _{{type}}_{{/returnValue}}
+
+{{/baseInfos}}
+
+Locator Strategies
+------------------
+
+The `findElement`, `findElements`, and `isElementPresent` functions take
+a _locator strategy_ as their parameter. The following locator strategies
+are avaiable)
+
+
+{{#locatorInfos}}
+{{#wd}}[**WD**]({{&link}}) {{/wd}}{{#p}}[**P**]({{&link}}){{/p}} : 
+`Protractor.By.{{name}}` function( {{#params}}_{{type}}_ {{/params}} ) {{#returnValue}} -> _{{type}}_{{/returnValue}}
+
+{{/locatorInfos}}
+
+
+WebElements
+-----------
+
+The `findElement`, `findElements`, and `isElementPresent` functions return
+a WebElement object. The following functions are available on WebElements.
+
+{{#elementInfos}}
+{{#wd}}[**WD**]({{&link}}) {{/wd}}{{#p}}[**P**]({{&link}}){{/p}} : 
+`WebElement.{{name}}` function( {{#params}}_{{type}}_ {{/params}} ) {{#returnValue}} -> _{{type}}_{{/returnValue}}
+
+{{/elementInfos}}
+
+

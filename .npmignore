@@ -1,6 +1,10 @@
 testapp/
 spec/
+debugging/
 selenium/
 
 .npmignore
 chromedriver.log
+libpeerconnection.log
+changes.sh
+xmloutput*

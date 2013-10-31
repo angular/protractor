@@ -12,17 +12,19 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "selenium-webdriver": "~2.35.0",
+    "selenium-webdriver": "~2.37.0",
     "minijasminenode": "~0.2.4",
     "saucelabs": "~0.1.0",
     "glob": ">=3.1.14",
-    "adm-zip": ">=0.4.2"
+    "adm-zip": ">=0.4.2",
+    "optimist": "~0.6.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
     "jasmine-node": "~1.9.0",
     "mocha": "~1.10.0",
-    "express": "~3.3.4"
+    "express": "~3.3.4",
+    "mustache": "~0.7.2"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,8 @@
   "bin": "bin/protractor",
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js conf.js"
+    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js"
   },
-  "version": "0.7.0"
+  "license" : "MIT",
+  "version": "0.12.0"
 }

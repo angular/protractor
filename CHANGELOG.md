@@ -1,3 +1,247 @@
+# 0.12.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+This change introduces major syntax updates. Using the new syntax is recommeded, but the old version is still supported for now. Note also that the test application, docs, and example tests have been updated.
+
+## Features
+
+- ([a2cd6c8](https://github.com/angular/protractor/commit/a2cd6c8baf242a81c4efea1f55249d597de95329)) feat(syntax): big syntax reboot, expose global $, $$, element, and by
+
+In an effort to make tests more readable and clear, a few more global variables
+will now be exported.
+
+`browser` is an instance of protractor. This was previously accessed using
+`protractor.getInstance`.
+
+`by` is a collection of element locators. Previously, this was `protractor.By`.
+
+`$` is a shortcut for getting elements by css. `$('.foo')` === `element(by.css('.foo'))`
+
+All changes should be backwards compatible, as tested with the new 'backwardscompat'
+tests.
+
+## Bug fixes
+
+- ([8c87ae6](https://github.com/angular/protractor/commit/8c87ae6b430479445744a2f5c8eaca7f5f03d61d)) fix(onPrepare): onPrepare with a string argument should resolve from the config directory
+
+onPrepare can take a string, which is a filename containing a script to load adn execute
+before any tests run. This fixes the string to resolve the filename relative to the
+config file, instead of relative to the current working directory where protractor
+is called.
+
+
+
+# 0.11.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([02cb819](https://github.com/angular/protractor/commit/02cb8199d89c6645d0bc9dbb39e5cb27517bfaf3)) feat(cli): allow passing params directly to your test
+
+Adds a config object 'params' which is passed directly
+to instances of protractor. 'params' may contain nested
+objects, and can be changed via the command line as:
+
+  --params.login.user 'Joe' --params.login.password 'abc'
+
+This change also switches to using optimist to parse
+command line flags for more flexibility and better usage
+documentation. Closes #32.
+
+- ([c025ddb](https://github.com/angular/protractor/commit/c025ddbe617b977908db509f365cc882924b196f)) feat(findElements): $ & $$ shortcuts.
+
+Introducing the $ shortcut method for finding a single element by css
+without having to call protractor.By.css.  Additionally $$ for finding
+all elements by css.
+
+Examples:
+- ptor.$('.some .selector')
+- ptor.$$('.some .selector')
+
+- ([7d74184](https://github.com/angular/protractor/commit/7d7418411ea4a9d696855f755899161ecb36818d)) feat(explorer): add an interactive element explorer
+
+When debugging or first writing test suites, you may find it helpful to
+try out Protractor commands without starting up the entire test suite. You can
+do this with the element explorer. This change introduces a first version
+of the element explorer. Closes #107
+
+## Bug Fixes
+
+- ([e45ceaa](https://github.com/angular/protractor/commit/e45ceaae825cce0ec69580b8f6e93d102d4d61f1)) fix(repeaters): allow finding all rows of a repeater
+
+Now, finding an element with the strategy 'protractor.By.repeater()' returns
+a promise which will resolve to an array of WebElements, where each WebElement
+is a row in the repeater. Closes #149.
+
+- ([b501ceb](https://github.com/angular/protractor/commit/b501ceb7b776a5d9f1c2659326577601d0fbce5a)) fix(findElements): Consistently include evaluate.
+
+When using findElements with a css locator, wrap the returned list of
+elements with protractor specific functionality.
+
+- ([c17ac12](https://github.com/angular/protractor/commit/c17ac12c2a213a7b6f8c236e81ba5cb2db542fd0)) fix(cli): allow running from command line without a config file
+
+If all necessary fields are specified (e.g. seleniumAddress and at least
+one spec), a config file shouldn't be necessary.
+
+## Breaking Changes
+
+- ([421d623](https://github.com/angular/protractor/commit/421d6232fe0b45ca1758afd634997da644f2e1db)) fix(repeat): use 0-based indexing for repeater rows
+
+BREAKING CHANGE: Finding rows with protractor.By.repeater now
+indexes from 0 instead of 1. This should be more familiar to most
+modern programmers. You will need to edit existing tests. Closes #90.
+
+Before:
+```
+// The fourth foo
+ptor.findElement(protractor.By.repeater('foo in foos').row(4));
+```
+After:
+```
+// The fourth foo
+ptor.findElement(protractor.By.repeater('foo in foos').row(3));
+```
+
+# 0.10.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([881759e](https://github.com/angular/protractor/commit/881759e77462dc8e1001eb77008668ae6dc552cd)) feat(timeouts): add a unique error message when waitForAngular times out
+
+To improve the readability of error messages, when waitForAngular times out
+it now produces a custom message. This should help clarify confusion
+for pages that continually poll using $interval. This change also adds more
+documentation on timeouts. See issue #109.
+
+- ([37e0f1a](https://github.com/angular/protractor/commit/37e0f1af196c3c0bf54dcddf0088a8c16602e5f2)) feat(install selenium): better communication in the install script
+
+Adds better messages in the selenium server install script, and also
+makes the script output a 'start' executable which can be used to quickly
+start up the selenium standalone. *not yet windows friendly*. Closes #108.
+
+- ([b32f5a5](https://github.com/angular/protractor/commit/b32f5a59169f1324271bd5abc09c17fcd9c4f249)) feat(config): add exmples for dealing with log-in
+
+Adds examples for how to log in when the login page is not written
+in Angular. New examples are in spec/login.
+
+- ([1b7675a](https://github.com/angular/protractor/commit/1b7675aab7846bee54117876887bfec07ce31745)) feat(cli): add an onPrepare callback to the config
+
+This onPrepare callback is useful when you want to do something with
+protractor before running the specs. For example, you might want
+to monkey-patch protractor with custom functions used by all the
+specs, or add the protractor instance to the globals.
+An example usage is shown in the spec/onPrepareConf.js file and its
+associated spec.
+
+## Bug fixes
+
+- ([256b21c](https://github.com/angular/protractor/commit/256b21cf8c744a200892e6b7f9172150b2f4fe8d)) fix(cli): allow passing the config file before the options
+
+The cli usage says:
+> USAGE: protractor configFile [options]
+However, the options passed as argument are merged into the default
+configuration as soon as the configFile is met in the args parsing
+loop.
+This fix merges the options in the default configuration only after
+the loop, allowing to pass the options to the cli before or after,
+or around the config file.
+
+- ([6223825](https://github.com/angular/protractor/commit/62238252c7fc68c6a5941883f6a272e95997a8ff)) fix(jasminewd): allow use of custom matchers
+
+Using jasmine.Matchers.prototype to generate the chained methods for
+expect() calls is flawed because it does not pick up custom matchers
+defined using addMatcher.  Instead, use either the matchersClass for
+the current spec or from the environment.
+
+- ([c22fc38](https://github.com/angular/protractor/commit/c22fc387bc0ef7a07371e023d39a6ce58dfa56c9)) fix(sync): getCurrentUrl and friends should sync with Angular first
+
+getCurrentUrl, getPageSource, and getTitle should sync with Angular
+before executing. Closes #92.
+
+- ([dd06756](https://github.com/angular/protractor/commit/dd067561cf9fe0a765e98605b9ebdd8fbfef04d3)) fix(clientsidescripts): findElements and isElementPresent for protractor.By.select
+
+- ([c607459](https://github.com/angular/protractor/commit/c60745945c6514e25403783eab3de5873e15758b)) fix (navigation): The defer label should appear before other window names,
+not after.
+
+- ([806f381](https://github.com/angular/protractor/commit/806f38113c675a26171776a559a20bf3899aa2cc)) Fix: findElements() and isElementPresent() now work for protractor.By.input.
+Closes #79.
+
+## Breaking changes
+
+- ([881759e](https://github.com/angular/protractor/commit/881759e77462dc8e1001eb77008668ae6dc552cd)) feat(timeouts): add a unique error message when waitForAngular times out
+
+This changes the default script timeout from 100 seconds down to 11. Tests
+which relied on extremely long timeouts will need to change the default script
+timeout with `driver.manage().timeouts().setScriptTimeout(<bigNumber>)`.
+
+# 0.9.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([0e8de99](https://github.com/angular/protractor/commit/0e8de99eb0d8a0db4f6d3538dd051c94f35775f5)) Wrap WebElements with Protractor specific features. This change allows
+chained findElement calls to work with Protractor locators. It also
+adds a function, evaluate, to evaluate an angular expression in the context
+of a WebElement's scope.
+
+- ([9f53118](https://github.com/angular/protractor/commit/9f5311812cbae5122ce2c6ebe522132273b0ebcc)) Improving the command line interface (adding more options). This allows
+the --spec option to be passed with test files that will be resolved
+relative to the current directory. Smarter merging of default config
+values. Closes #65.
+
+- ([73821fb](https://github.com/angular/protractor/commit/73821fb6b6d252a93cc15ce990b4ec4738b87b95)) Adding an 'ignoreSynchronization' property to turn off Protractor's attempt to
+wait for Angular to be ready on a page. This can be used to test pages that
+poll with $timeout or $http.
+
+## Bug fixes
+
+- ([cfc6438](https://github.com/angular/protractor/commit/cfc6438e80e77387afae776f289cd55813e9b2d9)) Adding support for isElementPresent with Protractor locators.
+Closes #11.
+
+- ([8329b01](https://github.com/angular/protractor/commit/8329b01865074c32f7a261fe9bbf2c151b704a34)) Adding waitForAngular calls before WebElement functions. Closes #37.
+
+# 0.8.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Docs
+- Added documentation to the [docs folder](https://github.com/angular/protractor/tree/master/docs).
+
+- ([08ef244](https://github.com/angular/protractor/commit/08ef244217fb83206c818c84cbe8f07999116ee3)) Adding debugging tests showing different types of timeouts, and fixing
+a bug where scheduled tasks from a previous it block would run into
+the next in case of a timeout.
+
+## Features
+
+- ([1c7eae0](https://github.com/angular/protractor/commit/1c7eae0c09f13b7068f81324f24967709e264241)) Updating the binary script to understand debug, so that
+protractor debug conf.js works.
+
+- ([7a59479](https://github.com/angular/protractor/commit/7a594791b5ac6616de9c98dcd7d44ecaffb0e8a3)) Adding a 'debug' function to protractor. This schedules a debugger pause
+within the webdriver control flow.
+
+- ([679c82d](https://github.com/angular/protractor/commit/679c82d510ea016690fba259db50b4afa36154cc)) Mixing in all webdriver exports to protractor. This means that webdriver
+classes such as ActionSequence and Keys are accessible on the global
+protractor.
+
+- ([3c76246](https://github.com/angular/protractor/commit/3c76246a01e584bc30da645a36e75920b5397251)) Added nested angular app (ng-app on an element other than `<html>` or `<body>`) capability via conf file.
+
+## Bug fixes
+
+- ([1c9b98d](https://github.com/angular/protractor/commit/1c9b98d0464bbe57194cf340c6e5942cbe7c8385)) Fixed Sauce issues: low timeouts, shutdown and init order.
+
+## Breaking Changes
+
+- Now running selenium 2.25. Requires updating WebDriverJS and the selenium standalone binary and chromedriver binary.
+
+- ([a54abfb](https://github.com/angular/protractor/commit/a54abfbbfd3b13be5144e64e52a267c73d409a81)) Spec paths in configuration files are now resolved from the location of the spec file instead of the current working directory when the command line is run.
+
+
+
 # 0.7.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
