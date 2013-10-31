@@ -59,3 +59,19 @@ The result of `getText` from an input element is always empty
 This is a [webdriver quirk](http://grokbase.com/t/gg/webdriver/12bcmvwhcm/extarcting-text-from-the-input-field).
 `<input>` and `<textarea>` elements always have
 empty `getText` values. Instead, try `element.getAttribute('value')`.
+
+How can I interact directly with the JavaScript running in my app?
+------------------------------------------------------------------
+
+In general, the design of WebDriver tests is to interact with the page as a user would, so it gets a little tricky if you want to interact with the JavaScript directly. You should avoid it unless you have a good reason. However, there are ways of doing it.
+
+You can use the evaluate function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.
+```javascript
+by.css('.foo').evaluate('bar')
+```
+would return whatever `{{bar}}` is in the scope of the element with class 'foo'.
+
+You can also execute arbitrary JavaScript in the browser with
+```javascript
+browser.executeScript('your script as a string')
+```
