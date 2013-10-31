@@ -15,7 +15,7 @@ Switching to a browser besides Chrome
 
 Simply set a different browser name in the capabilites object
 
-```json
+```javascript
 capabilities: {
   'browserName': 'firefox'
 }
@@ -28,7 +28,7 @@ Adding chrome-specific options
 
 Chrome options are nested in the `chromeOptions` object. A full list of options is at [the chromedriver site](https://sites.google.com/a/chromium.org/chromedriver/capabilities). For example, to show an FPS counter in the upper right, your configuration would look like this:
 
-```json
+```javascript
 capabilities: {
   'browserName': 'chrome',
   'chromeOptions': {
