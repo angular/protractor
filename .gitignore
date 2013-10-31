@@ -6,3 +6,6 @@ chromedriver.log
 libpeerconnection.log
 changes.sh
 xmloutput*
+
+*.iml
+.idea/
