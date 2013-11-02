@@ -3,7 +3,7 @@ var webdriver = require('selenium-webdriver');
 
 describe('modes of failure', function() {
   it('should fail to find a non-existent element', function() {
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
 
     // Run this statement before the line which fails. If protractor is run
     // with the debugger (protractor debug debugging/conf.js), the test
@@ -20,7 +20,7 @@ describe('modes of failure', function() {
   }, 20000);
 
   it('should fail an assertion', function() {
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
 
     var greeting = element(by.binding('{{greeting}}'));
 
