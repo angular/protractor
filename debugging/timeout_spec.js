@@ -9,7 +9,7 @@ describe('timeout possibilities', function() {
   it('should timeout due to webdriver script timeout', function() {
     browser.driver.manage().timeouts().setScriptTimeout(55);
 
-    browser.get('app/index.html#/form');
+    browser.get('index.html#/form');
 
     browser.driver.executeAsyncScript(function() {
       var callback = arguments[arguments.length - 1];
@@ -33,7 +33,7 @@ describe('timeout possibilities', function() {
 
       browser.driver.manage().timeouts().setScriptTimeout(55);
 
-      browser.get('app/index.html#/async');
+      browser.get('index.html#/async');
 
 
       var status = element(by.binding('slowHttpStatus'));
