@@ -82,24 +82,24 @@ if (!(process.argv[2] == '--nocd')) {
   var chromedriver_zip = chromedriver_url.split('/').pop();
 
 	// ugly workaround for Mac OS X Maverick 10.9
-	if (os.type() == 'Darwin' && os.release() == '13.0.0') {
-		var VERBOSE_SCRIPT_FILENAME = DOWNLOAD_DIR + 'verbose';
+  if (os.type() == 'Darwin' && os.release() == '13.0.0') {
+    var VERBOSE_SCRIPT_FILENAME = DOWNLOAD_DIR + 'verbose';
 
-		var verbose_script = "cat <<EOF>chromedriververbose\n"
-			+ "echo 'running chromedriver --verbose \\$*'\n"
-			+ "\\$(dirname \\$0)/chromedriver --verbose \\$*\n"
-			+ "EOF\n\n mv chromedriververbose ./selenium/chromedriververbose\n\n"
-			+ "chmod +x ./selenium/chromedriververbose";
+    var verbose_script = "cat <<EOF>chromedriververbose\n"
+      + "echo 'running chromedriver --verbose \\$*'\n"
+      + "\\$(dirname \\$0)/chromedriver --verbose \\$*\n"
+      + "EOF\n\n mv chromedriververbose ./selenium/chromedriververbose\n\n"
+      + "chmod +x ./selenium/chromedriververbose";
 
-		var verbose_script_file = fs.createWriteStream(VERBOSE_SCRIPT_FILENAME);
-		verbose_script_file.write(verbose_script);
-		verbose_script_file.end(function() {
-			fs.chmod(VERBOSE_SCRIPT_FILENAME, 0755);
-		});
-		start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriververbose;';
-	} else {
+    var verbose_script_file = fs.createWriteStream(VERBOSE_SCRIPT_FILENAME);
+    verbose_script_file.write(verbose_script);
+    verbose_script_file.end(function() {
+      fs.chmod(VERBOSE_SCRIPT_FILENAME, 0755);
+    });
+    start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriververbose;';
+  } else {
     start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
-	}
+  }
 
   download_file_httpget(chromedriver_url, function(file_name) {
     var zip = new AdmZip(file_name);
