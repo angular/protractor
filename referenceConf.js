@@ -87,7 +87,7 @@ exports.config = {
       user: 'Jane',
       password: '1234'
     }
-  }
+  },
   
   // ----- Options to be passed to minijasminenode -----
   //
