@@ -13,7 +13,7 @@ var AdmZip = require('adm-zip')
 var SELENIUM_URL =
     'https://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar';
 var CHROMEDRIVER_URL_MAC =
-    'https://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip';
+    'https://chromedriver.storage.googleapis.com/2.5/chromedriver_mac32.zip';
 var CHROMEDRIVER_URL_LINUX32 =
     'https://chromedriver.storage.googleapis.com/2.4/chromedriver_linux32.zip';
 var CHROMEDRIVER_URL_LINUX64 =
@@ -24,8 +24,11 @@ var CHROMEDRIVER_URL_WINDOWS =
 var DOWNLOAD_DIR = './selenium/';
 var START_SCRIPT_FILENAME = DOWNLOAD_DIR + 'start';
 var chromedriver_url = '';
-var start_script = 'java -jar selenium/selenium-server-standalone-2.37.0.jar';
 
+// running 'verbose script' for Mac OS X 10.9 / Maverick bug workaround
+var start_script = (os.type() == 'Darwin' && os.release() == '13.0.0')
+	? './selenium/verbose; sleep 5; java -jar selenium/selenium-server-standalone-2.37.0.jar'
+	: 'java -jar selenium/selenium-server-standalone-2.37.0.jar';
 
 if (!fs.existsSync(DOWNLOAD_DIR) || !fs.statSync(DOWNLOAD_DIR).isDirectory()) {
   fs.mkdirSync(DOWNLOAD_DIR);
@@ -77,7 +80,26 @@ if (!(process.argv[2] == '--nocd')) {
   }
 
   var chromedriver_zip = chromedriver_url.split('/').pop();
-  start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
+
+	// ugly workaround for Mac OS X Maverick 10.9
+  if (os.type() == 'Darwin' && os.release() == '13.0.0') {
+    var VERBOSE_SCRIPT_FILENAME = DOWNLOAD_DIR + 'verbose';
+
+    var verbose_script = "cat <<EOF>chromedriververbose\n"
+      + "echo 'running chromedriver --verbose \\$*'\n"
+      + "\\$(dirname \\$0)/chromedriver --verbose \\$*\n"
+      + "EOF\n\n mv chromedriververbose ./selenium/chromedriververbose\n\n"
+      + "chmod +x ./selenium/chromedriververbose";
+
+    var verbose_script_file = fs.createWriteStream(VERBOSE_SCRIPT_FILENAME);
+    verbose_script_file.write(verbose_script);
+    verbose_script_file.end(function() {
+      fs.chmod(VERBOSE_SCRIPT_FILENAME, 0755);
+    });
+    start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriververbose;';
+  } else {
+    start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
+  }
 
   download_file_httpget(chromedriver_url, function(file_name) {
     var zip = new AdmZip(file_name);
