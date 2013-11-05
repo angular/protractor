@@ -152,6 +152,39 @@ for (var i = 0; i < protractorInfo.length; ++i) {
   }
 }
 
+var otherLocators = ['className',
+                     'cssSelector',
+                     'id',
+                     'js',
+                     'linkText',
+                     'name',
+                     'partialLinkText',
+                     'tagName',
+                     'xpath'];
+                     
+for (var i = 0; i < otherLocators.length; i++) {
+  var ln = 67;
+  //Some values are repeated
+  if (i>0){ln++;}
+  if (i>4){ln++;}
+  if (i>6){ln++;}
+  if (i>7){ln++;}
+  
+  var info = {
+        fullName: 'Protractor.By.' + otherLocators[i],
+        name: 3,
+        description: '',
+        lineNumber: ln,
+        params: [],
+        returnValue: undefined,
+        link: 'https://code.google.com/p/selenium/source/browse/javascript/webdriver/locators.js#' + ln,
+        filename: files['locators']
+  };
+  
+  model.locatorInfos.push(info);
+  info.wd = {link: info.link};
+}
+
 for (var i = 0; i < locatorInfo.length; ++i) {
   var info = locatorInfo[i];
   if (!info.fullName) {
