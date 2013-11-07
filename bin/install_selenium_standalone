@@ -13,13 +13,13 @@ var AdmZip = require('adm-zip')
 var SELENIUM_URL =
     'https://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar';
 var CHROMEDRIVER_URL_MAC =
-    'https://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip';
+    'https://chromedriver.storage.googleapis.com/2.6/chromedriver_mac32.zip';
 var CHROMEDRIVER_URL_LINUX32 =
-    'https://chromedriver.storage.googleapis.com/2.4/chromedriver_linux32.zip';
+    'https://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip';
 var CHROMEDRIVER_URL_LINUX64 =
-    'https://chromedriver.storage.googleapis.com/2.4/chromedriver_linux64.zip';
+    'https://chromedriver.storage.googleapis.com/2.6/chromedriver_linux64.zip';
 var CHROMEDRIVER_URL_WINDOWS =
-    'https://chromedriver.storage.googleapis.com/2.4/chromedriver_win32.zip';
+    'https://chromedriver.storage.googleapis.com/2.6/chromedriver_win32.zip';
 
 var DOWNLOAD_DIR = './selenium/';
 var START_SCRIPT_FILENAME = DOWNLOAD_DIR + 'start';
