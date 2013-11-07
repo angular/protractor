@@ -50,10 +50,14 @@ capabilities: {
 }
 ```
 
-Jasmine tests should work without further customization. If you are using Mocha, or another framework, the driver will need to be adjusted accordingly:
+Appendix A: Using with the Protractor Library
+---------------------------------------------
+
+If you are not using the Protractor runner (for example, you're using Mocha) and you are setting up webdriver yourself, you will need to create a capabilities object and pass it in to the webdriver builder. The `webdriver.Capabilities` namespace offers some preset options. See [the webdriver capabilities source](https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js).
+
 ```javascript
 driver = new webdriver.Builder().
-	usingServer('http://localhost:4444/wd/hub').withCapabilities(webdriver.Capabilities.phantomjs()).build();
+	  usingServer('http://localhost:4444/wd/hub').
+    withCapabilities(webdriver.Capabilities.phantomjs()).
+    build();
 ```
-
-
