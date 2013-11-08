@@ -80,11 +80,22 @@ describe('locators', function() {
         expect(arr.length).toEqual(3);
       });
     });
+  });
 
+  describe('by select', function() {
     it('should find multiple selects', function() {
       browser.findElements(by.select('dayColor.color')).then(function(arr) {
         expect(arr.length).toEqual(3);
       });
+    });
+
+    it('should find the select and concat its options', function() {
+      expect(element(by.select('fruit')).getText()).
+          toEqual('applepearpeachbanana');
+    });
+
+    it('should find the selected option', function() {
+      expect(element(by.selectedOption('fruit')).getText()).toEqual('apple');
     });
 
     it('should find multiple selected options', function() {
@@ -96,6 +107,8 @@ describe('locators', function() {
         expect(arr[2].getText()).toBe('blue');
       });
     });
+
+
   });
 
   describe('by repeater', function() {

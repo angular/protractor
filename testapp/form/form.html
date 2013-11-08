@@ -31,6 +31,11 @@
   <div ng-repeat="dayColor in dayColors">
     <select ng-model="dayColor.color" ng-options="c for c in colors"></select>
   </div>
+
+  <select ng-model="fruit" ng-options="fruit for fruit in fruits">
+    <option value="">{{defaultFruit}}</option>
+  </select>
+  <span>Fruit: {{fruit}}</span>
 </div>
 
 <div id="checkboxes">
