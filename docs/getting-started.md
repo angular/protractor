@@ -32,9 +32,9 @@ Install Protractor with
 
     npm install -g protractor
 
-(or omit the -g if you'd prefer not to install globally). 
+(or omit the -g if you'd prefer not to install globally).
 
-The example test expects a selenium standalone server to be running at 
+The example test expects a selenium standalone server to be running at
 localhost:4444. Protractor comes with a script to help download and install
 the standalone server. Run
 
@@ -46,7 +46,7 @@ the server with
     ./selenium/start
 
 Protractor is now available as a command line program which takes one argument,
-a configuration file. 
+a configuration file.
 
     protractor node_modules/protractor/example/conf.js
 
@@ -141,7 +141,7 @@ You may also use plain old WebDriver strategies such as `by.id` and
 `by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `element.by.css`.
 
 `element` returns an ElementFinder. This is an object which allows you to interact with the element on your page, but since all interaction with the browser must be done over webdriver, it is important to remember that this is *not* a DOM element. You can interact with it with methods such as
-`sendKeys`, `getText`, and `click`. Check out the [API](/api.md) for a list of
+`sendKeys`, `getText`, and `click`. Check out the [API](/docs/api.md) for a list of
 all available methods.
 
 See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/basic/findelements_spec.js)
