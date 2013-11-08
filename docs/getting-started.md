@@ -141,7 +141,7 @@ You may also use plain old WebDriver strategies such as `by.id` and
 `by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `element.by.css`.
 
 `element` returns an ElementFinder. This is an object which allows you to interact with the element on your page, but since all interaction with the browser must be done over webdriver, it is important to remember that this is *not* a DOM element. You can interact with it with methods such as
-`sendKeys`, `getText`, and `click`. Check out the [API](/api.md) for a list of
+`sendKeys`, `getText`, and `click`. Check out the [API](https://github.com/angular/protractor/blob/master/docs/api.md) for a list of
 all available methods.
 
 See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/basic/findelements_spec.js)
