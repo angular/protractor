@@ -34,12 +34,12 @@ _Note: Major version 0 releases are for initial development, and backwards compa
 
 - ([21264fd](https://github.com/angular/protractor/commit/21264fdc2f6cb3345c8f005936c74985ecd811dc)) fix(find): fix error when exposed to ng-options element with a default option
 
-Protractor will now ignore elements with the ng-bind class that don't have
-a proper binding on their data, instead of blowing up when encoutering them.
-
-- ([f672648](https://github.com/angular/protractor/commit/f6726482cd2ce9a7dda9ccdeeb93574d3b9293e3)) fix(findelements): fix isPresent for repeaters by row for real
+  Protractor will now ignore elements with the ng-bind class that don't have
+  a proper binding on their data, instead of blowing up when encoutering them.
 
   Closes #165, may fix #170
+
+  - ([f672648](https://github.com/angular/protractor/commit/f6726482cd2ce9a7dda9ccdeeb93574d3b9293e3)) fix(findelements): fix isPresent for repeaters by row for real
 
 ## Breaking Changes
 
