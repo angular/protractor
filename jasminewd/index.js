@@ -67,16 +67,25 @@ global.afterEach = wrapInControlFlow(global.afterEach);
  * @param {!Function} matcher The matcher function to wrap.
  * @param {webdriver.promise.Promise} actualPromise The promise which will
  *     resolve to the actual value being tested.
+ * @param {boolean} not Whether this is being called with 'not' active.
  */
-function wrapMatcher(matcher, actualPromise) {
+function wrapMatcher(matcher, actualPromise, not) {
   return function(expected) {
     actualPromise.then(function(actual) {
       if (expected instanceof webdriver.promise.Promise) {
         expected.then(function(exp) {
-          expect(actual)[matcher](exp);
+          if (not) {
+            expect(actual).not[matcher](exp)
+          } else {
+            expect(actual)[matcher](exp);
+          }
         });
       } else {
-        expect(actual)[matcher](expected);
+        if (not) {
+          expect(actual).not[matcher](expected)
+        } else {
+          expect(actual)[matcher](expected);
+        }
       }
     });
   };
@@ -89,12 +98,13 @@ function wrapMatcher(matcher, actualPromise) {
  *     resolve to the acutal value being tested.
  */
 function promiseMatchers(actualPromise) {
-  var promises = {};
+  var promises = {not: {}};
   var env = jasmine.getEnv();
   var matchersClass = env.currentSpec.matchersClass || env.matchersClass;
 
   for (matcher in matchersClass.prototype) {
-    promises[matcher] = wrapMatcher(matcher, actualPromise);
+    promises[matcher] = wrapMatcher(matcher, actualPromise, false);
+    promises.not[matcher] = wrapMatcher(matcher, actualPromise, true);
   };
 
   return promises;
