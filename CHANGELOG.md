@@ -1,3 +1,55 @@
+# 0.12.1
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Minor features
+
+- ([201b59c](https://github.com/angular/protractor/commit/201b59c2e728c56d2a88a1167ed3007b22ab9034)) feat(jasminewd): better error messaging when expect is called with a WebElement
+
+- ([d383770](https://github.com/angular/protractor/commit/d383770499da4b08b74ad53c20ffa288147f94e9)) feat(clientsidescripts): better error reporting from testForAngular and waitForAngular
+
+## Bug fixes
+
+- ([8580c0c](https://github.com/angular/protractor/commit/8580c0c76c5ccd3c55d053e59d8df37b3c4cf35a)) fix(install-selenium): update to chromedriver 2.6
+
+  Update to the latest version of Chromedriver. This fixes the issue with
+  OS X 10.9. Closes #181.
+
+- ([ebc528f](https://github.com/angular/protractor/commit/ebc528fec2c2e88b0f9e32cee0661ecd79da2252)) fix(debugging): switch debugging tests to the new test app urls.
+
+- ([8ff4787](https://github.com/angular/protractor/commit/8ff47875488647513f4199bab36e3b0023dd305d)) fix(runner): exit with proper code when tests fail
+
+  When errors with messages matching /timeout/ were created, Protractor
+  clears the control flow so that the remainder of the tasks scheduled
+  for that spec don't bleed over into the next spec. This was messing up
+  the promises used in the runner, since they are also webdriver promises.
+  Long term, the runner should _not_ use webdriver promises. For now, fix by
+  having the runner resolve promises directly rather than through chaining,
+  and add a TODO to use promises which aren't connected to WebDriver's
+  control flow in the runner.
+
+  Closes #214.
+
+- ([81501c5](https://github.com/angular/protractor/commit/81501c5d941cd7edb15439cef7c7a64c0e773e27)) fix(clientsidescripts): workaround for IE 8 "async page reload" init problem
+
+- ([21264fd](https://github.com/angular/protractor/commit/21264fdc2f6cb3345c8f005936c74985ecd811dc)) fix(find): fix error when exposed to ng-options element with a default option
+
+Protractor will now ignore elements with the ng-bind class that don't have
+a proper binding on their data, instead of blowing up when encoutering them.
+
+- ([f672648](https://github.com/angular/protractor/commit/f6726482cd2ce9a7dda9ccdeeb93574d3b9293e3)) fix(findelements): fix isPresent for repeaters by row for real
+
+  Closes #165, may fix #170
+
+## Breaking Changes
+
+- ([bf5b076](https://github.com/angular/protractor/commit/bf5b076cb8897d844c25baa91c263a12c61e3ab3)) fix(cli): remove boolean verbose and stack trace options
+
+  Also add better description for what the command line options are.
+
+  Tiny breaking change:
+    Rename the 'includeStackTrace' command line option to 'stackTrace' for brevity.
+
 # 0.12.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
