@@ -5,7 +5,7 @@ function ConflictCtrl($scope) {
   }
 
   $scope.wrapper = [{
-    resuedBinding: 'inner',
+    reusedBinding: 'inner',
     alsoReused: 'innerbarbaz'
   }]
 };

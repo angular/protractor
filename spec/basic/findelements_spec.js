@@ -253,8 +253,8 @@ describe('chaining find elements', function() {
         by.binding('item.reusedBinding')).getText()).
           toEqual('Outer: outer');
 
-        expect(element(by.id('baz')).
-            findElement(by.binding('item.resuedBinding')).
+        expect(element(by.id('baz')).findElement(
+            by.binding('item.reusedBinding')).
             getText()).
             toEqual('Inner: inner');
   });
@@ -264,6 +264,7 @@ describe('chaining find elements', function() {
       element.all(by.binding('item')).then(function(elems) {
         expect(elems.length).toEqual(4);
       });
+
       element(by.id('baz')).
           findElements(by.binding('item')).
           then(function(elems) {
@@ -273,7 +274,7 @@ describe('chaining find elements', function() {
 
   it('should determine element presence properly with chaining', function() {
     expect(element(by.id('baz')).
-        isElementPresent(by.binding('item.resuedBinding'))).
+        isElementPresent(by.binding('item.reusedBinding'))).
         toBe(true);
 
     expect(element(by.id('baz')).
