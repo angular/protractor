@@ -1,4 +1,4 @@
-function FormCtrl($scope) {
+function FormCtrl($scope, $window) {
   $scope.greeting = "Hiya";
   $scope.username = "Anon";
   $scope.aboutbox = "This is a text box";
@@ -11,5 +11,9 @@ function FormCtrl($scope) {
   $scope.fruit = '';
   $scope.defaultFruit = 'apple'
   $scope.fruits = ['pear', 'peach', 'banana'];
+
+  $scope.doAlert = function() {
+    $window.alert('Hello');
+  }
 }
-FormCtrl.$inject = ['$scope'];
+FormCtrl.$inject = ['$scope', '$window'];

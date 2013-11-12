@@ -14,4 +14,12 @@ describe('using an ActionSequence', function() {
 
     expect(sliderBar.getAttribute('value')).toEqual('10');
   });
+
+  it('should deal with alerts', function() {
+    var alertButton = $('#alertbutton');
+    alertButton.click();
+    var alertDialog = browser.switchTo().alert();
+
+    expect(alertDialog.getText()).toEqual('Hello');
+  });
 });
