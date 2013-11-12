@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['myApp.appVersion']).
+angular.module('myApp', ['ngRoute', 'myApp.appVersion']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/repeater', {templateUrl: 'repeater/repeater.html', controller: RepeaterCtrl});
     $routeProvider.when('/bindings', {templateUrl: 'bindings/bindings.html', controller: BindingsCtrl});
