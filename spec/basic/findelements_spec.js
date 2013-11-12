@@ -226,6 +226,14 @@ describe('locators', function() {
           column('qux'));
       expect(byCol.getText()).toEqual('W');
     });
+
+    it('should determine if repeater elements are present', function() {
+      expect(element(by.repeater('allinfo in days').row(3)).isPresent()).
+          toBe(true);
+      // There are only 5 rows, so the 6th row is not present.
+      expect(element(by.repeater('allinfo in days').row(5)).isPresent()).
+          toBe(false);
+    })
   });
 
   it('should determine if an element is present', function() {
