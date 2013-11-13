@@ -40,6 +40,13 @@ written with Protractor.
 Here's a [great blog post](http://www.yearofmoo.com/2013/09/advanced-testing-and-debugging-in-angularjs.html)
 with more info.
 
+Angular can't be found on my page
+---------------------------------
+
+Protractor supports angular 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.
+
+The `angular` variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if `angular` is defined.
+
 How do I deal with my log-in page?
 ----------------------------------
 
