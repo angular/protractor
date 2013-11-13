@@ -46,4 +46,9 @@ describe('protractor library', function() {
         expect(protractor.ActionSequence).toBeDefined();
         expect(protractor.Key.RETURN).toEqual('\uE006');
     });
+
+  // it('should allow adding custom locators', function() {
+  //   by.addLocator();
+    
+  // });
 });
