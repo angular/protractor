@@ -21,5 +21,7 @@ describe('using an ActionSequence', function() {
     var alertDialog = browser.switchTo().alert();
 
     expect(alertDialog.getText()).toEqual('Hello');
+
+    alertDialog.accept();
   });
 });
