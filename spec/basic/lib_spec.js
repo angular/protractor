@@ -47,8 +47,23 @@ describe('protractor library', function() {
         expect(protractor.Key.RETURN).toEqual('\uE006');
     });
 
-  // it('should allow adding custom locators', function() {
-  //   by.addLocator();
-    
-  // });
+  it('should allow adding custom locators', function() {
+    var findMenuItem = function() {
+      var using = arguments[0]; // unused
+      var itemName = arguments[1];
+      var menu = document.querySelectorAll('.menu li');
+      for (var i = 0; i < menu.length; ++i) {
+        if (menu[i].innerText == itemName) {
+          return [menu[i]];
+        }
+      }
+    };
+
+    by.addLocator('menuItem', findMenuItem);
+
+    expect(by.menuItem).toBeDefined();
+
+    expect(element(by.menuItem('repeater')).isPresent());
+    expect(element(by.menuItem('repeater')).getText()).toEqual('repeater');
+  });
 });
