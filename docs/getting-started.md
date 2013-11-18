@@ -20,7 +20,7 @@ When writing tests, keep the following in mind:
 -  The test code and scripts running in the browser are separated, and only
    communicate through the [WebDriver wire protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol).
 -  WebDriver commands are scheduled on a control flow and return promises, not
-   primitive values. See the [control flow doc](/control-flow.md) for more
+   primitive values. See the [control flow doc](/docs/control-flow.md) for more
    info.
 -  To run tests, WebDriverJS needs to talk to a selenium standalone server
    running as a separate process.
