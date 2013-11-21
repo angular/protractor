@@ -66,4 +66,16 @@ describe('protractor library', function() {
     expect(element(by.menuItem('repeater')).isPresent());
     expect(element(by.menuItem('repeater')).getText()).toEqual('repeater');
   });
+
+  describe('helper functions', function() {
+    it('should get the absolute URL', function() {
+      browser.get('index.html');
+      expect(browser.getLocationAbsUrl()).
+          toEqual('http://localhost:8000/index.html#/form');
+
+      element(by.linkText('repeater')).click();
+      expect(browser.getLocationAbsUrl()).
+          toEqual('http://localhost:8000/index.html#/repeater');
+    });
+  })
 });
