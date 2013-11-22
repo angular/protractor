@@ -15,7 +15,7 @@ Protractor comes with [examples of failing tests](https://github.com/angular/pro
 To run, start up the test application and a selenium server, and run
 
 ```
-protractor debugging/failure_conf.js
+protractor debugging/failureConf.js
 ```
 
 then look at all the pretty stack traces!
@@ -41,7 +41,7 @@ it('should fail to find a non-existent element', function() {
   browser.get('app/index.html#/form');
 
   // Run this statement before the line which fails. If protractor is run
-  // with the debugger (protractor debug debugging/conf.js), the test
+  // with the debugger (protractor debug <...>), the test
   // will pause after loading the webpage but before trying to find the
   // element.
   browser.debugger();
@@ -54,7 +54,7 @@ it('should fail to find a non-existent element', function() {
 Then run the test in debug mode
 
 ```
-protractor debug debugging/failure_conf.js
+protractor debug debugging/failureConf.js
 ```
 
 This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
@@ -73,9 +73,9 @@ from Protractor into the browser as `window.clientSideScripts`. They can be
 used from the browser's console.
 
 ```javascript
-// In the browser console
-> window.clientSideScripts.findInput('user.name');
-// Should return the input element with model 'user.name'.
+// In the browser console (e.g. from Chrome Dev Tools)
+> window.clientSideScripts.findInputs('username');
+// Should return the input element with model 'username'.
 ```
 
 
@@ -139,7 +139,7 @@ Timeouts
 Protractor also contains an example suite of tests which time out. Run with
 
 ```
-protractor debugging/timeout_conf.js
+protractor debugging/timeoutConf.js
 ```
 
 Jasmine tests have a timeout which can be set
