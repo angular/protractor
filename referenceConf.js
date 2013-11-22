@@ -9,6 +9,10 @@ exports.config = {
   // 2. seleniumAddress - to connect to a Selenium server which is already
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium servers via SauceLabs.
+  //
+  // If the chromeOnly option is specified, no Selenium server will be started,
+  // and chromeDriver will be used directly (from the location specified in
+  // chromeDriver)
 
   // The location of the selenium standalone server .jar file.
   seleniumServerJar: './selenium/selenium-server-standalone-2.37.0.jar',
@@ -20,6 +24,9 @@ exports.config = {
   // the system property webdriver.chrome.driver. If null, selenium will
   // attempt to find chromedriver using PATH.
   chromeDriver: './selenium/chromedriver',
+  // If true, only chromedriver will be started, not a standalone selenium.
+  // Tests for browsers other than chrome will not run.
+  chromeOnly: false,
   // Additional command line options to pass to selenium. For example,
   // if you need to change the browser timeout, use
   // seleniumArgs: ['-browserTimeout=60'],
