@@ -1,3 +1,48 @@
+# 0.13.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([ce5f494](https://github.com/angular/protractor/commit/ce5f494289c3750b84c6783339a14342a1b74f3d)) feat(element): element.all now has 'first' and 'last' methods
+
+- ([ef61662](https://github.com/angular/protractor/commit/ef6166232186b3385769f63430819a722052cc44)) feat(runner): allow bypassing the selenium standalone server if running only chrome
+
+  Using the config option `chromeOnly` now enables running ChromeDriver directly,
+  without going through the Selenium Standalone. The chromedriver binary should be
+  available in your PATH, or should be specified with the config option
+  `chromeDriver`.
+
+- ([76c094a](https://github.com/angular/protractor/commit/76c094a3fa69511b0311011b0ef2c7343b8e655b)) feat(getLocationAbsUrl) - allows current url to be obtained on IE (and Chrome/Firefox)
+
+- ([6a1c918](https://github.com/angular/protractor/commit/6a1c91848858453d0af712588b51c0bdaa0c9445)) feat(runner): add error message for bad jar path
+
+- ([98bce7e](https://github.com/angular/protractor/commit/98bce7e2ac1e659faf2d8727e1fda210b796525e)) feat(locators): add the ability to add custom element locators with by.addLocator
+
+  Custom locators can now be added using by.addLocator(name, script), where
+  script is a self-contained snippet to be executed on the browser which returns
+  an array of elements. Closes #236.
+
+- ([c7bcc20](https://github.com/angular/protractor/commit/c7bcc20c07416237f69f7934d257b5ba5bfe8c1f)) chore(angular): update to angular 1.2
+
+
+## Bug Fixes
+
+- ([a24eeee](https://github.com/angular/protractor/commit/a24eeee4f08e973ffcecd107b6610ce1c2c5e3f6)) fix(runner): do not error out if only one spec pattern does not match any files
+
+  Previously, the runner would throw an error if any one of the spec patterns did not
+  match any files. Now it logs a warning in that case, and errors out only if there
+  are no found files in any spec patterns. Closes #260
+
+- ([f3b3fdb](https://github.com/angular/protractor/commit/f3b3fdbcbc8fe4f3c5915ef0f6eb7c89e339a62e)) fix(element): fix an error where all.then() wasn't calling callbacks.
+
+  Closes #267
+
+- ([137d804](https://github.com/angular/protractor/commit/137d8040778215fd841654d3ca465b71f8719ea5)) fix(jasminewd): patched matcher should understand 'not'
+
+  Closes #139.
+
+
 # 0.12.1
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
