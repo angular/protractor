@@ -328,6 +328,20 @@ describe('global element function', function() {
     expect(colorList.get(2).getAttribute('value')).toEqual('red');
   });
 
+  it('should get the first element from an array', function() {
+    var colorList = element.all(by.model('color'));
+    browser.get('index.html#/form');
+
+    expect(colorList.first(0).getAttribute('value')).toEqual('blue');
+  });
+
+  it('should get the last element from an array', function() {
+    var colorList = element.all(by.model('color'));
+    browser.get('index.html#/form');
+
+    expect(colorList.last(0).getAttribute('value')).toEqual('red');
+  });
+
   it('should export an isPresent helper', function() {
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
