@@ -86,7 +86,7 @@ exports.config = {
 
   // The params object will be passed directly to the protractor instance,
   // and can be accessed from your test. It is an arbitrary object and can
-  // contain anything you my need in your test.
+  // contain anything you may need in your test.
   // This can be changed via the command line as:
   //   --params.login.user 'Joe'
   params: {
