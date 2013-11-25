@@ -39,9 +39,7 @@ Create a configuration file - an example with detailed comments is shown in `nod
 // myConf.js
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  jasmineNodeOpts: {
-    specs: ['myTest.js', 'myTestFolder/*Test.js']
-  }
+  specs: ['myTest.js', 'myTestFolder/*Test.js']
 }
 ```
 
