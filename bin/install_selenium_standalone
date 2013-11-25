@@ -78,6 +78,9 @@ if (!(process.argv[2] == '--nocd')) {
 
   var chromedriver_zip = chromedriver_url.split('/').pop();
   start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
+  if (os.type() == 'Windows_NT') {
+    start_script += '.exe';
+  }
 
   download_file_httpget(chromedriver_url, function(file_name) {
     var zip = new AdmZip(file_name);
@@ -91,5 +94,9 @@ if (!(process.argv[2] == '--nocd')) {
 var start_script_file = fs.createWriteStream(START_SCRIPT_FILENAME);
 start_script_file.write(start_script);
 start_script_file.end(function() {
-  fs.chmod(START_SCRIPT_FILENAME, 0755);
+  if (os.type() == 'Windows_NT') {
+    fs.renameSync(START_SCRIPT_FILENAME, START_SCRIPT_FILENAME + '.cmd');
+  } else {
+    fs.chmod(START_SCRIPT_FILENAME, 0755);
+  }
 });
