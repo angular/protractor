@@ -133,8 +133,8 @@ parameter, a *locator* strategy for locating the element. Protractor offers Angu
    either from `ng-bind` or `{{}}` notation in the template.
 -  `by.model` searches for elements by input `ng-model`.
 -  `by.repeater` searches for `ng-repeat` elements. For example,
-   `by.repeater('phone in phones').row(12).column('price')` returns
-   the element in the 12th row of the `ng-repeat = "phone in phones"` repeater
+   `by.repeater('phone in phones').row(11).column('price')` returns
+   the element in the 12th row (0-based) of the `ng-repeat = "phone in phones"` repeater
    with the binding matching `{{phone.price}}`.
 
 You may also use plain old WebDriver strategies such as `by.id` and
