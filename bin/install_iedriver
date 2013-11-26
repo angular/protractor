@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+var fs = require('fs');
+var os = require('os');
+var dl = require('./download_files');
+var AdmZip = require('adm-zip')
+
+var IEXPLOREDRIVER_URL_WINDOWS64 = 
+  'https://selenium.googlecode.com/files/IEDriverServer_x64_2.35.3.zip';
+var IEXPLOREDRIVER_URL_WINDOWS32 = 
+  'https://selenium.googlecode.com/files/IEDriverServer_Win32_2.35.3.zip';
+
+var DOWNLOAD_DIR = './selenium/';
+var iexploredriver_url = '';
+
+if (!fs.existsSync(DOWNLOAD_DIR) || !fs.statSync(DOWNLOAD_DIR).isDirectory()) {
+  fs.mkdirSync(DOWNLOAD_DIR);
+}
+
+
+if (!(process.argv[2] == '--nocd')) {
+  if (os.type() == 'Windows_NT') {
+    if (os.arch() == 'x64') {
+      iexploredriver_url = IEXPLOREDRIVER_URL_WINDOWS64;
+    } else {
+      iexploredriver_url = IEXPLOREDRIVER_URL_WINDOWS32;
+    }
+  } else {
+    console.log("OS is not compatible. That driver works in Windows platform only.");
+    return;
+  }
+
+  iexploredriver_url = IEXPLOREDRIVER_URL_WINDOWS;
+  dl.download_file_httpget(iexploredriver_url, function(file_name) {
+    var zip = new AdmZip(file_name);
+    zip.extractAllTo(DOWNLOAD_DIR);
+  });
+
+}
