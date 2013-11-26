@@ -1,0 +1,244 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var os = require('os');
+var url = require('url');
+var http = require('http');
+var path = require('path');
+var AdmZip = require('adm-zip');
+var optimist = require('optimist');
+
+/**
+ * Download the requested binaries to node_modules/protractor/selenium/
+ */
+var SELENIUM_DIR = path.resolve(__dirname, '../selenium');
+
+var versions = require('../package.json').webdriverVersions;
+
+var binaries = {
+  standalone: {
+    name: 'selenium standalone',
+    isDefault: true,
+    prefix: 'selenium-server-standalone',
+    filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
+    url: function() {
+      return 'https://selenium.googlecode.com/files/' +
+          'selenium-server-standalone-' + versions.selenium+ '.jar';
+    }
+  },
+  chrome: {
+    name: 'chromedriver',
+    isDefault: true,
+    prefix: 'chromedriver_',
+    filename: 'chromedriver_' + versions.chromedriver + '.zip',
+    url: function() {
+      var urlPrefix = 'https://chromedriver.storage.googleapis.com/' +
+          versions.chromedriver + '/chromedriver_';
+      if (os.type() == 'Darwin') {
+        return urlPrefix + 'mac32.zip';
+      } else if (os.type() == 'Linux') {
+        if (os.arch() == 'x64') {
+          return urlPrefix + 'linux64.zip';
+        } else {
+          return urlPrefix + 'linux32.zip';
+        }
+      } else if (os.type() == 'Windows_NT') {
+        return urlPrefix + 'win32.zip';
+      }
+    }
+  },
+  ie: {
+    name: 'IEDriver',
+    isDefault: false,
+    prefix: 'IEDriverServer',
+    filename: 'IEDriverServer_' + versions.iedriver + '.zip',
+    url: function() {
+      var urlPrefix = 'https://selenium.googlecode.com/files/IEDriverServer';
+      if (os.type() == 'Windows_NT') {
+        if (os.arch() == 'x64') {
+          binaries.iedriver.url = urlPrefix + '_x64_' + versions.iedriver +
+              '.zip';
+        } else {
+          binaries.iedriver.url = urlPrefix + '_win32_' + versions.iedriver +
+              '.zip';
+        }
+      }
+    }
+  }
+};
+
+
+var cli = optimist.
+    usage('Usage: manage_webdriver <command>\n' +
+        'Commands:\n' + 
+        '  update: install or update selected binaries\n' +
+        '  start: start up the selenium server\n' +
+        '  status: list the current available drivers').
+    describe('out_dir', 'Location to output/expect ').
+    default('out_dir', SELENIUM_DIR);
+
+for (bin in binaries) {
+  cli.describe(bin, 'install or update ' + binaries[bin].name).
+  boolean(bin).
+  default(bin, binaries[bin].isDefault);
+}
+
+var argv = cli.
+    check(function(arg) {
+      if (arg._.length != 1) {
+        throw 'Please specify one command';
+      }
+    }).
+    argv;
+
+if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
+  fs.mkdirSync(argv.out_dir);
+}
+
+/**
+ * Function to download file using HTTP.get.
+ * Thanks to http://www.hacksparrow.com/using-node-js-to-download-files.html
+ * for the outline of this code.
+ */
+var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
+  console.log('downloading ' + fileUrl + '...');
+  var options = {
+    host: url.parse(fileUrl).host,
+    port: 80,
+    path: url.parse(fileUrl).pathname
+  };
+
+  var filePath = path.join(outputDir, fileName);
+  var file = fs.createWriteStream(filePath);
+
+  http.get(options, function(res) {
+    res.on('data', function(data) {
+      file.write(data);
+    }).on('end', function() {
+      file.end(function() {
+        console.log(fileName + ' downloaded to ' + filePath);
+        if (callback) {
+          callback(filePath);
+        }
+      });
+    });
+  });
+};
+
+/**
+ * If a new version of the file with the given url exists, download and
+ * delete the old version.
+ */
+var downloadIfNew = function(bin, outputDir, existingFiles, opt_callback) {
+  if (!bin.exists) {
+    // Remove anything else that matches the exclusive prefix.
+    existingFiles.forEach(function(file) {
+      if (file.indexOf(bin.prefix) != -1) {
+        fs.unlinkSync(path.join(outputDir, file));
+      }
+    });
+    console.log('Updating ' + bin.name);
+    var url = bin.url();
+    if (!url) {
+      console.error(bin.name + ' is not available for your system.');
+      return;
+    }
+    httpGetFile(url, bin.filename, outputDir, function(downloaded) {
+      if (opt_callback) {
+        opt_callback(downloaded);
+      }
+    });
+  } else {
+    console.log(bin.name + ' is up to date.');
+  }
+};
+
+/**
+ * Append '.exe' to a filename if the system is windows.
+ */
+var executableName = function(file) {
+  if (os.type() == 'Windows_NT') {
+    return file + '.exe';
+  } else {
+    return file;
+  }
+};
+
+
+// Setup before any command.
+var existingFiles = fs.readdirSync(argv.out_dir);
+
+for (name in binaries) {
+  bin = binaries[name];
+  var exists = fs.existsSync(path.join(argv.out_dir, bin.filename));
+  var outOfDateExists = false;
+  existingFiles.forEach(function(file) {
+    if (file.indexOf(bin.prefix) != -1 && file != bin.filename) {
+      outOfDateExists = true;
+    }
+  });
+  bin.exists = exists;
+  bin.outOfDateExists = outOfDateExists;
+}
+
+switch (argv._[0]) {
+  case 'start':
+    if (!binaries.standalone.exists) {
+      console.error('Selenium Standalone is not present. Install with ' +
+          'manage_webdriver update --standalone');
+      process.exit(1);
+    }
+    var args = ['-jar', path.join(argv.out_dir, binaries.standalone.filename)];
+    if (binaries.chrome.exists) {
+      args.push('-Dwebdriver.chrome.driver=' +
+          path.join(argv.out_dir, executableName('chromedriver')));
+    }
+    if (binaries.ie.exists) {
+       args.push('-Dwebdriver.ie.driver=' +
+          path.join(argv.out_dir, executableName('IEDriverServer')));
+    }
+    var javaChild = require('child_process').spawn(
+        'java', args, { stdio: 'inherit' });
+    break;
+  case 'status':
+    for (name in binaries) {
+      bin = binaries[name];
+      if (bin.exists) {
+        console.log(bin.name + ' is up to date');
+      } else if (bin.outOfDateExists) {
+        console.log('**' + bin.name + ' needs to be updated');
+      } else {
+        console.log(bin.name + ' is not present')
+      }
+    }
+    break;
+  case 'update':
+    if (argv.standalone) {
+      downloadIfNew(binaries.standalone, argv.out_dir, existingFiles);
+    }
+    if (argv.chrome) {
+      downloadIfNew(binaries.chrome, argv.out_dir, existingFiles,
+        function(filename) {
+          var zip = new AdmZip(filename);
+          // Expected contents of the zip:
+          //   mac/linux: chromedriver
+          //   windows: chromedriver.exe
+          zip.extractAllTo(argv.out_dir);
+          if (os.type() != 'Windows_NT') {
+            fs.chmodSync(path.join(argv.out_dir, 'chromedriver'), 0755);
+          }
+        });
+    }
+    if (argv.ie) {
+       downloadIfNew(binaries.ie, argv.out_dir, existingFiles,
+        function(filename) {
+          // Expected contents of the zip:
+          //   IEDriverServer.exe
+          zip.extractAllTo(argv.out_dir);
+        });
+    }
+    break;
+  default:
+    console.error('Invalid command');
+    optimist.showHelp();
+}
