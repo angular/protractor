@@ -24,15 +24,23 @@ var CHROMEDRIVER_URL_WINDOWS =
 var DOWNLOAD_DIR = './selenium/';
 var START_SCRIPT_FILENAME = DOWNLOAD_DIR + 'start';
 var chromedriver_url = '';
-var start_script = 'java -jar selenium/selenium-server-standalone-2.37.0.jar';
+var start_script;
 
 
 if (!fs.existsSync(DOWNLOAD_DIR) || !fs.statSync(DOWNLOAD_DIR).isDirectory()) {
   fs.mkdirSync(DOWNLOAD_DIR);
 }
 
-console.log(
-  'When finished, start the Selenium Standalone Server with ./selenium/start \n');
+if (os.type() == 'Windows_NT') {
+  START_SCRIPT_FILENAME = START_SCRIPT_FILENAME + '.cmd';
+  console.log(
+    'When finished, start the Selenium Standalone Server with .\\selenium\\start.cmd \n');
+  start_script = 'java -jar %~dp0\selenium-server-standalone-2.37.0.jar';
+}else{
+  start_script = 'java -jar selenium/selenium-server-standalone-2.37.0.jar';
+  console.log(
+    'When finished, start the Selenium Standalone Server with ./selenium/start \n');
+}
 
 // Function to download file using HTTP.get
 var download_file_httpget = function(file_url, callback) {
@@ -77,7 +85,11 @@ if (!(process.argv[2] == '--nocd')) {
   }
 
   var chromedriver_zip = chromedriver_url.split('/').pop();
-  start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
+  if (os.type() == 'Windows_NT') {
+    start_script += ' -Dwebdriver.chrome.driver=%~dp0\chromedriver.exe';
+  }else{
+    start_script += ' -Dwebdriver.chrome.driver=./selenium/chromedriver';
+  }
 
   download_file_httpget(chromedriver_url, function(file_name) {
     var zip = new AdmZip(file_name);
