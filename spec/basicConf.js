@@ -1,7 +1,7 @@
 // The main suite of Protractor tests.
 exports.config = {
-  seleniumServerJar: './selenium/selenium-server-standalone-2.35.0.jar',
-  chromeDriver: './selenium/chromedriver',
+  seleniumServerJar: '../selenium/selenium-server-standalone-2.37.0.jar',
+  chromeDriver: '../selenium/chromedriver',
 
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
