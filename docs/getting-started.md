@@ -38,12 +38,11 @@ The example test expects a selenium standalone server to be running at
 localhost:4444. Protractor comes with a script to help download and install
 the standalone server. Run
 
-    node_modules/protractor/bin/install_selenium_standalone
+    webdriver-manager update
 
-This installs selenium standalone server and chromedriver to `./selenium`. Start
-the server with
+This installs selenium standalone server and chromedriver to `protractor/selenium`. Start the server with
 
-    ./selenium/start
+    webdriver-manager start
 
 Protractor is now available as a command line program which takes one argument,
 a configuration file.
