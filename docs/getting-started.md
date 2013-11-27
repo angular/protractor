@@ -38,7 +38,7 @@ The example test expects a selenium standalone server to be running at
 localhost:4444. Protractor comes with a script to help download and install
 the standalone server. Run
 
-    node_modules/protractor/bin/install_selenium_standalone
+    node node_modules/protractor/bin/install_selenium_standalone
 
 This installs selenium standalone server and chromedriver to `./selenium`. Start
 the server with
