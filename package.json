@@ -32,7 +32,7 @@
   },
   "bin": {
     "protractor": "bin/protractor",
-    "manage-webdriver": "bin/webdriver-manager"
+    "webdriver-manager": "bin/webdriver-manager"
   },
   "main": "lib/protractor.js",
   "scripts": {
