@@ -346,6 +346,14 @@ describe('global element function', function() {
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
   });
+
+  it('should wrap element returned from the array with protractor', function() {
+    var days = element.all(by.repeater('allinfo in days'));
+    browser.get('index.html#/repeater');
+    expect(days.get(0).findElement(by.binding('allinfo.initial')).getText()).toEqual('M');
+    expect(days.first(0).findElement(by.binding('allinfo.initial')).getText()).toEqual('M');
+    expect(days.last(0).findElement(by.binding('allinfo.initial')).getText()).toEqual('F');
+  });
 });
 
 describe('evaluating statements', function() {
