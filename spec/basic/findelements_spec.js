@@ -464,6 +464,15 @@ describe('wrapping web driver elements', function() {
         element.all(by.binding('planet.name')).then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
+        element.all(by.binding('planet.name')).get(0).then(function(elem) {
+          elem.verifyMethodsAdded;
+        });
+        element.all(by.binding('planet.name')).first().then(function(elem) {
+          elem.verifyMethodsAdded;
+        });
+        element.all(by.binding('planet.name')).last().then(function(elem) {
+          elem.verifyMethodsAdded;
+        });
         element.all(by.css('option[value="4"]')).then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
