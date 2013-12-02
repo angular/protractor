@@ -1,6 +1,6 @@
 # 0.14.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
