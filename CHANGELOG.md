@@ -1,3 +1,59 @@
+# 0.14.0
+
+_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+
+## Features
+
+- ([c579a1a](https://github.com/angular/protractor/commit/c579a1a01bae6798a87a5ca8915417775e1b6fb2)), ([f54fd5d](https://github.com/angular/protractor/commit/f54fd5d7c3caa8df319a0115086bb4db8443d856)) feat(webdriver-manager): redo the script to run and install selenium/webdriver
+
+  Breaking Change.
+  As outlined in Issue #296, redoing the way the selenium/webdriver
+  install and run helper scripts work. Now, the 'webdriver-manager' script
+  will be available either locally or globally (depending on how protractor
+  was installed). It replaced install_selenium_standalone and the 'start' script
+  that was provided after install. Run `webdriver-manager update` to download
+  new versions of selected webdriver binaries. Run `webdriver-manager start`
+  to start the standalone server. In addition, this fixes issues with running
+  the server starter in Windows, and allows automated downloading of the IEDriver.
+
+  Thanks to kurthong and vipper for their PRs with windows fixes, which were
+  very useful in preparing this.
+
+- ([a69ebc3](https://github.com/angular/protractor/commit/a69ebc3b783fb7bf42877a658498de90d3d196c3)) feat(runner): use selenium and chromedriver from the default location if nothing else is specified
+
+## Bug Fixes
+
+- ([1fa090c](https://github.com/angular/protractor/commit/1fa090c656cbab55bdbfb101b503b53811b50dff)) fix(runner): merge should override entire arrays, not just parts of them
+
+  Closes #304
+
+- ([a2afb4d](https://github.com/angular/protractor/commit/a2afb4d8399ba980674c79138dd98efb683e9ab9)) fix(element): element.all.get and element.all.first/last should wrap web elements
+
+  Closes #307
+
+- ([f3be172](https://github.com/angular/protractor/commit/f3be1727cf95dea50b597d20c6510e62a605dee2)) fix(runner): running with chromeOnly should try to find chromedriver with .exe extension
+
+  Closes #283
+
+## Breaking Changes
+
+- ([c579a1a](https://github.com/angular/protractor/commit/c579a1a01bae6798a87a5ca8915417775e1b6fb2)) feat(webdriver-manager): redo the script to run and install selenium/webdriver
+
+  Breaking Change.
+  Your old selenium/start script will continue to work, but install_selenium_standalone no longer exists.
+  To do a clean update, remove the selenium folder. Then run
+  `webdriver-manager update`
+
+- ([a1c91a2](https://github.com/angular/protractor/commit/a1c91a29af5c1e1f35744462ca16ef4b33ad6c48)) fix(config): Make all file paths in config files relative to the config file itself
+
+  Breaking Change
+  Previously, onPrepare and specs were relative to the location of the config,
+  but seleniumServerJar and chromeDriver were relative to the cwd when the
+  test was called. If you were calling the tests from somewhere other than
+  the same directory as the config location, you will need to change the paths of
+  seleniumServerJar and/or chromeDriver.  Closes #222.
+
+
 # 0.13.0
 
 _Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
