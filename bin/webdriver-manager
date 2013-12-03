@@ -230,6 +230,7 @@ switch (argv._[0]) {
     if (argv.ie) {
        downloadIfNew(binaries.ie, argv.out_dir, existingFiles,
         function(filename) {
+          var zip = new AdmZip(filename);
           // Expected contents of the zip:
           //   IEDriverServer.exe
           zip.extractAllTo(argv.out_dir);
