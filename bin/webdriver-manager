@@ -56,11 +56,9 @@ var binaries = {
       var urlPrefix = 'https://selenium.googlecode.com/files/IEDriverServer';
       if (os.type() == 'Windows_NT') {
         if (os.arch() == 'x64') {
-          binaries.iedriver.url = urlPrefix + '_x64_' + versions.iedriver +
-              '.zip';
+          return urlPrefix + '_x64_' + versions.iedriver + '.zip';
         } else {
-          binaries.iedriver.url = urlPrefix + '_win32_' + versions.iedriver +
-              '.zip';
+          return urlPrefix + '_win32_' + versions.iedriver + '.zip';
         }
       }
     }
