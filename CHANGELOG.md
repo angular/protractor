@@ -1,6 +1,6 @@
 # 0.14.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
@@ -56,7 +56,7 @@ _Note: Major version 0 releases are for initial development, and backwards compa
 
 # 0.13.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
@@ -101,7 +101,7 @@ _Note: Major version 0 releases are for initial development, and backwards compa
 
 # 0.12.1
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Minor features
 
@@ -153,7 +153,7 @@ _Note: Major version 0 releases are for initial development, and backwards compa
 
 # 0.12.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 This change introduces major syntax updates. Using the new syntax is recommeded, but the old version is still supported for now. Note also that the test application, docs, and example tests have been updated.
 
@@ -171,7 +171,7 @@ will now be exported.
 
 `$` is a shortcut for getting elements by css. `$('.foo')` === `element(by.css('.foo'))`
 
-All changes should be backwards compatible, as tested with the new 'backwardscompat'
+All changes should be backwards incompatible, as tested with the new 'backwardscompat'
 tests.
 
 ## Bug fixes
@@ -187,7 +187,7 @@ is called.
 
 # 0.11.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
@@ -259,7 +259,7 @@ ptor.findElement(protractor.By.repeater('foo in foos').row(3));
 
 # 0.10.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
@@ -333,7 +333,7 @@ timeout with `driver.manage().timeouts().setScriptTimeout(<bigNumber>)`.
 
 # 0.9.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
@@ -360,7 +360,7 @@ Closes #11.
 
 # 0.8.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Docs
 - Added documentation to the [docs folder](https://github.com/angular/protractor/tree/master/docs).
@@ -397,7 +397,7 @@ protractor.
 
 # 0.7.0
 
-_Note: Major version 0 releases are for initial development, and backwards compatible changes may be introduced at any time._
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
 
