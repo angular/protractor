@@ -124,6 +124,17 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
 };
 
 /**
+ * Normalize a command across OS
+ */
+var spawnCommand = function(command, args) {
+  var win32 = process.platform === 'win32';
+  var winCommand = win32 ? 'cmd' : command;
+  var winArgs = win32 ? ['/c'].concat(command, args) : args;
+
+  return require('child_process').spawn(winCommand, winArgs, { stdio: 'inherit' });
+};
+
+/**
  * If a new version of the file with the given url exists, download and
  * delete the old version.
  */
@@ -195,8 +206,7 @@ switch (argv._[0]) {
        args.push('-Dwebdriver.ie.driver=' +
           path.join(argv.out_dir, executableName('IEDriverServer')));
     }
-    var javaChild = require('child_process').spawn(
-        'java', args, { stdio: 'inherit' });
+    spawnCommand('java', args);
     break;
   case 'status':
     for (name in binaries) {
