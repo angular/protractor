@@ -104,7 +104,8 @@ describe('angularjs homepage', function() {
     // Load the AngularJS homepage.
     browser.get('http://www.angularjs.org');
 
-    // Find the element with ng-model matching 'yourName', and then
+    // Find the element with ng-model matching 'yourName' - this will
+    // find the <input type="text" ng-model="yourName"/> element - and then
     // type 'Julie' into it.
     element(by.model('yourName')).sendKeys('Julie');
 
