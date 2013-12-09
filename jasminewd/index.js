@@ -58,6 +58,7 @@ function wrapInControlFlow(globalFn) {
 };
 
 global.it = wrapInControlFlow(global.it);
+global.iit = wrapInControlFlow(global.iit);
 global.beforeEach = wrapInControlFlow(global.beforeEach);
 global.afterEach = wrapInControlFlow(global.afterEach);
 
