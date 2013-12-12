@@ -133,6 +133,29 @@ Webdriver can snap a screenshot with `browser.takeScreenshot()`.
 This returns a promise which will resolve to the screenshot as a base-64
 encoded PNG.
 
+Sample usage:
+``` javascript
+// at the top of the test spec:
+var fs = require('fs');
+
+// ... other code
+
+// abstract writing screen shot to a file
+function writeScreenShot(data, filename) {
+    var stream = fs.createWriteStream(filename);
+
+    stream.write(buf = new Buffer(data, 'base64'));
+    stream.end();
+}
+
+// ...
+
+// within a test:
+browser.takeScreenshot().then(function (png) {
+    writeScreenShot(png, 'exception.png');
+});
+```
+
 Timeouts
 --------
 
