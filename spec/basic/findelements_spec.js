@@ -18,11 +18,18 @@ describe('locators', function() {
       expect(greeting.getText()).toEqual('Hiya');
     });
 
-    it('should find an element by binding with ng-binding attribute',
+    it('should find an element by binding with ng-bind attribute',
         function() {
       var name = element(by.binding('username'));
 
       expect(name.getText()).toEqual('Anon');
+    });
+
+    it('should find an element by binding with ng-bind-template attribute',
+        function() {
+      var name = element(by.binding('{{username|uppercase}}'));
+
+      expect(name.getText()).toEqual('ANON');
     });
   });
 
