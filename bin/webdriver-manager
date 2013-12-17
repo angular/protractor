@@ -68,7 +68,7 @@ var binaries = {
 
 
 var cli = optimist.
-    usage('Usage: manage_webdriver <command>\n' +
+    usage('Usage: webdriver-manager <command>\n' +
         'Commands:\n' + 
         '  update: install or update selected binaries\n' +
         '  start: start up the selenium server\n' +
@@ -196,7 +196,7 @@ switch (argv._[0]) {
   case 'start':
     if (!binaries.standalone.exists) {
       console.error('Selenium Standalone is not present. Install with ' +
-          'manage_webdriver update --standalone');
+          'webdriver-manager update --standalone');
       process.exit(1);
     }
     var args = ['-jar', path.join(argv.out_dir, binaries.standalone.filename)];
