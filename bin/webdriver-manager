@@ -7,6 +7,7 @@ var http = require('http');
 var path = require('path');
 var AdmZip = require('adm-zip');
 var optimist = require('optimist');
+var childProcess = require('child_process');
 
 /**
  * Download the requested binaries to node_modules/protractor/selenium/
@@ -131,7 +132,7 @@ var spawnCommand = function(command, args) {
   var winCommand = win32 ? 'cmd' : command;
   var finalArgs = win32 ? ['/c'].concat(command, args) : args;
 
-  return require('child_process').spawn(winCommand, finalArgs,
+  return childProcess.spawn(winCommand, finalArgs,
       { stdio: 'inherit' });
 };
 
@@ -207,7 +208,21 @@ switch (argv._[0]) {
        args.push('-Dwebdriver.ie.driver=' +
           path.join(argv.out_dir, executableName('IEDriverServer')));
     }
-    spawnCommand('java', args);
+    var seleniumProcess = spawnCommand('java', args);
+    console.log('seleniumProcess.pid: ' + seleniumProcess.pid);
+    seleniumProcess.on('exit', function(code) {
+      console.log('Selenium Standalone has exited with code ' + code);
+      process.exit(code);
+    });
+    process.stdin.resume();
+    process.stdin.on('data', function(chunk) {
+      console.log('Attempting to shut down selenium nicely');
+      http.get('http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer');
+
+    });
+    process.on('SIGINT', function() {
+      console.log('Staying alive until the Selenium Standalone process exits');
+    });
     break;
   case 'status':
     for (name in binaries) {
