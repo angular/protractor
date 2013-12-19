@@ -155,11 +155,11 @@ Protractor uses real browsers to run its tests, so it can connect to anything th
 
 There are a couple of things to watch out for!
 
-*If your page does manual bootstrap* Protractor will not be able to load your page using `browser.get`. Instead, use the base webdriver instance - `browser.driver.get`. This means that Protractor does not know when your page is fully loaded, and you may need to add a wait statement to make sure your tests avoid race conditions.
+**If your page does manual bootstrap** Protractor will not be able to load your page using `browser.get`. Instead, use the base webdriver instance - `browser.driver.get`. This means that Protractor does not know when your page is fully loaded, and you may need to add a wait statement to make sure your tests avoid race conditions.
 
-*If your page uses $timeout for polling* Protractor will not be able to tell when your page is ready. Consider using $interval instead of $timeout and see [this issue](https://github.com/angular/protractor/issues/49) for further discussion.
+**If your page uses $timeout for polling** Protractor will not be able to tell when your page is ready. Consider using $interval instead of $timeout and see [this issue](https://github.com/angular/protractor/issues/49) for further discussion.
 
-If you need to do global preparation for your tests (for example, logging in), you can put this into the config in the `onPrepare` property. This property can be either a function or a filename. If a filename, Protractor will load that file with node.js and run its contents. See the [login tests](https://github.com/angular/protractor/blob/master/spec/login/viaConfigSpec.js) for an example.
+If you need to do global preparation for your tests (for example, logging in), you can put this into the config in the `onPrepare` property. This property can be either a function or a filename. If a filename, Protractor will load that file with node.js and run its contents. See the [login tests](https://github.com/angular/protractor/blob/master/spec/login) for an example.
 
 
 Organizing Real Tests: Page Objects
