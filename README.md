@@ -7,6 +7,7 @@ Protractor can be run as a standalone binary, or included into your tests as a l
 
 For more information, [read the docs](https://github.com/angular/protractor/tree/master/docs/getting-started.md), or head over to the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
+To learn how to use Protractor, read the [getting started](https://github.com/angular/protractor/blob/master/docs/getting-started.md)
 
 To run the sample tests
 -----------------------
