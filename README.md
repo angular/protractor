@@ -1,11 +1,11 @@
 Protractor
 ==========
 
-Protractor is an end to end test framework for [AngularJS](http://angularjs.org/) applications built on top of [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs).
+Protractor is an end to end test framework for [AngularJS](http://angularjs.org/) applications built on top of [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). Protractor runs tests against your application running in a real browser, interacting with it as a user would.
 
-Protractor can be run as a standalone binary runner, or included into your tests as a library. Use [Protractor as a library](https://github.com/angular/protractor/blob/master/docs/library-only.md) if you would like to manage WebDriver and your test setup yourself.
+Protractor can be run as a standalone binary, or included into your tests as a library. Use [Protractor as a library](https://github.com/angular/protractor/blob/master/docs/library-only.md) if you would like to manage WebDriver and your test setup yourself.
 
-For more information, [read the docs](https://github.com/angular/protractor/tree/master/docs), or head over to the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
+For more information, [read the docs](https://github.com/angular/protractor/tree/master/docs/getting-started.md), or head over to the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
 
 To run the sample tests
@@ -17,7 +17,7 @@ Install protractor with.
 
 Start up a selenium server (See the appendix below for help with this). By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`.
 
-The example folder contains a simple test suite which runs against angularjs.org. Run with: 
+The node module's example folder contains a simple test suite which runs against angularjs.org. Run with: 
 
     protractor example/conf.js
 

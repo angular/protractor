@@ -9,7 +9,7 @@ performing any action (such as finding an element or sending a command to
 an element). If your application continuously polls $timeout or $http, it will
 never be registered as completely loaded. You should use the
 [$interval service](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3). Further
-discussion is in [issue 59](https://github.com/angular/protractor/issues/49).
+discussion is in [issue 49](https://github.com/angular/protractor/issues/49).
 
 You may also be running into a timeout because your page is slow to load
 or perform actions. By default, Protractor sets the timeout for actions to
