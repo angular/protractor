@@ -362,6 +362,13 @@ describe('global element function', function() {
     expect(colorList.last(0).getAttribute('value')).toEqual('red');
   });
 
+  it('should perform an action on each element in an array', function() {
+    var colorList = element.all(by.model('color'));
+    colorList.each(function(colorElement) {
+      expect(colorElement.getText()).not.toEqual('purple');
+    });
+  });
+
   it('should export an isPresent helper', function() {
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
