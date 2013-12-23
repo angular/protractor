@@ -1,3 +1,75 @@
+# 0.15.0
+
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([f8d0291](https://github.com/angular/protractor/commit/f8d02910340f54af92a8ed5fdd067fa03ca2cef8)) chore(version): update the version of dependency minijasminenode
+
+  This is notable because in the newer 0.2.6 version of minijasminenode,
+  ddescribe and iit are supported. These should be available after running
+  an 'npm update'.
+
+- ([6165023](https://github.com/angular/protractor/commit/6165023a9593f4f69fe342761b8b2d75923baf7a)) feat(runner): return a promise from runner.runOnce
+
+  In some cases knowing when the runner has finished is a requirement (e.g. an async grunt task).
+
+- ([d44ef01](https://github.com/angular/protractor/commit/d44ef01c64023b4e3a24a9959740676b691f6074)) feat(debugging): remove webdriver lines from stacktraces by default to improve readability
+
+- ([33fa4a4](https://github.com/angular/protractor/commit/33fa4a43acfbe87f3a4d4c84fa93c5c20b3cca0c)) feat(locators): by model works for anything with a model, not just input
+
+  Notably, by.model will now find selects and textareas.
+
+  Closes #321.
+
+- ([238bb74](https://github.com/angular/protractor/commit/238bb7429572f9a9f6620bf1317690f1ac825960)) feat(ignoresync): ignoreSynchronization now affects the behavior of browser.get
+
+  Now, when ignoring synchronization, calls to browser.get are equivalent to calling
+  browser.driver.get.
+
+  Closes #306
+
+- ([30c0ceb](https://github.com/angular/protractor/commit/30c0ceb3e2745d3bcc549f4d4963d9fade132e71)) feat(element) element.all exports an 'each' method
+
+  Usage:
+  ```
+  element.all(by.model('foo')).each(function(webElement) {
+    // Do stuff with webElement.
+  });
+  ```
+  Closes #298
+
+- ([6a73a25](https://github.com/angular/protractor/commit/6a73a25c61a72ef991a604eadae010c90a157266)) feat(by.repeat) by.repeat support for multi ng-repeat
+
+  Make by.repeat (and its column and row friends) work with ng-repeat-start
+  and ng-repeat-end elements.
+
+  Closes #366. Closes #182.
+
+## Bug Fixes
+
+- ([50d6fde](https://github.com/angular/protractor/commit/50d6fde25148e24d7ef22be371b04333cdf61e50)) fix(clientSideScripts): bind-template directive shouldn't break bind locators
+
+  Fix "UnknownError: angular.element(...).data(...).$binding[0] is
+  undefined" error raised when trying to use "by.binding" locator in any
+  element of a page that contains at least one "bind-template" directive.
+
+- ([f8c606b](https://github.com/angular/protractor/commit/f8c606bae7b2f414a67b6349f841881132d9cc97)) fix(webdriver-manager): make sure selenium standalone shuts down nicely
+
+  This addresses selenium server shutdown in two ways
+   - the node process will stay open until selenium has exited
+   - if the user inputs to STDIN (e.g. press space) selenium will shut down gracefully
+
+- ([e98f71e](https://github.com/angular/protractor/commit/e98f71ebd7778d5c77c41bbecc73e31f1aeca177)) fix(webdriver-manager): fix IEDriver install and running via windows
+
+  Changed the binaries.ie.url function to return the correct URL for the IEDriverServer.
+  Created the zip object in the win32 section to be able to decompress IEDriverServer.
+  Added a function to normalize a command across OS and spawn it. It allows start the webdriver in win32.
+
+  Seen here:
+  https://github.com/yeoman/generator/blob/master/lib/actions/spawn_command.js
+  
+
 # 0.14.0
 
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
