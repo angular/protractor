@@ -127,8 +127,6 @@ describe('locators', function() {
         expect(arr[2].getText()).toBe('blue');
       });
     });
-
-
   });
 
   describe('by repeater', function() {
@@ -153,7 +151,7 @@ describe('locators', function() {
 
     it('should return all rows when unmodified', function() {
       var all =
-          browser.findElements(by.repeater('allinfo in days'));
+          element.all(by.repeater('allinfo in days'));
       all.then(function(arr) {
         expect(arr.length).toEqual(5);
         expect(arr[0].getText()).toEqual('M Monday');
@@ -163,7 +161,7 @@ describe('locators', function() {
     });
 
     it('should return a single column', function() {
-      var initials = browser.findElements(
+      var initials = element.all(
           by.repeater('allinfo in days').column('initial'));
       initials.then(function(arr) {
         expect(arr.length).toEqual(5);
@@ -172,7 +170,7 @@ describe('locators', function() {
         expect(arr[2].getText()).toEqual('W');
       });
 
-      var names = browser.findElements(
+      var names = element.all(
           by.repeater('allinfo in days').column('name'));
       names.then(function(arr) {
         expect(arr.length).toEqual(5);
@@ -253,7 +251,54 @@ describe('locators', function() {
       // There are only 5 rows, so the 6th row is not present.
       expect(element(by.repeater('allinfo in days').row(5)).isPresent()).
           toBe(false);
-    })
+    });
+
+    describe('repeaters using ng-repeat-start and ng-repeat-end', function() {
+      it('should return all elements when unmodified', function() {
+        var all =
+            element.all(by.repeater('bloop in days'));
+
+        all.then(function(arr) {
+          expect(arr.length).toEqual(3 * 5);
+          expect(arr[0].getText()).toEqual('M');
+          expect(arr[1].getText()).toEqual('-');
+          expect(arr[2].getText()).toEqual('Monday');
+          expect(arr[3].getText()).toEqual('T');
+          expect(arr[4].getText()).toEqual('-');
+          expect(arr[5].getText()).toEqual('Tuesday');
+        });
+      });
+
+      it('should return a group of elements for a row', function() {
+        var firstRow = element.all(by.repeater('bloop in days').row(0));
+
+        firstRow.then(function(arr) {
+          expect(arr.length).toEqual(3);
+          expect(arr[0].getText()).toEqual('M');
+          expect(arr[1].getText()).toEqual('-');
+          expect(arr[2].getText()).toEqual('Monday');
+        });
+      });
+
+      it('should return a group of elements for a column', function() {
+        var nameColumn = element.all(
+          by.repeater('bloop in days').column('name'));
+
+        nameColumn.then(function(arr) {
+          expect(arr.length).toEqual(5);
+          expect(arr[0].getText()).toEqual('Monday');
+          expect(arr[1].getText()).toEqual('Tuesday');
+        });
+      });
+
+      it('should find an individual element', function() {
+        browser.debugger();
+        var firstInitial = element(
+          by.repeater('bloop in days').row(0).column('bloop.initial'));
+
+        expect(firstInitial.getText()).toEqual('M');
+      });
+    });
   });
 
   it('should determine if an element is present', function() {
