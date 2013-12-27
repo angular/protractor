@@ -98,6 +98,13 @@ exports.config = {
       password: '1234'
     }
   },
+
+  // ----- The test framework -----
+  //
+  // Jasmine is fully supported as a test and assertion framework.
+  // Mocha has limited beta support. You will need to include your own
+  // assertion framework if working with mocha.
+  framework: 'jasmine',
   
   // ----- Options to be passed to minijasminenode -----
   //

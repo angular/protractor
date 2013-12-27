@@ -22,7 +22,7 @@
   "devDependencies": {
     "expect.js": "~0.2.0",
     "jasmine-node": "~1.9.0",
-    "mocha": "~1.10.0",
+    "mocha": "~1.16.0",
     "express": "~3.3.4",
     "mustache": "~0.7.2"
   },
@@ -36,7 +36,7 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js"
+    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js"
   },
   "license" : "MIT",
   "version": "0.15.0",
