@@ -80,7 +80,7 @@ Writing tests
 -------------
 
 By default, Protractor uses [Jasmine](http://pivotal.github.io/jasmine/) as its
-test scaffolding. Protractor exposes several global variables.
+test scaffolding. ([read about using mocha instead](https://github.com/angular/protractor/tree/master/docs/using-mocha.md)) Protractor exposes several global variables.
 
  * `browser` this is the a wrapper around an instance of webdriver. Used for
  navigation and page-wide information.
