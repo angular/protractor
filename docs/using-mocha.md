@@ -28,3 +28,5 @@ expect(myElement.getText()).to.eventually.equal('some text');
 ```
 
 Finally, set the 'framework' property of the config to 'mocha', either by adding `framework: mocha` to the config file or adding `--framework=mocha` to the command line.
+
+See a full [example in protractor's own tests](https://github.com/angular/protractor/tree/master/spec/mocha).
