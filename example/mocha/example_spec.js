@@ -5,9 +5,13 @@
  *   protractor example/mocha/mochaConf.js
  */
 
-// Note that there is nothing adapting expect.js to understand promises,
-// so we may only use it once promises have been resolved.
-var expect = require('expect.js');
+// Use the external Chai As Promised to deal with resolving promises in
+// expectations.
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+
+var expect = chai.expect;
 
 describe('angularjs.org homepage', function() {
   this.timeout(80000);
@@ -17,10 +21,8 @@ describe('angularjs.org homepage', function() {
 
     element(by.input('yourName')).sendKeys('Julie');
 
-    element(by.binding('{{yourName}}')).
-        getText().then(function(text) {
-          expect(text).to.eql('Hello Julie!');
-        });
+    expect(element(by.binding('{{yourName}}')).getText()).
+        to.eventually.equal('Hello Julie!');
   });
 
   it('should list todos', function() {
@@ -28,8 +30,6 @@ describe('angularjs.org homepage', function() {
 
     var todo = element(by.repeater('todo in todos').row(1));
 
-    todo.getText().then(function(text) {
-      expect(text).to.eql('build an angular app');
-    });
+    expect(todo.getText()).to.eventually.equal('build an angular app');
   });
 });

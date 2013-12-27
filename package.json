@@ -12,7 +12,7 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "selenium-webdriver": "~2.37.0",
+    "selenium-webdriver": "~2.39.0",
     "minijasminenode": ">=0.2.7",
     "saucelabs": "~0.1.0",
     "glob": ">=3.1.14",
@@ -21,7 +21,9 @@
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
-    "jasmine-node": "~1.9.0",
+    "chai": "~1.8.1",
+    "chai-as-promised": "~4.1.0",
+    "jasmine-reporters": "~0.2.1",
     "mocha": "~1.16.0",
     "express": "~3.3.4",
     "mustache": "~0.7.2"

@@ -31,7 +31,7 @@ The Protractor runner is a binary which accepts a config file. Install protracto
     # Run the line below to see command line options
     protractor
 
-You will need a *configuration file* containing setup info and *test files* containing the actual test scripts. The config file specifies how the runner should start webdriver, where your test files are, and global setup options. The test files use Jasmine framework by default (Mocha is supported in beta).
+You will need a *configuration file* containing setup info and *test files* containing the actual test scripts. The config file specifies how the runner should start webdriver, where your test files are, and global setup options. The test files use Jasmine framework by default ([read about using mocha instead](https://github.com/angular/protractor/tree/master/docs/using-mocha.md)).
 
 Create a configuration file - an example with detailed comments is shown in `node_modules/protractor/referenceConf.js`. Edit the configuration file to point to your test files.
 

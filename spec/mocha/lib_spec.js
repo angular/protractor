@@ -1,24 +1,28 @@
-var expect = require('expect.js');
+// Use the external Chai As Promised to deal with resolving promises in
+// expectations.
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+
+var expect = chai.expect;
 
 describe('no protractor at all', function() {
   it('should still do normal tests', function() {
-    expect(true).to.eql(true);
+    expect(true).to.equal(true);
   });
 });
 
 describe('protractor library', function() {
   it('should expose the correct global variables', function() {
-    expect(protractor).not.to.be(undefined);
-    expect(browser).not.to.be(undefined);
-    expect(by).not.to.be(undefined);
-    expect(element).not.to.be(undefined);
-    expect($).not.to.be(undefined);
+    expect(protractor).to.exist;
+    expect(browser).to.exist;
+    expect(by).to.exist;
+    expect(element).to.exist;
+    expect($).to.exist;
   });
 
   it('should wrap webdriver', function() {
     browser.get('index.html');
-    browser.getTitle().then(function(text) {
-      expect(text).to.eql('My AngularJS App');
-    });
+    expect(browser.getTitle()).to.eventually.equal('My AngularJS App');
   });
 });
