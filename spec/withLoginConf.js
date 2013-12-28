@@ -4,7 +4,7 @@ exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
   specs: [
-    'viaConfigSpec.js'
+    'login/login_spec.js'
   ],
 
   capabilities: {
@@ -12,7 +12,7 @@ exports.config = {
   },
 
   onPrepare: function() {
-    browser.driver.get('http://localhost:8000/app/login.html');
+    browser.driver.get('http://localhost:8000/login.html');
 
     browser.driver.findElement(by.id('username')).sendKeys('Jane');
     browser.driver.findElement(by.id('password')).sendKeys('1234');
