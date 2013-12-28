@@ -55,10 +55,7 @@ page is not written with Angular, you'll need to interact with it via
 unwrapped webdriver, which can be accessed like `browser.driver.get()`. 
 
 You can put your log-in code into an `onPrepare` function, which will be run
-once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/login/viaConfigConf.js).
-
-If you would like to do your login in your test suite itself, see
-[this example](https://github.com/angular/protractor/blob/master/spec/login/viaTestSpec.js).
+once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/login/login_spec.js).
 
 The result of `getText` from an input element is always empty
 -------------------------------------------------------------
@@ -82,3 +79,8 @@ You can also execute arbitrary JavaScript in the browser with
 ```javascript
 browser.executeScript('your script as a string')
 ```
+
+How do I produce an XML report of my test results?
+--------------------------------------------------
+
+Use jasmine-reporters and add a JUnit XML Reporter. Check out [this example](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js).
