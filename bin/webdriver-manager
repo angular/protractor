@@ -69,12 +69,13 @@ var binaries = {
 
 var cli = optimist.
     usage('Usage: webdriver-manager <command>\n' +
-        'Commands:\n' + 
+        'Commands:\n' +
         '  update: install or update selected binaries\n' +
         '  start: start up the selenium server\n' +
         '  status: list the current available drivers').
     describe('out_dir', 'Location to output/expect ').
-    default('out_dir', SELENIUM_DIR);
+    default('out_dir', SELENIUM_DIR).
+    describe('seleniumPort', 'Optional port for the selenium standalone server');
 
 for (bin in binaries) {
   cli.describe(bin, 'install or update ' + binaries[bin].name).
@@ -200,6 +201,9 @@ switch (argv._[0]) {
       process.exit(1);
     }
     var args = ['-jar', path.join(argv.out_dir, binaries.standalone.filename)];
+    if (argv.seleniumPort) {
+      args.push('-port', argv.seleniumPort);
+    }
     if (binaries.chrome.exists) {
       args.push('-Dwebdriver.chrome.driver=' +
           path.join(argv.out_dir, executableName('chromedriver')));
