@@ -121,4 +121,12 @@ exports.config = {
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 30000
   }
+
+  // ----- Options to be passed to mocha -----
+  //
+  // See the full list at http://visionmedia.github.io/mocha/
+  mochaOpts: {
+    ui: 'bdd',
+    reporter: 'list'
+  }
 };
