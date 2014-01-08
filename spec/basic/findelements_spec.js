@@ -414,6 +414,26 @@ describe('global element function', function() {
     });
   });
 
+  it('should map each element on array and with promises', function() {
+    var labels = element.all(by.css('.menu li a')).map(function(elm) {
+      return elm.getText();
+    });
+    browser.get('index.html#/form');
+
+    expect(labels).toEqual(
+        ['repeater', 'bindings', 'form', 'async', 'conflict', 'polling']);
+  });
+
+  it('should map each element from a literal and promise array', function() {
+    var i = 1;
+    var labels = element.all(by.css('.menu li a')).map(function(elm) {
+      return i++;
+    });
+    browser.get('index.html#/form');
+
+    expect(labels).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
   it('should export an isPresent helper', function() {
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
