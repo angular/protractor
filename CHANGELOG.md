@@ -1,3 +1,40 @@
+# 0.16.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+_Note: 0.16.0 was released as a canary - no changelog for it._
+
+## Features
+
+- ([a75fa04](https://github.com/angular/protractor/commit/a75fa04a70f64e0da29b9a0a9100bd60d9ebf93f)) 
+  docs(readme): add the travis status widget
+
+- ([478c00a](https://github.com/angular/protractor/commit/478c00a01dc9b93de68983b6ef2dfa55f0b42649)) 
+  feat(runner): add beta support for using mocha as your test framework
+
+  This change adds limited support for using mocha as the test framework instead of jasmine. Make
+  the switch by using `--framework=mocha` on the command line or adding `framework: 'mocha'` to the
+  config. Tests will be run using the BDD interface. The interface is adapted so that tests run
+  asynchronously without needing to call `done()`.
+
+  Note that there is currently no support for an assertion framework, so you will need to require
+  whichever assertion framework you prefer. This means there is no adapter to make the assertions
+  unwrap promises, so you will need to resolve promises yourself and run the assertions afterwards.
+
+- ([3731abf](https://github.com/angular/protractor/commit/3731abf901c4278b4470336c3a58765161b08bcc)) 
+  feat(webdriver-manager): add seleniumPort command line option
+
+  Added seleniumPort command line option so that the standalone selenium server can be started with
+  the supplied port number as opposed to the default port 4444.
+  ```
+  $ webdriver-manager start --seleniumPort 4443
+  ```
+
+## Bug Fixes
+
+- ([bc18c42](https://github.com/angular/protractor/commit/bc18c42dab6207d111f88ea1f1deefb9bcc28f23)) 
+  chore(config): saucelabs requires tunnel identifier to be a string
+
+
 # 0.15.0
 
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
