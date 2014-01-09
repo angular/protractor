@@ -11,7 +11,7 @@ before_script:
   - (cd testapp && scripts/web-server.js)
 
 script:
-  - node bin/protractor spec/basicConf.js --seleniumAddress='' --sauceUser=$SAUCE_USERNAME --sauceKey=$SAUCE_ACCESS_KEY
+  - node bin/protractor spec/basicConf.js --seleniumAddress='' --sauceUser=$SAUCE_USERNAME --sauceKey=$SAUCE_ACCESS_KEY --capabilities.tunnel-identifier=$TRAVIS_JOB_NUMBER --capabilities.build=$TRAVIS_BUILD_NUMBER
 
 addons:
   sauce_connect: true
