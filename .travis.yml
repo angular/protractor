@@ -11,7 +11,7 @@ env:
 
 before_script:
   - ./scripts/sauce_connect_setup.sh
-  - (cd testapp && scripts/web-server.js)
+  - (cd testapp && scripts/web-server.js) &
   - ./scripts/wait_for_browser_provider.sh
 
 script:
