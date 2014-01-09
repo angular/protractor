@@ -5,3 +5,4 @@
 cd testapp
 node scripts/web-server.js &
 sleep 1
+echo Test application started
