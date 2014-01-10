@@ -11,6 +11,7 @@ describe('protractor library', function() {
     expect(protractor).toBeDefined();
     expect(browser).toBeDefined();
     expect(by).toBeDefined();
+    expect(By).toBeDefined();
     expect(element).toBeDefined();
     expect($).toBeDefined();
   });
