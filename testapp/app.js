@@ -10,5 +10,14 @@ angular.module('myApp', ['ngRoute', 'myApp.appVersion']).
     $routeProvider.when('/async', {templateUrl: 'async/async.html', controller: AsyncCtrl});
     $routeProvider.when('/conflict', {templateUrl: 'conflict/conflict.html', controller: ConflictCtrl});
     $routeProvider.when('/polling', {templateUrl: 'polling/polling.html', controller: PollingCtrl});
+    $routeProvider.when('/slowloader', {
+      templateUrl: 'polling/polling.html',
+      controller: PollingCtrl,
+      resolve: {
+        slow: function($timeout) {
+          return $timeout(function() {}, 2000);
+        }
+      }
+    });
     $routeProvider.otherwise({redirectTo: '/form'});
   }]);

@@ -1,10 +1,11 @@
-function AsyncCtrl($scope, $http, $timeout) {
+function AsyncCtrl($scope, $http, $timeout, $location) {
   $scope.slowHttpStatus = 'not started';
   $scope.slowFunctionStatus = 'not started';
   $scope.slowTimeoutStatus = 'not started';
   $scope.slowAngularTimeoutStatus = 'not started';
   $scope.slowAngularTimeoutPromiseStatus = 'not started';
   $scope.slowHttpPromiseStatus = 'not started';
+  $scope.routingChangeStatus = 'not started';
 
   $scope.slowHttp = function() {
     $scope.slowHttpStatus = 'pending...';
@@ -53,7 +54,12 @@ function AsyncCtrl($scope, $http, $timeout) {
     }).then(function() {
       $scope.slowHttpPromiseStatus = 'done';
     });
-  }
+  };
+
+  $scope.routingChange = function() {
+    $scope.routingChangeStatus = 'pending...';
+    $location.url('/slowloader');
+  };
 };
 
-AsyncCtrl.$inject = ['$scope', '$http', '$timeout'];
+AsyncCtrl.$inject = ['$scope', '$http', '$timeout', '$location'];
