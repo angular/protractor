@@ -34,6 +34,17 @@ _Note: 0.16.0 was released as a canary - no changelog for it._
 - ([bc18c42](https://github.com/angular/protractor/commit/bc18c42dab6207d111f88ea1f1deefb9bcc28f23)) 
   chore(config): saucelabs requires tunnel identifier to be a string
 
+## Breaking Changes
+
+ - ([478c00a](https://github.com/angular/protractor/commit/478c00a01dc9b93de68983b6ef2dfa55f0b42649)) 
+  feat(runner): add beta support for using mocha as your test framework
+
+  To allow the user to customize their framework, the protractor runner will now wait
+  until just before `onPrepare` to load the framework. This means that `jasmine` will
+  not be available in global until `onPrepare`. For exampel, this means that requiring
+  the jasmine-reporters module must be done inside onPrepare, since that module expects
+  jasmine to be available at the time it is loaded.
+
 
 # 0.15.0
 
