@@ -1,6 +1,6 @@
 var util = require('util');
 
-describe('synchronizing with slow pages', function() {
+ddescribe('synchronizing with slow pages', function() {
   beforeEach(function() {
     browser.get('index.html#/async');
   });
@@ -71,5 +71,16 @@ describe('synchronizing with slow pages', function() {
     button.click();
 
     expect(status.getText()).toEqual('done');
+  });
+
+  it('waits for slow routing changes', function() {
+    var status = element(by.binding('routingChangeStatus'));
+    var button = element(by.css('[ng-click="routingChange()"]'));
+
+    expect(status.getText()).toEqual('not started');
+
+    button.click();
+
+    expect(browser.getPageSource()).toMatch('polling mechanism');
   });
 });
