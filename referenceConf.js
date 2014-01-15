@@ -85,6 +85,9 @@ exports.config = {
     // will be available. For example, you can add a Jasmine reporter with:
     //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
     //         'outputdir/', true, true));
+
+    // For junit reporting
+    require('jasmine-reporters');
   },
 
   // The params object will be passed directly to the protractor instance,
