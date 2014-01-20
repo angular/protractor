@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-if( !process.env.NODE_ENV ) process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
 /**
  * This tiny wrapper file checks for node debug flags and appends them
@@ -8,8 +8,8 @@ if( !process.env.NODE_ENV ) process.env.NODE_ENV = 'test';
  * pattern.
  */
 
-var spawn = require('child_process').spawn,
-    args = [__dirname + '/../lib/cli.js'];
+var spawn = require('child_process').spawn;
+var args = [__dirname + '/../lib/cli.js'];
 
 process.argv.slice(2).forEach(function(arg) {
   var flag = arg.split('=')[0];
@@ -24,8 +24,8 @@ process.argv.slice(2).forEach(function(arg) {
       args.unshift(arg);
       break;
     default:
-      if (0 == arg.indexOf('--trace')) args.unshift(arg);
-      else args.push(arg);
+      if (0 == arg.indexOf('--trace')) { args.unshift(arg); }
+      else { args.push(arg); }
       break;
   }
 });
