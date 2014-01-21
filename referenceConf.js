@@ -120,7 +120,7 @@ exports.config = {
     includeStackTrace: true,
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 30000
-  }
+  },
 
   // ----- Options to be passed to mocha -----
   //
@@ -128,5 +128,12 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     reporter: 'list'
-  }
+  },
+
+  // ----- The cleanup step -----
+  //
+  // A callback function called once the tests have finished running and
+  // the webdriver instance has been shut down. It is passed the exit code
+  // (0 if the tests passed or 1 if not).
+  onCleanUp: function() {}
 };
