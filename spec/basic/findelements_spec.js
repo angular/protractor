@@ -415,13 +415,50 @@ describe('global element function', function() {
   });
 
   it('should map each element on array and with promises', function() {
-    var labels = element.all(by.css('.menu li a')).map(function(elm) {
-      return elm.getText();
+    var labels = element.all(by.css('.menu li a')).map(function(elm, index) {
+      return {
+        index: index,
+        text: elm.getText()
+      };
     });
     browser.get('index.html#/form');
 
-    expect(labels).toEqual(
-        ['repeater', 'bindings', 'form', 'async', 'conflict', 'polling']);
+    expect(labels).toEqual([
+      {index: 0, text: 'repeater'},
+      {index: 1, text: 'bindings'},
+      {index: 2, text: 'form'},
+      {index: 3, text: 'async'},
+      {index: 4, text: 'conflict'},
+      {index: 5, text: 'polling'}
+    ]);
+  });
+
+  it('should map and resolve multiple promises', function() {
+    var labels = element.all(by.css('.menu li a')).map(function(elm) {
+      return {
+        text: elm.getText(),
+        inner: elm.getInnerHtml(),
+        outer: elm.getOuterHtml()
+      };
+    });
+    browser.get('index.html#/form');
+
+    var newExpected = function(expectedLabel) {
+      return {
+        text: expectedLabel,
+        inner: expectedLabel,
+        outer: '<a href="#/' + expectedLabel + '">' + expectedLabel + '</a>'
+      };
+    };
+
+    expect(labels).toEqual([
+      newExpected('repeater'),
+      newExpected('bindings'),
+      newExpected('form'),
+      newExpected('async'),
+      newExpected('conflict'),
+      newExpected('polling')
+    ]);
   });
 
   it('should map each element from a literal and promise array', function() {
