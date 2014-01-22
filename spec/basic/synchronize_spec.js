@@ -1,6 +1,6 @@
 var util = require('util');
 
-ddescribe('synchronizing with slow pages', function() {
+describe('synchronizing with slow pages', function() {
   beforeEach(function() {
     browser.get('index.html#/async');
   });
