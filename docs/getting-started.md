@@ -155,7 +155,11 @@ Protractor uses real browsers to run its tests, so it can connect to anything th
 
 There are a couple of things to watch out for!
 
-**If your page does manual bootstrap** Protractor will not be able to load your page using `browser.get`. Instead, use the base webdriver instance - `browser.driver.get`. This means that Protractor does not know when your page is fully loaded, and you may need to add a wait statement to make sure your tests avoid race conditions.
+**If your page does manual bootstrap** Protractor will not be able to load your page using `browser.get`. Instead, use the base webdriver instance - `browser.driver.get`. This means that Protractor does not know when your page is fully loaded, and you may need to add a wait statement to make sure your tests avoid race conditions. Note that the base webdriver does not include `baseUrl`, so you have to add it yourself:
+
+```javascript
+    browser.driver.get(browser.baseUrl+'/login.html'); //no Angular on this page
+```
 
 **If your page uses $timeout for polling** Protractor will not be able to tell when your page is ready. Consider using $interval instead of $timeout and see [this issue](https://github.com/angular/protractor/issues/49) for further discussion.
 
