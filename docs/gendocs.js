@@ -6,7 +6,7 @@ var mustache = require('mustache');
 // and make clear what is webdriver and what is wrapped. But for now, let's
 // get some docs!
 
-var versionHash ='8580c0c76c5ccd3c55d053e59d8df37b3c4cf35a';
+var versionHash ='fb88e4c9365f4d067ee36a31014c7e67018c5ca0';
 
 var NEW_LINE = /\n\r?/;
 
