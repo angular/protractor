@@ -3,17 +3,13 @@ Using Mocha
 
 _Please note that Mocha support is new as of December 2013 and may still have some rough edges._
 
-Mocha support is only available on Protractor's canary version at the moment. Install with
-
-    npm install -g protractor@canary
-
 If you would like to use mocha instead of Jasmine as your test framework, you'll need a little extra setup. Mocha has limited support - you'll need to use the BDD interface and chai assertions with [Chai As Promised](http://chaijs.com/plugins/chai-as-promised).
 
-Download the dependencies with npm. This should be in the same place as protractor is installed (so if you installed protracted with -g, you should use -g here).
+Download the dependencies with npm. Mocha should be installed in the same place as Protractor - so if protractor was installed globally, install Mocha with -g.
 
     npm install -g mocha
-    npm install -g chai
-    npm install -g chai-as-promised
+    npm install chai
+    npm install chai-as-promised
 
 You will need to require and set up chai inside your test files:
 
