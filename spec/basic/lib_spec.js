@@ -54,7 +54,7 @@ describe('protractor library', function() {
       var itemName = arguments[1];
       var menu = document.querySelectorAll('.menu li');
       for (var i = 0; i < menu.length; ++i) {
-        if (menu[i].innerText == itemName) {
+        if (menu[i].textContent == itemName) {
           return [menu[i]];
         }
       }
@@ -64,6 +64,7 @@ describe('protractor library', function() {
 
     expect(by.menuItem).toBeDefined();
 
+    browser.get('index.html');
     expect(element(by.menuItem('repeater')).isPresent());
     expect(element(by.menuItem('repeater')).getText()).toEqual('repeater');
   });
