@@ -324,6 +324,32 @@ describe('chaining find elements', function() {
             toEqual('Inner: inner');
   });
 
+  it('should wait to grab the chained WebElement until a method is called',
+      function() {
+    browser.driver.get('about:blank');
+
+    // These should throw no error before a page is loaded.
+    var reused = element(by.id('baz')).
+        element(by.binding('item.reusedBinding'));
+
+    browser.get('index.html#/conflict');
+
+    expect(reused.getText()).toEqual('Inner: inner');
+    expect(reused.isPresent()).toBe(true);
+  });
+
+  it('should chain deeper than 2', function() {
+    browser.driver.get('about:blank');
+
+    // These should throw no error before a page is loaded.
+    var reused = element(by.css('body')).element(by.id('baz')).
+        element(by.binding('item.reusedBinding'));
+
+    browser.get('index.html#/conflict');
+
+    expect(reused.getText()).toEqual('Inner: inner');
+  })
+
   it('should find multiple elements scoped properly with chaining',
     function() {
       element.all(by.binding('item')).then(function(elems) {
@@ -336,6 +362,21 @@ describe('chaining find elements', function() {
             expect(elems.length).toEqual(2);
           });
     });
+
+  it('should wait to grab multiple chained elements',
+      function() {
+    browser.driver.get('about:blank');
+
+    // These should throw no error before a page is loaded.
+    var reused = element(by.id('baz')).
+        element.all(by.binding('item'));
+
+    browser.get('index.html#/conflict');
+
+    expect(reused.count()).toEqual(2);
+    expect(reused.get(0).getText()).toEqual('Inner: inner');
+    expect(reused.last().getText()).toEqual('Inner other: innerbarbaz');
+  });
 
   it('should determine element presence properly with chaining', function() {
     expect(element(by.id('baz')).
