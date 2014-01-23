@@ -12,7 +12,7 @@ This file provides an overview and links on where to get more information.
 API methods and members that are modified or added by Protractor are marked
 with a `P`.
 
-Documentation generated at fb88e4c9365f4d067ee36a31014c7e67018c5ca0
+Documentation generated at 92e0fdf07ad775878feba9f16be8fba1015e3753
 
 [WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js) and [Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js)
 ------------------
@@ -65,7 +65,7 @@ Documentation generated at fb88e4c9365f4d067ee36a31014c7e67018c5ca0
 [**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#599)  : 
 `close` function(  )  -> _!webdriver.promise.Promise_
 
-[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#610) [**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L542) : 
+[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#610) [**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L629) : 
 `get` function( _string_  )  -> _!webdriver.promise.Promise_
 
 [**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#621)  : 
@@ -98,25 +98,25 @@ Documentation generated at fb88e4c9365f4d067ee36a31014c7e67018c5ca0
 [**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#866)  : 
 `switchTo` function(  )  -> _!webdriver.WebDriver.TargetLocator_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L308) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L395) : 
 `waitForAngular` function(  )  -> _!webdriver.promise.Promise_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L337) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L424) : 
 `wrapWebElement` function( _webdriver.WebElement_  )  -> _webdriver.WebElement_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L520) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L607) : 
 `addMockModule` function( _!string_ _!string|Function_  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L534) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L621) : 
 `clearMockModules` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L609) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L696) : 
 `getLocationAbsUrl` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L617) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L704) : 
 `debugger` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L651) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L738) : 
 `findElementsOverrideHelper_` function( _webdriver.WebElement_ _webdriver.Locator_  )  -> _webdriver.WebElement_
 
 
@@ -155,28 +155,28 @@ are available:
  : 
 `Protractor.By.js` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L21) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L21) : 
 `Protractor.By.addLocator` function( _string_ _function|string_  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L44) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L44) : 
 `Protractor.By.binding` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L60) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L60) : 
 `Protractor.By.select` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L76) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L76) : 
 `Protractor.By.selectedOption` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L91) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L91) : 
 `Protractor.By.input` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L107) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L107) : 
 `Protractor.By.model` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L122) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L122) : 
 `Protractor.By.textarea` function(  ) 
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/locators.js#L138) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L138) : 
 `Protractor.By.repeater` function(  ) 
 
 
@@ -197,13 +197,13 @@ The following functions are available on WebElement objects:
 [**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1577)  : 
 `WebElement.schedule_` function( _!webdriver.Command_ _string_  )  -> _!webdriver.promise.Promise_
 
-[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1594) [**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L461) : 
+[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1594) [**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L548) : 
 `WebElement.findElement` function( _webdriver.Locator|Object.&lt;string&gt;_ _..._  )  -> _webdriver.WebElement_
 
-[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1637) [**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L504) : 
+[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1637) [**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L591) : 
 `WebElement.isElementPresent` function( _webdriver.Locator|Object.&lt;string&gt;_ _..._  )  -> _!webdriver.promise.Promise_
 
-[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1662) [**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L479) : 
+[**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1662) [**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L566) : 
 `WebElement.findElements` function( _webdriver.Locator|Object.&lt;string&gt;_ _..._  )  -> _!webdriver.promise.Promise_
 
 [**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1689)  : 
@@ -251,16 +251,16 @@ The following functions are available on WebElement objects:
 [**WD**](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1953)  : 
 `WebElement.getInnerHtml` function(  )  -> _!webdriver.promise.Promise_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L93) : 
-`WebElement.all` function(  ) 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L149) : 
+`WebElement.all` function( _webdriver.Locator_  )  -> _ElementArrayFinder_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L360) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L447) : 
 `WebElement.$` function( _string_  )  -> _!webdriver.WebElement_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L389) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L476) : 
 `WebElement.$$` function( _string_  )  -> _!webdriver.promise.Promise_
 
-[**P**](https://github.com/angular/protractor/blob/fb88e4c9365f4d067ee36a31014c7e67018c5ca0/lib/protractor.js#L442) : 
+[**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/protractor.js#L529) : 
 `WebElement.evaluate` function( _string_  )  -> _!webdriver.promise.Promise_
 
 

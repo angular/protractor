@@ -1,3 +1,75 @@
+# 0.17.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([cc4f7b5](https://github.com/angular/protractor/commit/cc4f7b55e1fe46fcef1b8c3ca39d702a32ee6d82)), ([8348803](https://github.com/angular/protractor/commit/834880368115ecade154b3a090e06159667c0c2d)) 
+  feat(element): allow chaining of element finders with element().element()...
+
+  Chaining calls to element will now build a scoped element finder. No webdriver functions will be
+  called until a method (such as getText) is called on the final element. Example:
+
+      var elem = element(by.id('outer')).element(by.css('inner'));
+     browser.get('myPage');
+     elem.click();
+
+  Closes #340.
+
+- ([088a581](https://github.com/angular/protractor/commit/088a58150f992a6520da983fc461fec4eac1a0ed)) 
+  feat(runner): add a callback for when the tests are done
+
+  Add an onCleanUp callback to be able to hook into when all the tests have been run.
+
+  Conflicts:
+  referenceConf.js
+
+- ([66c4774](https://github.com/angular/protractor/commit/66c4774aa18d94d4da81c101b82db4a748cf69a4)) 
+  feat(runner): add mocha options to config file
+
+  change lib/runner to allow setting mocha options from config.
+
+- ([092fe1f](https://github.com/angular/protractor/commit/092fe1fc1e7d1b58b786870ff1ce33f95e652d78)), ([3151ca7](https://github.com/angular/protractor/commit/3151ca7daaeeec9f537561b31c6dfd42c678f7bb)) 
+  feat(locators): Add map() function to element.all
+
+  Added a map function to element.all to apply a function to each element and return the result of
+  the transformation.
+
+  Resolve promises if there is an object that contains multiple promises. Added index as a second
+  argument to the map function callback.
+
+  Closes #392
+
+- ([7259614](https://github.com/angular/protractor/commit/7259614a326802b8e7a906346bd9830b92e1514d)), ([0257b5f](https://github.com/angular/protractor/commit/0257b5f225052ab0a075d96811dd56961f9278ae)) 
+  feat(config): allow CoffeeScript configuration files
+
+  Require CoffeeScript in the cli file to enable CS configuration and spec files.
+
+  Possibly fixes #38
+
+- ([e7d9e08](https://github.com/angular/protractor/commit/e7d9e081cdc7fcf100e0346b1dcf0f7fdad7d889)) 
+  feat(global): export By (== by) on the global for use with coffeescript (or others who prefer it)
+
+## Bug Fixes
+
+- ([a0bd84b](https://github.com/angular/protractor/commit/a0bd84b9a28ec92eccd2784f8b849388985a4480)) 
+  fix(pageload): add a wait during protractor.get() to solve unload issues
+
+  Some systems would not wait for the browser unload event to finish before beginning the
+  asynchronous script execution.
+
+  Closes #406. Closes #85.
+
+- ([4b053eb](https://github.com/angular/protractor/commit/4b053ebe587d51562d77ca512848be28195ae0cc)) 
+  fix(runner): only run selenium with spec files
+
+  Only setup Selenium if there are actual spec files passed in
+
+- ([8e096b9](https://github.com/angular/protractor/commit/8e096b9a91af9c37ab4bf84e100568544351efc8)) 
+  fix(Protractor.prototype.get): resolve `baseUrl` before ignoring synchronization
+
+  Fixes issues where setting `ignoreSynchronization = true` ignores the value of `baseUrl`
+  entirely.
+
 # 0.16.1
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
