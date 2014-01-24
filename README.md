@@ -83,7 +83,7 @@ Start up a selenium server. By default, the tests expect the selenium server to 
 Protractor's test suite runs against the included testapp. Start that up with
 
     cd testapp
-    ./scripts/web-server.js
+    ./scripts/testserver.sh
 
 Then run the tests with
 
