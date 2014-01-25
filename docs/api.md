@@ -147,10 +147,10 @@ are available:
 `Protractor.By.className` function(  ) 
 
  : 
-`Protractor.By.linkText` function(  ) 
+`Protractor.By.linkText` function(  )
 
  : 
-`Protractor.By.partialLinkText` function(  ) 
+`Protractor.By.partialLinkText` function(  )
 
  : 
 `Protractor.By.js` function(  ) 
@@ -179,6 +179,11 @@ are available:
 [**P**](https://github.com/angular/protractor/blob/92e0fdf07ad775878feba9f16be8fba1015e3753/lib/locators.js#L138) : 
 `Protractor.By.repeater` function(  ) 
 
+ :
+`Protractor.By.buttonText` function(  )
+
+ :
+`Protractor.By.partialButtonText` function(  )
 
 
 WebElements

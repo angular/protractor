@@ -129,6 +129,35 @@ describe('locators', function() {
     });
   });
 
+  describe('by partial button text', function() {
+    it('should find multiple buttons containing "text"', function() {
+      element.all(by.partialButtonText('text')).then(function(arr) {
+        expect(arr.length).toEqual(4);
+        expect(arr[0].getAttribute('id')).toBe('exacttext');
+        expect(arr[1].getAttribute('id')).toBe('otherbutton');
+        expect(arr[2].getAttribute('id')).toBe('submitbutton');
+        expect(arr[3].getAttribute('id')).toBe('inputbutton');
+      })
+    })
+  });
+
+  describe('by button text', function() {
+    it('should find two button containing "Exact text"', function() {
+      element.all(by.buttonText('Exact text')).then(function(arr) {
+        expect(arr.length).toEqual(2);
+        expect(arr[0].getAttribute('id')).toBe('exacttext');
+        expect(arr[1].getAttribute('id')).toBe('submitbutton');
+      })
+    });
+
+    it('should not find any buttons containing "text"', function() {
+      element.all(by.buttonText('text')).then(function(arr) {
+        expect(arr.length).toEqual(0);
+      })
+    });
+
+  });
+
   describe('by repeater', function() {
     beforeEach(function() {
       browser.get('index.html#/repeater');
