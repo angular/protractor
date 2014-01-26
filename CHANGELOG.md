@@ -113,7 +113,7 @@ _Note: 0.16.0 was released as a canary - no changelog for it._
 
   To allow the user to customize their framework, the protractor runner will now wait
   until just before `onPrepare` to load the framework. This means that `jasmine` will
-  not be available in global until `onPrepare`. For exampel, this means that requiring
+  not be available in global until `onPrepare`. For example, this means that requiring
   the jasmine-reporters module must be done inside onPrepare, since that module expects
   jasmine to be available at the time it is loaded.
 
