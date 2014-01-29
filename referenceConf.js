@@ -56,6 +56,9 @@ exports.config = {
     'spec/*_spec.js',
   ],
 
+  // Patterns to exclude.
+  exclude: [],
+
   // ----- Capabilities to be passed to the webdriver instance ----
   //
   // For a full list of available capabilities, see
