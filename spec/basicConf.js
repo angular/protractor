@@ -7,6 +7,11 @@ exports.config = {
     'basic/*_spec.js'
   ],
 
+  // Exclude patterns are relative to this directory.
+  exclude: [
+    'basic/exclude*.js'
+  ],
+
   capabilities: {
     'browserName': 'chrome'
   },
