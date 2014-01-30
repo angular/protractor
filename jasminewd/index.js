@@ -71,9 +71,15 @@ global.afterEach = wrapInControlFlow(global.afterEach);
  * @param {boolean} not Whether this is being called with 'not' active.
  */
 function wrapMatcher(matcher, actualPromise, not) {
-  return function(expected) {
+  return function() {
+    var originalArgs = arguments;
     actualPromise.then(function(actual) {
+      var expected = originalArgs[0];
       if (expected instanceof webdriver.promise.Promise) {
+        if (originalArgs.length > 1) {
+          throw error('Multi-argument matchers with promises are not '
+              + 'supported.');
+        }
         expected.then(function(exp) {
           if (not) {
             expect(actual).not[matcher](exp)
@@ -82,11 +88,11 @@ function wrapMatcher(matcher, actualPromise, not) {
           }
         });
       } else {
+        var expectation = expect(actual);
         if (not) {
-          expect(actual).not[matcher](expected)
-        } else {
-          expect(actual)[matcher](expected);
+          expectation = expectation.not;
         }
+        expectation[matcher].apply(expectation, originalArgs);
       }
     });
   };
