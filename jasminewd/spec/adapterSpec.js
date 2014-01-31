@@ -42,7 +42,12 @@ var getFakeDriver = function() {
       return flow.execute(function() {
         return webdriver.promise.fulfilled(1111);
       });
-    }
+    },
+    getDecimalNumber: function() {
+        return flow.execute(function() {
+          return webdriver.promise.fulfilled(3.14159);
+        });
+      }
   };
 };
 
@@ -110,6 +115,16 @@ describe('webdriverJS Jasmine adapter', function() {
     expect(500).toBeLotsMoreThan(3);
     expect(fakeDriver.getBigNumber()).toBeLotsMoreThan(33);
   });
+  
+  it('should pass multiple arguments to matcher', function() {
+      // Passing specific precision
+      expect(fakeDriver.getDecimalNumber()).toBeCloseTo(3.1, 1);
+      expect(fakeDriver.getDecimalNumber()).not.toBeCloseTo(3.1, 2);
+      
+      // Using default precision (2)
+      expect(fakeDriver.getDecimalNumber()).not.toBeCloseTo(3.1);
+      expect(fakeDriver.getDecimalNumber()).toBeCloseTo(3.14);
+    });
 
   describe('not', function() {
     it('should still pass normal synchronous tests', function() {
