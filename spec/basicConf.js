@@ -2,7 +2,7 @@
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
-    // Spec patterns are relative to this directory.
+  // Spec patterns are relative to this directory.
   specs: [
     'basic/*_spec.js',
     'basic/*_test.js'
