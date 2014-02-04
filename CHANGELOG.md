@@ -1,4 +1,58 @@
+# 0.18.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([e3b1e7c](https://github.com/angular/protractor/commit/e3b1e7cec7af35f2e245ca64e4f94227ecaa1c57)) 
+  feat(config): add option to exclude specs based on file patterns
+
+  The config now accepts `exclude`, an array of patterns to exclude.
+
+- ([88a1e58](https://github.com/angular/protractor/commit/88a1e587a40f0e6d978b20fe55160a18e2855493)) 
+  Feat(clientSideScripts): Add by.buttonText, by.partialButtonText
+
+  Adds client side JS implementations of by.buttonText and by.partialButtonText, enabling element
+  lookup based on innerText.
+
+  Closes #452
+
+- ([8d29c93](https://github.com/angular/protractor/commit/8d29c939766f044d910401e60834769cf8e5e44b)) 
+  feat(config): allow LiveScript configuration files
+
+## Bug Fixes
+
+- ([d06d931](https://github.com/angular/protractor/commit/d06d931e1cb2c2bd38c2c50965a6f78690bdc336)) 
+  fix(timeouts): fix an obscure cause of firefox timeouts
+
+  Fixes #493
+
+- ([de39e50](https://github.com/angular/protractor/commit/de39e5077d09daaeb885767e968a5cef78c9cac7)) 
+  fix(jasminewd): support multi-argument matchers
+
+  Implement support for multi-argument matchers in promise wrapper.
+
+  Closes #477
+
+- ([11c4210](https://github.com/angular/protractor/commit/11c4210fe740771707d5421a4940bdce43d3d33e)) 
+  fix(testForAngular): add a message when page load does not complete in time
+
+- ([6ae6261](https://github.com/angular/protractor/commit/6ae626158ee0610b70501af5d57ad4ff379c5ead)) 
+  refactor(waitForAngular): improve error messages when timeouts occur
+
+- ([5dd93c2](https://github.com/angular/protractor/commit/5dd93c2397a401011e16271f6472c72037c871b6)) 
+  fix(config): allow CoffeeScript 1.7 to be used
+
+  CoffeeScript now requires a register call to be made.
+
+- ([10aec0f](https://github.com/angular/protractor/commit/10aec0ff212987bfdb9ab4011e6cb2f9c646fca2)) 
+  fix(pageload): increase wait timeout
+
+  The 300 ms wait caused problems when testing IE on Sauce Labs. It seems way too short.
+  "browser.get()" invariably timed out. Increasing it solved our problem.
+
+
 # 0.17.0
+
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
 ## Features
