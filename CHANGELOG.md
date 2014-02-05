@@ -1,3 +1,13 @@
+# 0.18.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+
+- ([a79aa73](https://github.com/angular/protractor/commit/a79aa73df5df598ccad695af882d23ddaac2c2d9))
+  fix(cli): specs was being processed as a string, not a list
+
+  Fixes #495
+
 # 0.18.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
