@@ -104,7 +104,7 @@ exports.config = {
 
   // ----- The test framework -----
   //
-  // Jasmine and Cucumber are fully supported as a test and assertion framework.
+  // Jasmine is fully supported as a test and assertion framework.
   // Mocha has limited beta support. You will need to include your own
   // assertion framework if working with mocha.
   framework: 'jasmine',
@@ -131,16 +131,6 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     reporter: 'list'
-  },
-
-  // ----- Options to be passed to cucumber -----
-  cucumberOpts: {
-    // Require files before executing the features.
-    require: 'cucumber/stepDefinitions.js',
-    // Only execute the features or scenarios with tags matching @dev.
-    tags: '@dev',
-    // How to format features (default: progress)
-    format: 'summary'
   },
 
   // ----- The cleanup step -----
