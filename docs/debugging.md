@@ -76,6 +76,9 @@ used from the browser's console.
 // In the browser console (e.g. from Chrome Dev Tools)
 > window.clientSideScripts.findInputs('username');
 // Should return the input element with model 'username'.
+
+// You can also limit the scope of the locator
+> window.clientSideScripts.findInputs('username', document.getElementById('#myEl'));
 ```
 
 
