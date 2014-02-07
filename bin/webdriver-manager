@@ -59,7 +59,7 @@ var binaries = {
         if (os.arch() == 'x64') {
           return urlPrefix + '_x64_' + versions.iedriver + '.zip';
         } else {
-          return urlPrefix + '_win32_' + versions.iedriver + '.zip';
+          return urlPrefix + '_Win32_' + versions.iedriver + '.zip';
         }
       }
     }
