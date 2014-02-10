@@ -50,8 +50,8 @@ describe('protractor library', function() {
 
   it('should allow adding custom locators', function() {
     var findMenuItem = function() {
-      var using = arguments[0]; // unused
-      var itemName = arguments[1];
+      var itemName = arguments[0];
+      var using = arguments[1]; // unused
       var menu = document.querySelectorAll('.menu li');
       for (var i = 0; i < menu.length; ++i) {
         if (menu[i].textContent == itemName) {
