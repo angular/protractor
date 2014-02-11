@@ -336,11 +336,20 @@ describe('locators', function() {
       });
 
       it('should find an individual element', function() {
-        browser.debugger();
         var firstInitial = element(
           by.repeater('bloop in days').row(0).column('bloop.initial'));
 
         expect(firstInitial.getText()).toEqual('M');
+      });
+    });
+  });
+
+  describe('by css containing text', function () {
+    it('should find elements by css and partial text', function () {
+      element.all(by.cssContainingText('#inner ul .pet', 'dog')).then(function(arr) {
+        expect(arr.length).toEqual(2);
+        expect(arr[0].getAttribute('id')).toBe('bigdog');
+        expect(arr[1].getAttribute('id')).toBe('smalldog');
       });
     });
   });
