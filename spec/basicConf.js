@@ -12,6 +12,8 @@ exports.config = {
     'basic/exclude*.js'
   ],
 
+  chromeOnly: false,
+
   capabilities: {
     'browserName': 'chrome'
   },
