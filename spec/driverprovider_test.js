@@ -31,7 +31,7 @@ var testDriverProvider = function(driverProvider) {
       return driverProvider.updateJob({
             'passed': true
           }).then(function() {
-            driverProvider.teardownEnv();
+            return driverProvider.teardownEnv();
           });
     } else {
       return driverProvider.teardownEnv();
