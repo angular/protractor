@@ -27,7 +27,15 @@ var testDriverProvider = function(driverProvider) {
     });
     return deferred.promise;
   }).then(function() {
-    driverProvider.teardownEnv();
+    if (driverProvider.updateJob) {
+      return driverProvider.updateJob({
+            'passed': true
+          }).then(function() {
+            driverProvider.teardownEnv();
+          });
+    } else {
+      return driverProvider.teardownEnv();
+    }
   });
 };
 
