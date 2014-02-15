@@ -46,7 +46,7 @@
   "version": "0.18.1",
   "webdriverVersions": {
     "selenium": "2.39.0",
-    "chromedriver": "2.8",
+    "chromedriver": "2.9",
     "iedriver": "2.39.0"
   }
 }
