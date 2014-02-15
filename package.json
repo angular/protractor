@@ -28,7 +28,9 @@
     "mocha": "~1.16.0",
     "cucumber": "~0.3.3",
     "express": "~3.3.4",
-    "mustache": "~0.7.2"
+    "mustache": "~0.7.2",
+    "dgeni": "0.0.3",
+    "dgeni-packages": "0.0.2"
   },
   "repository": {
     "type": "git",
