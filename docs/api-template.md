@@ -10,7 +10,7 @@
 
 Param | Type | Description
 --- | --- | ---
-{% for tag in tags.tags %}{{tag.title}} | {{tag.type.name}} | {{tag.description|replace("\n", "")}}
+{% for tag in tags.tags %}{{tag.title}} | {{tag.type.name}} | {{tag.description}}
 {% endfor %}
 {% endif %}
 
