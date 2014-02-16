@@ -63,7 +63,7 @@ module.exports = function (config) {
   basePath = '/Users/andresdom/dev/protractor';
 
   config.set('source.files', [
-    { pattern: 'lib/**/*.js', basePath: basePath }
+    { pattern: 'lib/**/protractor.js', basePath: basePath }
   ]);
 
   config.set('rendering.outputFolder', 'build');
