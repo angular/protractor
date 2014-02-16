@@ -1,29 +1,35 @@
 var nunjucks = require('nunjucks');
+var fs = require('fs');
 var _ = require('lodash');
 var path = require('canonical-path');
 var packagePath = __dirname;
 
 var basePackage = require('dgeni-packages/jsdoc');
 
-var skipFiles = ['cli', 'runner'];
-
 var tagFilter = {
   name: 'do-stuff',
   description: 'Doing some stuff',
   runAfter: ['extracting-tags'],
   init: function (config) {
-
   },
   process: function (docs) {
     var i = 1;
     docs.forEach(function (doc) {
-      var regExp = /([^@]*)(@.*)?/;
+      // Clean the tags.
+      if (doc.tags) {
+        doc.tags.tags.forEach(function (tag) {
+          tag.description = (tag.description || '').replace('\n', ' ');
+        })
+      }
 
-      doc.desc = regExp.exec(doc.content || '')[1];
+      // Get everything until the first @.
+      doc.desc = /[^@]*/.exec(doc.content || '')[0];
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
     });
   }
 };
+
+var templateFile = fs.readFileSync('/Users/andresdom/dev/protractor/docs/api-template.md', 'utf-8');
 
 var properRender = {
   name: 'proper-render',
@@ -33,9 +39,8 @@ var properRender = {
   process: function (docs) {
     docs.forEach(function (doc) {
       console.log(doc);
-
-      doc.renderedContent =
-          nunjucks.renderString(doc.renderedContent, doc);
+      nunjucks.configure({autoescape: true});
+      doc.renderedContent = nunjucks.renderString(templateFile, doc);
     });
   }
 };
