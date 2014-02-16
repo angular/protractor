@@ -29,7 +29,10 @@
     "express": "~3.3.4",
     "mustache": "~0.7.2",
     "dgeni": "0.0.3",
-    "dgeni-packages": "0.0.2"
+    "dgeni-packages": "0.0.2",
+    "lodash": "~2.4.1",
+    "canonical-path": "0.0.2",
+    "nunjucks": "~1.0.1"
   },
   "repository": {
     "type": "git",
