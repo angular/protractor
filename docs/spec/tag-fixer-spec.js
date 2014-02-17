@@ -24,6 +24,6 @@ describe('tag fixer', function () {
         '    expect(lis.count()).toEqual(4);'
     );
     expect(doc.desc).to.equal('element.all is used for operations on an ' +
-        'array of elements (as opposed\nto a single element).\n\n');
+        'array of elements (as opposed to a single element).\n\n');
   });
 });

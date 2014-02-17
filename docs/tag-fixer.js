@@ -20,6 +20,7 @@ var parseExampleAndContent = function (doc) {
 
   if (index >= 0) {
     doc.example = content.substring(index).replace('Example:\n', '');
+    doc.desc = content.substring(0, index);
   }
 };
 
@@ -35,8 +36,6 @@ module.exports = {
       removeNewLines(doc);
       parseExampleAndContent(doc);
 
-      // Get everything until the first @.
-      doc.desc = /[^@]*/.exec(doc.content || '')[0];
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
     });
   }
