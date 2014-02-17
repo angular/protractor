@@ -24,9 +24,11 @@ module.exports = {
     // Bail out if there is no contents
     if ( !contents ) { return []; }
 
-    var docs = [], currentDoc, match;
-    contents.split(NEW_LINE).forEach(function(line, lineNumber){
-  
+    var docs = [], currentDoc, match,
+        lines = contents.split(NEW_LINE);
+
+    lines.forEach(function(line, lineNumber){
+
       // is the comment starting?
       if (!currentDoc && (match = line.match(DOC_COMMENT_START))) {
 
@@ -49,6 +51,14 @@ module.exports = {
 
         // strip out any blank lines
         currentDoc.content = currentDoc.content.replace(BLANK_LINE, '');
+
+        // Get the next line, which will probably contain the function.
+        if (lineNumber + 1 < lines.length) {
+          currentDoc.fnDef = {
+            line: lines[lineNumber + 1],
+            lineNumber: lineNumber + 1
+          }
+        }
 
         docs.push(currentDoc);
 
