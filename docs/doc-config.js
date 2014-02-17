@@ -9,8 +9,8 @@ module.exports = function (config) {
   config = basePackage(config);
 
   config.append('processing.processors', [
-    require('./tag-fixer'),
-    require('./doc-renderer')
+    require('./processors/tag-fixer'),
+    require('./processors/doc-renderer')
   ]);
 
   // The name tag should not be required.
