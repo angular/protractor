@@ -84,7 +84,7 @@ a second arg.
   });
   expect(items).toEqual([
     {index: 0, text: '1', class: 'one'},
-    {index: 0, text: '1', class: 'one'},
+    {index: 1, text: '2', class: 'two'},
   ]);
 ```
 
