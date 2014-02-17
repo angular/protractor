@@ -4,6 +4,13 @@
 
 {{desc}}
 
+{% if example %}
+###Example
+```javascript
+{{ example }}
+```
+{% endif %}
+
 {% if tags.tags %}
 ###Params
 
