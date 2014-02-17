@@ -1,13 +1,27 @@
+var _ = require('lodash');
+
 /**
  * Remove new lines from the params.
  * @param {!Object} doc Document with the tag.
  */
-var removeNewLinesFromParams = function (doc) {
-  if (doc.tags) {
-    doc.tags.tags.forEach(function (tag) {
-      tag.description = (tag.description || '').replace('\n', ' ');
+var fixParams = function (doc) {
+  // Remove duplicates.
+  doc.params = _.uniq(doc.params, function(param) { return param.name });
+
+  if (doc.name == 'element.all') {
+    _.each(doc.params, function (param) {
+      console.log(param);
     });
   }
+
+
+  if (!doc.params) {
+    return;
+  }
+
+  doc.tags.tags.forEach(function (tag) {
+    tag.description = (tag.description || '').replace('\n', ' ');
+  });
 };
 
 /**
@@ -17,6 +31,10 @@ var removeNewLinesFromParams = function (doc) {
 var parseExampleAndContent = function (doc) {
   var description = doc.description || '',
       index = description.indexOf('Example:');
+
+  if (doc.name == 'element.all') {
+    console.log(doc);
+  }
 
   if (index >= 0) {
     doc.example = description.substring(index).replace('Example:\n', '');
@@ -34,7 +52,7 @@ module.exports = {
   process: function (docs) {
     var i = 1;
     docs.forEach(function (doc) {
-      removeNewLinesFromParams(doc);
+      fixParams(doc);
       parseExampleAndContent(doc);
 
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
