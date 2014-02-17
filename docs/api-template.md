@@ -1,5 +1,4 @@
 ##[{{name}}]({{sourceLink}})
-
 {{desc}}
 
 {% if example %}

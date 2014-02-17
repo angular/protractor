@@ -34,4 +34,9 @@ describe('tag fixer', function () {
 
     expect(doc.name).to.equal('element');
   });
+
+  it('should not override name', function() {
+    tagFixer.process([doc]);
+    expect(doc.name).to.equal('element.all');
+  });
 });
