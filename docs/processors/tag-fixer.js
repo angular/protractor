@@ -61,6 +61,11 @@ var parseExampleAndContent = function (doc) {
   }
 };
 
+var addLinkToSource = function (doc) {
+  doc.sourceLink = 'https://github.com/angular/protractor/blob/master/' +
+      doc.file + '#L' + doc.startingLine;
+};
+
 module.exports = {
   name: 'tag-fixer',
   description: 'Do some processing before rendering',
@@ -73,6 +78,7 @@ module.exports = {
     docs.forEach(function (doc) {
       fixParams(doc);
       parseExampleAndContent(doc);
+      addLinkToSource(doc);
 
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
     });
