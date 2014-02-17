@@ -6,7 +6,20 @@ var _ = require('lodash');
  * @param {string} prop Property name.
  */
 var replaceNewLines = function (obj, prop) {
-  obj[prop] = (obj[prop] || '').replace(/\n\s+/, ' ');
+  if (obj) {
+    obj[prop] = (obj[prop] || '').replace(/\n\s+/, ' ');
+  }
+};
+
+/**
+ * Escape the < > characters from the param or return type.
+ * @param {!Object} type Parsed type.
+ */
+var escapeTypeDescriptions = function (type) {
+  if (type && type.description) {
+    type.description =
+        type.description.replace('<', '&lt;').replace('>', '&gt;');
+  }
 };
 
 /**
@@ -15,14 +28,22 @@ var replaceNewLines = function (obj, prop) {
  */
 var fixParams = function (doc) {
   // Remove duplicates.
-  if (doc.params) {
-    doc.params = _.uniq(doc.params, 'name');
+  var params = doc.params,
+      returns = doc.returns;
+
+  if (params) {
+    doc.params = _.uniq(params, 'name');
   }
 
   // Replace new lines in the return and params descriptions.
-  replaceNewLines(doc.returns, 'description');
-  _.each(doc.params, function (param) {
+  if (returns) {
+    replaceNewLines(returns, 'description');
+    escapeTypeDescriptions(returns.type);
+  }
+
+  _.each(params, function (param) {
     replaceNewLines(param, 'description');
+    escapeTypeDescriptions(param.type);
   });
 };
 
@@ -33,10 +54,6 @@ var fixParams = function (doc) {
 var parseExampleAndContent = function (doc) {
   var description = doc.description || '',
       index = description.indexOf('Example:');
-
-  if (doc.name == 'element.all') {
-    console.log(doc);
-  }
 
   if (index >= 0) {
     doc.example = description.substring(index).replace('Example:\n', '');
