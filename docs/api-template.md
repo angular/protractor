@@ -1,6 +1,4 @@
-##{{name}}
-
-[code](https://www.google.com/{{startingLine}})
+##[{{name}}]({{sourceLink}})
 
 {{desc}}
 
@@ -11,13 +9,13 @@
 ```
 {% endif %}
 
-{% if tags.tags %}
+{% if params %}
 ###Params
 
 
 Param | Type | Description
 --- | --- | ---
-{% for tag in tags.tags %}{{tag.title}} | {{tag.type.name}} | {{tag.description}}
+{% for param in params %}{{param.name}} | {{param.type.description}} | {{param.description}}
 {% endfor %}
 {% endif %}
 
