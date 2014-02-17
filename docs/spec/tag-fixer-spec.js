@@ -23,5 +23,7 @@ describe('tag fixer', function () {
         '    browser.get(\'myurl\');\n' +
         '    expect(lis.count()).toEqual(4);'
     );
+    expect(doc.desc).to.equal('element.all is used for operations on an ' +
+        'array of elements (as opposed\nto a single element).\n\n');
   });
 });
