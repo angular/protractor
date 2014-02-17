@@ -25,7 +25,7 @@ Param | Type | Description
 ###Returns
 
 
-Type | DescriptionGG
+Type | Description
 --- | ---
 {{returns.type.description}} | {{returns.description}}
 {% endif %}
