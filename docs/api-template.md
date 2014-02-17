@@ -12,7 +12,6 @@
 {% if params %}
 ###Params
 
-
 Param | Type | Description
 --- | --- | ---
 {% for param in params %}{{param.name}} | {{param.type.description}} | {{param.description}}
@@ -21,7 +20,6 @@ Param | Type | Description
 
 {% if returns %}
 ###Returns
-
 
 Type | Description
 --- | ---
