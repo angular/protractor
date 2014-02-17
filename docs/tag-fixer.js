@@ -39,4 +39,4 @@ module.exports = {
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
     });
   }
-}
+};
