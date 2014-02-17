@@ -73,13 +73,13 @@ Calls the input function on each WebElement found by the locator.
 
 Param | Type | Description
 --- | --- | ---
-fn | function (webdriver.WebElement) | Input function.
+fn | function (webdriver.WebElement) | Input function
 
 
 
 
 
-##[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L242)
+##[element.all().map()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L242)
 Apply a map function to each element found using the locator. The
 callback receives the web element as the first argument and the index as
 a second arg.
@@ -125,7 +125,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
 
 
-##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L316)
+##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L317)
 
 
 
@@ -142,7 +142,7 @@ opt_baseUrl | string | A base URL to run get requests against.
 
 
 
-##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L409)
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L410)
 
 
 
@@ -157,7 +157,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L450)
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L451)
 
 
 
@@ -179,7 +179,7 @@ Type | Description
 webdriver.WebElement | the wrapped web element.
 
 
-##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L473)
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L474)
 
 
 
@@ -201,7 +201,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L485)
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L486)
 
 
 
@@ -216,7 +216,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L502)
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L503)
 
 
 
@@ -238,7 +238,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
 
 
-##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L515)
+##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L516)
 
 
 
@@ -268,7 +268,7 @@ Type | Description
 webdriver.WebElement | 
 
 
-##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L539)
+##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L540)
 
 
 
@@ -283,7 +283,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
 
 
-##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L555)
+##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L556)
 
 
 
@@ -308,7 +308,7 @@ Type | Description
     will be returned as a WebElement.
 
 
-##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L574)
+##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L575)
 
 
 
@@ -323,7 +323,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L592)
+##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L593)
 
 
 
@@ -338,7 +338,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
 
 
-##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L617)
+##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L618)
 
 
 
@@ -353,7 +353,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
 
 
-##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L633)
+##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L634)
 
 
 
@@ -370,7 +370,7 @@ script | (!string|Function) | The JavaScript to load the module.
 
 
 
-##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L647)
+##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L648)
 
 
 
@@ -379,7 +379,7 @@ script | (!string|Function) | The JavaScript to load the module.
 
 
 
-##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L655)
+##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L656)
 
 
 
@@ -395,7 +395,7 @@ destination | string | Destination URL.
 
 
 
-##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L722)
+##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L723)
 
 
 
@@ -404,7 +404,7 @@ destination | string | Destination URL.
 
 
 
-##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L730)
+##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L731)
 
 
 
@@ -428,7 +428,7 @@ Type | Description
 boolean | whether the element is present on the page.
 
 
-##[exports.wrapDriver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L793)
+##[exports.wrapDriver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L794)
 
 
 
@@ -451,7 +451,7 @@ Type | Description
 Protractor | 
 
 
-##[exports.setInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L809)
+##[exports.setInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L810)
 
 
 
@@ -467,7 +467,7 @@ ptor | Protractor | null
 
 
 
-##[exports.getInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L817)
+##[exports.getInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L818)
 
 
 
@@ -482,7 +482,7 @@ Type | Description
 Protractor | 
 
 
-##[exports.filterStackTrace](https://github.com/angular/protractor/blob/master/lib/protractor.js#L825)
+##[exports.filterStackTrace](https://github.com/angular/protractor/blob/master/lib/protractor.js#L826)
 
 
 
