@@ -15,12 +15,12 @@ var removeNewLinesFromParams = function (doc) {
  * @param {!Object} doc Document with the tag.
  */
 var parseExampleAndContent = function (doc) {
-  var content = doc.description || '',
-      index = content.indexOf('Example:');
+  var description = doc.description || '',
+      index = description.indexOf('Example:');
 
   if (index >= 0) {
-    doc.example = content.substring(index).replace('Example:\n', '');
-    doc.desc = content.substring(0, index);
+    doc.example = description.substring(index).replace('Example:\n', '');
+    doc.desc = description.substring(0, index);
   }
 };
 
