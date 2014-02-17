@@ -18,6 +18,10 @@ describe('tag fixer', function () {
   it('should parse example', function () {
     tagFixer.process(docs);
 
-    expect(doc.example).to.equal(1);
+    expect(doc.example).to.equal(
+        '    var lis = element.all(by.css(\'li\'));\n' +
+        '    browser.get(\'myurl\');\n' +
+        '    expect(lis.count()).toEqual(4);'
+    );
   });
 });
