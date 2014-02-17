@@ -14,7 +14,7 @@ var paths = {
 };
 
 gulp.task('clean', function () {
-  return gulp.src('build', { read: false }).
+  return gulp.src('build', {read: false}).
       pipe(rimraf());
 });
 
