@@ -1,5 +1,23 @@
 var _ = require('lodash');
 
+
+/**
+ * Find the name of the function.
+ */
+var findName = function (doc) {
+  // Skip if the function has a name.
+  if (doc.name || !doc.fnDef) {
+    return;
+  }
+
+  // Remove text after =.
+  var name = doc.fnDef.line.replace(/\s*=.*/, '');
+  // Remove space + var prefix.
+  name = name.replace(/\s*(var)?\s*/, '');
+
+  doc.name = name;
+};
+
 /**
  * Replace the new lines in an object property.
  * @param {!Object} obj Object with properties.
@@ -76,6 +94,7 @@ module.exports = {
   process: function (docs) {
     var i = 1;
     docs.forEach(function (doc) {
+      findName(doc);
       fixParams(doc);
       parseExampleAndContent(doc);
       addLinkToSource(doc);
