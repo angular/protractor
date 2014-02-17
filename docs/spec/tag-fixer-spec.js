@@ -15,7 +15,7 @@ describe('tag fixer', function () {
     docs = [doc];
   });
 
-  it('should parse example', function () {
+  it('should parse example and desc', function () {
     tagFixer.process(docs);
 
     expect(doc.example).to.equal(
