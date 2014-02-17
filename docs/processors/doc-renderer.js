@@ -13,8 +13,7 @@ module.exports = {
   },
   process: function (docs) {
     docs.forEach(function (doc) {
-      console.log(doc);
-      nunjucks.configure({autoescape: true});
+//      nunjucks.configure({autoescape: true});
       doc.renderedContent = nunjucks.renderString(templateFile, doc);
     });
   }
