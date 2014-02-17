@@ -84,6 +84,8 @@ var addLinkToSource = function (doc) {
       doc.file + '#L' + doc.startingLine;
 };
 
+var excludedTags = ['private', 'type'];
+
 module.exports = {
   name: 'tag-fixer',
   description: 'Do some processing before rendering',
@@ -93,6 +95,15 @@ module.exports = {
   },
   process: function (docs) {
     var i = 1;
+
+    // Remove docs that should not be in the docuemntation.
+    docs = _.reject(docs, function(doc) {
+      if (doc.tags) {
+        var tags = _.pluck(doc.tags.tags, 'title');
+        return _.intersection(tags, excludedTags).length;
+      }
+    });
+
     docs.forEach(function (doc) {
       findName(doc);
       fixParams(doc);
@@ -101,5 +112,7 @@ module.exports = {
 
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
     });
+
+    return docs;
   }
 };
