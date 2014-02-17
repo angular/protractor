@@ -1,4 +1,4 @@
-var tagFixer = require('../tag-fixer');
+var tagFixer = require('../processors/tag-fixer');
 var expect = require('expect.js');
 
 describe('tag fixer', function () {
