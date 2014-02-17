@@ -1,26 +1,28 @@
 var _ = require('lodash');
 
 /**
+ * Replace the new lines in an object property.
+ * @param {!Object} obj Object with properties.
+ * @param {string} prop Property name.
+ */
+var replaceNewLines = function (obj, prop) {
+  obj[prop] = (obj[prop] || '').replace(/\n\s+/, ' ');
+};
+
+/**
  * Remove new lines from the params.
  * @param {!Object} doc Document with the tag.
  */
 var fixParams = function (doc) {
   // Remove duplicates.
-  doc.params = _.uniq(doc.params, function(param) { return param.name });
-
-  if (doc.name == 'element.all') {
-    _.each(doc.params, function (param) {
-      console.log(param);
-    });
+  if (doc.params) {
+    doc.params = _.uniq(doc.params, 'name');
   }
 
-
-  if (!doc.params) {
-    return;
-  }
-
-  doc.tags.tags.forEach(function (tag) {
-    tag.description = (tag.description || '').replace('\n', ' ');
+  // Replace new lines in the return and params descriptions.
+  replaceNewLines(doc.returns, 'description');
+  _.each(doc.params, function (param) {
+    replaceNewLines(param, 'description');
   });
 };
 
