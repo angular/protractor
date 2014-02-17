@@ -25,7 +25,7 @@ var parseExampleAndContent = function (doc) {
 };
 
 module.exports = {
-  name: 'protractor-tag-fixer',
+  name: 'tag-fixer',
   description: 'Do some processing before rendering',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
