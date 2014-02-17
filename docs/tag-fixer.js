@@ -1,8 +1,8 @@
 /**
- * Remove new lines from the tags.
+ * Remove new lines from the params.
  * @param {!Object} doc Document with the tag.
  */
-var removeNewLines = function (doc) {
+var removeNewLinesFromParams = function (doc) {
   if (doc.tags) {
     doc.tags.tags.forEach(function (tag) {
       tag.description = (tag.description || '').replace('\n', ' ');
@@ -33,7 +33,7 @@ module.exports = {
   process: function (docs) {
     var i = 1;
     docs.forEach(function (doc) {
-      removeNewLines(doc);
+      removeNewLinesFromParams(doc);
       parseExampleAndContent(doc);
 
       doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
