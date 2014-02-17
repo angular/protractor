@@ -8,6 +8,11 @@ module.exports = function (config) {
 
   config = basePackage(config);
 
+  // Override the default extractor.
+  config.set('source.extractors', [
+    require('./processors/js')
+  ]);
+
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
     require('./processors/doc-renderer')
