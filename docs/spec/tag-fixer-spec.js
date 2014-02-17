@@ -11,7 +11,7 @@ describe('tag fixer', function () {
       fileName: 'protractor',
       name: 'element.all',
       description: 'element.all is used for operations on an array of elements (as opposed to a single element).\n\nExample:\n    var lis = element.all(by.css(\'li\'));\n    browser.get(\'myurl\');\n    expect(lis.count()).toEqual(4);',
-      fnDef: {line: '  element.all = function(locator) {', lineNumber: 165}
+      fnDef: {line: '  var element = function(locator) {', lineNumber: 165}
     };
   });
 
@@ -32,6 +32,6 @@ describe('tag fixer', function () {
     doc.name = null;
     tagFixer.process([doc]);
 
-    expect(doc.name).to.equal('all');
+    expect(doc.name).to.equal('element');
   });
 });
