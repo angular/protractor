@@ -1,0 +1,1753 @@
+##[exports.By](https://github.com/angular/protractor/blob/master/lib/protractor.js#L23)
+
+
+
+
+
+
+
+
+
+##[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L166)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+number | the number of elements matching the locator.
+
+
+##[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L175)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+index | number | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the element at the given index
+
+
+##[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L186)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the first matching element
+
+
+##[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L199)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the last matching element
+
+
+##[elementArrayFinder.then](https://github.com/angular/protractor/blob/master/lib/protractor.js#L209)
+
+
+
+
+
+
+
+
+
+##[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L217)
+
+
+
+
+
+
+
+
+
+##[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L230)
+
+Apply a map function to each element found using the locator. The
+callback receives the web element as the first argument and the index as
+a second arg.
+
+
+
+
+###Example
+```javascript
+  <ul class="menu">
+    <li class="one">1</li>
+    <li class="two">2</li>
+  </ul>
+
+  var items = element.all(by.css('.menu li')).map(function(elm, index) {
+    return {
+      index: index,
+      text: elm.getText(),
+      class: elm.getAttribute('class')
+    };
+  });
+  expect(items).toEqual([
+    {index: 0, text: '1', class: 'one'},
+    {index: 0, text: '1', class: 'one'},
+  ]);
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+mapFn | function (webdriver.WebElement, number) | Map function that will be applied to each element.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
+
+
+##[buildCssHelper](https://github.com/angular/protractor/blob/master/lib/protractor.js#L278)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+function (string): ElementFinder | 
+
+
+##[buildMultiCssHelper](https://github.com/angular/protractor/blob/master/lib/protractor.js#L291)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+function (string): ElementArrayFinder | 
+
+
+##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L304)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+webdriver | webdriver.WebDriver | null
+opt_baseUrl | string | A base URL to run get requests against.
+
+
+
+
+
+##[mixin](https://github.com/angular/protractor/blob/master/lib/protractor.js#L28)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+to | Object | null
+from | Object | null
+fnName | string | null
+
+
+
+
+
+##[this.driver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L328)
+
+
+
+
+
+
+
+
+
+##[this.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L336)
+
+
+
+
+
+
+
+
+
+##[this.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L343)
+
+
+
+
+
+
+
+
+
+##[this.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L350)
+
+
+
+
+
+
+
+
+
+##[this.baseUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L357)
+
+
+
+
+
+
+
+
+
+##[this.rootEl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L365)
+
+
+
+
+
+
+
+
+
+##[this.ignoreSynchronization](https://github.com/angular/protractor/blob/master/lib/protractor.js#L374)
+
+
+
+
+
+
+
+
+
+##[this.params](https://github.com/angular/protractor/blob/master/lib/protractor.js#L385)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L397)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to the scripts return value.
+
+
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L438)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+element | webdriver.WebElement | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the wrapped web element.
+
+
+##[buildElementHelper](https://github.com/angular/protractor/blob/master/lib/protractor.js#L47)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L461)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L473)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L490)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L503)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L527)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
+
+
+##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L543)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+expression | string | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in
+    {@link webdriver.WebDriver.executeScript}. In summary - primitives will
+    be resolved as is, functions will be converted to string, and elements
+    will be returned as a WebElement.
+
+
+##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L562)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L580)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L605)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
+
+
+##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L621)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+name | !string | The name of the module to load or override.
+script | (!string|Function) | The JavaScript to load the module.
+
+
+
+
+
+##[element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L65)
+
+The element function returns an Element Finder. Element Finders do
+not actually attempt to find the element until a method is called on them,
+which means they can be set up in helper files before the page is
+available.
+
+
+
+
+###Example
+```javascript
+    var nameInput = element(by.model('name'));
+    browser.get('myurl');
+    nameInput.sendKeys('Jane Doe');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+locator | webdriver.Locator | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+ElementFinder | 
+
+
+##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L635)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L643)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+destination | string | Destination URL.
+
+
+
+
+
+##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L710)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L718)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.findElementsOverrideHelper_](https://github.com/angular/protractor/blob/master/lib/protractor.js#L752)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+using | webdriver.WebElement | A WebElement to scope the find, or null.
+locator | webdriver.Locator | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | 
+
+
+##[exports.wrapDriver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L781)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+webdriver | webdriver.WebDriver | The configured webdriver instance.
+opt_baseUrl | string | A URL to prepend to relative gets.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+Protractor | 
+
+
+##[instance;](https://github.com/angular/protractor/blob/master/lib/protractor.js#L792)
+
+
+
+
+
+
+
+
+
+##[exports.setInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L797)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+
+##[exports.getInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L805)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+Protractor | 
+
+
+##[exports.filterStackTrace](https://github.com/angular/protractor/blob/master/lib/protractor.js#L813)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+text | string | Original stack trace.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+string | 
+
+
+##[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L102)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | 
+
+
+##[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L111)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+boolean | whether the element is present on the page.
+
+
+##[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L118)
+
+Calls to element may be chained to find elements within a parent.
+
+
+
+###Example
+```javascript
+    var name = element(by.id('container')).element(by.model('name'));
+    browser.get('myurl');
+    name.sendKeys('John Smith');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+opt_usingChain | Array.&lt;webdriver.Locator&gt; | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+function (webdriver.Locator): ElementFinder | 
+
+
+##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L132)
+
+Shortcut for chaining css element finders.
+
+
+
+###Example
+```javascript
+    var name = element(by.id('container')).$('input.myclass');
+    browser.get('myurl');
+    name.sendKeys('John Smith');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+cssSelector | string | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+ElementFinder | 
+
+
+##[element.all](https://github.com/angular/protractor/blob/master/lib/protractor.js#L150)
+
+element.all is used for operations on an array of elements (as opposed
+to a single element).
+
+
+
+
+###Example
+```javascript
+    var lis = element.all(by.css('li'));
+    browser.get('myurl');
+    expect(lis.count()).toEqual(4);
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+locator | webdriver.Locator | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+ElementArrayFinder | 
+
+
+##[exports.By](https://github.com/angular/protractor/blob/master/lib/protractor.js#L23)
+
+
+
+
+
+
+
+
+
+##[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L166)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+number | the number of elements matching the locator.
+
+
+##[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L175)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+index | number | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the element at the given index
+
+
+##[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L186)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the first matching element
+
+
+##[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L199)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the last matching element
+
+
+##[elementArrayFinder.then](https://github.com/angular/protractor/blob/master/lib/protractor.js#L209)
+
+
+
+
+
+
+
+
+
+##[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L217)
+
+
+
+
+
+
+
+
+
+##[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L230)
+
+Apply a map function to each element found using the locator. The
+callback receives the web element as the first argument and the index as
+a second arg.
+
+
+
+
+###Example
+```javascript
+  <ul class="menu">
+    <li class="one">1</li>
+    <li class="two">2</li>
+  </ul>
+
+  var items = element.all(by.css('.menu li')).map(function(elm, index) {
+    return {
+      index: index,
+      text: elm.getText(),
+      class: elm.getAttribute('class')
+    };
+  });
+  expect(items).toEqual([
+    {index: 0, text: '1', class: 'one'},
+    {index: 0, text: '1', class: 'one'},
+  ]);
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+mapFn | function (webdriver.WebElement, number) | Map function that will be applied to each element.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
+
+
+##[buildCssHelper](https://github.com/angular/protractor/blob/master/lib/protractor.js#L278)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+function (string): ElementFinder | 
+
+
+##[buildMultiCssHelper](https://github.com/angular/protractor/blob/master/lib/protractor.js#L291)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+function (string): ElementArrayFinder | 
+
+
+##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L304)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+webdriver | webdriver.WebDriver | null
+opt_baseUrl | string | A base URL to run get requests against.
+
+
+
+
+
+##[mixin](https://github.com/angular/protractor/blob/master/lib/protractor.js#L28)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+to | Object | null
+from | Object | null
+fnName | string | null
+
+
+
+
+
+##[this.driver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L328)
+
+
+
+
+
+
+
+
+
+##[this.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L336)
+
+
+
+
+
+
+
+
+
+##[this.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L343)
+
+
+
+
+
+
+
+
+
+##[this.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L350)
+
+
+
+
+
+
+
+
+
+##[this.baseUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L357)
+
+
+
+
+
+
+
+
+
+##[this.rootEl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L365)
+
+
+
+
+
+
+
+
+
+##[this.ignoreSynchronization](https://github.com/angular/protractor/blob/master/lib/protractor.js#L374)
+
+
+
+
+
+
+
+
+
+##[this.params](https://github.com/angular/protractor/blob/master/lib/protractor.js#L385)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L397)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to the scripts return value.
+
+
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L438)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+element | webdriver.WebElement | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the wrapped web element.
+
+
+##[buildElementHelper](https://github.com/angular/protractor/blob/master/lib/protractor.js#L47)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L461)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L473)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L490)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L503)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L527)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
+
+
+##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L543)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+expression | string | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in
+    {@link webdriver.WebDriver.executeScript}. In summary - primitives will
+    be resolved as is, functions will be converted to string, and elements
+    will be returned as a WebElement.
+
+
+##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L562)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L580)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L605)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
+
+
+##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L621)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+name | !string | The name of the module to load or override.
+script | (!string|Function) | The JavaScript to load the module.
+
+
+
+
+
+##[element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L65)
+
+The element function returns an Element Finder. Element Finders do
+not actually attempt to find the element until a method is called on them,
+which means they can be set up in helper files before the page is
+available.
+
+
+
+
+###Example
+```javascript
+    var nameInput = element(by.model('name'));
+    browser.get('myurl');
+    nameInput.sendKeys('Jane Doe');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+locator | webdriver.Locator | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+ElementFinder | 
+
+
+##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L635)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L643)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+destination | string | Destination URL.
+
+
+
+
+
+##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L710)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L718)
+
+
+
+
+
+
+
+
+
+##[Protractor.prototype.findElementsOverrideHelper_](https://github.com/angular/protractor/blob/master/lib/protractor.js#L752)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+using | webdriver.WebElement | A WebElement to scope the find, or null.
+locator | webdriver.Locator | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | 
+
+
+##[exports.wrapDriver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L781)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+webdriver | webdriver.WebDriver | The configured webdriver instance.
+opt_baseUrl | string | A URL to prepend to relative gets.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+Protractor | 
+
+
+##[instance;](https://github.com/angular/protractor/blob/master/lib/protractor.js#L792)
+
+
+
+
+
+
+
+
+
+##[exports.setInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L797)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+
+##[exports.getInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L805)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+Protractor | 
+
+
+##[exports.filterStackTrace](https://github.com/angular/protractor/blob/master/lib/protractor.js#L813)
+
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+text | string | Original stack trace.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+string | 
+
+
+##[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L102)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | 
+
+
+##[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L111)
+
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+boolean | whether the element is present on the page.
+
+
+##[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L118)
+
+Calls to element may be chained to find elements within a parent.
+
+
+
+###Example
+```javascript
+    var name = element(by.id('container')).element(by.model('name'));
+    browser.get('myurl');
+    name.sendKeys('John Smith');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+opt_usingChain | Array.&lt;webdriver.Locator&gt; | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+function (webdriver.Locator): ElementFinder | 
+
+
+##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L132)
+
+Shortcut for chaining css element finders.
+
+
+
+###Example
+```javascript
+    var name = element(by.id('container')).$('input.myclass');
+    browser.get('myurl');
+    name.sendKeys('John Smith');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+cssSelector | string | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+ElementFinder | 
+
+
+##[element.all](https://github.com/angular/protractor/blob/master/lib/protractor.js#L150)
+
+element.all is used for operations on an array of elements (as opposed
+to a single element).
+
+
+
+
+###Example
+```javascript
+    var lis = element.all(by.css('li'));
+    browser.get('myurl');
+    expect(lis.count()).toEqual(4);
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+locator | webdriver.Locator | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+ElementArrayFinder | 
+

@@ -25,7 +25,7 @@ gulp.task('create-md-files', function () {
 gulp.task('concat-md', function () {
   return gulp.src(paths.protractor).
       pipe(concat('protractor.md')).
-      pipe(gulp.dest('build'));
+      pipe(gulp.dest('.'));
 });
 
 
