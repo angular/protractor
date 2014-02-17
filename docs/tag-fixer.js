@@ -1,3 +1,7 @@
+/**
+ * Remove new lines from the tags.
+ * @param {!Object} doc Document with the tag.
+ */
 var removeNewLines = function(doc) {
   if (doc.tags) {
     doc.tags.tags.forEach(function (tag) {
