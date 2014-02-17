@@ -18,11 +18,11 @@ gulp.task('clean', function () {
       pipe(rimraf());
 });
 
-gulp.task('generate-docs', ['clean'], function () {
+gulp.task('create-md-files', function () {
   return docGenerator('doc-config.js').generateDocs();
 });
 
-gulp.task('prepare-docs', function () {
+gulp.task('concat-md', function () {
   return gulp.src(paths.protractor).
       pipe(concat('protractor.md')).
       pipe(gulp.dest('build'));
@@ -34,4 +34,5 @@ gulp.task('watch', function () {
   gulp.watch(paths.scripts, ['default']);
 });
 
-gulp.task('default', ['generate-docs', 'prepare-docs']);
+gulp.task('generate-docs', ['clean', 'create-md-files', 'concat-md']);
+gulp.task('default', ['generate-docs']);
