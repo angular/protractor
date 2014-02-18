@@ -13,6 +13,8 @@ module.exports = function (config) {
     require('./processors/js')
   ]);
 
+  // Add a couple of processors to the pipe to do extra parsing on the tags and
+  // extra rendering.
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
     require('./processors/doc-renderer')
@@ -28,8 +30,9 @@ module.exports = function (config) {
   var basePath = path.resolve(packagePath, '..');
 
   config.set('source.files', [
-    { pattern: 'lib/**/protractor.js', basePath: basePath },
-    { pattern: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js', basePath: basePath }
+    {pattern: 'lib/**/protractor.js', basePath: basePath},
+    {pattern: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js',
+      basePath: basePath}
   ]);
 
   config.set('rendering.outputFolder', 'build');
