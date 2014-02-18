@@ -93,6 +93,23 @@ var fileName = function(doc, i) {
   return 'partials/' + doc.fileName + index + '.md';
 };
 
+/**
+ * Remove docs that should not be in the documentation.
+ */
+var filterDocs = function (docs) {
+  return _.reject(docs, function (doc) {
+    // Skip functions starting with 'exports'.
+    if (/^exports/.test(doc.name)) {
+      return true;
+    }
+
+    if (doc.tags) {
+      var tags = _.pluck(doc.tags.tags, 'title');
+      return _.intersection(tags, excludedTags).length;
+    }
+  });
+};
+
 var excludedTags = ['private', 'type'];
 var i = 1;
 
@@ -104,16 +121,6 @@ module.exports = {
   init: function (config) {
   },
   process: function (docs) {
-
-
-    // Remove docs that should not be in the docuemntation.
-    docs = _.reject(docs, function(doc) {
-      if (doc.tags) {
-        var tags = _.pluck(doc.tags.tags, 'title');
-        return _.intersection(tags, excludedTags).length;
-      }
-    });
-
     docs.forEach(function (doc) {
       findName(doc);
       fixParams(doc);
@@ -122,6 +129,8 @@ module.exports = {
 
       doc.outputPath = fileName(doc, i++);
     });
+
+    docs = filterDocs(docs);
 
     return docs;
   }
