@@ -25,11 +25,11 @@ module.exports = function (config) {
 
   config.append('processing.tagDefinitions', tagDefs);
 
-  var basePath = path.resolve(packagePath);
-  basePath = '/Users/andresdom/dev/protractor';
+  var basePath = path.resolve(packagePath, '..');
 
   config.set('source.files', [
-    { pattern: 'lib/**/protractor.js', basePath: basePath }
+    { pattern: 'lib/**/protractor.js', basePath: basePath },
+    { pattern: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js', basePath: basePath }
   ]);
 
   config.set('rendering.outputFolder', 'build');
