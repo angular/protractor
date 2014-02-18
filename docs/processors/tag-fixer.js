@@ -75,7 +75,7 @@ var parseExampleAndContent = function (doc) {
 
   if (index >= 0) {
     doc.example = description.substring(index).replace('Example:\n', '');
-    doc.desc = description.substring(0, index);
+    doc.description = description.substring(0, index);
   }
 };
 
@@ -84,7 +84,17 @@ var addLinkToSource = function (doc) {
       doc.file + '#L' + doc.startingLine;
 };
 
+/**
+ * Generate a unique file name with an index used to concatenate.
+ */
+var fileName = function(doc, i) {
+  var index = '00' + (i++);
+  index = index.substring(index.length - 3);
+  return 'partials/' + doc.fileName + index + '.md';
+};
+
 var excludedTags = ['private', 'type'];
+var i = 1;
 
 module.exports = {
   name: 'tag-fixer',
@@ -94,7 +104,7 @@ module.exports = {
   init: function (config) {
   },
   process: function (docs) {
-    var i = 1;
+
 
     // Remove docs that should not be in the docuemntation.
     docs = _.reject(docs, function(doc) {
@@ -110,7 +120,7 @@ module.exports = {
       parseExampleAndContent(doc);
       addLinkToSource(doc);
 
-      doc.outputPath = 'partials/' + doc.fileName + (i++) + '.md'
+      doc.outputPath = fileName(doc, i++);
     });
 
     return docs;

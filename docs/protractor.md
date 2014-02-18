@@ -32,229 +32,8 @@ Type | Description
 ElementFinder | 
 
 
-##[element.all().last()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L199)
-Get the last matching element for the locator.
-
-
-
-
-###Example
-```javascript
-  element.all(by.css('li')).last()
-```
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-webdriver.WebElement | the last matching element
-
-
-##[element.all().each()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L223)
-Calls the input function on each WebElement found by the locator.
-
-
-
-
-###Example
-```javascript
-  var colorList = element.all(by.model('color'));
-  colorList.each(function(colorElement) {
-  });
-```
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-fn | function (webdriver.WebElement) | Input function
-
-
-
-
-
-##[element.all().map()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L242)
-Apply a map function to each element found using the locator. The
-callback receives the web element as the first argument and the index as
-a second arg.
-
-
-
-
-###Example
-```javascript
-  <ul class="menu">
-    <li class="one">1</li>
-    <li class="two">2</li>
-  </ul>
-
-  var items = element.all(by.css('.menu li')).map(function(elm, index) {
-    return {
-      index: index,
-      text: elm.getText(),
-      class: elm.getAttribute('class')
-    };
-  });
-  expect(items).toEqual([
-    {index: 0, text: '1', class: 'one'},
-    {index: 1, text: '2', class: 'two'},
-  ]);
-```
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-mapFn | function (webdriver.WebElement, number) | Map function that will be applied to each element.
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
-
-
-##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L317)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-webdriver | webdriver.WebDriver | null
-opt_baseUrl | string | A base URL to run get requests against.
-
-
-
-
-
-##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L410)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will resolve to the scripts return value.
-
-
-##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L451)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-element | webdriver.WebElement | null
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-webdriver.WebElement | the wrapped web element.
-
-
-##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L474)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-selector | string | a css selector
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.WebElement | 
-
-
-##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L486)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.WebElement | 
-
-
-##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L503)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-selector | string | a css selector
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
-
-
-##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L516)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
-
-
 ##[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L102)
-
+Return the actual WebElement.
 
 
 
@@ -266,151 +45,6 @@ Type | Description
 Type | Description
 --- | ---
 webdriver.WebElement | 
-
-
-##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L540)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
-
-
-##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L556)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-expression | string | null
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in
-    {@link webdriver.WebDriver.executeScript}. In summary - primitives will
-    be resolved as is, functions will be converted to string, and elements
-    will be returned as a WebElement.
-
-
-##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L575)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.WebElement | 
-
-
-##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L593)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
-
-
-##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L618)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-!webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
-
-
-##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L634)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-name | !string | The name of the module to load or override.
-script | (!string|Function) | The JavaScript to load the module.
-
-
-
-
-
-##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L648)
-
-
-
-
-
-
-
-
-##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L656)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-destination | string | Destination URL.
-
-
-
-
-
-##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L723)
-
-
-
-
-
-
-
-
-##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L731)
-
-
-
-
-
-
 
 
 ##[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L111)
@@ -426,82 +60,6 @@ destination | string | Destination URL.
 Type | Description
 --- | ---
 boolean | whether the element is present on the page.
-
-
-##[exports.wrapDriver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L794)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-webdriver | webdriver.WebDriver | The configured webdriver instance.
-opt_baseUrl | string | A URL to prepend to relative gets.
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-Protractor | 
-
-
-##[exports.setInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L810)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-ptor | Protractor | null
-
-
-
-
-
-##[exports.getInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L818)
-
-
-
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-Protractor | 
-
-
-##[exports.filterStackTrace](https://github.com/angular/protractor/blob/master/lib/protractor.js#L826)
-
-
-
-
-
-###Params
-
-Param | Type | Description
---- | --- | ---
-text | string | Original stack trace.
-
-
-
-
-###Returns
-
-Type | Description
---- | ---
-string | 
 
 
 ##[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L118)
@@ -647,4 +205,471 @@ webdriver.WebElement | the element at the given index
 Type | Description
 --- | ---
 webdriver.WebElement | the first matching element
+
+
+##[element.all().last()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L199)
+Get the last matching element for the locator.
+
+
+
+
+###Example
+```javascript
+  element.all(by.css('li')).last()
+```
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the last matching element
+
+
+##[element.all().each()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L223)
+Calls the input function on each WebElement found by the locator.
+
+
+
+
+###Example
+```javascript
+  var colorList = element.all(by.model('color'));
+  colorList.each(function(colorElement) {
+  });
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+fn | function (webdriver.WebElement) | Input function
+
+
+
+
+
+##[element.all().map()](https://github.com/angular/protractor/blob/master/lib/protractor.js#L242)
+Apply a map function to each element found using the locator. The
+callback receives the web element as the first argument and the index as
+a second arg.
+
+
+
+
+###Example
+```javascript
+  <ul class="menu">
+    <li class="one">1</li>
+    <li class="two">2</li>
+  </ul>
+
+  var items = element.all(by.css('.menu li')).map(function(elm, index) {
+    return {
+      index: index,
+      text: elm.getText(),
+      class: elm.getAttribute('class')
+    };
+  });
+  expect(items).toEqual([
+    {index: 0, text: '1', class: 'one'},
+    {index: 1, text: '2', class: 'two'},
+  ]);
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+mapFn | function (webdriver.WebElement, number) | Map function that will be applied to each element.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
+
+
+##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L317)
+
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+webdriver | webdriver.WebDriver | null
+opt_baseUrl | string | A base URL to run get requests against.
+
+
+
+
+
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L410)
+Instruct webdriver to wait until Angular has finished rendering and has
+no outstanding $http calls before continuing.
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to the scripts return value.
+
+
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L451)
+Wrap a webdriver.WebElement with protractor specific functionality.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+element | webdriver.WebElement | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.WebElement | the wrapped web element.
+
+
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L474)
+Shortcut for querying the document directly with css.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L486)
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L503)
+Shortcut for querying the document directly with css.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L516)
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L540)
+
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
+
+
+##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L556)
+Evalates the input as if it were on the scope of the current element.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+expression | string | null
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in
+    {@link webdriver.WebDriver.executeScript}. In summary - primitives will
+    be resolved as is, functions will be converted to string, and elements
+    will be returned as a WebElement.
+
+
+##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L575)
+Waits for Angular to finish rendering before searching for elements.
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.WebElement | 
+
+
+##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L593)
+Waits for Angular to finish rendering before searching for elements.
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+
+
+##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L618)
+Tests if an element is present on the page.
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
+
+
+##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L634)
+Add a module to load before Angular whenever Protractor.get is called.
+Modules will be registered after existing modules already on the page,
+so any module registered here will override preexisting modules with the same
+name.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+name | !string | The name of the module to load or override.
+script | (!string|Function) | The JavaScript to load the module.
+
+
+
+
+
+##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L648)
+Clear the list of registered mock modules.
+
+
+
+
+
+
+
+##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L656)
+See webdriver.WebDriver.get
+
+Navigate to the given destination and loads mock modules before
+Angular. Assumes that the page being loaded uses Angular.
+If you need to access a page which does have Angular on load, use
+the wrapped webdriver directly.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+destination | string | Destination URL.
+
+
+
+
+
+##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L723)
+Returns the current absolute url from AngularJS.
+
+
+
+
+
+
+
+##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L731)
+Pauses the test and injects some helper functions into the browser, so that
+debugging may be done in the browser console.
+
+This should be used under node in debug mode, i.e. with
+protractor debug <configuration.js>
+
+While in the debugger, commands can be scheduled through webdriver by
+entering the repl:
+  debug> repl
+  Press Ctrl + C to leave rdebug repl
+  > ptor.findElement(protractor.By.input('user').sendKeys('Laura'));
+  > ptor.debugger();
+  debug> c
+
+This will run the sendKeys command as the next task, then re-enter the
+debugger.
+
+
+
+
+
+
+
+##[exports.wrapDriver](https://github.com/angular/protractor/blob/master/lib/protractor.js#L794)
+Create a new instance of Protractor by wrapping a webdriver instance.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+webdriver | webdriver.WebDriver | The configured webdriver instance.
+opt_baseUrl | string | A URL to prepend to relative gets.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+Protractor | 
+
+
+##[exports.setInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L810)
+Set a singleton instance of protractor.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+ptor | Protractor | null
+
+
+
+
+
+##[exports.getInstance](https://github.com/angular/protractor/blob/master/lib/protractor.js#L818)
+Get the singleton instance.
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+Protractor | 
+
+
+##[exports.filterStackTrace](https://github.com/angular/protractor/blob/master/lib/protractor.js#L826)
+Utility function that filters a stack trace to be more readable. It removes
+Jasmine test frames and webdriver promise resolution.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+text | string | Original stack trace.
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+string | 
 
