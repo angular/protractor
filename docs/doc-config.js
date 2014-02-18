@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var path = require('canonical-path');
 var packagePath = __dirname;
-
 var basePackage = require('dgeni-packages/jsdoc');
 
 module.exports = function (config) {
