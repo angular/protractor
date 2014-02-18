@@ -103,6 +103,7 @@ var filterDocs = function (docs) {
       return true;
     }
 
+    // Exclude docs with tags.
     if (doc.tags) {
       var tags = _.pluck(doc.tags.tags, 'title');
       return _.intersection(tags, excludedTags).length;
