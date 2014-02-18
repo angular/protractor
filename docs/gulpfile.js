@@ -6,6 +6,7 @@ var docGenerator = require('dgeni');
 
 var paths = {
   protractor: 'build/**/protractor*',
+  webdriver: 'build/**/webdriver*',
   scripts: [
     'api-template.md',
     'processors/*',
@@ -23,11 +24,14 @@ gulp.task('create-md-files', function () {
 });
 
 gulp.task('concat-md', function () {
-  return gulp.src(paths.protractor).
+  gulp.src(paths.protractor).
       pipe(concat('protractor.md')).
       pipe(gulp.dest('.'));
-});
 
+  gulp.src(paths.webdriver).
+      pipe(concat('webdriver.md')).
+      pipe(gulp.dest('.'));
+});
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
