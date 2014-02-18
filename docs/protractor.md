@@ -528,7 +528,7 @@ name.
 Param | Type | Description
 --- | --- | ---
 name | !string | The name of the module to load or override.
-script | (!string|Function) | The JavaScript to load the module.
+script | (!string&#124;Function) | The JavaScript to load the module.
 
 
 
