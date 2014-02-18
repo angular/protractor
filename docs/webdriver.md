@@ -33,7 +33,7 @@ execute before the next command in the current frame. For example:
 
 Param | Type | Description
 --- | --- | ---
-session | !(webdriver.Session|webdriver.promise.Promise) | Either a known session or a promise that will be resolved to a session.
+session | !(webdriver.Session&#124;webdriver.promise.Promise) | Either a known session or a promise that will be resolved to a session.
 executor | !webdriver.CommandExecutor | The executor to use when sending commands to the browser.
 opt_flow | webdriver.promise.ControlFlow | The flow to schedule commands through. Defaults to the active flow object.
 
@@ -289,7 +289,7 @@ functions return value:
 
 Param | Type | Description
 --- | --- | ---
-script | !(string|Function) | The script to execute.
+script | !(string&#124;Function) | The script to execute.
 var_args | ...* | The arguments to pass to the script.
 
 
@@ -383,7 +383,7 @@ driver.executeAsyncScript(function() {
 
 Param | Type | Description
 --- | --- | ---
-script | !(string|Function) | The script to execute.
+script | !(string&#124;Function) | The script to execute.
 var_args | ...* | The arguments to pass to the script.
 
 
@@ -617,7 +617,7 @@ one this instance is currently focused on), a
 
 Param | Type | Description
 --- | --- | ---
-locatorOrElement | !(webdriver.Locator|Object.&lt;string&gt;|Element) | The locator strategy to use when searching for the element, or the actual
+locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) | The locator strategy to use when searching for the element, or the actual
     DOM element to be located by the server.
 
 
@@ -638,7 +638,7 @@ test if at least one element can be found with the given search criteria.
 
 Param | Type | Description
 --- | --- | ---
-locatorOrElement | !(webdriver.Locator|Object.&lt;string&gt;|Element) | The locator strategy to use when searching for the element, or the actual
+locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) | The locator strategy to use when searching for the element, or the actual
     DOM element to be located by the server.
 
 
@@ -655,7 +655,7 @@ Schedule a command to search for multiple elements on the page.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator|Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
+locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
 
 
 
@@ -860,7 +860,7 @@ value | string | The cookie value.
 opt_path | string | The cookie path.
 opt_domain | string | The cookie domain.
 opt_isSecure | boolean | Whether the cookie is secure.
-opt_expiry | (number|!Date) | When the cookie expires. If specified as a number, should be in milliseconds since midnight, January 1, 1970 UTC.
+opt_expiry | (number&#124;!Date) | When the cookie expires. If specified as a number, should be in milliseconds since midnight, January 1, 1970 UTC.
 
 
 
@@ -1372,7 +1372,7 @@ with a {@code bot.ErrorCode.NO_SUCH_FRAME} error.
 
 Param | Type | Description
 --- | --- | ---
-nameOrIndex | (string|number) | The frame locator.
+nameOrIndex | (string&#124;number) | The frame locator.
 
 
 
@@ -1487,7 +1487,7 @@ catch errors when an element cannot be located on the page:
 Param | Type | Description
 --- | --- | ---
 driver | !webdriver.WebDriver | The parent WebDriver instance for this element.
-id | !(string|webdriver.promise.Promise) | Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will
+id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will
     resolve to that ID or another WebElement.
 
 
@@ -1575,7 +1575,7 @@ searches are delegated to this instance's parent WebDriver.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator|Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
+locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
 
 
 
@@ -1595,7 +1595,7 @@ DOM. All such searches are delegated to this instance's parent WebDriver.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator|Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
+locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
 
 
 
@@ -1615,7 +1615,7 @@ searches are delegated to this instance's parent WebDriver.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator|Object.&lt;string&gt;) | The locator strategy to use when searching for the elements.
+locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the elements.
 
 
 
@@ -1950,7 +1950,7 @@ case of {@code prompt}).
 Param | Type | Description
 --- | --- | ---
 driver | !webdriver.WebDriver | The driver controlling the browser this alert is attached to.
-text | !(string|webdriver.promise.Promise) | Either the message text displayed with this alert, or a promise that will be resolved to said
+text | !(string&#124;webdriver.promise.Promise) | Either the message text displayed with this alert, or a promise that will be resolved to said
     text.
 
 

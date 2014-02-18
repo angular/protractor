@@ -13,7 +13,7 @@
 
 Param | Type | Description
 --- | --- | ---
-{% for param in params %}{{param.name}} | {{param.type.description}} | {{param.description}}
+{% for param in params %}{{param.name}} | {{param.type.description | replace("\|", "&#124;")}} | {{param.description}}
 {% endfor %}
 {% endif %}
 
