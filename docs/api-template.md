@@ -1,5 +1,5 @@
 ##[{{name}}]({{sourceLink}})
-{{desc}}
+{{description}}
 
 {% if example %}
 ###Example
