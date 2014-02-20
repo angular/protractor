@@ -19,11 +19,13 @@ gulp.task('clean', function() {
       pipe(rimraf());
 });
 
-gulp.task('create-md-files', function() {
+// Create a file for each function in protractor.js and webdriver.js.
+gulp.task('create-md-files', ['clean'], function() {
   return docGenerator('doc-config.js').generateDocs();
 });
 
-gulp.task('concat-md', function() {
+// Concatenate all the files into a single doc.
+gulp.task('concat-md', ['create-md-files'], function() {
   gulp.src(paths.protractor).
       pipe(concat('protractor.md')).
       pipe(gulp.dest('.'));
@@ -38,5 +40,4 @@ gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['default']);
 });
 
-gulp.task('generate-docs', ['clean', 'create-md-files', 'concat-md']);
-gulp.task('default', ['generate-docs']);
+gulp.task('default', ['concat-md']);
