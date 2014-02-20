@@ -3,7 +3,7 @@
 
 {% if example %}
 ###Example
-```javascript
+```
 {{ example }}
 ```
 {% endif %}

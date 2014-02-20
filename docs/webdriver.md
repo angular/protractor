@@ -229,7 +229,7 @@ called.
 
 
 ###Example
-```javascript
+```
 <pre><code>
   driver.actions().
       mouseDown(element1).
