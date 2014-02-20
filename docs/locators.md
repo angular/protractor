@@ -66,12 +66,15 @@ Type | Description
 
 
 ##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L65)
+DEPRECATED - use 'model' instead.
+
 
 
 
 ###Example
 ```javascript
-Example:
+  <select ng-model="user" ng-options="user.name for user in users"></select>
+  element(by.select("user"));
 ```
 
 
@@ -79,7 +82,7 @@ Example:
 
 
 
-##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L81)
+##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L82)
 
 
 
@@ -94,7 +97,7 @@ Example:
 
 
 
-##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L96)
+##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L97)
 
 
 
@@ -103,7 +106,7 @@ Example:
 
 
 
-##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L112)
+##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L113)
 
 
 
@@ -118,7 +121,7 @@ Example:
 
 
 
-##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L127)
+##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L128)
 Find a button by text.
 
 
@@ -148,7 +151,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L147)
+##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L148)
 Find a button by partial text.
 
 
@@ -178,7 +181,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L168)
+##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L169)
 
 
 
@@ -187,7 +190,7 @@ Type | Description
 
 
 
-##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L184)
+##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L185)
 
 
 
