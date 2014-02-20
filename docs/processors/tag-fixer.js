@@ -4,7 +4,7 @@ var _ = require('lodash');
 /**
  * Find the name of the function.
  */
-var findName = function (doc) {
+var findName = function(doc) {
   // Skip if the function has a name.
   if (doc.name || !doc.fnDef) {
     return;
@@ -23,7 +23,7 @@ var findName = function (doc) {
  * @param {!Object} obj Object with properties.
  * @param {string} prop Property name.
  */
-var replaceNewLines = function (obj, prop) {
+var replaceNewLines = function(obj, prop) {
   if (obj) {
     obj[prop] = (obj[prop] || '').replace(/\n\s+/, ' ');
   }
@@ -33,10 +33,9 @@ var replaceNewLines = function (obj, prop) {
  * Escape the < > characters from the param or return type.
  * @param {!Object} type Parsed type.
  */
-var escapeTypeDescriptions = function (type) {
+var escapeTypeDescriptions = function(type) {
   if (type && type.description) {
-    type.description =
-        type.description.replace('<', '&lt;').replace('>', '&gt;');
+    type.description = _.escape(type.description);
   }
 };
 
@@ -44,32 +43,29 @@ var escapeTypeDescriptions = function (type) {
  * Remove new lines from the params.
  * @param {!Object} doc Document with the tag.
  */
-var fixParams = function (doc) {
+var fixParams = function(doc) {
   // Remove duplicates.
-  var params = doc.params,
-      returns = doc.returns;
-
-  if (params) {
-    doc.params = _.uniq(params, 'name');
+  if (doc.params) {
+    doc.params = _.uniq(doc.params, 'name');
+    _.each(doc.params, function(param) {
+      replaceNewLines(param, 'description');
+      escapeTypeDescriptions(param.type);
+    });
   }
 
   // Replace new lines in the return and params descriptions.
+  var returns = doc.returns;
   if (returns) {
     replaceNewLines(returns, 'description');
     escapeTypeDescriptions(returns.type);
   }
-
-  _.each(params, function (param) {
-    replaceNewLines(param, 'description');
-    escapeTypeDescriptions(param.type);
-  });
 };
 
 /**
  * Parse the example and the content.
  * @param {!Object} doc Document with the tag.
  */
-var parseExampleAndContent = function (doc) {
+var parseExampleAndContent = function(doc) {
   var description = doc.description || '',
       index = description.indexOf('Example:');
 
@@ -79,9 +75,11 @@ var parseExampleAndContent = function (doc) {
   }
 };
 
-var addLinkToSource = function (doc) {
+var addLinkToSource = function(doc) {
   doc.sourceLink = 'https://github.com/angular/protractor/blob/master/' +
       doc.file + '#L' + doc.startingLine;
+
+//  'https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#62'
 };
 
 /**
@@ -96,8 +94,8 @@ var fileName = function(doc, i) {
 /**
  * Remove docs that should not be in the documentation.
  */
-var filterDocs = function (docs) {
-  return _.reject(docs, function (doc) {
+var filterDocs = function(docs) {
+  return _.reject(docs, function(doc) {
     // Skip functions starting with 'exports'.
     if (/^exports/.test(doc.name)) {
       return true;
@@ -119,10 +117,10 @@ module.exports = {
   description: 'Do some processing before rendering',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
-  init: function (config) {
+  init: function(config) {
   },
-  process: function (docs) {
-    docs.forEach(function (doc) {
+  process: function(docs) {
+    docs.forEach(function(doc) {
       findName(doc);
       fixParams(doc);
       parseExampleAndContent(doc);
