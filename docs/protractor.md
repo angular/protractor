@@ -238,7 +238,7 @@ Calls the input function on each WebElement found by the locator.
 ###Example
 ```javascript
   var colorList = element.all(by.model('color'));
-  colorList.each(function(colorElement) {
+    colorList.each(function(colorElement) {
   });
 ```
 
