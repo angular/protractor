@@ -30,6 +30,7 @@ module.exports = function (config) {
 
   config.set('source.files', [
     {pattern: 'lib/**/protractor.js', basePath: basePath},
+    {pattern: 'lib/**/locators.js', basePath: basePath},
     {pattern: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js',
       basePath: basePath}
   ]);
