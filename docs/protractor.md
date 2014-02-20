@@ -8,7 +8,7 @@ available.
 
 
 ###Example
-```javascript
+```
     var nameInput = element(by.model('name'));
     browser.get('myurl');
     nameInput.sendKeys('Jane Doe');
@@ -68,7 +68,7 @@ Calls to element may be chained to find elements within a parent.
 
 
 ###Example
-```javascript
+```
     var name = element(by.id('container')).element(by.model('name'));
     browser.get('myurl');
     name.sendKeys('John Smith');
@@ -99,7 +99,7 @@ Shortcut for chaining css element finders.
 
 
 ###Example
-```javascript
+```
     var name = element(by.id('container')).$('input.myclass');
     browser.get('myurl');
     name.sendKeys('John Smith');
@@ -131,7 +131,7 @@ to a single element).
 
 
 ###Example
-```javascript
+```
     var lis = element.all(by.css('li'));
     browser.get('myurl');
     expect(lis.count()).toEqual(4);
@@ -214,7 +214,7 @@ Get the last matching element for the locator.
 
 
 ###Example
-```javascript
+```
   element.all(by.css('li')).last()
 ```
 
@@ -236,7 +236,7 @@ Calls the input function on each WebElement found by the locator.
 
 
 ###Example
-```javascript
+```
   var colorList = element.all(by.model('color'));
     colorList.each(function(colorElement) {
   });
@@ -263,7 +263,7 @@ a second arg.
 
 
 ###Example
-```javascript
+```
   <ul class="menu">
     <li class="one">1</li>
     <li class="two">2</li>

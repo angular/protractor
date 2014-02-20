@@ -42,7 +42,7 @@ Find an element by binding.
 
 
 ###Example
-```javascript
+```
   <span>{{status}}</span>
   var status = element(by.binding('{{status}}'));
 ```
@@ -72,7 +72,7 @@ DEPRECATED - use 'model' instead.
 
 
 ###Example
-```javascript
+```
   <select ng-model="user" ng-options="user.name for user in users"></select>
   element(by.select("user"));
 ```
@@ -87,7 +87,7 @@ DEPRECATED - use 'model' instead.
 
 
 ###Example
-```javascript
+```
   <select ng-model="user" ng-options="user.name for user in users"></select>
   element(by.selectedOption("user"));
 ```
@@ -111,7 +111,7 @@ DEPRECATED - use 'model' instead.
 
 
 ###Example
-```javascript
+```
   <input ng-model="user" type="text"/>
   element(by.model('user'));
 ```
@@ -128,7 +128,7 @@ Find a button by text.
 
 
 ###Example
-```javascript
+```
   <button>Save</button>
   element(by.buttonText("Save"));
 ```
@@ -158,7 +158,7 @@ Find a button by partial text.
 
 
 ###Example
-```javascript
+```
   <button>Save my file</button>
   element(by.partialButtonText("Save"));
 ```
@@ -195,7 +195,7 @@ Type | Description
 
 
 ###Example
-```javascript
+```
   <div ng-repeat = "cat in pets">
     <span>{{cat.name}}</span>
     <span>{{cat.age}}</span>
