@@ -14,16 +14,16 @@ var paths = {
   ]
 };
 
-gulp.task('clean', function () {
+gulp.task('clean', function() {
   return gulp.src('build', {read: false}).
       pipe(rimraf());
 });
 
-gulp.task('create-md-files', function () {
+gulp.task('create-md-files', function() {
   return docGenerator('doc-config.js').generateDocs();
 });
 
-gulp.task('concat-md', function () {
+gulp.task('concat-md', function() {
   gulp.src(paths.protractor).
       pipe(concat('protractor.md')).
       pipe(gulp.dest('.'));
@@ -34,7 +34,7 @@ gulp.task('concat-md', function () {
 });
 
 // Rerun the task when a file changes
-gulp.task('watch', function () {
+gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['default']);
 });
 
