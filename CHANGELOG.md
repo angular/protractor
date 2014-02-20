@@ -1,3 +1,75 @@
+# 0.19.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+- ([77393d0](https://github.com/angular/protractor/commit/77393d08343ef16ddc2b8042e187c9d68fe7bf2f)), ([6848180](https://github.com/angular/protractor/commit/68481801d506941ebf00fab71f87be510c7a87ba)), ([cca82ca](https://github.com/angular/protractor/commit/cca82caab6ae444b368eebe040a69967d774737e))
+  feat(runner/launcher): major runner updates to allow multiple capabilities
+
+  Adding simultaneous runner capability (grid-style), refactoring launch/runner init system, and
+  abstracting out configParser module.
+
+- ([642de06](https://github.com/angular/protractor/commit/642de06e8bbabf82c7b8e0a64a280df5c4daf01c)) 
+  feat(protractor): add removeMockModule method
+
+- ([88c339f](https://github.com/angular/protractor/commit/88c339fc1d392717a0a5b8265806934b40158c5f)) 
+  feat(runner): add adapter for cucumber.js
+
+  Conflicts:
+  lib/runner.js
+
+## Bug Fixes
+- ([8924bbc](https://github.com/angular/protractor/commit/8924bbca9e8f04073a29534bf16b0867a1ede7a0)) 
+  fix(cli): convert capabilities arguments to dot-notation for WebDriver compatibility
+
+- ([a96d32f](https://github.com/angular/protractor/commit/a96d32f44a92ba9447fc843bc0aca7b91b777635)) 
+  fix(webdriver-manager): upcase in IE download url
+
+  The url for the Win32 version of the IEDriverServer is apparently case sensitive: _win32_ vs
+  _Win32_
+
+## Breaking Changes
+- ([05eb42b](https://github.com/angular/protractor/commit/05eb42bb482c7cb36b48af1a86210afc442aa112)) 
+  refactor(locators): moves scope in locators to last argument
+
+  scope defaults to document, and is an optional argument so now be moved to the end. Came up from
+  debugging and trying to use window.clientSideScripts.findInputs('username'); which failed.
+  Refactored to match original intent.
+
+  BREAKING CHANGE: anything relying on clientsidescripts should no longer pass
+     element scope as first argument.
+
+      Before:
+
+      window.clientSideScripts.findInputs(document, 'username');
+
+      After:
+
+      window.clientSideScripts.findInputs(document, 'username');
+
+      Also, any custom locators using addLocator will now break since the
+     arguments order has chnaged. To migrate the code follow the example below:
+
+      Before:
+
+      var findMenuItem = function() {
+       var domScope = arguments[0];
+       var myArg = arguments[1];
+       // balh blah blah
+     };
+     by.addLocator('menuItem', findMenuItem);
+
+      After:
+
+      var findMenuItem = function() {
+       var myArg = arguments[0];
+       var domScope = arguments[1];
+       // balh blah blah
+     };
+     by.addLocator('menuItem', findMenuItem);
+
+  Closes #497
+
+
 # 0.18.1
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 

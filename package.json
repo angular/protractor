@@ -43,7 +43,7 @@
     "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/multiConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node lib/cli.js spec/cucumberConf.js; node lib/cli.js spec/withLoginConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js spec/unit/*.js"
   },
   "license" : "MIT",
-  "version": "0.18.1",
+  "version": "0.19.0",
   "webdriverVersions": {
     "selenium": "2.39.0",
     "chromedriver": "2.9",
