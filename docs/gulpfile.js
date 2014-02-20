@@ -33,6 +33,10 @@ gulp.task('concat-md', ['create-md-files'], function() {
   gulp.src(paths.webdriver).
       pipe(concat('webdriver.md')).
       pipe(gulp.dest('.'));
+
+  gulp.src(paths.webdriver).
+      pipe(concat('locators.md')).
+      pipe(gulp.dest('.'));
 });
 
 // Rerun the task when a file changes
