@@ -1273,7 +1273,7 @@ type | !webdriver.logging.Type | The desired log type.
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise.&lt;!Array.<!webdriver.logging.Entry&gt;> | A promise that will resolve to a list of log entries for the specified
+!webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Entry&gt;&gt; | A promise that will resolve to a list of log entries for the specified
   type.
 
 
@@ -1289,7 +1289,7 @@ Retrieves the log types available to this driver.
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise.&lt;!Array.<!webdriver.logging.Type&gt;> | A promise that will resolve to a list of available log types.
+!webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Type&gt;&gt; | A promise that will resolve to a list of available log types.
 
 
 ##[webdriver.WebDriver.TargetLocator](https://github.com/angular/protractor/blob/master/node_modules/selenium-webdriver/lib/webdriver/webdriver.js#L1318)
