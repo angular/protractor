@@ -23,7 +23,7 @@ describe('add-links', function() {
       startingLine: 123
     };
     addLinks(doc);
-    expect(doc.sourceLink).to.equal(
-        'https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#123');
+    expect(doc.sourceLink).to.equal('https://code.google.com/p/selenium/' +
+        'source/browse/javascript/webdriver/webdriver.js#123');
   });
 });
