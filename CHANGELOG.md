@@ -46,26 +46,26 @@ _Note: Major version 0 releases are for initial development, and backwards incom
 
       window.clientSideScripts.findInputs(document, 'username');
 
-      Also, any custom locators using addLocator will now break since the
-     arguments order has chnaged. To migrate the code follow the example below:
+    Also, any custom locators using addLocator will now break since the
+    arguments order has chnaged. To migrate the code follow the example below:
 
       Before:
 
       var findMenuItem = function() {
-       var domScope = arguments[0];
-       var myArg = arguments[1];
-       // balh blah blah
-     };
-     by.addLocator('menuItem', findMenuItem);
+        var domScope = arguments[0];
+        var myArg = arguments[1];
+        // balh blah blah
+      };
+      by.addLocator('menuItem', findMenuItem);
 
       After:
 
       var findMenuItem = function() {
-       var myArg = arguments[0];
-       var domScope = arguments[1];
-       // balh blah blah
-     };
-     by.addLocator('menuItem', findMenuItem);
+        var myArg = arguments[0];
+        var domScope = arguments[1];
+        // balh blah blah
+      };
+      by.addLocator('menuItem', findMenuItem);
 
   Closes #497
 
