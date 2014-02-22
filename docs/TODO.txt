@@ -3,3 +3,4 @@
 3. Find a way to split markup and code for examples
 4. Filter private functions_
 5. Document find()
+6. element.all params
