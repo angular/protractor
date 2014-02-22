@@ -69,6 +69,28 @@ describe('protractor library', function() {
     expect(element(by.menuItem('repeater')).getText()).toEqual('repeater');
   });
 
+  it('should allow adding custom varargs locators', function() {
+    var findMenuItemWithName = function() {
+      var css = arguments[0];
+      var itemName = arguments[1];
+      var using = arguments[2]; // unused
+      var menu = document.querySelectorAll(css);
+      for (var i = 0; i < menu.length; ++i) {
+        if (menu[i].textContent == itemName) {
+          return [menu[i]];
+        }
+      }
+    };
+
+    by.addLocator('menuItemWithName', findMenuItemWithName);
+
+    expect(by.menuItemWithName).toBeDefined();
+
+    browser.get('index.html');
+    expect(element(by.menuItemWithName('.menu li', 'repeater')).isPresent());
+    expect(element(by.menuItemWithName('.menu li', 'repeater')).getText()).toEqual('repeater');
+  });
+
   describe('helper functions', function() {
     it('should get the absolute URL', function() {
       browser.get('index.html');
