@@ -1,4 +1,5 @@
 ##[ProtractorBy](https://github.com/angular/protractor/blob/master/lib/locators.js#L6)
+
 The Protractor Locators. These provide ways of finding elements in
 Angular applications by binding, model, etc.
 
@@ -9,6 +10,7 @@ Angular applications by binding, model, etc.
 
 
 ##[WebdriverBy.prototype](https://github.com/angular/protractor/blob/master/lib/locators.js#L15)
+
 webdriver's By is an enum of locator functions, so we must set it to
 a prototype before inheriting from it.
 
@@ -19,6 +21,7 @@ a prototype before inheriting from it.
 
 
 ##[ProtractorBy.prototype.addLocator](https://github.com/angular/protractor/blob/master/lib/locators.js#L22)
+
 Add a locator to this instance of ProtractorBy. This locator can then be
 used with element(by.<name>(<args>)).
 
@@ -36,16 +39,13 @@ name | string | null
 
 
 ##[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L44)
+
 Find an element by binding.
 
-
-
-
-###Example
-```
+Example:
   <span>{{status}}</span>
   var status = element(by.binding('{{status}}'));
-```
+
 
 
 
@@ -66,16 +66,13 @@ Type | Description
 
 
 ##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L65)
+
 DEPRECATED - use 'model' instead.
 
-
-
-
-###Example
-```
+Example:
   <select ng-model="user" ng-options="user.name for user in users"></select>
   element(by.select("user"));
-```
+
 
 
 
@@ -84,13 +81,10 @@ DEPRECATED - use 'model' instead.
 
 ##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L82)
 
-
-
-###Example
-```
+Example:
   <select ng-model="user" ng-options="user.name for user in users"></select>
   element(by.selectedOption("user"));
-```
+
 
 
 
@@ -106,15 +100,13 @@ DEPRECATED - use 'model' instead.
 
 
 
+
 ##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L113)
 
-
-
-###Example
-```
+Example:
   <input ng-model="user" type="text"/>
   element(by.model('user'));
-```
+
 
 
 
@@ -122,16 +114,13 @@ DEPRECATED - use 'model' instead.
 
 
 ##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L128)
+
 Find a button by text.
 
-
-
-
-###Example
-```
+Example:
   <button>Save</button>
   element(by.buttonText("Save"));
-```
+
 
 
 
@@ -152,16 +141,13 @@ Type | Description
 
 
 ##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L148)
+
 Find a button by partial text.
 
-
-
-
-###Example
-```
+Example:
   <button>Save my file</button>
   element(by.partialButtonText("Save"));
-```
+
 
 
 
@@ -190,12 +176,10 @@ Type | Description
 
 
 
+
 ##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L185)
 
-
-
-###Example
-```
+Example:
   <div ng-repeat = "cat in pets">
     <span>{{cat.name}}</span>
     <span>{{cat.age}}</span>
@@ -212,7 +196,7 @@ var ages = element.all(
 // Returns a promise that resolves to an array of WebElements containing
 // all rows of the repeater.
 var rows = element.all(by.repeater("cat in pets"));
-```
+
 
 
 
