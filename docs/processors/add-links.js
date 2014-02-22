@@ -7,6 +7,10 @@ var templateMapping = {
       'javascript/webdriver/webdriver.js#<%= startingLine %>')
 };
 
+/**
+ * Add a link to the source code.
+ * @param {!Object} doc Current document.
+ */
 var addLink = function(doc) {
   var template = doc.fileName === 'webdriver' ?
       templateMapping.webdriver : templateMapping.protractor;
