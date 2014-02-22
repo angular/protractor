@@ -174,7 +174,7 @@ expect(triple.getText()).toBe('555-123-4567');
 
 Param | Type | Description
 --- | --- | ---
-cssSelector | string | null
+cssSelector | string | A css selector.
 
 
 
