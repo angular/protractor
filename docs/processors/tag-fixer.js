@@ -62,20 +62,6 @@ var fixParams = function(doc) {
 };
 
 /**
- * Parse the example and the content.
- * @param {!Object} doc Document with the tag.
- */
-var parseExampleAndContent = function(doc) {
-  var description = doc.description || '',
-      index = description.indexOf('Example:');
-
-  if (index >= 0) {
-    doc.example = description.substring(index).replace('Example:\n', '');
-    doc.description = description.substring(0, index);
-  }
-};
-
-/**
  * Generate a unique file name with an index used to concatenate.
  */
 var fileName = function(doc, i) {
@@ -116,7 +102,6 @@ module.exports = {
     docs.forEach(function(doc) {
       findName(doc);
       fixParams(doc);
-      parseExampleAndContent(doc);
 
       doc.outputPath = fileName(doc, i++);
     });
