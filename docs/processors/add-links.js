@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 var templateMapping = {
   protractor: _.template('https://github.com/angular/protractor/blob/' +
-      'master/<%= fileName %>#L<%= startingLine %>'),
+      'master/lib/<%= fileName %>.js#L<%= startingLine %>'),
   webdriver: _.template('https://code.google.com/p/selenium/source/browse/' +
       'javascript/webdriver/webdriver.js#<%= startingLine %>')
 };

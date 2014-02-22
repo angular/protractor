@@ -13,8 +13,8 @@ describe('add-links', function() {
       startingLine: 123
     };
     addLinks(doc);
-    expect(doc.sourceLink).to.equal(
-        'https://github.com/angular/protractor/blob/master/protractor#L123');
+    expect(doc.sourceLink).to.equal('https://github.com/angular/protractor/' +
+        'blob/master/lib/protractor.js#L123');
   });
 
   it('should add webdriver link', function() {
