@@ -75,13 +75,6 @@ var parseExampleAndContent = function(doc) {
   }
 };
 
-var addLinkToSource = function(doc) {
-  doc.sourceLink = 'https://github.com/angular/protractor/blob/master/' +
-      doc.file + '#L' + doc.startingLine;
-
-//  'https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#62'
-};
-
 /**
  * Generate a unique file name with an index used to concatenate.
  */
@@ -124,7 +117,6 @@ module.exports = {
       findName(doc);
       fixParams(doc);
       parseExampleAndContent(doc);
-      addLinkToSource(doc);
 
       doc.outputPath = fileName(doc, i++);
     });
