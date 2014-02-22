@@ -38,21 +38,8 @@ describe('tag fixer', function() {
           optional: false,
           typeList: ['!webdriver.promise.Promise.<!Array.<!webdriver.logging.Entry>>']
         },
-        description: 'A promise that will resolve to a list of log entries for the specified\n  type.' },
-
+        description: 'A promise that will resolve to a list of log entries for the specified\n  type.' }
     };
-  });
-
-  it('should parse example and desc', function() {
-    tagFixer.process([doc]);
-
-    expect(doc.example).to.equal(
-        '    var lis = element.all(by.css(\'li\'));\n' +
-            '    browser.get(\'myurl\');\n' +
-            '    expect(lis.count()).toEqual(4);'
-    );
-    expect(doc.description).to.equal('element.all is used for operations on an ' +
-        'array of elements (as opposed to a single element).\n\n');
   });
 
   it('should find name in fnDef', function() {
