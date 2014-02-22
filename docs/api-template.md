@@ -3,7 +3,12 @@
 
 {% if example %}
 ###Example
+{% if view %}
+```html
+{{ view }}
 ```
+{% endif %}
+```javascript
 {{ example }}
 ```
 {% endif %}
