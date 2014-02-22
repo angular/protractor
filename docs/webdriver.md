@@ -7,7 +7,9 @@
 
 
 
+
 ##[webdriver.WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#47)
+
 Creates a new WebDriver client, which provides control over a browser.
 
 Every WebDriver command returns a {@code webdriver.promise.Promise} that
@@ -50,7 +52,9 @@ opt_flow | webdriver.promise.ControlFlow | The flow to schedule commands through
 
 
 
+
 ##[this.executor_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#79)
+
 
 
 
@@ -68,7 +72,9 @@ opt_flow | webdriver.promise.ControlFlow | The flow to schedule commands through
 
 
 
+
 ##[webdriver.WebDriver.attachToSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#87)
+
 Creates a new WebDriver client for an existing session.
 
 
@@ -92,6 +98,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.createSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#102)
+
 Creates a new WebDriver session.
 
 
@@ -122,6 +129,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -130,6 +138,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.schedule](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#252)
+
 Schedules a {@code webdriver.Command} to be executed by this driver's
 {@code webdriver.CommandExecutor}.
 
@@ -161,6 +170,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -176,6 +186,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -184,6 +195,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.getCapability](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#323)
+
 Returns a promise for one of this driver's capabilities.
 
 
@@ -206,6 +218,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.quit](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#338)
+
 Schedules a command to quit the current session. After calling quit, this
 instance will be invalidated and may no longer be used to issue commands
 against the browser.
@@ -223,13 +236,10 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.actions](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#357)
+
 Creates a new action sequence using this driver. The sequence will not be
 scheduled for execution until {@link webdriver.ActionSequence#perform} is
-called. 
-
-
-###Example
-```
+called. Example:
 <pre><code>
   driver.actions().
       mouseDown(element1).
@@ -237,7 +247,7 @@ called.
       mouseUp().
       perform();
 </code></pre>
-```
+
 
 
 
@@ -251,6 +261,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.executeScript](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#375)
+
 Schedules a command to execute JavaScript in the context of the currently
 selected frame or window. The script fragment will be executed as the body
 of an anonymous function. If the script is provided as a function object,
@@ -303,6 +314,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.executeAsyncScript](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#424)
+
 Schedules a command to execute asynchronous JavaScript in the context of the
 currently selected frame or window. The script fragment will be executed as
 the body of an anonymous function. If the script is provided as a function
@@ -397,6 +409,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.call](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#515)
+
 Schedules a command to execute a custom function.
 
 
@@ -421,6 +434,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.wait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#534)
+
 Schedules a command to wait for a condition to hold, as defined by some
 user supplied function. If any errors occur while evaluating the wait, they
 will be allowed to propagate.
@@ -447,6 +461,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.sleep](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#550)
+
 Schedules a command to make the driver sleep for the given amount of time.
 
 
@@ -469,6 +484,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.getWindowHandle](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#561)
+
 Schedules a command to retrieve they current window handle.
 
 
@@ -484,6 +500,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.getAllWindowHandles](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#573)
+
 Schedules a command to retrieve the current list of available window handles.
 
 
@@ -499,6 +516,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.getPageSource](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#585)
+
 Schedules a command to retrieve the current page's source. The page source
 returned is a representation of the underlying DOM: do not expect it to be
 formatted or escaped in the same way as the response sent from the web
@@ -517,6 +535,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.close](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#600)
+
 Schedules a command to close the current window.
 
 
@@ -532,6 +551,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#611)
+
 Schedules a command to navigate to the given URL.
 
 
@@ -554,6 +574,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.getCurrentUrl](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#622)
+
 Schedules a command to retrieve the URL of the current page.
 
 
@@ -569,6 +590,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.getTitle](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#634)
+
 Schedules a command to retrieve the current page's title.
 
 
@@ -584,6 +606,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.findElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#645)
+
 Schedule a command to find an element on the page. If the element cannot be
 found, a {@code bot.ErrorCode.NO_SUCH_ELEMENT} result will be returned
 by the driver. Unlike other commands, this error cannot be suppressed. In
@@ -625,6 +648,7 @@ locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) 
 
 
 ##[webdriver.WebDriver.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#767)
+
 Schedules a command to test if an element is present on the page.
 
 <p>If given a DOM element, this function will check if it belongs to the
@@ -646,6 +670,7 @@ locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) 
 
 
 ##[webdriver.WebDriver.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#794)
+
 Schedule a command to search for multiple elements on the page.
 
 
@@ -662,6 +687,7 @@ locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy 
 
 
 ##[webdriver.WebDriver.prototype.takeScreenshot](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#830)
+
 Schedule a command to take a screenshot. The driver makes a best effort to
 return a screenshot of the following, in order of preference:
 <ol>
@@ -691,6 +717,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -699,6 +726,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.prototype.navigate](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#858)
+
 
 
 
@@ -721,6 +749,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -729,6 +758,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Navigation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#877)
+
 Interface for navigating back and forth in the browser history.
 
 
@@ -753,7 +783,9 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
+
 ##[webdriver.WebDriver.Navigation.prototype.to](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#889)
+
 Schedules a command to navigate to a new URL.
 
 
@@ -776,6 +808,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Navigation.prototype.back](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#903)
+
 Schedules a command to move backwards in the browser history.
 
 
@@ -791,6 +824,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Navigation.prototype.forward](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#915)
+
 Schedules a command to move forwards in the browser history.
 
 
@@ -806,6 +840,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Navigation.prototype.refresh](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#927)
+
 Schedules a command to refresh the current page.
 
 
@@ -821,6 +856,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Options](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#940)
+
 Provides methods for managing browser and driver state.
 
 
@@ -845,7 +881,9 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
+
 ##[webdriver.WebDriver.Options.prototype.addCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#952)
+
 Schedules a command to add a cookie.
 
 
@@ -873,6 +911,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Options.prototype.deleteAllCookies](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1009)
+
 Schedules a command to delete all cookies visible to the current page.
 
 
@@ -888,6 +927,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Options.prototype.deleteCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1021)
+
 Schedules a command to delete the cookie with the given name. This command is
 a no-op if there is no cookie with the given name visible to the current
 page.
@@ -912,6 +952,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Options.prototype.getCookies](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1037)
+
 Schedules a command to retrieve all cookies visible to the current page.
 Each cookie will be returned as a JSON object as described by the WebDriver
 wire protocol.
@@ -929,6 +970,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Options.prototype.getCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1052)
+
 Schedules a command to retrieve the cookie with the given name. Returns null
 if there is no such cookie. The cookie will be returned as a JSON object as
 described by the WebDriver wire protocol.
@@ -960,6 +1002,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -968,6 +1011,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Options.prototype.timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1079)
+
 
 
 
@@ -990,6 +1034,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -998,6 +1043,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1098)
+
 An interface for managing timeout behavior for WebDriver instances.
 
 
@@ -1022,7 +1068,9 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
+
 ##[webdriver.WebDriver.Timeouts.prototype.implicitlyWait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1110)
+
 Specifies the amount of time the driver should wait when searching for an
 element if it is not immediately present.
 <p/>
@@ -1059,6 +1107,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1139)
+
 Sets the amount of time to wait, in milliseconds, for an asynchronous script
 to finish execution before returning an error. If the timeout is less than or
 equal to 0, the script will be allowed to run indefinitely.
@@ -1083,6 +1132,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1156)
+
 Sets the amount of time to wait for a page load to complete before returning
 an error.  If the timeout is negative, page loads may be indefinite.
 
@@ -1106,6 +1156,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1173)
+
 An interface for managing the current window.
 
 
@@ -1130,7 +1181,9 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
+
 ##[webdriver.WebDriver.Window.prototype.getPosition](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1185)
+
 Retrieves the window's current position, relative to the top left corner of
 the screen.
 
@@ -1147,6 +1200,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Window.prototype.setPosition](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1199)
+
 Repositions the current window.
 
 
@@ -1170,6 +1224,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Window.prototype.getSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1218)
+
 Retrieves the window's current size.
 
 
@@ -1186,6 +1241,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Window.prototype.setSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1232)
+
 Resizes the current window.
 
 
@@ -1209,6 +1265,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Window.prototype.maximize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1249)
+
 Maximizes the current window.
 
 
@@ -1224,6 +1281,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Logs](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1262)
+
 Interface for managing WebDriver log records.
 
 
@@ -1248,7 +1306,9 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
+
 ##[webdriver.WebDriver.Logs.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1274)
+
 Fetches available log entries for the given type.
 
 <p/>Note that log buffers are reset after each call, meaning that
@@ -1278,6 +1338,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1305)
+
 Retrieves the log types available to this driver.
 
 
@@ -1293,6 +1354,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.TargetLocator](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1318)
+
 An interface for changing the focus of the driver to another frame or window.
 
 
@@ -1317,7 +1379,9 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
+
 ##[webdriver.WebDriver.TargetLocator.prototype.activeElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1330)
+
 Schedules a command retrieve the {@code document.activeElement} element on
 the current document, or {@code document.body} if activeElement is not
 available.
@@ -1335,6 +1399,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.TargetLocator.prototype.defaultContent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1344)
+
 Schedules a command to switch focus of all future commands to the first frame
 on the page.
 
@@ -1351,6 +1416,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.TargetLocator.prototype.frame](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1358)
+
 Schedules a command to switch the focus of all future commands to another
 frame on the page.
 <p/>
@@ -1385,6 +1451,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.TargetLocator.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1384)
+
 Schedules a command to switch the focus of all future commands to another
 window. Windows may be specified by their {@code window.name} attribute or
 by its handle (as returned by {@code webdriver.WebDriver#getWindowHandles}).
@@ -1412,6 +1479,7 @@ Type | Description
 
 
 ##[webdriver.WebDriver.TargetLocator.prototype.alert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1404)
+
 Schedules a command to change focus to the active alert dialog. This command
 will return a {@link bot.ErrorCode.NO_MODAL_DIALOG_OPEN} error if a modal
 dialog is not currently open.
@@ -1429,6 +1497,7 @@ Type | Description
 
 
 ##[webdriver.Key.chord](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1418)
+
 Simulate pressing many keys at once in a "chord". Takes a sequence of
 {@link webdriver.Key}s or strings, appends each of the values to a string,
 and adds the chord termination key ({@link webdriver.Key.NULL}) and returns
@@ -1457,6 +1526,7 @@ string | The null-terminated key sequence.
 
 
 ##[webdriver.WebElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1450)
+
 Represents a DOM element. WebElements can be found by searching from the
 document root using a {@code webdriver.WebDriver} instance, or by searching
 under another {@code webdriver.WebElement}:
@@ -1495,6 +1565,7 @@ id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the und
 
 
 ##[webdriver.WebElement.equals](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1532)
+
 Compares to WebElements for equality.
 
 
@@ -1525,6 +1596,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -1540,6 +1612,7 @@ Type | Description
 
 
 
+
 ###Returns
 
 Type | Description
@@ -1548,6 +1621,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.findElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1595)
+
 Schedule a command to find a descendant of this element. If the element
 cannot be found, a {@code bot.ErrorCode.NO_SUCH_ELEMENT} result will
 be returned by the driver. Unlike other commands, this error cannot be
@@ -1582,6 +1656,7 @@ locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy 
 
 
 ##[webdriver.WebElement.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1638)
+
 Schedules a command to test if there is at least one descendant of this
 element that matches the given search criteria.
 
@@ -1602,6 +1677,7 @@ locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy 
 
 
 ##[webdriver.WebElement.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1663)
+
 Schedules a command to find all of the descendants of this element that match
 the given search criteria.
 <p/>
@@ -1622,6 +1698,7 @@ locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy 
 
 
 ##[webdriver.WebElement.prototype.click](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1690)
+
 Schedules a command to click on this element.
 
 
@@ -1637,6 +1714,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.sendKeys](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1702)
+
 Schedules a command to type a sequence on the DOM element represented by this
 instance.
 <p/>
@@ -1691,6 +1769,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getTagName](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1759)
+
 Schedules a command to query for the tag/node name of this element.
 
 
@@ -1706,6 +1785,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getCssValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1771)
+
 Schedules a command to query for the computed style of the element
 represented by this instance. If the element inherits the named style from
 its parent, the parent will be queried for its value.  Where possible, color
@@ -1735,6 +1815,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getAttribute](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1795)
+
 Schedules a command to query for the value of the given attribute of the
 element. Will return the current value, even if it has been modified after
 the page has been loaded. More exactly, this method will return the value of
@@ -1780,6 +1861,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1832)
+
 Get the visible (i.e. not hidden by CSS) innerText of this element, including
 sub-elements, without any leading or trailing whitespace.
 
@@ -1796,6 +1878,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1845)
+
 Schedules a command to compute the size of this element's bounding box, in
 pixels.
 
@@ -1812,6 +1895,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getLocation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1858)
+
 Schedules a command to compute the location of this element in page space.
 
 
@@ -1827,6 +1911,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.isEnabled](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1870)
+
 Schedules a command to query whether the DOM element represented by this
 instance is enabled, as dicted by the {@code disabled} attribute.
 
@@ -1843,6 +1928,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.isSelected](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1883)
+
 Schedules a command to query whether this element is selected.
 
 
@@ -1858,6 +1944,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.submit](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1895)
+
 Schedules a command to submit the form containing this element (or this
 element if it is a FORM element). This command is a no-op if the element is
 not contained in a form.
@@ -1875,6 +1962,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.clear](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1909)
+
 Schedules a command to clear the {@code value} of this element. This command
 has no effect if the underlying DOM element is neither a text INPUT element
 nor a TEXTAREA element.
@@ -1892,6 +1980,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.isDisplayed](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1923)
+
 Schedules a command to test whether this element is currently displayed.
 
 
@@ -1907,6 +1996,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getOuterHtml](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1935)
+
 Schedules a command to retrieve the outer HTML of this element.
 
 
@@ -1922,6 +2012,7 @@ Type | Description
 
 
 ##[webdriver.WebElement.prototype.getInnerHtml](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1954)
+
 Schedules a command to retrieve the inner HTML of this element.
 
 
@@ -1937,6 +2028,7 @@ Type | Description
 
 
 ##[webdriver.Alert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1965)
+
 Represents a modal dialog such as {@code alert}, {@code confirm}, or
 {@code prompt}. Provides functions to retrieve the message displayed with
 the alert, accept or dismiss the alert, and set the response text (in the
@@ -1966,6 +2058,7 @@ text | !(string&#124;webdriver.promise.Promise) | Either the message text displa
 
 
 
+
 ##[this.text_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1992)
 
 
@@ -1975,7 +2068,9 @@ text | !(string&#124;webdriver.promise.Promise) | Either the message text displa
 
 
 
+
 ##[webdriver.Alert.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2001)
+
 Retrieves the message text displayed with this alert. For instance, if the
 alert were opened with alert("hello"), then this would return "hello".
 
@@ -1992,6 +2087,7 @@ Type | Description
 
 
 ##[webdriver.Alert.prototype.accept](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2012)
+
 Accepts this alert.
 
 
@@ -2007,6 +2103,7 @@ Type | Description
 
 
 ##[webdriver.Alert.prototype.dismiss](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2024)
+
 Dismisses this alert.
 
 
@@ -2022,6 +2119,7 @@ Type | Description
 
 
 ##[webdriver.Alert.prototype.sendKeys](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2036)
+
 Sets the response text on this alert. This command will return an error if
 the underlying alert does not support response text (e.g. window.alert and
 window.confirm).
@@ -2046,6 +2144,7 @@ Type | Description
 
 
 ##[webdriver.UnhandledAlertError](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2053)
+
 An error returned to indicate that there is an unhandled modal dialog on the
 current page.
 
@@ -2072,7 +2171,9 @@ alert | !webdriver.Alert | The alert handle.
 
 
 
+
 ##[webdriver.UnhandledAlertError.prototype.getAlert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2070)
+
 
 
 
