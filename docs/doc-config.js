@@ -22,6 +22,9 @@ module.exports = function(config) {
 
   // The name tag should not be required.
   var tagDefs = require('dgeni-packages/jsdoc/tag-defs');
+  tagDefs.push({name: 'alias'});
+  tagDefs.push({name: 'example'});
+  tagDefs.push({name: 'view'});
   var nameTag = _.find(tagDefs, {name: 'name'});
   nameTag.required = false;
 
