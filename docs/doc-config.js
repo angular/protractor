@@ -3,7 +3,7 @@ var path = require('canonical-path');
 var packagePath = __dirname;
 var basePackage = require('dgeni-packages/jsdoc');
 
-module.exports = function (config) {
+module.exports = function(config) {
 
   config = basePackage(config);
 
