@@ -9,12 +9,12 @@ module.exports = {
   description: 'Do the rendering',
   runAfter: ['rendering-docs'],
   runBefore: ['docs-rendered'],
-  init: function () {
+  init: function() {
     var apiTemplate = path.resolve(__dirname, '../api-template.md');
     templateFile = fs.readFileSync(apiTemplate, 'utf-8');
   },
-  process: function (docs) {
-    docs.forEach(function (doc) {
+  process: function(docs) {
+    docs.forEach(function(doc) {
       doc.renderedContent = nunjucks.renderString(templateFile, doc);
     });
   }
