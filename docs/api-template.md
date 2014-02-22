@@ -1,4 +1,5 @@
 ##[{{name}}]({{sourceLink}})
+{%if alias%}####{{alias}}{%endif%}
 {{description}}
 
 {% if example %}
