@@ -466,7 +466,7 @@ opt_baseUrl | string | A base URL to run get requests against.
 
 
 
-##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L547)
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L564)
 
 Instruct webdriver to wait until Angular has finished rendering and has
 no outstanding $http calls before continuing.
@@ -483,7 +483,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L588)
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L605)
 
 Wrap a webdriver.WebElement with protractor specific functionality.
 
@@ -506,7 +506,7 @@ Type | Description
 webdriver.WebElement | the wrapped web element.
 
 
-##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L611)
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L628)
 ####$()
 Shortcut for querying the document directly with css.
 
@@ -543,7 +543,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L634)
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L651)
 
 
 
@@ -559,7 +559,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L651)
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L668)
 
 Shortcut for querying the document directly with css.
 
@@ -582,7 +582,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
 
 
-##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L664)
+##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L681)
 
 
 
@@ -598,7 +598,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
 
 
-##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L688)
+##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L705)
 
 
 
@@ -614,7 +614,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
 
 
-##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L704)
+##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L721)
 
 Evalates the input as if it were on the scope of the current element.
 
@@ -640,7 +640,7 @@ Type | Description
     will be returned as a WebElement.
 
 
-##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L723)
+##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L740)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -656,7 +656,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L741)
+##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L758)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -672,7 +672,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
 
 
-##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L766)
+##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L783)
 
 Tests if an element is present on the page.
 
@@ -688,7 +688,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
 
 
-##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L782)
+##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L799)
 
 Add a module to load before Angular whenever Protractor.get is called.
 Modules will be registered after existing modules already on the page,
@@ -709,7 +709,7 @@ script | (!string&#124;Function) | The JavaScript to load the module.
 
 
 
-##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L796)
+##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L813)
 
 Clear the list of registered mock modules.
 
@@ -719,7 +719,7 @@ Clear the list of registered mock modules.
 
 
 
-##[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L804)
+##[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L821)
 
 Remove a registered mock module.
 
@@ -736,7 +736,7 @@ name | !string | The name of the module to remove.
 
 
 
-##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L814)
+##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L831)
 
 See webdriver.WebDriver.get
 
@@ -758,7 +758,7 @@ destination | string | Destination URL.
 
 
 
-##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L881)
+##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L898)
 
 Returns the current absolute url from AngularJS.
 
@@ -768,7 +768,7 @@ Returns the current absolute url from AngularJS.
 
 
 
-##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L889)
+##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L906)
 
 Pauses the test and injects some helper functions into the browser, so that
 debugging may be done in the browser console.
