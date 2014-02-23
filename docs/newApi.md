@@ -1,7 +1,17 @@
-#Index
+Protractor API
+==============
+
+Note: in this documentation, `protractor` and `webdriver` refer to namespaces,
+and `ptor` and `driver` refer to instances of the Protractor and Webdriver
+classes.
+
+Protractor is a wrapper around WebDriver, so anything available on WebDriver
+is available on Protractor. The best documentation for both is the code itself.
+This file provides an overview and links on where to get more information.
 
 
 ##protractor
+
 * [element](#element)
 * [elementFinder.find](#elementfinderfind)
 * [elementFinder.isPresent](#elementfinderispresent)
@@ -33,6 +43,7 @@
 * [Protractor.prototype.getLocationAbsUrl](#protractorprototypegetlocationabsurl)
 * [Protractor.prototype.debugger](#protractorprototypedebugger)
 ##locators
+
 * [ProtractorBy](#protractorby)
 * [WebdriverBy.prototype](#webdriverbyprototype)
 * [ProtractorBy.prototype.addLocator](#protractorbyprototypeaddlocator)
@@ -46,6 +57,7 @@
 * [ProtractorBy.prototype.textarea](#protractorbyprototypetextarea)
 * [ProtractorBy.prototype.repeater](#protractorbyprototyperepeater)
 ##webdriver
+
 * [](#)
 * [webdriver.WebDriver](#webdriverwebdriver)
 * [this.session_](#thissession_)
