@@ -83,7 +83,7 @@ DEPRECATED - use 'model' instead.
 ```
 
 ```javascript
-element(by.select("user"));
+element(by.select('user'));
 ```
 
 
@@ -143,7 +143,6 @@ element(by.input('user'));
 ```
 
 ```javascript
-:
 element(by.model('user'));
 ```
 
@@ -164,7 +163,7 @@ Find a button by text.
 ```
 
 ```javascript
-element(by.buttonText("Save"));
+element(by.buttonText('Save'));
 ```
 
 
@@ -197,7 +196,7 @@ Find a button by partial text.
 ```
 
 ```javascript
-element(by.partialButtonText("Save"));
+element(by.partialButtonText('Save'));
 ```
 
 
@@ -230,7 +229,7 @@ DEPRECATED - use 'model' instead.
 ```
 
 ```javascript
-element(by.textarea("user"));
+element(by.textarea('user'));
 ```
 
 
@@ -254,11 +253,11 @@ Find elements inside an ng-repeat.
 
 ```javascript
 // Returns the DIV for the second cat.
-var secondCat = element(by.repeater("cat in pets").row(1));
+var secondCat = element(by.repeater('cat in pets').row(1));
 
 // Returns the SPAN for the first cat's name.
 var firstCatName = element(by.repeater('cat in pets').
-    row(0).column("{{cat.name}}"));
+    row(0).column('{{cat.name}}'));
 
 // Returns a promise that resolves to an array of WebElements from a column
 var ages = element.all(
