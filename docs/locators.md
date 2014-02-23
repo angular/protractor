@@ -46,11 +46,16 @@ Find an element by binding.
 ###Example
 
 ```html
-<span>{{status}}</span>
+<span>{{person.name}}</span>
+<span ng-bind="person.email"></span>
 ```
 
 ```javascript
-var status = element(by.binding('{{status}}'));
+var span1 = element(by.binding('person.name'));
+expect(span1.getText()).toBe('Foo');
+
+var span2 = element(by.binding('person.email'));
+expect(span2.getText()).toBe('foo@bar.com');
 ```
 
 
@@ -71,7 +76,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L67)
+##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L72)
 
 DEPRECATED - use 'model' instead.
 
@@ -91,7 +96,7 @@ element(by.select('user'));
 
 
 
-##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L86)
+##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L91)
 
 
 
@@ -111,7 +116,7 @@ element(by.selectedOption("user"));
 
 
 
-##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L103)
+##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L108)
 
 
 
@@ -131,27 +136,36 @@ element(by.input('user'));
 
 
 
-##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L121)
+##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L126)
 
-
+Find an element by ng-model expression.
 
 
 ###Example
 
 ```html
-<input ng-model="user" type="text"/>
+<input type="text" ng-model="person.name"/>
 ```
 
 ```javascript
-element(by.model('user'));
+var input = element(by.model('person.name'));
+input.sendKeys('123');
+expect(input.getAttribute('value')).toBe('Foo123');
 ```
 
 
 
+###Params
+
+Param | Type | Description
+--- | --- | ---
+model | string | ng-model expression.
 
 
 
-##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L138)
+
+
+##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L149)
 
 Find a button by text.
 
@@ -184,7 +198,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L160)
+##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L171)
 
 Find a button by partial text.
 
@@ -217,7 +231,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L183)
+##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L194)
 
 DEPRECATED - use 'model' instead.
 
@@ -237,7 +251,7 @@ element(by.textarea('user'));
 
 
 
-##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L201)
+##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L212)
 
 Find elements inside an ng-repeat.
 
