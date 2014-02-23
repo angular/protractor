@@ -42,10 +42,16 @@ name | string | null
 
 Find an element by binding.
 
-Example:
-  <span>{{status}}</span>
-  var status = element(by.binding('{{status}}'));
 
+###Example
+
+```html
+<span>{{status}}</span>
+```
+
+```javascript
+var status = element(by.binding('{{status}}'));
+```
 
 
 
@@ -65,62 +71,101 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L65)
+##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L67)
 
 DEPRECATED - use 'model' instead.
 
-Example:
-  <select ng-model="user" ng-options="user.name for user in users"></select>
-  element(by.select("user"));
+
+###Example
+
+```html
+<select ng-model="user" ng-options="user.name for user in users"></select>
+```
+
+```javascript
+element(by.select("user"));
+```
 
 
 
 
 
 
-
-##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L82)
-
-Example:
-  <select ng-model="user" ng-options="user.name for user in users"></select>
-  element(by.selectedOption("user"));
+##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L86)
 
 
 
 
+###Example
 
+```html
+<select ng-model="user" ng-options="user.name for user in users"></select>
+```
 
-
-##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L97)
-
-
+```javascript
+element(by.selectedOption("user"));
+```
 
 
 
 
 
 
-
-##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L113)
-
-Example:
-  <input ng-model="user" type="text"/>
-  element(by.model('user'));
+##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L103)
 
 
 
 
+###Example
+
+```html
+<input ng-model="user" type="text"/>
+```
+
+```javascript
+element(by.input('user'));
+```
 
 
 
-##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L128)
+
+
+
+##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L121)
+
+
+
+
+###Example
+
+```html
+<input ng-model="user" type="text"/>
+```
+
+```javascript
+:
+element(by.model('user'));
+```
+
+
+
+
+
+
+##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L138)
 
 Find a button by text.
 
-Example:
-  <button>Save</button>
-  element(by.buttonText("Save"));
 
+###Example
+
+```html
+<button>Save</button>
+```
+
+```javascript
+element(by.buttonText("Save"));
+```
 
 
 
@@ -140,14 +185,20 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L148)
+##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L160)
 
 Find a button by partial text.
 
-Example:
-  <button>Save my file</button>
-  element(by.partialButtonText("Save"));
 
+###Example
+
+```html
+<button>Save my file</button>
+```
+
+```javascript
+element(by.partialButtonText("Save"));
+```
 
 
 
@@ -167,36 +218,56 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L169)
+##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L183)
+
+DEPRECATED - use 'model' instead.
+
+
+###Example
+
+```html
+<textarea ng-model="user"></textarea>
+```
+
+```javascript
+element(by.textarea("user"));
+```
 
 
 
 
 
 
+##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L201)
+
+Find elements inside an ng-repeat.
 
 
+###Example
 
-##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L185)
+```html
+<div ng-repeat = "cat in pets">
+  <span>{{cat.name}}</span>
+  <span>{{cat.age}}</span>
+</div>
+```
 
-Example:
-  <div ng-repeat = "cat in pets">
-    <span>{{cat.name}}</span>
-    <span>{{cat.age}}</span>
-  </div>
-
+```javascript
 // Returns the DIV for the second cat.
 var secondCat = element(by.repeater("cat in pets").row(1));
+
 // Returns the SPAN for the first cat's name.
-var firstCatName = element(
-    by.repeater("cat in pets").row(0).column("{{cat.name}}"));
+var firstCatName = element(by.repeater('cat in pets').
+    row(0).column("{{cat.name}}"));
+
 // Returns a promise that resolves to an array of WebElements from a column
 var ages = element.all(
-    by.repeater("cat in pets").column("{{cat.age}}"));
+    by.repeater('cat in pets').column('{{cat.age}}'));
+    
 // Returns a promise that resolves to an array of WebElements containing
 // all rows of the repeater.
-var rows = element.all(by.repeater("cat in pets"));
-
+var rows = element.all(by.repeater('cat in pets'));
+```
 
 
 
