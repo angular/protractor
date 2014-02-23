@@ -466,7 +466,7 @@ opt_baseUrl | string | A base URL to run get requests against.
 
 
 
-##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L564)
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L547)
 
 Instruct webdriver to wait until Angular has finished rendering and has
 no outstanding $http calls before continuing.
@@ -483,7 +483,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L605)
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L588)
 
 Wrap a webdriver.WebElement with protractor specific functionality.
 
@@ -506,7 +506,7 @@ Type | Description
 webdriver.WebElement | the wrapped web element.
 
 
-##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L628)
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L611)
 ####$()
 Shortcut for querying the document directly with css.
 
@@ -543,7 +543,7 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L651)
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L634)
 
 
 
@@ -559,10 +559,31 @@ Type | Description
 !webdriver.WebElement | 
 
 
-##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L668)
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L651)
 
 Shortcut for querying the document directly with css.
 
+
+###Example
+
+```html
+<div class="count">
+  <span class="one">First</span>
+  <span class="two">Second</span>
+</div>
+```
+
+```javascript
+// The following protractor expressions are equivalent.
+var list = element.all(by.css('.count span'));
+
+list = $$('.count span');
+list.then(function(items) {
+  expect(items.length).toBe(2);
+  expect(items[0].getText()).toBe('First');
+  expect(items[1].getText()).toBe('Second');
+});
+```
 
 
 
