@@ -32,6 +32,11 @@ module.exports = {
       _.each(docs, addLink);
     });
 
-    console.log(docs);
+    // Add the table of contents at the beginning.
+    docs.unshift({
+      outputPath: 'partials/toc.md',
+      isToc: true,
+      toc: toc
+    });
   }
 };
