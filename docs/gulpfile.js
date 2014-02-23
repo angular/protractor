@@ -8,6 +8,7 @@ var paths = {
   protractor: 'build/**/protractor*',
   webdriver: 'build/**/webdriver*',
   locators: 'build/**/locators*',
+  toc: 'build/**/toc.md',
   scripts: [
     'api-template.md',
     'processors/*',
@@ -39,7 +40,7 @@ gulp.task('concat-md', ['create-md-files'], function() {
       pipe(concat('locators.md')).
       pipe(gulp.dest('.'));
 
-  var paths2 = [paths.locators, paths.protractor, paths.webdriver];
+  var paths2 = [paths.toc, paths.locators, paths.protractor, paths.webdriver];
   gulp.src(paths2).
       pipe(concat('newApi.md')).
       pipe(gulp.dest('.'));
