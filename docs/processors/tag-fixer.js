@@ -75,8 +75,8 @@ var fileName = function(doc, i) {
  */
 var filterDocs = function(docs) {
   return _.reject(docs, function(doc) {
-    // Skip functions starting with 'exports'.
-    if (/^exports/.test(doc.name)) {
+    // Skip functions starting with 'exports' and ending with _.
+    if (!doc.name || /^exports/.test(doc.name) || /_\s*$/.test(doc.name)) {
       return true;
     }
 

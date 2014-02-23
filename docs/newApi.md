@@ -58,11 +58,7 @@ This file provides an overview and links on where to get more information.
 * [ProtractorBy.prototype.repeater](#protractorbyprototyperepeater)
 ##webdriver
 
-* [](#)
 * [webdriver.WebDriver](#webdriverwebdriver)
-* [this.session_](#thissession_)
-* [this.executor_](#thisexecutor_)
-* [this.flow_](#thisflow_)
 * [webdriver.WebDriver.attachToSession](#webdriverwebdriverattachtosession)
 * [webdriver.WebDriver.createSession](#webdriverwebdrivercreatesession)
 * [webdriver.WebDriver.prototype.controlFlow](#webdriverwebdriverprototypecontrolflow)
@@ -92,13 +88,11 @@ This file provides an overview and links on where to get more information.
 * [webdriver.WebDriver.prototype.navigate](#webdriverwebdriverprototypenavigate)
 * [webdriver.WebDriver.prototype.switchTo](#webdriverwebdriverprototypeswitchto)
 * [webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation)
-* [this.driver_](#thisdriver_)
 * [webdriver.WebDriver.Navigation.prototype.to](#webdriverwebdrivernavigationprototypeto)
 * [webdriver.WebDriver.Navigation.prototype.back](#webdriverwebdrivernavigationprototypeback)
 * [webdriver.WebDriver.Navigation.prototype.forward](#webdriverwebdrivernavigationprototypeforward)
 * [webdriver.WebDriver.Navigation.prototype.refresh](#webdriverwebdrivernavigationprototyperefresh)
 * [webdriver.WebDriver.Options](#webdriverwebdriveroptions)
-* [this.driver_](#thisdriver_)
 * [webdriver.WebDriver.Options.prototype.addCookie](#webdriverwebdriveroptionsprototypeaddcookie)
 * [webdriver.WebDriver.Options.prototype.deleteAllCookies](#webdriverwebdriveroptionsprototypedeleteallcookies)
 * [webdriver.WebDriver.Options.prototype.deleteCookie](#webdriverwebdriveroptionsprototypedeletecookie)
@@ -108,23 +102,19 @@ This file provides an overview and links on where to get more information.
 * [webdriver.WebDriver.Options.prototype.timeouts](#webdriverwebdriveroptionsprototypetimeouts)
 * [webdriver.WebDriver.Options.prototype.window](#webdriverwebdriveroptionsprototypewindow)
 * [webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts)
-* [this.driver_](#thisdriver_)
 * [webdriver.WebDriver.Timeouts.prototype.implicitlyWait](#webdriverwebdrivertimeoutsprototypeimplicitlywait)
 * [webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](#webdriverwebdrivertimeoutsprototypesetscripttimeout)
 * [webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](#webdriverwebdrivertimeoutsprototypepageloadtimeout)
 * [webdriver.WebDriver.Window](#webdriverwebdriverwindow)
-* [this.driver_](#thisdriver_)
 * [webdriver.WebDriver.Window.prototype.getPosition](#webdriverwebdriverwindowprototypegetposition)
 * [webdriver.WebDriver.Window.prototype.setPosition](#webdriverwebdriverwindowprototypesetposition)
 * [webdriver.WebDriver.Window.prototype.getSize](#webdriverwebdriverwindowprototypegetsize)
 * [webdriver.WebDriver.Window.prototype.setSize](#webdriverwebdriverwindowprototypesetsize)
 * [webdriver.WebDriver.Window.prototype.maximize](#webdriverwebdriverwindowprototypemaximize)
 * [webdriver.WebDriver.Logs](#webdriverwebdriverlogs)
-* [this.driver_](#thisdriver_)
 * [webdriver.WebDriver.Logs.prototype.get](#webdriverwebdriverlogsprototypeget)
 * [webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](#webdriverwebdriverlogsprototypegetavailablelogtypes)
 * [webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator)
-* [this.driver_](#thisdriver_)
 * [webdriver.WebDriver.TargetLocator.prototype.activeElement](#webdriverwebdrivertargetlocatorprototypeactiveelement)
 * [webdriver.WebDriver.TargetLocator.prototype.defaultContent](#webdriverwebdrivertargetlocatorprototypedefaultcontent)
 * [webdriver.WebDriver.TargetLocator.prototype.frame](#webdriverwebdrivertargetlocatorprototypeframe)
@@ -154,14 +144,11 @@ This file provides an overview and links on where to get more information.
 * [webdriver.WebElement.prototype.getOuterHtml](#webdriverwebelementprototypegetouterhtml)
 * [webdriver.WebElement.prototype.getInnerHtml](#webdriverwebelementprototypegetinnerhtml)
 * [webdriver.Alert](#webdriveralert)
-* [this.driver_](#thisdriver_)
-* [this.text_](#thistext_)
 * [webdriver.Alert.prototype.getText](#webdriveralertprototypegettext)
 * [webdriver.Alert.prototype.accept](#webdriveralertprototypeaccept)
 * [webdriver.Alert.prototype.dismiss](#webdriveralertprototypedismiss)
 * [webdriver.Alert.prototype.sendKeys](#webdriveralertprototypesendkeys)
 * [webdriver.UnhandledAlertError](#webdriverunhandledalerterror)
-* [this.alert_](#thisalert_)
 * [webdriver.UnhandledAlertError.prototype.getAlert](#webdriverunhandledalerterrorprototypegetalert)
 
 ##[ProtractorBy](https://github.com/angular/protractor/blob/master/lib/locators.js#L6)
@@ -1262,16 +1249,6 @@ debugger.
 
 
 
-##[](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#15)
-
-
-
-
-
-
-
-
-
 ##[webdriver.WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#47)
 
 Creates a new WebDriver client, which provides control over a browser.
@@ -1302,36 +1279,6 @@ Param | Type | Description
 session | !(webdriver.Session&#124;webdriver.promise.Promise) | Either a known session or a promise that will be resolved to a session.
 executor | !webdriver.CommandExecutor | The executor to use when sending commands to the browser.
 opt_flow | webdriver.promise.ControlFlow | The flow to schedule commands through. Defaults to the active flow object.
-
-
-
-
-
-##[this.session_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#76)
-
-
-
-
-
-
-
-
-
-##[this.executor_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#79)
-
-
-
-
-
-
-
-
-
-##[this.flow_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#82)
-
-
-
-
 
 
 
@@ -2038,16 +1985,6 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#884)
-
-
-
-
-
-
-
-
-
 ##[webdriver.WebDriver.Navigation.prototype.to](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#889)
 
 Schedules a command to navigate to a new URL.
@@ -2131,16 +2068,6 @@ Provides methods for managing browser and driver state.
 Param | Type | Description
 --- | --- | ---
 driver | !webdriver.WebDriver | The parent driver.
-
-
-
-
-
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#947)
-
-
-
-
 
 
 
@@ -2323,16 +2250,6 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1105)
-
-
-
-
-
-
-
-
-
 ##[webdriver.WebDriver.Timeouts.prototype.implicitlyWait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1110)
 
 Specifies the amount of time the driver should wait when searching for an
@@ -2431,16 +2348,6 @@ An interface for managing the current window.
 Param | Type | Description
 --- | --- | ---
 driver | !webdriver.WebDriver | The parent driver.
-
-
-
-
-
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1180)
-
-
-
-
 
 
 
@@ -2561,16 +2468,6 @@ driver | !webdriver.WebDriver | The parent driver.
 
 
 
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1269)
-
-
-
-
-
-
-
-
-
 ##[webdriver.WebDriver.Logs.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1274)
 
 Fetches available log entries for the given type.
@@ -2629,16 +2526,6 @@ An interface for changing the focus of the driver to another frame or window.
 Param | Type | Description
 --- | --- | ---
 driver | !webdriver.WebDriver | The parent driver.
-
-
-
-
-
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1325)
-
-
-
-
 
 
 
@@ -3313,26 +3200,6 @@ text | !(string&#124;webdriver.promise.Promise) | Either the message text displa
 
 
 
-##[this.driver_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1981)
-
-
-
-
-
-
-
-
-
-##[this.text_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1992)
-
-
-
-
-
-
-
-
-
 ##[webdriver.Alert.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2001)
 
 Retrieves the message text displayed with this alert. For instance, if the
@@ -3421,16 +3288,6 @@ Param | Type | Description
 --- | --- | ---
 message | string | The error message.
 alert | !webdriver.Alert | The alert handle.
-
-
-
-
-
-##[this.alert_](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2064)
-
-
-
-
 
 
 
