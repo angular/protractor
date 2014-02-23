@@ -259,7 +259,7 @@ Find elements inside an ng-repeat.
 ###Example
 
 ```html
-<div ng-repeat = "cat in pets">
+<div ng-repeat="cat in pets">
   <span>{{cat.name}}</span>
   <span>{{cat.age}}</span>
 </div>
