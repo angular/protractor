@@ -10,6 +10,7 @@ is available on Protractor. The best documentation for both is the code itself.
 This file provides an overview and links on where to get more information.
 
 
+
 ##protractor
 
 * [element](#element)
@@ -42,6 +43,7 @@ This file provides an overview and links on where to get more information.
 * [Protractor.prototype.get](#protractorprototypeget)
 * [Protractor.prototype.getLocationAbsUrl](#protractorprototypegetlocationabsurl)
 * [Protractor.prototype.debugger](#protractorprototypedebugger)
+
 ##locators
 
 * [ProtractorBy](#protractorby)
@@ -56,6 +58,7 @@ This file provides an overview and links on where to get more information.
 * [ProtractorBy.prototype.partialButtonText](#protractorbyprototypepartialbuttontext)
 * [ProtractorBy.prototype.textarea](#protractorbyprototypetextarea)
 * [ProtractorBy.prototype.repeater](#protractorbyprototyperepeater)
+
 ##webdriver
 
 * [webdriver.WebDriver](#webdriverwebdriver)
