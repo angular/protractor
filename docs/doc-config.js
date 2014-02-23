@@ -17,7 +17,8 @@ module.exports = function(config) {
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
     require('./processors/doc-renderer'),
-    require('./processors/add-links')
+    require('./processors/add-links'),
+    require('./processors/add-toc')
   ]);
 
   // The name tag should not be required.

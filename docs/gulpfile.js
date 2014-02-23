@@ -38,6 +38,11 @@ gulp.task('concat-md', ['create-md-files'], function() {
   gulp.src(paths.locators).
       pipe(concat('locators.md')).
       pipe(gulp.dest('.'));
+
+  var paths2 = [paths.locators, paths.protractor, paths.webdriver];
+  gulp.src(paths2).
+      pipe(concat('newApi.md')).
+      pipe(gulp.dest('.'));
 });
 
 // Rerun the task when a file changes
