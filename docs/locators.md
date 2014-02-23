@@ -32,7 +32,7 @@ used with element(by.<name>(<args>)).
 
 Param | Type | Description
 --- | --- | ---
-name | string | null
+name | string | 
 
 
 
@@ -64,7 +64,7 @@ expect(span2.getText()).toBe('foo@bar.com');
 
 Param | Type | Description
 --- | --- | ---
-bindingDescriptor | string | null
+bindingDescriptor | string | 
 
 
 
@@ -186,7 +186,7 @@ element(by.buttonText('Save'));
 
 Param | Type | Description
 --- | --- | ---
-searchText | string | null
+searchText | string | 
 
 
 
@@ -219,7 +219,7 @@ element(by.partialButtonText('Save'));
 
 Param | Type | Description
 --- | --- | ---
-searchText | string | null
+searchText | string | 
 
 
 

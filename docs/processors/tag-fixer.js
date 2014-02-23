@@ -48,6 +48,10 @@ var fixParams = function(doc) {
   if (doc.params) {
     doc.params = _.uniq(doc.params, 'name');
     _.each(doc.params, function(param) {
+      // Remove null descriptions.
+      if (param.description === 'null') {
+        param.description = '';
+      }
       replaceNewLines(param, 'description');
       escapeTypeDescriptions(param.type);
     });

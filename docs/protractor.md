@@ -128,8 +128,8 @@ expect(triple.getText()).toBe('555-123-4567');
 
 Param | Type | Description
 --- | --- | ---
-ptor | Protractor | null
-opt_usingChain | Array.&lt;webdriver.Locator&gt; | null
+ptor | Protractor | 
+opt_usingChain | Array.&lt;webdriver.Locator&gt; | 
 
 
 
@@ -214,7 +214,7 @@ element.all(by.css('.items li')).then(function(items) {
 
 Param | Type | Description
 --- | --- | ---
-locator | webdriver.Locator | null
+locator | webdriver.Locator | 
 
 
 
@@ -453,7 +453,7 @@ Type | Description
 
 Param | Type | Description
 --- | --- | ---
-webdriver | webdriver.WebDriver | null
+webdriver | webdriver.WebDriver | 
 opt_baseUrl | string | A base URL to run get requests against.
 
 
@@ -488,7 +488,7 @@ Wrap a webdriver.WebElement with protractor specific functionality.
 
 Param | Type | Description
 --- | --- | ---
-element | webdriver.WebElement | null
+element | webdriver.WebElement | 
 
 
 
@@ -639,7 +639,7 @@ Evalates the input as if it were on the scope of the current element.
 
 Param | Type | Description
 --- | --- | ---
-expression | string | null
+expression | string | 
 
 
 
