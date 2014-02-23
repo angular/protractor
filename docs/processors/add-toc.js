@@ -16,9 +16,10 @@ module.exports = {
 
     var addLink = function(doc) {
       // Remove the dots.
-      var linkName = doc.name.replace(/\./g, '');
+      var name = doc.name || '';
+      var linkName = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
       toc.push({
-        name: doc.name,
+        name: name,
         link: linkName
       });
     };
