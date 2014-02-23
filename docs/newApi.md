@@ -2,305 +2,155 @@
 
 
 ##protractor
-
 * [element](#element)
-
 * [elementFinder.find](#elementfinderfind)
-
 * [elementFinder.isPresent](#elementfinderispresent)
-
 * [elementFinder.element](#elementfinderelement)
-
-* [elementFinder.$](#elementfinder$)
-
+* [elementFinder.$](#elementfinder)
 * [element.all](#elementall)
-
 * [elementArrayFinder.count](#elementarrayfindercount)
-
 * [elementArrayFinder.get](#elementarrayfinderget)
-
 * [elementArrayFinder.first](#elementarrayfinderfirst)
-
 * [elementArrayFinder.last](#elementarrayfinderlast)
-
 * [elementArrayFinder.each](#elementarrayfindereach)
-
 * [elementArrayFinder.map](#elementarrayfindermap)
-
 * [Protractor](#protractor)
-
 * [Protractor.prototype.waitForAngular](#protractorprototypewaitforangular)
-
 * [Protractor.prototype.wrapWebElement](#protractorprototypewrapwebelement)
-
-* [element.$](#element$)
-
+* [element.$](#element)
 * [element.findElement](#elementfindelement)
-
-* [element.$$](#element$$)
-
+* [element.$$](#element)
 * [element.findElements](#elementfindelements)
-
 * [element.isElementPresent](#elementiselementpresent)
-
 * [element.evaluate](#elementevaluate)
-
 * [Protractor.prototype.findElement](#protractorprototypefindelement)
-
 * [Protractor.prototype.findElements](#protractorprototypefindelements)
-
 * [Protractor.prototype.isElementPresent](#protractorprototypeiselementpresent)
-
 * [Protractor.prototype.addMockModule](#protractorprototypeaddmockmodule)
-
 * [Protractor.prototype.clearMockModules](#protractorprototypeclearmockmodules)
-
 * [Protractor.prototype.removeMockModule](#protractorprototyperemovemockmodule)
-
 * [Protractor.prototype.get](#protractorprototypeget)
-
 * [Protractor.prototype.getLocationAbsUrl](#protractorprototypegetlocationabsurl)
-
 * [Protractor.prototype.debugger](#protractorprototypedebugger)
-
 ##locators
-
 * [ProtractorBy](#protractorby)
-
 * [WebdriverBy.prototype](#webdriverbyprototype)
-
 * [ProtractorBy.prototype.addLocator](#protractorbyprototypeaddlocator)
-
 * [ProtractorBy.prototype.binding](#protractorbyprototypebinding)
-
 * [ProtractorBy.prototype.select](#protractorbyprototypeselect)
-
 * [ProtractorBy.prototype.selectedOption](#protractorbyprototypeselectedoption)
-
 * [ProtractorBy.prototype.input](#protractorbyprototypeinput)
-
 * [ProtractorBy.prototype.model](#protractorbyprototypemodel)
-
 * [ProtractorBy.prototype.buttonText](#protractorbyprototypebuttontext)
-
 * [ProtractorBy.prototype.partialButtonText](#protractorbyprototypepartialbuttontext)
-
 * [ProtractorBy.prototype.textarea](#protractorbyprototypetextarea)
-
 * [ProtractorBy.prototype.repeater](#protractorbyprototyperepeater)
-
 ##webdriver
-
 * [](#)
-
 * [webdriver.WebDriver](#webdriverwebdriver)
-
 * [this.session_](#thissession_)
-
 * [this.executor_](#thisexecutor_)
-
 * [this.flow_](#thisflow_)
-
 * [webdriver.WebDriver.attachToSession](#webdriverwebdriverattachtosession)
-
 * [webdriver.WebDriver.createSession](#webdriverwebdrivercreatesession)
-
 * [webdriver.WebDriver.prototype.controlFlow](#webdriverwebdriverprototypecontrolflow)
-
 * [webdriver.WebDriver.prototype.schedule](#webdriverwebdriverprototypeschedule)
-
 * [webdriver.WebDriver.prototype.getSession](#webdriverwebdriverprototypegetsession)
-
 * [webdriver.WebDriver.prototype.getCapabilities](#webdriverwebdriverprototypegetcapabilities)
-
 * [webdriver.WebDriver.prototype.getCapability](#webdriverwebdriverprototypegetcapability)
-
 * [webdriver.WebDriver.prototype.quit](#webdriverwebdriverprototypequit)
-
 * [webdriver.WebDriver.prototype.actions](#webdriverwebdriverprototypeactions)
-
 * [webdriver.WebDriver.prototype.executeScript](#webdriverwebdriverprototypeexecutescript)
-
 * [webdriver.WebDriver.prototype.executeAsyncScript](#webdriverwebdriverprototypeexecuteasyncscript)
-
 * [webdriver.WebDriver.prototype.call](#webdriverwebdriverprototypecall)
-
 * [webdriver.WebDriver.prototype.wait](#webdriverwebdriverprototypewait)
-
 * [webdriver.WebDriver.prototype.sleep](#webdriverwebdriverprototypesleep)
-
 * [webdriver.WebDriver.prototype.getWindowHandle](#webdriverwebdriverprototypegetwindowhandle)
-
 * [webdriver.WebDriver.prototype.getAllWindowHandles](#webdriverwebdriverprototypegetallwindowhandles)
-
 * [webdriver.WebDriver.prototype.getPageSource](#webdriverwebdriverprototypegetpagesource)
-
 * [webdriver.WebDriver.prototype.close](#webdriverwebdriverprototypeclose)
-
 * [webdriver.WebDriver.prototype.get](#webdriverwebdriverprototypeget)
-
 * [webdriver.WebDriver.prototype.getCurrentUrl](#webdriverwebdriverprototypegetcurrenturl)
-
 * [webdriver.WebDriver.prototype.getTitle](#webdriverwebdriverprototypegettitle)
-
 * [webdriver.WebDriver.prototype.findElement](#webdriverwebdriverprototypefindelement)
-
 * [webdriver.WebDriver.prototype.isElementPresent](#webdriverwebdriverprototypeiselementpresent)
-
 * [webdriver.WebDriver.prototype.findElements](#webdriverwebdriverprototypefindelements)
-
 * [webdriver.WebDriver.prototype.takeScreenshot](#webdriverwebdriverprototypetakescreenshot)
-
 * [webdriver.WebDriver.prototype.manage](#webdriverwebdriverprototypemanage)
-
 * [webdriver.WebDriver.prototype.navigate](#webdriverwebdriverprototypenavigate)
-
 * [webdriver.WebDriver.prototype.switchTo](#webdriverwebdriverprototypeswitchto)
-
 * [webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation)
-
 * [this.driver_](#thisdriver_)
-
 * [webdriver.WebDriver.Navigation.prototype.to](#webdriverwebdrivernavigationprototypeto)
-
 * [webdriver.WebDriver.Navigation.prototype.back](#webdriverwebdrivernavigationprototypeback)
-
 * [webdriver.WebDriver.Navigation.prototype.forward](#webdriverwebdrivernavigationprototypeforward)
-
 * [webdriver.WebDriver.Navigation.prototype.refresh](#webdriverwebdrivernavigationprototyperefresh)
-
 * [webdriver.WebDriver.Options](#webdriverwebdriveroptions)
-
 * [this.driver_](#thisdriver_)
-
 * [webdriver.WebDriver.Options.prototype.addCookie](#webdriverwebdriveroptionsprototypeaddcookie)
-
 * [webdriver.WebDriver.Options.prototype.deleteAllCookies](#webdriverwebdriveroptionsprototypedeleteallcookies)
-
 * [webdriver.WebDriver.Options.prototype.deleteCookie](#webdriverwebdriveroptionsprototypedeletecookie)
-
 * [webdriver.WebDriver.Options.prototype.getCookies](#webdriverwebdriveroptionsprototypegetcookies)
-
 * [webdriver.WebDriver.Options.prototype.getCookie](#webdriverwebdriveroptionsprototypegetcookie)
-
 * [webdriver.WebDriver.Options.prototype.logs](#webdriverwebdriveroptionsprototypelogs)
-
 * [webdriver.WebDriver.Options.prototype.timeouts](#webdriverwebdriveroptionsprototypetimeouts)
-
 * [webdriver.WebDriver.Options.prototype.window](#webdriverwebdriveroptionsprototypewindow)
-
 * [webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts)
-
 * [this.driver_](#thisdriver_)
-
 * [webdriver.WebDriver.Timeouts.prototype.implicitlyWait](#webdriverwebdrivertimeoutsprototypeimplicitlywait)
-
 * [webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](#webdriverwebdrivertimeoutsprototypesetscripttimeout)
-
 * [webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](#webdriverwebdrivertimeoutsprototypepageloadtimeout)
-
 * [webdriver.WebDriver.Window](#webdriverwebdriverwindow)
-
 * [this.driver_](#thisdriver_)
-
 * [webdriver.WebDriver.Window.prototype.getPosition](#webdriverwebdriverwindowprototypegetposition)
-
 * [webdriver.WebDriver.Window.prototype.setPosition](#webdriverwebdriverwindowprototypesetposition)
-
 * [webdriver.WebDriver.Window.prototype.getSize](#webdriverwebdriverwindowprototypegetsize)
-
 * [webdriver.WebDriver.Window.prototype.setSize](#webdriverwebdriverwindowprototypesetsize)
-
 * [webdriver.WebDriver.Window.prototype.maximize](#webdriverwebdriverwindowprototypemaximize)
-
 * [webdriver.WebDriver.Logs](#webdriverwebdriverlogs)
-
 * [this.driver_](#thisdriver_)
-
 * [webdriver.WebDriver.Logs.prototype.get](#webdriverwebdriverlogsprototypeget)
-
 * [webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](#webdriverwebdriverlogsprototypegetavailablelogtypes)
-
 * [webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator)
-
 * [this.driver_](#thisdriver_)
-
 * [webdriver.WebDriver.TargetLocator.prototype.activeElement](#webdriverwebdrivertargetlocatorprototypeactiveelement)
-
 * [webdriver.WebDriver.TargetLocator.prototype.defaultContent](#webdriverwebdrivertargetlocatorprototypedefaultcontent)
-
 * [webdriver.WebDriver.TargetLocator.prototype.frame](#webdriverwebdrivertargetlocatorprototypeframe)
-
 * [webdriver.WebDriver.TargetLocator.prototype.window](#webdriverwebdrivertargetlocatorprototypewindow)
-
 * [webdriver.WebDriver.TargetLocator.prototype.alert](#webdriverwebdrivertargetlocatorprototypealert)
-
 * [webdriver.Key.chord](#webdriverkeychord)
-
 * [webdriver.WebElement](#webdriverwebelement)
-
 * [webdriver.WebElement.equals](#webdriverwebelementequals)
-
 * [webdriver.WebElement.prototype.getDriver](#webdriverwebelementprototypegetdriver)
-
 * [webdriver.WebElement.prototype.toWireValue](#webdriverwebelementprototypetowirevalue)
-
 * [webdriver.WebElement.prototype.findElement](#webdriverwebelementprototypefindelement)
-
 * [webdriver.WebElement.prototype.isElementPresent](#webdriverwebelementprototypeiselementpresent)
-
 * [webdriver.WebElement.prototype.findElements](#webdriverwebelementprototypefindelements)
-
 * [webdriver.WebElement.prototype.click](#webdriverwebelementprototypeclick)
-
 * [webdriver.WebElement.prototype.sendKeys](#webdriverwebelementprototypesendkeys)
-
 * [webdriver.WebElement.prototype.getTagName](#webdriverwebelementprototypegettagname)
-
 * [webdriver.WebElement.prototype.getCssValue](#webdriverwebelementprototypegetcssvalue)
-
 * [webdriver.WebElement.prototype.getAttribute](#webdriverwebelementprototypegetattribute)
-
 * [webdriver.WebElement.prototype.getText](#webdriverwebelementprototypegettext)
-
 * [webdriver.WebElement.prototype.getSize](#webdriverwebelementprototypegetsize)
-
 * [webdriver.WebElement.prototype.getLocation](#webdriverwebelementprototypegetlocation)
-
 * [webdriver.WebElement.prototype.isEnabled](#webdriverwebelementprototypeisenabled)
-
 * [webdriver.WebElement.prototype.isSelected](#webdriverwebelementprototypeisselected)
-
 * [webdriver.WebElement.prototype.submit](#webdriverwebelementprototypesubmit)
-
 * [webdriver.WebElement.prototype.clear](#webdriverwebelementprototypeclear)
-
 * [webdriver.WebElement.prototype.isDisplayed](#webdriverwebelementprototypeisdisplayed)
-
 * [webdriver.WebElement.prototype.getOuterHtml](#webdriverwebelementprototypegetouterhtml)
-
 * [webdriver.WebElement.prototype.getInnerHtml](#webdriverwebelementprototypegetinnerhtml)
-
 * [webdriver.Alert](#webdriveralert)
-
 * [this.driver_](#thisdriver_)
-
 * [this.text_](#thistext_)
-
 * [webdriver.Alert.prototype.getText](#webdriveralertprototypegettext)
-
 * [webdriver.Alert.prototype.accept](#webdriveralertprototypeaccept)
-
 * [webdriver.Alert.prototype.dismiss](#webdriveralertprototypedismiss)
-
 * [webdriver.Alert.prototype.sendKeys](#webdriveralertprototypesendkeys)
-
 * [webdriver.UnhandledAlertError](#webdriverunhandledalerterror)
-
 * [this.alert_](#thisalert_)
-
 * [webdriver.UnhandledAlertError.prototype.getAlert](#webdriverunhandledalerterrorprototypegetalert)
-
 
 ##[ProtractorBy](https://github.com/angular/protractor/blob/master/lib/locators.js#L6)
 
