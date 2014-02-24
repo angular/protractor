@@ -143,6 +143,7 @@ exports.config = {
     // Require files before executing the features.
     require: 'cucumber/stepDefinitions.js',
     // Only execute the features or scenarios with tags matching @dev.
+    // This may be an array of strings to specify multiple tags to include.
     tags: '@dev',
     // How to format features (default: progress)
     format: 'summary'
