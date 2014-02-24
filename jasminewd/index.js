@@ -70,7 +70,7 @@ global.afterEach = wrapInControlFlow(global.afterEach);
  *     resolve to the actual value being tested.
  * @param {boolean} not Whether this is being called with 'not' active.
  */
-function wrapMatcher(matcher, actualPromise, not) {
+function wrapMatcher(matcher, actualPromise, origError, not) {
   return function() {
     var originalArgs = arguments;
     actualPromise.then(function(actual) {
@@ -92,7 +92,13 @@ function wrapMatcher(matcher, actualPromise, not) {
         if (not) {
           expectation = expectation.not;
         }
+        origFn = expectation.spec.addMatcherResult; // Probly null, but to be safe
+        expectation.spec.addMatcherResult = function(result) {
+          result.trace = origError;
+          jasmine.Spec.prototype.addMatcherResult.call(this, result);
+        }
         expectation[matcher].apply(expectation, originalArgs);
+        expectation.spec.addMatcherResult = origFn;
       }
     });
   };
@@ -104,14 +110,14 @@ function wrapMatcher(matcher, actualPromise, not) {
  * @param {webdriver.promise.Promise} actualPromise The promise which will
  *     resolve to the acutal value being tested.
  */
-function promiseMatchers(actualPromise) {
+function promiseMatchers(actualPromise, origError) {
   var promises = {not: {}};
   var env = jasmine.getEnv();
   var matchersClass = env.currentSpec.matchersClass || env.matchersClass;
 
   for (matcher in matchersClass.prototype) {
-    promises[matcher] = wrapMatcher(matcher, actualPromise, false);
-    promises.not[matcher] = wrapMatcher(matcher, actualPromise, true);
+    promises[matcher] = wrapMatcher(matcher, actualPromise, origError, false);
+    promises.not[matcher] = wrapMatcher(matcher, actualPromise, origError, true);
   };
 
   return promises;
@@ -125,7 +131,8 @@ global.expect = function(actual) {
       throw 'expect called with WebElement argment, expected a Promise. ' + 
           'Did you mean to use .getText()?';
     }
-    return promiseMatchers(actual);
+    origError = new Error(); // Record the stack for use if expectation fails
+    return promiseMatchers(actual, origError);
   } else {
     return originalExpect(actual);
   }
