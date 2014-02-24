@@ -47,7 +47,7 @@ module.exports = function(config) {
   config.set('rendering.templateFolders', [docsPath]);
 
   config.set('rendering.templatePatterns', [
-    'api-template.md'
+    'templates/api-template.md'
   ]);
 
   return config;

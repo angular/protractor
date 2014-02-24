@@ -15,8 +15,8 @@ module.exports = {
       return fs.readFileSync(path.resolve(__dirname, filePath), 'utf-8');
     }
 
-    apiTemplate = readFile('../api-template.md');
-    tocTemplate = readFile('../toc-template.md');
+    apiTemplate = readFile('../templates/api-template.md');
+    tocTemplate = readFile('../templates/toc-template.md');
   },
   process: function(docs) {
     docs.forEach(function(doc) {
