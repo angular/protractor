@@ -36,7 +36,8 @@
     "nunjucks": "~1.0.1",
     "gulp": "~3.5.2",
     "gulp-concat": "~2.1.7",
-    "gulp-rimraf": "0.0.9"
+    "gulp-rimraf": "0.0.9",
+    "rimraf": "~2.2.6"
   },
   "repository": {
     "type": "git",
@@ -50,7 +51,7 @@
   "scripts": {
     "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/multiConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node lib/cli.js spec/cucumberConf.js; node lib/cli.js spec/withLoginConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js spec/unit/*.js"
   },
-  "license" : "MIT",
+  "license": "MIT",
   "version": "0.19.0",
   "webdriverVersions": {
     "selenium": "2.39.0",
