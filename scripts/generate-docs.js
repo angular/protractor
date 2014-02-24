@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var docGenerator = require('dgeni');
 var rimraf = require('rimraf');
 var fs = require('fs');
