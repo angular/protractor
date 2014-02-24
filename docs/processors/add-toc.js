@@ -35,7 +35,7 @@ module.exports = {
 
     // Add the table of contents at the beginning.
     docs.unshift({
-      outputPath: 'partials/toc.md',
+      outputPath: 'toc.md',
       isToc: true,
       toc: toc
     });

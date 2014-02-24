@@ -71,7 +71,7 @@ var fixParams = function(doc) {
 var fileName = function(doc, i) {
   var index = '00' + (i++);
   index = index.substring(index.length - 3);
-  return 'partials/' + doc.fileName + index + '.md';
+  return doc.fileName + index + '.md';
 };
 
 /**

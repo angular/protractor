@@ -4,10 +4,11 @@ var fs = require('fs');
 var path = require('canonical-path');
 var _ = require('lodash');
 
-(function() {
-  var configPath = path.resolve(__dirname, '../docs/doc-config.js');
-  var buildPath = path.resolve(__dirname, '../docs/build');
-  var docsPath = path.resolve(__dirname, '../docs');
+//(function() {
+  var apiFileName = 'api.md',
+      configPath = path.resolve(__dirname, '../docs/doc-config.js'),
+      buildPath = path.resolve(__dirname, '../docs/build'),
+      docsPath = path.resolve(__dirname, '../docs');
 
   deleteBuild(function() {
     generateDocs();
@@ -31,16 +32,31 @@ var _ = require('lodash');
         if (err) {
           throw  err;
         }
-        mergeFiles(files);
+
+        var sortedFiles = [];
+
+        // Group by file name.
+        var grouped = _.groupBy(files, function(fileName) {
+          return fileName.replace(/\d*\.md/, '');
+        });
+
+        var fileOrder = ['toc', 'protractor', 'locators', 'webdriver'];
+        fileOrder.forEach(function(fileName) {
+          console.log(fileName);
+          sortedFiles = sortedFiles.concat(grouped[fileName]);
+        });
+
+        mergeFiles(sortedFiles);
       });
     });
   }
 
   function mergeFiles(files) {
-    console.log('Merging ' + files.length + ' files into api.md');
+    console.log('Merging ' + files.length + ' files into ' + apiFileName);
 
     var buffer = [];
 
+    // Read all the files.
     files.forEach(function(file) {
       var contents = fs.readFileSync(path.resolve(buildPath, file), 'utf-8');
       buffer.push(contents);
@@ -50,17 +66,15 @@ var _ = require('lodash');
       return;
     }
 
-    var joinedPath = path.resolve(docsPath, 'api.md');
-    console.log('joinedPath', joinedPath);
+    // Write file.
+    var joinedPath = path.resolve(docsPath, 'api.md'),
+        contents = buffer.join('\n');
 
-    var joinedContents = buffer.join('\n');
-    console.log('joinedContents', joinedContents);
-
-    fs.writeFile(joinedPath, joinedContents, function(err) {
+    fs.writeFile(joinedPath, contents, function(err) {
       if (err) {
         throw err;
       }
-      console.log('Done done done');
+      console.log('Done writing file');
     });
   }
-})();
+//})();
