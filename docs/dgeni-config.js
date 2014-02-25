@@ -35,18 +35,24 @@ module.exports = function(config) {
     require('./processors/doc-renderer')
   ]);
 
-  // The name tag should not be required.
+  // Configure the tags that will be parsed from the jsDoc.
   var tagDefs = require('dgeni-packages/jsdoc/tag-defs');
+
+  // Parse 'alias', 'example', and 'view' tags.
   tagDefs.push({name: 'alias'});
   tagDefs.push({name: 'example'});
   tagDefs.push({name: 'view'});
+
+  // The name tag should not be required.
   var nameTag = _.find(tagDefs, {name: 'name'});
   nameTag.required = false;
 
   config.append('processing.tagDefinitions', tagDefs);
 
+  // Base path is the protractor root dir.
   var basePath = path.resolve(packagePath, '..');
 
+  // Generate documentation for protractor, locators, and webdriver.
   config.set('source.files', [
     {pattern: 'lib/**/protractor.js', basePath: basePath},
     {pattern: 'lib/**/locators.js', basePath: basePath},
