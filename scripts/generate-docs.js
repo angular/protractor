@@ -11,10 +11,10 @@ var apiFileName = 'api.md',
     buildPath = path.resolve(__dirname, '../docs/build'),
     docsPath = path.resolve(__dirname, '../docs');
 
-deleteBuildDir(function() {
-  generateDocs();
-});
-
+/**
+ * Delete the docs/build directory.
+ * @param {function()} doneCallback Called when the delete is complete.
+ */
 function deleteBuildDir(doneCallback) {
   console.log('Deleting build directory', buildPath);
   rimraf(buildPath, function(err) {
@@ -26,6 +26,9 @@ function deleteBuildDir(doneCallback) {
   });
 }
 
+/**
+ * Generate the docs/api.md document.
+ */
 function generateDocs() {
   console.log('Generating docs');
   docGenerator(configPath).generateDocs().then(function() {
@@ -86,3 +89,10 @@ function mergeFiles(files) {
     console.log('Done writing file', apiFilePath);
   });
 }
+
+// Generate the documentation.
+// 1. Delete the docs/build directory.
+// 2. Generate the docs/api.md file.
+deleteBuildDir(function() {
+  generateDocs();
+});
