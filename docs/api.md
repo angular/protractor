@@ -1982,7 +1982,7 @@ Interface for navigating back and forth in the browser history.
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent driver.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2070,7 +2070,7 @@ Provides methods for managing browser and driver state.
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent driver.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2247,7 +2247,7 @@ An interface for managing timeout behavior for WebDriver instances.
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent driver.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2350,7 +2350,7 @@ An interface for managing the current window.
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent driver.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2465,7 +2465,7 @@ Interface for managing WebDriver log records.
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent driver.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2528,7 +2528,7 @@ An interface for changing the focus of the driver to another frame or window.
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent driver.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2710,7 +2710,7 @@ catch errors when an element cannot be located on the page:
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The parent WebDriver instance for this element.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent WebDriver instance for this element.
 id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will
     resolve to that ID or another WebElement.
 
@@ -2729,8 +2729,8 @@ Compares to WebElements for equality.
 
 Param | Type | Description
 --- | --- | ---
-a | !webdriver.WebElement | A WebElement.
-b | !webdriver.WebElement | A WebElement.
+a | [!webdriver.WebElement](#webdriverwebelement) | A WebElement.
+b | [!webdriver.WebElement](#webdriverwebelement) | A WebElement.
 
 
 
@@ -3195,7 +3195,7 @@ case of {@code prompt}).
 
 Param | Type | Description
 --- | --- | ---
-driver | !webdriver.WebDriver | The driver controlling the browser this alert is attached to.
+driver | [!webdriver.WebDriver](#webdriverwebdriver) | The driver controlling the browser this alert is attached to.
 text | !(string&#124;webdriver.promise.Promise) | Either the message text displayed with this alert, or a promise that will be resolved to said
     text.
 
@@ -3290,7 +3290,7 @@ current page.
 Param | Type | Description
 --- | --- | ---
 message | string | The error message.
-alert | !webdriver.Alert | The alert handle.
+alert | [!webdriver.Alert](#webdriveralert) | The alert handle.
 
 
 

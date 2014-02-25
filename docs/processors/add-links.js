@@ -1,4 +1,9 @@
 (function() {
+  /**
+   * Add links to the types.
+   * @param {!Object} doc Current document.
+   */
+  var addTypeLinks;
   var _ = require('lodash');
 
   var templateMapping = {
@@ -19,11 +24,7 @@
     doc.sourceLink = template(doc);
   };
 
-  /**
-   * Add links to the types.
-   * @param {!Object} doc Current document.
-   */
-  var addTypeLinks = function(doc) {
+  addTypeLinks = function(doc) {
     // Check the params,
     _.each(doc.params, function(param) {
       // Skip if there is not type.
@@ -32,17 +33,36 @@
         return
       }
 
-      // Is this symbol defined in the list?
-      if (!symbolTable[paramType.description]) {
+      // Find the type name. The type may have the following formats:
+      // some.type
+      // Array.<some.type>
+      // function(some.type)
+      var type = paramType.description;
+
+      // &lt;webdriver.Locator&gt;
+      var match = /(.*&lt;)?([\w\.]+)(&gt;.*)?/.exec(paramType.description);
+      if (match && match[2]) {
+        type = match[2];
+      }
+
+      // Is this type defined in the list?
+      if (!symbolTable[type]) {
         return;
       }
 
       // The link looks like: 'elementFinder.isPresent', transform it into
       // 'elementfinderispresent'.
-      var name = symbolTable[paramType.description][0].name;
-      var linkName = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
+      var typeName = symbolTable[type][0].name;
+      var linkName = typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
 
-      paramType.description = '[' + name + '](#' + linkName + ')';
+      // Is there are bang! at the beginning?
+      if(paramType.description.match(new RegExp('^!' + type))) {
+        type = "!" + type;
+      }
+
+      var typeLink = '[' + type + '](#' + linkName + ')';
+
+      paramType.description = paramType.description.replace(type, typeLink);
     });
   };
 
