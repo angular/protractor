@@ -7,7 +7,7 @@ var path = require('canonical-path');
 var _ = require('lodash');
 
 var apiFileName = 'api.md',
-    configPath = path.resolve(__dirname, '../docs/doc-config.js'),
+    configPath = path.resolve(__dirname, '../docs/dgeni-config.js'),
     buildPath = path.resolve(__dirname, '../docs/build'),
     docsPath = path.resolve(__dirname, '../docs');
 
