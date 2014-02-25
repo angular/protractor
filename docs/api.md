@@ -284,7 +284,7 @@ expect(triple.getText()).toBe('555-123-4567');
 
 Param | Type | Description
 --- | --- | ---
-ptor | Protractor | 
+ptor | [Protractor](#protractor) | 
 opt_usingChain | Array.&lt;webdriver.Locator&gt; | 
 
 
@@ -609,7 +609,7 @@ Type | Description
 
 Param | Type | Description
 --- | --- | ---
-webdriver | webdriver.WebDriver | 
+webdriver | [webdriver.WebDriver](#webdriverwebdriver) | 
 opt_baseUrl | string | A base URL to run get requests against.
 
 
@@ -644,7 +644,7 @@ Wrap a webdriver.WebElement with protractor specific functionality.
 
 Param | Type | Description
 --- | --- | ---
-element | webdriver.WebElement | 
+element | [webdriver.WebElement](#webdriverwebelement) | 
 
 
 

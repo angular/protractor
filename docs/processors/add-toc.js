@@ -24,7 +24,7 @@ module.exports = {
         // Remove the dots.
         var name = doc.name || '';
 
-        // The link looks like: 'elementFinder.isPresent' into
+        // The link looks like: 'elementFinder.isPresent', transform it into
         // 'elementfinderispresent'.
         var linkName = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
 
