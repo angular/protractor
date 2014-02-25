@@ -6,6 +6,9 @@ var BLANK_LINE = /^\s*\n\r?/;
 
 
 /**
+ * This is almost the same code as the original js extractor of dgeni. This
+ * version reads the line after the closing comment.
+ *
  * @description
  * This extractor will pull all docs out from comments in the JS code
  * Each doc will initially have the form:
@@ -13,7 +16,11 @@ var BLANK_LINE = /^\s*\n\r?/;
  *   fileType: 'js',
  *   startingLine: 123,
  *   file: 'path/to/file.js'
- *   content: 'the content of the ngdoc block, stripped of comment stars'
+ *   content: 'the content of the ngdoc block, stripped of comment stars',
+ *   fnDef: {
+ *     line: 'the next line after the closing comment',
+ *     lineNumber: 234
+ *   }
  * }
  */
 
