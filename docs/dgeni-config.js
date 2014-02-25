@@ -7,15 +7,23 @@ module.exports = function(config) {
 
   config = basePackage(config);
 
-  // Override the default extractor.
+  // Override the default extractor with a custom processor that reads the next
+  // line of code after the closing jsdoc.
   config.set('source.extractors', [
     require('./processors/js')
   ]);
 
-  // Add a couple of processors to the pipe to do extra parsing on the tags and
-  // extra rendering.
+  /*
+   * Add a couple of processors to the pipe to do extra parsing and rendering.
+   *
+   * tag-fixer: Get the name of the function, format the @param and @return
+   *     annotations to prepare them for rendering and generate an output file
+   *     name using a sequence.
+   *
+   */
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
+    require('./processors/filter-jsdoc'),
     require('./processors/doc-renderer'),
     require('./processors/add-links'),
     require('./processors/add-toc')

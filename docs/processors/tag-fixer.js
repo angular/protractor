@@ -40,10 +40,13 @@ var escapeTypeDescriptions = function(type) {
 };
 
 /**
- * Remove new lines from the params.
- * @param {!Object} doc Document with the tag.
+ * Remove the duplicate param annotations. Go through the params and the return
+ * annotations to replace the new lines and escape the types to prepare them
+ * for markdown rendering.
+ *
+ * @param {!Object} doc Document representing a function jsdoc.
  */
-var fixParams = function(doc) {
+var fixParamsAndReturns = function(doc) {
   // Remove duplicates.
   if (doc.params) {
     doc.params = _.uniq(doc.params, 'name');
@@ -75,29 +78,16 @@ var fileName = function(doc, i) {
 };
 
 /**
- * Remove docs that should not be in the documentation.
+ * Used to generate a sequence number for each function.
+ * @type {number}
  */
-var filterDocs = function(docs) {
-  return _.reject(docs, function(doc) {
-    // Skip functions starting with 'exports' and ending with _.
-    if (!doc.name || /^exports/.test(doc.name) || /_\s*$/.test(doc.name)) {
-      return true;
-    }
-
-    // Exclude docs with tags.
-    if (doc.tags) {
-      var tags = _.pluck(doc.tags.tags, 'title');
-      return _.intersection(tags, excludedTags).length;
-    }
-  });
-};
-
-var excludedTags = ['private', 'type'];
 var i = 1;
 
 module.exports = {
   name: 'tag-fixer',
-  description: 'Do some processing before rendering',
+  description: 'Get the name of the function, format the @param and @return ' +
+      'annotations to prepare them for rendering and generate an output file ' +
+      'name using a sequence.',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
   init: function(config) {
@@ -105,12 +95,10 @@ module.exports = {
   process: function(docs) {
     docs.forEach(function(doc) {
       findName(doc);
-      fixParams(doc);
+      fixParamsAndReturns(doc);
 
       doc.outputPath = fileName(doc, i++);
     });
-
-    docs = filterDocs(docs);
 
     return docs;
   }
