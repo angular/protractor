@@ -20,7 +20,7 @@ module.exports = {
       });
 
       // Add the link to jump to the jsdoc definition in api.md.
-      _.each(docs, function(doc) {
+      docs.forEach(function(doc) {
         // Remove the dots.
         var name = doc.name || '';
 
