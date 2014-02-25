@@ -19,7 +19,6 @@ function seal(fn) {
   };
 };
 
-
 /**
  * Wraps a function so it runs inside a webdriver.promise.ControlFlow and
  * waits for the flow to complete before continuing.
@@ -28,6 +27,20 @@ function seal(fn) {
  */
 function wrapInControlFlow(globalFn) {
   return function() {
+    var driverError = new Error();
+    driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
+
+    function asyncTestFn(fn) {
+      return function(done) {
+        var thing = flow.execute(function() {
+          fn.call(jasmine.getEnv().currentSpec);
+        }).then(seal(done), function(e) {
+          e.stack = driverError.stack;
+          done(e);
+        });
+      };
+    };
+
     switch (arguments.length) {
       case 1:
         globalFn(asyncTestFn(arguments[0]));
@@ -46,14 +59,6 @@ function wrapInControlFlow(globalFn) {
       default:
         throw Error('Invalid # arguments: ' + arguments.length);
     }
-  };
-
-  function asyncTestFn(fn) {
-    return function(done) {
-      flow.execute(function() {
-        fn.call(jasmine.getEnv().currentSpec);
-      }).then(seal(done), done);
-    };
   };
 };
 
