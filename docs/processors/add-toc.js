@@ -8,21 +8,9 @@ module.exports = {
   init: function(config) {
   },
   process: function(docs) {
-    var byFile = _.groupBy(docs, 'fileName');
-
-    var toc = [];
-
-    // https://github.com/andresdominguez/protractor/blob/documentationMerge/docs/protractor.md#element
-
-    var addLink = function(doc) {
-      // Remove the dots.
-      var name = doc.name || '';
-      var linkName = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
-      toc.push({
-        name: name,
-        link: linkName
-      });
-    };
+    // Group docs by file name.
+    var byFile = _.groupBy(docs, 'fileName'),
+        toc = [];
 
     _.each(byFile, function(docs, fileName) {
       // This is the file header
@@ -30,7 +18,21 @@ module.exports = {
         name: fileName,
         isHeader: true
       });
-      _.each(docs, addLink);
+
+      // Add the link to jump to the jsdoc definition in api.md.
+      _.each(docs, function(doc) {
+        // Remove the dots.
+        var name = doc.name || '';
+
+        // The link looks like: 'elementFinder.isPresent' into
+        // 'elementfinderispresent'.
+        var linkName = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
+
+        toc.push({
+          name: name,
+          link: linkName
+        });
+      });
     });
 
     // Add the table of contents at the beginning.

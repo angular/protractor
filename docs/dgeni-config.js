@@ -19,7 +19,13 @@ module.exports = function(config) {
    * tag-fixer: Get the name of the function, format the @param and @return
    *     annotations to prepare them for rendering and generate an output file
    *     name using a sequence.
-   *
+   * filter-jsdoc: Filter the functions that will not be part of the output
+   *     documentation and generate a unique name for the output partial file.
+   * doc-renderer: Render the string that will go into the output partial file
+   *     using the nunjucks template.
+   * add-links: Add links to the source code for protractor.js, locators.js,
+   *     and webdriver.js.
+   * add-toc: Add the table of contents.
    */
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
