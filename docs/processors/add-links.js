@@ -24,6 +24,10 @@
     doc.sourceLink = template(doc);
   };
 
+  /**
+   * Add links to the types for param and return annotations.
+   * @param {!Object} paramOrReturn A param or return object.
+   */
   var addTypeLink = function(paramOrReturn) {
     if (!paramOrReturn) {
       return;
@@ -48,13 +52,13 @@
     }
 
     // Is this type defined in the list?
-    if (!symbolTable[type]) {
+    if (!typeTable[type]) {
       return;
     }
 
     // The link looks like: 'elementFinder.isPresent', transform it into
     // 'elementfinderispresent'.
-    var typeName = symbolTable[type][0].name;
+    var typeName = typeTable[type][0].name;
     var linkName = typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
 
     // Is there are bang! at the beginning?
@@ -67,12 +71,11 @@
     annotationType.description = annotationType.description.replace(type, typeLink);
   };
 
-  addTypeLinks = function(doc) {
-    _.each(doc.params, addTypeLink);
-    addTypeLink(doc.returns);
-  };
-
-  var symbolTable;
+  /**
+   * A lookup table with all the types in the parsed files.
+   * @type {Object.<string, Array.<Object>>}
+   */
+  var typeTable;
 
   module.exports = {
     name: 'add-links',
@@ -82,11 +85,14 @@
     init: function(config) {
     },
     process: function(docs) {
-      symbolTable = _.groupBy(docs, 'name');
+      typeTable = _.groupBy(docs, 'name');
 
       docs.forEach(function(doc) {
         addLinkToSourceCode(doc);
-        addTypeLinks(doc);
+        // Add links for the param types.
+        _.each(doc.params, addTypeLink);
+        // Add links for the return types.
+        addTypeLink(doc.returns);
       });
     }
   };
