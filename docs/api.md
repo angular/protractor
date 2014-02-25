@@ -216,7 +216,7 @@ Return the actual WebElement.
 
 Type | Description
 --- | ---
-webdriver.WebElement | 
+[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L126)
@@ -449,7 +449,7 @@ index | number | Element index.
 
 Type | Description
 --- | ---
-webdriver.WebElement | The element at the given index
+[webdriver.WebElement](#webdriverwebelement) | The element at the given index
 
 
 ##[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L284)
@@ -480,7 +480,7 @@ expect(list.first().getText()).toBe('First');
 
 Type | Description
 --- | ---
-webdriver.WebElement | The first matching element
+[webdriver.WebElement](#webdriverwebelement) | The first matching element
 
 
 ##[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L311)
@@ -511,7 +511,7 @@ expect(list.last().getText()).toBe('Third');
 
 Type | Description
 --- | ---
-webdriver.WebElement | the last matching element
+[webdriver.WebElement](#webdriverwebelement) | the last matching element
 
 
 ##[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L343)
@@ -653,7 +653,7 @@ element | [webdriver.WebElement](#webdriverwebelement) |
 
 Type | Description
 --- | ---
-webdriver.WebElement | the wrapped web element.
+[webdriver.WebElement](#webdriverwebelement) | the wrapped web element.
 
 
 ##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L605)
@@ -690,7 +690,7 @@ selector | string | A css selector
 
 Type | Description
 --- | ---
-!webdriver.WebElement | 
+[!webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L628)
@@ -706,7 +706,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebElement | 
+[!webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L645)
@@ -823,7 +823,7 @@ Waits for Angular to finish rendering before searching for elements.
 
 Type | Description
 --- | ---
-!webdriver.WebElement | 
+[!webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L752)
@@ -1308,7 +1308,7 @@ sessionId | string | ID of the session to attach to.
 
 Type | Description
 --- | ---
-!webdriver.WebDriver | A new client for the specified session.
+[!webdriver.WebDriver](#webdriverwebdriver) | A new client for the specified session.
 
 
 ##[webdriver.WebDriver.createSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#102)
@@ -1332,7 +1332,7 @@ desiredCapabilities | !webdriver.Capabilities | The desired capabilities for the
 
 Type | Description
 --- | ---
-!webdriver.WebDriver | The driver for the newly created session.
+[!webdriver.WebDriver](#webdriverwebdriver) | The driver for the newly created session.
 
 
 ##[webdriver.WebDriver.prototype.controlFlow](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#243)
@@ -1936,7 +1936,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver.Options | The options interface for this instance.
+[!webdriver.WebDriver.Options](#webdriverwebdriveroptions) | The options interface for this instance.
 
 
 ##[webdriver.WebDriver.prototype.navigate](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#858)
@@ -1952,7 +1952,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver.Navigation | The navigation interface for this instance.
+[!webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation) | The navigation interface for this instance.
 
 
 ##[webdriver.WebDriver.prototype.switchTo](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#867)
@@ -1968,7 +1968,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver.TargetLocator | The target locator interface for this instance.
+[!webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator) | The target locator interface for this instance.
 
 
 ##[webdriver.WebDriver.Navigation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#877)
@@ -2201,7 +2201,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver.Logs | The interface for managing driver logs.
+[!webdriver.WebDriver.Logs](#webdriverwebdriverlogs) | The interface for managing driver logs.
 
 
 ##[webdriver.WebDriver.Options.prototype.timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1079)
@@ -2217,7 +2217,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver.Timeouts | The interface for managing driver timeouts.
+[!webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts) | The interface for managing driver timeouts.
 
 
 ##[webdriver.WebDriver.Options.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1088)
@@ -2233,7 +2233,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver.Window | The interface for managing the current window.
+[!webdriver.WebDriver.Window](#webdriverwebdriverwindow) | The interface for managing the current window.
 
 
 ##[webdriver.WebDriver.Timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1098)
@@ -2549,7 +2549,7 @@ available.
 
 Type | Description
 --- | ---
-!webdriver.WebElement | The active element.
+[!webdriver.WebElement](#webdriverwebelement) | The active element.
 
 
 ##[webdriver.WebDriver.TargetLocator.prototype.defaultContent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1344)
@@ -2647,7 +2647,7 @@ dialog is not currently open.
 
 Type | Description
 --- | ---
-!webdriver.Alert | The open alert.
+[!webdriver.Alert](#webdriveralert) | The open alert.
 
 
 ##[webdriver.Key.chord](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1418)
@@ -2755,7 +2755,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.WebDriver | The parent driver for this instance.
+[!webdriver.WebDriver](#webdriverwebdriver) | The parent driver for this instance.
 
 
 ##[webdriver.WebElement.prototype.toWireValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1568)
@@ -3309,5 +3309,5 @@ alert | [!webdriver.Alert](#webdriveralert) | The alert handle.
 
 Type | Description
 --- | ---
-!webdriver.Alert | The open alert.
+[!webdriver.Alert](#webdriveralert) | The open alert.
 

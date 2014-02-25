@@ -24,46 +24,52 @@
     doc.sourceLink = template(doc);
   };
 
+  var addTypeLink = function(paramOrReturn) {
+    if (!paramOrReturn) {
+      return;
+    }
+
+    // Skip if there is not type.
+    var annotationType = paramOrReturn.type;
+    if (!annotationType || !annotationType.description) {
+      return
+    }
+
+    // Find the type name. The type may have the following formats:
+    // some.type
+    // Array.<some.type>
+    // function(some.type)
+    var type = annotationType.description;
+
+    // &lt;webdriver.Locator&gt;
+    var match = /(.*&lt;)?([\w\.]+)(&gt;.*)?/.exec(annotationType.description);
+    if (match && match[2]) {
+      type = match[2];
+    }
+
+    // Is this type defined in the list?
+    if (!symbolTable[type]) {
+      return;
+    }
+
+    // The link looks like: 'elementFinder.isPresent', transform it into
+    // 'elementfinderispresent'.
+    var typeName = symbolTable[type][0].name;
+    var linkName = typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
+
+    // Is there are bang! at the beginning?
+    if (annotationType.description.match(new RegExp('^!' + type))) {
+      type = "!" + type;
+    }
+
+    var typeLink = '[' + type + '](#' + linkName + ')';
+
+    annotationType.description = annotationType.description.replace(type, typeLink);
+  };
+
   addTypeLinks = function(doc) {
-    // Check the params,
-    _.each(doc.params, function(param) {
-      // Skip if there is not type.
-      var paramType = param.type;
-      if (!paramType || !paramType.description) {
-        return
-      }
-
-      // Find the type name. The type may have the following formats:
-      // some.type
-      // Array.<some.type>
-      // function(some.type)
-      var type = paramType.description;
-
-      // &lt;webdriver.Locator&gt;
-      var match = /(.*&lt;)?([\w\.]+)(&gt;.*)?/.exec(paramType.description);
-      if (match && match[2]) {
-        type = match[2];
-      }
-
-      // Is this type defined in the list?
-      if (!symbolTable[type]) {
-        return;
-      }
-
-      // The link looks like: 'elementFinder.isPresent', transform it into
-      // 'elementfinderispresent'.
-      var typeName = symbolTable[type][0].name;
-      var linkName = typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
-
-      // Is there are bang! at the beginning?
-      if(paramType.description.match(new RegExp('^!' + type))) {
-        type = "!" + type;
-      }
-
-      var typeLink = '[' + type + '](#' + linkName + ')';
-
-      paramType.description = paramType.description.replace(type, typeLink);
-    });
+    _.each(doc.params, addTypeLink);
+    addTypeLink(doc.returns);
   };
 
   var symbolTable;
