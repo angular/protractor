@@ -7,7 +7,8 @@ var _ = require('lodash');
 var excludedTags = ['private', 'type'];
 
 /**
- * Remove docs that should not be in the documentation.
+ * Remove docs that should not be in the documentation. Reject type, private,
+ * exported functions, and function ending with underscore.
  *
  * @param {Array.<Object>} docs The jsdoc list.
  */
@@ -28,7 +29,7 @@ var filterDocs = function(docs) {
 
 module.exports = {
   name: 'filter-jsdoc',
-  description: 'Filter ',
+  description: 'Filter functions that will not go into the documentation',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
   init: function(config) {
