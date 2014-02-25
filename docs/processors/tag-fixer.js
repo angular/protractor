@@ -68,26 +68,10 @@ var fixParamsAndReturns = function(doc) {
   }
 };
 
-/**
- * Generate a unique file name with an index used to concatenate.
- */
-var fileName = function(doc, i) {
-  var index = '00' + (i++);
-  index = index.substring(index.length - 3);
-  return doc.fileName + index + '.md';
-};
-
-/**
- * Used to generate a sequence number for each function.
- * @type {number}
- */
-var i = 1;
-
 module.exports = {
   name: 'tag-fixer',
   description: 'Get the name of the function, format the @param and @return ' +
-      'annotations to prepare them for rendering and generate an output file ' +
-      'name using a sequence.',
+      'annotations to prepare them for rendering.',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
   init: function(config) {
@@ -96,8 +80,6 @@ module.exports = {
     docs.forEach(function(doc) {
       findName(doc);
       fixParamsAndReturns(doc);
-
-      doc.outputPath = fileName(doc, i++);
     });
 
     return docs;
