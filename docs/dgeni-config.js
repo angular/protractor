@@ -21,18 +21,18 @@ module.exports = function(config) {
    *     name using a sequence.
    * filter-jsdoc: Filter the functions that will not be part of the output
    *     documentation and generate a unique name for the output partial file.
-   * doc-renderer: Render the string that will go into the output partial file
-   *     using the nunjucks template.
    * add-links: Add links to the source code for protractor.js, locators.js,
    *     and webdriver.js.
    * add-toc: Add the table of contents.
+   * doc-renderer: Render the string that will go into the output partial file
+   *     using the nunjucks template.
    */
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
     require('./processors/filter-jsdoc'),
-    require('./processors/doc-renderer'),
     require('./processors/add-links'),
-    require('./processors/add-toc')
+    require('./processors/add-toc'),
+    require('./processors/doc-renderer')
   ]);
 
   // The name tag should not be required.
