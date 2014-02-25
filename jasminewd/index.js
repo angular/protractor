@@ -70,9 +70,11 @@ global.afterEach = wrapInControlFlow(global.afterEach);
  *     resolve to the actual value being tested.
  * @param {boolean} not Whether this is being called with 'not' active.
  */
-function wrapMatcher(matcher, actualPromise, origError, not) {
+function wrapMatcher(matcher, actualPromise, not) {
   return function() {
     var originalArgs = arguments;
+    var matchError = new Error("Failed expectation");
+    matchError.stack = matchError.stack.replace(/ +at.+jasminewd.+\n/, '');
     actualPromise.then(function(actual) {
       var expected = originalArgs[0];
       if (expected instanceof webdriver.promise.Promise) {
@@ -92,9 +94,10 @@ function wrapMatcher(matcher, actualPromise, origError, not) {
         if (not) {
           expectation = expectation.not;
         }
-        origFn = expectation.spec.addMatcherResult; // Probly null, but to be safe
+        var origFn = expectation.spec.addMatcherResult;
+        var error = matchError;
         expectation.spec.addMatcherResult = function(result) {
-          result.trace = origError;
+          result.trace = error;
           jasmine.Spec.prototype.addMatcherResult.call(this, result);
         }
         expectation[matcher].apply(expectation, originalArgs);
@@ -110,14 +113,14 @@ function wrapMatcher(matcher, actualPromise, origError, not) {
  * @param {webdriver.promise.Promise} actualPromise The promise which will
  *     resolve to the acutal value being tested.
  */
-function promiseMatchers(actualPromise, origError) {
+function promiseMatchers(actualPromise) {
   var promises = {not: {}};
   var env = jasmine.getEnv();
   var matchersClass = env.currentSpec.matchersClass || env.matchersClass;
 
   for (matcher in matchersClass.prototype) {
-    promises[matcher] = wrapMatcher(matcher, actualPromise, origError, false);
-    promises.not[matcher] = wrapMatcher(matcher, actualPromise, origError, true);
+    promises[matcher] = wrapMatcher(matcher, actualPromise, false);
+    promises.not[matcher] = wrapMatcher(matcher, actualPromise, true);
   };
 
   return promises;
@@ -131,8 +134,7 @@ global.expect = function(actual) {
       throw 'expect called with WebElement argment, expected a Promise. ' + 
           'Did you mean to use .getText()?';
     }
-    origError = new Error(); // Record the stack for use if expectation fails
-    return promiseMatchers(actual, origError);
+    return promiseMatchers(actual);
   } else {
     return originalExpect(actual);
   }
