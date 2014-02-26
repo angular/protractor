@@ -23,7 +23,7 @@ var binaries = {
     prefix: 'selenium-server-standalone',
     filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
     url: function() {
-      return 'https://selenium.googlecode.com/files/' +
+      return 'http://selenium-release.storage.googleapis.com/2.40/' +
           'selenium-server-standalone-' + versions.selenium+ '.jar';
     }
   },
@@ -54,7 +54,7 @@ var binaries = {
     prefix: 'IEDriverServer',
     filename: 'IEDriverServer_' + versions.iedriver + '.zip',
     url: function() {
-      var urlPrefix = 'https://selenium.googlecode.com/files/IEDriverServer';
+      var urlPrefix = 'http://selenium-release.storage.googleapis.com/2.40/IEDriverServer';
       if (os.type() == 'Windows_NT') {
         if (os.arch() == 'x64') {
           return urlPrefix + '_x64_' + versions.iedriver + '.zip';
