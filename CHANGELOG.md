@@ -44,7 +44,9 @@ _Note: Major version 0 releases are for initial development, and backwards incom
 
       After:
 
-      window.clientSideScripts.findInputs(document, 'username');
+      window.clientSideScripts.findInputs('username', document);
+      // or simply
+      window.clientSideScripts.findInputs('username');
 
     Also, any custom locators using addLocator will now break since the
     arguments order has chnaged. To migrate the code follow the example below:
