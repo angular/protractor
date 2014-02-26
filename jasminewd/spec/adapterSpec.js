@@ -47,7 +47,25 @@ var getFakeDriver = function() {
         return flow.execute(function() {
           return webdriver.promise.fulfilled(3.14159);
         });
-      }
+      },
+    getDisplayedElement: function() {
+      return flow.execute(function() {
+        return webdriver.promise.fulfilled({
+          isDisplayed: function() {
+            return webdriver.promise.fulfilled(true);
+          }
+        });
+      });
+    },
+    getHiddenElement: function() {
+      return flow.execute(function() {
+        return webdriver.promise.fulfilled({
+          isDisplayed: function() {
+            return webdriver.promise.fulfilled(false);
+          }
+        });
+      });
+    }
   };
 };
 
@@ -69,6 +87,10 @@ describe('webdriverJS Jasmine adapter', function() {
     this.addMatchers({
       toBeLotsMoreThan: function(expected) {
         return this.actual > expected + 100;
+      },
+      // Example custom matcher returning a promise that resolves to true/false.
+      toBeDisplayed: function() {
+        return this.actual.isDisplayed();
       }
     });
   });
@@ -114,6 +136,11 @@ describe('webdriverJS Jasmine adapter', function() {
   it('should allow the use of custom matchers', function() {
     expect(500).toBeLotsMoreThan(3);
     expect(fakeDriver.getBigNumber()).toBeLotsMoreThan(33);
+  });
+
+  it('should allow custom matchers to return a promise', function() {
+    expect(fakeDriver.getDisplayedElement()).toBeDisplayed();
+    expect(fakeDriver.getHiddenElement()).not.toBeDisplayed();
   });
 
   it('should pass multiple arguments to matcher', function() {

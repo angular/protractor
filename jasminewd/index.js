@@ -148,6 +148,32 @@ global.expect = function(actual) {
   }
 };
 
+// Wrap internal Jasmine function to allow custom matchers
+// to return promises that resolve to truthy or falsy values
+var originalMatcherFn = jasmine.Matchers.matcherFn_;
+jasmine.Matchers.matcherFn_ = function(matcherName, matcherFunction) {
+  var matcherFnThis = this;
+  var matcherFnArgs = jasmine.util.argsToArray(arguments);
+  return function() {
+    var matcherThis = this;
+    var matcherArgs = jasmine.util.argsToArray(arguments);
+    var result = matcherFunction.apply(this, arguments);
+
+    if (result instanceof webdriver.promise.Promise) {
+      result.then(function(resolution) {
+        matcherFnArgs[1] = function() {
+          return resolution;
+        };
+        originalMatcherFn.apply(matcherFnThis, matcherFnArgs).
+            apply(matcherThis, matcherArgs);
+      });
+    } else {
+      originalMatcherFn.apply(matcherFnThis, matcherFnArgs).
+          apply(matcherThis, matcherArgs);
+    }
+  };
+};
+
 /**
  * A Jasmine reporter which does nothing but execute the input function
  * on a timeout failure.
