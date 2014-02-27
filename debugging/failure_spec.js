@@ -15,6 +15,11 @@ describe('modes of failure', function() {
     var nonExistant = element(by.binding('nopenopenope')).getText();
   });
 
+  it('should fail to click a hidden element', function () {
+    browser.get('index.html#/form');
+    element(by.id("hiddenbutton")).click();
+  });
+
   it('should fail to use protractor on a non-Angular site', function() {
     browser.get('http://www.google.com');
   }, 20000);

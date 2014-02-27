@@ -19,7 +19,6 @@ function seal(fn) {
   };
 };
 
-
 /**
  * Wraps a function so it runs inside a webdriver.promise.ControlFlow and
  * waits for the flow to complete before continuing.
@@ -28,6 +27,20 @@ function seal(fn) {
  */
 function wrapInControlFlow(globalFn) {
   return function() {
+    var driverError = new Error();
+    driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
+
+    function asyncTestFn(fn) {
+      return function(done) {
+        var thing = flow.execute(function() {
+          fn.call(jasmine.getEnv().currentSpec);
+        }).then(seal(done), function(e) {
+          e.stack = driverError.stack;
+          done(e);
+        });
+      };
+    };
+
     switch (arguments.length) {
       case 1:
         globalFn(asyncTestFn(arguments[0]));
@@ -47,14 +60,6 @@ function wrapInControlFlow(globalFn) {
         throw Error('Invalid # arguments: ' + arguments.length);
     }
   };
-
-  function asyncTestFn(fn) {
-    return function(done) {
-      flow.execute(function() {
-        fn.call(jasmine.getEnv().currentSpec);
-      }).then(seal(done), done);
-    };
-  };
 };
 
 global.it = wrapInControlFlow(global.it);
@@ -73,6 +78,8 @@ global.afterEach = wrapInControlFlow(global.afterEach);
 function wrapMatcher(matcher, actualPromise, not) {
   return function() {
     var originalArgs = arguments;
+    var matchError = new Error("Failed expectation");
+    matchError.stack = matchError.stack.replace(/ +at.+jasminewd.+\n/, '');
     actualPromise.then(function(actual) {
       var expected = originalArgs[0];
       if (expected instanceof webdriver.promise.Promise) {
@@ -92,7 +99,14 @@ function wrapMatcher(matcher, actualPromise, not) {
         if (not) {
           expectation = expectation.not;
         }
+        var origFn = expectation.spec.addMatcherResult;
+        var error = matchError;
+        expectation.spec.addMatcherResult = function(result) {
+          result.trace = error;
+          jasmine.Spec.prototype.addMatcherResult.call(this, result);
+        }
         expectation[matcher].apply(expectation, originalArgs);
+        expectation.spec.addMatcherResult = origFn;
       }
     });
   };
