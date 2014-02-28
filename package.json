@@ -18,7 +18,8 @@
     "glob": ">=3.1.14",
     "adm-zip": ">=0.4.2",
     "optimist": "~0.6.0",
-    "q": "1.0.0"
+    "q": "1.0.0",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
@@ -40,9 +41,9 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/multiConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node lib/cli.js spec/cucumberConf.js; node lib/cli.js spec/withLoginConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js spec/unit/*.js"
+    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/multiConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node lib/cli.js spec/cucumberConf.js; node lib/cli.js spec/withLoginConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js spec/unit/*.js; node lib/cli.js spec/suitesConf.js --suite okmany; node lib/cli.js spec/suitesConf.js --suite okspec"
   },
-  "license" : "MIT",
+  "license": "MIT",
   "version": "0.19.0",
   "webdriverVersions": {
     "selenium": "2.40.0",
