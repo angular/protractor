@@ -1,5 +1,6 @@
 var linksProcessor = require('../processors/add-links');
 var expect = require('expect.js');
+var _ = require('lodash');
 
 
 describe('add-links', function() {
@@ -44,6 +45,16 @@ describe('add-links', function() {
             type: {
               description: '!webdriver.WebElement'
             }
+          },
+          {
+            type: {
+              description: 'webdriver.WebElement'
+            }
+          },
+          {
+            type: {
+              description: _.escape('!Array.<webdriver.WebElement>')
+            }
           }
         ],
         returns: {
@@ -58,9 +69,15 @@ describe('add-links', function() {
     addLinks(docs);
 
     // Then ensure the link was added.
-    expect(docs[1].params[0].type.description).
+    var doc = docs[1];
+    expect(doc.params[0].type.description).
         to.equal('[!webdriver.WebElement](#webdriverwebelement)');
-    expect(docs[1].returns.type.description).
-        to.equal(12);
+    expect(doc.params[1].type.description).
+        to.equal('[webdriver.WebElement](#webdriverwebelement)');
+    expect(doc.params[2].type.description).
+        to.equal('!Array.&lt;[webdriver.WebElement](#webdriverwebelement)&gt;');
+
+    expect(doc.returns.type.description).
+        to.equal('[!webdriver.WebElement](#webdriverwebelement)');
   });
 });
