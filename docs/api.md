@@ -1003,7 +1003,7 @@ name | string |
 
 
 
-##[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L45)
+##[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L61)
 ####by.binding()
 Find an element by binding.
 
@@ -1041,7 +1041,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L74)
+##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L90)
 
 DEPRECATED - use 'model' instead.
 
@@ -1061,7 +1061,7 @@ element(by.select('user'));
 
 
 
-##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L93)
+##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L109)
 
 
 
@@ -1081,7 +1081,7 @@ element(by.selectedOption("user"));
 
 
 
-##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L110)
+##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L126)
 
 
 
@@ -1101,7 +1101,7 @@ element(by.input('user'));
 
 
 
-##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L128)
+##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L144)
 ####by.model()
 Find an element by ng-model expression.
 
@@ -1130,7 +1130,7 @@ model | string | ng-model expression.
 
 
 
-##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L152)
+##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L168)
 
 Find a button by text.
 
@@ -1163,7 +1163,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L174)
+##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L190)
 
 Find a button by partial text.
 
@@ -1196,7 +1196,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L197)
+##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L213)
 
 DEPRECATED - use 'model' instead.
 
@@ -1216,7 +1216,7 @@ element(by.textarea('user'));
 
 
 
-##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L215)
+##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L231)
 
 Find elements inside an ng-repeat.
 
