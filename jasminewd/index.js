@@ -19,7 +19,6 @@ function seal(fn) {
   };
 };
 
-
 /**
  * Wraps a function so it runs inside a webdriver.promise.ControlFlow and
  * waits for the flow to complete before continuing.
@@ -28,6 +27,20 @@ function seal(fn) {
  */
 function wrapInControlFlow(globalFn) {
   return function() {
+    var driverError = new Error();
+    driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
+
+    function asyncTestFn(fn) {
+      return function(done) {
+        var thing = flow.execute(function() {
+          fn.call(jasmine.getEnv().currentSpec);
+        }).then(seal(done), function(e) {
+          e.stack = driverError.stack + '\nAt async task:\n      ' + e.stack;
+          done(e);
+        });
+      };
+    };
+
     switch (arguments.length) {
       case 1:
         globalFn(asyncTestFn(arguments[0]));
@@ -47,14 +60,6 @@ function wrapInControlFlow(globalFn) {
         throw Error('Invalid # arguments: ' + arguments.length);
     }
   };
-
-  function asyncTestFn(fn) {
-    return function(done) {
-      flow.execute(function() {
-        fn.call(jasmine.getEnv().currentSpec);
-      }).then(seal(done), done);
-    };
-  };
 };
 
 global.it = wrapInControlFlow(global.it);
@@ -73,26 +78,38 @@ global.afterEach = wrapInControlFlow(global.afterEach);
 function wrapMatcher(matcher, actualPromise, not) {
   return function() {
     var originalArgs = arguments;
+    var matchError = new Error("Failed expectation");
+    matchError.stack = matchError.stack.replace(/ +at.+jasminewd.+\n/, '');
     actualPromise.then(function(actual) {
       var expected = originalArgs[0];
+
+      var expectation = expect(actual);
+      if (not) {
+        expectation = expectation.not;
+      }
+      var originalAddMatcherResult = expectation.spec.addMatcherResult;
+      var error = matchError;
+      expectation.spec.addMatcherResult = function(result) {
+        result.trace = error;
+        jasmine.Spec.prototype.addMatcherResult.call(this, result);
+      };
+
       if (expected instanceof webdriver.promise.Promise) {
         if (originalArgs.length > 1) {
           throw error('Multi-argument matchers with promises are not '
               + 'supported.');
         }
         expected.then(function(exp) {
-          if (not) {
-            expect(actual).not[matcher](exp)
-          } else {
-            expect(actual)[matcher](exp);
-          }
+          expectation[matcher].apply(expectation, [exp]);
+          expectation.spec.addMatcherResult = originalAddMatcherResult;
         });
       } else {
-        var expectation = expect(actual);
-        if (not) {
-          expectation = expectation.not;
+        expectation.spec.addMatcherResult = function(result) {
+          result.trace = error;
+          originalAddMatcherResult.call(this, result);
         }
         expectation[matcher].apply(expectation, originalArgs);
+        expectation.spec.addMatcherResult = originalAddMatcherResult;
       }
     });
   };
@@ -129,6 +146,32 @@ global.expect = function(actual) {
   } else {
     return originalExpect(actual);
   }
+};
+
+// Wrap internal Jasmine function to allow custom matchers
+// to return promises that resolve to truthy or falsy values
+var originalMatcherFn = jasmine.Matchers.matcherFn_;
+jasmine.Matchers.matcherFn_ = function(matcherName, matcherFunction) {
+  var matcherFnThis = this;
+  var matcherFnArgs = jasmine.util.argsToArray(arguments);
+  return function() {
+    var matcherThis = this;
+    var matcherArgs = jasmine.util.argsToArray(arguments);
+    var result = matcherFunction.apply(this, arguments);
+
+    if (result instanceof webdriver.promise.Promise) {
+      result.then(function(resolution) {
+        matcherFnArgs[1] = function() {
+          return resolution;
+        };
+        originalMatcherFn.apply(matcherFnThis, matcherFnArgs).
+            apply(matcherThis, matcherArgs);
+      });
+    } else {
+      originalMatcherFn.apply(matcherFnThis, matcherFnArgs).
+          apply(matcherThis, matcherArgs);
+    }
+  };
 };
 
 /**

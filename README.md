@@ -108,5 +108,7 @@ Download and start the selenium server with
     webdriver-manager update
     webdriver-manager start
 
+Note the [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) is also required to run the webdriver. You may have to download and install it if your computer does not already have it.
+
 For alternate ways to download and start the selenium standalone, see
 [the webdriver docs](http://docs.seleniumhq.org/docs/03_webdriver.jsp#running-standalone-selenium-server-for-use-with-remotedrivers).
