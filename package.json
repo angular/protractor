@@ -17,7 +17,8 @@
     "saucelabs": "~0.1.0",
     "glob": ">=3.1.14",
     "adm-zip": ">=0.4.2",
-    "optimist": "~0.6.0"
+    "optimist": "~0.6.0",
+    "q": "1.0.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
@@ -32,10 +33,8 @@
     "dgeni-packages": "0.0.2",
     "lodash": "~2.4.1",
     "canonical-path": "0.0.2",
-    "nunjucks": "~1.0.1",
-    "gulp": "~3.5.2",
-    "gulp-concat": "~2.1.7",
-    "gulp-rimraf": "0.0.9"
+    "rimraf": "~2.2.6",
+    "nunjucks": "~1.0.1"
   },
   "repository": {
     "type": "git",
@@ -47,13 +46,13 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node lib/cli.js spec/cucumberConf.js; node lib/cli.js spec/withLoginConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js"
+    "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/multiConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node lib/cli.js spec/mochaConf.js; node lib/cli.js spec/cucumberConf.js; node lib/cli.js spec/withLoginConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js spec/unit/*.js"
   },
   "license": "MIT",
-  "version": "0.18.1",
+  "version": "0.19.0",
   "webdriverVersions": {
     "selenium": "2.39.0",
-    "chromedriver": "2.8",
+    "chromedriver": "2.9",
     "iedriver": "2.39.0"
   }
 }

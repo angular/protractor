@@ -36,4 +36,16 @@ describe('mock modules', function() {
 
     expect(element(by.css('[app-version]')).getText()).toEqual('3');
   });
+
+  it('should have the version of the module A after deleting module B', function() {
+    browser.addMockModule('moduleA', mockModuleA);
+    browser.addMockModule('moduleB', mockModuleB);
+
+    browser.removeMockModule('moduleB');
+
+    browser.get('index.html');
+
+    expect(element(by.css('[app-version]')).getText()).toEqual('2');
+  });
+
 });

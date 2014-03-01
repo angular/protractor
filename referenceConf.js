@@ -69,6 +69,11 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  // If you would like to run more than one instance of webdriver on the same
+  // tests, use multiCapabilities, which takes an array of capabilities.
+  // If this is specified, capabilities will be ignored.
+  multiCapabilities: [],
+
   // ----- More information for your tests ----
   //
   // A base URL for your application under test. Calls to protractor.get()

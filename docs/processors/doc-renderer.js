@@ -2,7 +2,8 @@ var path = require('canonical-path');
 var nunjucks = require('nunjucks');
 var fs = require('fs');
 
-var templateFile;
+var apiTemplate,
+    tocTemplate;
 
 module.exports = {
   name: 'proper-render',
@@ -10,12 +11,18 @@ module.exports = {
   runAfter: ['rendering-docs'],
   runBefore: ['docs-rendered'],
   init: function() {
-    var apiTemplate = path.resolve(__dirname, '../api-template.md');
-    templateFile = fs.readFileSync(apiTemplate, 'utf-8');
+    function readFile(filePath) {
+      return fs.readFileSync(path.resolve(__dirname, filePath), 'utf-8');
+    }
+
+    apiTemplate = readFile('../templates/api-template.md');
+    tocTemplate = readFile('../templates/toc-template.md');
   },
   process: function(docs) {
     docs.forEach(function(doc) {
-      doc.renderedContent = nunjucks.renderString(templateFile, doc);
+      // Choose the template: table of contents or function.
+      var template = doc.isToc ? tocTemplate : apiTemplate;
+      doc.renderedContent = nunjucks.renderString(template, doc);
     });
   }
 };

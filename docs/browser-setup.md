@@ -37,6 +37,21 @@ capabilities: {
 ```
 If running with chromeOnly and chromeOptions together, chromeOptions.args and chromeOptions.extensions are required due to [Issue 6627](https://code.google.com/p/selenium/issues/detail?id=6627&thanks=6627&ts=1385488060) of selenium-webdriver currently(@2.37.0). So in order to avoid the issue, you may simply set them(or one of them) to an empty array.
 
+Testing against multiple browsers
+---------------------------------
+
+If you would like to test against multiple browsers at once, use the multiCapabilities configuration option.
+
+```javascript
+multiCapabilities: [{
+  'browserName': 'firefox'
+}, {
+  'browserName': 'chrome'
+}]
+```
+
+Protractor will run tests in parallel against each set of capabilities. Please note that if multiCapabilities is defined, the runner will ignore the `capabilities` configuration.
+
 PhantomJS
 -------------------------------------
 In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For relative install run: `npm install --save-dev phantomjs`.
@@ -46,8 +61,18 @@ Add phantomjs to the driver capabilities, and include a path to the binary if us
 capabilities: {
   'browserName': 'phantomjs',
 
-  // should be able to omit this property if phantomjs installed globally
-  'phantomjs.binary.path':'./node_modules/phantomjs/bin/phantomjs'
+  /* 
+   * Can be used to specify the phantomjs binary path.
+   * This can generally be ommitted if you installed phantomjs globally.
+   */
+  'phantomjs.binary.path':'./node_modules/phantomjs/bin/phantomjs',
+  
+  /*
+   * Command line arugments to pass to phantomjs. 
+   * Can be ommitted if no arguments need to be passed. 
+   * Acceptable cli arugments: https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-command-line-options
+   */
+  'phantomjs.cli.args':['--logfile=PATH', '--loglevel=DEBUG']
 }
 ```
 

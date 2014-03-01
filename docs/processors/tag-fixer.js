@@ -40,14 +40,21 @@ var escapeTypeDescriptions = function(type) {
 };
 
 /**
- * Remove new lines from the params.
- * @param {!Object} doc Document with the tag.
+ * Remove the duplicate param annotations. Go through the params and the return
+ * annotations to replace the new lines and escape the types to prepare them
+ * for markdown rendering.
+ *
+ * @param {!Object} doc Document representing a function jsdoc.
  */
-var fixParams = function(doc) {
+var fixParamsAndReturns = function(doc) {
   // Remove duplicates.
   if (doc.params) {
     doc.params = _.uniq(doc.params, 'name');
     _.each(doc.params, function(param) {
+      // Remove null descriptions.
+      if (param.description === 'null') {
+        param.description = '';
+      }
       replaceNewLines(param, 'description');
       escapeTypeDescriptions(param.type);
     });
@@ -61,39 +68,10 @@ var fixParams = function(doc) {
   }
 };
 
-/**
- * Generate a unique file name with an index used to concatenate.
- */
-var fileName = function(doc, i) {
-  var index = '00' + (i++);
-  index = index.substring(index.length - 3);
-  return 'partials/' + doc.fileName + index + '.md';
-};
-
-/**
- * Remove docs that should not be in the documentation.
- */
-var filterDocs = function(docs) {
-  return _.reject(docs, function(doc) {
-    // Skip functions starting with 'exports'.
-    if (/^exports/.test(doc.name)) {
-      return true;
-    }
-
-    // Exclude docs with tags.
-    if (doc.tags) {
-      var tags = _.pluck(doc.tags.tags, 'title');
-      return _.intersection(tags, excludedTags).length;
-    }
-  });
-};
-
-var excludedTags = ['private', 'type'];
-var i = 1;
-
 module.exports = {
   name: 'tag-fixer',
-  description: 'Do some processing before rendering',
+  description: 'Get the name of the function, format the @param and @return ' +
+      'annotations to prepare them for rendering.',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
   init: function(config) {
@@ -101,12 +79,8 @@ module.exports = {
   process: function(docs) {
     docs.forEach(function(doc) {
       findName(doc);
-      fixParams(doc);
-
-      doc.outputPath = fileName(doc, i++);
+      fixParamsAndReturns(doc);
     });
-
-    docs = filterDocs(docs);
 
     return docs;
   }

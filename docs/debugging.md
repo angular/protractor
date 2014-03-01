@@ -61,8 +61,8 @@ This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
 `c` to start execution and continue after the breakpoint.
 
 We use `browser.debugger();` instead of node's `debugger;` statement so that
-the test pauses after the get command has beenexecuted*. Using `debugger;`
-pauses the test after the get command isscheduled* but has not yet
+the test pauses after the get command has been executed. Using `debugger;`
+pauses the test after the get command is scheduled but has not yet
 been sent to the browser.
 
 Protractor's `debugger` method works by scheduling a node debug breakpoint
@@ -108,7 +108,7 @@ server to be running at http://localhost:4444.
 
 From protractor directory, run with:
 
-    ./bin/elementexplorer.js <urL>
+    node ./bin/elementexplorer.js <urL>
 
 This will load up the URL on webdriver and put the terminal into a REPL loop.
 You will see a > prompt. The `browser`, `element` and `protractor` variables will
@@ -147,7 +147,7 @@ var fs = require('fs');
 function writeScreenShot(data, filename) {
     var stream = fs.createWriteStream(filename);
 
-    stream.write(buf = new Buffer(data, 'base64'));
+    stream.write(new Buffer(data, 'base64'));
     stream.end();
 }
 
