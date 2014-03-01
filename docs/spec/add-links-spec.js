@@ -1,5 +1,4 @@
 var linksProcessor = require('../processors/add-links');
-var expect = require('expect.js');
 var _ = require('lodash');
 
 
@@ -14,7 +13,7 @@ describe('add-links', function() {
       startingLine: 123
     };
     addLinks([doc]);
-    expect(doc.sourceLink).to.equal('https://github.com/angular/protractor/' +
+    expect(doc.sourceLink).toBe('https://github.com/angular/protractor/' +
         'blob/master/lib/protractor.js#L123');
   });
 
@@ -24,7 +23,7 @@ describe('add-links', function() {
       startingLine: 123
     };
     addLinks([doc]);
-    expect(doc.sourceLink).to.equal('https://code.google.com/p/selenium/' +
+    expect(doc.sourceLink).toBe('https://code.google.com/p/selenium/' +
         'source/browse/javascript/webdriver/webdriver.js#123');
   });
 
@@ -71,20 +70,20 @@ describe('add-links', function() {
     var getDesc = function(index) {
       return docs[1].params[index].type.description;
     };
-    expect(getDesc(0)).to.equal(
+    expect(getDesc(0)).toBe(
         '&#33;[webdriver.WebElement](#webdriverwebelement)');
-    expect(getDesc(1)).to.equal(
+    expect(getDesc(1)).toBe(
         '[webdriver.WebElement](#webdriverwebelement)');
-    expect(getDesc(2)).to.equal(
+    expect(getDesc(2)).toBe(
         '!Array.&lt;[webdriver.WebElement](#webdriverwebelement)&gt;');
-    expect(getDesc(3)).to.equal(
+    expect(getDesc(3)).toBe(
         'function([webdriver.WebElement](#webdriverwebelement), number)');
-    expect(getDesc(4)).to.equal(
+    expect(getDesc(4)).toBe(
         'function([webdriver.WebElement](#webdriverwebelement))');
-    expect(getDesc(5)).to.equal(
+    expect(getDesc(5)).toBe(
         '!function(&#33;[webdriver.WebElement](#webdriverwebelement))');
 
     expect(docs[1].returns.type.description).
-        to.equal('&#33;[webdriver.WebElement](#webdriverwebelement)');
+        toBe('&#33;[webdriver.WebElement](#webdriverwebelement)');
   });
 });

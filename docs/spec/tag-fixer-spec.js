@@ -1,5 +1,4 @@
 var tagFixer = require('../processors/tag-fixer');
-var expect = require('expect.js');
 
 describe('tag fixer', function() {
   var doc;
@@ -47,22 +46,23 @@ describe('tag fixer', function() {
     doc.name = null;
     tagFixer.process([doc]);
 
-    expect(doc.name).to.equal('element');
+    expect(doc.name).toBe('element');
   });
 
   it('should not override name', function() {
     tagFixer.process([doc]);
-    expect(doc.name).to.equal('element.all');
+    expect(doc.name).toBe('element.all');
   });
 
   it('should escape params', function() {
     tagFixer.process([doc]);
-    expect(doc.params[0].type.description).to.equal('!(string|Function|Array.&lt;webdriver.Locator&gt;)');
-    expect(doc.params[1].type.description).to.equal('...*');
+    expect(doc.params[0].type.description).
+        toBe('!(string|Function|Array.&lt;webdriver.Locator&gt;)');
+    expect(doc.params[1].type.description).toBe('...*');
   });
 
   it('should escape returns', function() {
     tagFixer.process([doc]);
-    expect(doc.returns.type.description).to.equal('!webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Entry&gt;&gt;');
+    expect(doc.returns.type.description).toBe('!webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Entry&gt;&gt;');
   });
 });
