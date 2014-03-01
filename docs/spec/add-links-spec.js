@@ -45,7 +45,12 @@ describe('add-links', function() {
               description: '!webdriver.WebElement'
             }
           }
-        ]
+        ],
+        returns: {
+          type: {
+            description: '!webdriver.WebElement'
+          }
+        }
       }
     ];
 
@@ -55,5 +60,7 @@ describe('add-links', function() {
     // Then ensure the link was added.
     expect(docs[1].params[0].type.description).
         to.equal('[!webdriver.WebElement](#webdriverwebelement)');
+    expect(docs[1].returns.type.description).
+        to.equal(12);
   });
 });
