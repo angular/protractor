@@ -1,3 +1,0 @@
-1. Add links to symbols for functions and pipes
-2. Document find()
-3. element.all params
