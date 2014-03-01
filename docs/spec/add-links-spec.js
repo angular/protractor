@@ -28,6 +28,14 @@ describe('add-links', function() {
         'source/browse/javascript/webdriver/webdriver.js#123');
   });
 
+  var newType = function(description) {
+    return {
+      type: {
+        description: description
+      }
+    };
+  };
+
   it('should add links to types', function() {
     // Given a type and a function.
     var docs = [
@@ -41,21 +49,12 @@ describe('add-links', function() {
         fileName: 'protractor',
         startingLine: 123,
         params: [
-          {
-            type: {
-              description: '!webdriver.WebElement'
-            }
-          },
-          {
-            type: {
-              description: 'webdriver.WebElement'
-            }
-          },
-          {
-            type: {
-              description: _.escape('!Array.<webdriver.WebElement>')
-            }
-          }
+          newType('!webdriver.WebElement'),
+          newType('webdriver.WebElement'),
+          newType(_.escape('!Array.<webdriver.WebElement>')),
+          newType(_.escape('function(webdriver.WebElement, number)')),
+          newType(_.escape('function(webdriver.WebElement)')),
+          newType(_.escape('!function(!webdriver.WebElement)'))
         ],
         returns: {
           type: {
@@ -69,15 +68,23 @@ describe('add-links', function() {
     addLinks(docs);
 
     // Then ensure the link was added.
-    var doc = docs[1];
-    expect(doc.params[0].type.description).
-        to.equal('[!webdriver.WebElement](#webdriverwebelement)');
-    expect(doc.params[1].type.description).
-        to.equal('[webdriver.WebElement](#webdriverwebelement)');
-    expect(doc.params[2].type.description).
-        to.equal('!Array.&lt;[webdriver.WebElement](#webdriverwebelement)&gt;');
+    var getDesc = function(index) {
+      return docs[1].params[index].type.description;
+    };
+    expect(getDesc(0)).to.equal(
+        '[!webdriver.WebElement](#webdriverwebelement)');
+    expect(getDesc(1)).to.equal(
+        '[webdriver.WebElement](#webdriverwebelement)');
+    expect(getDesc(2)).to.equal(
+        '!Array.&lt;[webdriver.WebElement](#webdriverwebelement)&gt;');
+    expect(getDesc(3)).to.equal(
+        'function([webdriver.WebElement](#webdriverwebelement), number)');
+    expect(getDesc(4)).to.equal(
+        'function([webdriver.WebElement](#webdriverwebelement))');
+    expect(getDesc(5)).to.equal(
+        '!function([!webdriver.WebElement](#webdriverwebelement))');
 
-    expect(doc.returns.type.description).
+    expect(docs[1].returns.type.description).
         to.equal('[!webdriver.WebElement](#webdriverwebelement)');
   });
 });
