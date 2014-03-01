@@ -72,7 +72,7 @@ describe('add-links', function() {
       return docs[1].params[index].type.description;
     };
     expect(getDesc(0)).to.equal(
-        '[!webdriver.WebElement](#webdriverwebelement)');
+        '&#33;[webdriver.WebElement](#webdriverwebelement)');
     expect(getDesc(1)).to.equal(
         '[webdriver.WebElement](#webdriverwebelement)');
     expect(getDesc(2)).to.equal(
@@ -82,9 +82,9 @@ describe('add-links', function() {
     expect(getDesc(4)).to.equal(
         'function([webdriver.WebElement](#webdriverwebelement))');
     expect(getDesc(5)).to.equal(
-        '!function([!webdriver.WebElement](#webdriverwebelement))');
+        '!function(&#33;[webdriver.WebElement](#webdriverwebelement))');
 
     expect(docs[1].returns.type.description).
-        to.equal('[!webdriver.WebElement](#webdriverwebelement)');
+        to.equal('&#33;[webdriver.WebElement](#webdriverwebelement)');
   });
 });

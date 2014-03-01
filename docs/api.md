@@ -542,7 +542,7 @@ element.all(by.css('.items li')).each(function(element) {
 
 Param | Type | Description
 --- | --- | ---
-fn | function (webdriver.WebElement) | Input function
+fn | function ([webdriver.WebElement](#webdriverwebelement)) | Input function
 
 
 
@@ -586,7 +586,7 @@ expect(items).toEqual([
 
 Param | Type | Description
 --- | --- | ---
-mapFn | function (webdriver.WebElement, number) | Map function that will be applied to each element.
+mapFn | function ([webdriver.WebElement](#webdriverwebelement), number) | Map function that will be applied to each element.
 
 
 
@@ -690,7 +690,7 @@ selector | string | A css selector
 
 Type | Description
 --- | ---
-[!webdriver.WebElement](#webdriverwebelement) | 
+&#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L628)
@@ -706,7 +706,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebElement](#webdriverwebelement) | 
+&#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L645)
@@ -823,7 +823,7 @@ Waits for Angular to finish rendering before searching for elements.
 
 Type | Description
 --- | ---
-[!webdriver.WebElement](#webdriverwebelement) | 
+&#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L752)
@@ -1308,7 +1308,7 @@ sessionId | string | ID of the session to attach to.
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver](#webdriverwebdriver) | A new client for the specified session.
+&#33;[webdriver.WebDriver](#webdriverwebdriver) | A new client for the specified session.
 
 
 ##[webdriver.WebDriver.createSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#102)
@@ -1332,7 +1332,7 @@ desiredCapabilities | !webdriver.Capabilities | The desired capabilities for the
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver](#webdriverwebdriver) | The driver for the newly created session.
+&#33;[webdriver.WebDriver](#webdriverwebdriver) | The driver for the newly created session.
 
 
 ##[webdriver.WebDriver.prototype.controlFlow](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#243)
@@ -1936,7 +1936,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver.Options](#webdriverwebdriveroptions) | The options interface for this instance.
+&#33;[webdriver.WebDriver.Options](#webdriverwebdriveroptions) | The options interface for this instance.
 
 
 ##[webdriver.WebDriver.prototype.navigate](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#858)
@@ -1952,7 +1952,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation) | The navigation interface for this instance.
+&#33;[webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation) | The navigation interface for this instance.
 
 
 ##[webdriver.WebDriver.prototype.switchTo](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#867)
@@ -1968,7 +1968,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator) | The target locator interface for this instance.
+&#33;[webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator) | The target locator interface for this instance.
 
 
 ##[webdriver.WebDriver.Navigation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#877)
@@ -1982,7 +1982,7 @@ Interface for navigating back and forth in the browser history.
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2070,7 +2070,7 @@ Provides methods for managing browser and driver state.
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2201,7 +2201,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver.Logs](#webdriverwebdriverlogs) | The interface for managing driver logs.
+&#33;[webdriver.WebDriver.Logs](#webdriverwebdriverlogs) | The interface for managing driver logs.
 
 
 ##[webdriver.WebDriver.Options.prototype.timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1079)
@@ -2217,7 +2217,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts) | The interface for managing driver timeouts.
+&#33;[webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts) | The interface for managing driver timeouts.
 
 
 ##[webdriver.WebDriver.Options.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1088)
@@ -2233,7 +2233,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver.Window](#webdriverwebdriverwindow) | The interface for managing the current window.
+&#33;[webdriver.WebDriver.Window](#webdriverwebdriverwindow) | The interface for managing the current window.
 
 
 ##[webdriver.WebDriver.Timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1098)
@@ -2247,7 +2247,7 @@ An interface for managing timeout behavior for WebDriver instances.
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2350,7 +2350,7 @@ An interface for managing the current window.
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2465,7 +2465,7 @@ Interface for managing WebDriver log records.
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2528,7 +2528,7 @@ An interface for changing the focus of the driver to another frame or window.
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
@@ -2549,7 +2549,7 @@ available.
 
 Type | Description
 --- | ---
-[!webdriver.WebElement](#webdriverwebelement) | The active element.
+&#33;[webdriver.WebElement](#webdriverwebelement) | The active element.
 
 
 ##[webdriver.WebDriver.TargetLocator.prototype.defaultContent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1344)
@@ -2647,7 +2647,7 @@ dialog is not currently open.
 
 Type | Description
 --- | ---
-[!webdriver.Alert](#webdriveralert) | The open alert.
+&#33;[webdriver.Alert](#webdriveralert) | The open alert.
 
 
 ##[webdriver.Key.chord](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1418)
@@ -2710,7 +2710,7 @@ catch errors when an element cannot be located on the page:
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The parent WebDriver instance for this element.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent WebDriver instance for this element.
 id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will
     resolve to that ID or another WebElement.
 
@@ -2729,8 +2729,8 @@ Compares to WebElements for equality.
 
 Param | Type | Description
 --- | --- | ---
-a | [!webdriver.WebElement](#webdriverwebelement) | A WebElement.
-b | [!webdriver.WebElement](#webdriverwebelement) | A WebElement.
+a | &#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement.
+b | &#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement.
 
 
 
@@ -2755,7 +2755,7 @@ Type | Description
 
 Type | Description
 --- | ---
-[!webdriver.WebDriver](#webdriverwebdriver) | The parent driver for this instance.
+&#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver for this instance.
 
 
 ##[webdriver.WebElement.prototype.toWireValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1568)
@@ -3195,7 +3195,7 @@ case of {@code prompt}).
 
 Param | Type | Description
 --- | --- | ---
-driver | [!webdriver.WebDriver](#webdriverwebdriver) | The driver controlling the browser this alert is attached to.
+driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The driver controlling the browser this alert is attached to.
 text | !(string&#124;webdriver.promise.Promise) | Either the message text displayed with this alert, or a promise that will be resolved to said
     text.
 
@@ -3290,7 +3290,7 @@ current page.
 Param | Type | Description
 --- | --- | ---
 message | string | The error message.
-alert | [!webdriver.Alert](#webdriveralert) | The alert handle.
+alert | &#33;[webdriver.Alert](#webdriveralert) | The alert handle.
 
 
 
@@ -3309,5 +3309,5 @@ alert | [!webdriver.Alert](#webdriveralert) | The alert handle.
 
 Type | Description
 --- | ---
-[!webdriver.Alert](#webdriveralert) | The open alert.
+&#33;[webdriver.Alert](#webdriveralert) | The open alert.
 

@@ -25,50 +25,69 @@
   };
 
   /**
+   *
+   * @param description
+   * @return {string[]}
+   */
+  var getType = function(description) {
+    var regExp;
+    if (/function/.test(description)) {
+      regExp = /(function\s*\(\s*!?)([\w\.]+)(\))?/;
+    } else {
+      regExp = /(.*&lt;)?([\w\.]+)(&gt;.*)?/;
+    }
+
+    var match = regExp.exec(description);
+    if (match && match[2]) {
+      return match[2];
+    }
+
+    return description;
+  };
+
+  /**
+   * The link looks like: 'elementFinder.isPresent', transform it into
+   * 'elementfinderispresent'.
+   * @param type
+   * @returns {string}
+   */
+  var linkForType = function(type) {
+    var typeName = typeTable[type][0].name;
+    return typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
+  };
+
+  /**
    * Add links to the types for param and return annotations.
    * @param {!Object} paramOrReturn A param or return object.
    */
   var addTypeLink = function(paramOrReturn) {
-    if (!paramOrReturn) {
+    // Skip if there is not type.
+    if (!paramOrReturn || !paramOrReturn.type || !paramOrReturn.type.description) {
       return;
     }
 
-    // Skip if there is not type.
-    var annotationType = paramOrReturn.type;
-    if (!annotationType || !annotationType.description) {
-      return
-    }
+    var description = paramOrReturn.type.description;
 
     // Find the type name. The type may have the following formats:
     // some.type
     // Array.<some.type>
     // function(some.type)
-    var type = annotationType.description;
-
-    // &lt;webdriver.Locator&gt;
-    var match = /(.*&lt;)?([\w\.]+)(&gt;.*)?/.exec(annotationType.description);
-    if (match && match[2]) {
-      type = match[2];
-    }
+    var type = getType(description);
 
     // Is this type defined in the list?
     if (!typeTable[type]) {
       return;
     }
 
-    // The link looks like: 'elementFinder.isPresent', transform it into
-    // 'elementfinderispresent'.
-    var typeName = typeTable[type][0].name;
-    var linkName = typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
-
     // Is there are bang! at the beginning?
-    if (annotationType.description.match(new RegExp('^!' + type))) {
-      type = "!" + type;
-    }
+    var typeLink = '[' + type + '](#' + linkForType(type) + ')';
 
-    var typeLink = '[' + type + '](#' + linkName + ')';
+    // ![foo] is a link to an image. Escape the !.
 
-    annotationType.description = annotationType.description.replace(type, typeLink);
+    description = description.replace(type, typeLink);
+    description = description.replace(/!\[/, '&#33;[');
+
+    paramOrReturn.type.description = description;
   };
 
   /**
