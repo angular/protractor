@@ -1,5 +1,16 @@
 var _ = require('lodash');
 
+/**
+ * Add the description property to the doc. The description is all the text that
+ * goes before the first annotation.
+ * @param {!Object} doc Current doc.
+ */
+var addDescription = function(doc) {
+  var content = doc.content || '';
+  doc.description = content.
+      substring(0, content.indexOf('@')).
+      replace(/\n*$/g, '');
+};
 
 /**
  * Find the name of the function.
@@ -78,6 +89,7 @@ module.exports = {
   },
   process: function(docs) {
     docs.forEach(function(doc) {
+      addDescription(doc);
       findName(doc);
       fixParamsAndReturns(doc);
 
