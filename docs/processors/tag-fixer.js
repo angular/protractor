@@ -30,12 +30,12 @@ var replaceNewLines = function(obj, prop) {
 };
 
 /**
- * Escape the < > characters from the param or return type.
+ * Escape the < > | characters from the param or return type.
  * @param {!Object} type Parsed type.
  */
 var escapeTypeDescriptions = function(type) {
   if (type && type.description) {
-    type.description = _.escape(type.description);
+    type.description = _.escape(type.description).replace(/\|/g, '&#124;');
   }
 };
 

@@ -19,7 +19,7 @@
 
 Param | Type | Description
 --- | --- | ---
-{% for param in doc.params %}{$ param.name $} | {$ param.type.description | replace("\|", "&#124;") $} | {$ param.description $}
+{% for param in doc.params %}{$ param.name $} | {$ param.type.description $} | {$ param.description $}
 {% endfor %}
 {% endif %}
 
