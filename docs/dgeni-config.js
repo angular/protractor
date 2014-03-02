@@ -24,15 +24,12 @@ module.exports = function(config) {
    * add-links: Add links to the source code for protractor.js, locators.js,
    *     and webdriver.js.
    * add-toc: Add the table of contents.
-   * doc-renderer: Render the string that will go into the output partial file
-   *     using the nunjucks template.
    */
   config.append('processing.processors', [
     require('./processors/tag-fixer'),
     require('./processors/filter-jsdoc'),
     require('./processors/add-links'),
-    require('./processors/add-toc'),
-    require('./processors/doc-renderer')
+    require('./processors/add-toc')
   ]);
 
   // Configure the tags that will be parsed from the jsDoc.
@@ -63,11 +60,11 @@ module.exports = function(config) {
   config.set('rendering.outputFolder', 'build');
   config.set('logging.level', 'debug');
 
-  var docsPath = path.resolve(basePath, 'docs');
+  var docsPath = path.resolve(basePath, 'docs/templates');
   config.set('rendering.templateFolders', [docsPath]);
 
   config.set('rendering.templatePatterns', [
-    'templates/api-template.md'
+    '${ doc.template }-template.md'
   ]);
 
   return config;

@@ -35,10 +35,10 @@ module.exports = {
       });
     });
 
-    // Add the table of contents at the beginning.
-    docs.unshift({
+    // Add the table of contents.
+    docs.push({
       outputPath: 'toc.md',
-      isToc: true,
+      template: 'toc',
       toc: toc
     });
   }
