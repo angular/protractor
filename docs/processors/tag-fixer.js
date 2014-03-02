@@ -44,9 +44,9 @@ var replaceNewLines = function(obj, prop) {
  * Escape the < > | characters from the param or return type.
  * @param {!Object} type Parsed type.
  */
-var escapeTypeDescriptions = function(type) {
-  if (type && type.description) {
-    type.description = _.escape(type.description).replace(/\|/g, '&#124;');
+var escapeTypeNames = function(type) {
+  if (type && type.name) {
+    type.name = _.escape(type.name).replace(/\|/g, '&#124;');
   }
 };
 
@@ -67,7 +67,7 @@ var fixParamsAndReturns = function(doc) {
         param.description = '';
       }
       replaceNewLines(param, 'description');
-      escapeTypeDescriptions(param.type);
+      escapeTypeNames(param.type);
     });
   }
 
@@ -75,7 +75,7 @@ var fixParamsAndReturns = function(doc) {
   var returns = doc.returns;
   if (returns) {
     replaceNewLines(returns, 'description');
-    escapeTypeDescriptions(returns.type);
+    escapeTypeNames(returns.type);
   }
 };
 
