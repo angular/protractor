@@ -80,6 +80,9 @@ module.exports = {
     docs.forEach(function(doc) {
       findName(doc);
       fixParamsAndReturns(doc);
+
+      // Set the template name to use api-template.md.
+      doc.template = 'api';
     });
 
     return docs;
