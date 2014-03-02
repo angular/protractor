@@ -3,7 +3,7 @@
 var docGenerator = require('dgeni');
 var rimraf = require('rimraf');
 var fs = require('fs');
-var path = require('canonical-path');
+var path = require('path');
 var _ = require('lodash');
 
 var apiFileName = 'api.md',

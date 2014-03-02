@@ -31,7 +31,6 @@
     "dgeni": "0.0.3",
     "dgeni-packages": "0.0.2",
     "lodash": "~2.4.1",
-    "canonical-path": "0.0.2",
     "rimraf": "~2.2.6"
   },
   "repository": {
