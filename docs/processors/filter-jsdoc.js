@@ -21,7 +21,7 @@ var filterDocs = function(docs) {
 
     // Exclude docs with tags.
     if (doc.tags) {
-      var tags = _.pluck(doc.tags.tags, 'title');
+      var tags = _.pluck(doc.tags.tags, 'tagName');
       return _.intersection(tags, excludedTags).length;
     }
   });
