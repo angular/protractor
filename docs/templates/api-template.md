@@ -1,32 +1,32 @@
-##[{{name}}]({{sourceLink}})
-{%if alias%}####{{alias}}{%endif%}
-{{description}}
+##[{$ doc.name $}]({$ doc.sourceLink $})
+{%if doc.alias %}####{$ doc.alias $}{%endif%}
+{$ doc.description $}
 
-{% if example %}
+{% if doc.example %}
 ###Example
-{% if view %}
+{% if doc.view %}
 ```html
-{{ view }}
+{$ doc.view $}
 ```
 {% endif %}
 ```javascript
-{{ example }}
+{$ doc.example $}
 ```
 {% endif %}
 
-{% if params %}
+{% if doc.params %}
 ###Params
 
 Param | Type | Description
 --- | --- | ---
-{% for param in params %}{{param.name}} | {{param.type.description | replace("\|", "&#124;")}} | {{param.description}}
+{% for param in doc.params %}{$ param.name $} | {$ param.type.description | replace("\|", "&#124;") $} | {$ param.description $}
 {% endfor %}
 {% endif %}
 
-{% if returns %}
+{% if doc.returns %}
 ###Returns
 
 Type | Description
 --- | ---
-{{returns.type.description}} | {{returns.description}}
+{$ doc.returns.type.description $} | {$ doc.returns.description $}
 {% endif %}

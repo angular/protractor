@@ -9,7 +9,7 @@ Protractor is a wrapper around WebDriver, so anything available on WebDriver
 is available on Protractor. The best documentation for both is the code itself.
 This file provides an overview and links on where to get more information.
 
-{% for line in toc %}
+{% for line in doc.toc %}
 {% if line.isHeader %}
-##{{line.name}}
-{% else %}* [{{line.name}}](#{{line.link}}){% endif %}{% endfor %}
+##{$ line.name $}
+{% else %}* [{$ line.name $}](#{$ line.link $}){% endif %}{% endfor %}
