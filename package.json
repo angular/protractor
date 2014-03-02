@@ -28,10 +28,10 @@
     "mocha": "~1.16.0",
     "cucumber": "~0.3.3",
     "express": "~3.3.4",
-    "dgeni": "0.0.3",
-    "dgeni-packages": "0.0.2",
     "lodash": "~2.4.1",
-    "rimraf": "~2.2.6"
+    "rimraf": "~2.2.6",
+    "dgeni-packages": "~0.3.1",
+    "dgeni": "~0.2.0"
   },
   "repository": {
     "type": "git",
