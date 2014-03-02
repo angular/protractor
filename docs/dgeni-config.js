@@ -35,9 +35,11 @@ module.exports = function(config) {
   // Configure the tags that will be parsed from the jsDoc.
   var tagDefs = require('dgeni-packages/jsdoc/tag-defs');
 
-  // Parse 'alias', 'example', and 'view' tags.
+  // Parse the following annotations.
   tagDefs.push({name: 'alias'});
   tagDefs.push({name: 'example'});
+  tagDefs.push({name: 'private'});
+  tagDefs.push({name: 'type'});
   tagDefs.push({name: 'view'});
 
   // The name tag should not be required.
@@ -57,6 +59,7 @@ module.exports = function(config) {
       basePath: basePath}
   ]);
 
+  config.set('source.projectPath', basePath);
   config.set('rendering.outputFolder', 'build');
   config.set('logging.level', 'debug');
 
