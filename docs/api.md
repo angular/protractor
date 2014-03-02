@@ -923,6 +923,7 @@ the wrapped webdriver directly.
 Param | Type | Description
 --- | --- | ---
 destination | string | Destination URL.
+opt_timeout | number | Number of seconds to wait for Angular to start.
 
 
 
