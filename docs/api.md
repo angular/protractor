@@ -277,7 +277,7 @@ expect(triple.getText()).toBe('555-123-4567');
 Param | Type | Description
 --- | --- | ---
 ptor | [Protractor](#protractor) | 
-opt_usingChain | Array.&lt;webdriver.Locator&gt;= |
+opt_usingChain | Array.&lt;webdriver.Locator&gt;= | 
 
 
 
@@ -286,7 +286,7 @@ opt_usingChain | Array.&lt;webdriver.Locator&gt;= |
 
 Type | Description
 --- | ---
-function(webdriver.Locator): ElementFinder |
+function(webdriver.Locator): ElementFinder | 
 
 
 ##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L179)
@@ -534,7 +534,7 @@ element.all(by.css('.items li')).each(function(element) {
 
 Param | Type | Description
 --- | --- | ---
-fn | function ([webdriver.WebElement](#webdriverwebelement)) | Input function
+fn | function([webdriver.WebElement](#webdriverwebelement)) | Input function
 
 
 
@@ -578,7 +578,7 @@ expect(items).toEqual([
 
 Param | Type | Description
 --- | --- | ---
-mapFn | function ([webdriver.WebElement](#webdriverwebelement), number) | Map function that will be applied to each element.
+mapFn | function([webdriver.WebElement](#webdriverwebelement), number) | Map function that will be applied to each element.
 
 
 
@@ -682,7 +682,7 @@ selector | string | A css selector
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) | 
+&#33;[webdriver.WebElement](#webdriverwebelement) |
 
 
 ##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L628)
@@ -698,7 +698,7 @@ Type | Description
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) | 
+&#33;[webdriver.WebElement](#webdriverwebelement) |
 
 
 ##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L645)
@@ -815,7 +815,7 @@ Waits for Angular to finish rendering before searching for elements.
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) | 
+&#33;[webdriver.WebElement](#webdriverwebelement) |
 
 
 ##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L752)
@@ -1274,7 +1274,7 @@ Param | Type | Description
 --- | --- | ---
 session | !(webdriver.Session&#124;webdriver.promise.Promise) | Either a known session or a promise that will be resolved to a session.
 executor | !webdriver.CommandExecutor | The executor to use when sending commands to the browser.
-opt_flow | webdriver.promise.ControlFlow | The flow to schedule commands through. Defaults to the active flow object.
+opt_flow | webdriver.promise.ControlFlow= | The flow to schedule commands through. Defaults to the active flow object.
 
 
 
