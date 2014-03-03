@@ -277,7 +277,7 @@ expect(triple.getText()).toBe('555-123-4567');
 Param | Type | Description
 --- | --- | ---
 ptor | [Protractor](#protractor) | 
-opt_usingChain | Array.&lt;webdriver.Locator&gt; | 
+opt_usingChain | Array.&lt;webdriver.Locator&gt;= |
 
 
 
