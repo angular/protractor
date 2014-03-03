@@ -19,7 +19,7 @@
 
 Param | Type | Description
 --- | --- | ---
-{% for param in doc.params %}{$ param.name $} | {$ param.type.description $} | {$ param.description $}
+{% for param in doc.params %}{$ param.name $} | {$ param.paramString $} | {$ param.description $}
 {% endfor %}
 {% endif %}
 
@@ -28,5 +28,5 @@ Param | Type | Description
 
 Type | Description
 --- | ---
-{$ doc.returns.type.description $} | {$ doc.returns.description $}
+{$ doc.returnString $} | {$ doc.returns.description $}
 {% endif %}

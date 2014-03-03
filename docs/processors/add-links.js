@@ -23,7 +23,7 @@ var addLinkToSourceCode = function(doc) {
  * @param description
  * @return {string[]}
  */
-var getType = function(description) {
+var parseType = function(description) {
   var regExp;
   if (/function/.test(description)) {
     regExp = /(function\s*\(\s*!?)([\w\.]+)(\))?/;
@@ -48,39 +48,62 @@ var linkForType = function(type) {
   return typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
 };
 
-/**
- * Add links to the types for param and return annotations.
- * @param {!Object} paramOrReturn A param or return object.
- */
-var addTypeLink = function(paramOrReturn) {
+var createTypeLink = function(paramOrReturn) {
   // Skip if there is not type.
-  if (!paramOrReturn || !paramOrReturn.type ||
-      !paramOrReturn.type.description) {
-    return;
+  if (!paramOrReturn || !paramOrReturn.type || !paramOrReturn.type.name) {
+    return null;
   }
 
-  var description = paramOrReturn.type.description;
+  var typeName = paramOrReturn.type.name;
 
   // Find the type name. The type may have the following formats:
   // some.type
   // Array.<some.type>
   // function(some.type)
-  var type = getType(description);
+  var type = parseType(typeName);
 
   // Is this type defined in the list?
   if (!typeTable[type]) {
-    return;
+    return null;
   }
 
   // Is there are bang! at the beginning?
   var typeLink = '[' + type + '](#' + linkForType(type) + ')';
 
   // ![foo] is a link to an image. Escape with &#33;[foo].
-  description = description.
-      replace(type, typeLink).
-      replace(/!\[/, '&#33;[');
+  return typeName.replace(type, typeLink).replace(/!\[/, '&#33;[');
+};
 
-  paramOrReturn.type.description = description;
+/**
+ * Add links to the types for param and return annotations.
+ * @param {!Object} paramOrReturn A param or return object.
+ */
+var addTypeLink = function(paramOrReturn) {
+  var typeLink = createTypeLink(paramOrReturn);
+  if (typeLink) {
+    paramOrReturn.type.name = typeLink;
+  }
+};
+
+var createLinkToType = function(annotationType, typeExpression, doc) {
+  // Parse the type.
+  if (doc.name == 'elementArrayFinder.each') {
+    console.log(1);
+  }
+
+  var type = parseType(annotationType);
+  if (type && typeTable[type]) {
+    var typeLink = '[' + type + '](#' + linkForType(type) + ')';
+
+    return typeExpression.replace(type, typeLink).replace(/!\[/, '&#33;[');
+  }
+};
+
+/**
+ * Escape the < > | characters.
+ */
+var escape = function(str) {
+  return _.escape(str).replace(/\|/g, '&#124;');
 };
 
 /**
@@ -97,14 +120,29 @@ module.exports = {
   init: function(config) {
   },
   process: function(docs) {
-    typeTable = _.groupBy(docs, 'name');
+    try {
+      typeTable = _.groupBy(docs, 'name');
 
-    docs.forEach(function(doc) {
-      addLinkToSourceCode(doc);
-      // Add links for the param types.
-      _.each(doc.params, addTypeLink);
-      // Add links for the return types.
-      addTypeLink(doc.returns);
-    });
+      docs.forEach(function(doc) {
+        addLinkToSourceCode(doc);
+        // Add links for the param types.
+        _.each(doc.params, function(param) {
+          if (param.type) {
+            var linkToType = createLinkToType(param.type.name, param.typeExpression, doc);
+            param.paramString = escape(linkToType ? linkToType : param.typeExpression);
+          }
+        });
+
+        // Add links for the return types.
+        var returns = doc.returns;
+        if (returns && returns.type) {
+          var linkToType = createLinkToType(returns.type.name, returns.typeExpression, doc);
+          doc.returnString = escape(linkToType ? linkToType : returns.typeExpression);
+        }
+      });
+    } catch (e) {
+      console.log('Error', e);
+    }
+
   }
 };
