@@ -286,7 +286,7 @@ opt_usingChain | Array.&lt;webdriver.Locator&gt;= |
 
 Type | Description
 --- | ---
-function (webdriver.Locator): ElementFinder | 
+function(webdriver.Locator): ElementFinder |
 
 
 ##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L179)
