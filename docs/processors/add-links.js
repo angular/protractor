@@ -66,6 +66,37 @@ var escape = function(str) {
 };
 
 /**
+ * Create a markdown link for the type.
+ */
+var toMarkdownLinkFormat = function(type) {
+  var lowercaseType = type.replace(/[\.\$]/g, '').toLocaleLowerCase();
+  return '[' + type + '](#' + lowercaseType + ')';
+};
+
+var paramString = function(param) {
+  var str = param.typeExpression;
+  var type = param.type;
+  if (!type) {
+    return escape(str);
+  }
+
+  var replaceWithLinkIfPresent = function(type) {
+    var name = type.name;
+    if (typeTable[name]) {
+      str = str.replace(name, toMarkdownLinkFormat(name));
+    }
+  };
+
+  if (type.type === 'FunctionType') {
+    _.each(type.params, replaceWithLinkIfPresent);
+  } else if (type.type === 'NameExpression') {
+    replaceWithLinkIfPresent(type);
+  }
+
+  return escape(str);
+};
+
+/**
  * A lookup table with all the types in the parsed files.
  * @type {Object.<string, Array.<Object>>}
  */
@@ -84,19 +115,10 @@ module.exports = {
 
       docs.forEach(function(doc) {
         addLinkToSourceCode(doc);
+
         // Add links for the param types.
         _.each(doc.params, function(param) {
-          param.paramString = escape(param.typeExpression);
-          if (param.type) {
-            var annotationType = param.type.name || (param.type.params &&
-                param.type.params.length && param.type.params[0].name);
-            if (annotationType) {
-              var linkToType = createLinkToType(annotationType, param.typeExpression, doc);
-              if (linkToType) {
-                param.paramString = escape(linkToType);
-              }
-            }
-          }
+          param.paramString = paramString(param);
         });
 
         // Add links for the return types.
