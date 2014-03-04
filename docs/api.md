@@ -779,7 +779,7 @@ Type | Description
 
 ##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L715)
 
-Evalates the input as if it were on the scope of the current element.
+Evaluates the input as if it were on the scope of the current element.
 
 
 
@@ -797,10 +797,7 @@ expression | string |
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in
-    {@link webdriver.WebDriver.executeScript}. In summary - primitives will
-    be resolved as is, functions will be converted to string, and elements
-    will be returned as a WebElement.
+!webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in {@link webdriver.WebDriver.executeScript}. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.
 
 
 ##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L734)
@@ -980,10 +977,35 @@ a prototype before inheriting from it.
 
 
 ##[ProtractorBy.prototype.addLocator](https://github.com/angular/protractor/blob/master/lib/locators.js#L22)
-#### Use as: by.addLocator()
+#### Use as: by.addLocator(locatorName, functionOrScript)
 Add a locator to this instance of ProtractorBy. This locator can then be
-used with element(by.<name>(<args>)).
+used with element(by.locatorName(args)).
 
+
+###Example
+
+```html
+<button ng-click="doAddition()">Go!</button>
+```
+
+```javascript
+// Add the custom locator.
+by.addLocator('buttonTextSimple', function(buttonText, opt_parentElement) {
+  // This function will be serialized as a string and will execute in the
+  // browser. The first argument is the text for the button. The second
+  // argument is the parent element, if any.
+  var using = opt_parentElement || document,
+  buttons = using.querySelectorAll('button');
+
+  // Return an array of buttons with the text.
+  return Array.prototype.filter.call(buttons, function(button) {
+    return button.textContent === buttonText;
+  });
+});
+
+// Use the custom locator.
+element(by.buttonTextSimple('Go!')).click();
+```
 
 
 
@@ -991,16 +1013,14 @@ used with element(by.<name>(<args>)).
 
 Param | Type | Description
 --- | --- | ---
-name | string | 
-script | function&#124;string | A script to be run in the context of the browser. This script will be passed an array of arguments
-    that contains any args passed into the locator followed by the
-    element scoping the search. It should return an array of elements.
+name | string | The name of the new locator.
+script | Function&#124;string | A script to be run in the context of the browser. This script will be passed an array of arguments that contains any args passed into the locator followed by the element scoping the search. It should return an array of elements.
 
 
 
 
 
-##[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L61)
+##[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L82)
 #### Use as: by.binding()
 Find an element by binding.
 
@@ -1038,7 +1058,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L90)
+##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L111)
 
 DEPRECATED - use 'model' instead.
 
@@ -1058,7 +1078,7 @@ element(by.select('user'));
 
 
 
-##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L109)
+##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L130)
 
 
 
@@ -1078,7 +1098,7 @@ element(by.selectedOption("user"));
 
 
 
-##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L126)
+##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L147)
 
 @DEPRECATED - use 'model' instead.
 
@@ -1098,7 +1118,7 @@ element(by.input('user'));
 
 
 
-##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L144)
+##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L165)
 #### Use as: by.model()
 Find an element by ng-model expression.
 
@@ -1127,7 +1147,7 @@ model | string | ng-model expression.
 
 
 
-##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L168)
+##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L189)
 
 Find a button by text.
 
@@ -1160,7 +1180,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L190)
+##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L211)
 
 Find a button by partial text.
 
@@ -1193,7 +1213,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L213)
+##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L234)
 
 DEPRECATED - use 'model' instead.
 
@@ -1213,7 +1233,7 @@ element(by.textarea('user'));
 
 
 
-##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L231)
+##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L252)
 
 Find elements inside an ng-repeat.
 
@@ -1238,7 +1258,7 @@ var firstCatName = element(by.repeater('cat in pets').
 // Returns a promise that resolves to an array of WebElements from a column
 var ages = element.all(
     by.repeater('cat in pets').column('{{cat.age}}'));
-    
+
 // Returns a promise that resolves to an array of WebElements containing
 // all rows of the repeater.
 var rows = element.all(by.repeater('cat in pets'));
@@ -1851,8 +1871,7 @@ one this instance is currently focused on), a
 
 Param | Type | Description
 --- | --- | ---
-locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) | The locator strategy to use when searching for the element, or the actual
-    DOM element to be located by the server.
+locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) | The locator strategy to use when searching for the element, or the actual DOM element to be located by the server.
 
 
 
@@ -1861,8 +1880,7 @@ locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) 
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the
-    element will be invalidated and all scheduled commands aborted.
+&#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the element will be invalidated and all scheduled commands aborted.
 
 
 ##[webdriver.WebDriver.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#767)
@@ -1880,8 +1898,7 @@ test if at least one element can be found with the given search criteria.
 
 Param | Type | Description
 --- | --- | ---
-locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) | The locator strategy to use when searching for the element, or the actual
-    DOM element to be located by the server.
+locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) | The locator strategy to use when searching for the element, or the actual DOM element to be located by the server.
 
 
 
@@ -2426,8 +2443,7 @@ Retrieves the window's current size.
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved with the window's size in the form of a {width:number, height:number} object
-    literal.
+!webdriver.promise.Promise | A promise that will be resolved with the window's size in the form of a {width:number, height:number} object literal.
 
 
 ##[webdriver.WebDriver.Window.prototype.setSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1232)
@@ -2513,8 +2529,7 @@ type | !webdriver.logging.Type | The desired log type.
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Entry&gt;&gt; | A promise that will resolve to a list of log entries for the specified
-  type.
+!webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Entry&gt;&gt; | A promise that will resolve to a list of log entries for the specified type.
 
 
 ##[webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1305)
@@ -2727,8 +2742,7 @@ catch errors when an element cannot be located on the page:
 Param | Type | Description
 --- | --- | ---
 driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent WebDriver instance for this element.
-id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will
-    resolve to that ID or another WebElement.
+id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will resolve to that ID or another WebElement.
 
 
 
@@ -2828,8 +2842,7 @@ locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to
 
 Type | Description
 --- | ---
-[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the
-    element will be invalidated and all scheduled commands aborted.
+[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the element will be invalidated and all scheduled commands aborted.
 
 
 ##[webdriver.WebElement.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1638)
@@ -2944,8 +2957,7 @@ keyboard layout.
 
 Param | Type | Description
 --- | --- | ---
-var_args | ...string | The sequence of keys to type. All arguments will be joined into a single sequence (var_args is
-    permitted for convenience).
+var_args | ...string | The sequence of keys to type. All arguments will be joined into a single sequence (var_args is permitted for convenience).
 
 
 
@@ -3045,8 +3057,7 @@ attributeName | string | The name of the attribute to query.
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved with the attribute's value. The returned value will always be either a string or
-    null.
+!webdriver.promise.Promise | A promise that will be resolved with the attribute's value. The returned value will always be either a string or null.
 
 
 ##[webdriver.WebElement.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1832)
@@ -3231,8 +3242,7 @@ case of {@code prompt}).
 Param | Type | Description
 --- | --- | ---
 driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The driver controlling the browser this alert is attached to.
-text | !(string&#124;webdriver.promise.Promise) | Either the message text displayed with this alert, or a promise that will be resolved to said
-    text.
+text | !(string&#124;webdriver.promise.Promise) | Either the message text displayed with this alert, or a promise that will be resolved to said text.
 
 
 
