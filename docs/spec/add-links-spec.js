@@ -27,14 +27,6 @@ describe('add-links', function() {
         'source/browse/javascript/webdriver/webdriver.js#123');
   });
 
-  var newType = function(description) {
-    return {
-      type: {
-        description: description
-      }
-    };
-  };
-
   it('should add links to types', function() {
     var docWithFunction = {
       typeExpression: 'function(webdriver.WebElement, number)',
@@ -130,5 +122,29 @@ describe('add-links', function() {
 
     expect(docs[1].returnString).toBe(
         '[webdriver.WebElement](#webdriverwebelement)');
+  });
+
+  it('should add @link links', function() {
+    // Given a doc with a @link annotation.
+    var docs = [
+      {
+        name: 'webdriver.WebElement',
+        fileName: 'webdriver',
+        startingLine: 123
+      },
+      {
+        name: 'element.findElements',
+        description: 'A promise that {@link webdriver.WebElement}s',
+        fileName: 'protractor',
+        startingLine: 3
+      }
+    ];
+
+    // When you add links.
+    addLinks(docs);
+
+    // Then ensure a link was added to the type.
+    expect(docs[1].description).toBe('A promise that ' +
+        '{@link [webdriver.WebElement](#webdriverwebelement)}s');
   });
 });
