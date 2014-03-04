@@ -81,9 +81,8 @@ var paramString = function(param) {
   }
 
   var replaceWithLinkIfPresent = function(type) {
-    var name = type.name;
-    if (typeTable[name]) {
-      str = str.replace(name, toMarkdownLinkFormat(name));
+    if (typeTable[type.name]) {
+      str = str.replace(type.name, toMarkdownLinkFormat(type.name));
     }
   };
 
