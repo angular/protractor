@@ -19,6 +19,8 @@ Before submitting an issues, please search the issue archive, read the
 When submitting an issue, please include context from your test and
 your application. If there's an error, please include the error text.
 
+Please format code and markup in your issue using [github markdown](https://help.github.com/articles/github-flavored-markdown).
+
 
 Pull Requests
 -------------
