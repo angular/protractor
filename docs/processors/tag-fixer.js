@@ -39,16 +39,6 @@ var replaceNewLines = function(obj, prop) {
 };
 
 /**
- * Escape the < > | characters from the param or return type.
- * @param {!Object} type Parsed type.
- */
-var escapeTypeNames = function(type) {
-  if (type && type.name) {
-    type.name = _.escape(type.name).replace(/\|/g, '&#124;');
-  }
-};
-
-/**
  * Remove the duplicate param annotations. Go through the params and the return
  * annotations to replace the new lines and escape the types to prepare them
  * for markdown rendering.
@@ -58,12 +48,7 @@ var escapeTypeNames = function(type) {
 var fixParamsAndReturns = function(doc) {
   if (doc.params) {
     _.each(doc.params, function(param) {
-      // Remove null descriptions.
-      if (param.description === 'null') {
-        param.description = '';
-      }
       replaceNewLines(param, 'description');
-      escapeTypeNames(param.type);
     });
   }
 
@@ -71,7 +56,6 @@ var fixParamsAndReturns = function(doc) {
   var returns = doc.returns;
   if (returns) {
     replaceNewLines(returns, 'description');
-    escapeTypeNames(returns.type);
   }
 };
 
