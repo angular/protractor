@@ -73,6 +73,11 @@ var toMarkdownLinkFormat = function(type) {
   return '[' + type + '](#' + lowercaseType + ')';
 };
 
+/**
+ * Create the param string property.
+ * @param {!Object} param Parameter.
+ * @return {string} Escaped param string with links to the types.
+ */
 var paramString = function(param) {
   var str = param.typeExpression;
   var type = param.type;
@@ -130,6 +135,5 @@ module.exports = {
     } catch (e) {
       console.log('Error adding links', e);
     }
-
   }
 };
