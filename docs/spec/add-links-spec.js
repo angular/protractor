@@ -78,6 +78,25 @@ describe('add-links', function() {
           },
           typeList: ['function(webdriver.WebElement, number)'],
           name: 'mapFn'
+        },
+        {
+          tagDef: {
+            name: 'param',
+            multi: true,
+            docProperty: 'params',
+            canHaveName: true,
+            canHaveType: true
+          },
+          tagName: 'param',
+          description: '',
+          startingLine: 171,
+          typeExpression: 'Protractor',
+          type: {
+            type: 'NameExpression',
+            name: 'Protractor'
+          },
+          typeList: ['Protractor'],
+          name: 'ptor'
         }
       ]
     };
@@ -89,7 +108,12 @@ describe('add-links', function() {
         fileName: 'webdriver',
         startingLine: 123
       },
-      docWithFunction
+      docWithFunction,
+      {
+        name: 'Protractor',
+        fileName: 'protractor',
+        startingLine: 3
+      }
     ];
 
     // When you add links.
@@ -101,6 +125,8 @@ describe('add-links', function() {
     };
     expect(getDesc(0)).toBe(
         'function([webdriver.WebElement](#webdriverwebelement), number)');
+    expect(getDesc(1)).toBe(
+        '[Protractor](#protractor)');
     expect(docs[1].returnString).toBe(
         '[webdriver.WebElement](#webdriverwebelement)');
   });
