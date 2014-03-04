@@ -196,7 +196,7 @@ ElementFinder |
 
 
 ##[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L116)
-####element(locator).find()
+#### Use as: element(locator).find()
 Return the actual WebElement.
 
 
@@ -212,7 +212,7 @@ Type | Description
 
 
 ##[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L126)
-####element(locator).isPresent()
+#### Use as: element(locator).isPresent()
 Determine whether an element is present on the page.
 
 
@@ -242,7 +242,7 @@ Type | Description
 
 
 ##[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L148)
-####element(locator).element()
+#### Use as: element(locator).element()
 Calls to element may be chained to find elements within a parent.
 
 
@@ -290,7 +290,7 @@ function(webdriver.Locator): ElementFinder |
 
 
 ##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L179)
-####element(locator).$()
+#### Use as: element(locator).$()
 Shortcut for chaining css element finders.
 
 
@@ -375,7 +375,7 @@ ElementArrayFinder |
 
 
 ##[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L234)
-####element.all(locator).count()
+#### Use as: element.all(locator).count()
 Count the number of elements found by the locator.
 
 
@@ -406,7 +406,7 @@ Type | Description
 
 
 ##[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L258)
-####element.all(locator).get()
+#### Use as: element.all(locator).get()
 Get an element found by the locator by index. The index starts at 0.
 
 
@@ -445,7 +445,7 @@ Type | Description
 
 
 ##[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L284)
-####element.all(locator).first()
+#### Use as: element.all(locator).first()
 Get the first element found using the locator.
 
 
@@ -476,7 +476,7 @@ Type | Description
 
 
 ##[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L311)
-####element.all().last()
+#### Use as: element.all().last()
 Get the last matching element for the locator.
 
 
@@ -507,7 +507,7 @@ Type | Description
 
 
 ##[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L343)
-####element.all().each()
+#### Use as: element.all().each()
 Calls the input function on each WebElement found by the locator.
 
 
@@ -541,7 +541,7 @@ fn | function([webdriver.WebElement](#webdriverwebelement)) | Input function
 
 
 ##[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L370)
-####element.all(locator).map()
+#### Use as: element.all(locator).map()
 Apply a map function to each element found using the locator. The
 callback receives the web element as the first argument and the index as
 a second arg.
@@ -650,7 +650,7 @@ Type | Description
 
 
 ##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L605)
-####$()
+#### Use as: $()
 Shortcut for querying the document directly with css.
 
 
@@ -703,7 +703,7 @@ Type | Description
 
 
 ##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L645)
-####$$()
+#### Use as: $$()
 Shortcut for querying the document directly with css.
 
 
@@ -980,7 +980,7 @@ a prototype before inheriting from it.
 
 
 ##[ProtractorBy.prototype.addLocator](https://github.com/angular/protractor/blob/master/lib/locators.js#L22)
-####by.addLocator()
+#### Use as: by.addLocator()
 Add a locator to this instance of ProtractorBy. This locator can then be
 used with element(by.<name>(<args>)).
 
@@ -1001,7 +1001,7 @@ script | function&#124;string | A script to be run in the context of the browser
 
 
 ##[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L61)
-####by.binding()
+#### Use as: by.binding()
 Find an element by binding.
 
 
@@ -1099,7 +1099,7 @@ element(by.input('user'));
 
 
 ##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L144)
-####by.model()
+#### Use as: by.model()
 Find an element by ng-model expression.
 
 

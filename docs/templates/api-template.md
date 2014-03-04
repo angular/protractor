@@ -1,5 +1,5 @@
 ##[{$ doc.name $}]({$ doc.sourceLink $})
-{%if doc.alias %}####{$ doc.alias $}{%endif%}
+{%if doc.alias %}#### Use as: {$ doc.alias $}{%endif%}
 {$ doc.description $}
 
 {% if doc.example %}
