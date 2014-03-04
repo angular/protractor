@@ -36,6 +36,36 @@ describe('add-links', function() {
   };
 
   it('should add links to types', function() {
+    var docWithFunction = {
+      typeExpression: 'function(webdriver.WebElement, number)',
+      fileName: 'protractor',
+      startingLine: 123,
+      params: [
+        {
+          tagDef: {
+            name: 'param',
+            multi: true,
+            docProperty: 'params',
+            canHaveName: true,
+            canHaveType: true
+          },
+          tagName: 'param',
+          description: 'Map function that will be applied to each element.',
+          startingLine: 396,
+          typeExpression: 'function(webdriver.WebElement, number)',
+          type: {
+            type: 'FunctionType',
+            params: [
+              {type: 'NameExpression', name: 'webdriver.WebElement'},
+              {type: 'NameExpression', name: 'number'}
+            ]
+          },
+          typeList: ['function(webdriver.WebElement, number)'],
+          name: 'mapFn'
+        }
+      ]
+    };
+
     // Given a type and a function.
     var docs = [
       {
@@ -43,24 +73,7 @@ describe('add-links', function() {
         fileName: 'webdriver',
         startingLine: 123
       },
-      {
-        name: 'theFunction',
-        fileName: 'protractor',
-        startingLine: 123,
-        params: [
-          newType('!webdriver.WebElement'),
-          newType('webdriver.WebElement'),
-          newType(_.escape('!Array.<webdriver.WebElement>')),
-          newType(_.escape('function(webdriver.WebElement, number)')),
-          newType(_.escape('function(webdriver.WebElement)')),
-          newType(_.escape('!function(!webdriver.WebElement)'))
-        ],
-        returns: {
-          type: {
-            description: '!webdriver.WebElement'
-          }
-        }
-      }
+      docWithFunction
     ];
 
     // When you add links.
@@ -68,22 +81,9 @@ describe('add-links', function() {
 
     // Then ensure the link was added.
     var getDesc = function(index) {
-      return docs[1].params[index].type.description;
+      return docs[1].params[index].paramString;
     };
     expect(getDesc(0)).toBe(
-        '&#33;[webdriver.WebElement](#webdriverwebelement)');
-    expect(getDesc(1)).toBe(
-        '[webdriver.WebElement](#webdriverwebelement)');
-    expect(getDesc(2)).toBe(
-        '!Array.&lt;[webdriver.WebElement](#webdriverwebelement)&gt;');
-    expect(getDesc(3)).toBe(
         'function([webdriver.WebElement](#webdriverwebelement), number)');
-    expect(getDesc(4)).toBe(
-        'function([webdriver.WebElement](#webdriverwebelement))');
-    expect(getDesc(5)).toBe(
-        '!function(&#33;[webdriver.WebElement](#webdriverwebelement))');
-
-    expect(docs[1].returns.type.description).
-        toBe('&#33;[webdriver.WebElement](#webdriverwebelement)');
   });
 });
