@@ -40,6 +40,22 @@ describe('add-links', function() {
       typeExpression: 'function(webdriver.WebElement, number)',
       fileName: 'protractor',
       startingLine: 123,
+      returns: {
+        tagDef: {
+          name: 'returns',
+          aliases: ['return'],
+          canHaveType: true
+        },
+        tagName: 'return',
+        description: '',
+        startingLine: 119,
+        typeExpression: 'webdriver.WebElement',
+        type: {
+          type: 'NameExpression',
+          name: 'webdriver.WebElement'
+        },
+        typeList: ['webdriver.WebElement']
+      },
       params: [
         {
           tagDef: {
@@ -85,5 +101,7 @@ describe('add-links', function() {
     };
     expect(getDesc(0)).toBe(
         'function([webdriver.WebElement](#webdriverwebelement), number)');
+    expect(docs[1].returnString).toBe(
+        '[webdriver.WebElement](#webdriverwebelement)');
   });
 });
