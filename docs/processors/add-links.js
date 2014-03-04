@@ -128,7 +128,7 @@ module.exports = {
         }
       });
     } catch (e) {
-      console.log('Error', e);
+      console.log('Error adding links', e);
     }
 
   }
