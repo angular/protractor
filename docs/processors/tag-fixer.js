@@ -7,9 +7,11 @@ var _ = require('lodash');
  */
 var addDescription = function(doc) {
   var content = doc.content || '';
-  doc.description = content.
-      substring(0, content.indexOf('@')).
-      replace(/\n*$/g, '');
+
+  // Does it have tags? Find the text until the first @.
+  doc.description = /@/.test(content) ?
+      content.substring(0, content.indexOf('@')).replace(/\n*$/g, '') :
+      content;
 };
 
 /**
