@@ -74,22 +74,18 @@ module.exports = {
   init: function(config) {
   },
   process: function(docs) {
-    try {
-      typeTable = _.groupBy(docs, 'name');
+    typeTable = _.groupBy(docs, 'name');
 
-      docs.forEach(function(doc) {
-        addLinkToSourceCode(doc);
+    docs.forEach(function(doc) {
+      addLinkToSourceCode(doc);
 
-        // Add links for the param types.
-        _.each(doc.params, function(param) {
-          param.paramString = getTypeString(param);
-        });
-
-        // Add links for the return types.
-        doc.returnString = doc.returns ? getTypeString(doc.returns) : '';
+      // Add links for the param types.
+      _.each(doc.params, function(param) {
+        param.paramString = getTypeString(param);
       });
-    } catch (e) {
-      console.log('Error adding links', e);
-    }
+
+      // Add links for the return types.
+      doc.returnString = doc.returns ? getTypeString(doc.returns) : '';
+    });
   }
 };
