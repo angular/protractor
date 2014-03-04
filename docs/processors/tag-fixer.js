@@ -56,9 +56,7 @@ var escapeTypeNames = function(type) {
  * @param {!Object} doc Document representing a function jsdoc.
  */
 var fixParamsAndReturns = function(doc) {
-  // Remove duplicates.
   if (doc.params) {
-    doc.params = _.uniq(doc.params, 'name');
     _.each(doc.params, function(param) {
       // Remove null descriptions.
       if (param.description === 'null') {
