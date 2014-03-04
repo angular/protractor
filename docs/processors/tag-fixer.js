@@ -33,7 +33,7 @@ var findName = function(doc) {
  */
 var replaceNewLines = function(obj, prop) {
   if (obj) {
-    obj[prop] = (obj[prop] || '').replace(/\n\s+/, ' ');
+    obj[prop] = (obj[prop] || '').replace(/\n\s+/g, ' ');
   }
 };
 
