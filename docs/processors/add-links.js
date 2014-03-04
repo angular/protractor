@@ -19,14 +19,36 @@ var addLinkToSourceCode = function(doc) {
 };
 
 /**
+ * Add links to @link annotations. For example: {@link foo.bar} will be
+ * transformed into '[foo.bar](#foobar)'.
+ * @param {string} str The string with the annotations.
+ * @return {string} A link in markdown format.
+ */
+var addLinkToLinkAnnotation = function(str) {
+  if (str) {
+    var matches = /{@link\s+([\w\.]+)}/.exec(str);
+    if (matches && typeTable[matches[1]]) {
+      return str.replace(
+          new RegExp('{@link\\s+' + matches[1] + '\\s*}'),
+          toMarkdownLinkFormat(matches[1])
+      );
+    }
+  }
+  return str;
+};
+
+/**
  * Escape the < > | characters.
+ * @param {string} str The string to escape.
  */
 var escape = function(str) {
   return _.escape(str).replace(/\|/g, '&#124;').replace(/!\[/, '&#33;[');
 };
 
 /**
- * Create a markdown link for the type.
+ * Create a markdown link with the following format: '[foo.Bar](#foobar)'
+ * @param {string} type The type you want to link.
+ * return {string} A markdown link for the type.
  */
 var toMarkdownLinkFormat = function(type) {
   var lowercaseType = type.replace(/[\.\$]/g, '').toLocaleLowerCase();
@@ -78,6 +100,7 @@ module.exports = {
 
     docs.forEach(function(doc) {
       addLinkToSourceCode(doc);
+      doc.description = addLinkToLinkAnnotation(doc.description);
 
       // Add links for the param types.
       _.each(doc.params, function(param) {
@@ -85,7 +108,13 @@ module.exports = {
       });
 
       // Add links for the return types.
-      doc.returnString = doc.returns ? getTypeString(doc.returns) : '';
+      var returns = doc.returns;
+      if (returns) {
+        doc.returnString = getTypeString(returns);
+        returns.description = addLinkToLinkAnnotation(returns.description);
+      } else {
+        doc.returnString = '';
+      }
     });
   }
 };
