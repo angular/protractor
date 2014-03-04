@@ -602,7 +602,8 @@ Type | Description
 Param | Type | Description
 --- | --- | ---
 webdriver | [webdriver.WebDriver](#webdriverwebdriver) | 
-opt_baseUrl | string | A base URL to run get requests against.
+opt_baseUrl | string= | A base URL to run get requests against.
+opt_rootElement | string= | Selector element that has an ng-app in scope.
 
 
 
@@ -682,7 +683,7 @@ selector | string | A css selector
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) |
+&#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L628)
@@ -698,7 +699,7 @@ Type | Description
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) |
+&#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L645)
@@ -815,7 +816,7 @@ Waits for Angular to finish rendering before searching for elements.
 
 Type | Description
 --- | ---
-&#33;[webdriver.WebElement](#webdriverwebelement) |
+&#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
 ##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L752)
@@ -865,7 +866,7 @@ name.
 Param | Type | Description
 --- | --- | ---
 name | !string | The name of the module to load or override.
-script | (!string&#124;Function) | The JavaScript to load the module.
+script | !string&#124;Function | The JavaScript to load the module.
 
 
 
@@ -915,7 +916,7 @@ the wrapped webdriver directly.
 Param | Type | Description
 --- | --- | ---
 destination | string | Destination URL.
-opt_timeout | number | Number of seconds to wait for Angular to start.
+opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
@@ -991,6 +992,9 @@ used with element(by.<name>(<args>)).
 Param | Type | Description
 --- | --- | ---
 name | string | 
+script | function&#124;string | A script to be run in the context of the browser. This script will be passed an array of arguments
+    that contains any args passed into the locator followed by the
+    element scoping the search. It should return an array of elements.
 
 
 
@@ -1076,7 +1080,7 @@ element(by.selectedOption("user"));
 
 ##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L126)
 
-
+@DEPRECATED - use 'model' instead.
 
 
 ###Example
@@ -1627,7 +1631,7 @@ Schedules a command to execute a custom function.
 Param | Type | Description
 --- | --- | ---
 fn | !Function | The function to execute.
-opt_scope | Object | The object in whose scope to execute the function.
+opt_scope | Object= | The object in whose scope to execute the function.
 var_args | ...* | Any arguments to pass to the function.
 
 
@@ -1653,9 +1657,9 @@ will be allowed to propagate.
 
 Param | Type | Description
 --- | --- | ---
-fn | function (): boolean | The function to evaluate as a wait condition.
+fn | function():boolean | The function to evaluate as a wait condition.
 timeout | number | How long to wait for the condition to be true.
-opt_message | string | An optional message to use if the wait times out.
+opt_message | string= | An optional message to use if the wait times out.
 
 
 
@@ -1853,6 +1857,13 @@ locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) 
 
 
 
+###Returns
+
+Type | Description
+--- | ---
+&#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the
+    element will be invalidated and all scheduled commands aborted.
+
 
 ##[webdriver.WebDriver.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#767)
 
@@ -1875,6 +1886,12 @@ locatorOrElement | !(webdriver.Locator&#124;Object.&lt;string&gt;&#124;Element) 
 
 
 
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
+
 
 ##[webdriver.WebDriver.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#794)
 
@@ -1887,10 +1904,16 @@ Schedule a command to search for multiple elements on the page.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
+locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to use when searching for the element.
 
 
 
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
 
 
 ##[webdriver.WebDriver.prototype.takeScreenshot](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#830)
@@ -2082,10 +2105,10 @@ Param | Type | Description
 --- | --- | ---
 name | string | The cookie name.
 value | string | The cookie value.
-opt_path | string | The cookie path.
-opt_domain | string | The cookie domain.
-opt_isSecure | boolean | Whether the cookie is secure.
-opt_expiry | (number&#124;!Date) | When the cookie expires. If specified as a number, should be in milliseconds since midnight, January 1, 1970 UTC.
+opt_path | string= | The cookie path.
+opt_domain | string= | The cookie domain.
+opt_isSecure | boolean= | Whether the cookie is secure.
+opt_expiry | (number&#124;!Date)= | When the cookie expires. If specified as a number, should be in milliseconds since midnight, January 1, 1970 UTC.
 
 
 
@@ -2585,7 +2608,7 @@ with a {@code bot.ErrorCode.NO_SUCH_FRAME} error.
 
 Param | Type | Description
 --- | --- | ---
-nameOrIndex | (string&#124;number) | The frame locator.
+nameOrIndex | string&#124;number | The frame locator.
 
 
 
@@ -2796,10 +2819,17 @@ searches are delegated to this instance's parent WebDriver.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
+locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to use when searching for the element.
 
 
 
+
+###Returns
+
+Type | Description
+--- | ---
+[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the
+    element will be invalidated and all scheduled commands aborted.
 
 
 ##[webdriver.WebElement.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1638)
@@ -2817,10 +2847,16 @@ DOM. All such searches are delegated to this instance's parent WebDriver.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the element.
+locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to use when searching for the element.
 
 
 
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
 
 
 ##[webdriver.WebElement.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1663)
@@ -2838,10 +2874,16 @@ searches are delegated to this instance's parent WebDriver.
 
 Param | Type | Description
 --- | --- | ---
-locator | (webdriver.Locator&#124;Object.&lt;string&gt;) | The locator strategy to use when searching for the elements.
+locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to use when searching for the elements.
 
 
 
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved with an array of located {@link webdriver.WebElement}s.
 
 
 ##[webdriver.WebElement.prototype.click](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1690)

@@ -4,14 +4,10 @@ var _ = require('lodash');
  * Add the description property to the doc. The description is all the text that
  * goes before the first annotation.
  * @param {!Object} doc Current doc.
+ * TODO(andresdom): remove
  */
 var addDescription = function(doc) {
-  var content = doc.content || '';
-
-  // Does it have tags? Find the text until the first @.
-  doc.description = /@/.test(content) ?
-      content.substring(0, content.indexOf('@')).replace(/\n*$/g, '') :
-      content;
+  doc.description = (doc.tags.description || '').replace(/\n$/, '');
 };
 
 /**

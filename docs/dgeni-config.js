@@ -37,8 +37,11 @@ module.exports = function(config) {
 
   // Parse the following annotations.
   tagDefs.push({name: 'alias'});
+  tagDefs.push({name: 'augments'});
+  tagDefs.push({name: 'deprecated'});
   tagDefs.push({name: 'example'});
   tagDefs.push({name: 'private'});
+  tagDefs.push({name: 'see'});
   tagDefs.push({name: 'type'});
   tagDefs.push({name: 'view'});
 
