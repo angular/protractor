@@ -12,7 +12,7 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "selenium-webdriver": "~2.39.0",
+    "selenium-webdriver": "~2.40.0",
     "minijasminenode": ">=0.2.7",
     "saucelabs": "~0.1.0",
     "glob": ">=3.1.14",
