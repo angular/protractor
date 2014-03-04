@@ -127,6 +127,7 @@ describe('add-links', function() {
         'function([webdriver.WebElement](#webdriverwebelement), number)');
     expect(getDesc(1)).toBe(
         '[Protractor](#protractor)');
+
     expect(docs[1].returnString).toBe(
         '[webdriver.WebElement](#webdriverwebelement)');
   });

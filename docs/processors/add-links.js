@@ -19,46 +19,6 @@ var addLinkToSourceCode = function(doc) {
 };
 
 /**
- *
- * @param description
- * @return {string[]}
- */
-var parseType = function(description) {
-  var regExp;
-  if (/function/.test(description)) {
-    regExp = /(function\s*\(\s*!?)([\w\.]+)(\))?/;
-  } else {
-    regExp = /(.*&lt;)?([\w\.]+)(&gt;.*)?/;
-  }
-
-  var match = regExp.exec(description);
-  if (match && match[2]) {
-    return match[2];
-  }
-
-  return description;
-};
-
-/**
- * The link looks like: 'elementFinder.isPresent', transform it into
- * 'elementfinderispresent'.
- */
-var linkForType = function(type) {
-  var typeName = typeTable[type][0].name;
-  return typeName.replace(/[\.\$]/g, '').toLocaleLowerCase();
-};
-
-var createLinkToType = function(annotationType, typeExpression, doc) {
-  // Parse the type.
-  var type = parseType(annotationType);
-  if (type && typeTable[type]) {
-    var typeLink = '[' + type + '](#' + linkForType(type) + ')';
-
-    return typeExpression.replace(type, typeLink);
-  }
-};
-
-/**
  * Escape the < > | characters.
  */
 var escape = function(str) {
@@ -74,11 +34,11 @@ var toMarkdownLinkFormat = function(type) {
 };
 
 /**
- * Create the param string property.
+ * Create the param or return type.
  * @param {!Object} param Parameter.
  * @return {string} Escaped param string with links to the types.
  */
-var paramString = function(param) {
+var getTypeString = function(param) {
   var str = param.typeExpression;
   var type = param.type;
   if (!type) {
@@ -122,15 +82,11 @@ module.exports = {
 
         // Add links for the param types.
         _.each(doc.params, function(param) {
-          param.paramString = paramString(param);
+          param.paramString = getTypeString(param);
         });
 
         // Add links for the return types.
-        var returns = doc.returns;
-        if (returns && returns.type) {
-          var linkToType = createLinkToType(returns.type.name, returns.typeExpression, doc);
-          doc.returnString = escape(linkToType ? linkToType : returns.typeExpression);
-        }
+        doc.returnString = doc.returns ? getTypeString(doc.returns) : '';
       });
     } catch (e) {
       console.log('Error adding links', e);
