@@ -49,7 +49,7 @@ module.exports = function(config) {
   var nameTag = _.find(tagDefs, {name: 'name'});
   nameTag.required = false;
 
-  config.append('processing.tagDefinitions', tagDefs);
+  config.set('processing.tagDefinitions', tagDefs);
 
   // Base path is the protractor root dir.
   var basePath = path.resolve(packagePath, '..');
