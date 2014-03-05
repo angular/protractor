@@ -1,6 +1,7 @@
 node_modules/
 selenium/
 testapp/inbrowsertest/
+docs/build/
 
 chromedriver.log
 libpeerconnection.log
