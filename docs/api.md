@@ -1119,7 +1119,7 @@ element(by.input('user'));
 
 
 ##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L165)
-#### Use as: by.model()
+#### Use as: by.model(modelName)
 Find an element by ng-model expression.
 
 
