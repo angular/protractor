@@ -1,3 +1,76 @@
+# 0.20.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([220d793](https://github.com/angular/protractor/commit/220d79372fb93d3b58c5131188b24e48be8176ab)), ([6603a7e](https://github.com/angular/protractor/commit/6603a7e964c8f1632db4790081a71648360cf1f9)) 
+  chore(webdriver): update selenium version to 2.40.0 and download location
+
+- ([ad5f3aa](https://github.com/angular/protractor/commit/ad5f3aa77fc3429fcf83f825a14fdb43fd7cc8a7)) 
+  feat(jasminewd): allow custom matchers to return promises
+
+  Allow custom jasmine matchers to return a promise which resolves to a boolean and match against
+  the resolution of the promise
+
+- ([41feaca](https://github.com/angular/protractor/commit/41feaca58c81fbd578c77424abf745acaf26f84f)) 
+  feat(framework.cucumber): Allow multiple tags on cucumber tests.
+
+  Motivation: Support for multiple tags on the cucumber test execution, to be able to filter with
+  more complex expressions the scenarios to run.
+
+  How to use:
+  ```
+  cucumberOpts: {
+     tags: '@dev'
+  }
+  ```
+
+  or
+
+  ```
+  cucumberOpts: {
+     tags: ['@dev', '~@ignore']
+  }
+  ```
+
+  More information on tags: https://github.com/cucumber/cucumber/wiki/Tags
+
+## Bug Fixes
+
+- ([2ca6541](https://github.com/angular/protractor/commit/2ca654114a2bf937313ff027583308f87e909892)) 
+  fix(debug): make protractor debug work in the new runner/launcher world
+
+  Closes #552
+
+- ([a68627b](https://github.com/angular/protractor/commit/a68627b3581c0551e04460682cfc13f8f91be366)) 
+  fix(launcher): command line args should be passed as-is to the runner
+
+  This allows users to continue to use optimist (or other process.argv) processing within their
+  tests and grab values from the command line.
+
+  Closes #571.
+
+- ([767c306](https://github.com/angular/protractor/commit/767c306102956ba6015cfe3998affb7e8430f259)), ([02defe3](https://github.com/angular/protractor/commit/02defe360dce41ee6841df9012166d249acfeca0)) 
+  fix(jasminewd): include full pre-async-call stack trace in expectation failure message
+
+- ([b6df2cf](https://github.com/angular/protractor/commit/b6df2cfcfd35b31e2e473604b6df9add744c6c2d)) 
+  fix(configParser): load coffee and typescript for child processes
+
+  Without loading coffee in configParser.js, child processes which try and load a coffeescript
+  config file do not have coffee registered with node's required, and child tests fail.
+
+  Fixes an issue with using coffeescript config files.
+
+- ([64bee25](https://github.com/angular/protractor/commit/64bee252f6df52f9243c0f5d7e40f39bf5407134)) 
+  fix(locators): add locator with multiple arguments
+
+  When using a custom locator with multiple arguments, only the first argument was used when 
+  calling `webdriver.findElements`.
+
+
+- ([87b0c7f](https://github.com/angular/protractor/commit/87b0c7f2ecc8befa4fa1ebd5d8238c811a869aff)) 
+  fix(debug): display error message when runner fails
+
 # 0.19.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
