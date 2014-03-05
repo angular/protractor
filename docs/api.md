@@ -742,7 +742,7 @@ selector | string | a css selector
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
 ##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L677)
@@ -758,7 +758,7 @@ Type | Description
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
 ##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L701)
@@ -829,7 +829,7 @@ Waits for Angular to finish rendering before searching for elements.
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
 ##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L779)
@@ -1856,7 +1856,7 @@ var e2 = driver.findElement({id:'foo'});
 </pre></code>
 
 <p>When running in the browser, a WebDriver cannot manipulate DOM elements
-directly; it may do so only through a {@link webdriver.WebElement} reference.
+directly; it may do so only through a [webdriver.WebElement](#webdriverwebelement) reference.
 This function may be used to generate a WebElement from a DOM element. A
 reference to the DOM element will be stored in a known location and this
 driver will attempt to retrieve it through {@link #executeScript}. If the
@@ -1930,7 +1930,7 @@ locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved to an array of the located {@link webdriver.WebElement}s.
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
 ##[webdriver.WebDriver.prototype.takeScreenshot](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#830)
@@ -2896,7 +2896,7 @@ locator | webdriver.Locator&#124;Object.&lt;string&gt; | The locator strategy to
 
 Type | Description
 --- | ---
-!webdriver.promise.Promise | A promise that will be resolved with an array of located {@link webdriver.WebElement}s.
+!webdriver.promise.Promise | A promise that will be resolved with an array of located [webdriver.WebElement](#webdriverwebelement)s.
 
 
 ##[webdriver.WebElement.prototype.click](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1690)

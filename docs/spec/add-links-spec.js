@@ -136,7 +136,23 @@ describe('add-links', function() {
         name: 'element.findElements',
         description: 'A promise that {@link webdriver.WebElement}s',
         fileName: 'protractor',
-        startingLine: 3
+        startingLine: 3,
+        returns: {
+          tagDef: {
+            name: 'returns',
+            aliases: ['return'],
+            canHaveType: true
+          },
+          tagName: 'return',
+          description: 'A promise located {@link webdriver.WebElement}s.',
+          startingLine: 119,
+          typeExpression: 'webdriver.WebElement',
+          type: {
+            type: 'NameExpression',
+            name: 'webdriver.WebElement'
+          },
+          typeList: ['webdriver.WebElement']
+        }
       }
     ];
 
@@ -145,6 +161,8 @@ describe('add-links', function() {
 
     // Then ensure a link was added to the type.
     expect(docs[1].description).toBe('A promise that ' +
-        '{@link [webdriver.WebElement](#webdriverwebelement)}s');
+        '[webdriver.WebElement](#webdriverwebelement)s');
+    expect(docs[1].returns.description).toBe('A promise located ' +
+        '[webdriver.WebElement](#webdriverwebelement)s.');
   });
 });
