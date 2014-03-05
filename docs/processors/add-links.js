@@ -20,6 +20,7 @@ var addLinkToSourceCode = function(doc) {
 
 /**
  * Escape the < > | characters.
+ * @param {string} str The string to escape.
  */
 var escape = function(str) {
   return _.escape(str).replace(/\|/g, '&#124;').replace(/!\[/, '&#33;[');
