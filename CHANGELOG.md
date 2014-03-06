@@ -1,3 +1,12 @@
+# 0.20.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+- ([17de697](https://github.com/angular/protractor/commit/17de697fe9f64e238a8df0fbc6358b8e578e45f2
+  fix(debug): make new debug work on windows too
+
+  Closes #580
+
 # 0.20.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
