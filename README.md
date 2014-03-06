@@ -43,7 +43,7 @@ exports.config = {
 }
 ```
 
-The configuration file must specify a way to connection to webdriver. This can be
+The configuration file must specify a way to connect to webdriver. This can be
  *   `seleniumAddress`: The address of a running selenium standalone server.
  *   `seleniumServerJar`: The location of the selenium standalone .jar file on your machine. Protractor will use this to start up the selenium server.
  *   `sauceUser` and `sauceKey`: The username and key for a [SauceLabs](http://www.saucelabs.com) account. Protractor will use this to run tests on SauceLabs.
