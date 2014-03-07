@@ -10,7 +10,7 @@ module.exports = function(config) {
   // Override the default extractor with a custom processor that reads the next
   // line of code after the closing jsdoc.
   config.set('source.extractors', [
-    require('./processors/js')
+    require('dgeni-packages/jsdoc/extractors/jsdoc.js')
   ]);
 
   /*
