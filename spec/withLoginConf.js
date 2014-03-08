@@ -1,5 +1,8 @@
 // This is the configuration file showing how a suite of tests might
 // handle log-in using the onPrepare field.
+var port =  + (process.env.HTTP_PORT || '8000'),
+    baseUrl = 'http://localhost:8000';
+
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
@@ -12,7 +15,7 @@ exports.config = {
   },
 
   onPrepare: function() {
-    browser.driver.get('http://localhost:8000/login.html');
+    browser.driver.get(baseUrl + '/login.html');
 
     browser.driver.findElement(by.id('username')).sendKeys('Jane');
     browser.driver.findElement(by.id('password')).sendKeys('1234');
@@ -28,5 +31,5 @@ exports.config = {
     });
   },
 
-  baseUrl: 'http://localhost:8000',
+  baseUrl: baseUrl,
 };

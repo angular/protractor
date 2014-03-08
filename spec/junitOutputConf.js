@@ -30,5 +30,5 @@ exports.config = {
     }
   },
 
-  baseUrl: 'http://localhost:8000',
+  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
 };
