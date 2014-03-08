@@ -31,7 +31,7 @@
     "lodash": "~2.4.1",
     "rimraf": "~2.2.6",
     "dgeni": "~0.2.2",
-    "dgeni-packages": "~0.4.0"
+    "dgeni-packages": "~0.6.0"
   },
   "repository": {
     "type": "git",
