@@ -13,7 +13,7 @@ exports.config = {
     'browserName': 'chrome'
   },
 
-  baseUrl: 'http://localhost:8000',
+  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
 
   params: {
     login: {

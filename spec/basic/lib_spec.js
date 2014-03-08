@@ -1,4 +1,5 @@
 var util = require('util');
+var port =  process.env.HTTP_PORT || '8000';
 
 describe('no protractor at all', function() {
   it('should still do normal tests', function() {
@@ -31,15 +32,15 @@ describe('protractor library', function() {
     function() {
       browser.get('index.html');
       expect(browser.getCurrentUrl()).
-          toEqual('http://localhost:8000/index.html#/form')
+          toEqual('http://localhost:'+port+'/index.html#/form')
 
       browser.driver.findElement(protractor.By.linkText('repeater')).click();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:8000/index.html#/repeater');
+          toEqual('http://localhost:'+port+'/index.html#/repeater');
 
       browser.navigate().back();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:8000/index.html#/form');
+          toEqual('http://localhost:'+port+'/index.html#/form');
     });
 
   it('should export other webdriver classes onto the global protractor',
@@ -95,11 +96,11 @@ describe('protractor library', function() {
     it('should get the absolute URL', function() {
       browser.get('index.html');
       expect(browser.getLocationAbsUrl()).
-          toEqual('http://localhost:8000/index.html#/form');
+          toEqual('http://localhost:'+port+'/index.html#/form');
 
       element(by.linkText('repeater')).click();
       expect(browser.getLocationAbsUrl()).
-          toEqual('http://localhost:8000/index.html#/repeater');
+          toEqual('http://localhost:'+port+'/index.html#/repeater');
     });
   })
 });
