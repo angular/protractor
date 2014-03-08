@@ -1,16 +1,16 @@
-##[{$ doc.name $}]({$ doc.sourceLink $})
-{%if doc.alias %}#### Use as: {$ doc.alias $}{%endif%}
-{$ doc.description $}
+##[{{ doc.name }}]({{ doc.sourceLink }})
+{%if doc.alias %}#### Use as: {{ doc.alias }}{%endif%}
+{{ doc.description }}
 
 {% if doc.example %}
 ###Example
 {% if doc.view %}
 ```html
-{$ doc.view $}
+{{ doc.view }}
 ```
 {% endif %}
 ```javascript
-{$ doc.example $}
+{{ doc.example }}
 ```
 {% endif %}
 
@@ -19,7 +19,7 @@
 
 Param | Type | Description
 --- | --- | ---
-{% for param in doc.params %}{$ param.name $} | {$ param.paramString $} | {$ param.description $}
+{% for param in doc.params %}{{ param.name }} | {{ param.paramString }} | {{ param.description }}
 {% endfor %}
 {% endif %}
 
@@ -28,5 +28,5 @@ Param | Type | Description
 
 Type | Description
 --- | ---
-{$ doc.returnString $} | {$ doc.returns.description $}
+{{ doc.returnString }} | {{ doc.returns.description }}
 {% endif %}
