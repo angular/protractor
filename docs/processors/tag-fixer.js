@@ -14,16 +14,48 @@ var addDescription = function(doc) {
  */
 var findName = function(doc) {
   // Skip if the function has a name.
-  if (doc.name || !doc.fnDef) {
-    return;
+  if (doc.name) {
+    return doc.name;
   }
 
-  // Remove text after =.
-  var name = doc.fnDef.line.replace(/\s*=.*/, '');
-  // Remove space + var prefix.
-  name = name.replace(/\s*(var)?\s*/, '');
+  try {
+    var node = doc.code.node;
 
-  doc.name = name;
+    // Is this a simple declaration? "var element = function() {".
+    if (node.declarations && node.declarations.length) {
+      return node.declarations[0].id.name;
+    }
+
+    // Is this an expression? "elementFinder.find = function() {".
+    if (node.expression) {
+      var parts = [];
+
+      /**
+       * Recursively create the function name by examining the object property.
+       * @param obj Parsed object.
+       * @return {string} The name of the function.
+       */
+      function buildName(obj) {
+        if (!obj) {
+          return parts.join('.');
+        }
+
+        if (obj.property && obj.property.name) {
+          parts.unshift(obj.property.name);
+        }
+
+        if (obj.object && obj.object.name) {
+          parts.unshift(obj.object.name);
+        }
+
+        return buildName(obj.object);
+      }
+
+      return buildName(node.expression.left);
+    }
+  } catch (e) {
+    console.log('Could not find document name', doc.file, doc.endingLine);
+  }
 };
 
 /**
@@ -69,7 +101,7 @@ module.exports = {
   process: function(docs) {
     docs.forEach(function(doc) {
       addDescription(doc);
-      findName(doc);
+      doc.name = findName(doc);
       fixParamsAndReturns(doc);
 
       // Set the template name to use api-template.md.
