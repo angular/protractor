@@ -35,11 +35,13 @@ module.exports = {
       });
     });
 
+    // Get the version.
     // Add the table of contents.
     docs.push({
       outputPath: 'toc.md',
       template: 'toc',
-      toc: toc
+      toc: toc,
+      version: require('../../package.json').version
     });
   }
 };
