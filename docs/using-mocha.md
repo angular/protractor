@@ -27,7 +27,7 @@ You can then use Chai As Promised as such
 expect(myElement.getText()).to.eventually.equal('some text');
 ```
 
-Finally, set the 'framework' property of the config to 'mocha', either by adding `framework: mocha` to the config file or adding `--framework=mocha` to the command line.
+Finally, set the 'framework' property of the config to 'mocha', either by adding `framework: 'mocha'` to the config file or adding `--framework=mocha` to the command line.
 
 Options for mocha such as 'reporter', 'slow', can be given in config file with `mochaOpts` :
 
