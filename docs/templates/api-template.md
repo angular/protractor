@@ -1,6 +1,6 @@
 ##[{{ doc.name }}]({{ doc.sourceLink }})
 {%if doc.alias %}#### Use as: {{ doc.alias }}{%endif%}
-{{ doc.description }}
+{{ doc.description }}{% if doc.deprecated %}**DEPRECATED** {{doc.deprecated}}{% endif %}
 
 {% if doc.example %}
 ###Example
