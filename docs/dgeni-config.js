@@ -7,8 +7,7 @@ module.exports = function(config) {
 
   config = basePackage(config);
 
-  // Override the default extractor with a custom processor that reads the next
-  // line of code after the closing jsdoc.
+  // Use the jsdoc extractor instead of the default to parse the function name.
   config.set('source.extractors', [
     require('dgeni-packages/jsdoc/extractors/jsdoc.js')
   ]);
@@ -50,6 +49,10 @@ module.exports = function(config) {
   nameTag.required = false;
 
   config.set('processing.tagDefinitions', tagDefs);
+
+  // OutputPath for docs that do not already have them.
+  config.set('rendering.contentsFolder',
+      path.resolve(config.basePath, 'build'));
 
   // Base path is the protractor root dir.
   var basePath = path.resolve(packagePath, '..');
