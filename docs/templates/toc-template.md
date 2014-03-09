@@ -1,4 +1,4 @@
-Protractor API
+Protractor API {{doc.version}}
 ==============
 
 {% for line in doc.toc %}
