@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+/*
+ * Usage:
+ *
+ * ./scripts/generate-docs.js [--use_hash auto|someValue]
+ */
+
 'use strict';
 var docGenerator = require('dgeni');
 var rimraf = require('rimraf');
