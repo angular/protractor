@@ -1,37 +1,52 @@
 #!/usr/bin/env node
 
+/*
+ * Usage:
+ *
+ * ./scripts/generate-docs.js [--use_hash auto|someValue]
+ */
+
+'use strict';
 var docGenerator = require('dgeni');
 var rimraf = require('rimraf');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
+var argv = require('optimist').argv;
+var q = require('q');
 
 var apiFileName = 'api.md',
     configPath = path.resolve(__dirname, '../docs/dgeni-config.js'),
     buildPath = path.resolve(__dirname, '../docs/build'),
-    docsPath = path.resolve(__dirname, '../docs');
+    docsPath = path.resolve(__dirname, '../docs'),
+    apiFilePath = path.resolve(docsPath, apiFileName);
 
 /**
  * Delete the docs/build directory.
- * @param {function()} doneCallback Called when the delete is complete.
  */
-function deleteBuildDir(doneCallback) {
+function deleteBuildDir() {
   console.log('Deleting build directory', buildPath);
+
+  var deferred = q.defer();
+
   rimraf(buildPath, function(err) {
     if (err) {
-      throw  err;
+      console.log('Error deleting build path', err);
+      return deferred.reject(err);
     }
     console.log('Done deleting build directory');
-    doneCallback();
+    deferred.resolve();
   });
+
+  return deferred.promise;
 }
 
 /**
  * Generate the docs/api.md document.
  */
-function generateDocs() {
+function generateDocs(config) {
   console.log('Generating docs');
-  docGenerator(configPath).generateDocs().then(function() {
+  docGenerator(config).generateDocs().then(function() {
     fs.readdir(buildPath, function(err, files) {
       if (err) {
         throw  err;
@@ -79,8 +94,7 @@ function mergeFiles(files) {
   }
 
   // Write the buffer into the output file.
-  var apiFilePath = path.resolve(docsPath, apiFileName),
-      contents = buffer.join('\n');
+  var contents = buffer.join('\n');
 
   fs.writeFile(apiFilePath, contents, function(err) {
     if (err) {
@@ -90,9 +104,54 @@ function mergeFiles(files) {
   });
 }
 
-// Generate the documentation.
-// 1. Delete the docs/build directory.
-// 2. Generate the docs/api.md file.
-deleteBuildDir(function() {
-  generateDocs();
-});
+/**
+ * Get the hash used to link to the source code.
+ * @return {Q.promise.<string>} A promise that resolves to the git hash used to
+ *     link to the source code.
+ */
+function readGitHash() {
+  var deferred = q.defer();
+
+  var useHash = argv.use_hash;
+  // No hash, use master.
+  if (!useHash) {
+    deferred.resolve('master');
+  } else if (useHash.toLowerCase() === 'auto') {
+    // Auto? query git to use the latest commit hash.
+    var exec = require('child_process').exec;
+    exec('git log -n 1 --pretty=format:"%H"', function(error, stdout, stderr) {
+      if (error) {
+        console.log('Error reading hash from git', error);
+        deferred.reject(error);
+        return;
+      }
+      deferred.resolve(stdout);
+    });
+  } else {
+    // Use the hash provided.
+    deferred.resolve(useHash);
+  }
+
+  return deferred.promise;
+}
+
+/*
+ * Delete the 'docs/build' directory.
+ * Get the hash for the source code links.
+ * Create the configuration obj.
+ * Generate the api.md file.
+ */
+deleteBuildDir().
+    then(function() {
+      return readGitHash();
+    }).
+    then(function(linksHash) {
+      console.log('Using hash for doc links', linksHash);
+      return _.extend(require('dgeni/lib/utils/config').load(configPath), {
+        linksHash: linksHash
+      });
+    }).then(function(config) {
+      generateDocs(config);
+    }).catch(function(err) {
+      console.log('Error generating docs', err);
+    });

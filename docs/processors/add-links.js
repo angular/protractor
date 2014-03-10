@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 var templateMapping = {
   protractor: _.template('https://github.com/angular/protractor/blob/' +
-      'master/lib/<%= fileName %>.js#L<%= startingLine %>'),
+      '<%= linksHash %>/lib/<%= fileName %>.js#L<%= startingLine %>'),
   webdriver: _.template('https://code.google.com/p/selenium/source/browse/' +
       'javascript/webdriver/webdriver.js#<%= startingLine %>')
 };
@@ -15,7 +15,11 @@ var addLinkToSourceCode = function(doc) {
   var template = doc.fileName === 'webdriver' ?
       templateMapping.webdriver : templateMapping.protractor;
 
-  doc.sourceLink = template(doc);
+  doc.sourceLink = template({
+    linksHash: linksHash,
+    fileName: doc.fileName,
+    startingLine: doc.startingLine
+  });
 };
 
 /**
@@ -88,12 +92,18 @@ var getTypeString = function(param) {
  */
 var typeTable;
 
+/**
+ * The hash used to generate the links to the source code.
+ */
+var linksHash;
+
 module.exports = {
   name: 'add-links',
   description: 'Add links to the external documents',
   runAfter: ['extracting-tags'],
   runBefore: ['tags-extracted'],
   init: function(config) {
+    linksHash = config.linksHash;
   },
   process: function(docs) {
     typeTable = _.groupBy(docs, 'name');
