@@ -7,7 +7,7 @@ exports.config = {
     okspec: 'suites/ok_spec.js',
     okmany: ['suites/ok_spec.js', 'suites/ok_2_spec.js'],
     failingtest: 'suites/always_fail_spec.js'
-  }
+  },
 
   // Exclude patterns are relative to this directory.
   exclude: [
