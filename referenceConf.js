@@ -59,6 +59,14 @@ exports.config = {
   // Patterns to exclude.
   exclude: [],
 
+  // Alternatively, suites may be used. When run without a commad line parameter,
+  // all suites will run. If run with --suite=smoke, only the patterns matched
+  // by that suite will run.
+  suites: {
+    smoke: 'spec/smoketests/*.js',
+    full: 'spec/*.js'
+  }
+
   // ----- Capabilities to be passed to the webdriver instance ----
   //
   // For a full list of available capabilities, see
