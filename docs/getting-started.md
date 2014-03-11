@@ -213,8 +213,8 @@ exports.config = {
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
   suites: {
-    homepage: 'tests/e2e/modules/homepage/**/*Spec.js',
-    search: ['tests/e2e/modules/contact_search/**/*Spec.js', 'tests/e2e/modules/venue_search/**/*Spec.js']
+    homepage: 'tests/e2e/homepage/**/*Spec.js',
+    search: ['tests/e2e/contact_search/**/*Spec.js', 'tests/e2e/venue_search/**/*Spec.js']
   },
 
   // Options to be passed to Jasmine-node.
@@ -229,7 +229,7 @@ suite of tests:
 
     protractor protractor.conf.js --suite hompage
 
-Will only run the homepage section of the tests.
+will only run the homepage section of the tests.
 
 Further Reading
 ---------------
