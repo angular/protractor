@@ -80,6 +80,15 @@ You can also execute arbitrary JavaScript in the browser with
 browser.executeScript('your script as a string')
 ```
 
+How can I get hold of the browser's console?
+--------------------------------------------
+In your test:
+```javascript
+browser.manage().logs().get('browser').then(function(browserLog) {
+  console.log('log: ' + require('util').inspect(browserLog));
+});
+```
+
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
