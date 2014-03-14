@@ -65,7 +65,7 @@ exports.config = {
   suites: {
     smoke: 'spec/smoketests/*.js',
     full: 'spec/*.js'
-  }
+  },
 
   // ----- Capabilities to be passed to the webdriver instance ----
   //
