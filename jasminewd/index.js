@@ -34,8 +34,8 @@ function wrapInControlFlow(globalFn) {
       return function(done) {
         var thing = flow.execute(function() {
           fn.call(jasmine.getEnv().currentSpec);
-        }, 'asynchronous test function').then(seal(done), function(e) {
-          e.stack = driverError.stack + '\nAt async task:\n      ' + e.stack;
+        }).then(seal(done), function(e) {
+          e.stack = e.stack + '\n' + driverError.stack;
           done(e);
         });
       };
