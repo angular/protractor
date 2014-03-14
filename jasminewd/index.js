@@ -25,17 +25,23 @@ function seal(fn) {
  * @param {!Function} globalFn The function to wrap.
  * @return {!Function} The new function.
  */
-function wrapInControlFlow(globalFn) {
+function wrapInControlFlow(globalFn, fnName) {
   return function() {
     var driverError = new Error();
     driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
+
+    var description = 'Asynchronous test function: ' + fnName + '(';
+    if (arguments.length >= 2) {
+      description += '"' + arguments[0] + '"';
+    }
+    description += ')';
 
     function asyncTestFn(fn) {
       return function(done) {
         var thing = flow.execute(function() {
           fn.call(jasmine.getEnv().currentSpec);
-        }, 'asynchronous test function').then(seal(done), function(e) {
-          e.stack = driverError.stack + '\nAt async task:\n      ' + e.stack;
+        }, description).then(seal(done), function(e) {
+          e.stack = e.stack + '==== async task ====\n' + driverError.stack;
           done(e);
         });
       };
@@ -62,10 +68,10 @@ function wrapInControlFlow(globalFn) {
   };
 };
 
-global.it = wrapInControlFlow(global.it);
-global.iit = wrapInControlFlow(global.iit);
-global.beforeEach = wrapInControlFlow(global.beforeEach);
-global.afterEach = wrapInControlFlow(global.afterEach);
+global.it = wrapInControlFlow(global.it, 'it');
+global.iit = wrapInControlFlow(global.iit, 'iit');
+global.beforeEach = wrapInControlFlow(global.beforeEach, 'beforeEach');
+global.afterEach = wrapInControlFlow(global.afterEach, 'afterEach');
 
 
 /**
