@@ -227,7 +227,7 @@ exports.config = {
 You can then easily switch from the command line between running one or the other
 suite of tests:
 
-    protractor protractor.conf.js --suite hompage
+    protractor protractor.conf.js --suite homepage
 
 will only run the homepage section of the tests.
 
