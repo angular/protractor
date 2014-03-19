@@ -9,7 +9,7 @@ describe('using an ActionSequence', function() {
     expect(sliderBar.getAttribute('value')).toEqual('1');
 
     browser.actions().
-        dragAndDrop(sliderBar.find(), {x: 400, y: 20}).
+        dragAndDrop(sliderBar, {x: 400, y: 20}).
         perform();
 
     expect(sliderBar.getAttribute('value')).toEqual('10');
