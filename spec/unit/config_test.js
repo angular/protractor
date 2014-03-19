@@ -2,6 +2,7 @@ var ConfigParser = require('../../lib/configParser');
 var path = require('path');
 
 describe('the config parser', function() {
+
   it('should have a default config', function() {
     var config = new ConfigParser().getConfig();
     expect(config.specs).toEqual([]);
@@ -23,7 +24,7 @@ describe('the config parser', function() {
         getConfig();
 
     expect(config.rootElement).toEqual('.mycontainer');
-    expect(config.onPrepare).toMatch('/spec/unit/data/foo/bar.js');
+    expect(config.onPrepare.indexOf(path.normalize('/spec/unit/data/foo/bar.js'))).not.toEqual(-1);
     expect(config.specs.length).toEqual(1);
     expect(config.specs[0]).toEqual('fakespec*.js');
   });
@@ -35,7 +36,7 @@ describe('the config parser', function() {
 
     var config = new ConfigParser().addConfig(toAdd).getConfig();
 
-    expect(config.onPrepare).toEqual(process.cwd() + '/baz/qux.js');
+    expect(config.onPrepare).toEqual(path.normalize(process.cwd() + '/baz/qux.js'));
   });
 
   describe('resolving globs', function() {
@@ -47,8 +48,8 @@ describe('the config parser', function() {
       var config = new ConfigParser().addConfig(toAdd).getConfig();
       var specs = ConfigParser.resolveFilePatterns(config.specs);
       expect(specs.length).toEqual(2);
-      expect(specs[0]).toMatch('unit/data/fakespecA.js');
-      expect(specs[1]).toMatch('unit/data/fakespecB.js');
+      expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
+      expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
 
     it('should resolve relative to the config file dir', function() {
@@ -58,8 +59,8 @@ describe('the config parser', function() {
       var specs = ConfigParser.resolveFilePatterns(
           config.specs, false, config.configDir);
       expect(specs.length).toEqual(2);
-      expect(specs[0]).toMatch('unit/data/fakespecA.js');
-      expect(specs[1]).toMatch('unit/data/fakespecB.js');
+      expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
+      expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
   });
 });
