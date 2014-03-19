@@ -93,7 +93,7 @@ Then run the tests with
 Appendix A: Setting up a standalone selenium server
 ---------------------------------------------------
 
-WebdriverJS does not natively include the selenium server - you must start a standalone selenium server. All you need is the latest [selenium-server-standalone.](https://code.google.com/p/selenium/downloads/list). To drive individual browsers, you may need to install separate driver binaries.
+WebdriverJS does not natively include the selenium server - you must start a standalone selenium server. All you need is the latest [selenium-server-standalone.](http://selenium-release.storage.googleapis.com/index.html). To drive individual browsers, you may need to install separate driver binaries.
 
 To use with chrome browsers, [download chromedriver](http://chromedriver.storage.googleapis.com/index.html).
 [More information about chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
