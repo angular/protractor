@@ -44,7 +44,7 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "test": "scripts/test.sh"
+    "test": "scripts/test.js"
   },
   "license": "MIT",
   "version": "0.20.1",
