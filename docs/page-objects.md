@@ -48,6 +48,3 @@ describe("Do the first thing and other thing", function () {
 }
 
 ```
-
-As you can see above this test reads linearly and hopefully any maintainer of your tests wouldn't have to follow
-a complex chaining of promises to understand what your test was meant to do.
