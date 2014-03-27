@@ -12,7 +12,7 @@ var scripts = [
   'node lib/cli.js spec/cucumberConf.js',
   'node lib/cli.js spec/withLoginConf.js',
   'node lib/cli.js spec/suitesConf.js --suite okmany',
-  'node lib/cli.js spec/suitesConf.js'
+  'node lib/cli.js spec/suitesConf.js --suite okspec'
 ];
 
 scripts.push(
