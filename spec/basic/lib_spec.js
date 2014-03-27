@@ -102,5 +102,14 @@ describe('protractor library', function() {
       expect(browser.getLocationAbsUrl()).
           toEqual('http://localhost:'+port+'/index.html#/repeater');
     });
+
+    it('should navigate to another url with setLocation', function() {
+      browser.get('index.html');
+
+      browser.setLocation('/repeater');
+
+      expect(browser.getLocationAbsUrl()).
+        toEqual('http://localhost:' + port + '/index.html#/repeater');
+    });
   })
 });
