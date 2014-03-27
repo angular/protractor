@@ -196,7 +196,7 @@ ElementFinder |
 
 ##[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L117)
 #### Use as: element(locator).find()
-Return the actual WebElement.
+Returns the specified WebElement. Throws an error if the element doesn't exist.
 
 
 
