@@ -4,12 +4,12 @@ var glob = require('glob').sync;
 var spawn = require('child_process').spawn;
 
 var scripts = [
-  'lib/cli.js spec/basicConf.js',
-  'lib/cli.js spec/multiConf.js',
-  'lib/cli.js spec/altRootConf.js',
-  'lib/cli.js spec/onPrepareConf.js',
-  'lib/cli.js spec/mochaConf.js',
-  'lib/cli.js spec/cucumberConf.js',
+  'node lib/cli.js spec/basicConf.js',
+  'node lib/cli.js spec/multiConf.js',
+  'node lib/cli.js spec/altRootConf.js',
+  'node lib/cli.js spec/onPrepareConf.js',
+  'node lib/cli.js spec/mochaConf.js',
+  'node lib/cli.js spec/cucumberConf.js',
   'node lib/cli.js spec/withLoginConf.js',
   'node lib/cli.js spec/suitesConf.js --suite okmany',
   'node lib/cli.js spec/suitesConf.js'
