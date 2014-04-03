@@ -1,3 +1,80 @@
+# 0.21.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([0c4ef69](https://github.com/angular/protractor/commit/0c4ef69c1f61a2fb41829fa6d0afae3493148eee)) 
+  feat(launcher): launcher outputs a final summary of how the browsers did
+
+- ([f1db8b4](https://github.com/angular/protractor/commit/f1db8b438fd154cef241895c01ed902b3f343315)) 
+  feat(runner): make runner an event emitter and log passes or failures from the launcher
+
+  Now, for runs with multiple capabilities, the launcher will output '.' or 'F' for each pass or
+  fail instead of just '.' for every chunk of data. TODO - complete the event emitter API for the
+  Cucumber runner.
+
+- ([f9c4391](https://github.com/angular/protractor/commit/f9c43910021095e1bee1d1074e8788f4b0aee145)) 
+  feat(cli+config): allow defining multiple test suites in the config and running them separately
+  from the command line.
+
+- ([06bd573](https://github.com/angular/protractor/commit/06bd573cbc2471c719a8504f906468fb672d4097)) 
+  feat(pause): add the browser.pause method to enter a webdriver-specific debugger
+
+  Warning: this is still beta, there may be issues. Usage: In test code, insert a `browser.pause()`
+  statement. This will stop the test at that point in the webdriver control flow. No need to change
+  the command line you use to start the test. Once paused, you can step forward, pausing before
+  each webdriver command, and interact with the browser. Exit the debugger to continue the tests.
+
+## Bug Fixes
+
+- ([43aff83](https://github.com/angular/protractor/commit/43aff830bb74aa97fc4704f3aea9ef38feaee1b6)) 
+  fix(pageload): Changing how `about:blank` unload waits Also changing `executeScript` script
+  comment from `//` to `/**/` format. These two small changes should not affect functionality but 
+  make Protractor work with Selendroid.
+
+- ([1334662](https://github.com/angular/protractor/commit/1334662905d8d6b642a294fbf1e97ec3bc371084)) 
+  fix(locators): Improve custom locators message
+
+  Increase readability of custom locator message by displaying each argument instead of the
+  arguments object.
+
+- ([c9dbbaa](https://github.com/angular/protractor/commit/c9dbbaa94e2b4378bcc2db580dcad637b609a868)) 
+  refactor(launcher): skip the child process if only one capability is requested
+
+  Closes #603
+
+- ([26d67a2](https://github.com/angular/protractor/commit/26d67a29a8a12aa52331a1ec4ae8013cf63257f2)) 
+  fix(launcher): launcher should report a failure when only one capability is running
+
+- ([9530a0c](https://github.com/angular/protractor/commit/9530a0cab2791cb0350f81eae3f619d68fb620c3)) 
+  (fix): Convert test.sh to test.js
+
+  This would enable the tests to be run on both Linux and Windows.
+
+- ([6d85ab4](https://github.com/angular/protractor/commit/6d85ab4b9f3b5824db3307df5aca77a0720dc2e6)) 
+  fix(jasminewd): display stack traces in correct order and with WebElement method failure details
+
+- ([8964ac9](https://github.com/angular/protractor/commit/8964ac97cb994eb6cf7cf7ce77b7eb40882e852b)) 
+  fix(test): Fixed path of configuration file to pass on windows
+
+- ([99bda1a](https://github.com/angular/protractor/commit/99bda1aa732288f74126c9a77c48dd7cff63531a)) 
+  fix(waitForAngular): when timeout overflows, at least pass the negative to error messages
+
+  Closes #622
+
+- ([4fd060a](https://github.com/angular/protractor/commit/4fd060a38faa1f938f880fa52746e1a481a9122d)) 
+  fix (element): Allow ElementFinder to be passed to actions directly.
+
+  Previously, do to an action such as drag and drop, one would have to use
+  `element(by.foo).find()`. Now, just passing `element(by.foo)` works. For example:
+
+  ```javascript
+  browser.actions().doubleClick(element(by.id('mybutton'))).perform();
+  ```
+
+- ([b2a4ffc](https://github.com/angular/protractor/commit/b2a4ffced58964826125ea00705e6e257cdb588b)) 
+  fix(configParser): always return "this" from addFileConfig
+
 # 0.20.1
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
