@@ -1,6 +1,7 @@
 function FormCtrl($scope, $window) {
   $scope.greeting = "Hiya";
   $scope.username = "Anon";
+  $scope.nickname = "annie";
   $scope.aboutbox = "This is a text box";
   $scope.color = "blue";
   $scope.show = true;
