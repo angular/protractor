@@ -16,6 +16,14 @@ var SELENIUM_DIR = path.resolve(__dirname, '../selenium');
 
 var versions = require('../package.json').webdriverVersions;
 
+/**
+ * Get the major and minor version but ignore the patch (required for selenium
+ * download URLs).
+ */
+var shortVersion = function(version) {
+  return version.slice(0, version.lastIndexOf('.'));
+}
+
 var binaries = {
   standalone: {
     name: 'selenium standalone',
@@ -24,11 +32,9 @@ var binaries = {
     filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
     url: function() {
       return 'http://selenium-release.storage.googleapis.com/' +
-          versions.selenium + '/' +
+          shortVersion(versions.selenium) + '/' +
           'selenium-server-standalone-' + versions.selenium + '.jar';
     }
-
-    http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar
   },
   chrome: {
     name: 'chromedriver',
@@ -57,7 +63,8 @@ var binaries = {
     prefix: 'IEDriverServer',
     filename: 'IEDriverServer_' + versions.iedriver + '.zip',
     url: function() {
-      var urlPrefix = 'http://selenium-release.storage.googleapis.com/2.40/IEDriverServer';
+      var urlPrefix = 'http://selenium-release.storage.googleapis.com/' +
+          shortVersion(versions.iedriver) + '/IEDriverServer';
       if (os.type() == 'Windows_NT') {
         if (os.arch() == 'x64') {
           return urlPrefix + '_x64_' + versions.iedriver + '.zip';
