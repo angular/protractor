@@ -26,12 +26,7 @@ function seal(fn) {
  * @return {!Function} The new function.
  */
 function wrapInControlFlow(globalFn, fnName) {
-  return function(extraDone) {
-    if (extraDone) {
-      throw new Error('Do not use a done callback with WebDriverJS tests. ' +
-          'The tests are patched to be asynchronous and will terminate when ' +
-          'the webdriver control flow is empty.');
-    }
+  return function() {
 
     var driverError = new Error();
     driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
@@ -44,8 +39,12 @@ function wrapInControlFlow(globalFn, fnName) {
 
     function asyncTestFn(fn) {
       return function(done) {
-        var thing = flow.execute(function() {
-          fn.call(jasmine.getEnv().currentSpec);
+        flow.execute(function() {
+          fn.call(jasmine.getEnv().currentSpec, function() {
+            throw new Error('Do not use a done callback with WebDriverJS tests. ' +
+                'The tests are patched to be asynchronous and will terminate when ' +
+                'the webdriver control flow is empty.');
+          });
         }, description).then(seal(done), function(e) {
           e.stack = e.stack + '==== async task ====\n' + driverError.stack;
           done(e);
