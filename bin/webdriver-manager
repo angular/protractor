@@ -23,9 +23,12 @@ var binaries = {
     prefix: 'selenium-server-standalone',
     filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
     url: function() {
-      return 'http://selenium-release.storage.googleapis.com/2.40/' +
-          'selenium-server-standalone-' + versions.selenium+ '.jar';
+      return 'http://selenium-release.storage.googleapis.com/' +
+          versions.selenium + '/' +
+          'selenium-server-standalone-' + versions.selenium + '.jar';
     }
+
+    http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar
   },
   chrome: {
     name: 'chromedriver',
