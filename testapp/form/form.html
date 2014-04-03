@@ -4,13 +4,15 @@
   <h4>Bindings</h4>
   <span>{{greeting}}</span>
   <span data-ng-bind="username"></span>
-  <span data-ng-bind-template="{{username|uppercase}}"></span>
+  <span data-ng-bind-template="({{nickname|uppercase}})"></span>
 </div>
 
 <div>
   <h4>Text</h4>
   <label>Username</label>
   <input ng-model="username" type="text"/>
+  <label>Nickname</label>
+  <input ng-model="nickname" type="text"/>
 </div>
 
 <div>

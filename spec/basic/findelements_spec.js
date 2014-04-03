@@ -27,9 +27,9 @@ describe('locators', function() {
 
     it('should find an element by binding with ng-bind-template attribute',
         function() {
-      var name = element(by.binding('{{username|uppercase}}'));
+      var name = element(by.binding('{{nickname|uppercase}}'));
 
-      expect(name.getText()).toEqual('ANON');
+      expect(name.getText()).toEqual('(ANNIE)');
     });
   });
 
