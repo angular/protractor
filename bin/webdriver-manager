@@ -3,11 +3,11 @@
 var fs = require('fs');
 var os = require('os');
 var url = require('url');
-var http = require('http');
 var path = require('path');
 var AdmZip = require('adm-zip');
 var optimist = require('optimist');
 var childProcess = require('child_process');
+var request = require('request');
 
 /**
  * Download the requested binaries to node_modules/protractor/selenium/
@@ -83,6 +83,8 @@ for (bin in binaries) {
   default(bin, binaries[bin].isDefault);
 }
 
+cli.describe('p', 'proxy to use for the install or update command').alias('p', 'proxy');
+
 var argv = cli.
     check(function(arg) {
       if (arg._.length != 1) {
@@ -95,34 +97,53 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
   fs.mkdirSync(argv.out_dir);
 }
 
-/**
- * Function to download file using HTTP.get.
- * Thanks to http://www.hacksparrow.com/using-node-js-to-download-files.html
- * for the outline of this code.
- */
-var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
+var resolveProxy = function (url) {
+  var proxy;
+
+  if (url.protocol === 'https:') {
+    // if https then try to use HTTPS proxy
+    // or if not present try to use HTTP proxy
+    proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
+  } else if (url.protocol === 'http:') {
+    // if http then try to use HTTP proxy
+    proxy = process.env.HTTP_PROXY;
+  }
+
+  // if the proxy was passed via cli then use that one
+  proxy = argv.proxy || proxy;
+  return proxy;
+};
+
+var httpGetFile = function (fileUrl, fileName, outputDir, callback) {
   console.log('downloading ' + fileUrl + '...');
+  var uri = url.parse(fileUrl);
   var options = {
-    host: url.parse(fileUrl).host,
-    port: 80,
-    path: url.parse(fileUrl).pathname
+    uri: uri,
+    method: 'GET'
   };
+  var proxy = resolveProxy(uri);
+
+  if (proxy) {
+    options.proxy = proxy;
+    console.log('Use proxy: ' + proxy + '...');
+  }
 
   var filePath = path.join(outputDir, fileName);
   var file = fs.createWriteStream(filePath);
 
-  http.get(options, function(res) {
-    res.on('data', function(data) {
-      file.write(data);
-    }).on('end', function() {
-      file.end(function() {
+  request(options)
+    .on('error', function (err) {
+      console.log("error: " + err.message);
+        // delete the file if the request has not been succesful
+        fs.unlinkSync(filePath);
+    })
+    .pipe(file)
+      .on('finish', function () {
         console.log(fileName + ' downloaded to ' + filePath);
-        if (callback) {
-          callback(filePath);
-        }
+          if (callback) {
+            callback(filePath);
+          }
       });
-    });
-  });
 };
 
 /**
@@ -221,7 +242,7 @@ switch (argv._[0]) {
     process.stdin.resume();
     process.stdin.on('data', function(chunk) {
       console.log('Attempting to shut down selenium nicely');
-      http.get('http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer');
+      request.get('http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer');
 
     });
     process.on('SIGINT', function() {
