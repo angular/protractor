@@ -118,10 +118,12 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
     path: url.parse(fileUrl).pathname
   };
 
-  var filePath = path.join(outputDir, fileName);
-  var file = fs.createWriteStream(filePath);
-
   http.get(options, function(res) {
+    if (res.statusCode !== 200) {
+      throw new Error('Got code ' + res.statusCode + ' from ' + fileUrl);
+    }
+    var filePath = path.join(outputDir, fileName);
+    var file = fs.createWriteStream(filePath);
     res.on('data', function(data) {
       file.write(data);
     }).on('end', function() {
