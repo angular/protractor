@@ -186,6 +186,10 @@ describe('webdriverJS Jasmine adapter', function() {
   //   expect(fakeDriver.getValueB()).toEqual('b');
   // }, 300);
 
+  // it('should error with a warning if done callback is used', function(done) {
+  //   done();
+  // });
+
   it('should pass after the timed out tests', function() {
     expect(true).toEqual(true);
   });
