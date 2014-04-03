@@ -26,7 +26,13 @@ function seal(fn) {
  * @return {!Function} The new function.
  */
 function wrapInControlFlow(globalFn, fnName) {
-  return function() {
+  return function(extraDone) {
+    if (extraDone) {
+      throw new Error('Do not use a done callback with WebDriverJS tests. ' +
+          'The tests are patched to be asynchronous and will terminate when ' +
+          'the webdriver control flow is empty.');
+    }
+
     var driverError = new Error();
     driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
 
