@@ -47,7 +47,7 @@
     "test": "scripts/test.js"
   },
   "license": "MIT",
-  "version": "0.20.1",
+  "version": "0.21.0",
   "webdriverVersions": {
     "selenium": "2.40.0",
     "chromedriver": "2.9",
