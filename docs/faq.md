@@ -95,3 +95,10 @@ How do I produce an XML report of my test results?
 --------------------------------------------------
 
 Use jasmine-reporters and add a JUnit XML Reporter. Check out [this example](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js).
+
+How can I catch errors such as ElementNotFound?
+-----------------------------------------------
+WebDriver throws errors when commands cannot be completed - e.g. not being able to click on an element which is obscured by another element. If you need to retry these actions, try using [webdriverjs-retry](https://github.com/juliemr/webdriverjs-retry). If you would just like to catch the error, do so like this
+```javascript
+elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
+```
