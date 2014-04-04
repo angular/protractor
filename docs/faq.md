@@ -91,6 +91,8 @@ browser.manage().logs().get('browser').then(function(browserLog) {
 
 This will output logs from the browser console. Note that logs below the set logging level will be ignored. WebDriver does not currently support changing the logging level for browser logs.
 
+[See an example of using this API to fail tests if the console has errors](https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js).
+
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
