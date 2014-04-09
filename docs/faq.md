@@ -55,7 +55,7 @@ page is not written with Angular, you'll need to interact with it via
 unwrapped webdriver, which can be accessed like `browser.driver.get()`. 
 
 You can put your log-in code into an `onPrepare` function, which will be run
-once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/login/login_spec.js).
+once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js).
 
 The result of `getText` from an input element is always empty
 -------------------------------------------------------------
