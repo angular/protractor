@@ -48,3 +48,12 @@ describe("Do the first thing and other thing", function () {
 }
 
 ```
+
+
+Idioms
+======
+
+This will hopefully turn into a comprehensive list of helpful idioms that will help other angular users when they are
+trying to hook into objects within their application.
+
+[Class Selector Access](./page-objects/class-selector-access.md)
