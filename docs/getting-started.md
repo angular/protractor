@@ -94,7 +94,7 @@ test scaffolding. ([read about using mocha instead](https://github.com/angular/p
 
  * `protractor` is the protractor namespace which wraps the webdriver namespace.
  This contains static variables and classes, such as `protractor.Key` which
- enumerates the codes for special keybord signals.
+ enumerates the codes for special keyboard signals.
 
 Take this example, which tests the 'Basics' example on the AngularJS homepage:
 
