@@ -145,7 +145,7 @@ function promiseMatchers(actualPromise) {
   return promises;
 };
 
-originalExpect = global.expect;
+var originalExpect = global.expect;
 
 global.expect = function(actual) {
   if (actual instanceof webdriver.promise.Promise) {
