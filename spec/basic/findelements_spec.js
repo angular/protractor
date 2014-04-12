@@ -1,4 +1,5 @@
 var util = require('util');
+var bindings = require('../page_objects/bindings')();
 
 describe('locators', function() {
   beforeEach(function() {
@@ -581,19 +582,19 @@ describe('evaluating statements', function() {
 
 describe('shortcut css notation', function() {
   beforeEach(function() {
-    browser.get('index.html#/bindings');
+    bindings.load();
   });
 
   describe('via the driver', function() {
     it('should return the same results as web driver', function() {
-      element(by.css('.planet-info')).getText().then(function(textFromLongForm) {
+      bindings.getPlanetInfo().then(function(textFromLongForm) {
         var textFromShortcut = $('.planet-info').getText();
         expect(textFromShortcut).toEqual(textFromLongForm);
       });
     });
 
     it('should return the same array results as web driver', function() {
-      element.all(by.css('option')).then(function(optionsFromLongForm) {
+      bindings.getOptions().then(function(optionsFromLongForm) {
         $$('option').then(function(optionsFromShortcut) {
           expect(optionsFromShortcut.length).toEqual(optionsFromLongForm.length);
 
@@ -611,19 +612,19 @@ describe('shortcut css notation', function() {
     var select;
 
     beforeEach(function() {
-      select = element(by.css('select'));
+      select = bindings.getSelect();
     });
 
     it('should return the same results as web driver', function() {
-      select.findElement(by.css('option[value="4"]')).getText().then(function(textFromLongForm) {
-        var textFromShortcut = select.$('option[value="4"]').getText();
+      select.getOption(4).then(function(textFromLongForm) {
+        var textFromShortcut = select.getElement().$('option[value="4"]').getText();
         expect(textFromShortcut).toEqual(textFromLongForm);
       });
     });
 
     it('should return the same array results as web driver', function() {
-      select.findElements(by.css('option')).then(function(optionsFromLongForm) {
-        select.$$('option').then(function(optionsFromShortcut) {
+      select.getOptions().then(function(optionsFromLongForm) {
+        select.getElement().$$('option').then(function(optionsFromShortcut) {
           expect(optionsFromShortcut.length).toEqual(optionsFromLongForm.length);
 
           optionsFromLongForm.forEach(function(option, i) {
@@ -645,49 +646,48 @@ describe('wrapping web driver elements', function() {
   }
 
   beforeEach(function() {
-    browser.get('index.html#/bindings');
+    bindings.load();
   });
 
   describe('when found via #findElement', function() {
     it('should wrap the result', function() {
-      browser.findElement(by.binding('planet.name')).then(verifyMethodsAdded);
-
-      browser.findElement(by.css('option[value="4"]')).then(verifyMethodsAdded);
+      bindings.getPlanet().then(verifyMethodsAdded);
+      bindings.getOption(4).then(verifyMethodsAdded);
     });
 
     describe('when found with global element', function() {
       it('should wrap the result', function() {
-        element(by.binding('planet.name')).find().then(verifyMethodsAdded);
-        element(by.css('option[value="4"]')).find().then(verifyMethodsAdded);
+        bindings.getPlanetWithGlobalElement().then(verifyMethodsAdded);
+        bindings.getOptionWithGlobalElement(4).then(verifyMethodsAdded);
       });
     });
   });
 
   describe('when found via #findElements', function() {
     it('should wrap the results', function() {
-      browser.findElements(by.binding('planet.name')).then(function(results) {
+      bindings.getPlanets().then(function(results) {
         results.forEach(verifyMethodsAdded);
       });
-      browser.findElements(by.css('option[value="4"]')).then(function(results) {
+      bindings.getOptionsWithValue(4).then(function(results) {
         results.forEach(verifyMethodsAdded);
       });
     });
 
     describe('when found with global element', function() {
       it('should wrap the result', function() {
-        element.all(by.binding('planet.name')).then(function(results) {
+        bindings.getPlanetsWithGlobalElement().then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
-        element.all(by.binding('planet.name')).get(0).then(function(elem) {
+        bindings.getPlanetsWithGlobalElement().get(0).then(function(elem) {
           elem.verifyMethodsAdded;
         });
-        element.all(by.binding('planet.name')).first().then(function(elem) {
+        bindings.getPlanetsWithGlobalElement().first().then(function(elem) {
           elem.verifyMethodsAdded;
         });
-        element.all(by.binding('planet.name')).last().then(function(elem) {
+        bindings.getPlanetsWithGlobalElement().last().then(function(elem) {
           elem.verifyMethodsAdded;
         });
-        element.all(by.css('option[value="4"]')).then(function(results) {
+        bindings.getOptionsWithValueWithGlobalElement(4).then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
       });
@@ -698,19 +698,19 @@ describe('wrapping web driver elements', function() {
     var info;
 
     beforeEach(function() {
-      info = browser.findElement(by.css('.planet-info'));
+      info = bindings.getInfo();
     });
 
     describe('when found via #findElement', function() {
       describe('when using a locator that specifies an override', function() {
         it('should wrap the result', function() {
-          info.findElement(by.binding('planet.name')).then(verifyMethodsAdded);
+          info.getPlanetName().then(verifyMethodsAdded);
         });
       });
 
       describe('when using a locator that does not specify an override', function() {
         it('should wrap the result', function() {
-          info.findElement(by.css('div:last-child')).then(verifyMethodsAdded);
+          info.getLastChild().then(verifyMethodsAdded);
         });
       });
     });
@@ -718,7 +718,7 @@ describe('wrapping web driver elements', function() {
     describe('when querying for many elements', function() {
       describe('when using a locator that specifies an override', function() {
         it('should wrap the result', function() {
-          info.findElements(by.binding('planet.name')).then(function(results) {
+          info.getPlanetNames().then(function(results) {
             results.forEach(verifyMethodsAdded);
           });
         });
@@ -726,7 +726,7 @@ describe('wrapping web driver elements', function() {
 
       describe('when using a locator that does not specify an override', function() {
         it('should wrap the result', function() {
-          info.findElements(by.css('div:last-child')).then(function(results) {
+          info.getLastChildren().then(function(results) {
             results.forEach(verifyMethodsAdded);
           });
         });
