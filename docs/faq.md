@@ -93,6 +93,45 @@ This will output logs from the browser console. Note that logs below the set log
 
 [See an example of using this API to fail tests if the console has errors](https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js).
 
+How can I get screenshots of failures?
+-------------------------------------------- 
+First, this is how you can take a screenshot:
+```javascript
+browser.takeScreenshot().then(function(png) {
+  var stream = fs.createWriteStream("/tmp/screenshot.png");
+  stream.write(new Buffer(png, 'base64'));
+  stream.end();
+});
+```
+
+The method to take a screenshot automatically on failure would depend on the type of failure.
+* For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as such:
+
+```javascript
+jasmine.getEnv().addReporter(new function() {
+  this.reportSpecResults = function(spec) {
+    if (!spec.results().passed()) {
+      //take screenshot
+    }
+  };
+};
+```
+Note, you can also choose to take a screenshot in AfterEach. However, because Jasmine does not execute AfterEach for timeouts, those would not produce screenshots
+* For failures of individual expectations, you can override jasmine's addMatcherResult function as such:
+
+```javascript
+var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
+jasmine.Spec.prototype.addMatcherResult = function() {
+  if (!arguments[0].passed()) {
+    //take screenshot
+  }
+  return originalAddMatcherResult.apply(this, arguments);
+};
+```
+
+[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
+
+
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
