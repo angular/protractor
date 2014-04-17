@@ -83,4 +83,15 @@ describe('synchronizing with slow pages', function() {
 
     expect(browser.getPageSource()).toMatch('polling mechanism');
   });
+
+  it('waits for slow ng-include templates to load', function() {
+    var status = element(by.css('.included'));
+    var button = element(by.css('[ng-click="changeTemplateUrl()"]'));
+
+    expect(status.getText()).toEqual('fast template contents');
+
+    button.click();
+
+    expect(status.getText()).toEqual('slow template contents');
+  })
 });

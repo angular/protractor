@@ -14,11 +14,17 @@ var main = function(argv) {
 };
 
 var testMiddleware = function(req, res, next) {
-  if(req.path == '/fastcall') {
+  if (req.path == '/fastcall') {
     res.send(200, 'done');
-  } else if(req.path == '/slowcall') {
+  } else if (req.path == '/slowcall') {
     setTimeout(function() {
       res.send(200, 'finally done');
+    }, 2000);
+  } else if (req.path == '/fastTemplateUrl') {
+    res.send(200, 'fast template contents');
+  } else if (req.path == '/slowTemplateUrl') {
+    setTimeout(function() {
+      res.send(200, 'slow template contents');
     }, 2000);
   } else {
     return next();

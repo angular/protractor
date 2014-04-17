@@ -28,4 +28,8 @@ Slow things that can happen:
     <button ng-click="routingChange()">routing change</button>
     <span ng-bind="routingChangeStatus"></span>
   </li>
+  <li>
+    <button ng-click="changeTemplateUrl()">ng-include URL change</button>
+    <div class="included" ng-include="templateUrl"></div>
+  </li>
 </ul>
