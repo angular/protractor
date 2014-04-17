@@ -6,6 +6,7 @@ function AsyncCtrl($scope, $http, $timeout, $location) {
   $scope.slowAngularTimeoutPromiseStatus = 'not started';
   $scope.slowHttpPromiseStatus = 'not started';
   $scope.routingChangeStatus = 'not started';
+  $scope.templateUrl = "/fastTemplateUrl";
 
   $scope.slowHttp = function() {
     $scope.slowHttpStatus = 'pending...';
@@ -59,6 +60,10 @@ function AsyncCtrl($scope, $http, $timeout, $location) {
   $scope.routingChange = function() {
     $scope.routingChangeStatus = 'pending...';
     $location.url('/slowloader');
+  };
+
+  $scope.changeTemplateUrl = function() {
+    $scope.templateUrl = "/slowTemplateUrl";
   };
 };
 
