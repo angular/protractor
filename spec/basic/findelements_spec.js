@@ -416,6 +416,11 @@ describe('chaining find elements', function() {
           });
     });
 
+  it('should chain element.all after element', function() {
+    expect(element(by.id('baz')).element.all(by.binding('item')).count()).
+        toEqual(2);
+  });
+
   it('should wait to grab multiple chained elements',
       function() {
     browser.driver.get('about:blank');
@@ -643,6 +648,16 @@ describe('shortcut css notation', function() {
         });
       });
     });
+  });
+
+  it('should chain $$ with $', function() {
+    var withoutShortcutCount =
+        element(by.css('select')).element.all(by.css('option')).then(function(options) {
+          return options.length;
+        });
+    var withShortcutCount = $('select').$$('option').count();
+
+    expect(withoutShortcutCount).toEqual(withShortcutCount);
   });
 });
 
