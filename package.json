@@ -26,7 +26,7 @@
     "chai": "~1.8.1",
     "chai-as-promised": "~4.1.0",
     "jasmine-reporters": "~0.2.1",
-    "mocha": "~1.16.0",
+    "mocha": "~1.18.0",
     "cucumber": "~0.3.3",
     "express": "~3.3.4",
     "lodash": "~2.4.1",
