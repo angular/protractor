@@ -6,6 +6,14 @@ chai.use(chaiAsPromised);
 
 var expect = chai.expect;
 
+var g = {
+    protractor:protractor,
+    browser:browser,
+    by:by,
+    element:element,
+    '$':$
+};
+
 module.exports = function() {
 
     this.Given(/^I run Cucumber with Protractor$/, function(next) {
@@ -30,6 +38,12 @@ module.exports = function() {
         expect($).to.exist;
         next();
     });
+
+    this.Then(/^it should expose the correct global variable "([^"]*)"$/, function(variable,next) {
+        expect(g[variable]).to.exist;
+        next();
+    });
+
 
     this.Then(/the title should equal "([^"]*)"$/, function(text, next) {
         expect(browser.getTitle()).to.eventually.equal(text).and.notify(next);
