@@ -10,6 +10,7 @@ var scripts = [
   'node lib/cli.js spec/onPrepareConf.js',
   'node lib/cli.js spec/mochaConf.js',
   'node lib/cli.js spec/cucumberConf.js',
+  'node lib/cli.js spec/cucumberConfWithCoffee.js',
   'node lib/cli.js spec/withLoginConf.js',
   'node lib/cli.js spec/suitesConf.js --suite okmany',
   'node lib/cli.js spec/suitesConf.js --suite okspec'

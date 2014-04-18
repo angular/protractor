@@ -23,7 +23,8 @@ exports.config = {
   },
 
   cucumberOpts: {
-    require: 'cucumber/stepDefinitions.js',
-    format: 'summary'
+    require: 'cucumber/stepDefinitions.coffee',
+    format: 'summary',
+    coffee: true
   }
 };
