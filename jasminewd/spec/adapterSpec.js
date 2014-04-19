@@ -186,11 +186,34 @@ describe('webdriverJS Jasmine adapter', function() {
   //   expect(fakeDriver.getValueB()).toEqual('b');
   // }, 300);
 
-  // it('should error with a warning if done callback is used', function(done) {
-  //   done();
+  // it('should pass errors from done callback', function(done) {
+  //   done('an error');
   // });
 
   it('should pass after the timed out tests', function() {
     expect(true).toEqual(true);
+  });
+
+  describe('should work for both synchronous and asynchronous tests', function() {
+    var x;
+
+    beforeEach(function() {
+      x = 0;
+    });
+
+    afterEach(function() {
+      expect(x).toBe(1);
+    });
+
+    it('should execute a synchronous test', function() {
+      x = 1;
+    });
+
+    it('should execute an asynchronous test', function(done) {
+      setTimeout(function(){
+        x = 1;
+        done();
+      }, 500);
+    });
   });
 });
