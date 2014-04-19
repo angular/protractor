@@ -39,12 +39,19 @@ function wrapInControlFlow(globalFn, fnName) {
 
     function asyncTestFn(fn) {
       return function(done) {
+        //deferred object for signaling completion of asychronous function within globalFn
+        var asyncFnDone = webdriver.promise.defer();
+
+        if (fn.length == 0) {
+          //function with globalFn not asychronous
+          asyncFnDone.fulfill();
+        } else if (fn.length > 1) {
+          throw Error('Invalid # arguments (' + fn.length + ') within function "' + fnName +'"');
+        }
+
         flow.execute(function() {
-          fn.call(jasmine.getEnv().currentSpec, function() {
-            throw new Error('Do not use a done callback with WebDriverJS tests. ' +
-                'The tests are patched to be asynchronous and will terminate when ' +
-                'the webdriver control flow is empty.');
-          });
+          fn.call(jasmine.getEnv().currentSpec, function() { asyncFnDone.fulfill(); });
+          return asyncFnDone.promise;
         }, description).then(seal(done), function(e) {
           e.stack = e.stack + '==== async task ====\n' + driverError.stack;
           done(e);

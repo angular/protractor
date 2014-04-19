@@ -193,4 +193,27 @@ describe('webdriverJS Jasmine adapter', function() {
   it('should pass after the timed out tests', function() {
     expect(true).toEqual(true);
   });
+
+  describe('should work for both synchronous and asynchronous tests', function() {
+    var x; 
+
+    beforeEach(function() {
+      x = 0; 
+    });
+
+    afterEach(function() {
+      expect(x).toBe(1);
+    })
+ 
+    it("should execute a synchronous test", function() {
+      x = 1;
+    });
+ 
+    it("should execute an asynchronous test", function(done) {
+      setTimeout(function(){
+        x = 1; 
+        done();
+      },500);
+    });
+  });
 });
