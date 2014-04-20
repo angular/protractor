@@ -1,0 +1,11 @@
+{
+    "curly"     : true,
+    "eqeqeq"    : true,
+    "immed"     : true,
+    "plusplus"  : false,
+    "indent"    : 2,
+    "node"       : true,
+    "globals"   : {
+        "_"         : true
+    }
+}
