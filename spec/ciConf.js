@@ -25,6 +25,8 @@ exports.config = {
     'name': 'Protractor smoke tests'
   }],
 
+  concurrency: true,
+
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
 
   params: {

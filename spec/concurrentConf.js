@@ -23,7 +23,7 @@ exports.config = {
     'databaseEnabled': false
   }],
 
-  concurrency: 1,
+  concurrency: true,
 
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
 
