@@ -52,6 +52,20 @@ multiCapabilities: [{
 
 Protractor will run tests in parallel against each set of capabilities. Please note that if multiCapabilities is defined, the runner will ignore the `capabilities` configuration.
 
+Browser Support
+---------------
+Protractor uses webdriver, so protractor support for a particular browser is tied to the capabilities available in the Driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.
+
+| Driver           | Support      | Known Issues    |
+|------------------|--------------|-----------------|
+|ChromeDriver      |Yes           |                 |
+|FirefoxDriver     |Yes           |#480             |
+|SafariDriver      |Yes           |#481, SafariDriver does not support modals|
+|IEDriver          |Yes           |IEDriver can be slow|
+|OperaDriver       |No            |                 |
+|ios-Driver        |No            |                 |
+|Selendroid        |Yes           |                 |
+
 PhantomJS
 -------------------------------------
 In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For relative install run: `npm install --save-dev phantomjs`.
