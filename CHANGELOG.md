@@ -1,3 +1,86 @@
+# 0.22.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([8b088fd](https://github.com/angular/protractor/commit/8b088fd6bf83696fd2ad294d8818e20894332693)) 
+  feat(locators): Added a By.cssContainingText locator.
+
+  This new locator find elements by css selector and inner text in response to the lack of
+  ':contains' selector.
+
+  Example: By.cssContainingText('ul .pet', 'Dog') will find all ul children with class 'pet'
+  containing the text 'Dog'.
+
+  Closes #488, Closes #709
+
+- ([54060b7](https://github.com/angular/protractor/commit/54060b7cef4eb2f4c184c360cef7c2eb25c0ff6a)) 
+  feat(protractor): add the browser.setLocation method to perform in-page navigation
+
+  Allow a faster way to navigate within the app. The current browser.get method forces the entire
+  app to load every time you navigate to a new page. The proposed browser.setLocation method uses
+  the same format as $location.url().
+
+  Closes #368
+
+- ([74761e8](https://github.com/angular/protractor/commit/74761e8b25395dd78e1c301ee23a7730fef36db9)) 
+  feat(cli): use protractor.conf.js as a default config file if none is passed
+
+  Closes #615
+
+## Chores and updates
+
+- ([b81cf5a](https://github.com/angular/protractor/commit/b81cf5a949dee25c9070491edd1eb9e9feee556f)) 
+  chore(webdriver): update WebDriverJS version to 2.41.0
+
+- ([a96df4d](https://github.com/angular/protractor/commit/a96df4d60a1f2e09de865bf7ca9c5c780f945239)) 
+  chore(minijasminenode): update to version 0.4.0.
+
+  This allows the use of `because('message')` before expectations, to give additional information
+  when a failure occurs.
+
+  It also removes warnings for Node 0.11.* users about util.print being deprecated.
+
+  Closes #377
+
+- ([6f31b56](https://github.com/angular/protractor/commit/6f31b5619de4fdb9b1b6e9a29a62dac09b781c6b)) 
+  chore(package): npm start now brings up the testapp
+
+  Closes #712
+
+## Bug Fixes
+
+- ([1137d12](https://github.com/angular/protractor/commit/1137d12b95435438d2b84448796f9fe32d2f87b2)) 
+  fix(mocha): fix it.only so that it does not double-wrap
+
+  Closes #469
+
+- ([bde56a0](https://github.com/angular/protractor/commit/bde56a0d92a79570f377490929dd1d05107f4e25)) 
+  fix(cli): fix --exclude command line flag
+
+  Accidentally got changed to 'excludes'. As discussed earlier, should be single to be consistent
+  with Karma.
+
+  Closes #637
+
+- ([9e426df](https://github.com/angular/protractor/commit/9e426dfd300a11f513c5d7202bbb632f4b1c41d8)) 
+  fix(locators): using $().$$() should return an ElementArrayFinder
+
+  Prior, $(foo).$$(bar) would return a promise which resolved to an array of WebElements. This is
+  unexpected, since $(foo).$(bar) returns an ElementFinder, and
+  element(by.css(foo)).element.all(by.css(bar)) returns an ElementArrayFinder. Fixed so things are
+  more consistent.
+
+  Closes #640
+
+- ([b67810a](https://github.com/angular/protractor/commit/b67810a08d19940cd144fea25f08af4478166231)) 
+  fix(webdriver-manager): do not download files if HTTP response is not 200
+
+  Closes #656
+
+- ([28912f0](https://github.com/angular/protractor/commit/28912f0a77b44cce19ef5367c92b023388f7ff10)) 
+  fix(webdriver-manager): fix download paths
+
 # 0.21.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
