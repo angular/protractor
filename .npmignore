@@ -1,11 +1,12 @@
-testapp/
-spec/
 debugging/
+spec/
 selenium/
+debugging/
 
 .npmignore
+.travis.yml
+changes.sh
 chromedriver.log
 libpeerconnection.log
-changes.sh
+new.txt
 xmloutput*
-.travis.yml
