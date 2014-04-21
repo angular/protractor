@@ -57,6 +57,10 @@ unwrapped webdriver, which can be accessed like `browser.driver.get()`.
 You can put your log-in code into an `onPrepare` function, which will be run
 once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js).
 
+Which browsers are supported?
+-----------------------------
+The last two major versions of Chrome, Firefox, IE, and Safari. See details at [browser support](https://github.com/angular/protractor/blob/master/docs/browser-setup.md).
+
 The result of `getText` from an input element is always empty
 -------------------------------------------------------------
 
