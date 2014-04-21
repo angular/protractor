@@ -20,6 +20,48 @@ function seal(fn) {
 };
 
 /**
+ * Validates that the parameter is a function.
+ * @param {Object} functionToValidate The function to validate.
+ * @throws {Error} 
+ * @return {Object} The original parameter.
+ */
+function validateFunction(functionToValidate) {
+  if (functionToValidate && Object.prototype.toString.call(functionToValidate) === '[object Function]') {
+    return functionToValidate;
+  } else {
+    throw Error(functionToValidate + ' is not a function');
+  }
+}
+
+/**
+ * Validates that the parameter is a number.
+ * @param {Object} numberToValidate The number to validate.
+ * @throws {Error} 
+ * @return {Object} The original number.
+ */
+function validateNumber(numberToValidate) {
+  if (!isNaN(numberToValidate)) {
+    return numberToValidate;
+  } else {
+    throw Error(numberToValidate + ' is not a number');
+  }
+}
+
+/**
+ * Validates that the parameter is a string.
+ * @param {Object} stringToValidate The string to validate.
+ * @throws {Error} 
+ * @return {Object} The original string.
+ */
+function validateString(stringtoValidate) {
+  if (typeof stringtoValidate == 'string' || stringtoValidate instanceof String) {
+    return stringtoValidate;
+  } else {
+    throw Error(stringtoValidate + ' is not a string');
+  }
+}
+
+/**
  * Wraps a function so it runs inside a webdriver.promise.ControlFlow and
  * waits for the flow to complete before continuing.
  * @param {!Function} globalFn The function to wrap.
@@ -27,48 +69,66 @@ function seal(fn) {
  */
 function wrapInControlFlow(globalFn, fnName) {
   return function() {
-
-    var driverError = new Error();
-    driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
-
-    var description = 'Asynchronous test function: ' + fnName + '(';
-    if (arguments.length >= 2) {
-      description += '"' + arguments[0] + '"';
-    }
-    description += ')';
-
-    function asyncTestFn(fn) {
+    function asyncTestFn(fn, desc) {
       return function(done) {
+        var desc_ = 'Asynchronous test function: ' + fnName + '(';
+        if (desc) {
+          desc_ += '"' + desc + '"';
+        }
+        desc_ += ')';
+
         flow.execute(function() {
           fn.call(jasmine.getEnv().currentSpec, function() {
             throw new Error('Do not use a done callback with WebDriverJS tests. ' +
                 'The tests are patched to be asynchronous and will terminate when ' +
                 'the webdriver control flow is empty.');
           });
-        }, description).then(seal(done), function(e) {
+        }, desc_).then(seal(done), function(e) {
+          var driverError = new Error();
+          driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
           e.stack = e.stack + '==== async task ====\n' + driverError.stack;
           done(e);
         });
       };
     };
 
-    switch (arguments.length) {
-      case 1:
-        globalFn(asyncTestFn(arguments[0]));
+    var description, func, timeout;
+    switch (fnName) {
+      case 'it':
+        description = validateString(arguments[0]);
+        func = validateFunction(arguments[1]);
+        if (!arguments[2]) {
+          globalFn(description, asyncTestFn(func));
+        } else {
+          timeout = validateNumber(arguments[2]);
+          globalFn(description, asyncTestFn(func), timeout);
+        }
         break;
-
-      case 2:
-        // The first variable is a description.
-        globalFn(arguments[0], asyncTestFn(arguments[1]));
+      case 'iit':
+        description = validateString(arguments[0]);
+        func = validateFunction(arguments[1]);
+        globalFn(description, asyncTestFn(func));
         break;
-
-      case 3:
-        // The third variable should be the timeout in ms.
-        globalFn(arguments[0], asyncTestFn(arguments[1]), arguments[2]);
+      case 'beforeEach':
+        func = validateFunction(arguments[0]);
+        if (!arguments[1]) {
+          globalFn(asyncTestFn(func));
+        } else {
+          timeout = validateNumber(arguments[1]);
+          globalFn(asyncTestFn(func), timeout);
+        }
         break;
-
+      case 'afterEach':
+        func = validateFunction(arguments[0]);
+        if (!arguments[1]) {
+          globalFn(asyncTestFn(func));
+        } else {
+          timeout = validateNumber(arguments[1]);
+          globalFn(asyncTestFn(func), timeout);
+        }
+        break;
       default:
-        throw Error('Invalid # arguments: ' + arguments.length);
+        throw Error('invalid function: ' + fnName);
     }
   };
 };
