@@ -213,7 +213,7 @@ describe('webdriverJS Jasmine adapter', function() {
       setTimeout(function(){
         x = 1; 
         done();
-      },500);
+      }, 500);
     });
   });
 });

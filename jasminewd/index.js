@@ -43,7 +43,7 @@ function wrapInControlFlow(globalFn, fnName) {
         var asyncFnDone = webdriver.promise.defer();
 
         if (fn.length == 0) {
-          //function with globalFn not asychronous
+          // function with globalFn not asychronous
           asyncFnDone.fulfill();
         } else if (fn.length > 1) {
           throw Error('Invalid # arguments (' + fn.length + ') within function "' + fnName +'"');
@@ -52,7 +52,7 @@ function wrapInControlFlow(globalFn, fnName) {
         flow.execute(function() {
           fn.call(jasmine.getEnv().currentSpec, function(userError) {
             if (userError) {
-              webdriver.promise.rejected(new Error(userError));
+              asyncFnDone.reject(new Error(userError));
             } else {
               asyncFnDone.fulfill();
             } 
