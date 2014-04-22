@@ -205,11 +205,11 @@ describe('webdriverJS Jasmine adapter', function() {
       expect(x).toBe(1);
     })
  
-    it("should execute a synchronous test", function() {
+    it('should execute a synchronous test', function() {
       x = 1;
     });
  
-    it("should execute an asynchronous test", function(done) {
+    it('should execute an asynchronous test', function(done) {
       setTimeout(function(){
         x = 1; 
         done();

@@ -39,7 +39,7 @@ function wrapInControlFlow(globalFn, fnName) {
 
     function asyncTestFn(fn) {
       return function(done) {
-        //deferred object for signaling completion of asychronous function within globalFn
+        // deferred object for signaling completion of asychronous function within globalFn
         var asyncFnDone = webdriver.promise.defer();
 
         if (fn.length == 0) {
@@ -50,7 +50,13 @@ function wrapInControlFlow(globalFn, fnName) {
         }
 
         flow.execute(function() {
-          fn.call(jasmine.getEnv().currentSpec, function() { asyncFnDone.fulfill(); });
+          fn.call(jasmine.getEnv().currentSpec, function(userError) {
+            if (userError) {
+              webdriver.promise.rejected(new Error(userError));
+            } else {
+              asyncFnDone.fulfill();
+            } 
+          });
           return asyncFnDone.promise;
         }, description).then(seal(done), function(e) {
           e.stack = e.stack + '==== async task ====\n' + driverError.stack;
