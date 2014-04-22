@@ -64,6 +64,7 @@ Protractor uses webdriver, so protractor support for a particular browser is tie
 |IEDriver          |Yes           |IEDriver can be slow|
 |OperaDriver       |No            |                 |
 |ios-Driver        |No            |                 |
+|Appium            |Yes           |Mobile Safari and Android emulators|
 |Selendroid        |Yes           |                 |
 
 PhantomJS
