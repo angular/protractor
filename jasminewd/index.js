@@ -140,7 +140,7 @@ function wrapMatcher(matcher, actualPromise, not) {
     var originalArgs = arguments;
     var matchError = new Error("Failed expectation");
     matchError.stack = matchError.stack.replace(/ +at.+jasminewd.+\n/, '');
-    actualPromise.then(function(actual) {
+    return actualPromise.then(function(actual) {
       var expected = originalArgs[0];
 
       var expectation = expect(actual);
