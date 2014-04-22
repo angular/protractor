@@ -69,6 +69,9 @@ function validateString(stringtoValidate) {
  */
 function wrapInControlFlow(globalFn, fnName) {
   return function() {
+    var driverError = new Error();
+    driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
+
     function asyncTestFn(fn, desc) {
       return function(done) {
         var desc_ = 'Asynchronous test function: ' + fnName + '(';
@@ -84,8 +87,6 @@ function wrapInControlFlow(globalFn, fnName) {
                 'the webdriver control flow is empty.');
           });
         }, desc_).then(seal(done), function(e) {
-          var driverError = new Error();
-          driverError.stack = driverError.stack.replace(/ +at.+jasminewd.+\n/, '');
           e.stack = e.stack + '==== async task ====\n' + driverError.stack;
           done(e);
         });
@@ -95,6 +96,7 @@ function wrapInControlFlow(globalFn, fnName) {
     var description, func, timeout;
     switch (fnName) {
       case 'it':
+      case 'iit':
         description = validateString(arguments[0]);
         func = validateFunction(arguments[1]);
         if (!arguments[2]) {
@@ -104,20 +106,7 @@ function wrapInControlFlow(globalFn, fnName) {
           globalFn(description, asyncTestFn(func), timeout);
         }
         break;
-      case 'iit':
-        description = validateString(arguments[0]);
-        func = validateFunction(arguments[1]);
-        globalFn(description, asyncTestFn(func));
-        break;
       case 'beforeEach':
-        func = validateFunction(arguments[0]);
-        if (!arguments[1]) {
-          globalFn(asyncTestFn(func));
-        } else {
-          timeout = validateNumber(arguments[1]);
-          globalFn(asyncTestFn(func), timeout);
-        }
-        break;
       case 'afterEach':
         func = validateFunction(arguments[0]);
         if (!arguments[1]) {
