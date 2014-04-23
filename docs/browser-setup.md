@@ -66,6 +66,78 @@ Protractor uses webdriver, so protractor support for a particular browser is tie
 |ios-Driver        |No            |                 |
 |Selendroid        |Yes           |                 |
 
+How to set up Protractor with Selendroid
+-------------------------------------
+###### Set up
+*   Install Java SDK (>1.6) and configure JAVA_HOME (Important: make sure it's not pointing to JRE).
+*   Follow http://spring.io/guides/gs/android/ to install and set up Android developer environment. Do not set up Android Virtual Device as instructed here
+*   from commandline, 'android avd' and then follow Selendroid's recommendation (http://selendroid.io/setup.html#androidDevices). Take note of the emulator accelerator. Here's an example:
+
+```shell
+> android list avd
+Available Android Virtual Devices:
+    Name: myAvd
+  Device: Nexus 5 (Google)
+    Path: /Users/hankduan/.android/avd/Hank.avd
+  Target: Android 4.4.2 (API level 19)
+ Tag/ABI: default/x86
+    Skin: WVGA800
+```
+
+###### Running test
+*   Ensure app is running if testing local app (Skip if testing public website)
+
+```shell
+> ./scripts/web-server.js
+Starting express web server in /workspace/protractor/testapp on port 8000
+```
+
+*   Start emulator manually (at least the first time)
+
+```shell
+> emulator -avd myAvd
+HAX is working and emulator runs in fast virt mode
+```
+
+*note the last line that tells you the emulator accelerator is running*
+*   Start selendroid 
+
+```shell
+> java -jar selendroid-standalone-0.9.0-with-dependencies.jar
+...
+```
+
+*   Once selendroid is started, you should be able to go to "http://localhost:4444/wd/hub/status" and see your device there, i.e.
+
+```javascript
+{"value":{"os":{"name":"Mac OS X","arch":"x86_64","version":"10.9.2"},"build":{"browserName":"selendroid","version":"0.9.0"},"supportedDevices":[{"emulator":true,"screenSize":"WVGA800","avdName":"Hank","androidTarget":"ANDROID19"}],"supportedApps":[{"mainActivity":"io.selendroid.androiddriver.WebViewActivity","appId":"io.selendroid.androiddriver:0.9.0","basePackage":"io.selendroid.androiddriver"}]},"status":0}
+```
+
+*   Configure protractor, i.e.
+
+```javascript
+exports.config = {
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+
+  specs: [
+    'basic/*_spec.js'
+  ],
+
+  chromeOnly: false,
+
+  capabilities: {
+    'browserName': 'android'
+  },
+
+  baseUrl: 'http://10.0.2.2:' + (process.env.HTTP_PORT || '8000')
+};
+```
+
+*note two things:*  
+ -browserName is 'android'  
+ -baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator
+
+
 PhantomJS
 -------------------------------------
 In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For relative install run: `npm install --save-dev phantomjs`.
