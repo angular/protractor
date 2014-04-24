@@ -43,7 +43,7 @@ var chromeConfig = {
   capabilities: {
     browserName: 'chrome'
   }
-}
+};
 testDriverProvider(require('../lib/driverProviders/chrome.dp')(chromeConfig)).
     then(function() {
       console.log('chrome.dp working!');
@@ -56,7 +56,7 @@ var hostedConfig = {
   capabilities: {
     browserName: 'firefox'
   }
-}
+};
 testDriverProvider(require('../lib/driverProviders/hosted.dp')(hostedConfig)).
     then(function() {
       console.log('hosted.dp working!');
@@ -69,7 +69,7 @@ var localConfig = {
   capabilities: {
     browserName: 'chrome'
   }
-}
+};
 testDriverProvider(require('../lib/driverProviders/local.dp')(localConfig)).
     then(function() {
       console.log('local.dp working!');
@@ -84,7 +84,7 @@ if (argv.sauceUser && argv.sauceKey) {
     capabilities: {
       browserName: 'chrome'
     }
-  }
+  };
   testDriverProvider(require('../lib/driverProviders/sauce.dp')(sauceConfig)).
       then(function() {
         console.log('sauce.dp working!');
