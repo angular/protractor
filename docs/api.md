@@ -1660,7 +1660,10 @@ Schedules a command to wait for a condition to hold, as defined by some
 user supplied function. If any errors occur while evaluating the wait, they
 will be allowed to propagate.
 
-
+In the event a condition returns a Promise, the polling loop will wait for 
+it to be resolved and use the resolved value for evaluating whether the condition 
+has been satisfied. The resolution time for a promise is factored into whether a wait 
+has timed out.
 
 
 ###Params
