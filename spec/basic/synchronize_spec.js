@@ -93,5 +93,5 @@ describe('synchronizing with slow pages', function() {
     button.click();
 
     expect(status.getText()).toEqual('slow template contents');
-  })
+  });
 });

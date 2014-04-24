@@ -168,7 +168,7 @@ describe('locators', function() {
     it('should not find any buttons containing "text"', function() {
       element.all(by.buttonText('text')).then(function(arr) {
         expect(arr.length).toEqual(0);
-      })
+      });
     });
 
   });
@@ -401,7 +401,7 @@ describe('chaining find elements', function() {
     browser.get('index.html#/conflict');
 
     expect(reused.getText()).toEqual('Inner: inner');
-  })
+  });
 
   it('should find multiple elements scoped properly with chaining',
     function() {
@@ -666,7 +666,7 @@ describe('wrapping web driver elements', function() {
     expect(typeof result.evaluate).toBe('function');
     expect(typeof result.$).toBe('function');
     expect(typeof result.$$).toBe('function');
-  }
+  };
 
   beforeEach(function() {
     browser.get('index.html#/bindings');
@@ -702,15 +702,9 @@ describe('wrapping web driver elements', function() {
         element.all(by.binding('planet.name')).then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
-        element.all(by.binding('planet.name')).get(0).then(function(elem) {
-          elem.verifyMethodsAdded;
-        });
-        element.all(by.binding('planet.name')).first().then(function(elem) {
-          elem.verifyMethodsAdded;
-        });
-        element.all(by.binding('planet.name')).last().then(function(elem) {
-          elem.verifyMethodsAdded;
-        });
+        element.all(by.binding('planet.name')).get(0).then(verifyMethodsAdded);
+        element.all(by.binding('planet.name')).first().then(verifyMethodsAdded);
+        element.all(by.binding('planet.name')).last().then(verifyMethodsAdded);
         element.all(by.css('option[value="4"]')).then(function(results) {
           results.forEach(verifyMethodsAdded);
         });
