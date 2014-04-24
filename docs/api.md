@@ -17,6 +17,7 @@ Protractor API 0.21.0
 * [elementArrayFinder.last](#elementarrayfinderlast)
 * [elementArrayFinder.each](#elementarrayfindereach)
 * [elementArrayFinder.map](#elementarrayfindermap)
+* [elementArrayFinder.then](#elementarrayfinderthen)
 * [Protractor](#protractor)
 * [Protractor.prototype.waitForAngular](#protractorprototypewaitforangular)
 * [Protractor.prototype.wrapWebElement](#protractorprototypewrapwebelement)
@@ -588,6 +589,26 @@ mapFn | function([webdriver.WebElement](#webdriverwebelement), number) | Map fun
 Type | Description
 --- | ---
 !webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
+
+
+
+##[elementArrayFinder.then](https://github.com/angular/protractor/blob/master/lib/protractor.js#L360)
+#### Use as: element.all(locator).then(Function)
+A promise which will resolve to an array of WebElements matching the locator.
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+fn | function([webdriver.WebElements](#webdriverwebelement)) | Function that will be called with the resolved array of WebElements.
+
+
+###Returns
+
+Type | Description
+--- | ---
+!webdriver.promise.Promise | A promise that will be resolved to an array of the located webdriver.WebElements.
 
 
 ##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L463)
