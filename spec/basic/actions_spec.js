@@ -36,9 +36,6 @@ describe('using an ActionSequence', function() {
     expect(name.getText()).toEqual('Anon');
   });
 
-  // Back and forward do NOT work at the moment because of an issue 
-  // bootstrapping with Angular
-  /*   
   it('should navigate back and forward properly', function() {
     var port =  process.env.HTTP_PORT || '8000';
     browser.get('index.html#/repeater');
@@ -53,7 +50,6 @@ describe('using an ActionSequence', function() {
     expect(browser.getCurrentUrl()).
       toEqual('http://localhost:'+port+'/index.html#/repeater'); 
   });
-  */
 
   it('should navigate back and forward properly from link', function() {
     var port =  process.env.HTTP_PORT || '8000';

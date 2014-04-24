@@ -58,9 +58,6 @@ describe('mock modules', function() {
     expect(element(by.css('[app-version]')).getText()).toEqual('2');
   });
 
-  // Back and forward do NOT work at the moment because of an issue 
-  // bootstrapping with Angular
-  /*   
   it('should load mock modules after navigating back and forward', function() {
     browser.addMockModule('moduleA', mockModuleA);
 
@@ -76,7 +73,6 @@ describe('mock modules', function() {
     browser.navigate().forward();
     expect(element(by.css('[app-version]')).getText()).toEqual('2');
   });
-  */
 
   it('should load mock modules after navigating back and forward from link', function() {
     browser.addMockModule('moduleA', mockModuleA);
