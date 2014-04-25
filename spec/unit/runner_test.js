@@ -78,7 +78,7 @@ describe('the Protractor runner', function() {
     var runner = new Runner(config);
 
     expect(function() {
-      runner.run()
+      runner.run();
     }).toThrow();
   });
 });

@@ -32,7 +32,7 @@ describe('protractor library', function() {
     function() {
       browser.get('index.html');
       expect(browser.getCurrentUrl()).
-          toEqual('http://localhost:'+port+'/index.html#/form')
+          toEqual('http://localhost:'+port+'/index.html#/form');
 
       browser.driver.findElement(protractor.By.linkText('repeater')).click();
       expect(browser.driver.getCurrentUrl()).
@@ -111,5 +111,5 @@ describe('protractor library', function() {
       expect(browser.getLocationAbsUrl()).
         toEqual('http://localhost:' + port + '/index.html#/repeater');
     });
-  })
+  });
 });
