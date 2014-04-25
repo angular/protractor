@@ -56,18 +56,19 @@ Browser Support
 ---------------
 Protractor uses webdriver, so protractor support for a particular browser is tied to the capabilities available in the Driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.
 
-| Driver           | Support      | Known Issues    |
-|------------------|--------------|-----------------|
-|ChromeDriver      |Yes           |                 |
-|FirefoxDriver     |Yes           |[#480](https://github.com/angular/protractor/issues/480)|
-|SafariDriver      |Yes           |[#481](https://github.com/angular/protractor/issues/481), SafariDriver does not support modals|
-|IEDriver          |Yes           |IEDriver can be slow|
-|OperaDriver       |No            |                 |
-|ios-Driver        |No            |                 |
-|Appium            |Yes           |Mobile Safari and Android emulators|
-|Selendroid        |Yes           |                 |
+| Driver                 | Support      | Known Issues    |
+|------------------------|--------------|-----------------|
+|ChromeDriver            |Yes           |                 |
+|FirefoxDriver           |Yes           |[#480](https://github.com/angular/protractor/issues/480)|
+|SafariDriver            |Yes           |[#481](https://github.com/angular/protractor/issues/481), SafariDriver does not support modals|
+|IEDriver                |Yes           |IEDriver can be slow|
+|OperaDriver             |No            |                 |
+|ios-Driver              |No            |                 |
+|Appium - iOS/Safari     |Yes           | drag and drop not supported (session/:sessionid/buttondown unimplemented) |
+|Appium - Android/Chrome |Yes           |                 |
+|Selendroid              |Yes           |                 |
 
-How to set up Protractor with Appium
+How to set up Protractor with Appium - Android/Chrome
 -------------------------------------
 ###### Set up
 *   Install Java SDK (>1.6) and configure JAVA_HOME (Important: make sure it's not pointing to JRE).
@@ -79,6 +80,7 @@ How to set up Protractor with Appium
    * Use the Host GPU
    * Here's an example:
 
+Phone:
 ```shell
 > android list avd
 Available Android Virtual Devices:
@@ -88,6 +90,18 @@ Available Android Virtual Devices:
   Target: Android 4.4.2 (API level 19)
  Tag/ABI: default/armeabi-v7a
     Skin: HVGA
+```
+
+Tablet:
+```shell
+> android list avd
+Available Android Virtual Devices:
+    Name: LatestTablet
+  Device: Nexus 10 (Google)
+    Path: /Users/hankduan/.android/avd/LatestTablet.avd
+  Target: Android 4.4.2 (API level 19)
+ Tag/ABI: default/armeabi-v7a
+    Skin: WXGA800-7in
 ```
 *   Follow http://ant.apache.org/manual/index.html to install ant and set up the environment
 *   Follow http://maven.apache.org/download.cgi to install mvn (Maven) and set up the environment. 
@@ -164,6 +178,83 @@ exports.config = {
 *note three things:*  
  -under capabilities: browserName is '', device is 'android', and app is 'chrome'  
  -baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator  
+ -selenium address is using port 4723  
+ 
+How to set up Protractor with Appium - iOS/Safari
+-------------------------------------
+###### Set up
+*   Install Java SDK (>1.6) and configure JAVA_HOME (Important: make sure it's not pointing to JRE).
+*   Follow http://ant.apache.org/manual/index.html to install ant and set up the environment
+*   Follow http://maven.apache.org/download.cgi to install mvn (Maven) and set up the environment. 
+   * NOTE: Appium suggests installing Maven 3.0.5 (I haven't tried later versions, but 3.0.5 works for sure)
+*   Install Appium using node ```npm install -g appium```. Make sure you don't install as sudo or else Appium will complain
+   * You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories
+
+###### Running test
+*   Ensure app is running if testing local app (Skip if testing public website)
+
+```shell
+> ./scripts/web-server.js
+Starting express web server in /workspace/protractor/testapp on port 8000
+```
+*   Start Appium
+
+```shell
+> appium
+info: Welcome to Appium v1.0.0-beta.1 (REV 6fcf54391fb06bb5fb03dfcf1582c84a1d9838b6)
+info: Appium REST http interface listener started on 0.0.0.0:4723
+info: socket.io started
+```
+*Note Appium listens to port 4723 instead of 4444*
+
+*   Configure protractor, i.e.
+
+iPhone:
+```javascript
+exports.config = {
+  seleniumAddress: 'http://localhost:4723/wd/hub',
+
+  specs: [
+    'basic/*_spec.js'
+  ],
+
+  chromeOnly: false,
+
+  capabilities: {
+    browserName: '',
+    device: 'iPhone',
+    app: 'safari'
+  },
+
+  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+};
+```
+
+iPad:
+```javascript
+exports.config = {
+  seleniumAddress: 'http://localhost:4723/wd/hub',
+
+  specs: [
+    'basic/*_spec.js'
+  ],
+
+  chromeOnly: false,
+
+  capabilities: {
+    browserName: '',
+    device: 'iPad',
+    app: 'safari',
+    deviceName: 'iPad Simulator'
+  },
+
+  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+};
+
+```
+*note three things:*  
+ -note capabilities  
+ -baseUrl is localhost (not 10.0.2.2)  
  -selenium address is using port 4723  
 
 How to set up Protractor with Selendroid
