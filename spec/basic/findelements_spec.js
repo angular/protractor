@@ -513,6 +513,29 @@ describe('global element function', function() {
     });
   });
 
+  it('should confirm existence of some element in an array', function() {
+    var colorList = element.all(by.model('color'));
+    var hasRed = colorList.some(function(colorElement) {
+      return colorElement.getText().then(function(text) {
+        return text === 'red';
+      });
+    });
+    expect(hasRed).toBe(true);
+  });
+
+  it('should confirm an element do not belong to array', function() {
+    var colorList = element.all(by.model('color'));
+    colorList.count().then(console.log);
+    colorList.each(console.log);
+    var hasBeige = colorList.some(function(colorElement) {
+      return colorElement.getText().then(function(text) {
+        return text === 'beige';
+      });
+    });
+    expect(hasBeige).toBe(false);
+  });
+
+
   it('should map each element on array and with promises', function() {
     var labels = element.all(by.css('.menu li a')).map(function(elm, index) {
       return {
