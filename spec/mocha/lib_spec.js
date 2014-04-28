@@ -6,6 +6,9 @@ chai.use(chaiAsPromised);
 
 var expect = chai.expect;
 
+// Chai's expect().to.exist style makes default jshint unhappy.
+// jshint expr:true
+
 describe('no protractor at all', function() {
   it('should still do normal tests', function() {
     expect(true).to.equal(true);

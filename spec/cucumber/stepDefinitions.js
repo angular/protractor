@@ -6,6 +6,9 @@ chai.use(chaiAsPromised);
 
 var expect = chai.expect;
 
+// Chai expect().to.exist syntax makes default jshint unhappy.
+// jshint expr:true
+
 module.exports = function() {
 
     this.Given(/^I run Cucumber with Protractor$/, function(next) {

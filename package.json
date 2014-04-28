@@ -26,6 +26,7 @@
     "chai": "~1.8.1",
     "chai-as-promised": "~4.1.0",
     "jasmine-reporters": "~0.2.1",
+    "jshint": "2.5.0",
     "mocha": "~1.18.0",
     "cucumber": "~0.3.3",
     "express": "~3.3.4",
@@ -44,6 +45,7 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
+    "pretest": "node_modules/.bin/jshint lib spec",
     "test": "scripts/test.js",
     "start": "testapp/scripts/web-server.js"
   },
