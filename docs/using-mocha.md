@@ -29,6 +29,15 @@ expect(myElement.getText()).to.eventually.equal('some text');
 
 Finally, set the 'framework' property of the config to 'mocha', either by adding `framework: 'mocha'` to the config file or adding `--framework=mocha` to the command line.
 
+	exports.config = {
+	  framework: 'mocha'
+	}
+	
+command line
+
+	protractor --framework=mocha
+
+
 Options for mocha such as 'reporter', 'slow', can be given in config file with `mochaOpts` :
 
 ```javascript
