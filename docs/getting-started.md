@@ -237,3 +237,4 @@ Further Reading
 - [WebDriverJS User's Guide](https://code.google.com/p/selenium/wiki/WebDriverJs)
 - [WebDriver FAQ](https://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions)
 - [w3 WebDriver Working Draft](http://www.w3.org/TR/webdriver/)
+- [Step-by-step slides on Protractor](http://ramonvictor.github.io/protractor/slides/) (May 3, 2014)
