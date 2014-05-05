@@ -8,6 +8,7 @@ var path = require('path');
 var AdmZip = require('adm-zip');
 var optimist = require('optimist');
 var childProcess = require('child_process');
+var tunnel = require('tunnel');
 
 /**
  * Download the requested binaries to node_modules/protractor/selenium/
@@ -112,11 +113,45 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
  */
 var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   console.log('downloading ' + fileUrl + '...');
+  var targetUrl = url.parse(fileUrl);
   var options = {
-    host: url.parse(fileUrl).host,
-    port: 80,
-    path: url.parse(fileUrl).pathname
+    host: targetUrl.host,
+    port: (targetUrl.port || targetUrl.protocol === 'https:' ? 443 : 80),
+    path: targetUrl.pathname
   };
+
+  if (targetUrl.protocol === 'http:' && (process.env.HTTP_PROXY || process.env.http_proxy)) {
+    var proxy = process.env.HTTP_PROXY || process.env.http_proxy;
+  } else if (targetUrl.protocol === 'https:' && (process.env.HTTPS_PROXY || process.env.https_proxy)) {
+    var proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  }
+
+  if (proxy) {
+    var proxyUrl = url.parse(proxy);
+
+    // Proxy settings
+    var proxyObj = {
+      host: proxyUrl.hostname,
+      port: proxyUrl.port,
+      headers: {
+        Host: options.host + ':' + options.port
+      },
+      // Basic authorization for proxy server if necessary
+      proxyAuth: proxyUrl.auth
+    };
+
+    if (proxyUrl.protocol === 'https:' && targetUrl.protocol === 'http:') {
+      var tunnelingAgent = tunnel.httpOverHttps({ proxy: proxyObj } );
+    } else if (proxyUrl.protocol === 'https:' && targetUrl.protocol === 'https:') {
+      var tunnelingAgent = tunnel.httpsOverHttps({ proxy: proxyObj } );
+    } else if (proxyUrl.protocol === 'http:' && targetUrl.protocol ===  'http:') {
+      var tunnelingAgent = tunnel.httpOverHttp({ proxy: proxyObj });
+    } else if (proxyUrl.protocol === 'http:' && targetUrl.protocol ===  'https:') {
+      var tunnelingAgent = tunnel.httpsOverHttp({ proxy: proxyObj });
+    }
+
+    options.agent = tunnelingAgent;
+  }
 
   http.get(options, function(res) {
     if (res.statusCode !== 200) {
