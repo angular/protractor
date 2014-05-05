@@ -1,6 +1,6 @@
 // This configuration file shows an example of using an Jasmine reporter to
 // output test results in XML format. Before running, you will need to
-// npm install jasmine-reporters
+// npm install jasmine-reporters and create the xmloutput directory
 
 // The main suite of Protractor tests.
 exports.config = {
