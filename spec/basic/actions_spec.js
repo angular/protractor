@@ -41,32 +41,34 @@ describe('using an ActionSequence', function() {
   /*   
   it('should navigate back and forward properly', function() {
     var port =  process.env.HTTP_PORT || '8000';
+    var host =  process.env.HTTP_HOST || 'localhost';
     browser.get('index.html#/repeater');
     expect(browser.getCurrentUrl()).
-      toEqual('http://localhost:'+port+'/index.html#/repeater');
+      toEqual('http://'+host+':'+port+'/index.html#/repeater');
 
     browser.navigate().back();
     expect(browser.getCurrentUrl()).
-      toEqual('http://localhost:'+port+'/index.html#/form');
+      toEqual('http://'+host+':'+port+'/index.html#/form');
     
     browser.navigate().forward();
     expect(browser.getCurrentUrl()).
-      toEqual('http://localhost:'+port+'/index.html#/repeater'); 
+      toEqual('http://'+host+':'+port+'/index.html#/repeater'); 
   });
   */
 
   it('should navigate back and forward properly from link', function() {
     var port =  process.env.HTTP_PORT || '8000';
+    var host =  process.env.HTTP_HOST || 'localhost';
     element(by.linkText('repeater')).click();
     expect(browser.getCurrentUrl()).
-      toEqual('http://localhost:'+port+'/index.html#/repeater');
+      toEqual('http://'+host+':'+port+'/index.html#/repeater');
 
     browser.navigate().back();
     expect(browser.getCurrentUrl()).
-      toEqual('http://localhost:'+port+'/index.html#/form');
+      toEqual('http://'+host+':'+port+'/index.html#/form');
     
     browser.navigate().forward();
     expect(browser.getCurrentUrl()).
-      toEqual('http://localhost:'+port+'/index.html#/repeater'); 
+      toEqual('http://'+host+':'+port+'/index.html#/repeater'); 
   });
 });
