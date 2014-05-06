@@ -226,7 +226,8 @@ exports.config = {
     app: 'safari'
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+  baseUrl: 'http://' + (process.env.HTTP_HOST || 'localhost') + 
+    ':' + (process.env.HTTP_PORT || '8000')
 };
 ```
 
@@ -248,7 +249,8 @@ exports.config = {
     deviceName: 'iPad Simulator'
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+  baseUrl: 'http://' + (process.env.HTTP_HOST || 'localhost') + 
+    ':' + (process.env.HTTP_PORT || '8000')
 };
 
 ```

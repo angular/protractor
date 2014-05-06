@@ -1,6 +1,8 @@
 describe('pages with login', function() {
   it('should log in with a non-Angular page', function() {
-    browser.get('http://localhost:8000/index.html');
+    var port =  process.env.HTTP_PORT || '8000';
+    var host =  process.env.HTTP_HOST || 'localhost';
+    browser.get('http://'+host+':'+port+'/index.html');
 
     var angularElement = element(by.model('username'));
     expect(angularElement.getAttribute('value')).toEqual('Anon');
