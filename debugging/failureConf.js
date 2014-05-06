@@ -13,7 +13,8 @@ exports.config = {
     'browserName': 'chrome'
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: 'http://' + (process.env.HTTP_HOST || 'localhost') + 
+    ':' + (process.env.HTTP_PORT || '8000'),
 
   // ----- Options to be passed to minijasminenode.
   jasmineNodeOpts: {

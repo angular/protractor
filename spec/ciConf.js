@@ -23,9 +23,16 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests'
+  }, {
+    'browserName': 'internet explorer',
+    'version': '11',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'Protractor smoke tests'
   }],
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: 'http://' + (process.env.HTTP_HOST || 'localhost') + 
+    ':' + (process.env.HTTP_PORT || '8000'),
 
   params: {
     login: {

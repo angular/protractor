@@ -1,5 +1,6 @@
 var util = require('util');
 var port =  process.env.HTTP_PORT || '8000';
+var host =  process.env.HTTP_HOST || 'localhost';
 
 describe('no protractor at all', function() {
   it('should still do normal tests', function() {
@@ -32,15 +33,15 @@ describe('protractor library', function() {
     function() {
       browser.get('index.html');
       expect(browser.getCurrentUrl()).
-          toEqual('http://localhost:'+port+'/index.html#/form');
+          toEqual('http://'+host+':'+port+'/index.html#/form');
 
       browser.driver.findElement(protractor.By.linkText('repeater')).click();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:'+port+'/index.html#/repeater');
+          toEqual('http://'+host+':'+port+'/index.html#/repeater');
 
       browser.navigate().back();
       expect(browser.driver.getCurrentUrl()).
-          toEqual('http://localhost:'+port+'/index.html#/form');
+          toEqual('http://'+host+':'+port+'/index.html#/form');
     });
 
   it('should export other webdriver classes onto the global protractor',
@@ -96,11 +97,11 @@ describe('protractor library', function() {
     it('should get the absolute URL', function() {
       browser.get('index.html');
       expect(browser.getLocationAbsUrl()).
-          toEqual('http://localhost:'+port+'/index.html#/form');
+          toEqual('http://'+host+':'+port+'/index.html#/form');
 
       element(by.linkText('repeater')).click();
       expect(browser.getLocationAbsUrl()).
-          toEqual('http://localhost:'+port+'/index.html#/repeater');
+          toEqual('http://'+host+':'+port+'/index.html#/repeater');
     });
 
     it('should navigate to another url with setLocation', function() {
@@ -109,7 +110,7 @@ describe('protractor library', function() {
       browser.setLocation('/repeater');
 
       expect(browser.getLocationAbsUrl()).
-        toEqual('http://localhost:' + port + '/index.html#/repeater');
+        toEqual('http://'+host+':' + port + '/index.html#/repeater');
     });
   });
 });
