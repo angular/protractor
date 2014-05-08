@@ -90,7 +90,7 @@ function wrapInControlFlow(globalFn, fnName) {
           throw Error('Invalid # arguments (' + fn.length + ') within function "' + fnName +'"');
         }
 
-        flow.execute(function() {
+        var flowFinished = flow.execute(function() {
           fn.call(jasmine.getEnv().currentSpec, function(userError) {
             if (userError) {
               asyncFnDone.reject(new Error(userError));
@@ -98,8 +98,11 @@ function wrapInControlFlow(globalFn, fnName) {
               asyncFnDone.fulfill();
             }
           });
-          return asyncFnDone.promise;
-        }, desc_).then(seal(done), function(e) {
+        }, desc_);
+
+        webdriver.promise.all([asyncFnDone, flowFinished]).then(function() {
+          seal(done)();
+        }, function(e) {
           e.stack = e.stack + '==== async task ====\n' + driverError.stack;
           done(e);
         });
