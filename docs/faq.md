@@ -118,7 +118,7 @@ jasmine.getEnv().addReporter(new function() {
       //take screenshot
     }
   };
-};
+});
 ```
 Note, you can also choose to take a screenshot in AfterEach. However, because Jasmine does not execute AfterEach for timeouts, those would not produce screenshots
 * For failures of individual expectations, you can override jasmine's addMatcherResult function as such:
