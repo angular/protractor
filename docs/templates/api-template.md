@@ -1,4 +1,4 @@
-##[{{ doc.name }}]({{ doc.sourceLink }})
+##<a name="{{ doc.link }}"></a>[{{ doc.name }}]({{ doc.sourceLink }})
 {%if doc.alias %}#### Use as: {{ doc.alias }}{%endif%}
 {{ doc.description }}{% if doc.deprecated %}**DEPRECATED** {{doc.deprecated}}{% endif %}
 
