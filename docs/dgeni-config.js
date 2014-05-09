@@ -31,6 +31,13 @@ module.exports = function(config) {
     require('./processors/add-toc')
   ]);
 
+  /*
+   * Add custom filters.
+   */
+  config.append('rendering.filters', [
+    require('./filters/link-slugify')
+  ]);
+
   // Configure the tags that will be parsed from the jsDoc.
   var tagDefs = require('dgeni-packages/jsdoc/tag-defs');
 
