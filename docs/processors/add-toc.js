@@ -26,7 +26,7 @@ module.exports = {
 
         // The link looks like: 'elementFinder.isPresent', transform it into
         // 'elementfinderispresent'.
-        var linkName = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
+        var linkName = 'api-' + name.replace(/[\.\$]/g, '').toLocaleLowerCase();
 
         toc.push({
           name: name,

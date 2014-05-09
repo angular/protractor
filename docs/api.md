@@ -5,152 +5,152 @@ Protractor API 0.22.0
 
 ##protractor
 
-* [element](#element)
-* [elementFinder.find](#elementfinderfind)
-* [elementFinder.isPresent](#elementfinderispresent)
-* [elementFinder.element](#elementfinderelement)
-* [elementFinder.$](#elementfinder)
-* [element.all](#elementall)
-* [elementArrayFinder.count](#elementarrayfindercount)
-* [elementArrayFinder.get](#elementarrayfinderget)
-* [elementArrayFinder.first](#elementarrayfinderfirst)
-* [elementArrayFinder.last](#elementarrayfinderlast)
-* [elementArrayFinder.each](#elementarrayfindereach)
-* [elementArrayFinder.map](#elementarrayfindermap)
-* [Protractor](#protractor)
-* [Protractor.prototype.waitForAngular](#protractorprototypewaitforangular)
-* [Protractor.prototype.wrapWebElement](#protractorprototypewrapwebelement)
-* [element.$](#element)
-* [element.findElement](#elementfindelement)
-* [element.$$](#element)
-* [element.findElements](#elementfindelements)
-* [element.isElementPresent](#elementiselementpresent)
-* [element.evaluate](#elementevaluate)
-* [Protractor.prototype.findElement](#protractorprototypefindelement)
-* [Protractor.prototype.findElements](#protractorprototypefindelements)
-* [Protractor.prototype.isElementPresent](#protractorprototypeiselementpresent)
-* [Protractor.prototype.addMockModule](#protractorprototypeaddmockmodule)
-* [Protractor.prototype.clearMockModules](#protractorprototypeclearmockmodules)
-* [Protractor.prototype.removeMockModule](#protractorprototyperemovemockmodule)
-* [Protractor.prototype.get](#protractorprototypeget)
-* [Protractor.prototype.refresh](#protractorprototyperefresh)
-* [Protractor.prototype.navigate](#protractorprototypenavigate)
-* [Protractor.prototype.setLocation](#protractorprototypesetlocation)
-* [Protractor.prototype.getLocationAbsUrl](#protractorprototypegetlocationabsurl)
-* [Protractor.prototype.debugger](#protractorprototypedebugger)
-* [Protractor.prototype.pause](#protractorprototypepause)
+* [element](#api-element)
+* [elementFinder.find](#api-elementfinderfind)
+* [elementFinder.isPresent](#api-elementfinderispresent)
+* [elementFinder.element](#api-elementfinderelement)
+* [elementFinder.$](#api-elementfinder)
+* [element.all](#api-elementall)
+* [elementArrayFinder.count](#api-elementarrayfindercount)
+* [elementArrayFinder.get](#api-elementarrayfinderget)
+* [elementArrayFinder.first](#api-elementarrayfinderfirst)
+* [elementArrayFinder.last](#api-elementarrayfinderlast)
+* [elementArrayFinder.each](#api-elementarrayfindereach)
+* [elementArrayFinder.map](#api-elementarrayfindermap)
+* [Protractor](#api-protractor)
+* [Protractor.prototype.waitForAngular](#api-protractorprototypewaitforangular)
+* [Protractor.prototype.wrapWebElement](#api-protractorprototypewrapwebelement)
+* [element.$](#api-element)
+* [element.findElement](#api-elementfindelement)
+* [element.$$](#api-element)
+* [element.findElements](#api-elementfindelements)
+* [element.isElementPresent](#api-elementiselementpresent)
+* [element.evaluate](#api-elementevaluate)
+* [Protractor.prototype.findElement](#api-protractorprototypefindelement)
+* [Protractor.prototype.findElements](#api-protractorprototypefindelements)
+* [Protractor.prototype.isElementPresent](#api-protractorprototypeiselementpresent)
+* [Protractor.prototype.addMockModule](#api-protractorprototypeaddmockmodule)
+* [Protractor.prototype.clearMockModules](#api-protractorprototypeclearmockmodules)
+* [Protractor.prototype.removeMockModule](#api-protractorprototyperemovemockmodule)
+* [Protractor.prototype.get](#api-protractorprototypeget)
+* [Protractor.prototype.refresh](#api-protractorprototyperefresh)
+* [Protractor.prototype.navigate](#api-protractorprototypenavigate)
+* [Protractor.prototype.setLocation](#api-protractorprototypesetlocation)
+* [Protractor.prototype.getLocationAbsUrl](#api-protractorprototypegetlocationabsurl)
+* [Protractor.prototype.debugger](#api-protractorprototypedebugger)
+* [Protractor.prototype.pause](#api-protractorprototypepause)
 
 ##locators
 
-* [ProtractorBy](#protractorby)
-* [WebdriverBy.prototype](#webdriverbyprototype)
-* [ProtractorBy.prototype.addLocator](#protractorbyprototypeaddlocator)
-* [ProtractorBy.prototype.binding](#protractorbyprototypebinding)
-* [ProtractorBy.prototype.select](#protractorbyprototypeselect)
-* [ProtractorBy.prototype.selectedOption](#protractorbyprototypeselectedoption)
-* [ProtractorBy.prototype.input](#protractorbyprototypeinput)
-* [ProtractorBy.prototype.model](#protractorbyprototypemodel)
-* [ProtractorBy.prototype.buttonText](#protractorbyprototypebuttontext)
-* [ProtractorBy.prototype.partialButtonText](#protractorbyprototypepartialbuttontext)
-* [ProtractorBy.prototype.textarea](#protractorbyprototypetextarea)
-* [ProtractorBy.prototype.repeater](#protractorbyprototyperepeater)
-* [ProtractorBy.prototype.cssContainingText](#protractorbyprototypecsscontainingtext)
+* [ProtractorBy](#api-protractorby)
+* [WebdriverBy.prototype](#api-webdriverbyprototype)
+* [ProtractorBy.prototype.addLocator](#api-protractorbyprototypeaddlocator)
+* [ProtractorBy.prototype.binding](#api-protractorbyprototypebinding)
+* [ProtractorBy.prototype.select](#api-protractorbyprototypeselect)
+* [ProtractorBy.prototype.selectedOption](#api-protractorbyprototypeselectedoption)
+* [ProtractorBy.prototype.input](#api-protractorbyprototypeinput)
+* [ProtractorBy.prototype.model](#api-protractorbyprototypemodel)
+* [ProtractorBy.prototype.buttonText](#api-protractorbyprototypebuttontext)
+* [ProtractorBy.prototype.partialButtonText](#api-protractorbyprototypepartialbuttontext)
+* [ProtractorBy.prototype.textarea](#api-protractorbyprototypetextarea)
+* [ProtractorBy.prototype.repeater](#api-protractorbyprototyperepeater)
+* [ProtractorBy.prototype.cssContainingText](#api-protractorbyprototypecsscontainingtext)
 
 ##webdriver
 
-* [webdriver.WebDriver](#webdriverwebdriver)
-* [webdriver.WebDriver.attachToSession](#webdriverwebdriverattachtosession)
-* [webdriver.WebDriver.createSession](#webdriverwebdrivercreatesession)
-* [webdriver.WebDriver.prototype.controlFlow](#webdriverwebdriverprototypecontrolflow)
-* [webdriver.WebDriver.prototype.schedule](#webdriverwebdriverprototypeschedule)
-* [webdriver.WebDriver.prototype.getSession](#webdriverwebdriverprototypegetsession)
-* [webdriver.WebDriver.prototype.getCapabilities](#webdriverwebdriverprototypegetcapabilities)
-* [webdriver.WebDriver.prototype.quit](#webdriverwebdriverprototypequit)
-* [webdriver.WebDriver.prototype.actions](#webdriverwebdriverprototypeactions)
-* [webdriver.WebDriver.prototype.executeScript](#webdriverwebdriverprototypeexecutescript)
-* [webdriver.WebDriver.prototype.executeAsyncScript](#webdriverwebdriverprototypeexecuteasyncscript)
-* [webdriver.WebDriver.prototype.call](#webdriverwebdriverprototypecall)
-* [webdriver.WebDriver.prototype.wait](#webdriverwebdriverprototypewait)
-* [webdriver.WebDriver.prototype.sleep](#webdriverwebdriverprototypesleep)
-* [webdriver.WebDriver.prototype.getWindowHandle](#webdriverwebdriverprototypegetwindowhandle)
-* [webdriver.WebDriver.prototype.getAllWindowHandles](#webdriverwebdriverprototypegetallwindowhandles)
-* [webdriver.WebDriver.prototype.getPageSource](#webdriverwebdriverprototypegetpagesource)
-* [webdriver.WebDriver.prototype.close](#webdriverwebdriverprototypeclose)
-* [webdriver.WebDriver.prototype.get](#webdriverwebdriverprototypeget)
-* [webdriver.WebDriver.prototype.getCurrentUrl](#webdriverwebdriverprototypegetcurrenturl)
-* [webdriver.WebDriver.prototype.getTitle](#webdriverwebdriverprototypegettitle)
-* [webdriver.WebDriver.prototype.findElement](#webdriverwebdriverprototypefindelement)
-* [webdriver.WebDriver.prototype.isElementPresent](#webdriverwebdriverprototypeiselementpresent)
-* [webdriver.WebDriver.prototype.findElements](#webdriverwebdriverprototypefindelements)
-* [webdriver.WebDriver.prototype.takeScreenshot](#webdriverwebdriverprototypetakescreenshot)
-* [webdriver.WebDriver.prototype.manage](#webdriverwebdriverprototypemanage)
-* [webdriver.WebDriver.prototype.navigate](#webdriverwebdriverprototypenavigate)
-* [webdriver.WebDriver.prototype.switchTo](#webdriverwebdriverprototypeswitchto)
-* [webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation)
-* [webdriver.WebDriver.Navigation.prototype.to](#webdriverwebdrivernavigationprototypeto)
-* [webdriver.WebDriver.Navigation.prototype.back](#webdriverwebdrivernavigationprototypeback)
-* [webdriver.WebDriver.Navigation.prototype.forward](#webdriverwebdrivernavigationprototypeforward)
-* [webdriver.WebDriver.Navigation.prototype.refresh](#webdriverwebdrivernavigationprototyperefresh)
-* [webdriver.WebDriver.Options](#webdriverwebdriveroptions)
-* [webdriver.WebDriver.Options.prototype.addCookie](#webdriverwebdriveroptionsprototypeaddcookie)
-* [webdriver.WebDriver.Options.prototype.deleteAllCookies](#webdriverwebdriveroptionsprototypedeleteallcookies)
-* [webdriver.WebDriver.Options.prototype.deleteCookie](#webdriverwebdriveroptionsprototypedeletecookie)
-* [webdriver.WebDriver.Options.prototype.getCookies](#webdriverwebdriveroptionsprototypegetcookies)
-* [webdriver.WebDriver.Options.prototype.getCookie](#webdriverwebdriveroptionsprototypegetcookie)
-* [webdriver.WebDriver.Options.prototype.logs](#webdriverwebdriveroptionsprototypelogs)
-* [webdriver.WebDriver.Options.prototype.timeouts](#webdriverwebdriveroptionsprototypetimeouts)
-* [webdriver.WebDriver.Options.prototype.window](#webdriverwebdriveroptionsprototypewindow)
-* [webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts)
-* [webdriver.WebDriver.Timeouts.prototype.implicitlyWait](#webdriverwebdrivertimeoutsprototypeimplicitlywait)
-* [webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](#webdriverwebdrivertimeoutsprototypesetscripttimeout)
-* [webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](#webdriverwebdrivertimeoutsprototypepageloadtimeout)
-* [webdriver.WebDriver.Window](#webdriverwebdriverwindow)
-* [webdriver.WebDriver.Window.prototype.getPosition](#webdriverwebdriverwindowprototypegetposition)
-* [webdriver.WebDriver.Window.prototype.setPosition](#webdriverwebdriverwindowprototypesetposition)
-* [webdriver.WebDriver.Window.prototype.getSize](#webdriverwebdriverwindowprototypegetsize)
-* [webdriver.WebDriver.Window.prototype.setSize](#webdriverwebdriverwindowprototypesetsize)
-* [webdriver.WebDriver.Window.prototype.maximize](#webdriverwebdriverwindowprototypemaximize)
-* [webdriver.WebDriver.Logs](#webdriverwebdriverlogs)
-* [webdriver.WebDriver.Logs.prototype.get](#webdriverwebdriverlogsprototypeget)
-* [webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](#webdriverwebdriverlogsprototypegetavailablelogtypes)
-* [webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator)
-* [webdriver.WebDriver.TargetLocator.prototype.activeElement](#webdriverwebdrivertargetlocatorprototypeactiveelement)
-* [webdriver.WebDriver.TargetLocator.prototype.defaultContent](#webdriverwebdrivertargetlocatorprototypedefaultcontent)
-* [webdriver.WebDriver.TargetLocator.prototype.frame](#webdriverwebdrivertargetlocatorprototypeframe)
-* [webdriver.WebDriver.TargetLocator.prototype.window](#webdriverwebdrivertargetlocatorprototypewindow)
-* [webdriver.WebDriver.TargetLocator.prototype.alert](#webdriverwebdrivertargetlocatorprototypealert)
-* [webdriver.Key.chord](#webdriverkeychord)
-* [webdriver.WebElement](#webdriverwebelement)
-* [webdriver.WebElement.equals](#webdriverwebelementequals)
-* [webdriver.WebElement.prototype.getDriver](#webdriverwebelementprototypegetdriver)
-* [webdriver.WebElement.prototype.toWireValue](#webdriverwebelementprototypetowirevalue)
-* [webdriver.WebElement.prototype.findElement](#webdriverwebelementprototypefindelement)
-* [webdriver.WebElement.prototype.isElementPresent](#webdriverwebelementprototypeiselementpresent)
-* [webdriver.WebElement.prototype.findElements](#webdriverwebelementprototypefindelements)
-* [webdriver.WebElement.prototype.click](#webdriverwebelementprototypeclick)
-* [webdriver.WebElement.prototype.sendKeys](#webdriverwebelementprototypesendkeys)
-* [webdriver.WebElement.prototype.getTagName](#webdriverwebelementprototypegettagname)
-* [webdriver.WebElement.prototype.getCssValue](#webdriverwebelementprototypegetcssvalue)
-* [webdriver.WebElement.prototype.getAttribute](#webdriverwebelementprototypegetattribute)
-* [webdriver.WebElement.prototype.getText](#webdriverwebelementprototypegettext)
-* [webdriver.WebElement.prototype.getSize](#webdriverwebelementprototypegetsize)
-* [webdriver.WebElement.prototype.getLocation](#webdriverwebelementprototypegetlocation)
-* [webdriver.WebElement.prototype.isEnabled](#webdriverwebelementprototypeisenabled)
-* [webdriver.WebElement.prototype.isSelected](#webdriverwebelementprototypeisselected)
-* [webdriver.WebElement.prototype.submit](#webdriverwebelementprototypesubmit)
-* [webdriver.WebElement.prototype.clear](#webdriverwebelementprototypeclear)
-* [webdriver.WebElement.prototype.isDisplayed](#webdriverwebelementprototypeisdisplayed)
-* [webdriver.WebElement.prototype.getOuterHtml](#webdriverwebelementprototypegetouterhtml)
-* [webdriver.WebElement.prototype.getInnerHtml](#webdriverwebelementprototypegetinnerhtml)
-* [webdriver.Alert](#webdriveralert)
-* [webdriver.Alert.prototype.getText](#webdriveralertprototypegettext)
-* [webdriver.Alert.prototype.accept](#webdriveralertprototypeaccept)
-* [webdriver.Alert.prototype.dismiss](#webdriveralertprototypedismiss)
-* [webdriver.Alert.prototype.sendKeys](#webdriveralertprototypesendkeys)
-* [webdriver.UnhandledAlertError](#webdriverunhandledalerterror)
-* [webdriver.UnhandledAlertError.prototype.getAlert](#webdriverunhandledalerterrorprototypegetalert)
+* [webdriver.WebDriver](#api-webdriverwebdriver)
+* [webdriver.WebDriver.attachToSession](#api-webdriverwebdriverattachtosession)
+* [webdriver.WebDriver.createSession](#api-webdriverwebdrivercreatesession)
+* [webdriver.WebDriver.prototype.controlFlow](#api-webdriverwebdriverprototypecontrolflow)
+* [webdriver.WebDriver.prototype.schedule](#api-webdriverwebdriverprototypeschedule)
+* [webdriver.WebDriver.prototype.getSession](#api-webdriverwebdriverprototypegetsession)
+* [webdriver.WebDriver.prototype.getCapabilities](#api-webdriverwebdriverprototypegetcapabilities)
+* [webdriver.WebDriver.prototype.quit](#api-webdriverwebdriverprototypequit)
+* [webdriver.WebDriver.prototype.actions](#api-webdriverwebdriverprototypeactions)
+* [webdriver.WebDriver.prototype.executeScript](#api-webdriverwebdriverprototypeexecutescript)
+* [webdriver.WebDriver.prototype.executeAsyncScript](#api-webdriverwebdriverprototypeexecuteasyncscript)
+* [webdriver.WebDriver.prototype.call](#api-webdriverwebdriverprototypecall)
+* [webdriver.WebDriver.prototype.wait](#api-webdriverwebdriverprototypewait)
+* [webdriver.WebDriver.prototype.sleep](#api-webdriverwebdriverprototypesleep)
+* [webdriver.WebDriver.prototype.getWindowHandle](#api-webdriverwebdriverprototypegetwindowhandle)
+* [webdriver.WebDriver.prototype.getAllWindowHandles](#api-webdriverwebdriverprototypegetallwindowhandles)
+* [webdriver.WebDriver.prototype.getPageSource](#api-webdriverwebdriverprototypegetpagesource)
+* [webdriver.WebDriver.prototype.close](#api-webdriverwebdriverprototypeclose)
+* [webdriver.WebDriver.prototype.get](#api-webdriverwebdriverprototypeget)
+* [webdriver.WebDriver.prototype.getCurrentUrl](#api-webdriverwebdriverprototypegetcurrenturl)
+* [webdriver.WebDriver.prototype.getTitle](#api-webdriverwebdriverprototypegettitle)
+* [webdriver.WebDriver.prototype.findElement](#api-webdriverwebdriverprototypefindelement)
+* [webdriver.WebDriver.prototype.isElementPresent](#api-webdriverwebdriverprototypeiselementpresent)
+* [webdriver.WebDriver.prototype.findElements](#api-webdriverwebdriverprototypefindelements)
+* [webdriver.WebDriver.prototype.takeScreenshot](#api-webdriverwebdriverprototypetakescreenshot)
+* [webdriver.WebDriver.prototype.manage](#api-webdriverwebdriverprototypemanage)
+* [webdriver.WebDriver.prototype.navigate](#api-webdriverwebdriverprototypenavigate)
+* [webdriver.WebDriver.prototype.switchTo](#api-webdriverwebdriverprototypeswitchto)
+* [webdriver.WebDriver.Navigation](#api-webdriverwebdrivernavigation)
+* [webdriver.WebDriver.Navigation.prototype.to](#api-webdriverwebdrivernavigationprototypeto)
+* [webdriver.WebDriver.Navigation.prototype.back](#api-webdriverwebdrivernavigationprototypeback)
+* [webdriver.WebDriver.Navigation.prototype.forward](#api-webdriverwebdrivernavigationprototypeforward)
+* [webdriver.WebDriver.Navigation.prototype.refresh](#api-webdriverwebdrivernavigationprototyperefresh)
+* [webdriver.WebDriver.Options](#api-webdriverwebdriveroptions)
+* [webdriver.WebDriver.Options.prototype.addCookie](#api-webdriverwebdriveroptionsprototypeaddcookie)
+* [webdriver.WebDriver.Options.prototype.deleteAllCookies](#api-webdriverwebdriveroptionsprototypedeleteallcookies)
+* [webdriver.WebDriver.Options.prototype.deleteCookie](#api-webdriverwebdriveroptionsprototypedeletecookie)
+* [webdriver.WebDriver.Options.prototype.getCookies](#api-webdriverwebdriveroptionsprototypegetcookies)
+* [webdriver.WebDriver.Options.prototype.getCookie](#api-webdriverwebdriveroptionsprototypegetcookie)
+* [webdriver.WebDriver.Options.prototype.logs](#api-webdriverwebdriveroptionsprototypelogs)
+* [webdriver.WebDriver.Options.prototype.timeouts](#api-webdriverwebdriveroptionsprototypetimeouts)
+* [webdriver.WebDriver.Options.prototype.window](#api-webdriverwebdriveroptionsprototypewindow)
+* [webdriver.WebDriver.Timeouts](#api-webdriverwebdrivertimeouts)
+* [webdriver.WebDriver.Timeouts.prototype.implicitlyWait](#api-webdriverwebdrivertimeoutsprototypeimplicitlywait)
+* [webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](#api-webdriverwebdrivertimeoutsprototypesetscripttimeout)
+* [webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](#api-webdriverwebdrivertimeoutsprototypepageloadtimeout)
+* [webdriver.WebDriver.Window](#api-webdriverwebdriverwindow)
+* [webdriver.WebDriver.Window.prototype.getPosition](#api-webdriverwebdriverwindowprototypegetposition)
+* [webdriver.WebDriver.Window.prototype.setPosition](#api-webdriverwebdriverwindowprototypesetposition)
+* [webdriver.WebDriver.Window.prototype.getSize](#api-webdriverwebdriverwindowprototypegetsize)
+* [webdriver.WebDriver.Window.prototype.setSize](#api-webdriverwebdriverwindowprototypesetsize)
+* [webdriver.WebDriver.Window.prototype.maximize](#api-webdriverwebdriverwindowprototypemaximize)
+* [webdriver.WebDriver.Logs](#api-webdriverwebdriverlogs)
+* [webdriver.WebDriver.Logs.prototype.get](#api-webdriverwebdriverlogsprototypeget)
+* [webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](#api-webdriverwebdriverlogsprototypegetavailablelogtypes)
+* [webdriver.WebDriver.TargetLocator](#api-webdriverwebdrivertargetlocator)
+* [webdriver.WebDriver.TargetLocator.prototype.activeElement](#api-webdriverwebdrivertargetlocatorprototypeactiveelement)
+* [webdriver.WebDriver.TargetLocator.prototype.defaultContent](#api-webdriverwebdrivertargetlocatorprototypedefaultcontent)
+* [webdriver.WebDriver.TargetLocator.prototype.frame](#api-webdriverwebdrivertargetlocatorprototypeframe)
+* [webdriver.WebDriver.TargetLocator.prototype.window](#api-webdriverwebdrivertargetlocatorprototypewindow)
+* [webdriver.WebDriver.TargetLocator.prototype.alert](#api-webdriverwebdrivertargetlocatorprototypealert)
+* [webdriver.Key.chord](#api-webdriverkeychord)
+* [webdriver.WebElement](#api-webdriverwebelement)
+* [webdriver.WebElement.equals](#api-webdriverwebelementequals)
+* [webdriver.WebElement.prototype.getDriver](#api-webdriverwebelementprototypegetdriver)
+* [webdriver.WebElement.prototype.toWireValue](#api-webdriverwebelementprototypetowirevalue)
+* [webdriver.WebElement.prototype.findElement](#api-webdriverwebelementprototypefindelement)
+* [webdriver.WebElement.prototype.isElementPresent](#api-webdriverwebelementprototypeiselementpresent)
+* [webdriver.WebElement.prototype.findElements](#api-webdriverwebelementprototypefindelements)
+* [webdriver.WebElement.prototype.click](#api-webdriverwebelementprototypeclick)
+* [webdriver.WebElement.prototype.sendKeys](#api-webdriverwebelementprototypesendkeys)
+* [webdriver.WebElement.prototype.getTagName](#api-webdriverwebelementprototypegettagname)
+* [webdriver.WebElement.prototype.getCssValue](#api-webdriverwebelementprototypegetcssvalue)
+* [webdriver.WebElement.prototype.getAttribute](#api-webdriverwebelementprototypegetattribute)
+* [webdriver.WebElement.prototype.getText](#api-webdriverwebelementprototypegettext)
+* [webdriver.WebElement.prototype.getSize](#api-webdriverwebelementprototypegetsize)
+* [webdriver.WebElement.prototype.getLocation](#api-webdriverwebelementprototypegetlocation)
+* [webdriver.WebElement.prototype.isEnabled](#api-webdriverwebelementprototypeisenabled)
+* [webdriver.WebElement.prototype.isSelected](#api-webdriverwebelementprototypeisselected)
+* [webdriver.WebElement.prototype.submit](#api-webdriverwebelementprototypesubmit)
+* [webdriver.WebElement.prototype.clear](#api-webdriverwebelementprototypeclear)
+* [webdriver.WebElement.prototype.isDisplayed](#api-webdriverwebelementprototypeisdisplayed)
+* [webdriver.WebElement.prototype.getOuterHtml](#api-webdriverwebelementprototypegetouterhtml)
+* [webdriver.WebElement.prototype.getInnerHtml](#api-webdriverwebelementprototypegetinnerhtml)
+* [webdriver.Alert](#api-webdriveralert)
+* [webdriver.Alert.prototype.getText](#api-webdriveralertprototypegettext)
+* [webdriver.Alert.prototype.accept](#api-webdriveralertprototypeaccept)
+* [webdriver.Alert.prototype.dismiss](#api-webdriveralertprototypedismiss)
+* [webdriver.Alert.prototype.sendKeys](#api-webdriveralertprototypesendkeys)
+* [webdriver.UnhandledAlertError](#api-webdriverunhandledalerterror)
+* [webdriver.UnhandledAlertError.prototype.getAlert](#api-webdriverunhandledalerterrorprototypegetalert)
 
-##<a name="element"></a>[element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L74)
+##<a name="api-element"></a>[element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L74)
 #### Use as: element(locator)
 The element function returns an Element Finder. Element Finders do
 not actually attempt to find the element until a method is called on them,
@@ -199,7 +199,7 @@ Type | Description
 ElementFinder | 
 
 
-##<a name="elementfinderfind"></a>[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L128)
+##<a name="api-elementfinderfind"></a>[elementFinder.find](https://github.com/angular/protractor/blob/master/lib/protractor.js#L128)
 #### Use as: element(locator).find()
 Returns the specified WebElement. Throws the WebDriver error if the
 element doesn't exist.
@@ -216,7 +216,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | 
 
 
-##<a name="elementfinderispresent"></a>[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L139)
+##<a name="api-elementfinderispresent"></a>[elementFinder.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L139)
 #### Use as: element(locator).isPresent()
 Determine whether an element is present on the page.
 
@@ -246,7 +246,7 @@ Type | Description
 !webdriver.promise.Promise | A promise which resolves to a boolean.
 
 
-##<a name="elementfinderelement"></a>[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L161)
+##<a name="api-elementfinderelement"></a>[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L161)
 #### Use as: element(locator).element(locator)
 Calls to element may be chained to find elements within a parent.
 
@@ -294,7 +294,7 @@ Type | Description
 function(webdriver.Locator): ElementFinder | 
 
 
-##<a name="elementfinder"></a>[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L192)
+##<a name="api-elementfinder"></a>[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L192)
 #### Use as: element(locator).$(cssSelector)
 Shortcut for chaining css element finders.
 
@@ -338,7 +338,7 @@ Type | Description
 ElementFinder | 
 
 
-##<a name="elementall"></a>[element.all](https://github.com/angular/protractor/blob/master/lib/protractor.js#L229)
+##<a name="api-elementall"></a>[element.all](https://github.com/angular/protractor/blob/master/lib/protractor.js#L229)
 #### Use as: element.all(locator)
 element.all is used for operations on an array of elements (as opposed
 to a single element).
@@ -379,7 +379,7 @@ Type | Description
 ElementArrayFinder | 
 
 
-##<a name="elementarrayfindercount"></a>[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L253)
+##<a name="api-elementarrayfindercount"></a>[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L253)
 #### Use as: element.all(locator).count()
 Count the number of elements found by the locator.
 
@@ -410,7 +410,7 @@ Type | Description
 !webdriver.promise.Promise | A promise which resolves to the number of elements matching the locator.
 
 
-##<a name="elementarrayfinderget"></a>[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L277)
+##<a name="api-elementarrayfinderget"></a>[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L277)
 #### Use as: element.all(locator).get(index)
 Get an element found by the locator by index. The index starts at 0.
 
@@ -449,7 +449,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | The element at the given index
 
 
-##<a name="elementarrayfinderfirst"></a>[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L303)
+##<a name="api-elementarrayfinderfirst"></a>[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L303)
 #### Use as: element.all(locator).first()
 Get the first element found using the locator.
 
@@ -480,7 +480,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | The first matching element
 
 
-##<a name="elementarrayfinderlast"></a>[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L330)
+##<a name="api-elementarrayfinderlast"></a>[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L330)
 #### Use as: element.all(locator).last()
 Get the last matching element for the locator.
 
@@ -511,7 +511,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | the last matching element
 
 
-##<a name="elementarrayfindereach"></a>[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L380)
+##<a name="api-elementarrayfindereach"></a>[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L380)
 #### Use as: element.all(locator).each(eachFunction)
 Calls the input function on each WebElement found by the locator.
 
@@ -545,7 +545,7 @@ fn | function([webdriver.WebElement](#webdriverwebelement)) | Input function
 
 
 
-##<a name="elementarrayfindermap"></a>[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L407)
+##<a name="api-elementarrayfindermap"></a>[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L407)
 #### Use as: element.all(locator).map(mapFunction)
 Apply a map function to each element found using the locator. The
 callback receives the web element as the first argument and the index as
@@ -595,7 +595,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
 
 
-##<a name="protractor"></a>[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L485)
+##<a name="api-protractor"></a>[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L485)
 
 
 
@@ -614,7 +614,7 @@ opt_rootElement | string= | Selector element that has an ng-app in scope.
 
 
 
-##<a name="protractorprototypewaitforangular"></a>[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L578)
+##<a name="api-protractorprototypewaitforangular"></a>[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L578)
 
 Instruct webdriver to wait until Angular has finished rendering and has
 no outstanding $http calls before continuing.
@@ -631,7 +631,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##<a name="protractorprototypewrapwebelement"></a>[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L619)
+##<a name="api-protractorprototypewrapwebelement"></a>[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L619)
 
 Wrap a webdriver.WebElement with protractor specific functionality.
 
@@ -654,7 +654,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | the wrapped web element.
 
 
-##<a name="element"></a>[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L644)
+##<a name="api-element"></a>[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L644)
 #### Use as: $(cssSelector)
 Shortcut for querying the document directly with css.
 
@@ -691,7 +691,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##<a name="elementfindelement"></a>[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L667)
+##<a name="api-elementfindelement"></a>[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L667)
 
 
 
@@ -707,7 +707,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##<a name="element"></a>[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L684)
+##<a name="api-element"></a>[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L684)
 #### Use as: $$(cssSelector)
 Shortcut for querying the document directly with css.
 
@@ -750,7 +750,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##<a name="elementfindelements"></a>[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L714)
+##<a name="api-elementfindelements"></a>[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L714)
 
 
 
@@ -766,7 +766,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##<a name="elementiselementpresent"></a>[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L738)
+##<a name="api-elementiselementpresent"></a>[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L738)
 
 
 
@@ -782,7 +782,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
 
 
-##<a name="elementevaluate"></a>[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L754)
+##<a name="api-elementevaluate"></a>[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L754)
 
 Evaluates the input as if it were on the scope of the current element.
 
@@ -805,7 +805,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in {@link webdriver.WebDriver.executeScript}. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.
 
 
-##<a name="protractorprototypefindelement"></a>[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L773)
+##<a name="api-protractorprototypefindelement"></a>[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L773)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -821,7 +821,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##<a name="protractorprototypefindelements"></a>[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L791)
+##<a name="api-protractorprototypefindelements"></a>[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L791)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -837,7 +837,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##<a name="protractorprototypeiselementpresent"></a>[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L816)
+##<a name="api-protractorprototypeiselementpresent"></a>[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L816)
 
 Tests if an element is present on the page.
 
@@ -853,7 +853,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
 
 
-##<a name="protractorprototypeaddmockmodule"></a>[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L832)
+##<a name="api-protractorprototypeaddmockmodule"></a>[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L832)
 
 Add a module to load before Angular whenever Protractor.get is called.
 Modules will be registered after existing modules already on the page,
@@ -874,7 +874,7 @@ script | !string&#124;Function | The JavaScript to load the module.
 
 
 
-##<a name="protractorprototypeclearmockmodules"></a>[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L846)
+##<a name="api-protractorprototypeclearmockmodules"></a>[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L846)
 
 Clear the list of registered mock modules.
 
@@ -884,7 +884,7 @@ Clear the list of registered mock modules.
 
 
 
-##<a name="protractorprototyperemovemockmodule"></a>[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L854)
+##<a name="api-protractorprototyperemovemockmodule"></a>[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L854)
 
 Remove a registered mock module.
 
@@ -901,7 +901,7 @@ name | !string | The name of the module to remove.
 
 
 
-##<a name="protractorprototypeget"></a>[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L864)
+##<a name="api-protractorprototypeget"></a>[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L864)
 
 See webdriver.WebDriver.get
 
@@ -924,7 +924,7 @@ opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
-##<a name="protractorprototyperefresh"></a>[Protractor.prototype.refresh](https://github.com/angular/protractor/blob/master/lib/protractor.js#L930)
+##<a name="api-protractorprototyperefresh"></a>[Protractor.prototype.refresh](https://github.com/angular/protractor/blob/master/lib/protractor.js#L930)
 
 See webdriver.WebDriver.refresh
 
@@ -946,7 +946,7 @@ opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
-##<a name="protractorprototypenavigate"></a>[Protractor.prototype.navigate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L953)
+##<a name="api-protractorprototypenavigate"></a>[Protractor.prototype.navigate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L953)
 
 Mixin navigation methods back into the navigation object so that 
 they are invoked as before, i.e. driver.navigate().refresh()
@@ -957,7 +957,7 @@ they are invoked as before, i.e. driver.navigate().refresh()
 
 
 
-##<a name="protractorprototypesetlocation"></a>[Protractor.prototype.setLocation](https://github.com/angular/protractor/blob/master/lib/protractor.js#L963)
+##<a name="api-protractorprototypesetlocation"></a>[Protractor.prototype.setLocation](https://github.com/angular/protractor/blob/master/lib/protractor.js#L963)
 
 Browse to another page using in-page navigation.
 
@@ -980,7 +980,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve once page has been changed.
 
 
-##<a name="protractorprototypegetlocationabsurl"></a>[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L981)
+##<a name="api-protractorprototypegetlocationabsurl"></a>[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L981)
 
 Returns the current absolute url from AngularJS.
 
@@ -990,7 +990,7 @@ Returns the current absolute url from AngularJS.
 
 
 
-##<a name="protractorprototypedebugger"></a>[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L989)
+##<a name="api-protractorprototypedebugger"></a>[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L989)
 
 Pauses the test and injects some helper functions into the browser, so that
 debugging may be done in the browser console.
@@ -1015,7 +1015,7 @@ debugger.
 
 
 
-##<a name="protractorprototypepause"></a>[Protractor.prototype.pause](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1024)
+##<a name="api-protractorprototypepause"></a>[Protractor.prototype.pause](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1024)
 
 Beta (unstable) pause function for debugging webdriver tests. Use
 browser.pause() in your test to enter the protractor debugger from that
@@ -1028,7 +1028,7 @@ Does not require changes to the command line (no need to add 'debug').
 
 
 
-##<a name="protractorby"></a>[ProtractorBy](https://github.com/angular/protractor/blob/master/lib/locators.js#L6)
+##<a name="api-protractorby"></a>[ProtractorBy](https://github.com/angular/protractor/blob/master/lib/locators.js#L6)
 
 The Protractor Locators. These provide ways of finding elements in
 Angular applications by binding, model, etc.
@@ -1039,7 +1039,7 @@ Angular applications by binding, model, etc.
 
 
 
-##<a name="webdriverbyprototype"></a>[WebdriverBy.prototype](https://github.com/angular/protractor/blob/master/lib/locators.js#L15)
+##<a name="api-webdriverbyprototype"></a>[WebdriverBy.prototype](https://github.com/angular/protractor/blob/master/lib/locators.js#L15)
 
 webdriver's By is an enum of locator functions, so we must set it to
 a prototype before inheriting from it.
@@ -1050,7 +1050,7 @@ a prototype before inheriting from it.
 
 
 
-##<a name="protractorbyprototypeaddlocator"></a>[ProtractorBy.prototype.addLocator](https://github.com/angular/protractor/blob/master/lib/locators.js#L22)
+##<a name="api-protractorbyprototypeaddlocator"></a>[ProtractorBy.prototype.addLocator](https://github.com/angular/protractor/blob/master/lib/locators.js#L22)
 #### Use as: by.addLocator(locatorName, functionOrScript)
 Add a locator to this instance of ProtractorBy. This locator can then be
 used with element(by.locatorName(args)).
@@ -1094,7 +1094,7 @@ script | Function&#124;string | A script to be run in the context of the browser
 
 
 
-##<a name="protractorbyprototypebinding"></a>[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L73)
+##<a name="api-protractorbyprototypebinding"></a>[ProtractorBy.prototype.binding](https://github.com/angular/protractor/blob/master/lib/locators.js#L73)
 #### Use as: by.binding()
 Find an element by binding.
 
@@ -1132,7 +1132,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##<a name="protractorbyprototypeselect"></a>[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L102)
+##<a name="api-protractorbyprototypeselect"></a>[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L102)
 
 **DEPRECATED** Use 'model' instead.
 
@@ -1152,7 +1152,7 @@ element(by.select('user'));
 
 
 
-##<a name="protractorbyprototypeselectedoption"></a>[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L121)
+##<a name="api-protractorbyprototypeselectedoption"></a>[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L121)
 
 
 
@@ -1172,7 +1172,7 @@ element(by.selectedOption("user"));
 
 
 
-##<a name="protractorbyprototypeinput"></a>[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L138)
+##<a name="api-protractorbyprototypeinput"></a>[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L138)
 
 **DEPRECATED** Use 'model' instead.
 
@@ -1192,7 +1192,7 @@ element(by.input('user'));
 
 
 
-##<a name="protractorbyprototypemodel"></a>[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L156)
+##<a name="api-protractorbyprototypemodel"></a>[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L156)
 #### Use as: by.model(modelName)
 Find an element by ng-model expression.
 
@@ -1221,7 +1221,7 @@ model | string | ng-model expression.
 
 
 
-##<a name="protractorbyprototypebuttontext"></a>[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L180)
+##<a name="api-protractorbyprototypebuttontext"></a>[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L180)
 
 Find a button by text.
 
@@ -1254,7 +1254,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##<a name="protractorbyprototypepartialbuttontext"></a>[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L203)
+##<a name="api-protractorbyprototypepartialbuttontext"></a>[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L203)
 
 Find a button by partial text.
 
@@ -1287,7 +1287,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##<a name="protractorbyprototypetextarea"></a>[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L227)
+##<a name="api-protractorbyprototypetextarea"></a>[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L227)
 
 **DEPRECATED** Use 'model' instead.
 
@@ -1307,7 +1307,7 @@ element(by.textarea('user'));
 
 
 
-##<a name="protractorbyprototyperepeater"></a>[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L245)
+##<a name="api-protractorbyprototyperepeater"></a>[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L245)
 
 Find elements inside an ng-repeat.
 
@@ -1343,7 +1343,7 @@ var rows = element.all(by.repeater('cat in pets'));
 
 
 
-##<a name="protractorbyprototypecsscontainingtext"></a>[ProtractorBy.prototype.cssContainingText](https://github.com/angular/protractor/blob/master/lib/locators.js#L324)
+##<a name="api-protractorbyprototypecsscontainingtext"></a>[ProtractorBy.prototype.cssContainingText](https://github.com/angular/protractor/blob/master/lib/locators.js#L324)
 
 Find elements by CSS which contain a certain string.
 
@@ -1367,7 +1367,7 @@ var dog = element(by.cssContainingText('.pet', 'Dog'));
 
 
 
-##<a name="webdriverwebdriver"></a>[webdriver.WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#47)
+##<a name="api-webdriverwebdriver"></a>[webdriver.WebDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#47)
 
 Creates a new WebDriver client, which provides control over a browser.
 
@@ -1402,7 +1402,7 @@ opt_flow | webdriver.promise.ControlFlow= | The flow to schedule commands throug
 
 
 
-##<a name="webdriverwebdriverattachtosession"></a>[webdriver.WebDriver.attachToSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#87)
+##<a name="api-webdriverwebdriverattachtosession"></a>[webdriver.WebDriver.attachToSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#87)
 
 Creates a new WebDriver client for an existing session.
 
@@ -1426,7 +1426,7 @@ Type | Description
 &#33;[webdriver.WebDriver](#webdriverwebdriver) | A new client for the specified session.
 
 
-##<a name="webdriverwebdrivercreatesession"></a>[webdriver.WebDriver.createSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#102)
+##<a name="api-webdriverwebdrivercreatesession"></a>[webdriver.WebDriver.createSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#102)
 
 Creates a new WebDriver session.
 
@@ -1450,7 +1450,7 @@ Type | Description
 &#33;[webdriver.WebDriver](#webdriverwebdriver) | The driver for the newly created session.
 
 
-##<a name="webdriverwebdriverprototypecontrolflow"></a>[webdriver.WebDriver.prototype.controlFlow](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#243)
+##<a name="api-webdriverwebdriverprototypecontrolflow"></a>[webdriver.WebDriver.prototype.controlFlow](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#243)
 
 
 
@@ -1466,7 +1466,7 @@ Type | Description
 !webdriver.promise.ControlFlow | The control flow used by this instance.
 
 
-##<a name="webdriverwebdriverprototypeschedule"></a>[webdriver.WebDriver.prototype.schedule](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#252)
+##<a name="api-webdriverwebdriverprototypeschedule"></a>[webdriver.WebDriver.prototype.schedule](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#252)
 
 Schedules a {@code webdriver.Command} to be executed by this driver's
 {@code webdriver.CommandExecutor}.
@@ -1491,7 +1491,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the command result.
 
 
-##<a name="webdriverwebdriverprototypegetsession"></a>[webdriver.WebDriver.prototype.getSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#304)
+##<a name="api-webdriverwebdriverprototypegetsession"></a>[webdriver.WebDriver.prototype.getSession](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#304)
 
 
 
@@ -1507,7 +1507,7 @@ Type | Description
 !webdriver.promise.Promise | A promise for this client's session.
 
 
-##<a name="webdriverwebdriverprototypegetcapabilities"></a>[webdriver.WebDriver.prototype.getCapabilities](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#312)
+##<a name="api-webdriverwebdriverprototypegetcapabilities"></a>[webdriver.WebDriver.prototype.getCapabilities](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#312)
 
 
 
@@ -1523,7 +1523,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve with the this instance's capabilities.
 
 
-##<a name="webdriverwebdriverprototypequit"></a>[webdriver.WebDriver.prototype.quit](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#323)
+##<a name="api-webdriverwebdriverprototypequit"></a>[webdriver.WebDriver.prototype.quit](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#323)
 
 Schedules a command to quit the current session. After calling quit, this
 instance will be invalidated and may no longer be used to issue commands
@@ -1541,7 +1541,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the command has completed.
 
 
-##<a name="webdriverwebdriverprototypeactions"></a>[webdriver.WebDriver.prototype.actions](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#342)
+##<a name="api-webdriverwebdriverprototypeactions"></a>[webdriver.WebDriver.prototype.actions](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#342)
 
 Creates a new action sequence using this driver. The sequence will not be
 scheduled for execution until {@link webdriver.ActionSequence#perform} is
@@ -1566,7 +1566,7 @@ Type | Description
 !webdriver.ActionSequence | A new action sequence for this instance.
 
 
-##<a name="webdriverwebdriverprototypeexecutescript"></a>[webdriver.WebDriver.prototype.executeScript](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#360)
+##<a name="api-webdriverwebdriverprototypeexecutescript"></a>[webdriver.WebDriver.prototype.executeScript](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#360)
 
 Schedules a command to execute JavaScript in the context of the currently
 selected frame or window. The script fragment will be executed as the body
@@ -1619,7 +1619,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##<a name="webdriverwebdriverprototypeexecuteasyncscript"></a>[webdriver.WebDriver.prototype.executeAsyncScript](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#409)
+##<a name="api-webdriverwebdriverprototypeexecuteasyncscript"></a>[webdriver.WebDriver.prototype.executeAsyncScript](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#409)
 
 Schedules a command to execute asynchronous JavaScript in the context of the
 currently selected frame or window. The script fragment will be executed as
@@ -1714,7 +1714,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##<a name="webdriverwebdriverprototypecall"></a>[webdriver.WebDriver.prototype.call](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#500)
+##<a name="api-webdriverwebdriverprototypecall"></a>[webdriver.WebDriver.prototype.call](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#500)
 
 Schedules a command to execute a custom function.
 
@@ -1739,7 +1739,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the function's result.
 
 
-##<a name="webdriverwebdriverprototypewait"></a>[webdriver.WebDriver.prototype.wait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#519)
+##<a name="api-webdriverwebdriverprototypewait"></a>[webdriver.WebDriver.prototype.wait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#519)
 
 Schedules a command to wait for a condition to hold, as defined by some
 user supplied function. If any errors occur while evaluating the wait, they
@@ -1766,7 +1766,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the wait condition has been satisfied.
 
 
-##<a name="webdriverwebdriverprototypesleep"></a>[webdriver.WebDriver.prototype.sleep](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#535)
+##<a name="api-webdriverwebdriverprototypesleep"></a>[webdriver.WebDriver.prototype.sleep](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#535)
 
 Schedules a command to make the driver sleep for the given amount of time.
 
@@ -1789,7 +1789,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the sleep has finished.
 
 
-##<a name="webdriverwebdriverprototypegetwindowhandle"></a>[webdriver.WebDriver.prototype.getWindowHandle](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#546)
+##<a name="api-webdriverwebdriverprototypegetwindowhandle"></a>[webdriver.WebDriver.prototype.getWindowHandle](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#546)
 
 Schedules a command to retrieve they current window handle.
 
@@ -1805,7 +1805,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the current window handle.
 
 
-##<a name="webdriverwebdriverprototypegetallwindowhandles"></a>[webdriver.WebDriver.prototype.getAllWindowHandles](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#558)
+##<a name="api-webdriverwebdriverprototypegetallwindowhandles"></a>[webdriver.WebDriver.prototype.getAllWindowHandles](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#558)
 
 Schedules a command to retrieve the current list of available window handles.
 
@@ -1821,7 +1821,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with an array of window handles.
 
 
-##<a name="webdriverwebdriverprototypegetpagesource"></a>[webdriver.WebDriver.prototype.getPageSource](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#570)
+##<a name="api-webdriverwebdriverprototypegetpagesource"></a>[webdriver.WebDriver.prototype.getPageSource](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#570)
 
 Schedules a command to retrieve the current page's source. The page source
 returned is a representation of the underlying DOM: do not expect it to be
@@ -1840,7 +1840,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the current page source.
 
 
-##<a name="webdriverwebdriverprototypeclose"></a>[webdriver.WebDriver.prototype.close](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#585)
+##<a name="api-webdriverwebdriverprototypeclose"></a>[webdriver.WebDriver.prototype.close](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#585)
 
 Schedules a command to close the current window.
 
@@ -1856,7 +1856,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when this command has completed.
 
 
-##<a name="webdriverwebdriverprototypeget"></a>[webdriver.WebDriver.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#596)
+##<a name="api-webdriverwebdriverprototypeget"></a>[webdriver.WebDriver.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#596)
 
 Schedules a command to navigate to the given URL.
 
@@ -1879,7 +1879,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the document has finished loading.
 
 
-##<a name="webdriverwebdriverprototypegetcurrenturl"></a>[webdriver.WebDriver.prototype.getCurrentUrl](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#607)
+##<a name="api-webdriverwebdriverprototypegetcurrenturl"></a>[webdriver.WebDriver.prototype.getCurrentUrl](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#607)
 
 Schedules a command to retrieve the URL of the current page.
 
@@ -1895,7 +1895,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the current URL.
 
 
-##<a name="webdriverwebdriverprototypegettitle"></a>[webdriver.WebDriver.prototype.getTitle](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#619)
+##<a name="api-webdriverwebdriverprototypegettitle"></a>[webdriver.WebDriver.prototype.getTitle](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#619)
 
 Schedules a command to retrieve the current page's title.
 
@@ -1911,7 +1911,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the current page's title.
 
 
-##<a name="webdriverwebdriverprototypefindelement"></a>[webdriver.WebDriver.prototype.findElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#630)
+##<a name="api-webdriverwebdriverprototypefindelement"></a>[webdriver.WebDriver.prototype.findElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#630)
 
 Schedule a command to find an element on the page. If the element cannot be
 found, a {@link bot.ErrorCode.NO_SUCH_ELEMENT} result will be returned
@@ -1974,7 +1974,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the element will be invalidated and all scheduled commands aborted.
 
 
-##<a name="webdriverwebdriverprototypeiselementpresent"></a>[webdriver.WebDriver.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#777)
+##<a name="api-webdriverwebdriverprototypeiselementpresent"></a>[webdriver.WebDriver.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#777)
 
 Schedules a command to test if an element is present on the page.
 
@@ -2002,7 +2002,7 @@ Type | Description
 !webdriver.promise.Promise.&lt;boolean&gt; | A promise that will resolve with whether the element is present on the page.
 
 
-##<a name="webdriverwebdriverprototypefindelements"></a>[webdriver.WebDriver.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#801)
+##<a name="api-webdriverwebdriverprototypefindelements"></a>[webdriver.WebDriver.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#801)
 
 Schedule a command to search for multiple elements on the page.
 
@@ -2025,7 +2025,7 @@ Type | Description
 !webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.WebElement&gt;&gt; | A promise that will resolve to an array of WebElements.
 
 
-##<a name="webdriverwebdriverprototypetakescreenshot"></a>[webdriver.WebDriver.prototype.takeScreenshot](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#848)
+##<a name="api-webdriverwebdriverprototypetakescreenshot"></a>[webdriver.WebDriver.prototype.takeScreenshot](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#848)
 
 Schedule a command to take a screenshot. The driver makes a best effort to
 return a screenshot of the following, in order of preference:
@@ -2048,7 +2048,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to the screenshot as a base-64 encoded PNG.
 
 
-##<a name="webdriverwebdriverprototypemanage"></a>[webdriver.WebDriver.prototype.manage](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#867)
+##<a name="api-webdriverwebdriverprototypemanage"></a>[webdriver.WebDriver.prototype.manage](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#867)
 
 
 
@@ -2064,7 +2064,7 @@ Type | Description
 &#33;[webdriver.WebDriver.Options](#webdriverwebdriveroptions) | The options interface for this instance.
 
 
-##<a name="webdriverwebdriverprototypenavigate"></a>[webdriver.WebDriver.prototype.navigate](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#876)
+##<a name="api-webdriverwebdriverprototypenavigate"></a>[webdriver.WebDriver.prototype.navigate](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#876)
 
 
 
@@ -2080,7 +2080,7 @@ Type | Description
 &#33;[webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation) | The navigation interface for this instance.
 
 
-##<a name="webdriverwebdriverprototypeswitchto"></a>[webdriver.WebDriver.prototype.switchTo](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#885)
+##<a name="api-webdriverwebdriverprototypeswitchto"></a>[webdriver.WebDriver.prototype.switchTo](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#885)
 
 
 
@@ -2096,7 +2096,7 @@ Type | Description
 &#33;[webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator) | The target locator interface for this instance.
 
 
-##<a name="webdriverwebdrivernavigation"></a>[webdriver.WebDriver.Navigation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#895)
+##<a name="api-webdriverwebdrivernavigation"></a>[webdriver.WebDriver.Navigation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#895)
 
 Interface for navigating back and forth in the browser history.
 
@@ -2113,7 +2113,7 @@ driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
-##<a name="webdriverwebdrivernavigationprototypeto"></a>[webdriver.WebDriver.Navigation.prototype.to](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#907)
+##<a name="api-webdriverwebdrivernavigationprototypeto"></a>[webdriver.WebDriver.Navigation.prototype.to](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#907)
 
 Schedules a command to navigate to a new URL.
 
@@ -2136,7 +2136,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the URL has been loaded.
 
 
-##<a name="webdriverwebdrivernavigationprototypeback"></a>[webdriver.WebDriver.Navigation.prototype.back](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#921)
+##<a name="api-webdriverwebdrivernavigationprototypeback"></a>[webdriver.WebDriver.Navigation.prototype.back](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#921)
 
 Schedules a command to move backwards in the browser history.
 
@@ -2152,7 +2152,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the navigation event has completed.
 
 
-##<a name="webdriverwebdrivernavigationprototypeforward"></a>[webdriver.WebDriver.Navigation.prototype.forward](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#933)
+##<a name="api-webdriverwebdrivernavigationprototypeforward"></a>[webdriver.WebDriver.Navigation.prototype.forward](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#933)
 
 Schedules a command to move forwards in the browser history.
 
@@ -2168,7 +2168,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the navigation event has completed.
 
 
-##<a name="webdriverwebdrivernavigationprototyperefresh"></a>[webdriver.WebDriver.Navigation.prototype.refresh](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#945)
+##<a name="api-webdriverwebdrivernavigationprototyperefresh"></a>[webdriver.WebDriver.Navigation.prototype.refresh](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#945)
 
 Schedules a command to refresh the current page.
 
@@ -2184,7 +2184,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the navigation event has completed.
 
 
-##<a name="webdriverwebdriveroptions"></a>[webdriver.WebDriver.Options](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#958)
+##<a name="api-webdriverwebdriveroptions"></a>[webdriver.WebDriver.Options](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#958)
 
 Provides methods for managing browser and driver state.
 
@@ -2201,7 +2201,7 @@ driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
-##<a name="webdriverwebdriveroptionsprototypeaddcookie"></a>[webdriver.WebDriver.Options.prototype.addCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#970)
+##<a name="api-webdriverwebdriveroptionsprototypeaddcookie"></a>[webdriver.WebDriver.Options.prototype.addCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#970)
 
 Schedules a command to add a cookie.
 
@@ -2229,7 +2229,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the cookie has been added to the page.
 
 
-##<a name="webdriverwebdriveroptionsprototypedeleteallcookies"></a>[webdriver.WebDriver.Options.prototype.deleteAllCookies](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1027)
+##<a name="api-webdriverwebdriveroptionsprototypedeleteallcookies"></a>[webdriver.WebDriver.Options.prototype.deleteAllCookies](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1027)
 
 Schedules a command to delete all cookies visible to the current page.
 
@@ -2245,7 +2245,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when all cookies have been deleted.
 
 
-##<a name="webdriverwebdriveroptionsprototypedeletecookie"></a>[webdriver.WebDriver.Options.prototype.deleteCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1039)
+##<a name="api-webdriverwebdriveroptionsprototypedeletecookie"></a>[webdriver.WebDriver.Options.prototype.deleteCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1039)
 
 Schedules a command to delete the cookie with the given name. This command is
 a no-op if there is no cookie with the given name visible to the current
@@ -2270,7 +2270,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the cookie has been deleted.
 
 
-##<a name="webdriverwebdriveroptionsprototypegetcookies"></a>[webdriver.WebDriver.Options.prototype.getCookies](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1055)
+##<a name="api-webdriverwebdriveroptionsprototypegetcookies"></a>[webdriver.WebDriver.Options.prototype.getCookies](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1055)
 
 Schedules a command to retrieve all cookies visible to the current page.
 Each cookie will be returned as a JSON object as described by the WebDriver
@@ -2288,7 +2288,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the cookies visible to the current page.
 
 
-##<a name="webdriverwebdriveroptionsprototypegetcookie"></a>[webdriver.WebDriver.Options.prototype.getCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1070)
+##<a name="api-webdriverwebdriveroptionsprototypegetcookie"></a>[webdriver.WebDriver.Options.prototype.getCookie](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1070)
 
 Schedules a command to retrieve the cookie with the given name. Returns null
 if there is no such cookie. The cookie will be returned as a JSON object as
@@ -2313,7 +2313,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the named cookie, or {@code null} if there is no such cookie.
 
 
-##<a name="webdriverwebdriveroptionsprototypelogs"></a>[webdriver.WebDriver.Options.prototype.logs](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1088)
+##<a name="api-webdriverwebdriveroptionsprototypelogs"></a>[webdriver.WebDriver.Options.prototype.logs](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1088)
 
 
 
@@ -2329,7 +2329,7 @@ Type | Description
 &#33;[webdriver.WebDriver.Logs](#webdriverwebdriverlogs) | The interface for managing driver logs.
 
 
-##<a name="webdriverwebdriveroptionsprototypetimeouts"></a>[webdriver.WebDriver.Options.prototype.timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1097)
+##<a name="api-webdriverwebdriveroptionsprototypetimeouts"></a>[webdriver.WebDriver.Options.prototype.timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1097)
 
 
 
@@ -2345,7 +2345,7 @@ Type | Description
 &#33;[webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts) | The interface for managing driver timeouts.
 
 
-##<a name="webdriverwebdriveroptionsprototypewindow"></a>[webdriver.WebDriver.Options.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1106)
+##<a name="api-webdriverwebdriveroptionsprototypewindow"></a>[webdriver.WebDriver.Options.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1106)
 
 
 
@@ -2361,7 +2361,7 @@ Type | Description
 &#33;[webdriver.WebDriver.Window](#webdriverwebdriverwindow) | The interface for managing the current window.
 
 
-##<a name="webdriverwebdrivertimeouts"></a>[webdriver.WebDriver.Timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1116)
+##<a name="api-webdriverwebdrivertimeouts"></a>[webdriver.WebDriver.Timeouts](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1116)
 
 An interface for managing timeout behavior for WebDriver instances.
 
@@ -2378,7 +2378,7 @@ driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
-##<a name="webdriverwebdrivertimeoutsprototypeimplicitlywait"></a>[webdriver.WebDriver.Timeouts.prototype.implicitlyWait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1128)
+##<a name="api-webdriverwebdrivertimeoutsprototypeimplicitlywait"></a>[webdriver.WebDriver.Timeouts.prototype.implicitlyWait](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1128)
 
 Specifies the amount of time the driver should wait when searching for an
 element if it is not immediately present.
@@ -2415,7 +2415,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the implicit wait timeout has been set.
 
 
-##<a name="webdriverwebdrivertimeoutsprototypesetscripttimeout"></a>[webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1157)
+##<a name="api-webdriverwebdrivertimeoutsprototypesetscripttimeout"></a>[webdriver.WebDriver.Timeouts.prototype.setScriptTimeout](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1157)
 
 Sets the amount of time to wait, in milliseconds, for an asynchronous script
 to finish execution before returning an error. If the timeout is less than or
@@ -2440,7 +2440,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the script timeout has been set.
 
 
-##<a name="webdriverwebdrivertimeoutsprototypepageloadtimeout"></a>[webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1174)
+##<a name="api-webdriverwebdrivertimeoutsprototypepageloadtimeout"></a>[webdriver.WebDriver.Timeouts.prototype.pageLoadTimeout](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1174)
 
 Sets the amount of time to wait for a page load to complete before returning
 an error.  If the timeout is negative, page loads may be indefinite.
@@ -2464,7 +2464,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the timeout has been set.
 
 
-##<a name="webdriverwebdriverwindow"></a>[webdriver.WebDriver.Window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1191)
+##<a name="api-webdriverwebdriverwindow"></a>[webdriver.WebDriver.Window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1191)
 
 An interface for managing the current window.
 
@@ -2481,7 +2481,7 @@ driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
-##<a name="webdriverwebdriverwindowprototypegetposition"></a>[webdriver.WebDriver.Window.prototype.getPosition](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1203)
+##<a name="api-webdriverwebdriverwindowprototypegetposition"></a>[webdriver.WebDriver.Window.prototype.getPosition](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1203)
 
 Retrieves the window's current position, relative to the top left corner of
 the screen.
@@ -2498,7 +2498,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the window's position in the form of a {x:number, y:number} object literal.
 
 
-##<a name="webdriverwebdriverwindowprototypesetposition"></a>[webdriver.WebDriver.Window.prototype.setPosition](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1217)
+##<a name="api-webdriverwebdriverwindowprototypesetposition"></a>[webdriver.WebDriver.Window.prototype.setPosition](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1217)
 
 Repositions the current window.
 
@@ -2522,7 +2522,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the command has completed.
 
 
-##<a name="webdriverwebdriverwindowprototypegetsize"></a>[webdriver.WebDriver.Window.prototype.getSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1236)
+##<a name="api-webdriverwebdriverwindowprototypegetsize"></a>[webdriver.WebDriver.Window.prototype.getSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1236)
 
 Retrieves the window's current size.
 
@@ -2538,7 +2538,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the window's size in the form of a {width:number, height:number} object literal.
 
 
-##<a name="webdriverwebdriverwindowprototypesetsize"></a>[webdriver.WebDriver.Window.prototype.setSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1250)
+##<a name="api-webdriverwebdriverwindowprototypesetsize"></a>[webdriver.WebDriver.Window.prototype.setSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1250)
 
 Resizes the current window.
 
@@ -2562,7 +2562,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the command has completed.
 
 
-##<a name="webdriverwebdriverwindowprototypemaximize"></a>[webdriver.WebDriver.Window.prototype.maximize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1267)
+##<a name="api-webdriverwebdriverwindowprototypemaximize"></a>[webdriver.WebDriver.Window.prototype.maximize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1267)
 
 Maximizes the current window.
 
@@ -2578,7 +2578,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the command has completed.
 
 
-##<a name="webdriverwebdriverlogs"></a>[webdriver.WebDriver.Logs](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1280)
+##<a name="api-webdriverwebdriverlogs"></a>[webdriver.WebDriver.Logs](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1280)
 
 Interface for managing WebDriver log records.
 
@@ -2595,7 +2595,7 @@ driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
-##<a name="webdriverwebdriverlogsprototypeget"></a>[webdriver.WebDriver.Logs.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1292)
+##<a name="api-webdriverwebdriverlogsprototypeget"></a>[webdriver.WebDriver.Logs.prototype.get](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1292)
 
 Fetches available log entries for the given type.
 
@@ -2624,7 +2624,7 @@ Type | Description
 !webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Entry&gt;&gt; | A promise that will resolve to a list of log entries for the specified type.
 
 
-##<a name="webdriverwebdriverlogsprototypegetavailablelogtypes"></a>[webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1323)
+##<a name="api-webdriverwebdriverlogsprototypegetavailablelogtypes"></a>[webdriver.WebDriver.Logs.prototype.getAvailableLogTypes](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1323)
 
 Retrieves the log types available to this driver.
 
@@ -2640,7 +2640,7 @@ Type | Description
 !webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.logging.Type&gt;&gt; | A promise that will resolve to a list of available log types.
 
 
-##<a name="webdriverwebdrivertargetlocator"></a>[webdriver.WebDriver.TargetLocator](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1336)
+##<a name="api-webdriverwebdrivertargetlocator"></a>[webdriver.WebDriver.TargetLocator](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1336)
 
 An interface for changing the focus of the driver to another frame or window.
 
@@ -2657,7 +2657,7 @@ driver | &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver.
 
 
 
-##<a name="webdriverwebdrivertargetlocatorprototypeactiveelement"></a>[webdriver.WebDriver.TargetLocator.prototype.activeElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1348)
+##<a name="api-webdriverwebdrivertargetlocatorprototypeactiveelement"></a>[webdriver.WebDriver.TargetLocator.prototype.activeElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1348)
 
 Schedules a command retrieve the {@code document.activeElement} element on
 the current document, or {@code document.body} if activeElement is not
@@ -2675,7 +2675,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | The active element.
 
 
-##<a name="webdriverwebdrivertargetlocatorprototypedefaultcontent"></a>[webdriver.WebDriver.TargetLocator.prototype.defaultContent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1362)
+##<a name="api-webdriverwebdrivertargetlocatorprototypedefaultcontent"></a>[webdriver.WebDriver.TargetLocator.prototype.defaultContent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1362)
 
 Schedules a command to switch focus of all future commands to the first frame
 on the page.
@@ -2692,7 +2692,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the driver has changed focus to the default content.
 
 
-##<a name="webdriverwebdrivertargetlocatorprototypeframe"></a>[webdriver.WebDriver.TargetLocator.prototype.frame](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1376)
+##<a name="api-webdriverwebdrivertargetlocatorprototypeframe"></a>[webdriver.WebDriver.TargetLocator.prototype.frame](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1376)
 
 Schedules a command to switch the focus of all future commands to another
 frame on the page.
@@ -2727,7 +2727,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the driver has changed focus to the specified frame.
 
 
-##<a name="webdriverwebdrivertargetlocatorprototypewindow"></a>[webdriver.WebDriver.TargetLocator.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1402)
+##<a name="api-webdriverwebdrivertargetlocatorprototypewindow"></a>[webdriver.WebDriver.TargetLocator.prototype.window](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1402)
 
 Schedules a command to switch the focus of all future commands to another
 window. Windows may be specified by their {@code window.name} attribute or
@@ -2755,7 +2755,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the driver has changed focus to the specified window.
 
 
-##<a name="webdriverwebdrivertargetlocatorprototypealert"></a>[webdriver.WebDriver.TargetLocator.prototype.alert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1422)
+##<a name="api-webdriverwebdrivertargetlocatorprototypealert"></a>[webdriver.WebDriver.TargetLocator.prototype.alert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1422)
 
 Schedules a command to change focus to the active alert dialog. This command
 will return a {@link bot.ErrorCode.NO_MODAL_DIALOG_OPEN} error if a modal
@@ -2773,7 +2773,7 @@ Type | Description
 &#33;[webdriver.Alert](#webdriveralert) | The open alert.
 
 
-##<a name="webdriverkeychord"></a>[webdriver.Key.chord](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1436)
+##<a name="api-webdriverkeychord"></a>[webdriver.Key.chord](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1436)
 
 Simulate pressing many keys at once in a "chord". Takes a sequence of
 {@link webdriver.Key}s or strings, appends each of the values to a string,
@@ -2802,7 +2802,7 @@ Type | Description
 string | The null-terminated key sequence.
 
 
-##<a name="webdriverwebelement"></a>[webdriver.WebElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1468)
+##<a name="api-webdriverwebelement"></a>[webdriver.WebElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1468)
 
 Represents a DOM element. WebElements can be found by searching from the
 document root using a {@code webdriver.WebDriver} instance, or by searching
@@ -2840,7 +2840,7 @@ id | !(string&#124;webdriver.promise.Promise) | Either the opaque ID for the und
 
 
 
-##<a name="webdriverwebelementequals"></a>[webdriver.WebElement.equals](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1550)
+##<a name="api-webdriverwebelementequals"></a>[webdriver.WebElement.equals](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1550)
 
 Compares to WebElements for equality.
 
@@ -2864,7 +2864,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to whether the two WebElements are equal.
 
 
-##<a name="webdriverwebelementprototypegetdriver"></a>[webdriver.WebElement.prototype.getDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1578)
+##<a name="api-webdriverwebelementprototypegetdriver"></a>[webdriver.WebElement.prototype.getDriver](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1578)
 
 
 
@@ -2880,7 +2880,7 @@ Type | Description
 &#33;[webdriver.WebDriver](#webdriverwebdriver) | The parent driver for this instance.
 
 
-##<a name="webdriverwebelementprototypetowirevalue"></a>[webdriver.WebElement.prototype.toWireValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1586)
+##<a name="api-webdriverwebelementprototypetowirevalue"></a>[webdriver.WebElement.prototype.toWireValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1586)
 
 
 
@@ -2896,7 +2896,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that resolves to this element's JSON representation as defined by the WebDriver wire protocol.
 
 
-##<a name="webdriverwebelementprototypefindelement"></a>[webdriver.WebElement.prototype.findElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1613)
+##<a name="api-webdriverwebelementprototypefindelement"></a>[webdriver.WebElement.prototype.findElement](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1613)
 
 Schedule a command to find a descendant of this element. If the element
 cannot be found, a {@code bot.ErrorCode.NO_SUCH_ELEMENT} result will
@@ -2950,7 +2950,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | A WebElement that can be used to issue commands against the located element. If the element is not found, the element will be invalidated and all scheduled commands aborted.
 
 
-##<a name="webdriverwebelementprototypeiselementpresent"></a>[webdriver.WebElement.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1669)
+##<a name="api-webdriverwebelementprototypeiselementpresent"></a>[webdriver.WebElement.prototype.isElementPresent](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1669)
 
 Schedules a command to test if there is at least one descendant of this
 element that matches the given search criteria.
@@ -2974,7 +2974,7 @@ Type | Description
 !webdriver.promise.Promise.&lt;boolean&gt; | A promise that will be resolved with whether an element could be located on the page.
 
 
-##<a name="webdriverwebelementprototypefindelements"></a>[webdriver.WebElement.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1685)
+##<a name="api-webdriverwebelementprototypefindelements"></a>[webdriver.WebElement.prototype.findElements](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1685)
 
 Schedules a command to find all of the descendants of this element that
 match the given search criteria.
@@ -2998,7 +2998,7 @@ Type | Description
 !webdriver.promise.Promise.&lt;!Array.&lt;!webdriver.WebElement&gt;&gt; | A promise that will resolve to an array of WebElements.
 
 
-##<a name="webdriverwebelementprototypeclick"></a>[webdriver.WebElement.prototype.click](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1708)
+##<a name="api-webdriverwebelementprototypeclick"></a>[webdriver.WebElement.prototype.click](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1708)
 
 Schedules a command to click on this element.
 
@@ -3014,7 +3014,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the click command has completed.
 
 
-##<a name="webdriverwebelementprototypesendkeys"></a>[webdriver.WebElement.prototype.sendKeys](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1720)
+##<a name="api-webdriverwebelementprototypesendkeys"></a>[webdriver.WebElement.prototype.sendKeys](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1720)
 
 Schedules a command to type a sequence on the DOM element represented by this
 instance.
@@ -3068,7 +3068,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when all keys have been typed.
 
 
-##<a name="webdriverwebelementprototypegettagname"></a>[webdriver.WebElement.prototype.getTagName](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1777)
+##<a name="api-webdriverwebelementprototypegettagname"></a>[webdriver.WebElement.prototype.getTagName](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1777)
 
 Schedules a command to query for the tag/node name of this element.
 
@@ -3084,7 +3084,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the element's tag name.
 
 
-##<a name="webdriverwebelementprototypegetcssvalue"></a>[webdriver.WebElement.prototype.getCssValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1789)
+##<a name="api-webdriverwebelementprototypegetcssvalue"></a>[webdriver.WebElement.prototype.getCssValue](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1789)
 
 Schedules a command to query for the computed style of the element
 represented by this instance. If the element inherits the named style from
@@ -3114,7 +3114,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the requested CSS value.
 
 
-##<a name="webdriverwebelementprototypegetattribute"></a>[webdriver.WebElement.prototype.getAttribute](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1813)
+##<a name="api-webdriverwebelementprototypegetattribute"></a>[webdriver.WebElement.prototype.getAttribute](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1813)
 
 Schedules a command to query for the value of the given attribute of the
 element. Will return the current value, even if it has been modified after
@@ -3159,7 +3159,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the attribute's value. The returned value will always be either a string or null.
 
 
-##<a name="webdriverwebelementprototypegettext"></a>[webdriver.WebElement.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1850)
+##<a name="api-webdriverwebelementprototypegettext"></a>[webdriver.WebElement.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1850)
 
 Get the visible (i.e. not hidden by CSS) innerText of this element, including
 sub-elements, without any leading or trailing whitespace.
@@ -3176,7 +3176,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the element's visible text.
 
 
-##<a name="webdriverwebelementprototypegetsize"></a>[webdriver.WebElement.prototype.getSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1863)
+##<a name="api-webdriverwebelementprototypegetsize"></a>[webdriver.WebElement.prototype.getSize](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1863)
 
 Schedules a command to compute the size of this element's bounding box, in
 pixels.
@@ -3193,7 +3193,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the element's size as a {@code {width:number, height:number}} object.
 
 
-##<a name="webdriverwebelementprototypegetlocation"></a>[webdriver.WebElement.prototype.getLocation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1876)
+##<a name="api-webdriverwebelementprototypegetlocation"></a>[webdriver.WebElement.prototype.getLocation](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1876)
 
 Schedules a command to compute the location of this element in page space.
 
@@ -3209,7 +3209,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to the element's location as a {@code {x:number, y:number}} object.
 
 
-##<a name="webdriverwebelementprototypeisenabled"></a>[webdriver.WebElement.prototype.isEnabled](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1888)
+##<a name="api-webdriverwebelementprototypeisenabled"></a>[webdriver.WebElement.prototype.isEnabled](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1888)
 
 Schedules a command to query whether the DOM element represented by this
 instance is enabled, as dicted by the {@code disabled} attribute.
@@ -3226,7 +3226,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether this element is currently enabled.
 
 
-##<a name="webdriverwebelementprototypeisselected"></a>[webdriver.WebElement.prototype.isSelected](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1901)
+##<a name="api-webdriverwebelementprototypeisselected"></a>[webdriver.WebElement.prototype.isSelected](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1901)
 
 Schedules a command to query whether this element is selected.
 
@@ -3242,7 +3242,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether this element is currently selected.
 
 
-##<a name="webdriverwebelementprototypesubmit"></a>[webdriver.WebElement.prototype.submit](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1913)
+##<a name="api-webdriverwebelementprototypesubmit"></a>[webdriver.WebElement.prototype.submit](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1913)
 
 Schedules a command to submit the form containing this element (or this
 element if it is a FORM element). This command is a no-op if the element is
@@ -3260,7 +3260,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the form has been submitted.
 
 
-##<a name="webdriverwebelementprototypeclear"></a>[webdriver.WebElement.prototype.clear](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1927)
+##<a name="api-webdriverwebelementprototypeclear"></a>[webdriver.WebElement.prototype.clear](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1927)
 
 Schedules a command to clear the {@code value} of this element. This command
 has no effect if the underlying DOM element is neither a text INPUT element
@@ -3278,7 +3278,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when the element has been cleared.
 
 
-##<a name="webdriverwebelementprototypeisdisplayed"></a>[webdriver.WebElement.prototype.isDisplayed](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1941)
+##<a name="api-webdriverwebelementprototypeisdisplayed"></a>[webdriver.WebElement.prototype.isDisplayed](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1941)
 
 Schedules a command to test whether this element is currently displayed.
 
@@ -3294,7 +3294,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether this element is currently visible on the page.
 
 
-##<a name="webdriverwebelementprototypegetouterhtml"></a>[webdriver.WebElement.prototype.getOuterHtml](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1953)
+##<a name="api-webdriverwebelementprototypegetouterhtml"></a>[webdriver.WebElement.prototype.getOuterHtml](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1953)
 
 Schedules a command to retrieve the outer HTML of this element.
 
@@ -3310,7 +3310,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the element's outer HTML.
 
 
-##<a name="webdriverwebelementprototypegetinnerhtml"></a>[webdriver.WebElement.prototype.getInnerHtml](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1972)
+##<a name="api-webdriverwebelementprototypegetinnerhtml"></a>[webdriver.WebElement.prototype.getInnerHtml](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1972)
 
 Schedules a command to retrieve the inner HTML of this element.
 
@@ -3326,7 +3326,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with the element's inner HTML.
 
 
-##<a name="webdriveralert"></a>[webdriver.Alert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1983)
+##<a name="api-webdriveralert"></a>[webdriver.Alert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1983)
 
 Represents a modal dialog such as {@code alert}, {@code confirm}, or
 {@code prompt}. Provides functions to retrieve the message displayed with
@@ -3347,7 +3347,7 @@ text | !(string&#124;webdriver.promise.Promise) | Either the message text displa
 
 
 
-##<a name="webdriveralertprototypegettext"></a>[webdriver.Alert.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2019)
+##<a name="api-webdriveralertprototypegettext"></a>[webdriver.Alert.prototype.getText](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2019)
 
 Retrieves the message text displayed with this alert. For instance, if the
 alert were opened with alert("hello"), then this would return "hello".
@@ -3364,7 +3364,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to the text displayed with this alert.
 
 
-##<a name="webdriveralertprototypeaccept"></a>[webdriver.Alert.prototype.accept](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2030)
+##<a name="api-webdriveralertprototypeaccept"></a>[webdriver.Alert.prototype.accept](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2030)
 
 Accepts this alert.
 
@@ -3380,7 +3380,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when this command has completed.
 
 
-##<a name="webdriveralertprototypedismiss"></a>[webdriver.Alert.prototype.dismiss](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2042)
+##<a name="api-webdriveralertprototypedismiss"></a>[webdriver.Alert.prototype.dismiss](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2042)
 
 Dismisses this alert.
 
@@ -3396,7 +3396,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when this command has completed.
 
 
-##<a name="webdriveralertprototypesendkeys"></a>[webdriver.Alert.prototype.sendKeys](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2054)
+##<a name="api-webdriveralertprototypesendkeys"></a>[webdriver.Alert.prototype.sendKeys](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2054)
 
 Sets the response text on this alert. This command will return an error if
 the underlying alert does not support response text (e.g. window.alert and
@@ -3421,7 +3421,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved when this command has completed.
 
 
-##<a name="webdriverunhandledalerterror"></a>[webdriver.UnhandledAlertError](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2071)
+##<a name="api-webdriverunhandledalerterror"></a>[webdriver.UnhandledAlertError](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2071)
 
 An error returned to indicate that there is an unhandled modal dialog on the
 current page.
@@ -3440,7 +3440,7 @@ alert | &#33;[webdriver.Alert](#webdriveralert) | The alert handle.
 
 
 
-##<a name="webdriverunhandledalerterrorprototypegetalert"></a>[webdriver.UnhandledAlertError.prototype.getAlert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2088)
+##<a name="api-webdriverunhandledalerterrorprototypegetalert"></a>[webdriver.UnhandledAlertError.prototype.getAlert](https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2088)
 
 
 

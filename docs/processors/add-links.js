@@ -110,7 +110,7 @@ module.exports = {
 
     docs.forEach(function(doc) {
       var name = doc.name || '';
-      doc.link = name.replace(/[\.\$]/g, '').toLocaleLowerCase();
+      doc.link = 'api-' + name.replace(/[\.\$]/g, '').toLocaleLowerCase();
 
       addLinkToSourceCode(doc);
       doc.description = addLinkToLinkAnnotation(doc.description);
