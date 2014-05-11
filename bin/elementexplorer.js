@@ -40,13 +40,8 @@ var repl = require('repl');
 var util = require('util');
 var vm = require('vm');
 var path = require('path');
-var express = require('express');
-var app = express();
-
-app.configure(function() {
-  app.use(express.bodyParser());
-  app.use(express.static('/Users/andresdom/dev/newPtor/protractor/extension'));
-});
+var http = require('http');
+var url = require('url');
 
 var driver, browser;
 
@@ -75,10 +70,11 @@ var list = function(locator) {
   });
 };
 
+/**
+ * Open a server on port 13000 that will receive queries from the chrome
+ * extension.
+ */
 var startServer = function() {
-  var server = app.listen(13000, function() {
-    console.log('Listening on port %d', server.address().port);
-  });
 
   var testSelector = function(flow, selector) {
     return flow.execute(function() {
@@ -90,12 +86,13 @@ var startServer = function() {
     });
   };
 
-  app.get('/testSelector', function(request, response) {
+  http.createServer(function (request, response) {
     var flow = webdriver.promise.controlFlow(),
-        locators = JSON.parse(request.param('locators')),
+        parsedUrl = url.parse(request.url, true),
+        locators = JSON.parse(parsedUrl.query.locators),
         locatorResults = {};
 
-    // Is this a pop-up input of a devtools input?
+    // Is this a popup query or a devtools query?
     if (locators.popupInput) {
       var popupInput = locators.popupInput;
 
@@ -122,11 +119,13 @@ var startServer = function() {
 
     webdriver.promise.fullyResolved(locatorResults).then(function(results) {
       console.log('Sending locator results', results);
-      response.send(200, {
+      response.writeHead(200,
+          {'Content-Type': 'application/json; charset=utf-8'});
+      response.end(JSON.stringify({
         results: results
-      });
+      }));
     });
-  });
+  }).listen(13000);
 };
 
 var flowEval = function(code, context, file, callback) {
