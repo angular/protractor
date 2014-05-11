@@ -123,6 +123,7 @@ var startServer = function() {
       }));
     });
   }).listen(13000);
+  console.log('Listening on port 13000');
 };
 
 var flowEval = function(code, context, file, callback) {
