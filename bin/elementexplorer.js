@@ -35,9 +35,18 @@
 
 var webdriver = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
+var locatorFinder = require('../lib/locator-finder.js');
 var repl = require('repl');
 var util = require('util');
 var vm = require('vm');
+var path = require('path');
+var express = require('express');
+var app = express();
+
+app.configure(function() {
+  app.use(express.bodyParser());
+  app.use(express.static('/Users/andresdom/dev/newPtor/protractor/extension'));
+});
 
 var driver, browser;
 
@@ -60,6 +69,60 @@ var list = function(locator) {
       });
     }
     return found;
+  });
+};
+
+var startServer = function() {
+  var server = app.listen(13000, function() {
+    console.log('Listening on port %d', server.address().port);
+  });
+
+  var testSelector = function(flow, selector) {
+    return flow.execute(function() {
+      return vm.runInThisContext(selector, null);
+    }).then(function(res) {
+      return res;
+    }, function(err) {
+      return 'There was a webdriver error: ' + err.name + ' ' + err.message;
+    });
+  };
+
+  app.get('/testSelector', function(request, response) {
+    var flow = webdriver.promise.controlFlow(),
+        locators = JSON.parse(request.param('locators')),
+        locatorResults = {};
+
+    // Is this a pop-up input of a devtools input?
+    if (locators.popupInput) {
+      var popupInput = locators.popupInput;
+
+      console.log('Testing input', popupInput);
+
+      // If the popup input starts with 'by' then execute a count expression.
+      var expr = /^by/.test(popupInput) ?
+          'element.all(' + popupInput + ').count()' : popupInput;
+
+      locatorResults[expr] = testSelector(flow, expr);
+    } else {
+
+      var suggestionList = locatorFinder.buildLocatorList(locators);
+
+      console.log('Testing locators', locators);
+      console.log('Testing locator list', suggestionList);
+
+      // Go through all the selectors and test them.
+      suggestionList.forEach(function(suggestion) {
+        locatorResults[suggestion.locator] =
+            testSelector(flow, suggestion.countExpression);
+      });
+    }
+
+    webdriver.promise.fullyResolved(locatorResults).then(function(results) {
+      console.log('Sending locator results', results);
+      response.send(200, {
+        results: results
+      });
+    });
   });
 };
 
@@ -114,9 +177,17 @@ var startRepl = function() {
 };
 
 var startUp = function() {
+  // Resolve the path for the chrome extension.
+  var extensionPath = path.resolve(__dirname, '../extension');
+
   driver = new webdriver.Builder().
-    usingServer('http://localhost:4444/wd/hub').
-    withCapabilities({'browserName': 'chrome'}).build();
+      usingServer('http://localhost:4444/wd/hub').
+      withCapabilities({
+        'browserName': 'chrome',
+        'chromeOptions': {
+          'args': ['--load-extension=' + extensionPath]
+        }
+      }).build();
 
   driver.getSession().then(function(session) {
     driver.manage().timeouts().setScriptTimeout(11000);
@@ -142,6 +213,8 @@ var startUp = function() {
     var url = process.argv[2] || 'about:blank';
     util.puts('Getting page at: ' + url);
     driver.get(url);
+
+    startServer();
 
     startRepl();
   });
