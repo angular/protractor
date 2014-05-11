@@ -39,6 +39,13 @@ ptorApp.controller('LocatorCtrl', function($scope, history, locatorTester) {
     app.locator = row.locator;
   };
 
+  // Get the url of the current tab and send it to the element explorer.
+  app.syncUrl = function() {
+    chrome.tabs.getSelected(null, function(tab) {
+      locatorTester.get('browser.get(\'' + tab.url + '\')');
+    });
+  };
+
   // Clear the history list.
   app.clearHistory = function() {
     app.history = [];
