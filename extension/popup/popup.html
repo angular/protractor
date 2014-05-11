@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Protractor selector tester</title>
+  <style>
+    body {
+      min-width: 500px;
+      max-width: 800px;
+    }
+  </style>
+  <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+  <script src="../js/angular.min.js"></script>
+  <script src="../js/angular-resource.min.js"></script>
+  <script src="popup.js"></script>
+</head>
+<body ng-app="ptorApp" ng-controller="LocatorCtrl">
+<form ng-submit="testSelector()">
+  <label for="locator">Enter a locator</label>
+  <div class="input-group">
+    <input
+        id="locator"
+        type="text"
+        placeholder="e.g. by.css('.foo') or $('.foo').getText()"
+        ng-model="locator"
+        class="form-control">
+      <span class="input-group-btn">
+        <button
+            type="submit"
+            ng-click="testLocator()"
+            class="btn btn-primary">
+          Submit
+        </button>
+      </span>
+  </div>
+</form>
+<div class="panel panel-default"
+    ng-if="history.length">
+
+  <div class="panel-heading">
+    Results history | <a ng-click="clearHistory()">Clear</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Expression</th>
+        <th>Results</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in history">
+      <td>
+        <a ng-bind="row.locator"
+            ng-click="copyToInput(row)"
+            title="copy to input field"></a>
+      </td>
+      <td ng-bind="row.count"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
