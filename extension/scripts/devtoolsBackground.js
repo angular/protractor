@@ -28,7 +28,7 @@ var getSuggestions = function() {
     var el = angular.element($0),
         locators = {};
 
-    // Get all the attributes to get byCss locators.
+    // Get all the element attributes to generate byCss locators.
     locators.byCss = {
       nodeName: $0.nodeName.toLowerCase()
     };
@@ -58,14 +58,14 @@ var getSuggestions = function() {
       locators.byBinding = bindingName;
     }
 
-    // Model?
-    // TODO(andresdom): Add more formats for model.
-    if ($0.getAttribute('ng-model')) {
-      locators.byModel = $0.getAttribute('ng-model');
-    }
-    if ($0.getAttribute('data-ng-model')) {
-      locators.byModel = $0.getAttribute('data-ng-model');
-    }
+    // Model? Test all of the prefixes.
+    var prefixes = ['ng-', 'ng_', 'data-ng-', 'x-ng-', 'ng\\:'];
+    prefixes.forEach(function(prefix) {
+      // Bail out if model was found.
+      if (!locators.byModel &&  $0.getAttribute(prefix + 'model')) {
+        locators.byModel = $0.getAttribute(prefix + 'model');
+      }
+    });
 
     locators.cssPath = crumbPath($0);
 
