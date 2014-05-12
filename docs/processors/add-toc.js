@@ -21,12 +21,11 @@ module.exports = {
 
       // Add the link to jump to the jsdoc definition in api.md.
       docs.forEach(function(doc) {
-        // Remove the dots.
         var name = doc.name || '';
 
         // The link looks like: 'elementFinder.isPresent', transform it into
-        // 'elementfinderispresent'.
-        var linkName = 'api-' + name.replace(/[\.\$]/g, '').toLocaleLowerCase();
+        // 'elementfinder-ispresent'.
+        var linkName = 'api-' + name.replace(/\./g, '-').toLocaleLowerCase();
 
         toc.push({
           name: name,
