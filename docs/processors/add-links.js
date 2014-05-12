@@ -109,9 +109,6 @@ module.exports = {
     typeTable = _.groupBy(docs, 'name');
 
     docs.forEach(function(doc) {
-      var name = doc.name || '';
-      doc.link = 'api-' + name.replace(/\./g, '-').toLocaleLowerCase();
-
       addLinkToSourceCode(doc);
       doc.description = addLinkToLinkAnnotation(doc.description);
 

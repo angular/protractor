@@ -19,17 +19,10 @@ module.exports = {
         isHeader: true
       });
 
-      // Add the link to jump to the jsdoc definition in api.md.
       docs.forEach(function(doc) {
         var name = doc.name || '';
-
-        // The link looks like: 'elementFinder.isPresent', transform it into
-        // 'elementfinder-ispresent'.
-        var linkName = 'api-' + name.replace(/\./g, '-').toLocaleLowerCase();
-
         toc.push({
-          name: name,
-          link: linkName
+          name: name
         });
       });
     });
