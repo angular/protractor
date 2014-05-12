@@ -9,18 +9,6 @@ var panels = chrome.devtools.panels,
  */
 var getSuggestions = function() {
   try {
-    var crumb = function(node) {
-      var idOrClass = (node.id && '#' + node.id) ||
-          ('' + node.classList && (' ' + node.classList).replace(/ /g, '.'));
-      return node.tagName.toLowerCase() + idOrClass;
-    };
-
-    // TODO(andresdom): remove ng-classes.
-    var crumbPath = function(node) {
-      return node.parentNode ?
-          crumbPath(node.parentNode).concat(crumb(node)) : [];
-    };
-
     // Angular and a selected element are required.
     if (!(window.angular && $0)) {
       return {};
@@ -30,12 +18,14 @@ var getSuggestions = function() {
         locators = {};
 
     // Get all the element attributes to generate byCss locators.
-    locators.byCss = {
-      nodeName: $0.nodeName.toLowerCase()
-    };
-    angular.forEach($0.attributes, function(attribute) {
-      locators.byCss[attribute.name] = attribute.value;
-    });
+    if ($0.attributes.length) {
+      locators.byCss = {
+        nodeName: $0.nodeName.toLowerCase()
+      };
+      angular.forEach($0.attributes, function(attribute) {
+        locators.byCss[attribute.name] = attribute.value;
+      });
+    }
 
     // Id?
     if (el.attr('id')) {
@@ -67,8 +57,6 @@ var getSuggestions = function() {
         locators.byModel = $0.getAttribute(prefix + 'model');
       }
     });
-
-    locators.cssPath = crumbPath($0);
 
     return locators;
   } catch (e) {
@@ -120,10 +108,15 @@ panels.elements.createSidebarPane('Protractor', function(sidebar) {
             return;
           }
 
-          backgroundPageConnection.postMessage({
-            name: 'selectionChanged',
-            selectors: selectors
-          });
+          // Are there any selectors?
+          if (Object.keys(selectors).length) {
+            backgroundPageConnection.postMessage({
+              name: 'selectionChanged',
+              selectors: selectors
+            });
+          } else {
+            sidebar.setObject({log: 'Cannot find suggestions'}, 'Locators');
+          }
         }
     );
   });
