@@ -117,14 +117,21 @@ var startServer = function() {
       });
     }
 
-    webdriver.promise.fullyResolved(locatorResults).then(function(results) {
+    var sendResponse = function(results) {
       console.log('Sending locator results', results);
       response.writeHead(200,
           {'Content-Type': 'application/json; charset=utf-8'});
       response.end(JSON.stringify({
         results: results
       }));
-    });
+    };
+
+    // Does is have any locators to test?
+    if (Object.keys(locatorResults).length) {
+      webdriver.promise.fullyResolved(locatorResults).then(sendResponse);
+    } else {
+      sendResponse({log: 'Cannot find suggestions'});
+    }
   }).listen(13000);
   console.log('Listening on port 13000');
 };
