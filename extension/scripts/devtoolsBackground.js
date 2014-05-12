@@ -1,5 +1,6 @@
 var panels = chrome.devtools.panels,
-    protractorSidebar = null;
+    protractorSidebar = null,
+    isSidebarPaneShown = false;
 
 /**
  * Generate a set of suggestions based on the currently selected element in the
@@ -95,8 +96,21 @@ backgroundPageConnection.onMessage.addListener(function(msg) {
 panels.elements.createSidebarPane('Protractor', function(sidebar) {
   protractorSidebar = sidebar;
 
+  // Check for visibility to ignore selection changes.
+  sidebar.onShown.addListener(function() {
+    isSidebarPaneShown = true;
+  });
+  sidebar.onHidden.addListener(function() {
+    isSidebarPaneShown = false;
+  });
+
+  // Listen for changes in the selected element.
   panels.elements.onSelectionChanged.addListener(function() {
-    sidebar.setObject({});
+    // Ignore selection changes when not shown shown.
+    if (isSidebarPaneShown === false) {
+      sidebar.setObject({});
+      return;
+    }
 
     var cmd = '(' + getSuggestions.toString() + ')()';
 
