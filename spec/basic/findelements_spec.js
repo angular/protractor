@@ -574,6 +574,13 @@ describe('global element function', function() {
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
   });
+
+  it('should keep a reference to the original locator', function() {
+    var byCss = by.css('body');
+    var byBinding = by.binding('greet');
+    expect(byCss).toEqual(element(byCss).locator());
+    expect(byBinding).toEqual(element(byBinding).locator());
+  });
 });
 
 describe('evaluating statements', function() {
