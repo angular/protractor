@@ -18,6 +18,18 @@ describe('locators', function() {
       expect(greeting.getText()).toEqual('Hiya');
     });
 
+    it('should find exact match by exactBinding', function() {
+      var greeting = element(by.exactBinding('greeting'));
+
+      expect(greeting.getText()).toEqual('Hiya');
+    });
+
+    it('should not find partial match by exactBinding', function() {
+      var greeting = element(by.exactBinding('greet'));
+
+      expect(greeting.isPresent()).toBe(false);
+    });
+
     it('should find an element by binding with ng-bind attribute',
         function() {
       var name = element(by.binding('username'));
