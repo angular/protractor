@@ -39,6 +39,38 @@ describe('the config parser', function() {
     expect(config.onPrepare).toEqual(path.normalize(process.cwd() + '/baz/qux.js'));
   });
 
+  it('should expand configs', function () {
+    var configList = new ConfigParser().
+        addConfig({
+          specs: ['spec/first_spec.js', 'spec/seccond_spec.js'],
+          multiCapabilities: [{ 'browserName': 'chrome' }, { 'browserName': 'firefox' }]
+        }).
+        flatten();
+
+    expect(configList.length).toBe(4);
+    expect(configList[0].capabilities.browserName).toMatch('chrome');
+    expect(configList[1].capabilities.browserName).toMatch('chrome');
+    expect(configList[2].capabilities.browserName).toMatch('firefox');
+    expect(configList[3].capabilities.browserName).toMatch('firefox');
+    expect(configList[0].specs).toMatch('first');
+    expect(configList[1].specs).toMatch('seccond');
+    expect(configList[2].specs).toMatch('first');
+    expect(configList[3].specs).toMatch('seccond');
+
+    configList = new ConfigParser().
+        addConfig({
+          specs: ['spec/first_spec.js', 'spec/seccond_spec.js'],
+          capabilities: { 'browserName': 'chrome' }
+        }).
+        flatten();
+
+    expect(configList.length).toBe(2);
+    expect(configList[0].capabilities.browserName).toMatch('chrome');
+    expect(configList[1].capabilities.browserName).toMatch('chrome');
+    expect(configList[0].specs).toMatch('first');
+    expect(configList[1].specs).toMatch('seccond');
+  });
+
   describe('resolving globs', function() {
     it('should resolve relative to the cwd', function() {
       spyOn(process, 'cwd').andReturn(__dirname + '/');

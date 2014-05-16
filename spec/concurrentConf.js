@@ -1,11 +1,11 @@
-// The main suite of Protractor tests to be run on CI servers.
+// The main suite of Protractor tests.
 exports.config = {
-  sauceUser: process.env.SAUCE_USERNAME,
-  sauceKey: process.env.SAUCE_ACCESS_KEY,
+  seleniumAddress: 'http://localhost:4444/wd/hub',
 
   // Spec patterns are relative to this directory.
   specs: [
-    'basic/*_spec.js'
+    'basic/lib_spec.js',
+    'basic/lib_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
@@ -13,16 +13,14 @@ exports.config = {
     'basic/exclude*.js'
   ],
 
+  chromeOnly: false,
+
   multiCapabilities: [{
     'browserName': 'chrome',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'Protractor smoke tests'
+    'databaseEnabled': true
   }, {
     'browserName': 'firefox',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'Protractor smoke tests'
+    'databaseEnabled': false
   }],
 
   concurrency: true,
