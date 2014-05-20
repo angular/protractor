@@ -119,7 +119,11 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   };
 
   http.get(options, function(res) {
-    if (res.statusCode !== 200) {
+    // Handle redirects recursively
+    if ([301, 302].indexOf(res.statusCode) > -1) {
+      httpGetFile(res.headers.location, fileName, outputDir, callback);
+      return;
+    } else if (res.statusCode !== 200) {
       throw new Error('Got code ' + res.statusCode + ' from ' + fileUrl);
     }
     var filePath = path.join(outputDir, fileName);
