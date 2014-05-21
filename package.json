@@ -20,7 +20,8 @@
     "adm-zip": "0.4.4",
     "optimist": "~0.6.0",
     "q": "1.0.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "source-map-support": "~0.2.6"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
