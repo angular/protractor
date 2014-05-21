@@ -1,7 +1,7 @@
 // This is the configuration file showing how a suite of tests might
 // handle log-in using the onPrepare field.
-var port =  + (process.env.HTTP_PORT || '8000'),
-    baseUrl = 'http://localhost:8000';
+var port =  + (process.env.HTTP_PORT || '8000');
+var baseUrl = 'http://localhost:' + port;
 
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',

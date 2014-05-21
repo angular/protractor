@@ -12,6 +12,7 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
+    "request": "^2.36.0",
     "selenium-webdriver": "2.41.0",
     "minijasminenode": "0.4.0",
     "saucelabs": "~0.1.0",
@@ -50,7 +51,7 @@
     "start": "testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "0.22.0",
+  "version": "0.23.1",
   "webdriverVersions": {
     "selenium": "2.41.0",
     "chromedriver": "2.9",

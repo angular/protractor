@@ -13,7 +13,7 @@ Issues
 ------
 
 If you have a bug or enhancement request, please file an issue.
-Before submitting an issues, please search the issue archive, read the
+Before submitting an issue, please search the issue archive, read the
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
 When submitting an issue, please include context from your test and

@@ -172,7 +172,7 @@ describe('webdriverJS Jasmine adapter', function() {
 
     expect(function() {
       expect(webElement).toEqual(4);
-    }).toThrow('expect called with WebElement argment, expected a Promise. ' +
+    }).toThrow('expect called with WebElement argument, expected a Promise. ' +
         'Did you mean to use .getText()?');
   });
 
