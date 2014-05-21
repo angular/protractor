@@ -51,7 +51,7 @@
     "start": "testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "0.23.0",
+  "version": "0.23.1",
   "webdriverVersions": {
     "selenium": "2.41.0",
     "chromedriver": "2.9",
