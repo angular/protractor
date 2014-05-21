@@ -2,11 +2,15 @@ debugging/
 spec/
 selenium/
 debugging/
+testapp/inbrowsertest
+docs/build
 
 .npmignore
 .travis.yml
 changes.sh
 chromedriver.log
 libpeerconnection.log
+npm-debug.log
 new.txt
 xmloutput*
+release.md
