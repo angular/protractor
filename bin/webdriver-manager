@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var os = require('os');
-var url = require('url');
+var request = require('request');
 var http = require('http');
 var path = require('path');
 var AdmZip = require('adm-zip');
@@ -112,27 +112,23 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
  */
 var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   console.log('downloading ' + fileUrl + '...');
-  var options = {
-    host: url.parse(fileUrl).host,
-    port: 80,
-    path: url.parse(fileUrl).pathname
-  };
-
-  http.get(options, function(res) {
+  var filePath = path.join(outputDir, fileName);
+  var file = fs.createWriteStream(filePath);
+  request(fileUrl)
+  .on('response', function(res) {
     if (res.statusCode !== 200) {
       throw new Error('Got code ' + res.statusCode + ' from ' + fileUrl);
-    }
-    var filePath = path.join(outputDir, fileName);
-    var file = fs.createWriteStream(filePath);
-    res.on('data', function(data) {
-      file.write(data);
-    }).on('end', function() {
-      file.end(function() {
-        console.log(fileName + ' downloaded to ' + filePath);
-        if (callback) {
-          callback(filePath);
-        }
-      });
+    }  
+  })
+  .on('data', function(data) {
+    file.write(data);
+  })
+  .on('end', function() {
+    file.end(function() {
+      console.log(fileName + ' downloaded to ' + filePath);
+      if (callback) {
+        callback(filePath);
+      } 
     });
   });
 };
