@@ -19,7 +19,7 @@ to keep execution organized. For example, consider the test
   it('should find an element by text input model', function() {
     browser.get('app/index.html#/form');
 
-    var username = element(by.input('username'));
+    var username = element(by.model('username'));
     username.clear();
     username.sendKeys('Jane Doe');
 

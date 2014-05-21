@@ -76,21 +76,15 @@ describe('locators', function() {
           toEqual('Something else to write about');
     });
 
-    it('should find an element by textarea model', function() {
-      // Note: deprecated API.
-      var about = element(by.textarea('aboutbox'));
-      expect(about.getAttribute('value')).toEqual('This is a text box');
-
-      about.clear();
-      about.sendKeys('Something else to write about');
-
-      expect(about.getAttribute('value')).
-          toEqual('Something else to write about');
-    });
-
     it('should find multiple selects by model', function() {
       var selects = element.all(by.model('dayColor.color'));
       expect(selects.count()).toEqual(3);
+    });
+
+    it('should find the selected option', function() {
+      var select = element(by.model('fruit'));
+      var selectedOption = select.element(by.css('option:checked'));
+      expect(selectedOption.getText()).toEqual('apple');
     });
 
     it('should find inputs with alternate attribute forms', function() {
@@ -128,29 +122,6 @@ describe('locators', function() {
 
       username.clear();
       expect(name.getText()).toEqual('');
-    });
-  });
-
-  describe('by select', function() {
-    it('should find multiple selects', function() {
-      // Note: deprecated API.
-      element.all(by.select('dayColor.color')).then(function(arr) {
-        expect(arr.length).toEqual(3);
-      });
-    });
-
-    it('should find the selected option', function() {
-      expect(element(by.selectedOption('fruit')).getText()).toEqual('apple');
-    });
-
-    it('should find multiple selected options', function() {
-      element.all(
-          by.selectedOption('dayColor.color')).then(function(arr) {
-        expect(arr.length).toEqual(3);
-        expect(arr[0].getText()).toBe('red');
-        expect(arr[1].getText()).toBe('green');
-        expect(arr[2].getText()).toBe('blue');
-      });
     });
   });
 
