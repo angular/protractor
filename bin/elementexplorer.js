@@ -46,9 +46,6 @@ var INITIAL_SUGGESTIONS = [
   'element(by.css(\'\'))',
   'element(by.name(\'\'))',
   'element(by.binding(\'\'))',
-  'element(by.input(\'\'))',
-  'element(by.select(\'\'))',
-  'element(by.textarea(\'\'))',
   'element(by.xpath(\'\'))',
   'element(by.tagName(\'\'))',
   'element(by.className(\'\'))'
