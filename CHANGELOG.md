@@ -1,3 +1,74 @@
+# 0.23.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([b7afa87](https://github.com/angular/protractor/commit/b7afa8791ba91b83fd6613cdd9ad4c4c26d04f7e)) 
+  feat(addMockModule): allow additional parameters
+
+  Allow Protractor’s 'addMockModule' method to pass context to its mocks, providing an argument to
+  the script which overrides a module. Rely on the WebDriver’s 'executeScript' method.
+
+  Closes #695
+
+- ([546d41f](https://github.com/angular/protractor/commit/546d41faeb75342c875e0f9bb7702309c1aa186d)) 
+  feat(sauceprovider): runner now prints a link to saucelabs test URL
+
+- ([fd7fe4a](https://github.com/angular/protractor/commit/fd7fe4a8c2c6fab6678d0c1f4d5619f7a2376990)) 
+  feat(launcher): Add support for splitTestsBetweenCapabilities.
+
+- ([b93bf18](https://github.com/angular/protractor/commit/b93bf18feaf3c44b406a41bf87d70c95e7a900e0)) 
+  feat(elementFinder): keep a reference to the original locator
+
+- ([98f4ba5](https://github.com/angular/protractor/commit/98f4ba590207e3f468b3cb2a30ff6ab6ae10fea1)) 
+  feat(locators): add by.exactBinding
+
+## Bug Fixes
+
+- ([43ff9e5](https://github.com/angular/protractor/commit/43ff9e5e2a05b4e51d04133122d763ef4ed3f2d1)) 
+  fix(jasminewd): allow asynchronous callbacks for jasmine tests
+
+  Closes #728, Closes #704
+
+- ([6249efe](https://github.com/angular/protractor/commit/6249efe57109d238044394636d623e0bd93dd4ad)) 
+  fix(webdriver-manager): use request module instead of http
+
+  Google changed selenium-server-standalone.jar's location and is returning 302 http module does
+  not follow redirects
+
+  Closes #826
+
+- ([95093c3](https://github.com/angular/protractor/commit/95093c3011431d1a1bdd6ec4d6139a6ff1c3e491)) 
+  fix(configParser): don't run suite if specs are supplied
+
+- ([27a5706](https://github.com/angular/protractor/commit/27a5706a23e33bc898a5a9c7b301e79f962e3a7b)) 
+  fix(loading): fix timeouts with about:blank removal
+
+  As documented at https://github.com/jnicklas/capybara/pull/1215 there are sometimes issues with
+  webdriver and about:blank pages.
+
+  Switching instead to try a data url.
+
+- ([cbcdb48](https://github.com/angular/protractor/commit/cbcdb483002e51bc3cc4061fd5162627bbac7699)) 
+  fix(runner): add -r for each cucumber require
+
+- ([e36c32a](https://github.com/angular/protractor/commit/e36c32a975739a99f6d434e1c9844d37382bda3a)) 
+  fix(jasminewd): Use promise.all to combine promises and done
+
+  - Make the flow promise explicit and use promise.all to wait for both
+   promises to be fulfilled before calling the done callback
+
+- ([b5c18db](https://github.com/angular/protractor/commit/b5c18dbb746e63496809460d6ed6e2100909659e)) 
+  fix(drivers): prevent Sauce Labs login credentials from showing up in logs
+
+  Closes #754
+
+- ([b85af50](https://github.com/angular/protractor/commit/b85af5031241d424e2952db0eb8d7d0c8ce4475b)) 
+  fix(protractor): change angular-bootstrap wrapper for navigation
+
+- ([8abea3c](https://github.com/angular/protractor/commit/8abea3cbb6f054c20e4f5abcbf61813d5b671239)) 
+  fix(jasminewd): fix timeout for beforeEach and afterEach
+
 # 0.22.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
