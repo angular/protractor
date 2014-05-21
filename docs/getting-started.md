@@ -238,3 +238,4 @@ Further Reading
 - [WebDriver FAQ](https://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions)
 - [w3 WebDriver Working Draft](http://www.w3.org/TR/webdriver/)
 - [Step-by-step slides on Protractor](http://ramonvictor.github.io/protractor/slides/) (May 3, 2014)
+- [Introduction to Protractor](https://docs.google.com/file/d/0BwDWzYJ-4RpAQnNRLXM3QVFPMjg) (May 21, 2014)
