@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var os = require('os');
-var url = require('url');
+var request = require('request');
 var http = require('http');
 var path = require('path');
 var AdmZip = require('adm-zip');
@@ -107,32 +107,28 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
 
 /**
  * Function to download file using HTTP.get.
- * Thanks to http://www.hacksparrow.com/using-node-js-to-download-files.html
- * for the outline of this code.
+ * TODO: look into using something instead of request here, to avoid the
+ * big dependency cost. It's required for now to follow redirects.
  */
 var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   console.log('downloading ' + fileUrl + '...');
-  var options = {
-    host: url.parse(fileUrl).host,
-    port: 80,
-    path: url.parse(fileUrl).pathname
-  };
-
-  http.get(options, function(res) {
+  var filePath = path.join(outputDir, fileName);
+  var file = fs.createWriteStream(filePath);
+  var req = request(fileUrl);
+  req.on('response', function(res) {
     if (res.statusCode !== 200) {
       throw new Error('Got code ' + res.statusCode + ' from ' + fileUrl);
-    }
-    var filePath = path.join(outputDir, fileName);
-    var file = fs.createWriteStream(filePath);
-    res.on('data', function(data) {
-      file.write(data);
-    }).on('end', function() {
-      file.end(function() {
-        console.log(fileName + ' downloaded to ' + filePath);
-        if (callback) {
-          callback(filePath);
-        }
-      });
+    }  
+  });
+  req.on('data', function(data) {
+    file.write(data);
+  });
+  req.on('end', function() {
+    file.end(function() {
+      console.log(fileName + ' downloaded to ' + filePath);
+      if (callback) {
+        callback(filePath);
+      }
     });
   });
 };
