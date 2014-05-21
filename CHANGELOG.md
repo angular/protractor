@@ -1,3 +1,16 @@
+# 0.23.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+
+- ([59533d9](https://github.com/angular/protractor/commit/59533d95219796ce18f796434f8c3396ada7402c))
+  fix(navigation): revert changes to the page reset
+
+  Navigating to an empty data URL won't work for internet explorer, sadly.
+
+  Reverting to about:blank. Will watch for flakes and explore other options.
+
+
 # 0.23.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
