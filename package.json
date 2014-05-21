@@ -12,14 +12,15 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "selenium-webdriver": "2.41.0",
-    "minijasminenode": "0.4.0",
-    "saucelabs": "~0.1.0",
-    "glob": "~3.2",
     "adm-zip": "0.4.4",
+    "follow-redirects": "0.0.3",
+    "glob": "~3.2",
+    "lodash": "~2.4.1",
+    "minijasminenode": "0.4.0",
     "optimist": "~0.6.0",
     "q": "1.0.0",
-    "lodash": "~2.4.1"
+    "saucelabs": "~0.1.0",
+    "selenium-webdriver": "2.41.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
