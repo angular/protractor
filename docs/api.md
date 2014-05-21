@@ -8,6 +8,7 @@ Protractor API 0.22.0
 * [element](#element)
 * [elementFinder.find](#elementfinderfind)
 * [elementFinder.isPresent](#elementfinderispresent)
+* [elementFinder.locator](#elementfinderlocator)
 * [elementFinder.element](#elementfinderelement)
 * [elementFinder.$](#elementfinder)
 * [element.all](#elementall)
@@ -46,6 +47,7 @@ Protractor API 0.22.0
 * [WebdriverBy.prototype](#webdriverbyprototype)
 * [ProtractorBy.prototype.addLocator](#protractorbyprototypeaddlocator)
 * [ProtractorBy.prototype.binding](#protractorbyprototypebinding)
+* [ProtractorBy.prototype.exactBinding](#protractorbyprototypeexactbinding)
 * [ProtractorBy.prototype.select](#protractorbyprototypeselect)
 * [ProtractorBy.prototype.selectedOption](#protractorbyprototypeselectedoption)
 * [ProtractorBy.prototype.input](#protractorbyprototypeinput)
@@ -246,7 +248,23 @@ Type | Description
 !webdriver.promise.Promise | A promise which resolves to a boolean.
 
 
-##[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L161)
+##[elementFinder.locator](https://github.com/angular/protractor/blob/master/lib/protractor.js#L161)
+
+Returns the originally specified locator.
+
+
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+webdriver.Locator | The element locator.
+
+
+##[elementFinder.element](https://github.com/angular/protractor/blob/master/lib/protractor.js#L170)
 #### Use as: element(locator).element(locator)
 Calls to element may be chained to find elements within a parent.
 
@@ -294,7 +312,7 @@ Type | Description
 function(webdriver.Locator): ElementFinder | 
 
 
-##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L192)
+##[elementFinder.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L201)
 #### Use as: element(locator).$(cssSelector)
 Shortcut for chaining css element finders.
 
@@ -338,7 +356,7 @@ Type | Description
 ElementFinder | 
 
 
-##[element.all](https://github.com/angular/protractor/blob/master/lib/protractor.js#L229)
+##[element.all](https://github.com/angular/protractor/blob/master/lib/protractor.js#L238)
 #### Use as: element.all(locator)
 element.all is used for operations on an array of elements (as opposed
 to a single element).
@@ -379,7 +397,7 @@ Type | Description
 ElementArrayFinder | 
 
 
-##[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L253)
+##[elementArrayFinder.count](https://github.com/angular/protractor/blob/master/lib/protractor.js#L262)
 #### Use as: element.all(locator).count()
 Count the number of elements found by the locator.
 
@@ -410,7 +428,7 @@ Type | Description
 !webdriver.promise.Promise | A promise which resolves to the number of elements matching the locator.
 
 
-##[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L277)
+##[elementArrayFinder.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L286)
 #### Use as: element.all(locator).get(index)
 Get an element found by the locator by index. The index starts at 0.
 
@@ -449,7 +467,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | The element at the given index
 
 
-##[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L303)
+##[elementArrayFinder.first](https://github.com/angular/protractor/blob/master/lib/protractor.js#L312)
 #### Use as: element.all(locator).first()
 Get the first element found using the locator.
 
@@ -480,7 +498,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | The first matching element
 
 
-##[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L330)
+##[elementArrayFinder.last](https://github.com/angular/protractor/blob/master/lib/protractor.js#L339)
 #### Use as: element.all(locator).last()
 Get the last matching element for the locator.
 
@@ -511,7 +529,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | the last matching element
 
 
-##[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L380)
+##[elementArrayFinder.each](https://github.com/angular/protractor/blob/master/lib/protractor.js#L389)
 #### Use as: element.all(locator).each(eachFunction)
 Calls the input function on each WebElement found by the locator.
 
@@ -545,7 +563,7 @@ fn | function([webdriver.WebElement](#webdriverwebelement)) | Input function
 
 
 
-##[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L407)
+##[elementArrayFinder.map](https://github.com/angular/protractor/blob/master/lib/protractor.js#L416)
 #### Use as: element.all(locator).map(mapFunction)
 Apply a map function to each element found using the locator. The
 callback receives the web element as the first argument and the index as
@@ -595,7 +613,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that resolves to an array of values returned by the map function.
 
 
-##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L485)
+##[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L494)
 
 
 
@@ -614,7 +632,7 @@ opt_rootElement | string= | Selector element that has an ng-app in scope.
 
 
 
-##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L578)
+##[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L589)
 
 Instruct webdriver to wait until Angular has finished rendering and has
 no outstanding $http calls before continuing.
@@ -631,7 +649,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L619)
+##[Protractor.prototype.wrapWebElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L630)
 
 Wrap a webdriver.WebElement with protractor specific functionality.
 
@@ -654,7 +672,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | the wrapped web element.
 
 
-##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L644)
+##[element.$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L655)
 #### Use as: $(cssSelector)
 Shortcut for querying the document directly with css.
 
@@ -691,7 +709,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L667)
+##[element.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L678)
 
 
 
@@ -707,7 +725,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L684)
+##[element.$$](https://github.com/angular/protractor/blob/master/lib/protractor.js#L695)
 #### Use as: $$(cssSelector)
 Shortcut for querying the document directly with css.
 
@@ -750,7 +768,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L714)
+##[element.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L725)
 
 
 
@@ -766,7 +784,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L738)
+##[element.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L749)
 
 
 
@@ -782,7 +800,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved with whether an element could be located on the page.
 
 
-##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L754)
+##[element.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L765)
 
 Evaluates the input as if it were on the scope of the current element.
 
@@ -805,7 +823,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the evaluated expression. The result will be resolved as in {@link webdriver.WebDriver.executeScript}. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.
 
 
-##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L773)
+##[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L784)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -821,7 +839,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L791)
+##[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L802)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -837,7 +855,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L816)
+##[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L827)
 
 Tests if an element is present on the page.
 
@@ -853,7 +871,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
 
 
-##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L832)
+##[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L843)
 
 Add a module to load before Angular whenever Protractor.get is called.
 Modules will be registered after existing modules already on the page,
@@ -869,12 +887,13 @@ Param | Type | Description
 --- | --- | ---
 name | !string | The name of the module to load or override.
 script | !string&#124;Function | The JavaScript to load the module.
+varArgs | ...* | Any additional arguments will be provided to the script and may be referenced using the `arguments` object.
 
 
 
 
 
-##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L846)
+##[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L861)
 
 Clear the list of registered mock modules.
 
@@ -884,7 +903,7 @@ Clear the list of registered mock modules.
 
 
 
-##[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L854)
+##[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L870)
 
 Remove a registered mock module.
 
@@ -901,7 +920,7 @@ name | !string | The name of the module to remove.
 
 
 
-##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L864)
+##[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L881)
 
 See webdriver.WebDriver.get
 
@@ -924,7 +943,7 @@ opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
-##[Protractor.prototype.refresh](https://github.com/angular/protractor/blob/master/lib/protractor.js#L930)
+##[Protractor.prototype.refresh](https://github.com/angular/protractor/blob/master/lib/protractor.js#L949)
 
 See webdriver.WebDriver.refresh
 
@@ -946,9 +965,9 @@ opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
-##[Protractor.prototype.navigate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L953)
+##[Protractor.prototype.navigate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L972)
 
-Mixin navigation methods back into the navigation object so that 
+Mixin navigation methods back into the navigation object so that
 they are invoked as before, i.e. driver.navigate().refresh()
 
 
@@ -957,7 +976,7 @@ they are invoked as before, i.e. driver.navigate().refresh()
 
 
 
-##[Protractor.prototype.setLocation](https://github.com/angular/protractor/blob/master/lib/protractor.js#L963)
+##[Protractor.prototype.setLocation](https://github.com/angular/protractor/blob/master/lib/protractor.js#L982)
 
 Browse to another page using in-page navigation.
 
@@ -980,7 +999,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve once page has been changed.
 
 
-##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L981)
+##[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1000)
 
 Returns the current absolute url from AngularJS.
 
@@ -990,7 +1009,7 @@ Returns the current absolute url from AngularJS.
 
 
 
-##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L989)
+##[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1008)
 
 Pauses the test and injects some helper functions into the browser, so that
 debugging may be done in the browser console.
@@ -1015,7 +1034,7 @@ debugger.
 
 
 
-##[Protractor.prototype.pause](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1024)
+##[Protractor.prototype.pause](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1043)
 
 Beta (unstable) pause function for debugging webdriver tests. Use
 browser.pause() in your test to enter the protractor debugger from that
@@ -1132,7 +1151,31 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L102)
+##[ProtractorBy.prototype.exactBinding](https://github.com/angular/protractor/blob/master/lib/locators.js#L102)
+#### Use as: by.exactBinding()
+Same as by.binding() except this does not allow for partial matches
+Find an element by exact binding.
+
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+bindingDescriptor | string | 
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+{findElementsOverride: findElementsOverride, message: string} | 
+
+
+##[ProtractorBy.prototype.select](https://github.com/angular/protractor/blob/master/lib/locators.js#L122)
 
 **DEPRECATED** Use 'model' instead.
 
@@ -1152,7 +1195,7 @@ element(by.select('user'));
 
 
 
-##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L121)
+##[ProtractorBy.prototype.selectedOption](https://github.com/angular/protractor/blob/master/lib/locators.js#L141)
 
 
 
@@ -1172,7 +1215,7 @@ element(by.selectedOption("user"));
 
 
 
-##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L138)
+##[ProtractorBy.prototype.input](https://github.com/angular/protractor/blob/master/lib/locators.js#L158)
 
 **DEPRECATED** Use 'model' instead.
 
@@ -1192,7 +1235,7 @@ element(by.input('user'));
 
 
 
-##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L156)
+##[ProtractorBy.prototype.model](https://github.com/angular/protractor/blob/master/lib/locators.js#L176)
 #### Use as: by.model(modelName)
 Find an element by ng-model expression.
 
@@ -1221,7 +1264,7 @@ model | string | ng-model expression.
 
 
 
-##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L180)
+##[ProtractorBy.prototype.buttonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L200)
 
 Find a button by text.
 
@@ -1254,7 +1297,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L203)
+##[ProtractorBy.prototype.partialButtonText](https://github.com/angular/protractor/blob/master/lib/locators.js#L223)
 
 Find a button by partial text.
 
@@ -1287,7 +1330,7 @@ Type | Description
 {findElementsOverride: findElementsOverride, message: string} | 
 
 
-##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L227)
+##[ProtractorBy.prototype.textarea](https://github.com/angular/protractor/blob/master/lib/locators.js#L247)
 
 **DEPRECATED** Use 'model' instead.
 
@@ -1307,7 +1350,7 @@ element(by.textarea('user'));
 
 
 
-##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L245)
+##[ProtractorBy.prototype.repeater](https://github.com/angular/protractor/blob/master/lib/locators.js#L265)
 
 Find elements inside an ng-repeat.
 
@@ -1343,7 +1386,7 @@ var rows = element.all(by.repeater('cat in pets'));
 
 
 
-##[ProtractorBy.prototype.cssContainingText](https://github.com/angular/protractor/blob/master/lib/locators.js#L324)
+##[ProtractorBy.prototype.cssContainingText](https://github.com/angular/protractor/blob/master/lib/locators.js#L344)
 
 Find elements by CSS which contain a certain string.
 

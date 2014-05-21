@@ -85,7 +85,7 @@ test scaffolding. ([read about using mocha instead](https://github.com/angular/p
  * `browser` this is the a wrapper around an instance of webdriver. Used for
  navigation and page-wide information.
 
- * `element` is a helper function for finding and interacting with elements
+ * `element` is a helper function for finding and interacting with HTML elements
  on the page you are testing.
 
  * `by` is a collection of element locator strategies. For example, elements
@@ -237,3 +237,5 @@ Further Reading
 - [WebDriverJS User's Guide](https://code.google.com/p/selenium/wiki/WebDriverJs)
 - [WebDriver FAQ](https://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions)
 - [w3 WebDriver Working Draft](http://www.w3.org/TR/webdriver/)
+- [Step-by-step slides on Protractor](http://ramonvictor.github.io/protractor/slides/) (May 3, 2014)
+- [Introduction to Protractor](https://docs.google.com/file/d/0BwDWzYJ-4RpAQnNRLXM3QVFPMjg) (May 21, 2014)

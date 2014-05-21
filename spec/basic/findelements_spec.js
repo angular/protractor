@@ -18,6 +18,18 @@ describe('locators', function() {
       expect(greeting.getText()).toEqual('Hiya');
     });
 
+    it('should find exact match by exactBinding', function() {
+      var greeting = element(by.exactBinding('greeting'));
+
+      expect(greeting.getText()).toEqual('Hiya');
+    });
+
+    it('should not find partial match by exactBinding', function() {
+      var greeting = element(by.exactBinding('greet'));
+
+      expect(greeting.isPresent()).toBe(false);
+    });
+
     it('should find an element by binding with ng-bind attribute',
         function() {
       var name = element(by.binding('username'));
@@ -573,6 +585,13 @@ describe('global element function', function() {
   it('should export an isPresent helper', function() {
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
+  });
+
+  it('should keep a reference to the original locator', function() {
+    var byCss = by.css('body');
+    var byBinding = by.binding('greet');
+    expect(element(byCss).locator()).toEqual(byCss);
+    expect(element(byBinding).locator()).toEqual(byBinding);
   });
 });
 

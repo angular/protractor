@@ -47,9 +47,10 @@ exports.config = {
 ```
 
 The configuration file must specify a way to connect to webdriver. This can be
- *   `seleniumAddress`: The address of a running selenium standalone server.
+ *   `seleniumAddress`: The address of a running selenium server.
  *   `seleniumServerJar`: The location of the selenium standalone .jar file on your machine. Protractor will use this to start up the selenium server.
  *   `sauceUser` and `sauceKey`: The username and key for a [SauceLabs](http://www.saucelabs.com) account. Protractor will use this to run tests on SauceLabs.
+ If none of the above are specific, Protractor will try to start the standalone .jar from the default location in node_modules/protractor/selenium.
 
 The runner exposes global variables `browser`, `by` and `element`. Check out [getting started docs](https://github.com/angular/protractor/blob/master/docs/getting-started.md) to learn how to write a test.
 
