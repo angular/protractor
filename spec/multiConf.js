@@ -1,15 +1,10 @@
-// The main suite of Protractor tests.
+// A suite of tests to run on two browsers at once.
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
   // Spec patterns are relative to this directory.
   specs: [
     'basic/lib_spec.js'
-  ],
-
-  // Exclude patterns are relative to this directory.
-  exclude: [
-    'basic/exclude*.js'
   ],
 
   chromeOnly: false,
