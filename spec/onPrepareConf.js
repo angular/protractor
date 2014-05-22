@@ -1,8 +1,8 @@
-// The main suite of Protractor tests.
+// Configuration using a function in onPrepare to set a parameter before
+// testing.
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
-  // Spec patterns are relative to this directory.
   specs: [
     'onPrepare/*_spec.js'
   ],

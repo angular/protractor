@@ -15,11 +15,4 @@ exports.config = {
   rootElement: 'div#nested-ng-app',
 
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
-
-  jasmineNodeOpts: {
-    onComplete: null,
-    isVerbose: false,
-    showColors: true,
-    includeStackTrace: true,
-  }
 };

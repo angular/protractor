@@ -14,11 +14,4 @@ exports.config = {
   },
 
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
-
-  params: {
-    login: {
-      user: 'Jane',
-      password: '1234'
-    }
-  }
 };
