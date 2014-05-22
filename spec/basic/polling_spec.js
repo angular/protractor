@@ -3,7 +3,7 @@ var util = require('util');
 /**
  * These tests show how to turn off Protractor's synchronization
  * when using applications which poll with $http or $timeout.
- * A better solution is to switch to the angular $interval service if possible
+ * A better solution is to switch to the angular $interval service if possible.
  */
 describe('synchronizing with pages that poll', function() {
   beforeEach(function() {
