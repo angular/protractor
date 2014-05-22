@@ -12,15 +12,13 @@ describe('mock modules', function() {
   // A second module overriding the 'version' service.
   // This module shows the use of a string for the load
   // function.
-  // TODO(julie): Consider this syntax. Should we allow loading the
-  // modules from files? Provide helpers?
   var mockModuleB = "angular.module('moduleB', []).value('version', '3');";
 
   // A third module overriding the 'version' service. This function
-  // references the additional argument provided through addMockModule().
+  // references the additional arguments provided through addMockModule().
   var mockModuleC = function () {
     var newModule = angular.module('moduleC', []);
-    newModule.value('version', arguments[1]);
+    newModule.value('version', arguments[0] + arguments[1]);
   };
 
   afterEach(function() {
@@ -55,12 +53,12 @@ describe('mock modules', function() {
     expect(element(by.css('[app-version]')).getText()).toEqual('2');
   });
 
-  it('should have the version provided as fourth parameter through the Module C', function() {
-    browser.addMockModule('moduleC', mockModuleC, 'unused', '42');
+  it('should have the version provided from parameters through Module C', function() {
+    browser.addMockModule('moduleC', mockModuleC, '42', 'beta');
 
     browser.get('index.html');
 
-    expect(element(by.css('[app-version]')).getText()).toEqual('42');
+    expect(element(by.css('[app-version]')).getText()).toEqual('42beta');
   });
 
   it('should load mock modules after refresh', function() {

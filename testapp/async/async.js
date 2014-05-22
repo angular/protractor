@@ -29,7 +29,7 @@ function AsyncCtrl($scope, $http, $timeout, $location) {
       $scope.$apply(function() {
         $scope.slowTimeoutStatus = 'done';
       });
-    }, 2000);
+    }, 3000);
   };
 
   $scope.slowAngularTimeout = function() {
