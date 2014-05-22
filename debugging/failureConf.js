@@ -1,7 +1,9 @@
+var env = require('../environment.js');
+
 // Examples of tests to show how debugging works with Protractor. Tests
 // should be run against the testapp.
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   // Spec patterns are relative to the current working directly when
   // protractor is called.
@@ -9,11 +11,9 @@ exports.config = {
     'failure_spec.js',
   ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: env.capabilities,
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: env.baseUrl,
 
   // ----- Options to be passed to minijasminenode.
   jasmineNodeOpts: {

@@ -1,18 +1,20 @@
+var env = require('./environment.js');
+
 // This configuration file shows an example of using an Jasmine reporter to
 // output test results in XML format. Before running, you will need to
 // npm install jasmine-reporters
 
 // The main suite of Protractor tests.
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   specs: [
     'basic/*_spec.js'
   ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: env.capabilities,
+
+  baseUrl: env.baseUrl,
 
   onPrepare: function() {
     // The require statement must be down here, since jasmine-reporters
@@ -28,7 +30,5 @@ exports.config = {
       user: 'Jane',
       password: '1234'
     }
-  },
-
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  }
 };
