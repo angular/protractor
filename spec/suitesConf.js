@@ -1,5 +1,7 @@
+var env = require('./environment.js');
+
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   // Spec patterns are relative to this directory.
   suites: {
@@ -8,9 +10,9 @@ exports.config = {
     failingtest: 'suites/always_fail_spec.js'
   },
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  chromeOnly: false,
 
-  baseUrl: 'http://localhost:8000',
+  capabilities: env.capabilities,
+
+  baseUrl: env.baseUrl,
 };

@@ -1,3 +1,5 @@
+var env = require('./environment.js');
+
 // Smoke tests to be run on CI servers - covers more browsers than
 // ciConf.js, but does not run all tests.
 exports.config = {
@@ -45,7 +47,7 @@ exports.config = {
     'platform': 'Windows 7'
   }],
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: env.baseUrl,
 
   params: {
     login: {

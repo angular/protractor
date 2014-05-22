@@ -1,6 +1,8 @@
 // A suite of tests to run on two browsers at once.
+var env = require('./environment.js');
+
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   // Spec patterns are relative to this directory.
   specs: [
@@ -15,7 +17,7 @@ exports.config = {
     'browserName': 'firefox'
   }],
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: env.baseUrl,
 
   params: {
     login: {
