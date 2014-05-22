@@ -1,3 +1,5 @@
+var env = require('./environment.js');
+
 // The main suite of Protractor tests to be run on CI servers.
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
@@ -30,7 +32,7 @@ exports.config = {
     'selenium-version': '2.41.0'
   }],
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: env.baseUrl,
 
   params: {
     login: {

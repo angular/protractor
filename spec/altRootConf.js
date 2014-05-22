@@ -1,20 +1,20 @@
+var env = require('./environment.js');
+
 // Tests for an Angular app where ng-app is not on the body.
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   // Spec patterns are relative to this config.
   specs: [
     'altRoot/*_spec.js',
   ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: env.capabilities,
+
+  baseUrl: env.baseUrl,
 
   // Selector for the element housing the angular app.
   rootElement: 'div#nested-ng-app',
-
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
 
   jasmineNodeOpts: {
     onComplete: null,

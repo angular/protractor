@@ -1,6 +1,8 @@
+var env = require('./environment.js');
+
 // The main suite of Protractor tests.
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   // Spec patterns are relative to this directory.
   suites: {
@@ -16,11 +18,9 @@ exports.config = {
 
   chromeOnly: false,
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: env.capabilities,
 
-  baseUrl: 'http://localhost:8000',
+  baseUrl: env.baseUrl,
 
   params: {
     login: {

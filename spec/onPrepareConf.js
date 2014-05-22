@@ -1,17 +1,17 @@
+var env = require('./environment.js');
+
 // The main suite of Protractor tests.
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
 
   // Spec patterns are relative to this directory.
   specs: [
     'onPrepare/*_spec.js'
   ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: env.capabilities,
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: env.baseUrl,
   
   onPrepare: function() {
     browser.params.password = '12345';
