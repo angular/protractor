@@ -61,7 +61,7 @@ Protractor uses webdriver, so protractor support for a particular browser is tie
 |ChromeDriver            |Yes           |                 |
 |FirefoxDriver           |Yes           |[#480](https://github.com/angular/protractor/issues/480)|
 |SafariDriver            |Yes           |[#481](https://github.com/angular/protractor/issues/481), SafariDriver does not support modals|
-|IEDriver                |Yes           |IEDriver can be slow|
+|IEDriver                |Yes           |[#778](https://github.com/angular/protractor/issues/778), IEDriver can be slow|
 |OperaDriver             |No            |                 |
 |ios-Driver              |No            |                 |
 |Appium - iOS/Safari     |Yes           | drag and drop not supported (session/:sessionid/buttondown unimplemented) |
