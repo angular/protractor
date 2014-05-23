@@ -29,21 +29,21 @@ function AsyncCtrl($scope, $http, $timeout, $location) {
       $scope.$apply(function() {
         $scope.slowTimeoutStatus = 'done';
       });
-    }, 3000);
+    }, 5000);
   };
 
   $scope.slowAngularTimeout = function() {
     $scope.slowAngularTimeoutStatus = 'pending...';
     $timeout(function() {
       $scope.slowAngularTimeoutStatus = 'done';
-    }, 2000);
+    }, 5000);
   };
 
   $scope.slowAngularTimeoutPromise = function() {
     $scope.slowAngularTimeoutPromiseStatus = 'pending...';
     $timeout(function() {
       // intentionally empty
-    }, 2000).then(function() {
+    }, 5000).then(function() {
       $scope.slowAngularTimeoutPromiseStatus = 'done';
     });
   };
