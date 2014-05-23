@@ -7,7 +7,8 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'basic/*_spec.js'
+    'basic/mock*',
+    'basic/lib_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
@@ -17,10 +18,16 @@ exports.config = {
 
   chromeOnly: false,
 
+  maxSessions: 2,
   splitTestsBetweenCapabilities: true,
   multiCapabilities: [{
     'browserName': 'chrome',
-    maxInstances: 2
+    maxInstances: 1,
+    specs: 'basic/polling*' // Capacity specific specs
+  }, {
+    'browserName': 'firefox',
+    maxInstances: 2,
+    specs: 'basic/action*'
   }],
 
   baseUrl: env.baseUrl,
