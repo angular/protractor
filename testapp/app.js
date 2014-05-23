@@ -15,7 +15,7 @@ angular.module('myApp', ['ngRoute', 'myApp.appVersion']).
       controller: PollingCtrl,
       resolve: {
         slow: function($timeout) {
-          return $timeout(function() {}, 2000);
+          return $timeout(function() {}, 5000);
         }
       }
     });
