@@ -19,4 +19,4 @@ before_script:
 
 script:
   - ./scripts/testserver.sh
-  - ./scripts/testonsauce.sh
+  - travis_retry ./scripts/testonsauce.sh
