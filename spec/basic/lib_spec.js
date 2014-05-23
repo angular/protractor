@@ -14,6 +14,10 @@ describe('protractor library', function() {
     expect(By).toBeDefined();
     expect(element).toBeDefined();
     expect($).toBeDefined();
+    expect(DartObject).toBeDefined();
+    var obj = {};
+    var dartProxy = new DartObject(obj);
+    expect(dartProxy.o === obj).toBe(true);
   });
 
   it('should export other webdriver classes onto the global protractor',
