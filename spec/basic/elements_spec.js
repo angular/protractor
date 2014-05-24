@@ -158,7 +158,8 @@ describe('ElementFinder', function() {
       {index: 2, text: 'form'},
       {index: 3, text: 'async'},
       {index: 4, text: 'conflict'},
-      {index: 5, text: 'polling'}
+      {index: 5, text: 'polling'},
+      {index: 6, text: 'animation'}
     ]);
   });
 
@@ -186,7 +187,8 @@ describe('ElementFinder', function() {
       newExpected('form'),
       newExpected('async'),
       newExpected('conflict'),
-      newExpected('polling')
+      newExpected('polling'),
+      newExpected('animation')
     ]);
   });
 
@@ -197,7 +199,7 @@ describe('ElementFinder', function() {
       return i++;
     });
 
-    expect(labels).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(labels).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 
   it('should export an isPresent helper', function() {
@@ -205,6 +207,20 @@ describe('ElementFinder', function() {
 
     expect(element(by.binding('greet')).isPresent()).toBe(true);
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
+  });
+
+  it('should export an allowAnimations helper', function() {
+    browser.get('index.html#/animation');
+    var animationTop = element(by.id('animationTop'));
+    var toggledNode = element(by.id('toggledNode'));
+
+    expect(animationTop.allowAnimations()).toBe(true);
+    animationTop.allowAnimations(false);
+    expect(animationTop.allowAnimations()).toBe(false);
+
+    expect(toggledNode.isPresent()).toBe(true);
+    element(by.id('checkbox')).click();
+    expect(toggledNode.isPresent()).toBe(false);
   });
 
   it('should keep a reference to the original locator', function() {
