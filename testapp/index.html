@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>My AngularJS App</title>
   <link rel="stylesheet" href="app.css"/>
+  <link rel="stylesheet" href="animation/animation.css"/>
 </head>
 <body>
   <ul class="menu">
@@ -13,6 +14,7 @@
     <li><a href="#/async">async</a></li>
     <li><a href="#/conflict">conflict</a></li>
     <li><a href="#/polling">polling</a></li>
+    <li><a href="#/animation">animation</a></li>
   </ul>
 
   <div ng-view></div>
@@ -20,7 +22,9 @@
   <div>Angular seed app: v<span app-version></span></div>
 
   <script src="lib/angular_v1.2.9/angular.min.js"></script>
+  <script src="lib/angular_v1.2.9/angular-animate.min.js"></script>
   <script src="lib/angular_v1.2.9/angular-route.min.js"></script>
+
   <script src="components/app-version.js"></script>
   <script src="async/async.js"></script>
   <script src="bindings/bindings.js"></script>
@@ -28,6 +32,7 @@
   <script src="form/form.js"></script>
   <script src="polling/polling.js"></script>
   <script src="repeater/repeater.js"></script>
+  <script src="animation/animation.js"></script>
   <script src="app.js"></script>
 
 </body>
