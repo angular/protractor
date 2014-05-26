@@ -144,7 +144,7 @@ You may also use plain old WebDriver strategies such as `by.id` and
 `sendKeys`, `getText`, and `click`. Check out the [API](/docs/api.md) for a list of
 all available methods.
 
-See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/basic/findelements_spec.js)
+See Protractor's [findelements test suite](https://github.com/angular/protractor/blob/master/spec/basic/elements_spec.js)
 for more examples.
 
 
