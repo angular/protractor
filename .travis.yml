@@ -20,3 +20,6 @@ before_script:
 script:
   - ./scripts/testserver.sh
   - ./scripts/testonsauce.sh
+
+after_script:
+  - ./scripts/print_logs.sh
