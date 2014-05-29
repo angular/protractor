@@ -1971,7 +1971,7 @@ are equivalent:
 var e1 = driver.findElement(By.id('foo'));
 var e2 = driver.findElement({id:'foo'});
 </pre></code>
-
+</p>
 <p>You may also provide a custom locator function, which takes as input
 this WebDriver instance and returns a {@link webdriver.WebElement}, or a
 promise that will resolve to a WebElement. For example, to find the first
@@ -1988,7 +1988,7 @@ function firstVisibleLink(driver) {
   });
 }
 </pre></code>
-
+</p>
 <p>When running in the browser, a WebDriver cannot manipulate DOM elements
 directly; it may do so only through a {@link webdriver.WebElement} reference.
 This function may be used to generate a WebElement from a DOM element. A
