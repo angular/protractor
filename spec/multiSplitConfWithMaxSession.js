@@ -17,17 +17,22 @@ exports.config = {
   ],
 
   chromeOnly: false,
-
-  maxSessions: 2,
-  splitTestsBetweenCapabilities: true,
+  framework: 'debugprint',
+  maxSessions: 3,
   multiCapabilities: [{
     'browserName': 'chrome',
+    maxInstances: 2
+  }, {
+    'browserName': 'chrome',
+    shardTestFiles: true,
     maxInstances: 1,
     specs: 'basic/polling*' // Capacity specific specs
   }, {
+    shardTestFiles: true,
     'browserName': 'firefox',
     maxInstances: 2,
-    specs: 'basic/action*'
+    count: 2,
+    specs: 'basic/action*',
   }],
 
   baseUrl: env.baseUrl,
