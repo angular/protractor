@@ -44,7 +44,7 @@ describe('the Protractor runner', function() {
   it('should run', function(done) {
     var config = {
       specs: ['*.js'],
-      framework: 'simpleprint'
+      framework: 'debugprint'
     };
     var exitCode;
     Runner.prototype.loadDriverProvider_ = function() {
