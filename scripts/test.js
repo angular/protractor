@@ -18,7 +18,7 @@ var scripts = [
 ];
 
 scripts.push(
-    'node node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js ' +
+    'node node_modules/.bin/minijasminenode ' +
     glob('spec/unit/*.js').join(' ') + ' ' +
     glob('docs/spec/*.js').join(' '));
 
