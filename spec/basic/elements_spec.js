@@ -27,6 +27,18 @@ describe('ElementFinder', function() {
     expect(name.getText()).toEqual('Jane');
   });
 
+  it('should chain element actions', function() {
+    browser.get('index.html#/form');
+
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    expect(name.getText()).toEqual('Anon');
+
+    usernameInput.clear().sendKeys('Jane');
+    expect(name.getText()).toEqual('Jane');
+  });
+
   it('chained call should wait to grab the WebElement until a method is called',
       function() {
     // These should throw no error before a page is loaded.
@@ -73,8 +85,7 @@ describe('ElementFinder', function() {
     });
   });
 
-  it('should wait to grab multiple chained elements',
-      function() {
+  it('should wait to grab multiple chained elements', function() {
     // These should throw no error before a page is loaded.
     var reused = element(by.id('baz')).all(by.binding('item'));
 
@@ -83,6 +94,21 @@ describe('ElementFinder', function() {
     expect(reused.count()).toEqual(2);
     expect(reused.get(0).getText()).toEqual('Inner: inner');
     expect(reused.last().getText()).toEqual('Inner other: innerbarbaz');
+  });
+
+  it('should wait to grab elements chained by index', function() {
+    // These should throw no error before a page is loaded.
+    var reused = element(by.id('baz')).all(by.binding('item'));
+    var first = reused.first();
+    var second = reused.get(1);
+    var last = reused.last();
+
+    browser.get('index.html#/conflict');
+
+    expect(reused.count()).toEqual(2);
+    expect(first.getText()).toEqual('Inner: inner');
+    expect(second.getText()).toEqual('Inner other: innerbarbaz');
+    expect(last.getText()).toEqual('Inner other: innerbarbaz');
   });
 
   it('should determine element presence properly with chaining', function() {
