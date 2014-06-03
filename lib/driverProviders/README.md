@@ -11,18 +11,18 @@ Each file exports a function which takes in the configuration as a parameter and
  * @return {q.promise} A promise which will resolve when the environment is
  *     ready to test.
  */
-DriverProvider.prototype.setupEnv = function(runner, specs, done)
+DriverProvider.prototype.setupEnv
 
 /**
  * @return {webdriver.WebDriver} The setup driver instance.
  */
-DriverProvider.prototype.getDriver()
+DriverProvider.prototype.getDriver
 
 /**
  * @return {q.promise} A promise which will resolve when the environment
  *     is down.
  */
-DriverProvider.prototype.teardownEnv()
+DriverProvider.prototype.teardownEnv
 
 /**
  * This is an optional function. If defined, it will be called with the final
@@ -31,7 +31,7 @@ DriverProvider.prototype.teardownEnv()
  * @param {{passed: boolean}}
  * @return {q.promise} A promise that will resolve when the update is complete.
  */
-DriverProvider.prototype.updateJob()
+DriverProvider.prototype.updateJob
 ```
 
 Requirements
