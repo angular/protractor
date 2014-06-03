@@ -15,6 +15,7 @@
     "request": "~2.36.0",
     "selenium-webdriver": "2.42.0",
     "minijasminenode": "0.4.0",
+    "jasminewd": "1.0.0",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
     "adm-zip": "0.4.4",
