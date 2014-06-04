@@ -14,13 +14,6 @@ _Note: Major version 0 releases are for initial development, and backwards incom
 
   Remove the code from Protractor, and add a dependency on jasminewd@1.0.0.
 
-- ([7fc2167](https://github.com/angular/protractor/commit/7fc21678fa1d9a6abd5f79097b66705ab413bba0)) 
-  refactor(runner): split framework adapters into their own files and add documentation
-
-  Split out the mocha/cucumber/jasmine bits of the runner for better separation and readability.
-
-  Closes #792
-
 - ([f23565d](https://github.com/angular/protractor/commit/f23565d5db4fbb102cfec8311ce9dfaee52e9113)) 
   feat(protractor): new API allowAnimations(bool) on protractor elements.
 
@@ -93,29 +86,38 @@ _Note: Major version 0 releases are for initial development, and backwards incom
   - Rework the way that elementFinder and wrappedWebElement is represented
   - Breaking changes:
     - element.all is chained differently
-        Before: `element(By.x).element.all(By.y)`
-        Now:    `element(By.x).all(By.y)`
-      However, using element.all without chaining did not change,
-        i.e. `element.all(By.x)`
+        ```
+        Before: element(By.x).element.all(By.y)
+        Now:    element(By.x).all(By.y)
+        
+        However, using element.all without chaining did not change,
+          i.e. `element.all(By.x)`
+        ```
+
     - Changed the way for retrieving underlying webElements
-        Before: `element(By.x).find()`, `element(By.x).findElement(By.y)`,
-                  and `element(By.x).findElements(By.y)`
-        Now:    `element(By.x).getWebElement()`,
-                  `element(By.x).element(By.y).getWebElement()`,
-                  and `element(By.x).element(By.y).getWebElements()`,
+        ```
+        Before: element(By.x).find(), element(By.x).findElement(By.y),
+                  and element(By.x).findElements(By.y)
+        Now:    element(By.x).getWebElement(),
+                  element(By.x).element(By.y).getWebElement(),
+                  and element(By.x).element(By.y).getWebElements(),
                   respectively
+        ```
     - browser.findElement returns a raw WebElement so $, $$, and
         evaluate will no longer be available
 
 - ([fbfc72b](https://github.com/angular/protractor/commit/fbfc72bad15667990232bb9ff1da503e03d16230)) 
   feat(launcher): Add support for maxSession
 
-    - add support for maxSession and capability-specific specs
-   - cleaned up launcher (refactored out taskScheduler.js)
-   - (breaking change) changed the config to shard test files; also sharding is specific to
+  - add support for maxSession and capability-specific specs
+  - cleaned up launcher (refactored out taskScheduler.js)
+  - Breaking change:
+    - changed the config to shard test files; also sharding is specific to
   capabilities now
-     - Before: config.splitTestsBetweenCapabilities
-     - Now: config.capabilities.shardTestFiles or config.multiCapabilities[index].shardTestFiles
+      ```
+      Before: config.splitTestsBetweenCapabilities
+      Now: config.capabilities.shardTestFiles or config.multiCapabilities[index].shardTestFiles
+      ```
 
 - ([9e5d9e4](https://github.com/angular/protractor/commit/9e5d9e4abb7d0928e6092a711fda527554994be7)) 
   feat(locators): remove deprecated locator APIs

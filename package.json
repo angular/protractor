@@ -55,7 +55,7 @@
   "license": "MIT",
   "version": "0.24.0",
   "webdriverVersions": {
-    "selenium": "2.42.2",
+    "selenium": "2.42.0",
     "chromedriver": "2.10",
     "iedriver": "2.42.0"
   }
