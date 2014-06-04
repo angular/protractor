@@ -6,7 +6,6 @@ var spawn = require('child_process').spawn;
 var scripts = [
   'node lib/cli.js spec/basicConf.js',
   'node lib/cli.js spec/multiConf.js',
-  'node lib/cli.js spec/shardingConf.js',
   'node lib/cli.js spec/altRootConf.js',
   'node lib/cli.js spec/onPrepareConf.js',
   'node lib/cli.js spec/onPrepareFileConf.js',
