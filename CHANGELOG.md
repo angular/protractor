@@ -1,3 +1,139 @@
+# 0.24.0
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Features
+
+- ([7299155](https://github.com/angular/protractor/commit/729915554cfa440bda0eec8a1c4bf423f4089481)) 
+  feat(sauceprovider): append spec filename to capabilities.name
+
+- ([f22456d](https://github.com/angular/protractor/commit/f22456d3cf0768a577371776d716b8888a74397d)) 
+  refactor(jasminewd): use jasminewd from its own node module
+
+  The Jasmine Webdriver Adapter is now its own npm module. The code has been moved to
+  http://www.github.com/angular/jasminewd.
+
+  Remove the code from Protractor, and add a dependency on jasminewd@1.0.0.
+
+- ([f23565d](https://github.com/angular/protractor/commit/f23565d5db4fbb102cfec8311ce9dfaee52e9113)) 
+  feat(protractor): new API allowAnimations(bool) on protractor elements.
+
+- ([876a3c0](https://github.com/angular/protractor/commit/876a3c04c07a9f8d97e1edca3ec1f76e51e1a310)) 
+  feat(runner): support running dart2js spec files
+
+  This commit supports running Dart2JS output in NodeJS.  Officially, Dart2JS in supposed to only
+  generate code for running in a real webbrowser.  With this patch, the dart2js code can also be
+  executed in NodeJS.
+
+  Ref:
+  https://code.google.com/p/dart/source/browse/branches/bleeding_edge/dart/sdk/lib/js/dart2js/js_dart2js.dart?spec=svn32943&r=32943#487
+
+- ([8d46e21](https://github.com/angular/protractor/commit/8d46e210b91ed1521f6692a2cf35f60740c0ace6)) 
+  feat(runner): support sourcemaps in spec files
+
+  This feature allows folks who are generating their spec files from a different language to see
+  stack traces that use the line numbers from their sources before translation.
+
+  This commit introduces a dependency on the `source-map-support` library.
+
+  For general information about sourcemaps, refer:
+  -  http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/
+  -  https://github.com/evanw/node-source-map-support
+  -  https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/view
+
+## Bug Fixes
+
+- ([56daa54](https://github.com/angular/protractor/commit/56daa54e2e269064bd44bc05ed0bbf2c44657ca8)) 
+  fix(clientsidescripts): convert non-Error exceptions to Errors
+
+  If any functions called by clientSideScripts throws a an exception that doesn't inherit from
+  `Error`, the stack trace is completely unhelpful and the message is just "unknown error."  This
+  commit wraps such errors into
+  `Error` instances so that we have meaningful stack traces and the correct exception message. 
+  (e.g. This is the common case when running dart2js code.  This commit gives us the Dart stack
+  trace and exception message.)
+
+  In addition, I've pushed the construction of the string to install into the browser into
+  clientsidescripts.js.
+
+- ([00c6abe](https://github.com/angular/protractor/commit/00c6abef16c47868974eed8ad1a4c38494b2a504)) 
+  fix(element): fix WebElement.$ using the incorrect By object
+
+  Closes #852
+
+- ([0500b2c](https://github.com/angular/protractor/commit/0500b2c3b2698fe41bedf694b92aad884f3b0d0e)) 
+  fix(navigation): ignore unknown JS errors when looking for the URL
+
+  This should address #841
+
+  Ignoring the error and trying again has worked for all of my test cases, and the error has never
+  occurred more than once in a row.
+
+- ([c8c85e0](https://github.com/angular/protractor/commit/c8c85e0d94d7a7211b000650f01af714663611ad)) 
+  fix(locators): fix by.repeater finding all rows for IE
+
+  Previously, element.all(by.repeater('foo in foos')) would find non-element nodes for
+  ng-repeat-start elements, which could cause IEDriver to fall over if the test tried to get text
+  from those nodes.
+
+## Breaking Changes
+
+- ([3c0e727](https://github.com/angular/protractor/commit/3c0e727136ab3d397c1a9a2bb02692d0aeb9be40)) 
+  refactor(protractor): reorganize internal structure of elementFinder/webelement
+
+  - Allow chaining of actions (i.e. `element(By.x).clear().sendKeys('abc)`)
+  - first(), last(), and get(index) are not executed immediately, allowing
+      them to be placed in page objects
+  - Rework the way that elementFinder and wrappedWebElement is represented
+  - Breaking changes:
+    - element.all is chained differently
+        ```
+        Before: element(By.x).element.all(By.y)
+        Now:    element(By.x).all(By.y)
+        
+        However, using element.all without chaining did not change,
+          i.e. `element.all(By.x)`
+        ```
+
+    - Changed the way for retrieving underlying webElements
+        ```
+        Before: element(By.x).find(), element(By.x).findElement(By.y),
+                  and element(By.x).findElements(By.y)
+        Now:    element(By.x).getWebElement(),
+                  element(By.x).element(By.y).getWebElement(),
+                  and element(By.x).element(By.y).getWebElements(),
+                  respectively
+        ```
+    - browser.findElement returns a raw WebElement so $, $$, and
+        evaluate will no longer be available
+
+- ([fbfc72b](https://github.com/angular/protractor/commit/fbfc72bad15667990232bb9ff1da503e03d16230)) 
+  feat(launcher): Add support for maxSession
+
+  - add support for maxSession and capability-specific specs
+  - cleaned up launcher (refactored out taskScheduler.js)
+  - Breaking change:
+    - changed the config to shard test files; also sharding is specific to
+  capabilities now
+      ```
+      Before: config.splitTestsBetweenCapabilities
+      Now: config.capabilities.shardTestFiles or config.multiCapabilities[index].shardTestFiles
+      ```
+
+- ([9e5d9e4](https://github.com/angular/protractor/commit/9e5d9e4abb7d0928e6092a711fda527554994be7)) 
+  feat(locators): remove deprecated locator APIs
+
+  This is a **breaking change**. The following deprecated Locator APIs have been removed.
+
+  - `by.input`
+  - `by.select`
+  - `by.selectedOption`
+  - `by.textarea`
+
+  `input`, `select`, and `textarea` can be replaced by `by.model`.
+
+  `element(by.selectedOption('foo'))` can be replaced by
+  `element(by.model('foo')).$('option:checked')`
+
 # 0.23.1
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
