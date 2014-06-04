@@ -1,14 +1,13 @@
 var TaskScheduler = require('../../lib/taskScheduler.js');
 var ConfigParser = require('../../lib/configParser');
-var path = require('path');
 
 describe('the task scheduler', function() {
 
   it('should schedule single capability tests', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       capabilities: {
         browserName: 'chrome'
@@ -27,8 +26,8 @@ describe('the task scheduler', function() {
   it('should schedule single capability tests with sharding', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       capabilities: {
         shardTestFiles: true,
@@ -53,8 +52,8 @@ describe('the task scheduler', function() {
   it('should schedule single capability tests with count', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       capabilities: {
         count: 2,
@@ -78,8 +77,8 @@ describe('the task scheduler', function() {
   it('should schedule multiCapabilities tests', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         'browserName': 'chrome'
@@ -104,8 +103,8 @@ describe('the task scheduler', function() {
   it('should obey maxInstances', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       capabilities: {
         shardTestFiles: true,
@@ -135,15 +134,12 @@ describe('the task scheduler', function() {
   it('should allow capability-specific specs', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         'browserName': 'chrome',
-        specs: [
-          'spec/basic/mock*', // duplicate
-          'spec/basic/polling*' // new spec
-        ]
+        specs: 'spec/unit/data/fakespecC.js'
       }],
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
@@ -159,8 +155,8 @@ describe('the task scheduler', function() {
   it('should handle multiCapabilities with mixture of features', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         'browserName': 'chrome',
@@ -212,8 +208,8 @@ describe('the task scheduler', function() {
   it('should default to chrome when no capability is defined', function() {
     var toAdd = {
       specs: [
-        'spec/basic/mock*',
-        'spec/basic/lib_spec.js'
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
