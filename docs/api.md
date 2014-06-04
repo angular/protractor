@@ -1,4 +1,4 @@
-Protractor API 0.23.1
+Protractor API 0.24.0
 ==============
 
 
