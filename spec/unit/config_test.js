@@ -26,7 +26,7 @@ describe('the config parser', function() {
     expect(config.rootElement).toEqual('.mycontainer');
     expect(config.onPrepare.indexOf(path.normalize('/spec/unit/data/foo/bar.js'))).not.toEqual(-1);
     expect(config.specs.length).toEqual(1);
-    expect(config.specs[0]).toEqual('fakespec*.js');
+    expect(config.specs[0]).toEqual('fakespec[AB].js');
   });
 
   it('should keep filepaths relative to the cwd when merging', function() {
@@ -43,7 +43,7 @@ describe('the config parser', function() {
     it('should resolve relative to the cwd', function() {
       spyOn(process, 'cwd').andReturn(__dirname + '/');
       var toAdd = {
-        specs: 'data/*spec*.js'
+        specs: 'data/*spec[AB].js'
       };
       var config = new ConfigParser().addConfig(toAdd).getConfig();
       var specs = ConfigParser.resolveFilePatterns(config.specs);
