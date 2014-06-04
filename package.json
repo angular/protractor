@@ -53,10 +53,10 @@
     "start": "testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "webdriverVersions": {
     "selenium": "2.42.0",
     "chromedriver": "2.10",
-    "iedriver": "2.41.0"
+    "iedriver": "2.42.0"
   }
 }
