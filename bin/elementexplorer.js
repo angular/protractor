@@ -35,9 +35,29 @@
 
 var webdriver = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
+var ConfigParser = require('../lib/configParser');
+var Runner = require('../lib/runner');
 var repl = require('repl');
 var util = require('util');
 var vm = require('vm');
+
+var optimist = require('optimist').
+    usage('Usage: $0 [options] [url]\n').
+    describe('help', 'Print Protractor help menu').
+    describe('chromeOnly', 'Use chromedriver directly').
+    describe('configFile', 'Initialize browser using protractors\' configFile').
+    describe('browser', 'Browsername, e.g. chrome or firefox').
+    describe('seleniumAddress', 'A running seleium address to use').
+    describe('seleniumServerJar', 'Location of the standalone selenium jar file').
+    describe('seleniumPort', 'Optional port for the selenium standalone server').
+    describe('baseUrl', 'URL to prepend to all relative paths').
+    alias('browser', 'capabilities.browserName').
+    alias('name', 'capabilities.name').
+    alias('platform', 'capabilities.platform').
+    alias('platform-version', 'capabilities.version').
+    alias('tags', 'capabilities.tags').
+    alias('build', 'capabilities.build').
+    string('capabilities.tunnel-identifier');
 
 var driver, browser;
 
@@ -50,6 +70,22 @@ var INITIAL_SUGGESTIONS = [
   'element(by.tagName(\'\'))',
   'element(by.className(\'\'))'
 ];
+
+// WebDriver capabilities properties require dot notation, but optimist parses
+// that into an object. Re-flatten it.
+var flattenObject = function(obj) {
+  var prefix = arguments[1] || '';
+  var out = arguments[2] || {};
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        typeof obj[prop] === 'object' ?
+            flattenObject(obj[prop], prefix + prop + '.', out) :
+            out[prefix + prop] = obj[prop];
+      }
+    }
+  return out;
+};
+
 
 var list = function(locator) {
   return browser.findElements(locator).then(function(arr) {
@@ -113,10 +149,9 @@ var startRepl = function() {
   });
 };
 
-var startUp = function() {
-  driver = new webdriver.Builder().
-    usingServer('http://localhost:4444/wd/hub').
-    withCapabilities({'browserName': 'chrome'}).build();
+var startUp = function(config) {
+  var runner = new Runner(config);
+  driver = runner.driverprovider_.getDriver();
 
   driver.getSession().then(function(session) {
     driver.manage().timeouts().setScriptTimeout(11000);
@@ -139,7 +174,7 @@ var startUp = function() {
     util.puts('  e.g., list(by.binding(\'\')) gets all bindings.');
     util.puts('');
 
-    var url = process.argv[2] || 'about:blank';
+    var url = config.baseUrl || 'about:blank';
     util.puts('Getting page at: ' + url);
     driver.get(url);
 
@@ -147,4 +182,26 @@ var startUp = function() {
   });
 };
 
-startUp();
+var argv = optimist.argv;
+
+if (argv.capabilities) {
+  argv.capabilities = flattenObject(argv.capabilities);
+}
+
+var configParser = new ConfigParser();
+if (argv.configFile) {
+  configParser.addFileConfig(argv.configFile);
+}
+configParser.addConfig(argv);
+var config = configParser.getConfig();
+
+if (argv._[0]) {
+  config.baseUrl = argv._[0];
+}
+
+if (argv.help || argv._.length > 1) {
+  optimist.showHelp();
+  process.exit(1);
+}
+
+startUp(config);
