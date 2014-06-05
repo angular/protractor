@@ -278,6 +278,12 @@ describe('shortcut css notation', function() {
   beforeEach(function() {
     browser.get('index.html#/bindings');
   });
+
+  it('should grab by css', function() {
+    expect($('.planet-info').getText()).
+        toEqual(element(by.css('.planet-info')).getText());
+    expect($$('option').count()).toEqual(element.all(by.css('option')).count());
+  });
   
   it('should chain $$ with $', function() {
     var withoutShortcutCount =
