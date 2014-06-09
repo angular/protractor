@@ -1,4 +1,4 @@
-Protractor API 0.24.0
+Protractor API 0.24.1
 ==============
 
 
@@ -743,7 +743,7 @@ Type | Description
 [webdriver.WebElement](#webdriverwebelement) | 
 
 
-##<a name="api-elementfinder-prototype-evaluate"></a>[ElementFinder.prototype.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L591)
+##<a name="api-elementfinder-prototype-evaluate"></a>[ElementFinder.prototype.evaluate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L592)
 
 Evaluates the input as if it were on the scope of the current element.
 
@@ -766,7 +766,7 @@ Type | Description
 [ElementFinder](#elementfinder) | which resolves to the evaluated expression. The result will be resolved as in {@link webdriver.WebDriver.executeScript}. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.
 
 
-##<a name="api-elementfinder-prototype-allowanimations"></a>[ElementFinder.prototype.allowAnimations](https://github.com/angular/protractor/blob/master/lib/protractor.js#L609)
+##<a name="api-elementfinder-prototype-allowanimations"></a>[ElementFinder.prototype.allowAnimations](https://github.com/angular/protractor/blob/master/lib/protractor.js#L610)
 
 Determine if animation is allowed on the current element.
 
@@ -789,7 +789,7 @@ Type | Description
 [ElementFinder](#elementfinder) | which resolves to whether animation is allowed.
 
 
-##<a name="api-elementfinder-prototype-then"></a>[ElementFinder.prototype.then](https://github.com/angular/protractor/blob/master/lib/protractor.js#L623)
+##<a name="api-elementfinder-prototype-then"></a>[ElementFinder.prototype.then](https://github.com/angular/protractor/blob/master/lib/protractor.js#L624)
 
 Access the underlying actionResult of ElementFinder. Implementation allows
 ElementFinder to be used as a webdriver.promise.Promise
@@ -813,7 +813,7 @@ Type | Description
 webdriver.promise.Promise | Promise which contains the results of  evaluating fn.
 
 
-##<a name="api-protractor"></a>[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L649)
+##<a name="api-protractor"></a>[Protractor](https://github.com/angular/protractor/blob/master/lib/protractor.js#L650)
 
 
 
@@ -832,7 +832,7 @@ opt_rootElement | string= | Selector element that has an ng-app in scope.
 
 
 
-##<a name="api-protractor-prototype-waitforangular"></a>[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L749)
+##<a name="api-protractor-prototype-waitforangular"></a>[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L750)
 
 Instruct webdriver to wait until Angular has finished rendering and has
 no outstanding $http calls before continuing.
@@ -849,7 +849,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to the scripts return value.
 
 
-##<a name="api-protractor-prototype-findelement"></a>[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L788)
+##<a name="api-protractor-prototype-findelement"></a>[Protractor.prototype.findElement](https://github.com/angular/protractor/blob/master/lib/protractor.js#L789)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -865,7 +865,7 @@ Type | Description
 &#33;[webdriver.WebElement](#webdriverwebelement) | 
 
 
-##<a name="api-protractor-prototype-findelements"></a>[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L797)
+##<a name="api-protractor-prototype-findelements"></a>[Protractor.prototype.findElements](https://github.com/angular/protractor/blob/master/lib/protractor.js#L798)
 
 Waits for Angular to finish rendering before searching for elements.
 
@@ -881,7 +881,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.
 
 
-##<a name="api-protractor-prototype-iselementpresent"></a>[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L807)
+##<a name="api-protractor-prototype-iselementpresent"></a>[Protractor.prototype.isElementPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L808)
 
 Tests if an element is present on the page.
 
@@ -897,7 +897,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve to whether the element is present on the page.
 
 
-##<a name="api-protractor-prototype-addmockmodule"></a>[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L819)
+##<a name="api-protractor-prototype-addmockmodule"></a>[Protractor.prototype.addMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L820)
 
 Add a module to load before Angular whenever Protractor.get is called.
 Modules will be registered after existing modules already on the page,
@@ -919,7 +919,7 @@ varArgs | ...* | Any additional arguments will be provided to the script and may
 
 
 
-##<a name="api-protractor-prototype-clearmockmodules"></a>[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L837)
+##<a name="api-protractor-prototype-clearmockmodules"></a>[Protractor.prototype.clearMockModules](https://github.com/angular/protractor/blob/master/lib/protractor.js#L838)
 
 Clear the list of registered mock modules.
 
@@ -929,7 +929,7 @@ Clear the list of registered mock modules.
 
 
 
-##<a name="api-protractor-prototype-removemockmodule"></a>[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L846)
+##<a name="api-protractor-prototype-removemockmodule"></a>[Protractor.prototype.removeMockModule](https://github.com/angular/protractor/blob/master/lib/protractor.js#L847)
 
 Remove a registered mock module.
 
@@ -946,7 +946,7 @@ name | !string | The name of the module to remove.
 
 
 
-##<a name="api-protractor-prototype-get"></a>[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L857)
+##<a name="api-protractor-prototype-get"></a>[Protractor.prototype.get](https://github.com/angular/protractor/blob/master/lib/protractor.js#L858)
 
 See webdriver.WebDriver.get
 
@@ -969,7 +969,7 @@ opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
-##<a name="api-protractor-prototype-refresh"></a>[Protractor.prototype.refresh](https://github.com/angular/protractor/blob/master/lib/protractor.js#L937)
+##<a name="api-protractor-prototype-refresh"></a>[Protractor.prototype.refresh](https://github.com/angular/protractor/blob/master/lib/protractor.js#L938)
 
 See webdriver.WebDriver.refresh
 
@@ -991,7 +991,7 @@ opt_timeout | number= | Number of seconds to wait for Angular to start.
 
 
 
-##<a name="api-protractor-prototype-navigate"></a>[Protractor.prototype.navigate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L960)
+##<a name="api-protractor-prototype-navigate"></a>[Protractor.prototype.navigate](https://github.com/angular/protractor/blob/master/lib/protractor.js#L961)
 
 Mixin navigation methods back into the navigation object so that
 they are invoked as before, i.e. driver.navigate().refresh()
@@ -1002,7 +1002,7 @@ they are invoked as before, i.e. driver.navigate().refresh()
 
 
 
-##<a name="api-protractor-prototype-setlocation"></a>[Protractor.prototype.setLocation](https://github.com/angular/protractor/blob/master/lib/protractor.js#L970)
+##<a name="api-protractor-prototype-setlocation"></a>[Protractor.prototype.setLocation](https://github.com/angular/protractor/blob/master/lib/protractor.js#L971)
 
 Browse to another page using in-page navigation.
 
@@ -1025,7 +1025,7 @@ Type | Description
 !webdriver.promise.Promise | A promise that will resolve once page has been changed.
 
 
-##<a name="api-protractor-prototype-getlocationabsurl"></a>[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L988)
+##<a name="api-protractor-prototype-getlocationabsurl"></a>[Protractor.prototype.getLocationAbsUrl](https://github.com/angular/protractor/blob/master/lib/protractor.js#L989)
 
 Returns the current absolute url from AngularJS.
 
@@ -1035,7 +1035,7 @@ Returns the current absolute url from AngularJS.
 
 
 
-##<a name="api-protractor-prototype-debugger"></a>[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L996)
+##<a name="api-protractor-prototype-debugger"></a>[Protractor.prototype.debugger](https://github.com/angular/protractor/blob/master/lib/protractor.js#L997)
 
 Pauses the test and injects some helper functions into the browser, so that
 debugging may be done in the browser console.
@@ -1060,7 +1060,7 @@ debugger.
 
 
 
-##<a name="api-protractor-prototype-pause"></a>[Protractor.prototype.pause](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1021)
+##<a name="api-protractor-prototype-pause"></a>[Protractor.prototype.pause](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1022)
 
 Beta (unstable) pause function for debugging webdriver tests. Use
 browser.pause() in your test to enter the protractor debugger from that
