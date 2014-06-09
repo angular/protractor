@@ -17,8 +17,6 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
 
  - Make sure .gitignore and .npmignore are updated with any new files that need to be ignored.
 
- - Generate new API documentation. Run `scripts/generate-docs.js`
-
  - Update package.json with a version bump. If the changes are only bug fixes, increment the patch (e.g. 0.0.5 -> 0.0.6), otherwise increment the minor version.
 
  - Update CHANGELOG.md.
@@ -30,6 +28,8 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
    - Create a new section in CHANGELOG.md and copy in features, bug fixes, and breaking changes. No need to note chores or stylistic changes - the changelog should be primarily useful to someone using Protractor, not developing on it.
 
    - Breaking changes should be in their own section and include before/after examples of how to fix code that needs to change.
+
+ - Generate new API documentation. Run `scripts/generate-docs.js`
 
  - Make a commit with the API and package.json changes titled chore(release): version bump and changelog for 0.0.K.
 
