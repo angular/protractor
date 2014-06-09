@@ -1,3 +1,27 @@
+# 0.24.1
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+
+- ([59af936](https://github.com/angular/protractor/commit/59af936e1ef6e21432f7876144554db145083d46)) 
+  fix(locators): Missing information in warning/error messages
+
+  Webdriver's built-in locators (such as `by.css()`) appeared as
+  'undefined' in protractor's messages.
+
+  For instance, if a locator matched multiple elements, protractor would print the following
+  message: 'warning: more than one element found for locator undefined- you may need to be more
+  specific'.
+
+- ([13373f5](https://github.com/angular/protractor/commit/13373f5de18690e1994b32e092105cfe3ad1753d)) 
+  fix(launcher): output error messages when child processes exit with error
+
+  Version 0.24.0 introduced a bug where child processes would error without outputting the error
+  message. Fix. See #902.
+
+- ([72668fe](https://github.com/angular/protractor/commit/72668fe5ebbdc8126ff16887814f763198128ab5)) 
+  fix(cssShortcut): fix $$ global throwing error
+
 # 0.24.0
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
