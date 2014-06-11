@@ -68,45 +68,45 @@ describe('Locator finder', function() {
     });
   });
 
-  describe('By binding', function() {
-    it('should find by finding', function() {
-      // Given an element with binding.
-      // When you get the locators.
-      var locators = locatorFinder.buildLocatorList({
-        byBinding: 'Hello {{yourName | uppercase}}!'
-      }).map(function(suggestion) {
-        return suggestion.locator;
-      });
-
-      // Then ensure there is one locator for the full expression, one for the
-      // contents of the curly braces, and one for the expression without filer.
-      expect(locators).toEqual([
-        'by.binding(\'Hello {{yourName | uppercase}}!\')',
-        'by.binding(\'yourName | uppercase\')',
-        'by.binding(\'yourName \')'
-      ]);
+  it('should find by finding', function() {
+    // Given an element with binding.
+    // When you get the locators.
+    var locators = locatorFinder.buildLocatorList({
+      byBinding: 'Hello {{yourName | uppercase}}!'
+    }).map(function(suggestion) {
+      return suggestion.locator;
     });
+
+    // Then ensure there is one locator for the full expression, one for the
+    // contents of the curly braces, and one for the expression without filer.
+    expect(locators).toEqual([
+      'by.binding(\'Hello {{yourName | uppercase}}!\')',
+      'by.binding(\'yourName | uppercase\')',
+      'by.binding(\'yourName \')'
+    ]);
   });
 
-  describe('By id', function() {
-    it('should find by id', function() {
-      // Given an element with id.
-      // When you get the locators.
-      var locators = locatorFinder.buildLocatorList({
-        byCss: {
-          nodeName: 'div',
-          id: 'baz'
-        },
-        byId: 'baz'
-      }).map(function(suggestion) {
-        return suggestion.locator;
-      });
-
-      // Then ensure there is a css locator and and id locator.
-      expect(locators).toEqual([
-        'by.css(\'#baz\')',
-        'by.id(\'baz\')'
-      ]);
+  it('should find by id', function() {
+    // Given an element with id.
+    // When you get the locators.
+    var locators = locatorFinder.buildLocatorList({
+      byCss: {
+        nodeName: 'div',
+        id: 'baz'
+      },
+      byId: 'baz'
+    }).map(function(suggestion) {
+      return suggestion.locator;
     });
+
+    // Then ensure there is a css locator and and id locator.
+    expect(locators).toEqual([
+      'by.css(\'#baz\')',
+      'by.id(\'baz\')'
+    ]);
+  });
+
+  it('should find by button text', function() {
+
   });
 });
