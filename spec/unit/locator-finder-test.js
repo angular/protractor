@@ -52,19 +52,39 @@ describe('Locator finder', function() {
       expectByCss('input.btn.btn-primary', list[1]);
       expectByCss('.btn.btn-primary', list[2]);
     });
-    
+
     it('should find by id', function() {
       // Given an element with id.
       // When you get the locator list;
-      var list = locatorFinder.buildLocatorList({byCss: {
-        nodeName: 'input',
-        id: 'abc'
-      }});
-      
+      var list = locatorFinder.buildLocatorList({
+        byCss: {
+          nodeName: 'input',
+          id: 'abc'
+        }});
+
       // Then ensure there is a locator for id.
       expect(list.length).toBe(1);
       expectByCss('#abc', list[0]);
     });
   });
-})
-;
+
+  describe('By binding', function() {
+    it('should find by finding', function() {
+      // Given an element with binding.
+      // When you get the locators.
+      var locators = locatorFinder.buildLocatorList({
+        byBinding: 'Hello {{yourName | uppercase}}!'
+      }).map(function(suggestion) {
+        return suggestion.locator;
+      });
+
+      // Then ensure there is one locator for the full expression, one for the
+      // contents of the curly braces, and one for the expression without filer.
+      expect(locators).toEqual([
+        'by.binding(\'Hello {{yourName | uppercase}}!\')',
+        'by.binding(\'yourName | uppercase\')',
+        'by.binding(\'yourName \')'
+      ]);
+    });
+  });
+});
