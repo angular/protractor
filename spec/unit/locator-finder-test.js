@@ -87,4 +87,26 @@ describe('Locator finder', function() {
       ]);
     });
   });
+
+  describe('By id', function() {
+    it('should find by id', function() {
+      // Given an element with id.
+      // When you get the locators.
+      var locators = locatorFinder.buildLocatorList({
+        byCss: {
+          nodeName: 'div',
+          id: 'baz'
+        },
+        byId: 'baz'
+      }).map(function(suggestion) {
+        return suggestion.locator;
+      });
+
+      // Then ensure there is a css locator and and id locator.
+      expect(locators).toEqual([
+        'by.css(\'#baz\')',
+        'by.id(\'baz\')'
+      ]);
+    });
+  });
 });
