@@ -3,7 +3,9 @@ var locatorFinder = require('../../lib/locator-finder.js');
 describe('Locator finder', function() {
 
   describe('Find by css', function() {
-    var expectbyCss = function(locator, actual) {
+    var expectByCss = function(expectedBy, actual) {
+      var locator = 'by.css(\'' + expectedBy + '\')';
+
       expect({
         name: 'byCss',
         locator: locator,
@@ -28,14 +30,13 @@ describe('Locator finder', function() {
 
       // Then ensure there is a locator for each attribute.
       expect(list.length).toBe(3);
-      expectbyCss('by.css(\'input[type="text"]\')', list[0]);
-      expectbyCss('by.css(\'input[ng-model="yourName"]\')', list[1]);
-      expectbyCss('by.css(\'input[placeholder="Enter a name here"]\')',
+      expectByCss('input[type="text"]', list[0]);
+      expectByCss('input[ng-model="yourName"]', list[1]);
+      expectByCss('input[placeholder="Enter a name here"]',
           list[2]);
     });
 
     it('should use classes and ignore ng classes', function() {
-      return;
       // Given an element with classes and ng classes.
       var locators = {
         byCss: {
@@ -50,24 +51,10 @@ describe('Locator finder', function() {
 
       // Then ensure there is a locator for each class and the ng classes are
       // ignored.
-      expect(list).toEqual([
-        {
-          name: 'byCss',
-          locator: 'by.css(\'input[type="text"]\')',
-          countExpression: 'element.all(by.css(\'input[type="text"]\')).count()'
-        },
-        {
-          name: 'byCss',
-          locator: 'by.css(\'input.btn.btn-primary\')',
-          countExpression: 'element.all(by.css(\' input.btn.btn-primary \')).count()'
-        },
-        {
-          name: 'byCss',
-          locator: 'by.css(\'.btn.btn-primary\')',
-          countExpression: 'element.all(by.css(\'.btn.btn-primary\')).count()'
-        }
-      ])
-      ;
+      expect(list.length).toBe(3);
+      expectByCss('input[type="text"]', list[0]);
+      expectByCss('input.btn.btn-primary', list[1]);
+      expectByCss('.btn.btn-primary', list[2]);
     });
   });
 })
