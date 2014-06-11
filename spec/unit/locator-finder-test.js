@@ -2,6 +2,13 @@ var locatorFinder = require('../../lib/locator-finder.js');
 
 describe('Locator finder', function() {
 
+  var getLocators = function(extensionLocators) {
+    return locatorFinder.buildLocatorList(extensionLocators).
+        map(function(suggestion) {
+          return suggestion.locator;
+        });
+  };
+
   describe('Find by css', function() {
     var expectByCss = function(expectedBy, actual) {
       var locator = 'by.css(\'' + expectedBy + '\')';
@@ -71,10 +78,8 @@ describe('Locator finder', function() {
   it('should find by finding', function() {
     // Given an element with binding.
     // When you get the locators.
-    var locators = locatorFinder.buildLocatorList({
+    var locators = getLocators({
       byBinding: 'Hello {{yourName | uppercase}}!'
-    }).map(function(suggestion) {
-      return suggestion.locator;
     });
 
     // Then ensure there is one locator for the full expression, one for the
@@ -89,14 +94,12 @@ describe('Locator finder', function() {
   it('should find by id', function() {
     // Given an element with id.
     // When you get the locators.
-    var locators = locatorFinder.buildLocatorList({
+    var locators = getLocators({
       byCss: {
         nodeName: 'div',
         id: 'baz'
       },
       byId: 'baz'
-    }).map(function(suggestion) {
-      return suggestion.locator;
     });
 
     // Then ensure there is a css locator and and id locator.
@@ -107,6 +110,17 @@ describe('Locator finder', function() {
   });
 
   it('should find by button text', function() {
+    // When you have an element with button text.
+    var locators = getLocators({
+      byCss: {
+        nodeName: 'button'
+      },
+      byButtonText: 'Partial button text'
+    });
 
+    // Then ensure there is a locator for buttonText.
+    expect(locators).toEqual([
+      'by.buttonText(\'Partial button text\')'
+    ]);
   });
 });
