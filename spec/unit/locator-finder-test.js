@@ -21,8 +21,7 @@ describe('Locator finder', function() {
     };
 
     it('should generate a locator for each attribute', function() {
-      // Given an element with multiple attributes.
-      // When you get the locator list.
+      // When you have an element with multiple attributes.
       var list = locatorFinder.buildLocatorList({
         byCss: {
           nodeName: 'input',
@@ -42,8 +41,7 @@ describe('Locator finder', function() {
     });
 
     it('should use classes and ignore ng classes', function() {
-      // Given an element with classes and ng classes.
-      // When you get the locator list.
+      // When you have an element with classes and ng classes.
       var list = locatorFinder.buildLocatorList({
         byCss: {
           nodeName: 'input',
@@ -61,8 +59,7 @@ describe('Locator finder', function() {
     });
 
     it('should find by id', function() {
-      // Given an element with id.
-      // When you get the locator list;
+      // When you have an element with id.
       var list = locatorFinder.buildLocatorList({
         byCss: {
           nodeName: 'input',
@@ -76,8 +73,7 @@ describe('Locator finder', function() {
   });
 
   it('should find by finding', function() {
-    // Given an element with binding.
-    // When you get the locators.
+    // When you have an element with binding.
     var locators = getLocators({
       byBinding: 'Hello {{yourName | uppercase}}!'
     });
@@ -92,8 +88,7 @@ describe('Locator finder', function() {
   });
 
   it('should find by id', function() {
-    // Given an element with id.
-    // When you get the locators.
+    // When you have an element with id.
     var locators = getLocators({
       byCss: {
         nodeName: 'div',
