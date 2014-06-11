@@ -15,7 +15,8 @@ describe('Locator finder', function() {
 
     it('should generate a locator for each attribute', function() {
       // Given an element with multiple attributes.
-      var locators = {
+      // When you get the locator list.
+      var list = locatorFinder.buildLocatorList({
         byCss: {
           nodeName: 'input',
           type: 'text',
@@ -23,10 +24,7 @@ describe('Locator finder', function() {
           placeholder: 'Enter a name here',
           class: 'ng-pristine ng-valid'
         }
-      };
-
-      // When you get the locator list.
-      var list = locatorFinder.buildLocatorList(locators);
+      });
 
       // Then ensure there is a locator for each attribute.
       expect(list.length).toBe(3);
@@ -38,16 +36,14 @@ describe('Locator finder', function() {
 
     it('should use classes and ignore ng classes', function() {
       // Given an element with classes and ng classes.
-      var locators = {
+      // When you get the locator list.
+      var list = locatorFinder.buildLocatorList({
         byCss: {
           nodeName: 'input',
           type: 'text',
           class: 'ng-pristine ng-valid btn btn-primary'
         }
-      };
-
-      // When you get the locator list.
-      var list = locatorFinder.buildLocatorList(locators);
+      });
 
       // Then ensure there is a locator for each class and the ng classes are
       // ignored.
@@ -55,6 +51,19 @@ describe('Locator finder', function() {
       expectByCss('input[type="text"]', list[0]);
       expectByCss('input.btn.btn-primary', list[1]);
       expectByCss('.btn.btn-primary', list[2]);
+    });
+    
+    it('should find by id', function() {
+      // Given an element with id.
+      // When you get the locator list;
+      var list = locatorFinder.buildLocatorList({byCss: {
+        nodeName: 'input',
+        id: 'abc'
+      }});
+      
+      // Then ensure there is a locator for id.
+      expect(list.length).toBe(1);
+      expectByCss('#abc', list[0]);
     });
   });
 })
