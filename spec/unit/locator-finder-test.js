@@ -113,9 +113,26 @@ describe('Locator finder', function() {
       byButtonText: 'Partial button text'
     });
 
-    // Then ensure there is a locator for buttonText.
+    // Then ensure there is a locator with buttonText.
     expect(locators).toEqual([
       'by.buttonText(\'Partial button text\')'
+    ]);
+  });
+
+  it('should find by link text', function() {
+    // When you have an element with link text.
+    var locators = getLocators({
+      byCss: {
+        nodeName: 'a',
+        href: '#/async'
+      },
+      byLinkText: 'async'
+    });
+
+    // Then ensure the is a locator with byLinkText.
+    expect(locators).toEqual([
+      'by.css(\'a[href="#/async"]\')',
+      'by.linkText(\'async\')'
     ]);
   });
 });
