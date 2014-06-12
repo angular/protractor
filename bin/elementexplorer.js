@@ -101,7 +101,6 @@ var startServer = function() {
 
       locatorResults[expr] = testSelector(flow, expr);
     } else {
-
       var suggestionList = locatorFinder.buildLocatorList(locators);
 
       console.log('Testing locators', locators);
