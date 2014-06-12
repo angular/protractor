@@ -72,7 +72,7 @@ describe('Locator finder', function() {
     });
   });
 
-  it('should find by finding', function() {
+  it('should find by binding', function() {
     // When you have an element with binding.
     var locators = getLocators({
       byBinding: 'Hello {{yourName | uppercase}}!'
