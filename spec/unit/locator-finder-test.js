@@ -135,4 +135,32 @@ describe('Locator finder', function() {
       'by.linkText(\'async\')'
     ]);
   });
+
+  it('should find multiple locators', function() {
+    // When you have multiple locators.
+    var locators = getLocators({
+      byCss: {
+        nodeName: 'a',
+        href: '',
+        'ng-click': 'archive()'
+      },
+      byLinkText: 'Active',
+      byBinding: 'Hello {{yourName}}!',
+      byId: '12345',
+      byButtonText: 'Edit Me',
+      byModel: 'yourName'
+    });
+
+    // Then ensure multiple locators are generated.
+    expect(locators).toEqual([
+      'by.css(\'a[href=""]\')',
+      'by.css(\'a[ng-click="archive()"]\')',
+      'by.linkText(\'Active\')',
+      'by.binding(\'Hello {{yourName}}!\')',
+      'by.binding(\'yourName\')',
+      'by.id(\'12345\')',
+      'by.buttonText(\'Edit Me\')',
+      'by.model(\'yourName\')'
+    ]);
+  });
 });
