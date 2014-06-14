@@ -30,7 +30,7 @@ ptorApp.factory('history', function() {
 
 ptorApp.controller('LocatorCtrl', function($scope, history, locatorTester) {
   var app = $scope,
-      maxElements = 10;
+      maxElements = 50;
 
   // Restore the history, if there is any.
   history.restore($scope);
