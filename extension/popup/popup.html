@@ -55,7 +55,7 @@
     ng-if="history.length">
 
   <div class="panel-heading">
-    Results history | <a ng-click="clearHistory()">Clear</a>
+    Results history | <a ng-click="clearHistory()" title="Clear history">Clear</a>
   </div>
 
   <table class="table">
@@ -68,7 +68,9 @@
     <tbody>
     <tr ng-repeat="row in history">
       <td>
-        <a ng-click="remove($index)" class="remove">&#x2715;</a><a ng-bind="row.locator"
+        <a ng-click="remove($index)"
+            title="Remove from history"
+            class="remove">&#x2715;</a><a ng-bind="row.locator"
             ng-click="copyToInput(row)"
             title="copy to input field"></a>
       </td>
