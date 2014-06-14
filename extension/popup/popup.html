@@ -8,6 +8,17 @@
       min-width: 500px;
       max-width: 800px;
     }
+
+    a {
+      cursor: pointer;
+    }
+
+    .remove,
+    .remove:hover {
+      color: #000;
+      margin-right: 8px;
+      text-decoration: none;
+    }
   </style>
   <link rel="stylesheet" href="../css/bootstrap.min.css"/>
   <script src="../js/angular.min.js"></script>
@@ -48,7 +59,7 @@
     <tbody>
     <tr ng-repeat="row in history">
       <td>
-        <a ng-bind="row.locator"
+        <a ng-click="remove($index)" class="remove">&#x2715;</a><a ng-bind="row.locator"
             ng-click="copyToInput(row)"
             title="copy to input field"></a>
       </td>

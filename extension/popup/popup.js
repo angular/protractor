@@ -1,5 +1,6 @@
 var ptorApp = angular.module('ptorApp', ['ngResource']);
 
+// HTTP resource to call the element explorer's server.
 ptorApp.factory('locatorTester', function($resource) {
   var testSelector = $resource('http://localhost:13000/testSelector');
 
@@ -50,6 +51,12 @@ ptorApp.controller('LocatorCtrl', function($scope, history, locatorTester) {
   app.clearHistory = function() {
     app.history = [];
     history.save(app.history);
+  };
+
+  // Remove an element.
+  app.remove = function(index) {
+    app.history.splice(index, 1);
+    history(app.history);
   };
 
   // Test the locator.
