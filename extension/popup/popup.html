@@ -5,8 +5,8 @@
   <title>Protractor selector tester</title>
   <style>
     body {
-      min-width: 500px;
-      max-width: 800px;
+      min-width: 600px;
+      max-width: 900px;
     }
 
     a {
@@ -18,6 +18,15 @@
       color: #000;
       margin-right: 8px;
       text-decoration: none;
+    }
+
+    #history-list {
+      max-height: 320px;
+      overflow: scroll;
+    }
+
+    #history-list.panel {
+      margin-bottom: 0;
     }
   </style>
   <link rel="stylesheet" href="../css/bootstrap.min.css"/>
@@ -42,7 +51,7 @@
       </span>
   </div>
 </form>
-<div class="panel panel-default"
+<div id="history-list" class="panel panel-default"
     ng-if="history.length">
 
   <div class="panel-heading">
