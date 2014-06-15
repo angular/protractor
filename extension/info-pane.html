@@ -31,18 +31,6 @@
   <li>A popup to enter protractor locators and expressions.</li>
   <li>A developer tools to suggest locators for the selected element.</li>
 </ul>
-<p>
-  To test locators you need to start run Protractor's element explorer.
-</p>
-<dl>
-  <dt>Start the selenium standalone server</dt>
-  <dd>
-    <kbd>$ protractor/bin/webdriver-manager start</kbd>
-  </dd>
-
-  <dt>Open the element explorer</dt>
-  <dd><kbd>$ protractor/bin/elementexplorer.js</kbd></dd>
-</dl>
 
 <h3>Using the popup</h3>
 
@@ -54,22 +42,36 @@
 <p>
   When you enter a locator starting with <code>by.</code> (e.g.
   <code>by.css</code>, <code>by.model</code>,
-  <code>by.binding</code>) then it will be executed as a count expression
+  <code>by.binding</code>, etc.) then it will be executed as a count expression
   <code>element.all(&lt;your locator&gt;).count()</code> by the element
   explorer.
 </p>
 
-<img src="images/popup-screen.png"
-    class="img-rounded"
-    alt="popup screenshot"/>
+<img src="images/popup-screen.png" class="img-rounded" alt="popup screenshot"/>
 
 <h3>Using the developer tools</h3>
 
+<p>
+  The developer tools extension tries to find protractor locators for the
+  currently selected item. To open the extension go to Developer tools >
+  Elements and then on the side pane (Styles, Computed, etc.) choose Protractor.
+</p>
+
+<img src="images/dev-tools.png" alt="open dev tools"/>
+
+<p>
+  The extension is limited by the fact that you cannot
+
+  When you open the DevTools window, ChromeDriver is automatically disconnected.
+  When ChromeDriver receives a command, if disconnected, it will attempt to
+  close the DevTools window and reconnect.
+  (<a href="https://sites.google.com/a/chromium.org/chromedriver/help/devtools-window-keeps-closing" target="_blank">source</a>).
+</p>
 <p>
   To use the developer tools you need to open a new browser window. Protractor's
   element explorer will close the developer tools every time you issue a
   command.
 </p>
-
+<img src="images/dev-tools2.png" alt="selectors"/>
 </body>
 </html>
