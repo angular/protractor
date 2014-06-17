@@ -16,13 +16,13 @@ var argv = require('optimist').argv;
 var q = require('q');
 
 var apiFileName = 'api.md',
-    configPath = path.resolve(__dirname, '../docs/dgeni-config.js'),
-    buildPath = path.resolve(__dirname, '../docs/build'),
+    configPath = path.resolve(__dirname, '../docgen/dgeni-config.js'),
+    buildPath = path.resolve(__dirname, '../docgen/build'),
     docsPath = path.resolve(__dirname, '../docs'),
     apiFilePath = path.resolve(docsPath, apiFileName);
 
 /**
- * Delete the docs/build directory.
+ * Delete the docgen/build directory.
  */
 function deleteBuildDir() {
   console.log('Deleting build directory', buildPath);
