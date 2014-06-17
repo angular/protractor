@@ -133,6 +133,12 @@ describe('ElementFinder', function() {
     expect(element.all(by.model('color')).count()).toEqual(3);
   });
 
+  it('should return 0 when counting no elements', function() {
+    browser.get('index.html#/form');
+
+    expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
+  });
+
   it('should get an element from an array', function() {
     var colorList = element.all(by.model('color'));
 
