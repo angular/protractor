@@ -12,14 +12,14 @@ describe('locators', function() {
 
     it('should allow custom expectations to expect an element', function() {
       this.addMatchers({
-        toEqualText: function(actualText) {
-          return this.actual.getText().then(function(expectedText){
+        toHaveText: function(actualText) {
+          return this.actual.getText().then(function(expectedText) {
             return expectedText === actualText;
           });
         }
       });
 
-      expect(element(by.binding('{{greeting}}'))).toEqualText('Hiya');
+      expect(element(by.binding('{{greeting}}'))).toHaveText('Hiya');
     });
 
     it('ElementFinder.then should resolve to itself', function() {
@@ -27,7 +27,7 @@ describe('locators', function() {
 
       elem.then(function(elem2) {
         expect(elem).toEqual(elem2);
-      })
+      });
     });
 
     it('should find a binding by partial match', function() {
