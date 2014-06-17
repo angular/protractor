@@ -1,3 +1,17 @@
+# 0.24.2
+_Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
+
+## Bug Fixes
+
+- ([a43f983](https://github.com/angular/protractor/commit/a43f98391d36cead7378d1dd26f54248f39300b7)) 
+  fix(protractor): make ElementFinder.then resolve to itself instead of null
+
+- ([31d42a3](https://github.com/angular/protractor/commit/31d42a3875c5b95893d8a20d00dc5365c289ff98)) 
+  fix(protractor): throw index-out-of-bounds
+
+  See https://github.com/angular/protractor/issues/915
+  - to make error more specific instead of propagate later
+
 # 0.24.1
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
