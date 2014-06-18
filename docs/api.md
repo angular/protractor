@@ -18,6 +18,7 @@ Protractor API 0.24.2
 * [ElementFinder.prototype.all](#api-elementfinder-prototype-all)
 * [ElementFinder.prototype.$](#api-elementfinder-prototype-$)
 * [ElementFinder.prototype.$$](#api-elementfinder-prototype-$$)
+* [ElementFinder.prototype.$x](#api-elementfinder-prototype-$x)
 * [ElementFinder.prototype.isPresent](#api-elementfinder-prototype-ispresent)
 * [ElementFinder.prototype.isElementPresent](#api-elementfinder-prototype-iselementpresent)
 * [ElementFinder.prototype.locator](#api-elementfinder-prototype-locator)
@@ -648,6 +649,47 @@ selector | string | a css selector
 Type | Description
 --- | ---
 [ElementArrayFinder](#elementarrayfinder) | which identifies the array of the located [webdriver.WebElement](#webdriverwebelement)s.
+
+
+##<a name="api-elementfinder-prototype-$x"></a>[ElementFinder.prototype.$x](https://github.com/angular/protractor/blob/master/lib/protractor.js#L474)
+#### Use as: $x(cssSelector)
+Shortcut for querying the document directly with xpath.
+
+
+###Example
+
+```html
+<div class="count">
+  <span class="one">First</span>
+  <span class="two">Second</span>
+</div>
+```
+
+```javascript
+// The following protractor expressions are equivalent.
+var second = element(by.xpath('/html/body/div[1]/div/div/div[1]'));
+expect(second.getText()).toBe('Second');
+
+second = $x('/html/body/div[1]/div/div/div[1]');
+expect(second.getText()).toBe('Second');
+```
+
+
+
+###Params
+
+Param | Type | Description
+--- | --- | ---
+selector | string | a css selector
+
+
+
+
+###Returns
+
+Type | Description
+--- | ---
+[ElementFinder](#elementfinder) | which identifies the located  [webdriver.WebElement](#webdriverwebelement)
 
 
 ##<a name="api-elementfinder-prototype-ispresent"></a>[ElementFinder.prototype.isPresent](https://github.com/angular/protractor/blob/master/lib/protractor.js#L502)

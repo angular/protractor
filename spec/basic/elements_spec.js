@@ -291,6 +291,11 @@ describe('shortcut css notation', function() {
     expect($$('option').count()).toEqual(element.all(by.css('option')).count());
   });
   
+  it('should grab by xpath', function () {
+    expect($x('/html/body/div[1]/div/div/div[1]').getText()).
+        toEqual(element(by.xpath('/html/body/div[1]/div/div/div[1]')).getText());
+  });
+
   it('should chain $$ with $', function() {
     var withoutShortcutCount =
         element(by.css('select')).all(by.css('option')).then(function(options) {

@@ -129,6 +129,7 @@ var startUp = function() {
     global.browser = browser;
     global.$ = browser.$;
     global.$$ = browser.$$;
+    global.$x = browser.$x;
     global.element = browser.element;
     global.by = global.By = protractor.By;
     global.list = list;
