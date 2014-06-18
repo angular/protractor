@@ -86,14 +86,13 @@ var startServer = function() {
   http.createServer(function (request, response) {
     var flow = webdriver.promise.controlFlow(),
         parsedUrl = url.parse(request.url, true),
-        locators = JSON.parse(parsedUrl.query.locators),
         locatorResults = {};
 
     // Is this a popup query or a devtools query?
-    if (locators.popupInput) {
-      var popupInput = locators.popupInput;
+    if (parsedUrl.query.popupInput) {
+      var popupInput = parsedUrl.query.popupInput;
 
-      console.log('Testing input', popupInput);
+      console.log('Testing popup input', popupInput);
 
       // If the popup input starts with 'by' then execute a count expression.
       var expr = /^by/.test(popupInput) ?
@@ -101,7 +100,8 @@ var startServer = function() {
 
       locatorResults[expr] = testSelector(flow, expr);
     } else {
-      var suggestionList = locatorFinder.buildLocatorList(locators);
+      var locators = JSON.parse(parsedUrl.query.locators),
+          suggestionList = locatorFinder.buildLocatorList(locators);
 
       console.log('Testing locators', locators);
       console.log('Testing locator list', suggestionList);

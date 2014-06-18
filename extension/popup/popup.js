@@ -5,11 +5,8 @@ ptorApp.factory('locatorTester', function($resource) {
   var testSelector = $resource('http://localhost:13000/testSelector');
 
   return {
-    get: function(input, cb) {
-      var requestParams = {
-        locators: {popupInput: input}
-      };
-      testSelector.get(requestParams).$promise.then(cb);
+    get: function(input) {
+      return testSelector.get({popupInput: input}).$promise;
     }
   };
 });
@@ -61,7 +58,7 @@ ptorApp.controller('LocatorCtrl', function($scope, history, locatorTester) {
 
   // Test the locator.
   app.testLocator = function() {
-    locatorTester.get(app.locator, function(data) {
+    locatorTester.get(app.locator).then(function(data) {
       // Add results to history.
       angular.forEach(data.results, function(count, locator) {
         app.history.unshift({
