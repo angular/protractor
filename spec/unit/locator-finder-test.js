@@ -119,19 +119,6 @@ describe('Locator finder', function() {
     ]);
   });
 
-  it('should trim text for buttonText locators', function() {
-    // When you have an element with button text.
-    var locators = getLocators({
-      byCss: {
-        nodeName: 'button'
-      },
-      byButtonText: '   text with space  '
-    });
-
-    // Then ensure the text is trimmed.
-    expect(locators).toEqual(['by.buttonText(\'text with space\')']);
-  });
-
   it('should find by link text', function() {
     // When you have an element with link text.
     var locators = getLocators({
@@ -146,6 +133,23 @@ describe('Locator finder', function() {
     expect(locators).toEqual([
       'by.css(\'a[href="#/async"]\')',
       'by.linkText(\'async\')'
+    ]);
+  });
+
+  it('should trim text for linkText locators', function() {
+    // When you have an element with link text.
+    var locators = getLocators({
+      byCss: {
+        nodeName: 'a',
+        href: '#/async'
+      },
+      byLinkText: '  space   '
+    });
+
+    // Then ensure the is a locator with byLinkText.
+    expect(locators).toEqual([
+      'by.css(\'a[href="#/async"]\')',
+      'by.linkText(\'space\')'
     ]);
   });
 
