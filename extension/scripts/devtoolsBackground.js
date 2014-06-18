@@ -66,7 +66,7 @@ var getSuggestions = function() {
 
 // Create a connection to the background page
 var backgroundPageConnection = chrome.runtime.connect({
-  name: "panel"
+  name: 'panel'
 });
 
 // Send a message to the background page to open a connection.
@@ -126,7 +126,7 @@ panels.elements.createSidebarPane('Protractor', function(sidebar) {
 chrome.devtools.panels.create('Protractor',
     'images/icon-16.png',
     'info-pane.html',
-    function(panel) {
+    function() {
     }
 );
 

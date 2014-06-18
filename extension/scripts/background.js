@@ -5,7 +5,7 @@ var popupState = {
 };
 
 /**
- * Save the popup history.
+ * Save the popup history. Used by popup.js.
  * @param {Array.<Object>} msg
  */
 var saveHistory = function(msg) {
@@ -13,7 +13,7 @@ var saveHistory = function(msg) {
 };
 
 /**
- * Restore the popup history after closing and opening.
+ * Restore the popup history after closing and opening. Used by popup.js.
  * @return {Array.<Object>}
  */
 var getLocatorHistory = function() {
@@ -30,9 +30,6 @@ chrome.runtime.onConnect.addListener(function(port) {
       connections[message.tabId] = port;
       return;
     }
-
-    port.onDisconnect.addListener(function() {
-    });
 
     try {
       if (message.name == 'selectionChanged') {
@@ -54,7 +51,6 @@ chrome.runtime.onConnect.addListener(function(port) {
       }
 
     } catch (e) {
-//      alert('Error testing selectors' + e);
     }
   };
 
