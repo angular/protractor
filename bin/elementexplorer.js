@@ -215,6 +215,11 @@ var startUp = function() {
     util.puts('Use the `list` helper function to find elements by strategy:');
     util.puts('  e.g., list(by.binding(\'\')) gets all bindings.');
     util.puts('');
+    util.puts('IMPORTANT:');
+    util.puts('The element explorer will not work when the dev tools window ' +
+        'is open on the first tab of the launched chrome browser. To use the ' +
+        'dev tools duplicate the first tab and inspect on the second tab.');
+    util.puts('');
 
     var url = process.argv[2] || 'about:blank';
     util.puts('Getting page at: ' + url);
