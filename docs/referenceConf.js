@@ -67,14 +67,34 @@ exports.config = {
     full: 'spec/*.js'
   },
 
+  // Maximum number of total browser sessions to run. Tests are queued in 
+  // sequence if number of browser sessions is limited by this parameter. 
+  // Use a number less than 1 to denote unlimited. Default is unlimited. 
+  maxSessions: -1,
+
   // ----- Capabilities to be passed to the webdriver instance ----
   //
-  // For a full list of available capabilities, see
+  // For a list of available capabilities, see
   // https://code.google.com/p/selenium/wiki/DesiredCapabilities
   // and
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
+  // Additionally, you may specify count, shardTestFiles, and maxInstances.
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome',
+
+    // Number of times to run this set of capabilities (in parallel, unless 
+    // limited by maxSessions). Default is 1.
+    count: 1, 
+
+    // If this is set to be true, specs will be sharded by file (i.e. all
+    // files to be run by this set of capabilities will run in parallel).
+    // Default is false.
+    shardTestFiles: false,
+
+    // Maximum number of browser instances that can run in parallel for this 
+    // set of capabilities. This is only needed if shardTestFiles is true. 
+    // Default is 1.
+    maxInstances: 1
   },
 
   // If you would like to run more than one instance of webdriver on the same
@@ -86,7 +106,7 @@ exports.config = {
   //
   // A base URL for your application under test. Calls to protractor.get()
   // with relative paths will be prepended with this.
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: 'http://localhost:9876',
 
   // Selector for the element housing the angular app - this defaults to
   // body, but is necessary if ng-app is on a descendant of <body>  

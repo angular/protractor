@@ -76,7 +76,7 @@ module.exports = function(config) {
   config.set('rendering.outputFolder', 'build');
   config.set('logging.level', 'debug');
 
-  var docsPath = path.resolve(basePath, 'docs/templates');
+  var docsPath = path.resolve(basePath, 'docgen/templates');
   config.set('rendering.templateFolders', [docsPath]);
 
   config.set('rendering.templatePatterns', [

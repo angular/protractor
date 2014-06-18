@@ -10,6 +10,26 @@ describe('locators', function() {
       expect(greeting.getText()).toEqual('Hiya');
     });
 
+    it('should allow custom expectations to expect an element', function() {
+      this.addMatchers({
+        toHaveText: function(actualText) {
+          return this.actual.getText().then(function(expectedText) {
+            return expectedText === actualText;
+          });
+        }
+      });
+
+      expect(element(by.binding('{{greeting}}'))).toHaveText('Hiya');
+    });
+
+    it('ElementFinder.then should resolve to itself', function() {
+      var elem = element(by.binding('{{greeting}}'));
+
+      elem.then(function(elem2) {
+        expect(elem).toEqual(elem2);
+      });
+    });
+
     it('should find a binding by partial match', function() {
       var greeting = element(by.binding('greet'));
 

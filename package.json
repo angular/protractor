@@ -15,7 +15,7 @@
     "request": "~2.36.0",
     "selenium-webdriver": "2.42.0",
     "minijasminenode": "0.4.0",
-    "jasminewd": "1.0.0",
+    "jasminewd": "1.0.1",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
     "adm-zip": "0.4.4",
@@ -53,10 +53,10 @@
     "start": "testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "0.23.1",
+  "version": "0.24.2",
   "webdriverVersions": {
     "selenium": "2.42.0",
     "chromedriver": "2.10",
-    "iedriver": "2.41.0"
+    "iedriver": "2.42.0"
   }
 }

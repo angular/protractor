@@ -3,7 +3,7 @@
 var express = require('express');
 var util = require('util');
 var testApp = express();
-var DEFAULT_PORT = process.env.HTTP_PORT || 8000;
+var DEFAULT_PORT = process.env.HTTP_PORT || 8081;
 var testAppDir = require('path').resolve(__dirname, '..');
 
 var main = function(argv) {

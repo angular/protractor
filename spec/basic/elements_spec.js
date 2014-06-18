@@ -27,6 +27,18 @@ describe('ElementFinder', function() {
     expect(name.getText()).toEqual('Jane');
   });
 
+  it('should chain element actions', function() {
+    browser.get('index.html#/form');
+
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    expect(name.getText()).toEqual('Anon');
+
+    usernameInput.clear().sendKeys('Jane');
+    expect(name.getText()).toEqual('Jane');
+  });
+
   it('chained call should wait to grab the WebElement until a method is called',
       function() {
     // These should throw no error before a page is loaded.
@@ -68,24 +80,35 @@ describe('ElementFinder', function() {
       expect(elems.length).toEqual(4);
     });
 
-    element(by.id('baz')).
-        element.all(by.binding('item')).
-        then(function(elems) {
-          expect(elems.length).toEqual(2);
-        });
+    element(by.id('baz')).all(by.binding('item')).then(function(elems) {
+      expect(elems.length).toEqual(2);
+    });
   });
 
-  it('should wait to grab multiple chained elements',
-      function() {
+  it('should wait to grab multiple chained elements', function() {
     // These should throw no error before a page is loaded.
-    var reused = element(by.id('baz')).
-        element.all(by.binding('item'));
+    var reused = element(by.id('baz')).all(by.binding('item'));
 
     browser.get('index.html#/conflict');
 
     expect(reused.count()).toEqual(2);
     expect(reused.get(0).getText()).toEqual('Inner: inner');
     expect(reused.last().getText()).toEqual('Inner other: innerbarbaz');
+  });
+
+  it('should wait to grab elements chained by index', function() {
+    // These should throw no error before a page is loaded.
+    var reused = element(by.id('baz')).all(by.binding('item'));
+    var first = reused.first();
+    var second = reused.get(1);
+    var last = reused.last();
+
+    browser.get('index.html#/conflict');
+
+    expect(reused.count()).toEqual(2);
+    expect(first.getText()).toEqual('Inner: inner');
+    expect(second.getText()).toEqual('Inner other: innerbarbaz');
+    expect(last.getText()).toEqual('Inner other: innerbarbaz');
   });
 
   it('should determine element presence properly with chaining', function() {
@@ -108,6 +131,12 @@ describe('ElementFinder', function() {
 
     // Should also work with promise expect unwrapping
     expect(element.all(by.model('color')).count()).toEqual(3);
+  });
+
+  it('should return 0 when counting no elements', function() {
+    browser.get('index.html#/form');
+
+    expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
 
   it('should get an element from an array', function() {
@@ -228,6 +257,7 @@ describe('ElementFinder', function() {
 
     var byCss = by.css('body');
     var byBinding = by.binding('greet');
+
     expect(element(byCss).locator()).toEqual(byCss);
     expect(element(byBinding).locator()).toEqual(byBinding);
   });
@@ -255,143 +285,19 @@ describe('shortcut css notation', function() {
     browser.get('index.html#/bindings');
   });
 
-  it('$ should be equivalent to by.css', function() {
-    var shortcut = $('.planet-info');
-    var noShortcut = element(by.css('.planet-info'));
-
-    expect(protractor.WebElement.equals(shortcut.find(), noShortcut.find())).
-        toBe(true);
+  it('should grab by css', function() {
+    expect($('.planet-info').getText()).
+        toEqual(element(by.css('.planet-info')).getText());
+    expect($$('option').count()).toEqual(element.all(by.css('option')).count());
   });
-
-  it('$$ should be equivalent to by.css', function() {
-    var shortcut = element.all(by.css('option'));
-    var noShortcut = $$('option');
-    shortcut.then(function(optionsFromShortcut) {
-      noShortcut.then(function(optionsFromLongForm) {
-        expect(optionsFromShortcut.length).toEqual(optionsFromLongForm.length);
-
-        for (var i = 0; i < optionsFromLongForm.length; ++i) {
-          expect(protractor.WebElement.equals(
-              optionsFromLongForm[i], optionsFromShortcut[i])).
-              toBe(true);
-        }
-      });
-    });
-  });
-
-  it('$ chained should be equivalent to by.css', function() {
-    var select = element(by.css('select'));
-    var shortcut = select.$('option[value="4"]');
-    var noShortcut = select.element(by.css('option[value="4"]'));
-
-    expect(protractor.WebElement.equals(shortcut.find(), noShortcut.find())).
-        toBe(true);
-  });
-
-  it('$$ chained should be equivalent to by.css', function() {
-    var select = element(by.css('select'));
-    var shortcut = select.element.all(by.css('option'));
-    var noShortcut = select.$$('option');
-    shortcut.then(function(optionsFromShortcut) {
-      noShortcut.then(function(optionsFromLongForm) {
-        expect(optionsFromShortcut.length).toEqual(optionsFromLongForm.length);
-
-        for (var i = 0; i < optionsFromLongForm.length; ++i) {
-          expect(protractor.WebElement.equals(
-              optionsFromLongForm[i], optionsFromShortcut[i])).
-              toBe(true);
-        }
-      });
-    });
-  });
-
+  
   it('should chain $$ with $', function() {
     var withoutShortcutCount =
-        element(by.css('select')).element.all(by.css('option')).then(function(options) {
+        element(by.css('select')).all(by.css('option')).then(function(options) {
           return options.length;
         });
     var withShortcutCount = $('select').$$('option').count();
 
     expect(withoutShortcutCount).toEqual(withShortcutCount);
-  });
-});
-
-describe('wrapping WebElements', function() {
-  var verifyMethodsAdded = function(result) {
-    expect(typeof result.evaluate).toBe('function');
-    expect(typeof result.$).toBe('function');
-    expect(typeof result.$$).toBe('function');
-  };
-
-  beforeEach(function() {
-    browser.get('index.html#/bindings');
-  });
-
-  describe('when found via #findElement', function() {
-    it('should wrap the result', function() {
-      browser.findElement(by.binding('planet.name')).then(verifyMethodsAdded);
-
-      browser.findElement(by.css('option[value="4"]')).then(verifyMethodsAdded);
-    });
-
-    describe('when found with global element', function() {
-      it('should wrap the result', function() {
-        element(by.binding('planet.name')).find().then(verifyMethodsAdded);
-        element(by.css('option[value="4"]')).find().then(verifyMethodsAdded);
-      });
-    });
-  });
-
-  describe('when found via #findElements', function() {
-    it('should wrap the results', function() {
-      browser.findElements(by.binding('planet.name')).then(function(results) {
-        results.forEach(verifyMethodsAdded);
-      });
-      browser.findElements(by.css('option[value="4"]')).then(function(results) {
-        results.forEach(verifyMethodsAdded);
-      });
-    });
-
-    describe('when found with global element.all', function() {
-      it('should wrap the result', function() {
-        element.all(by.binding('planet.name')).then(function(results) {
-          results.forEach(verifyMethodsAdded);
-        });
-        element.all(by.binding('planet.name')).get(0).then(verifyMethodsAdded);
-        element.all(by.binding('planet.name')).first().then(verifyMethodsAdded);
-        element.all(by.binding('planet.name')).last().then(verifyMethodsAdded);
-        element.all(by.css('option[value="4"]')).then(function(results) {
-          results.forEach(verifyMethodsAdded);
-        });
-      });
-    });
-  });
-
-  describe('when chaining with another element', function() {
-    var info;
-
-    beforeEach(function() {
-      info = browser.findElement(by.css('.planet-info'));
-    });
-
-    describe('when found via #findElement', function() {
-      it('should wrap the result', function() {
-        info.findElement(by.binding('planet.name')).then(verifyMethodsAdded);
-
-        info.findElement(by.css('div:last-child')).then(verifyMethodsAdded);
-      });
-    });
-
-    describe('when querying for many elements', function() {
-      it('should wrap the result', function() {
-        info.findElements(by.binding('planet.name')).then(function(results) {
-          results.forEach(verifyMethodsAdded);
-        });
-
-        info.findElements(by.css('div:last-child')).then(function(results) {
-          results.forEach(verifyMethodsAdded);
-        });
-      });
-    });
   });
 });

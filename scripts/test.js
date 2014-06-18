@@ -6,7 +6,6 @@ var spawn = require('child_process').spawn;
 var scripts = [
   'node lib/cli.js spec/basicConf.js',
   'node lib/cli.js spec/multiConf.js',
-  'node lib/cli.js spec/multiSplitConf.js',
   'node lib/cli.js spec/altRootConf.js',
   'node lib/cli.js spec/onPrepareConf.js',
   'node lib/cli.js spec/onPrepareFileConf.js',
@@ -20,7 +19,7 @@ var scripts = [
 scripts.push(
     'node node_modules/.bin/minijasminenode ' +
     glob('spec/unit/*.js').join(' ') + ' ' +
-    glob('docs/spec/*.js').join(' '));
+    glob('docgen/spec/*.js').join(' '));
 
 var failed = false;
 
