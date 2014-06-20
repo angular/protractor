@@ -292,6 +292,19 @@ describe('ElementFinder', function() {
     expect(element(byCss).locator()).toEqual(byCss);
     expect(element(byBinding).locator()).toEqual(byBinding);
   });
+
+  it('should propagate exceptions', function() {
+    browser.get('index.html#/form');
+    var successful = protractor.promise.defer();
+
+    var invalidElement = element(by.binding('INVALID'));
+    invalidElement.getText().then(function(value) {
+      successful.fulfill(true);
+    }, function(err) {
+      successful.fulfill(false);
+    });
+    expect(successful).toEqual(false);
+  });
 });
 
 describe('evaluating statements', function() {
