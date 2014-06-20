@@ -123,6 +123,12 @@ exports.config = {
     //         'outputdir/', true, true));
   },
 
+  // A callback function called once tests are finished.
+  onComplete: function() {
+    // At this point, tests will be done but global objects will still be
+    // available.
+  },
+
   // The params object will be passed directly to the protractor instance,
   // and can be accessed from your test. It is an arbitrary object and can
   // contain anything you may need in your test.
@@ -146,8 +152,6 @@ exports.config = {
   //
   // See the full list at https://github.com/juliemr/minijasminenode
   jasmineNodeOpts: {
-    // onComplete will be called just before the driver quits.
-    onComplete: null,
     // If true, display spec names.
     isVerbose: false,
     // If true, print colors to the terminal.
@@ -181,6 +185,6 @@ exports.config = {
   //
   // A callback function called once the tests have finished running and
   // the webdriver instance has been shut down. It is passed the exit code
-  // (0 if the tests passed or 1 if not).
-  onCleanUp: function() {}
+  // (0 if the tests passed or 1 if not). This is called once per capability.
+  onCleanUp: function(exitCode) {}
 };
