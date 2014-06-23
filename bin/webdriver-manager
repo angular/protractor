@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var os = require('os');
+var url = require('url');
 var request = require('request');
 var http = require('http');
 var path = require('path');
@@ -76,7 +77,6 @@ var binaries = {
   }
 };
 
-
 var cli = optimist.
     usage('Usage: webdriver-manager <command>\n' +
         'Commands:\n' +
@@ -85,7 +85,8 @@ var cli = optimist.
         '  status: list the current available drivers').
     describe('out_dir', 'Location to output/expect ').
     default('out_dir', SELENIUM_DIR).
-    describe('seleniumPort', 'Optional port for the selenium standalone server');
+    describe('seleniumPort', 'Optional port for the selenium standalone server').
+    describe('proxy', 'proxy to use for the install or update command');
 
 for (bin in binaries) {
   cli.describe(bin, 'install or update ' + binaries[bin].name).
@@ -105,6 +106,17 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
   fs.mkdirSync(argv.out_dir);
 }
 
+var resolveProxy = function(fileUrl) {
+  var protocol = url.parse(fileUrl).protocol;
+  if (argv.proxy) {
+    return argv.proxy;
+  } else if (protocol === 'https:') {
+    return process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
+  } else if (protocol === 'http:') {
+    return process.env.HTTP_PROXY;
+  }
+};
+
 /**
  * Function to download file using HTTP.get.
  * TODO: look into using something instead of request here, to avoid the
@@ -114,23 +126,20 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   console.log('downloading ' + fileUrl + '...');
   var filePath = path.join(outputDir, fileName);
   var file = fs.createWriteStream(filePath);
-  var req = request(fileUrl);
-  req.on('response', function(res) {
-    if (res.statusCode !== 200) {
-      throw new Error('Got code ' + res.statusCode + ' from ' + fileUrl);
-    }  
-  });
-  req.on('data', function(data) {
-    file.write(data);
-  });
-  req.on('end', function() {
-    file.end(function() {
-      console.log(fileName + ' downloaded to ' + filePath);
-      if (callback) {
-        callback(filePath);
-      }
-    });
-  });
+
+  var options = {
+    url: fileUrl,
+    proxy: resolveProxy(fileUrl)
+  }
+  request(options, function (error, response) {
+    if (response.statusCode !== 200) {
+      throw new Error('Got code ' + response.statusCode + ' from ' + fileUrl);
+    }
+    console.log(fileName + ' downloaded to ' + filePath);
+    if (callback) {
+      callback(filePath);
+    }
+  }).pipe(file);
 };
 
 /**
