@@ -80,7 +80,7 @@ var flowEval = function(code, context, file, callback) {
       process.domain.emit('error', vmErr);
       process.domain.exit();
     }
-    return result;
+    return webdriver.promise.fulfilled(result);
   }).then(function(res) {
     if (!vmErr) {
       callback(null, res);
