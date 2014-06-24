@@ -1,4 +1,4 @@
-var locatorFinder = require('../../lib/locator-finder.js');
+var locatorFinder = require('../../lib/locatorFinder.js');
 
 describe('Locator finder', function() {
 

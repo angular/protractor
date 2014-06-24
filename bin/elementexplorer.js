@@ -35,7 +35,7 @@
 
 var webdriver = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
-var locatorFinder = require('../lib/locator-finder.js');
+var locatorFinder = require('../lib/locatorFinder.js');
 var repl = require('repl');
 var util = require('util');
 var vm = require('vm');
