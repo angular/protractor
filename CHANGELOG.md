@@ -1,3 +1,69 @@
+# 1.0.0-rc1
+
+## Dependency Version Updates
+
+- ([0dc0421](https://github.com/angular/protractor/commit/0dc04217a6a5b772d42b1463c91d89beca7df258)) 
+  chore(selenium): version bumps to selenium 2.42.2
+
+## Features
+
+- ([6906c93](https://github.com/angular/protractor/commit/6906c9326a4a83d81a0d09bdc1446cccb579d699)) 
+  feat(webdriver-manager): use proxy for webdriver-manager
+
+- ([7d90880](https://github.com/angular/protractor/commit/7d9088025c5a1c37428ea3f1cee3dc8d3793f79e)) 
+  feat(locators): implement by.options
+
+- ([4e1cfe5](https://github.com/angular/protractor/commit/4e1cfe5ad0f22947d21b4ebecd7cd05e0319af1a)) 
+  feature(launcher): aggregate failures at the end and output message from the launcher
+
+- ([ff3d5eb](https://github.com/angular/protractor/commit/ff3d5ebc071a8806259f5da20018f2d937409455)) 
+  feat(locators): add toString() wrapper for this.message
+
+- ([c892c2a](https://github.com/angular/protractor/commit/c892c2a1a773cc24cc6565efe2db892776143104)) 
+  feat(protractor): implement reduce and filter for ElementArrayFinder
+
+  See https://github.com/angular/protractor/issues/877
+
+- ([8920028](https://github.com/angular/protractor/commit/8920028f42e683dc45e18a6dd9386bd862548010)) 
+  feat(pause): allow the user to specify a port to be used for debugging
+
+  Using browser.pause(portNumber) will now start the debugger on the specified port number.
+
+  Closes #956
+
+## Bug Fixes
+
+- ([f9082d0](https://github.com/angular/protractor/commit/f9082d0460c7b6465d53c37f326a0f66412c21ce)) 
+  fix(clientsidescripts): make exactBinding more exact
+
+  See https://github.com/angular/protractor/issues/925
+
+- ([6641c81](https://github.com/angular/protractor/commit/6641c8168d74914d4826c5968771a2aec8299833)) 
+  fix(launcher): report summary when specs fail
+
+- ([36e0e0a](https://github.com/angular/protractor/commit/36e0e0aaf090b0c9b5450fa59ba2da4c4237442a)) 
+  fix(protractor): allow exceptions from actions to be catchable
+
+  See https://github.com/angular/protractor/issues/959
+
+- ([e86eb72](https://github.com/angular/protractor/commit/e86eb726ad20737d463341afdb4c56b4d19ef414)) 
+  fix(protractor): removing a mock module that was never added now is a noop
+
+  It used to remove the last module - now is a noop.
+
+  Closes #764
+
+- ([bf26f76](https://github.com/angular/protractor/commit/bf26f76ba5dc99d02ea4cd7fc198dce410a9f58c)) 
+  fix(locators): findind elements by text should trim whitespace
+
+  WebDriver always trims whitespace from around the text of an element, so to be consistent we
+  should trim the text from button elements before doing a by.buttonText.
+
+  Closes #903, Closes #904.
+
+- ([48798b0](https://github.com/angular/protractor/commit/48798b0a8ac1fc56d0cdd80e177d67fdf592069c)) 
+  fix(elementexplorer): element.all hangs in interactive mode
+
 # 0.24.2
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
