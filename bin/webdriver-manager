@@ -111,9 +111,9 @@ var resolveProxy = function(fileUrl) {
   if (argv.proxy) {
     return argv.proxy;
   } else if (protocol === 'https:') {
-    return process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
+    return process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
   } else if (protocol === 'http:') {
-    return process.env.HTTP_PROXY;
+    return process.env.HTTP_PROXY || process.env.http_proxy;
   }
 };
 
@@ -132,8 +132,15 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
     proxy: resolveProxy(fileUrl)
   }
   request(options, function (error, response) {
+    if (error) {
+      fs.unlink(filePath);
+      console.error('Error: Got error ' + error + ' from ' + fileUrl);
+      return;
+    }
     if (response.statusCode !== 200) {
-      throw new Error('Got code ' + response.statusCode + ' from ' + fileUrl);
+      fs.unlink(filePath);
+      console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
+      return;
     }
     console.log(fileName + ' downloaded to ' + filePath);
     if (callback) {
