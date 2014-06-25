@@ -16,6 +16,10 @@ describe('no protractor at all', function() {
 });
 
 describe('protractor library', function() {
+  it.skip('should be able to skip tests', function() {
+    expect(true).to.equal(false);
+  });
+
   it('should expose the correct global variables', function() {
     expect(protractor).to.exist;
     expect(browser).to.exist;
@@ -25,6 +29,8 @@ describe('protractor library', function() {
   });
 
   it('should wrap webdriver', function() {
+    // Mocha will report the spec as slow if it goes over this time in ms.
+    this.slow(6000);
     browser.get('index.html');
     expect(browser.getTitle()).to.eventually.equal('My AngularJS App');
   });
