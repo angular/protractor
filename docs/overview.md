@@ -1,58 +1,30 @@
-Getting Started
-===============
+Overview
+========
 
-This guide describes how to get started writing Protractor tests.
+You may want to begin with [the tutorial](/docs/tutorial.md) for a step-by-step way to get started with Protractor.
 
-Understand that Protractor wraps WebDriverJS
---------------------------------------------
+Protractor is an end-to-end test framework for AngularJS applications. Selenium Webdriver is a browser automation framework. Protractor tests are written on top of the Selenium WebDriver API (WebDriverJS) and run in conjunction with the Selenium Server and the Selenium WebDriver Browser Drivers. Your test, the server, and the browser all run as separate processes.
 
-When writing tests, it's important to remember that Protractor is a wrapper
-around [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). It's
-highly recommended to skim the intro to WebDriverJS before starting with
-protractor.
+```
+[Test Code] <--> [Selenium Server] <--> [Browser with Browser Driver]
+```
 
-Selenium-Webdriver is a browser automation framework. Tests are written
-with the WebDriver API, which communicates with a Selenium server to control
-the browser under test.
+When writing tests, keep the following in mind: 
+ - Protractor is a wrapper around WebDriverJS, the JavaScript bindings for the Selenium WebDriver API (skim through the [WebDriverJS Users Guide](https://code.google.com/p/selenium/wiki/WebDriverJs) before writing your test).
+ - WebDriver commands are scheduled on a control flow and return promises, not primitive values. See The [WebDriver Control Flow](/docs/control-flow.md) doc for more info.
+ - Communication between the Selenium Server and the Browser Drivers is managed by the [JSON WebDriver Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol). All actions that you can perform in your test must be done through this protocol.
 
-When writing tests, keep the following in mind:
+Protractor needs two files to run: a configuration file and the test (spec) file.
 
--  The test code and scripts running in the browser are separated, and only
-   communicate through the [WebDriver wire protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol).
--  WebDriver commands are scheduled on a control flow and return promises, not
-   primitive values. See the [control flow doc](/docs/control-flow.md) for more
-   info.
--  To run tests, WebDriverJS needs to talk to a selenium standalone server
-   running as a separate process.
-
-Setup and Config
+Configuration
 ----------------
 
-Install Protractor with
-
-    npm install -g protractor
-
-(or omit the -g if you'd prefer not to install globally).
-
-The example test expects a selenium standalone server to be running at
-localhost:4444. Protractor comes with a script to help download and install
-the standalone server. Run
-
-    webdriver-manager update
-
-This installs selenium standalone server and chromedriver to `protractor/selenium`. Start the server with
-
-    webdriver-manager start
-
-Protractor is now available as a command line program which takes one argument,
-a configuration file.
-
-    protractor node_modules/protractor/example/conf.js
-
 The configuration file tells Protractor what tests to run, how to connect to a
-webdriver server, and various other options for reporting. See
-[referenceConf.js](https://github.com/angular/protractor/blob/master/docs/referenceConf.js)
-for an example and explanation of the options. This simple configuration is
+Selenium Server, and which browser to use. See
+[referenceConf.js](/docs/referenceConf.js)
+for an example and explanation of all the configuration options. 
+
+A simple configuration is shown below.
 
 ```javascript
 // An example configuration file.
@@ -81,7 +53,7 @@ Writing tests
 -------------
 
 By default, Protractor uses [Jasmine](http://pivotal.github.io/jasmine/) as its
-test scaffolding. ([read about using mocha instead](https://github.com/angular/protractor/tree/master/docs/using-mocha.md)) Protractor exposes several global variables.
+test scaffolding. (If you'd prefer to use Mocha, see [Using mocha](/docs/using-mocha.md)) Protractor exposes several global variables.
 
  * `browser` this is the a wrapper around an instance of webdriver. Used for
  navigation and page-wide information.
@@ -97,7 +69,7 @@ test scaffolding. ([read about using mocha instead](https://github.com/angular/p
  This contains static variables and classes, such as `protractor.Key` which
  enumerates the codes for special keyboard signals.
 
-Take this example, which tests the 'Basics' example on the AngularJS homepage:
+A simple spec file tests the 'The Basics' example on the AngularJS homepage:
 
 ```javascript
 describe('angularjs homepage', function() {
@@ -139,7 +111,7 @@ parameter, a *locator* strategy for locating the element. Protractor offers Angu
    with the binding matching `{{phone.price}}`.
 
 You may also use plain old WebDriver strategies such as `by.id` and
-`by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `element.by.css`.
+`by.css`. Since locating by CSS selector is so common, the global variable `$` is an alias for `element.by.css`. See [Using Locators](/docs/locators.md) for more information.
 
 `element` returns an ElementFinder. This is an object which allows you to interact with the element on your page, but since all interaction with the browser must be done over webdriver, it is important to remember that this is *not* a DOM element. You can interact with it with methods such as
 `sendKeys`, `getText`, and `click`. Check out the [API](/docs/api.md) for a list of
@@ -162,75 +134,6 @@ There are a couple of things to watch out for!
 
 If you need to do global preparation for your tests (for example, logging in), you can put this into the config in the `onPrepare` property. This property can be either a function or a filename. If a filename, Protractor will load that file with node.js and run its contents. See the [login tests](https://github.com/angular/protractor/blob/master/spec/login) for an example.
 
-
-Organizing Real Tests: Page Objects
------------------------------------
-
-When writing real tests scripts for your page, it's best to use the [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects) pattern to make your tests more readable. In Protractor, this could look like:
-
-```javascript
-var AngularHomepage = function() {
-  this.nameInput = element(by.model('yourName'));
-  this.greeting = element(by.binding('yourName'));
-
-  this.get = function() {
-    browser.get('http://www.angularjs.org');
-  };
-
-  this.setName = function(name) {
-    this.nameInput.sendKeys(name);
-  };
-};
-```
-
-Your test then becomes:
-
-```javascript
-describe('angularjs homepage', function() {
-  it('should greet the named user', function() {
-    var angularHomepage = new AngularHomepage();
-    angularHomepage.get();
-
-    angularHomepage.setName('Julie');
-
-    expect(angularHomepage.greeting.getText()).toEqual('Hello Julie!');
-  });
-});
-```
-
-It is possible to separate your tests in various test suites. The configuration becomes:
-
-```javascript
-// An example configuration file.
-exports.config = {
-  // The address of a running selenium server.
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-
-  // Capabilities to be passed to the webdriver instance.
-  capabilities: {
-    'browserName': 'chrome'
-  },
-
-  // Spec patterns are relative to the location of the spec file. They may
-  // include glob patterns.
-  suites: {
-    homepage: 'tests/e2e/homepage/**/*Spec.js',
-    search: ['tests/e2e/contact_search/**/*Spec.js', 'tests/e2e/venue_search/**/*Spec.js']
-  },
-
-  // Options to be passed to Jasmine-node.
-  jasmineNodeOpts: {
-    showColors: true, // Use colors in the command line report.
-  }
-};
-```
-
-You can then easily switch from the command line between running one or the other
-suite of tests:
-
-    protractor protractor.conf.js --suite homepage
-
-will only run the homepage section of the tests.
 
 Further Reading
 ---------------
