@@ -66,8 +66,9 @@ exports.config = {
   exclude: [],
 
   // Alternatively, suites may be used. When run without a command line
-  // parameter, all suites will run. If run with --suite=smoke, only the
-  // patterns matched by that suite will run.
+  // parameter, all suites will run. If run with --suite=smoke or
+  // --suite=smoke,full only the patterns matched by the specified suites will
+  // run.
   suites: {
     smoke: 'spec/smoketests/*.js',
     full: 'spec/*.js'
@@ -88,9 +89,9 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
 
-    // Number of times to run this set of capabilities (in parallel, unless 
+    // Number of times to run this set of capabilities (in parallel, unless
     // limited by maxSessions). Default is 1.
-    count: 1, 
+    count: 1,
 
     // If this is set to be true, specs will be sharded by file (i.e. all
     // files to be run by this set of capabilities will run in parallel).
@@ -183,7 +184,7 @@ exports.config = {
   // Mocha and Cucumber have limited beta support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
   framework: 'jasmine',
-  
+
   // Options to be passed to minijasminenode.
   //
   // See the full list at https://github.com/juliemr/minijasminenode/tree/jasmine1
