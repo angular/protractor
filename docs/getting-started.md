@@ -51,7 +51,7 @@ a configuration file.
 
 The configuration file tells Protractor what tests to run, how to connect to a
 webdriver server, and various other options for reporting. See
-[referenceConf.js](https://github.com/angular/protractor/blob/master/referenceConf.js)
+[referenceConf.js](https://github.com/angular/protractor/blob/master/docs/referenceConf.js)
 for an example and explanation of the options. This simple configuration is
 
 ```javascript

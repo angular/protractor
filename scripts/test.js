@@ -19,7 +19,7 @@ var scripts = [
 scripts.push(
     'node node_modules/.bin/minijasminenode ' +
     glob('spec/unit/*.js').join(' ') + ' ' +
-    glob('docs/spec/*.js').join(' '));
+    glob('docgen/spec/*.js').join(' '));
 
 var failed = false;
 

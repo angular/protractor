@@ -14,4 +14,8 @@ exports.config = {
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,
+
+  mochaOpts: {
+    reporter: 'spec'
+  }
 };

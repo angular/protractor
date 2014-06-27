@@ -231,6 +231,37 @@ describe('ElementFinder', function() {
     expect(labels).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 
+  it('should filter elements', function() {
+    browser.get('index.html#/form');
+    var count = element.all(by.css('.menu li a')).filter(function(elem) {
+      return elem.getText().then(function(text) {
+        return text === 'bindings';
+      });
+    }).then(function(filteredElements) {
+      return filteredElements.length;
+    });
+
+    expect(count).toEqual(1);
+  });
+
+  it('should reduce elements', function() {
+    browser.get('index.html#/form');
+    var value = element.all(by.css('.menu li a')).
+        reduce(function(currentValue, elem, index, elemArr) {
+          return elem.getText().then(function(text) {
+            return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
+          });
+        }, '');
+
+    expect(value).toEqual('0/7: repeater\n' +
+                          '1/7: bindings\n' +
+                          '2/7: form\n' +
+                          '3/7: async\n' +
+                          '4/7: conflict\n' +
+                          '5/7: polling\n' +
+                          '6/7: animation\n');
+  });
+
   it('should export an isPresent helper', function() {
     browser.get('index.html#/form');
 
@@ -260,6 +291,19 @@ describe('ElementFinder', function() {
 
     expect(element(byCss).locator()).toEqual(byCss);
     expect(element(byBinding).locator()).toEqual(byBinding);
+  });
+
+  it('should propagate exceptions', function() {
+    browser.get('index.html#/form');
+    var successful = protractor.promise.defer();
+
+    var invalidElement = element(by.binding('INVALID'));
+    invalidElement.getText().then(function(value) {
+      successful.fulfill(true);
+    }, function(err) {
+      successful.fulfill(false);
+    });
+    expect(successful).toEqual(false);
   });
 });
 

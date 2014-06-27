@@ -355,6 +355,16 @@ describe('locators', function() {
     });
   });
 
+  describe('by options', function() {
+    it('should find elements by options', function() {
+      var allOptions = element.all(by.options('fruit for fruit in fruits'));
+      expect(allOptions.count()).toEqual(4);
+
+      var firstOption = allOptions.first();
+      expect(firstOption.getText()).toEqual('apple');
+    });
+  });
+
   it('should determine if an element is present', function() {
     expect(browser.isElementPresent(by.binding('greet'))).toBe(true);
     expect(browser.isElementPresent(by.binding('nopenopenope'))).toBe(false);
