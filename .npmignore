@@ -3,7 +3,7 @@ spec/
 selenium/
 debugging/
 testapp/inbrowsertest
-docgen/build
+docgen/
 
 .npmignore
 .travis.yml
