@@ -122,7 +122,7 @@ var startServer = function() {
       }));
     };
 
-    // Does is have any locators to test?
+    // Does it have any locators to test?
     if (Object.keys(locatorResults).length) {
       webdriver.promise.fullyResolved(locatorResults).then(sendResponse);
     } else {
