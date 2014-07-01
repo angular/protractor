@@ -106,6 +106,10 @@ do this with the element explorer.
 Currently, the explorer runs only with chrome and expects a selenium standalone
 server to be running at http://localhost:4444.
 
+```
+npm install -g chromedriver
+```
+
 From protractor directory, run with:
 
     node ./bin/elementexplorer.js <urL>
