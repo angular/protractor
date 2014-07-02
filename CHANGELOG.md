@@ -1,3 +1,47 @@
+# 1.0.0-rc2
+
+## Dependency Version Updates
+
+- ([e10e1a4](https://github.com/angular/protractor/commit/e10e1a4a8ae5013982f00d209e6fab1ff2b1d2a1)) 
+  chore(minijasminenode): update minijasminenode dependency to v1.1.0
+
+  This adds several options for the reporter, which can be included in protractor's
+  `config.jasmineNodeOpts`
+  ```js
+  // If true, output nothing to the terminal. Overrides other printing options. silent: false,
+  // If true, print timestamps for failures showTiming: true,
+  // Print failures in real time. realtimeFailure: false
+  ```
+
+- ([be0bb00](https://github.com/angular/protractor/commit/be0bb00db6f51e381e31e80c6808a202270ecb20)) 
+  chore(jasminewd): update jasminewd to v1.0.3
+
+  This fixes extra logging when a timeout occurs.
+
+## Features
+
+- ([82c1d47](https://github.com/angular/protractor/commit/82c1d47462779688bb8c9ac74ba3a6ecfefb7775)) 
+  feat(protractor): add iteration index to ElementArrayFinder.each
+
+- ([62bcf7e](https://github.com/angular/protractor/commit/62bcf7e1c84ed720bc17435c40e1f78c50ba194c)) 
+  feat(webdriver-manager): minor proxy enhancements
+
+  Added error handling for request - previously, any errors coming from the request module were
+  silently swallowed.
+
+  Fixed error handling to remove empty files when a download fails for some reason.
+
+  Also evaluating both uppercase and lowercase proxy variables. Many tools use proxy variables in
+  the form https_proxy, others use HTTPS_PROXY.
+
+## Bug Fixes
+
+- ([dbf7ab5](https://github.com/angular/protractor/commit/dbf7ab5fdf7832676f37328e2ad96b9097db3f62)) 
+  fix(mocha): mocha globals should be re-wrapped for every new suite
+
+  Closes #523, closes #962
+
+
 # 1.0.0-rc1
 
 ## Dependency Version Updates
