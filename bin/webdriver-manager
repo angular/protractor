@@ -43,7 +43,7 @@ var binaries = {
     prefix: 'chromedriver_',
     filename: 'chromedriver_' + versions.chromedriver + '.zip',
     url: function() {
-      var urlPrefix = 'https://chromedriver.storage.googleapis.com/' +
+      var urlPrefix = 'http://chromedriver.storage.googleapis.com/' +
           versions.chromedriver + '/chromedriver_';
       if (os.type() == 'Darwin') {
         return urlPrefix + 'mac32.zip';
