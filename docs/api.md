@@ -1,4 +1,4 @@
-Protractor API 1.0.0-rc1
+Protractor API 1.0.0-rc2
 ==============
 
 
@@ -1424,7 +1424,7 @@ Find elements inside an ng-repeat.
 </div>
 
 <div class="book-img" ng-repeat-start="book in library">
-  <img ng-src="{{book.imgUrl}}"></img>
+  <span>{{$index}}</span>
 </div>
 <div class="book-info" ng-repeat-end>
   <h4>{{book.name}}</h4>
