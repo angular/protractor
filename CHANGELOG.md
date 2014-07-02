@@ -8,9 +8,12 @@
   This adds several options for the reporter, which can be included in protractor's
   `config.jasmineNodeOpts`
   ```js
-  // If true, output nothing to the terminal. Overrides other printing options. silent: false,
-  // If true, print timestamps for failures showTiming: true,
-  // Print failures in real time. realtimeFailure: false
+  // If true, output nothing to the terminal. Overrides other printing options.
+  silent: false,
+  // If true, print timestamps for failures
+  showTiming: true,
+  // Print failures in real time.
+  realtimeFailure: false
   ```
 
 - ([be0bb00](https://github.com/angular/protractor/commit/be0bb00db6f51e381e31e80c6808a202270ecb20)) 
