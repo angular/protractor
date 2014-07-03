@@ -6,7 +6,7 @@ Protractor is an end to end test framework for [AngularJS](http://angularjs.org/
 Protractor can be run as a standalone binary, or included into your tests as a library. Use [Protractor as a library](https://github.com/angular/protractor/blob/master/docs/library-only.md) if you would like to manage WebDriver and your test setup yourself.
 
 For more information
- - [read the docs](https://github.com/angular/protractor/tree/master/docs/getting-started.md)
+ - [Read the docs](https://github.com/angular/protractor/tree/master/docs/getting-started.md)
  - [Read the FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md)
  - See the [supported browsers](https://github.com/angular/protractor/tree/master/docs/browser-setup.md)
  - [See the API](https://github.com/angular/protractor/blob/master/docs/api.md)
@@ -34,7 +34,7 @@ The Protractor runner is a binary which accepts a config file. Install protracto
     # Run the line below to see command line options
     protractor
 
-You will need a *configuration file* containing setup info and *test files* containing the actual test scripts. The config file specifies how the runner should start webdriver, where your test files are, and global setup options. The test files use Jasmine framework by default ([read about using mocha instead](https://github.com/angular/protractor/tree/master/docs/using-mocha.md)).
+You will need a *configuration file* containing setup info and *test files* containing the actual test scripts. The config file specifies how the runner should start webdriver, where your test files are, and global setup options. The test files use [Jasmine](https://jasmine.github.io) framework by default ([read about using mocha instead](https://github.com/angular/protractor/tree/master/docs/using-mocha.md)).
 
 Create a configuration file - an example with detailed comments is shown in `node_modules/protractor/docs/referenceConf.js`. Edit the configuration file to point to your test files.
 
