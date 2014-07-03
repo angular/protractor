@@ -94,4 +94,23 @@ describe('synchronizing with slow pages', function() {
 
     expect(status.getText()).toEqual('slow template contents');
   });
+
+  it('can wait for multiple outcomes', function(){
+    element(by.css('[ng-click="randomTimeouts()"]')).click();
+    var ptor = protractor.getInstance();
+    ptor.waitForAny(
+      function(){
+        return element(by.css('.timeout.success')).getText().then(function(text){
+          return text === 'Success!!';
+        });
+      },
+      function(){
+        return element(by.css('.timeout.failure')).getText().then(function(text){
+          return text === 'Success!!';
+        });
+      }
+    );
+
+    expect(element(by.css('.timeout.finished')).isDisplayed()).toBe(true);
+  });
 });

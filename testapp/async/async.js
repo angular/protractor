@@ -32,6 +32,18 @@ function AsyncCtrl($scope, $http, $timeout, $location) {
     }, 5000);
   };
 
+  $scope.randomTimeouts = function() {
+    var result = ['timeoutSuccess', 'timeoutFailure'];
+    $scope.timeoutSuccess = '';
+    $scope.timeoutFailure = '';
+    var i = Math.floor(Math.random() * 2);
+    result = result[i];
+
+    $timeout(function(){
+      $scope[result] = 'Success!!';
+    }, 500);
+  }
+
   $scope.slowAngularTimeout = function() {
     $scope.slowAngularTimeoutStatus = 'pending...';
     $timeout(function() {

@@ -32,4 +32,10 @@ Slow things that can happen:
     <button ng-click="changeTemplateUrl()">ng-include URL change</button>
     <div class="included" ng-include="templateUrl"></div>
   </li>
+  <li>
+    <button ng-click="randomTimeouts()">Two possible resutls</button>
+    <span class="timeout success">{{timeoutSuccess}}</span>
+    <span class="timeout failure">{{timeoutFailure}}</span>
+    <span class="timeout finished" ng-show="timeoutSuccess || timeoutFailure">Finished</span>
+  </li>
 </ul>
