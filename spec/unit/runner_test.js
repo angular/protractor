@@ -30,11 +30,34 @@ describe('the Protractor runner', function() {
     });
   });
 
+  it('should wait for promise capabilities to resolve', function(done) {
+    var config = {
+      mockSelenium: true,
+      specs: ['*.js'],
+      framework: 'debugprint',
+      capabilities: q.when({
+        'browserName': 'customfortest'
+      })
+    };
+    var exitCode;
+    Runner.prototype.exit_ = function(exit) {
+      exitCode = exit;
+    };
+    var runner = new Runner(config);
+
+    runner.run().then(function() {
+      expect(runner.getConfig().capabilities.browserName).
+          toEqual('customfortest');
+      expect(exitCode).toEqual(0);
+      done();
+    });
+  });
+
   it('should fail with no specs', function() {
     var config = {
       mockSelenium: true,
       specs: [],
-      framework: 'simpleprint'
+      framework: 'debugprint'
     };
     var exitCode;
     Runner.prototype.exit_ = function(exit) {
