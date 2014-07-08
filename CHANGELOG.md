@@ -1,3 +1,19 @@
+# 1.0.0-rc3
+
+## Features
+
+- ([f0e7984](https://github.com/angular/protractor/commit/f0e7984cdd169df947142c1cff0bd1bc33ac995b)) 
+  feat(launcher): append capability tag for all output
+
+## Bug Fixes
+
+- ([1198dde](https://github.com/angular/protractor/commit/1198ddef9e353383819fca3a40bdaba0db22f96f)) 
+  fix(navigation): use empty html data urls for page resets instead of about:blank
+
+  Except on internet explorer, which does not allow data urls.
+
+  Closes #1023.
+
 # 1.0.0-rc2
 
 ## Dependency Version Updates
