@@ -51,14 +51,14 @@ exports.config = {
 
   jasmineNodeOpts: {
     isVerbose: true,
-    showTiming: true
+    showTiming: true,
+    defaultTimeoutInterval: 60000
   },
 
   params: {
     login: {
       user: 'Jane',
-      password: '1234',
-      defaultTimeoutInterval: 60000
+      password: '1234'
     }
   }
 };
