@@ -10,7 +10,7 @@ Promises and the Control Flow
 -----------------------------
 
 WebDriverJS (and thus, Protractor) APIs are entirely asynchronous. All functions
-return [promises](https://github.com/kriskowal/q). 
+return [promises](https://code.google.com/p/selenium/source/browse/javascript/webdriver/promise.js). 
 
 WebDriverJS maintains a queue of pending promises, called the control flow,
 to keep execution organized. For example, consider the test
