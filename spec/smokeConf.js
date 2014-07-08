@@ -57,7 +57,8 @@ exports.config = {
   params: {
     login: {
       user: 'Jane',
-      password: '1234'
+      password: '1234',
+      defaultTimeoutInterval: 60000
     }
   }
 };
