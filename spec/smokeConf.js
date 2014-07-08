@@ -12,7 +12,7 @@ exports.config = {
     'basic/synchronize_spec.js'
   ],
 
-  // Two latest versions of Chrome, Firefox, IE.
+  // Two latest versions of Chrome, Firefox, IE, Safari.
   // TODO - add mobile.
   multiCapabilities: [{
     'browserName': 'chrome',
@@ -28,6 +28,13 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '29',
+    'selenium-version': '2.42.2'
+  }, {
+    'browserName': 'safari',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'Protractor smoke tests',
+    'version': '7',
     'selenium-version': '2.42.2'
   }, {
     'browserName': 'internet explorer',
