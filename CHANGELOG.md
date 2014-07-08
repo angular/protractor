@@ -1,3 +1,10 @@
+# 1.0.0-rc4
+
+- ([ab1d0be](https://github.com/angular/protractor/commit/ab1d0be8cd83b37906b9b8750dd9d85d72
+  fix(navigation): fix using browser.get with safari driver
+
+  SafariDriver fails with data urls - see #1049. Reverting to use about:blank for now.
+
 # 1.0.0-rc3
 
 ## Features
