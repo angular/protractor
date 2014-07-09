@@ -52,6 +52,11 @@ exports.config = {
   // The tests will be run remotely using Sauce Labs.
   sauceUser: null,
   sauceKey: null,
+  // Use sauceSeleniumAddress if you need to customize the URL Protractor
+  // uses to connect to sauce labs (for example, if you are tunneling selenium
+  // traffic through a sauce connect tunnel). Default is
+  // ondemand.saucelabs.com:80/wd/hub
+  sauceSeleniumAddress: null,
 
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
