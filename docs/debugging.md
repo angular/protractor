@@ -162,31 +162,5 @@ browser.takeScreenshot().then(function (png) {
 Timeouts
 --------
 
-Protractor also contains an example suite of tests which time out. Run with
-
-```
-protractor debugging/timeoutConf.js
-```
-
-Jasmine tests have a timeout which can be set
-- By setting `jasmineNodeOpts.defaultTimeoutInterval` in the config, or
-- By setting `jasmine.getEnv().defaultTimeoutInterval = myNumber;` in your test,
-  or
-- By adding a third parameter, timeout in ms, to your spec
-  `it('should pass', function() {...}, 5555);`
-
-Webdriver has a timeout for script execution, which can be set with
-`driver.manage().timeouts().setScriptTimeout`. Protractor sets this to 11
-seconds by default. If you need a longer timeout, consider setting this in
-the `onPrepare` function in your configuration file.
-
-Protractor attempts to synchronize with your page before performing actions.
-This means waiting for all $timeout or $http requests to resolve, as well as
-letting the current $digest cycle finish. If your page has not synchronized
-within the script execution timeout, Protractor will fail with the message
-'Timed out waiting for Protractor to synchronize with the page'.
-
-If your website uses $timeout or $http to continuously poll, Protractor will
-interpret that as your site being busy and will time out on all requests. See
-[this issue](https://github.com/angular/protractor/issues/49) for more
-information.
+There are several ways that Protractor can time out - see the [Timeouts](/docs/timeouts.md)
+reference for full documentation.
