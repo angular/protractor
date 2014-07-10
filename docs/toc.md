@@ -11,7 +11,7 @@ Protractor Setup
 Protractor Tests
  - [Overview](/docs/overview.md)
  - [Using Locators](/docs/locators.md)
- - [Using Page Objects](/docs/page-objects.md)
+ - [Organizing Tests: Page Objects](/docs/page-objects.md)
  - [Debugging Protractor Tests](/docs/debugging.md)
 
 Reference

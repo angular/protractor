@@ -1,7 +1,9 @@
-Organizing Real Tests: Page Objects
+Organizing Tests: Page Objects
 -----------------------------------
 
-When writing real tests scripts for your page, it's best to use the [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects) pattern to make your tests more readable. In Protractor, this could look like:
+When writing test scripts for the pages of your application, it's best to use the [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects) pattern to organize and make your tests more readable. 
+
+In Protractor, this could look like:
 
 ```javascript
 var AngularHomepage = function() {
@@ -50,7 +52,8 @@ exports.config = {
   // include glob patterns.
   suites: {
     homepage: 'tests/e2e/homepage/**/*Spec.js',
-    search: ['tests/e2e/contact_search/**/*Spec.js', 'tests/e2e/venue_search/**/*Spec.js']
+    search: ['tests/e2e/contact_search/**/*Spec.js',
+      'tests/e2e/venue_search/**/*Spec.js']
   },
 
   // Options to be passed to Jasmine-node.
@@ -60,9 +63,6 @@ exports.config = {
 };
 ```
 
-You can then easily switch from the command line between running one or the other
-suite of tests:
+You can then easily switch from the command line between running one or the other suite of tests. This will only run the homepage section of the tests:
 
     protractor protractor.conf.js --suite homepage
-
-will only run the homepage section of the tests.
