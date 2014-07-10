@@ -12,8 +12,8 @@ and issue archives.
 Issues
 ------
 
-If you have a bug or enhancement request, please file an issue.
-Before submitting an issue, please search the issue archive, read the
+If you have a bug or feature request, please file an issue.
+Before submitting an issue, please search the issue archive to help reduce duplicates, and read the
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
 When submitting an issue, please include context from your test and
@@ -50,3 +50,15 @@ In summary, this style is
 
 Where `<type>` is one of [feat, fix, docs, style, refactor, test, chore] and
 `<scope>` is a quick descriptor of the location of the change, such as cli, clientSideScripts, element.
+
+Testing your changes
+--------------------
+
+Test your changes on your machine by running `npm start` to start up the test application,
+then `npm test` to run the test suite. This assumes you have a Selenium Server running
+at localhost:4444.
+
+When you submit a PR, tests will also be run on the Continuous Integration environment
+through Travis. If your tests fail on Travis, take a look at the logs - if the failures
+are known flakes in Internet Explorer or Safari you can ignore them, but otherwise
+Travis should pass.
