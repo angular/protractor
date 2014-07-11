@@ -244,4 +244,4 @@ ElementArrayFinder also has methods `each`, `map`, `filter`, and `reduce` which 
 Where to go next
 ----------------
 
-This should get you stated writing tests. To learn more, see the documentation [table of contents](/docs/toc.md).
+This should get you started writing tests. To learn more, see the documentation [table of contents](/docs/toc.md).
