@@ -307,6 +307,99 @@ describe('ElementFinder', function() {
   });
 });
 
+describe('ElementArrayFinder', function() {
+
+  it('action should act on all elements', function() {
+    browser.get('index.html#/conflict');
+
+    var multiElement = element.all(by.binding('item.reusedBinding'));
+    expect(multiElement.getText()).toEqual(['Outer: outer', 'Inner: inner']);
+  });
+
+  it('action should act on all elements selected by filter', function() {
+    browser.get('index.html');
+
+    var multiElement = $$('#checkboxes input').filter(function(elem, index) {
+      return index == 1 || index == 3;
+    });
+    multiElement.click();
+    expect($('#letterlist').getText()).toEqual('wy');
+  });
+
+  it('filter should chain with index correctly', function() {
+    browser.get('index.html');
+
+    var elem = $$('#checkboxes input').filter(function(elem, index) {
+      return index == 1 || index == 3;
+    }).last();
+    elem.click();
+    expect($('#letterlist').getText()).toEqual('y');
+  });
+
+  it('filter should work in page object', function() {
+    var elements = element.all(by.css('.menu li a')).filter(function(elem) {
+      return elem.getText().then(function(text) {
+        return text === 'bindings';
+      });
+    });
+
+    browser.get('index.html#/form');
+    expect(elements.count()).toEqual(1);
+  });
+
+  it('should be able to get ElementFinder from filtered ElementArrayFinder', function() {
+    var containsI = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("i") > -1;
+      });
+    };
+    var elements = element.all(by.css('.menu li a')).filter(containsI);
+    
+    browser.get('index.html#/form');
+    expect(elements.count()).toEqual(4);
+    expect(elements.get(3).getText()).toEqual('animation');
+  });
+
+  it('filter should be compoundable', function() {
+    var containsA = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("a") > -1;
+      });
+    };
+    var containsI = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("i") > -1;
+      });
+    };
+    var elements = element.all(by.css('.menu li a')).filter(containsA).filter(containsI);
+    
+    browser.get('index.html#/form');
+    expect(elements.count()).toEqual(1);
+    elements.then(function(arr) {
+      expect(arr[0].getText()).toEqual('animation');
+    });
+  });
+
+  it('filter should work with reduce', function() {
+    var containsA = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("a") > -1;
+      });
+    };
+    browser.get('index.html#/form');
+    var value = element.all(by.css('.menu li a')).filter(containsA).
+        reduce(function(currentValue, elem, index, elemArr) {
+          return elem.getText().then(function(text) {
+            return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
+          });
+        }, '');
+    
+    expect(value).toEqual('0/3: repeater\n' +
+                          '1/3: async\n' +
+                          '2/3: animation\n');
+  });
+});
+
 describe('evaluating statements', function() {
   beforeEach(function() {
     browser.get('index.html#/form');
