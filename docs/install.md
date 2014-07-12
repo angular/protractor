@@ -3,14 +3,14 @@ Getting Installed
 
 Prerequisites
 -------------
-Node.js
+
+**Node.js**
 
 Protractor is a Node.js program. To run Protractor, you will need to have Node.js installed. Check the version of node you have by running `node --version`. It should be greater than v0.10.0. 
 
 Node.js comes with the Protractor npm package, which you can use to install Protractor.
 
-JDK
----
+**JDK**
 
 To run the Selenium Server, you will need to have Java Development Kit (JDK) installed.  Check this by running `java --version` from the command line.
 

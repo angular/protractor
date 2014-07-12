@@ -18,6 +18,5 @@ Reference
  - [Configuration File Reference](/docs/referenceConf.js)
  - [Protractor API](/docs/api.md)
  - [Timeouts](/docs/timeouts.md)
- - [Using the Protractor Library](/docs/library-only.md)
  - [The WebDriver Control Flow](/docs/control-flow.md)
  - [FAQ](/docs/faq.md)
