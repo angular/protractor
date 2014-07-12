@@ -1,7 +1,7 @@
 Protractor [![Build Status](https://travis-ci.org/angular/protractor.png?branch=master)](https://travis-ci.org/angular/protractor)
 ==========
 
-Protractor is an end-to-end test framework for [AngularJS](http://angularjs.org/) applications. Protractor is a Node.js program built on top of [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). Protractor runs tests against your application running in a real browser, interacting with it as a user would. 
+Protractor is an end-to-end test framework for [AngularJS](http://angularjs.org/) applications. Protractor is a [Node.js](http://nodejs.org/) program built on top of [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs). Protractor runs tests against your application running in a real browser, interacting with it as a user would. 
 
 
 Getting Started
@@ -13,10 +13,12 @@ To get set up and running  quickly:
  - Work through the [Tutorial](https://github.com/angular/protractor/blob/master/docs/tutorial.md)
  - Take a look at the [Table of Contents](https://github.com/angular/protractor/blob/master/docs/toc.md)
 
+Once you are familiar with the tutorial, you’re ready to move on. To modify your environment, see the Protractor Setup docs. To start writing tests, see the Protractor Tests docs.
+
 To better understand how Protractor works with the Selenium WebDriver and Selenium Sever see the reference materials.
 
 
-For contributors
+For Contributors
 ----------------
 Clone the github repository:
 

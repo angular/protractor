@@ -41,7 +41,8 @@ capabilities: {
 
 You may need to install a separate binary to run another browser, such as IE or Android.
 
-### Adding chrome-specific options
+Adding Chrome specific options
+------------------------------
 
 Chrome options are nested in the `chromeOptions` object. A full list of options is at [the chromedriver site](https://sites.google.com/a/chromium.org/chromedriver/capabilities). For example, to show an FPS counter in the upper right, your configuration would look like this:
 
@@ -354,16 +355,4 @@ capabilities: {
    */
   'phantomjs.cli.args':['--logfile=PATH', '--loglevel=DEBUG']
 }
-```
-
-Appendix A: Using with the Protractor Library
----------------------------------------------
-
-If you are not using the Protractor runner and you are setting up webdriver yourself, you will need to create a capabilities object and pass it in to the webdriver builder. The `webdriver.Capabilities` namespace offers some preset options. See [the webdriver capabilities source](https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js).
-
-```javascript
-driver = new webdriver.Builder().
-	  usingServer('http://localhost:4444/wd/hub').
-    withCapabilities(webdriver.Capabilities.phantomjs()).
-    build();
 ```
