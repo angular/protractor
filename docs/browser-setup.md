@@ -3,6 +3,24 @@ Setting up your Browser
 
 Protractor is agnostic to how you set up your browser - it wraps WebDriverJS, so all browser setup for WebDriverJS applies. This doc serves as a collection for information surrounding how to set up browsers.
 
+Browser Support
+---------------
+Protractor uses WebDriver, so Protractor support for a particular browser is tied to the capabilities available in the Driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.
+
+| Driver                 | Support      | Known Issues    |
+|------------------------|--------------|-----------------|
+|ChromeDriver            |Yes           |                 |
+|FirefoxDriver           |Yes           |[#480](https://github.com/angular/protractor/issues/480) clicking options doesn't update the model|
+|SafariDriver            |Yes           |[#481](https://github.com/angular/protractor/issues/481) minus key doesn't work, SafariDriver does not support modals, [#1051](https://github.com/angular/protractor/issues/1051) We see occasional page loading timeouts|
+|IEDriver                |Yes           |[#778](https://github.com/angular/protractor/issues/778),  can be slow, [#1052](https://github.com/angular/protractor/issues/1052) often times out waiting for page load|
+|OperaDriver             |No            |                 |
+|ios-Driver              |No            |                 |
+|Appium - iOS/Safari     |Yes*           | drag and drop not supported (session/:sessionid/buttondown unimplemented) |
+|Appium - Android/Chrome |Yes*           |                 |
+|Selendroid              |Yes*           |                 |
+
+* These drivers are not yet in the Protractor smoke tests.
+
 Configuring Browsers
 --------------------
 
@@ -23,7 +41,8 @@ capabilities: {
 
 You may need to install a separate binary to run another browser, such as IE or Android.
 
-### Adding chrome-specific options
+Adding Chrome specific options
+------------------------------
 
 Chrome options are nested in the `chromeOptions` object. A full list of options is at [the chromedriver site](https://sites.google.com/a/chromium.org/chromedriver/capabilities). For example, to show an FPS counter in the upper right, your configuration would look like this:
 
@@ -52,21 +71,6 @@ multiCapabilities: [{
 
 Protractor will run tests in parallel against each set of capabilities. Please note that if multiCapabilities is defined, the runner will ignore the `capabilities` configuration.
 
-Browser Support
----------------
-Protractor uses webdriver, so protractor support for a particular browser is tied to the capabilities available in the Driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.
-
-| Driver                 | Support      | Known Issues    |
-|------------------------|--------------|-----------------|
-|ChromeDriver            |Yes           |                 |
-|FirefoxDriver           |Yes           |[#480](https://github.com/angular/protractor/issues/480)|
-|SafariDriver            |Yes           |[#481](https://github.com/angular/protractor/issues/481), SafariDriver does not support modals|
-|IEDriver                |Yes           |[#778](https://github.com/angular/protractor/issues/778), IEDriver can be slow|
-|OperaDriver             |No            |                 |
-|ios-Driver              |No            |                 |
-|Appium - iOS/Safari     |Yes           | drag and drop not supported (session/:sessionid/buttondown unimplemented) |
-|Appium - Android/Chrome |Yes           |                 |
-|Selendroid              |Yes           |                 |
 
 How to set up Protractor with Appium - Android/Chrome
 -------------------------------------
@@ -351,16 +355,4 @@ capabilities: {
    */
   'phantomjs.cli.args':['--logfile=PATH', '--loglevel=DEBUG']
 }
-```
-
-Appendix A: Using with the Protractor Library
----------------------------------------------
-
-If you are not using the Protractor runner (for example, you're using Mocha) and you are setting up webdriver yourself, you will need to create a capabilities object and pass it in to the webdriver builder. The `webdriver.Capabilities` namespace offers some preset options. See [the webdriver capabilities source](https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js).
-
-```javascript
-driver = new webdriver.Builder().
-	  usingServer('http://localhost:4444/wd/hub').
-    withCapabilities(webdriver.Capabilities.phantomjs()).
-    build();
 ```

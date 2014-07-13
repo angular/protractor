@@ -4,26 +4,8 @@ FAQ
 My tests time out in Protractor, but everything's working fine when running manually. What's up?
 --------------------
 
-Protractor attempts to wait until the page is completely loaded before
-performing any action (such as finding an element or sending a command to
-an element). If your application continuously polls $timeout or $http, it will
-never be registered as completely loaded. You should use the
-[$interval service](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3). Further
-discussion is in [issue 49](https://github.com/angular/protractor/issues/49).
-
-You may also be running into a timeout because your page is slow to load
-or perform actions. By default, Protractor sets the timeout for actions to
-11 seconds. You can change this in your config with the `allScriptsTimeout`
-options.
-```javascript
-  exports.config = {
-    // Override the timeout for webdriver to 20 seconds.
-    allScriptsTimeout: 20000,
-  }
-```
-
-Check out the [debugging doc](https://github.com/angular/protractor/blob/master/docs/debugging.md#timeouts)
-for more information.
+There are several ways that Protractor can time out - see the [Timeouts](/docs/timeouts.md)
+reference for full documentation.
 
 Why both Karma and Protractor? When do I use which?
 ---------------------------------------------------
@@ -73,7 +55,7 @@ How can I interact directly with the JavaScript running in my app?
 
 In general, the design of WebDriver tests is to interact with the page as a user would, so it gets a little tricky if you want to interact with the JavaScript directly. You should avoid it unless you have a good reason. However, there are ways of doing it.
 
-You can use the evaluate function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.
+You can use the `evaluate` function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.
 ```javascript
 by.css('.foo').evaluate('bar')
 ```
@@ -120,7 +102,7 @@ jasmine.getEnv().addReporter(new function() {
   };
 });
 ```
-Note, you can also choose to take a screenshot in AfterEach. However, because Jasmine does not execute AfterEach for timeouts, those would not produce screenshots
+Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
 * For failures of individual expectations, you can override jasmine's addMatcherResult function as such:
 
 ```javascript
@@ -139,7 +121,7 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
-Use jasmine-reporters and add a JUnit XML Reporter. Check out [this example](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js).
+You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out [this example](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you'll need to be sure to use version 1.0.0.
 
 How can I catch errors such as ElementNotFound?
 -----------------------------------------------
