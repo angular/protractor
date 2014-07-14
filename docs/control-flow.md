@@ -1,9 +1,9 @@
-The Webdriver Control Flow
+The WebDriver Control Flow
 ==========================
 
-The WebDriverJS API is based on [promises](https://code.google.com/p/selenium/wiki/WebDriverJs#Promises),
+The [WebDriverJS API](https://code.google.com/p/selenium/wiki/WebDriverJs#Understanding_the_API) is based on [promises](https://code.google.com/p/selenium/wiki/WebDriverJs#Promises),
 which are managed by a [control flow](https://code.google.com/p/selenium/wiki/WebDriverJs#Control_Flows)
-and adapated for [Jasmine](http://jasmine.github.io/1.3/introduction.html).
+and adapted for [Jasmine](http://jasmine.github.io/1.3/introduction.html).
 A short summary about how Protractor interacts with the control flow is presented below.
 
 
