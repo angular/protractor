@@ -1,7 +1,7 @@
 Using Locators
 ==============
 
-The heart of end to end tests for webpages is finding DOM elements, interacting with them, and getting information about the current state of your application. This doc is an overview of how to locate and perform actions on DOM elements using Protractor.
+The heart of end-to-end tests for webpages is finding DOM elements, interacting with them, and getting information about the current state of your application. This doc is an overview of how to locate and perform actions on DOM elements using Protractor.
 
 Overview
 --------
@@ -31,7 +31,7 @@ by.model('name')
 by.binding('bindingname')
 ```
 
-See a [list of Protractor specific locators](/docs/api.md#api-protractorby).
+For a list of Protractor-specific locators, see the [Protractor API: ProtractorBy](/docs/api.md#api-protractorby).
 
 The locators are passed to the `element` function, as below:
 
@@ -54,7 +54,7 @@ element(by.css('my-css'));
 Actions
 -------
 
-`element()` returns an ElementFinder object. The ElementFinder knows how to locate the DOM element using the locator you passed in as a parameter, but it has not actually done so yet. It will not contact the browser until an *action* method has been called.
+The `element()` function returns an ElementFinder object. The ElementFinder knows how to locate the DOM element using the locator you passed in as a parameter, but it has not actually done so yet. It will not contact the browser until an *action* method has been called.
 
 The most common action methods are:
 
@@ -114,28 +114,30 @@ element.all(locator).last();
 Finding Sub-Elements
 --------------------
 
-Simply chain element and element.all together to find sub-elements. For example:
+To find sub-elements, simply chain element and element.all functions together. For example,
+Using a single locator to find:
 
-Using a single locator to find an element:
+ - an element
+    ```js
+    element(by.css('some-css'));
+    ```
 
-```js
-element(by.css('some-css'));
-```
+ - a list of elements:
+    ```js
+    element.all(by.css('some-css'));
+    ```
 
-Using a single locator to find a list of elements:
-```js
-element.all(by.css('some-css'));
-```
+Using chained locators to find:
 
-to find a sub-element:
-```js
-element(by.css('some-css')).element(by.tag('tag-within-css'));
-```
+ - a sub-element:
+    ```js
+    element(by.css('some-css')).element(by.tag('tag-within-css'));
+    ```
 
-to find a list of sub-elements:
-```js
-element(by.css('some-css')).all(by.tag('tag-within-css'));
-```
+ - to find a list of sub-elements:
+    ```js
+    element(by.css('some-css')).all(by.tag('tag-within-css'));
+    ```
 
 You can chain with get/first/last as well like so:
 
@@ -145,7 +147,7 @@ element.all(by.css('some-css')).get(index).element(by.tag('tag-within-css'));
 element.all(by.css('some-css')).first().all(by.tag('tag-within-css'));
 ```
 
-Behind the scenes: ElementFinders versus WebElements
+Behind the Scenes: ElementFinders versus WebElements
 ----------------------------------------------------
 
 If you're familiar with WebDriver and WebElements, or you're just curious about the WebElements mentioned above, you may be wondering how they relate to ElementFinders.
@@ -163,7 +165,7 @@ var myButton = element(locator);
 // No command has been sent to the browser yet.
 ```
 
-Not until you call an action will the browser recieve any commands.
+The browser will not receive any commands until you call an action.
 
 ```js
 myButton.click();
@@ -174,5 +176,5 @@ ElementFinders also enable chaining to find subelements, such as `element(locato
 
 All WebElement actions are wrapped in this way and available on the ElementFinder, in addition to a couple helper methods like `isPresent`. 
 
-You may always access the underlying WebElement using `element(locator).getWebElement()`, but you should not need to.
+You can always access the underlying WebElement using `element(locator).getWebElement()`, but you should not need to.
 
