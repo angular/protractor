@@ -1,5 +1,5 @@
-Test Frameworks
-===============
+Choosing a Framework
+====================
 
 Protractor supports three behavior driven development (BDD) test frameworks: Jasmine, Mocha, and Cucumber. These frameworks are based on JavaScript and Node.js and provide the syntax, scaffolding, and reporting tools you will use to write and manage your tests.
 
