@@ -1,3 +1,34 @@
+# 1.0.0-rc5
+
+## Features
+
+- ([51a5e89](https://github.com/angular/protractor/commit/51a5e89f7dace45e61d8eab70e1ea6e9354d4de6)) 
+  feat(config): allow setting the get page timeout globally from the config
+
+  To change the timeout for how long a page is allowed to stall on `browser.get`, change
+  `getPageTimeout: timeout_in_millis` in the configuration. As before, you may also change the
+  timeout for one particular `get` call by using a second parameter:
+  `browser.get(url, timeout_in_sec)`
+
+## Bug Fixes
+
+- ([985ff27](https://github.com/angular/protractor/commit/985ff27c9a94cca83af8db5bf7e570d826b23838)) 
+  fix(configParser): load new functions from configs
+
+  Closes #1043
+
+## Breaking Changes
+
+- ([51a5e89](https://github.com/angular/protractor/commit/51a5e89f7dace45e61d8eab70e1ea6e9354d4de6)) 
+  feat(config): allow setting the get page timeout globally from the config
+
+  This change contains a small breaking change for consistency. Previously, the second parameter to
+  `get` changed the timeout in seconds. Now, the units are milliseconds. This is consistent with
+  all the other timeouts, as well as base JavaScript functions like setTimeout.
+
+   - before: `browser.get(url, 4)`
+  - after: `browser.get(url, 4000)`
+
 # 1.0.0-rc4
 
 ## Bug Fixes
