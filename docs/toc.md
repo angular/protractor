@@ -6,6 +6,7 @@ Quick Start
 
 Protractor Setup
  - [Getting Installed](/docs/install.md)
+ - [Test Frameworks](/docs/frameworks.md)
  - [Setting Up Your Browser](/docs/browser-setup.md)
 
 Protractor Tests

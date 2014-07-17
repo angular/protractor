@@ -53,7 +53,8 @@ Writing tests
 -------------
 
 By default, Protractor uses [Jasmine](http://pivotal.github.io/jasmine/) as its
-test scaffolding. (If you'd prefer to use Mocha, see [Using mocha](/docs/using-mocha.md)) Protractor exposes several global variables.
+test scaffolding. (If you'd prefer to use a different framework, such as Mocha,
+see [Frameworks](/docs/frameworks.md)) Protractor exposes several global variables.
 
  * `browser` this is the a wrapper around an instance of webdriver. Used for
  navigation and page-wide information.
