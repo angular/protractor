@@ -56,6 +56,10 @@ exports.config = {
 
   baseUrl: env.baseUrl,
 
+  // Up the timeouts for the slower browsers (IE, Safari).
+  allScriptsTimeout: 30000,
+  getPageTimeout: 30000,
+
   jasmineNodeOpts: {
     isVerbose: true,
     showTiming: true,
