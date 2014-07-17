@@ -7,6 +7,8 @@ Browser Support
 ---------------
 Protractor uses WebDriver, so Protractor support for a particular browser is tied to the capabilities available in the Driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.
 
+Protractor supports the two latest major versions of Chrome, Firefox, Safari, and IE.
+
 | Driver                 | Support      | Known Issues    |
 |------------------------|--------------|-----------------|
 |ChromeDriver            |Yes           |                 |
