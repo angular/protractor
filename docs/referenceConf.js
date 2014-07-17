@@ -128,9 +128,13 @@ exports.config = {
   // body, but is necessary if ng-app is on a descendant of <body>.
   rootElement: 'body',
 
-  // The timeout for each script run on the browser. This should be longer
-  // than the maximum time your application needs to stabilize between tasks.
+  // The timeout in milliseconds for each script run on the browser. This should
+  // be longer than the maximum time your application needs to stabilize between
+  // tasks.
   allScriptsTimeout: 11000,
+
+  // How long to wait for a page to load.
+  getPageTimeout: 10000,
 
   // A callback function called once protractor is ready and available, and
   // before the specs are executed.
