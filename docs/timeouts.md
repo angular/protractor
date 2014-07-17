@@ -17,7 +17,7 @@ be loaded and the new URL to appear before continuing.
 
  - Default timeout: 10 seconds
 
- - How to change: Pass an additional parameter: `browser.get(address, timeout_in_sec)`
+ - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
 **Waiting for Page Synchronization**
 
@@ -39,7 +39,7 @@ Protractor only works with Angular applications, so it waits for the `angular` v
 
  - Default timeout: 10 seconds
 
- - How to change: Pass an additional parameter: `browser.get(address, timeout_in_sec)`
+ - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
 
 Timeouts from WebDriver
