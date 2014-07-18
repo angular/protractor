@@ -1,3 +1,24 @@
+# 1.0.0-rc6
+
+## Dependency Version Upgrades
+
+- ([b6ab644](https://github.com/angular/protractor/commit/b6ab644dd8105d3f64e347342a0ae2ad2f0100fc)) 
+  chore(jasminewd): update to version 1.0.4
+
+  This version contains a fix for too many timeout messages.
+
+## Bug Fixes
+
+- ([0c4a70e](https://github.com/angular/protractor/commit/0c4a70e0ffbbf4373dbd9f1ab29daabe9338d57b)) 
+  fix(protractor) fix stack traces for WebElement errors
+
+  When angular/protractor@3c0e727136ab3d397c1a9a2bb02692d0aeb9be40 refactored `element()` into the
+  ElementFinder object, the function lost some of its error handling.  This removed references to
+  frames inside tests (`it()` blocks), making it hard to tell where the error was actually
+  occurring.
+
+  This commit fixes these problems, showing full stack traces for WebElement errors.
+
 # 1.0.0-rc5
 
 ## Features
