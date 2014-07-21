@@ -1,3 +1,7 @@
+# 1.0.0
+
+No changes from rc6.
+
 # 1.0.0-rc6
 
 ## Dependency Version Upgrades
