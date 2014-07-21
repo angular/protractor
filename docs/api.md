@@ -1,4 +1,4 @@
-Protractor API 1.0.0-rc6
+Protractor API 1.0.0
 ==============
 
 
