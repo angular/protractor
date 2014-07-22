@@ -131,20 +131,20 @@ Using chained locators to find:
 
  - a sub-element:
     ```js
-    element(by.css('some-css')).element(by.tag('tag-within-css'));
+    element(by.css('some-css')).element(by.tagName('tag-within-css'));
     ```
 
  - to find a list of sub-elements:
     ```js
-    element(by.css('some-css')).all(by.tag('tag-within-css'));
+    element(by.css('some-css')).all(by.tagName('tag-within-css'));
     ```
 
 You can chain with get/first/last as well like so:
 
 ```js
-element.all(by.css('some-css')).first().element(by.tag('tag-within-css'));
-element.all(by.css('some-css')).get(index).element(by.tag('tag-within-css'));
-element.all(by.css('some-css')).first().all(by.tag('tag-within-css'));
+element.all(by.css('some-css')).first().element(by.tagName('tag-within-css'));
+element.all(by.css('some-css')).get(index).element(by.tagName('tag-within-css'));
+element.all(by.css('some-css')).first().all(by.tagName('tag-within-css'));
 ```
 
 Behind the Scenes: ElementFinders versus WebElements
