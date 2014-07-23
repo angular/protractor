@@ -12,7 +12,7 @@ Node.js comes with the Protractor npm package, which you can use to install Prot
 
 **JDK**
 
-To run the Selenium Server, you will need to have Java Development Kit (JDK) installed.  Check this by running `java --version` from the command line.
+To run the Selenium Server, you will need to have Java Development Kit (JDK) installed.  Check this by running `java -version` from the command line.
 
 Installing Protractor
 ---------------------
