@@ -7,7 +7,7 @@ My tests time out in Protractor, but everything's working fine when running manu
 There are several ways that Protractor can time out - see the [Timeouts](/docs/timeouts.md)
 reference for full documentation.
 
-Why both Karma and Protractor? When do I use which?
+What's the difference between [Karma](karma-runner.github.io) and Protractor? When do I use which?
 ---------------------------------------------------
 
 Karma is a great tool for unit testing, and Protractor is intended for
