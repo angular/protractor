@@ -1,40 +1,38 @@
 Debugging Protractor Tests
 ==========================
 
-End to end tests can be difficult to debug because they depend on an entire
+End-to-end tests can be difficult to debug because they depend on an entire
 system, may depend on prior actions (such as log-in), and may change the
-state of the application they're testing. Webdriver tests in particular
-can be difficult to debug because long error messages and the separation
-between the browser and the process running the test. This document contains
-advice on what to look for and how Protractor can help.
+state of the application they're testing. WebDriver tests in particular
+can be difficult to debug because of long error messages and the separation
+between the browser and the process running the test.
 
-Types of failure
+Types of Failure
 ----------------
 
-Protractor comes with [examples of failing tests](https://github.com/angular/protractor/blob/master/debugging/failure_spec.js).
-To run, start up the test application and a selenium server, and run
+Protractor comes with examples of failing tests ([failure_spec.js](https://github.com/angular/protractor/blob/master/debugging/failure_spec.js)).
+To run, start up the test application and a Selenium Server, and run the command below. Then look at all the stack traces.
 
 ```
 protractor debugging/failureConf.js
 ```
 
-then look at all the pretty stack traces!
-
 This test suite shows various types of failure:
--  Webdriver throws an error. When a command cannot be completed, for example
-   an element is not found, webdriver throws an error.
+
+-  WebDriver throws an error - When a command cannot be completed, for example
+   an element is not found.
 -  Protractor will fail when it cannot find the Angular library on a page.
-   If your test needs to interact with a non-angular page, access the webdriver
+   If your test needs to interact with a non-angular page, access the WebDriver
    instance directly with `browser.driver`.
--  An expectation failure. This shows what a normal expectation failure looks
+-  Expectation Failure - Shows what a normal expectation failure looks
    like.
 
-Pausing to debug
+Pausing to Debug
 ----------------
 
 Protractor allows you to pause your test at any point and interact with the
-browser. To do this insert `browser.debugger();` into your test where you wish
-to break.
+browser. To do this insert `browser.debugger();` into your test where you want
+to break:
 
 ```javascript
 it('should fail to find a non-existent element', function() {
@@ -51,13 +49,13 @@ it('should fail to find a non-existent element', function() {
 });
 ```
 
-Then run the test in debug mode
+Then run the test in debug mode:
 
 ```
 protractor debug debugging/failureConf.js
 ```
 
-This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
+This example uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
 `c` to start execution and continue after the breakpoint.
 
 We use `browser.debugger();` instead of node's `debugger;` statement so that
@@ -82,35 +80,37 @@ used from the browser's console.
 ```
 
 
-Setting up WebStorm for debugging
+Setting Up WebStorm for Debugging
 ---------------------------------
 
-1. Open Run/Debug Configurations dialog
-2. Add new Node.js configuration
-3. On Configuration tab set:
+To set up WebStorm for Protractor, do the following:
+
+1. Open the Run/Debug Configurations dialog
+2. Add new Node.js configuration.
+3. On the Configuration tab set:
  - **Node Interpreter**: path to node executable
  - **Working directory**: your project base path
  - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\lib\cli.js*)
  - **Application parameters**: path to your Protractor configuration file (e.g.
  *protractorConfig.js*)
-4. Click OK, place some breakpoints and start debugging
+4. Click OK, place some breakpoints, and start debugging.
 
 
-Testing out Protractor interactively
+Testing Out Protractor Interactively
 ------------------------------------
 
 When debugging or first writing test suites, you may find it helpful to
 try out Protractor commands without starting up the entire test suite. You can
 do this with the element explorer.
 
-Currently, the explorer runs only with chrome and expects a selenium standalone
-server to be running at http://localhost:4444.
+Currently, the explorer runs only with chrome and expects a standalone Selenium
+Server to be running at http://localhost:4444.
 
-From protractor directory, run with:
+From the Protractor directory, run with:
 
     node ./bin/elementexplorer.js <urL>
 
-This will load up the URL on webdriver and put the terminal into a REPL loop.
+This will load up the URL on WebDriver and put the terminal into a REPL loop.
 You will see a > prompt. The `browser`, `element` and `protractor` variables will
 be available. Enter a command such as:
 
@@ -120,11 +120,9 @@ or
 
     > browser.get('http://www.angularjs.org')
 
-try just
+To get a list of functions you can call, try:
 
     > browser
-
-to get a list of functions you can call.
 
 Typing tab at a blank prompt will fill in a suggestion for finding
 elements.
@@ -132,7 +130,7 @@ elements.
 Taking Screenshots
 ------------------
 
-Webdriver can snap a screenshot with `browser.takeScreenshot()`.
+WebDriver can snap a screenshot with `browser.takeScreenshot()`.
 This returns a promise which will resolve to the screenshot as a base-64
 encoded PNG.
 
@@ -162,5 +160,5 @@ browser.takeScreenshot().then(function (png) {
 Timeouts
 --------
 
-There are several ways that Protractor can time out - see the [Timeouts](/docs/timeouts.md)
+There are several ways that Protractor can time out. See the [Timeouts](/docs/timeouts.md)
 reference for full documentation.

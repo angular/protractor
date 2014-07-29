@@ -1,4 +1,4 @@
-Setting Up Your Browser
+Setting Up the Browser
 =======================
 
 Protractor works with [Selenium WebDriver](http://docs.seleniumhq.org/docs/03_webdriver.jsp), a browser automation framework. Selenium WebDriver supports several browser implementations or [drivers](http://docs.seleniumhq.org/docs/03_webdriver.jsp#selenium-webdriver-s-drivers) which are discussed below.

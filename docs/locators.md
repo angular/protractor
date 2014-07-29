@@ -114,7 +114,8 @@ element.all(locator).last();
 Finding Sub-Elements
 --------------------
 
-To find sub-elements, simply chain element and element.all functions together. For example,
+To find sub-elements, simply chain element and element.all functions together as shown below.
+
 Using a single locator to find:
 
  - an element
