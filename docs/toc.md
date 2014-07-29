@@ -1,23 +1,25 @@
 Table of Contents
 =================
 
-Quick Start
- - [Protractor Tutorial](/docs/tutorial.md)
-
 Protractor Setup
- - [Getting Installed](/docs/install.md)
+ - [Setting Up Protractor](/docs/protractor-setup.md)
+ - [Setting Up the Selenium Server](/docs/server-setup.md)
+ - [Setting Up the Browser](/docs/browser-setup.md)
  - [Choosing a Framework](/docs/frameworks.md)
- - [Setting Up Your Browser](/docs/browser-setup.md)
 
 Protractor Tests
- - [Overview](/docs/overview.md)
+ - [Getting Started](/docs/getting-started.md)
+ - [Tutorial](/docs/tutorial.md)
+ - [Working with Spec and Config Files](/docs/api-overview.md)
+ - [Setting Up the System Under Test](/docs/system-setup.md)
  - [Using Locators](/docs/locators.md)
- - [Organizing Tests: Page Objects](/docs/page-objects.md)
+ - [Using Page Objects to Organize Tests](/docs/page-objects.md)
  - [Debugging Protractor Tests](/docs/debugging.md)
 
 Reference
- - [Configuration File Reference](/docs/referenceConf.js)
+ - [Reference Config File](/docs/referenceConf.js)
  - [Protractor API](/docs/api.md)
  - [Timeouts](/docs/timeouts.md)
  - [The WebDriver Control Flow](/docs/control-flow.md)
+ - [How It Works](/docs/infrastructure.md)
  - [FAQ](/docs/faq.md)

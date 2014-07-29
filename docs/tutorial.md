@@ -1,7 +1,7 @@
 Tutorial
 ========
 
-This is a simple tutorial for how to get Protractor set up and running tests.
+This is a simple tutorial that shows you how to set up Protractor and start running tests.
 
 Prerequisites
 -------------
@@ -10,7 +10,7 @@ Protractor is a [Node.js](http://nodejs.org/) program. To run, you will need to 
 
 By default, Protractor uses the [Jasmine](http://jasmine.github.io/1.3/introduction.html) test framework for its testing interface. This tutorial assumes some familiarity with Jasmine.
 
-This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed to run the Selenium Server. Check this by running `java -version` from the command line.
+This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have the [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed to run the standalone Selenium Server. Check this by running `java -version` from the command line.
 
 Setup
 -----
@@ -38,7 +38,7 @@ Open a new command line or terminal window and create a clean folder for testing
 
 Protractor needs two files to run, a **spec file** and a **configuration file**. 
 
-Let's start with a simple test that navigates to an example AngluarJS application and checks its title. The application we'll use is at [http://juliemr.github.io/protractor-demo/](http://juliemr.github.io/protractor-demo/).
+Let's start with a simple test that navigates to an example AngluarJS application and checks its title. We’ll use the Super Calculator application at [http://juliemr.github.io/protractor-demo/](http://juliemr.github.io/protractor-demo/).
 
 Copy the following into spec.js:
 
@@ -101,7 +101,7 @@ This uses the globals `element` and `by`, which are also created by Protractor. 
   - `by.id('gobutton')` to find the element with the given id. This finds `<button id="gobutton">`.
   - `by.binding('latest')` to find the element bound to the variable `latest`. This finds the span containing `{{latest}}`
 
-  [Learn more about locators and ElementFinders.](/docs/locators.md).
+  [Learn more about locators and ElementFinders](/docs/locators.md).
 
 Run the tests with
 
@@ -164,7 +164,7 @@ exports.config = {
 }
 ```
 
-Try running the tests again. You should see the tests running on Firefox instead of Chrome. The `capabilities` object describes the browser to be tested against. For a full list of options, see [the reference configuration](/docs/referenceConf.js).
+Try running the tests again. You should see the tests running on Firefox instead of Chrome. The `capabilities` object describes the browser to be tested against. For a full list of options, see [the reference config file](/docs/referenceConf.js).
 
 You can also run tests on more than one browser at once. Change conf.js to:
 
@@ -244,4 +244,4 @@ ElementArrayFinder also has methods `each`, `map`, `filter`, and `reduce` which 
 Where to go next
 ----------------
 
-This should get you started writing tests. To learn more, see the documentation [table of contents](/docs/toc.md).
+This should get you started writing tests. To learn more, see the documentation [Table of Contents](/docs/toc.md).

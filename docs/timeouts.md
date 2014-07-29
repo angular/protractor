@@ -1,9 +1,7 @@
 Timeouts
 ========
 
-This file provides a reference for the various timeouts involved in a Protractor
-test. Because WebDriver tests are asynchronous and there are many compoments
-involved, there are many reasons a timeout may occur.
+Because WebDriver tests are asynchronous and involve many components, there are several reasons why a timeout could occur in a Protractor test.
 
 Timeouts from Protractor
 ------------------------
@@ -23,7 +21,7 @@ be loaded and the new URL to appear before continuing.
 
 Before performing any action, Protractor asks Angular to wait until the page is synchronized. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, it will
 never be registered as completely loaded. You should use the
-[$interval service](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3).
+$interval service ([interval.js](https://github.com/angular/angular.js/blob/master/src/ng/interval.js)) for anything that polls continuously (introduced in Angular 1.2rc3).
 
  - Looks like: an error in your test results - `Timed out waiting for Protractor to synchronize with the page after 11 seconds.`
 
@@ -72,11 +70,11 @@ If a spec (an 'it' block) takes longer than the Jasmine timeout for any reason, 
 
 Timeouts from Sauce Labs
 ------------------------
-If you are using Sauce Labs, there are a couple additional ways your test can time out. See [Sauce Labs Timeout Documentation](https://docs.saucelabs.com/reference/test-configuration/#timeouts) for more information.
+If you are using Sauce Labs, there are a couple additional ways your test can time out. See [Sauce Labs Timeouts Documentation](https://docs.saucelabs.com/reference/test-configuration/#timeouts) for more information.
 
 **Maximum Test Duration**
 
-Sauce Labs limits the maximum total duration for a test
+Sauce Labs limits the maximum total duration for a test.
 
  - Looks like: `Test exceeded maximum duration after 1800 seconds`
 

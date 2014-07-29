@@ -7,10 +7,10 @@ My tests time out in Protractor, but everything's working fine when running manu
 There are several ways that Protractor can time out - see the [Timeouts](/docs/timeouts.md)
 reference for full documentation.
 
-What's the difference between [Karma](http://karma-runner.github.io) and Protractor? When do I use which?
+What's the difference between Karma and Protractor? When do I use which?
 ---------------------------------------------------
 
-Karma is a great tool for unit testing, and Protractor is intended for
+[Karma](http://karma-runner.github.io) is a great tool for unit testing, and Protractor is intended for
 end to end or integration testing. This means that small tests for the logic
 of your individual controllers, directives, and services should be run using
 Karma. Big tests in which you have a running instance of your entire application
@@ -37,11 +37,11 @@ page is not written with Angular, you'll need to interact with it via
 unwrapped webdriver, which can be accessed like `browser.driver.get()`. 
 
 You can put your log-in code into an `onPrepare` function, which will be run
-once before any of your tests. See [this example](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js).
+once before any of your tests. See this example ([withLoginConf.js](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js)]
 
 Which browsers are supported?
 -----------------------------
-The last two major versions of Chrome, Firefox, IE, and Safari. See details at [browser support](https://github.com/angular/protractor/blob/master/docs/browser-setup.md).
+The last two major versions of Chrome, Firefox, IE, and Safari. See details at [Setting Up the Browser](https://github.com/angular/protractor/blob/master/docs/browser-setup.md).
 
 The result of `getText` from an input element is always empty
 -------------------------------------------------------------
@@ -77,7 +77,7 @@ browser.manage().logs().get('browser').then(function(browserLog) {
 
 This will output logs from the browser console. Note that logs below the set logging level will be ignored. WebDriver does not currently support changing the logging level for browser logs.
 
-[See an example of using this API to fail tests if the console has errors](https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js).
+See an example ([spec.js](https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js)) of using this API to fail tests if the console has errors.
 
 How can I get screenshots of failures?
 -------------------------------------------- 
@@ -121,7 +121,7 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
-You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out [this example](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you'll need to be sure to use version 1.0.0.
+You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you'll need to be sure to use version 1.0.0.
 
 How can I catch errors such as ElementNotFound?
 -----------------------------------------------

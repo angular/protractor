@@ -1,11 +1,30 @@
-Organizing Tests: Page Objects
------------------------------------
+Using Page Objects to Organize Tests
+====================================
 
-When writing test scripts for the pages of your application, it's best to use the [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects) pattern to organize and make your tests more readable. 
+When writing end-to-end tests, a common pattern is to use [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects). Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.
 
-In Protractor, this could look like:
+Without Page Objects
+--------------------
 
-```javascript
+Here’s a simple test script ([example_spec.js](/example/example_sped.js)) for ‘The Basics’ example on the [angularjs.org](http://www.angularjs.org) homepage.
+
+```js
+describe('angularjs homepage', function() {
+  it('should greet the named user', function() {
+    browser.get('http://www.angularjs.org');
+    element(by.model('yourName')).sendKeys('Julie');
+    var greeting = element(by.binding('yourName'));
+    expect(greeting.getText()).toEqual('Hello Julie!');
+  });
+});
+```
+
+With PageObjects
+----------------
+
+To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:
+
+```js
 var AngularHomepage = function() {
   this.nameInput = element(by.model('yourName'));
   this.greeting = element(by.binding('yourName'));
@@ -19,10 +38,9 @@ var AngularHomepage = function() {
   };
 };
 ```
+The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the _functionality_ of the test script itself does not change (nothing is added or deleted).
 
-Your test then becomes:
-
-```javascript
+```js
 describe('angularjs homepage', function() {
   it('should greet the named user', function() {
     var angularHomepage = new AngularHomepage();
@@ -35,10 +53,12 @@ describe('angularjs homepage', function() {
 });
 ```
 
-It is possible to separate your tests in various test suites. The configuration becomes:
+Configuring Test Suites
+-----------------------
 
-```javascript
-// An example configuration file.
+It is possible to separate your tests into various test suites. In your config file, you could setup  the suites option as shown below. 
+
+```js
 exports.config = {
   // The address of a running selenium server.
   seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -63,6 +83,6 @@ exports.config = {
 };
 ```
 
-You can then easily switch from the command line between running one or the other suite of tests. This will only run the homepage section of the tests:
+From the command line, you can then easily switch between running one or the other suite of tests. This command will run only the homepage section of the tests:
 
     protractor protractor.conf.js --suite homepage

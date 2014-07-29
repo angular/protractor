@@ -9,7 +9,7 @@ exports.config = {
   // ----- How to setup Selenium -----------------------------------------------
   // ---------------------------------------------------------------------------
   //
-  // There are three ways to specify how to use Selenium. Specify one of the
+  // There are three ways to use the Selenium Server. Specify one of the
   // following:
   //
   // 1. seleniumServerJar - to start a standalone Selenium Server locally.
@@ -17,13 +17,13 @@ exports.config = {
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
   //
-  // You can bypass a Selenium Server if you only want to test using chrome.
-  // Set chromeOnly to true and chromeDriver will be used directly (from the
+  // You can bypass a Selenium Server if you only want to test using Chrome.
+  // Set chromeOnly to true and ChromeDriver will be used directly (from the
   // location specified in chromeDriver).
 
-  // The location of the selenium standalone server jar file, relative
-  // to the location of this config. If no other method of starting selenium
-  // is found, this will default to
+  // The location of the standalone Selenium Server jar file, relative
+  // to the location of this config. If no other method of starting Selenium
+  // Server is found, this will default to
   // node_modules/protractor/selenium/selenium-server...
   seleniumServerJar: null,
   // The port to start the Selenium Server on, or null if the server should
@@ -33,18 +33,18 @@ exports.config = {
   // if you need to change the browser timeout, use
   // seleniumArgs: ['-browserTimeout=60'],
   seleniumArgs: [],
-  // Chromedriver location is used to help the standalone Selenium Server
-  // find the chromedriver binary. This will be passed to the selenium jar as
-  // the system property webdriver.chrome.driver. If null, selenium will
-  // attempt to find chromedriver using PATH.
+  // ChromeDriver location is used to help the standalone Selenium Server
+  // find the chromedriver binary. This will be passed to the Selenium jar as
+  // the system property webdriver.chrome.driver. If null, Selenium will
+  // attempt to find ChromeDriver using PATH.
   chromeDriver: './selenium/chromedriver',
 
-  // If true, only chromedriver will be started, not a standalone selenium.
-  // Tests for browsers other than chrome will not run.
+  // If true, only ChromeDriver will be started, not a Selenium Server.
+  // Tests for browsers other than Chrome will not run.
   chromeOnly: false,
 
   // The address of a running Selenium Server. If specified, Protractor will
-  // connect to an already running instance of selenium. This usually looks like
+  // connect to an already running instance of Selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
 
@@ -107,7 +107,7 @@ exports.config = {
     specs: ['spec/chromeOnlySpec.js']
   },
 
-  // If you would like to run more than one instance of webdriver on the same
+  // If you would like to run more than one instance of WebDriver on the same
   // tests, use multiCapabilities, which takes an array of capabilities.
   // If this is specified, capabilities will be ignored.
   multiCapabilities: [],
@@ -158,11 +158,11 @@ exports.config = {
   },
 
   // A callback function called once the tests have finished running and
-  // the webdriver instance has been shut down. It is passed the exit code
+  // the WebDriver instance has been shut down. It is passed the exit code
   // (0 if the tests passed or 1 if not). This is called once per capability.
   onCleanUp: function(exitCode) {},
 
-  // The params object will be passed directly to the protractor instance,
+  // The params object will be passed directly to the Protractor instance,
   // and can be accessed from your test as browser.params. It is an arbitrary
   // object and can contain anything you may need in your test.
   // This can be changed via the command line as:
@@ -199,7 +199,7 @@ exports.config = {
     defaultTimeoutInterval: 30000
   },
 
-  // Options to be passed to mocha.
+  // Options to be passed to Mocha.
   //
   // See the full list at http://visionmedia.github.io/mocha/
   mochaOpts: {
@@ -207,7 +207,7 @@ exports.config = {
     reporter: 'list'
   },
 
-  // Options to be passed to cucumber.
+  // Options to be passed to Cucumber.
   cucumberOpts: {
     // Require files before executing the features.
     require: 'cucumber/stepDefinitions.js',
