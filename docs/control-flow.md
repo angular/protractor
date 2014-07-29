@@ -1,19 +1,20 @@
-The Webdriver Control Flow
+The WebDriver Control Flow
 ==========================
 
-The WebDriverJS API is based on promises, which are managed by a control flow.
-I highly recommend reading the [WebDriverJS documentation](https://code.google.com/p/selenium/wiki/WebDriverJs#Understanding_the_API)
-on this topic. A short summary, and how Protractor interacts with the control
-flow, is presented below.
+The [WebDriverJS API](https://code.google.com/p/selenium/wiki/WebDriverJs#Understanding_the_API) is based on [promises](https://code.google.com/p/selenium/wiki/WebDriverJs#Promises),
+which are managed by a [control flow](https://code.google.com/p/selenium/wiki/WebDriverJs#Control_Flows)
+and adapted for [Jasmine](http://jasmine.github.io/1.3/introduction.html).
+A short summary about how Protractor interacts with the control flow is presented below.
+
 
 Promises and the Control Flow
 -----------------------------
 
 WebDriverJS (and thus, Protractor) APIs are entirely asynchronous. All functions
-return [promises](https://github.com/kriskowal/q). 
+return promises.
 
 WebDriverJS maintains a queue of pending promises, called the control flow,
-to keep execution organized. For example, consider the test
+to keep execution organized. For example, consider this test:
 
 ```javascript
   it('should find an element by text input model', function() {
@@ -44,12 +45,10 @@ Protractor adapts Jasmine so that each spec automatically waits until the
 control flow is empty before exiting. This means you don't need to worry
 about calling runs() and waitsFor() blocks. 
 
-Jasmine expectations are also adapted to understand promises. That's why
-the line
+Jasmine expectations are also adapted to understand promises. That's why this
+line works - the code actually adds an expectation task to the control flow,
+which will run after the other tasks:
 
 ```javascript
   expect(name.getText()).toEqual('Jane Doe');
 ```
-
-works - this code actually adds an expectation task to the control flow,
-which will run after the other tasks.

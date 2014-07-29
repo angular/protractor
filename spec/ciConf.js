@@ -34,6 +34,12 @@ exports.config = {
 
   baseUrl: env.baseUrl,
 
+  jasmineNodeOpts: {
+    isVerbose: true,
+    showTiming: true,
+    defaultTimeoutInterval: 90000
+  },
+
   params: {
     login: {
       user: 'Jane',

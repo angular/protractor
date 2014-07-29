@@ -1,25 +1,31 @@
-var env = require('./environment.js');
+// Configuration for stress testing.
 
-// Smoke tests to be run on CI servers - covers more browsers than
-// ciConf.js, but does not run all tests.
+// Before running locally, start up sauce connect and the test appliation.
+// Then set the environment variables SAUCE_USERNAME, SAUCE_ACCESS_KEY,
+// TRAVIS_JOB_NUMBER, and TRAVIS_BUILD_NUMBER.
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
   specs: [
-    'basic/locators_spec.js',
-    'basic/mockmodule_spec.js',
-    'basic/synchronize_spec.js'
+    'spec.js'
   ],
 
-  // Two latest versions of Chrome, Firefox, IE, Safari.
-  // TODO - add mobile.
+  // Two latest versions of Chrome, Firefox, IE.
   multiCapabilities: [{
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '34',
+    'selenium-version': '2.42.2',
+    'platform': 'OS X 10.9'
+  }, {
+    'browserName': 'chrome',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'Protractor smoke tests',
+    'version': '35',
     'selenium-version': '2.42.2',
     'platform': 'OS X 10.9'
   }, {
@@ -30,11 +36,11 @@ exports.config = {
     'version': '29',
     'selenium-version': '2.42.2'
   }, {
-    'browserName': 'safari',
+    'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '7',
+    'version': '30',
     'selenium-version': '2.42.2'
   }, {
     'browserName': 'internet explorer',
@@ -54,22 +60,10 @@ exports.config = {
     'platform': 'Windows 7'
   }],
 
-  baseUrl: env.baseUrl,
-
-  // Up the timeouts for the slower browsers (IE, Safari).
-  allScriptsTimeout: 30000,
-  getPageTimeout: 30000,
+  baseUrl: 'http://localhost:8081',
 
   jasmineNodeOpts: {
     isVerbose: true,
-    showTiming: true,
-    defaultTimeoutInterval: 90000
+    showTiming: true
   },
-
-  params: {
-    login: {
-      user: 'Jane',
-      password: '1234'
-    }
-  }
 };

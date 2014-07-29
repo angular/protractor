@@ -1,3 +1,131 @@
+# 1.0.0
+
+No changes from rc6.
+
+# 1.0.0-rc6
+
+## Dependency Version Upgrades
+
+- ([b6ab644](https://github.com/angular/protractor/commit/b6ab644dd8105d3f64e347342a0ae2ad2f0100fc)) 
+  chore(jasminewd): update to version 1.0.4
+
+  This version contains a fix for too many timeout messages.
+
+## Bug Fixes
+
+- ([0c4a70e](https://github.com/angular/protractor/commit/0c4a70e0ffbbf4373dbd9f1ab29daabe9338d57b)) 
+  fix(protractor) fix stack traces for WebElement errors
+
+  When angular/protractor@3c0e727136ab3d397c1a9a2bb02692d0aeb9be40 refactored `element()` into the
+  ElementFinder object, the function lost some of its error handling.  This removed references to
+  frames inside tests (`it()` blocks), making it hard to tell where the error was actually
+  occurring.
+
+  This commit fixes these problems, showing full stack traces for WebElement errors.
+
+# 1.0.0-rc5
+
+## Features
+
+- ([51a5e89](https://github.com/angular/protractor/commit/51a5e89f7dace45e61d8eab70e1ea6e9354d4de6)) 
+  feat(config): allow setting the get page timeout globally from the config
+
+  To change the timeout for how long a page is allowed to stall on `browser.get`, change
+  `getPageTimeout: timeout_in_millis` in the configuration. As before, you may also change the
+  timeout for one particular `get` call by using a second parameter:
+  `browser.get(url, timeout_in_sec)`
+
+## Bug Fixes
+
+- ([985ff27](https://github.com/angular/protractor/commit/985ff27c9a94cca83af8db5bf7e570d826b23838)) 
+  fix(configParser): load new functions from configs
+
+  Closes #1043
+
+## Breaking Changes
+
+- ([51a5e89](https://github.com/angular/protractor/commit/51a5e89f7dace45e61d8eab70e1ea6e9354d4de6)) 
+  feat(config): allow setting the get page timeout globally from the config
+
+  This change contains a small breaking change for consistency. Previously, the second parameter to
+  `get` changed the timeout in seconds. Now, the units are milliseconds. This is consistent with
+  all the other timeouts, as well as base JavaScript functions like setTimeout.
+
+   - before: `browser.get(url, 4)`
+  - after: `browser.get(url, 4000)`
+
+# 1.0.0-rc4
+
+## Bug Fixes
+
+- ([ab1d0be](https://github.com/angular/protractor/commit/ab1d0be8cd83b37906b9b8750dd9d85d72))
+  fix(navigation): fix using browser.get with safari driver
+
+  SafariDriver fails with data urls - see #1049. Reverting to use about:blank for now.
+
+# 1.0.0-rc3
+
+## Features
+
+- ([f0e7984](https://github.com/angular/protractor/commit/f0e7984cdd169df947142c1cff0bd1bc33ac995b)) 
+  feat(launcher): append capability tag for all output
+
+## Bug Fixes
+
+- ([1198dde](https://github.com/angular/protractor/commit/1198ddef9e353383819fca3a40bdaba0db22f96f)) 
+  fix(navigation): use empty html data urls for page resets instead of about:blank
+
+  Except on internet explorer, which does not allow data urls.
+
+  Closes #1023.
+
+# 1.0.0-rc2
+
+## Dependency Version Updates
+
+- ([e10e1a4](https://github.com/angular/protractor/commit/e10e1a4a8ae5013982f00d209e6fab1ff2b1d2a1)) 
+  chore(minijasminenode): update minijasminenode dependency to v1.1.0
+
+  This adds several options for the reporter, which can be included in protractor's
+  `config.jasmineNodeOpts`
+  ```js
+  // If true, output nothing to the terminal. Overrides other printing options.
+  silent: false,
+  // If true, print timestamps for failures
+  showTiming: true,
+  // Print failures in real time.
+  realtimeFailure: false
+  ```
+
+- ([be0bb00](https://github.com/angular/protractor/commit/be0bb00db6f51e381e31e80c6808a202270ecb20)) 
+  chore(jasminewd): update jasminewd to v1.0.3
+
+  This fixes extra logging when a timeout occurs.
+
+## Features
+
+- ([82c1d47](https://github.com/angular/protractor/commit/82c1d47462779688bb8c9ac74ba3a6ecfefb7775)) 
+  feat(protractor): add iteration index to ElementArrayFinder.each
+
+- ([62bcf7e](https://github.com/angular/protractor/commit/62bcf7e1c84ed720bc17435c40e1f78c50ba194c)) 
+  feat(webdriver-manager): minor proxy enhancements
+
+  Added error handling for request - previously, any errors coming from the request module were
+  silently swallowed.
+
+  Fixed error handling to remove empty files when a download fails for some reason.
+
+  Also evaluating both uppercase and lowercase proxy variables. Many tools use proxy variables in
+  the form https_proxy, others use HTTPS_PROXY.
+
+## Bug Fixes
+
+- ([dbf7ab5](https://github.com/angular/protractor/commit/dbf7ab5fdf7832676f37328e2ad96b9097db3f62)) 
+  fix(mocha): mocha globals should be re-wrapped for every new suite
+
+  Closes #523, closes #962
+
+
 # 1.0.0-rc1
 
 ## Dependency Version Updates
