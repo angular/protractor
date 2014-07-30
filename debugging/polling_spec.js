@@ -37,3 +37,16 @@ describe('synchronizing with pages that poll', function() {
     browser.ignoreSynchronization = false;
   });
 });
+
+/* 
+ * Note that after this test runs, $timeout will be running
+ * continuously, so any action/browser.get (anything that requires
+ * calling waitForAngular will fail
+ * i.e.
+ *   it('form after polling', function() {
+ *     browser.get('index.html#/polling');
+ *     var startButton = element(by.id('pollstarter'));
+ *     startButton.click();
+ *     browser.get('index.html#/form');
+ *   });
+ */ 
