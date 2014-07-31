@@ -1,6 +1,5 @@
-
-Working with the Protractor API
-===============================
+Working with Spec and Config Files
+==================================
 
 Protractor needs two files to run, the test or spec file, and the configuration file.
 
