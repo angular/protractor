@@ -9,6 +9,8 @@ var scripts = [
   'node lib/cli.js spec/altRootConf.js',
   'node lib/cli.js spec/onPrepareConf.js',
   'node lib/cli.js spec/onPrepareFileConf.js',
+  'node lib/cli.js spec/onPreparePromiseConf.js',
+  'node lib/cli.js spec/onPreparePromiseFileConf.js',
   'node lib/cli.js spec/mochaConf.js',
   'node lib/cli.js spec/cucumberConf.js',
   'node lib/cli.js spec/withLoginConf.js',
