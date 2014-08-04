@@ -298,7 +298,7 @@ HAX is working and emulator runs in fast virt mode
 ```
 
 *Note: The last line that tells you the emulator accelerator is running.*
-*   Start selendroid 
+*   Start selendroid:
 
 ```shell
 > java -jar selendroid-standalone-0.9.0-with-dependencies.jar
