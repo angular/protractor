@@ -305,6 +305,12 @@ describe('ElementFinder', function() {
     });
     expect(successful).toEqual(false);
   });
+
+  it('should always return a promise when calling then', function() {
+    browser.get('index.html#/form');
+    var e1 = element(by.tagName('body')).then(function(){});
+    expect(e1 instanceof protractor.promise.Promise).toBe(true);
+  });
 });
 
 describe('evaluating statements', function() {
