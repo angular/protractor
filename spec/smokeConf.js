@@ -28,7 +28,8 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '29',
-    'selenium-version': '2.42.2'
+    // TODO - as of 2014/8/5 this has stopped working. Reinstate when possible.
+    // 'selenium-version': '2.42.2'
   }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
