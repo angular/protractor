@@ -11,7 +11,7 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
    - The versions in package.json/webdriverVersions should be up to date, and you should run `webdriver-manager update` locally.
    - The latest version of Chrome and Firefox should be used in spec/ciConf.js. All other browsers we support should be listed in spec/smokeConf.js.
 
- - Make sure [Travis](https://travis-ci.org/angular/protractor/builds) is passing
+ - Make sure [Travis](https://travis-ci.org/angular/protractor/builds) is passing. Note that there is an 'allowed failures' section in Travis - make sure that all failures are known.
 
  - Make sure `npm test` is passing (this runs more that just what is run on Travis)
 
