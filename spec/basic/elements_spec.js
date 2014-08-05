@@ -73,6 +73,154 @@ describe('ElementFinder', function() {
     expect(reused.getText()).toEqual('Inner: inner');
   });
 
+  it('should determine element presence properly with chaining', function() {
+    browser.get('index.html#/conflict');
+    expect(element(by.id('baz')).
+        isElementPresent(by.binding('item.reusedBinding'))).
+        toBe(true);
+
+    expect(element(by.id('baz')).
+        isElementPresent(by.binding('nopenopenope'))).
+        toBe(false);
+  });
+
+  it('should export an isPresent helper', function() {
+    browser.get('index.html#/form');
+
+    expect(element(by.binding('greet')).isPresent()).toBe(true);
+    expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
+  });
+
+  it('should export an allowAnimations helper', function() {
+    browser.get('index.html#/animation');
+    var animationTop = element(by.id('animationTop'));
+    var toggledNode = element(by.id('toggledNode'));
+
+    expect(animationTop.allowAnimations()).toBe(true);
+    animationTop.allowAnimations(false);
+    expect(animationTop.allowAnimations()).toBe(false);
+
+    expect(toggledNode.isPresent()).toBe(true);
+    element(by.id('checkbox')).click();
+    expect(toggledNode.isPresent()).toBe(false);
+  });
+
+  it('should keep a reference to the original locator', function() {
+    browser.get('index.html#/form');
+
+    var byCss = by.css('body');
+    var byBinding = by.binding('greet');
+
+    expect(element(byCss).locator()).toEqual(byCss);
+    expect(element(byBinding).locator()).toEqual(byBinding);
+  });
+
+  it('should propagate exceptions', function() {
+    browser.get('index.html#/form');
+    var successful = protractor.promise.defer();
+
+    var invalidElement = element(by.binding('INVALID'));
+    invalidElement.getText().then(function(value) {
+      successful.fulfill(true);
+    }, function(err) {
+      successful.fulfill(false);
+    });
+    expect(successful).toEqual(false);
+  });
+});
+
+describe('ElementArrayFinder', function() {
+
+  it('action should act on all elements', function() {
+    browser.get('index.html#/conflict');
+
+    var multiElement = element.all(by.binding('item.reusedBinding'));
+    expect(multiElement.getText()).toEqual(['Outer: outer', 'Inner: inner']);
+  });
+
+  it('action should act on all elements selected by filter', function() {
+    browser.get('index.html');
+
+    var multiElement = $$('#checkboxes input').filter(function(elem, index) {
+      return index == 1 || index == 3;
+    });
+    multiElement.click();
+    expect($('#letterlist').getText()).toEqual('wy');
+  });
+
+  it('filter should chain with index correctly', function() {
+    browser.get('index.html');
+
+    var elem = $$('#checkboxes input').filter(function(elem, index) {
+      return index == 1 || index == 3;
+    }).last();
+    elem.click();
+    expect($('#letterlist').getText()).toEqual('y');
+  });
+
+  it('filter should work in page object', function() {
+    var elements = element.all(by.css('.menu li a')).filter(function(elem) {
+      return elem.getText().then(function(text) {
+        return text === 'bindings';
+      });
+    });
+
+    browser.get('index.html#/form');
+    expect(elements.count()).toEqual(1);
+  });
+
+  it('should be able to get ElementFinder from filtered ElementArrayFinder', function() {
+    var containsI = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("i") > -1;
+      });
+    };
+    var elements = element.all(by.css('.menu li a')).filter(containsI);
+    
+    browser.get('index.html#/form');
+    expect(elements.count()).toEqual(4);
+    expect(elements.get(3).getText()).toEqual('animation');
+  });
+
+  it('filter should be compoundable', function() {
+    var containsA = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("a") > -1;
+      });
+    };
+    var containsI = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("i") > -1;
+      });
+    };
+    var elements = element.all(by.css('.menu li a')).filter(containsA).filter(containsI);
+    
+    browser.get('index.html#/form');
+    expect(elements.count()).toEqual(1);
+    elements.then(function(arr) {
+      expect(arr[0].getText()).toEqual('animation');
+    });
+  });
+
+  it('filter should work with reduce', function() {
+    var containsA = function(elem) {
+      return elem.getText().then(function(text) {
+        return text.indexOf("a") > -1;
+      });
+    };
+    browser.get('index.html#/form');
+    var value = element.all(by.css('.menu li a')).filter(containsA).
+        reduce(function(currentValue, elem, index, elemArr) {
+          return elem.getText().then(function(text) {
+            return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
+          });
+        }, '');
+    
+    expect(value).toEqual('0/3: repeater\n' +
+                          '1/3: async\n' +
+                          '2/3: animation\n');
+  });
+
   it('should find multiple elements scoped properly with chaining', function() {
     browser.get('index.html#/conflict');
 
@@ -109,17 +257,6 @@ describe('ElementFinder', function() {
     expect(first.getText()).toEqual('Inner: inner');
     expect(second.getText()).toEqual('Inner other: innerbarbaz');
     expect(last.getText()).toEqual('Inner other: innerbarbaz');
-  });
-
-  it('should determine element presence properly with chaining', function() {
-    browser.get('index.html#/conflict');
-    expect(element(by.id('baz')).
-        isElementPresent(by.binding('item.reusedBinding'))).
-        toBe(true);
-
-    expect(element(by.id('baz')).
-        isElementPresent(by.binding('nopenopenope'))).
-        toBe(false);
   });
 
   it('should count all elements', function() {
@@ -260,143 +397,6 @@ describe('ElementFinder', function() {
                           '4/7: conflict\n' +
                           '5/7: polling\n' +
                           '6/7: animation\n');
-  });
-
-  it('should export an isPresent helper', function() {
-    browser.get('index.html#/form');
-
-    expect(element(by.binding('greet')).isPresent()).toBe(true);
-    expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
-  });
-
-  it('should export an allowAnimations helper', function() {
-    browser.get('index.html#/animation');
-    var animationTop = element(by.id('animationTop'));
-    var toggledNode = element(by.id('toggledNode'));
-
-    expect(animationTop.allowAnimations()).toBe(true);
-    animationTop.allowAnimations(false);
-    expect(animationTop.allowAnimations()).toBe(false);
-
-    expect(toggledNode.isPresent()).toBe(true);
-    element(by.id('checkbox')).click();
-    expect(toggledNode.isPresent()).toBe(false);
-  });
-
-  it('should keep a reference to the original locator', function() {
-    browser.get('index.html#/form');
-
-    var byCss = by.css('body');
-    var byBinding = by.binding('greet');
-
-    expect(element(byCss).locator()).toEqual(byCss);
-    expect(element(byBinding).locator()).toEqual(byBinding);
-  });
-
-  it('should propagate exceptions', function() {
-    browser.get('index.html#/form');
-    var successful = protractor.promise.defer();
-
-    var invalidElement = element(by.binding('INVALID'));
-    invalidElement.getText().then(function(value) {
-      successful.fulfill(true);
-    }, function(err) {
-      successful.fulfill(false);
-    });
-    expect(successful).toEqual(false);
-  });
-});
-
-describe('ElementArrayFinder', function() {
-
-  it('action should act on all elements', function() {
-    browser.get('index.html#/conflict');
-
-    var multiElement = element.all(by.binding('item.reusedBinding'));
-    expect(multiElement.getText()).toEqual(['Outer: outer', 'Inner: inner']);
-  });
-
-  it('action should act on all elements selected by filter', function() {
-    browser.get('index.html');
-
-    var multiElement = $$('#checkboxes input').filter(function(elem, index) {
-      return index == 1 || index == 3;
-    });
-    multiElement.click();
-    expect($('#letterlist').getText()).toEqual('wy');
-  });
-
-  it('filter should chain with index correctly', function() {
-    browser.get('index.html');
-
-    var elem = $$('#checkboxes input').filter(function(elem, index) {
-      return index == 1 || index == 3;
-    }).last();
-    elem.click();
-    expect($('#letterlist').getText()).toEqual('y');
-  });
-
-  it('filter should work in page object', function() {
-    var elements = element.all(by.css('.menu li a')).filter(function(elem) {
-      return elem.getText().then(function(text) {
-        return text === 'bindings';
-      });
-    });
-
-    browser.get('index.html#/form');
-    expect(elements.count()).toEqual(1);
-  });
-
-  it('should be able to get ElementFinder from filtered ElementArrayFinder', function() {
-    var containsI = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf("i") > -1;
-      });
-    };
-    var elements = element.all(by.css('.menu li a')).filter(containsI);
-    
-    browser.get('index.html#/form');
-    expect(elements.count()).toEqual(4);
-    expect(elements.get(3).getText()).toEqual('animation');
-  });
-
-  it('filter should be compoundable', function() {
-    var containsA = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf("a") > -1;
-      });
-    };
-    var containsI = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf("i") > -1;
-      });
-    };
-    var elements = element.all(by.css('.menu li a')).filter(containsA).filter(containsI);
-    
-    browser.get('index.html#/form');
-    expect(elements.count()).toEqual(1);
-    elements.then(function(arr) {
-      expect(arr[0].getText()).toEqual('animation');
-    });
-  });
-
-  it('filter should work with reduce', function() {
-    var containsA = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf("a") > -1;
-      });
-    };
-    browser.get('index.html#/form');
-    var value = element.all(by.css('.menu li a')).filter(containsA).
-        reduce(function(currentValue, elem, index, elemArr) {
-          return elem.getText().then(function(text) {
-            return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
-          });
-        }, '');
-    
-    expect(value).toEqual('0/3: repeater\n' +
-                          '1/3: async\n' +
-                          '2/3: animation\n');
   });
 });
 
