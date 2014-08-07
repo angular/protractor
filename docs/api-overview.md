@@ -10,7 +10,7 @@ Protractor tests  are written using the syntax of your test framework, for examp
 
 Example Spec File
 -----------------
-This simple script ([example_spec.js](/example/example_sped.js)) tests the 'The Basics' example on the [angularjs.org](http://www.angularjs.org) homepage.
+This simple script ([example_spec.js](/example/example_spec.js)) tests the 'The Basics' example on the [angularjs.org](http://www.angularjs.org) homepage.
 
 ```js
 describe('angularjs homepage', function() {
