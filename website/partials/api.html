@@ -1,0 +1,112 @@
+<div>
+
+  <div class="row">
+    <h3>Protractor API <small>{{::version}}</small></h3>
+  </div>
+
+  <!-- Search -->
+  <div class="row">
+    <div class="form-group">
+      <label for="searchInput">Search</label>
+      <input id="searchInput"
+          autofocus
+          class="form-control"
+          type="search"
+          placeholder="Enter name"
+          ng-model="searchTerm"/>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Small screen -->
+    <!--<div class="visible-xs"></div>-->
+
+    <!-- Large screen -->
+    <!--<div class="hidden-xs">-->
+      <div class="col-sm-3 api-left-nav">
+        <ul class="list-unstyled">
+          <li ng-repeat="item in items | filter:searchTerm"
+              title="{{item.name}}"
+              ng-switch="item.isTitle">
+          <span ng-switch-when="true"
+              class="title"><strong>{{item.displayName}}</strong></span>
+            <a ng-switch-default
+                ng-click="showElement(item)"
+                ng-class="{child: item.isChild}">{{item.displayName}}</a>
+          </li>
+        </ul>
+      <!--</div>-->
+    </div>
+
+    <div class="col-sm-9">
+      <h3 class="api-title">
+        {{currentItem.title}}
+        <small ng-if="currentItem.sourceLink">
+          <a href="{{currentItem.sourceLink}}" target="_blank">View source</a>
+        </small>
+        <h4 ng-if="currentItem.alias" class="text-muted">{{currentItem.name}}</h4>
+      </h3>
+      <p ng-bind="currentItem.description"></p>
+
+      <div ng-if="currentItem.example">
+        <h4>Example</h4>
+
+        <!-- View -->
+        <div ng-if="currentItem.view">
+          <h5 class="text-muted">View</h5>
+          <pre ptor-code="currentItem.htmlView"></pre>
+        </div>
+
+        <!-- Code -->
+        <h5 class="text-muted">Code</h5>
+        <pre ptor-code="currentItem.example"></pre>
+      </div>
+
+      <!-- Params -->
+      <div ng-if="currentItem.params">
+        <h4>Params</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Param</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="param in currentItem.params">
+              <td>{{param.name}}</td>
+              <td>{{param.paramString}}</td>
+              <td>{{param.description}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Returns -->
+      <div ng-if="currentItem.returns">
+        <h4>Returns</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{currentItem.returnString}}</td>
+              <td>{{currentItem.returns.description}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
