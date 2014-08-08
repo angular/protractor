@@ -17,7 +17,7 @@ Locators
 
 A locator tells Protractor how to find a certain DOM element. Protractor exports locator factories on the global `by` object. The most common locators are:
 
-```
+```js
 // find an element using a css selector
 by.css('.myclass') 
 
@@ -31,7 +31,7 @@ by.model('name')
 by.binding('bindingname')
 ```
 
-For a list of Protractor-specific locators, see the [Protractor API: ProtractorBy](/docs/api.md#api-protractorby).
+For a list of Protractor-specific locators, see the [Protractor API: ProtractorBy](#/api?view=ProtractorBy).
 
 The locators are passed to the `element` function, as below:
 
@@ -82,7 +82,7 @@ el.getText().then(function(text) {
 });
 ```
 
-Any action available in WebDriverJS on a WebElement is available on an ElementFinder. [See a full list](https://github.com/angular/protractor/blob/master/docs/api.md#api-webdriver-webelement-prototype-getdriver).
+Any action available in WebDriverJS on a WebElement is available on an ElementFinder. [See a full list](#/api?view=ElementFinder).
 
 
 Finding Multiple Elements
