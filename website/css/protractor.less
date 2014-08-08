@@ -1,0 +1,75 @@
+@import 'prettify.css';
+@protractor-red: #e23237;
+@protractor-red-dark: #b52e31;
+@padding-top: 50px;
+@api-padding-top: 10px;
+
+.protractor-container {
+  margin-bottom: 50px;
+  padding-top: @padding-top;
+
+  .protractor-header {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 90px - @padding-top;
+  }
+}
+
+.gist {
+  margin: 20px 0;
+}
+
+.github-button {
+  background-color: @protractor-red;
+
+  &:hover {
+    background-color: @protractor-red-dark;
+  }
+
+  img {
+    margin-right: 12px;
+  }
+}
+
+.protractor-logo {
+  display: inline-block;
+  @media (max-width: 500px) {
+    background-image: url(../img/protractor-logo-300.png);
+    height: 67px;
+    width: 300px;
+  }
+  @media (min-width: 500px) {
+    background-image: url(../img/protractor-logo-450.png);
+    height: 101px;
+    width: 450px;
+  }
+}
+
+.twitter {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.api-title {
+  margin-top: @api-padding-top;
+}
+
+.api-left-nav {
+  .title {
+    display: inline-block;
+    font-size: 1.2em;
+    margin: @api-padding-top 0 5px;
+  }
+
+  .child {
+    color: #999;
+    margin-left: 20px;
+  }
+}
+
+// The grid is too wide.
+@media (min-width: 1200px) {
+  .container {
+    max-width: 960px;
+  }
+}
