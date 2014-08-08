@@ -1672,6 +1672,7 @@
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1153"
   },
   {
+    "alias": "by",
     "description": "The Protractor Locators. These provide ways of finding elements in\nAngular applications by binding, model, etc.",
     "fileName": "locators",
     "name": "ProtractorBy",
@@ -1683,7 +1684,7 @@
     "fileName": "locators",
     "name": "WebdriverBy.prototype",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L15"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L16"
   },
   {
     "alias": "by.addLocator(locatorName, functionOrScript)",
@@ -1703,7 +1704,7 @@
         },
         "tagName": "param",
         "description": "The name of the new locator.",
-        "startingLine": 47,
+        "startingLine": 48,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1725,7 +1726,7 @@
         },
         "tagName": "param",
         "description": "A script to be run in the context of the browser. This script will be passed an array of arguments that contains any args passed into the locator followed by the element scoping the search. It should return an array of elements.",
-        "startingLine": 48,
+        "startingLine": 49,
         "typeExpression": "Function|string",
         "type": {
           "type": "TypeUnion",
@@ -1749,11 +1750,10 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L22",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L23",
     "view": "<button ng-click=\"doAddition()\">Go!</button>"
   },
   {
-    "alias": "by.binding()",
     "description": "Find an element by binding.",
     "example": "var span1 = element(by.binding('person.name'));\nexpect(span1.getText()).toBe('Foo');\n\nvar span2 = element(by.binding('person.email'));\nexpect(span2.getText()).toBe('foo@bar.com');",
     "fileName": "locators",
@@ -1836,11 +1836,10 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L76",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L77",
     "view": "<span>{{person.name}}</span>\n<span ng-bind=\"person.email\"></span>"
   },
   {
-    "alias": "by.exactBinding()",
     "description": "Find an element by exact binding.",
     "example": "expect(element(by.exactBinding('person.name')).isPresent()).toBe(true);\nexpect(element(by.exactBinding('person-email')).isPresent()).toBe(true);\nexpect(element(by.exactBinding('person')).isPresent()).toBe(false);\nexpect(element(by.exactBinding('person_phone')).isPresent()).toBe(true);\nexpect(element(by.exactBinding('person_phone|uppercase')).isPresent()).toBe(true);\nexpect(element(by.exactBinding('phone')).isPresent()).toBe(false);",
     "fileName": "locators",
@@ -1857,7 +1856,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 123,
+        "startingLine": 122,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1880,7 +1879,7 @@
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 124,
+      "startingLine": 123,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -1944,7 +1943,7 @@
         },
         "tagName": "param",
         "description": "ng-model expression.",
-        "startingLine": 151,
+        "startingLine": 150,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1958,7 +1957,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L140",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L139",
     "view": "<input type=\"text\" ng-model=\"person.name\"/>"
   },
   {
@@ -1978,7 +1977,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 174,
+        "startingLine": 173,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2001,7 +2000,7 @@
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 175,
+      "startingLine": 174,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -2044,7 +2043,7 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L166",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L165",
     "view": "<button>Save</button>"
   },
   {
@@ -2064,7 +2063,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 199,
+        "startingLine": 198,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2087,7 +2086,7 @@
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 200,
+      "startingLine": 199,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -2130,7 +2129,7 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L191",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L190",
     "view": "<button>Save my file</button>"
   },
   {
@@ -2140,7 +2139,7 @@
     "htmlView": "&lt;div ng-repeat=&quot;cat in pets&quot;&gt;\n  &lt;span&gt;{{cat.name}}&lt;/span&gt;\n  &lt;span&gt;{{cat.age}}&lt;/span&gt;\n&lt;/div&gt;\n\n&lt;div class=&quot;book-img&quot; ng-repeat-start=&quot;book in library&quot;&gt;\n  &lt;span&gt;{{$index}}&lt;/span&gt;\n&lt;/div&gt;\n&lt;div class=&quot;book-info&quot; ng-repeat-end&gt;\n  &lt;h4&gt;{{book.name}}&lt;/h4&gt;\n  &lt;p&gt;{{book.blurb}}&lt;/p&gt;\n&lt;/div&gt;",
     "name": "ProtractorBy.prototype.repeater",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L217",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L216",
     "view": "<div ng-repeat=\"cat in pets\">\n  <span>{{cat.name}}</span>\n  <span>{{cat.age}}</span>\n</div>\n\n<div class=\"book-img\" ng-repeat-start=\"book in library\">\n  <span>{{$index}}</span>\n</div>\n<div class=\"book-info\" ng-repeat-end>\n  <h4>{{book.name}}</h4>\n  <p>{{book.blurb}}</p>\n</div>"
   },
   {
@@ -2150,7 +2149,7 @@
     "htmlView": "&lt;ul&gt;\n  &lt;li class=&quot;pet&quot;&gt;Dog&lt;/li&gt;\n  &lt;li class=&quot;pet&quot;&gt;Cat&lt;/li&gt;\n&lt;/ul&gt;",
     "name": "ProtractorBy.prototype.cssContainingText",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L332",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L331",
     "view": "<ul>\n  <li class=\"pet\">Dog</li>\n  <li class=\"pet\">Cat</li>\n</ul>"
   },
   {
@@ -2171,7 +2170,7 @@
         },
         "tagName": "param",
         "description": "ng-options expression.",
-        "startingLine": 373,
+        "startingLine": 372,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2185,7 +2184,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L358",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L357",
     "view": "<select ng-model=\"color\" ng-options=\"c for c in colors\">\n  <option value=\"0\" selected=\"selected\">red</option>\n  <option value=\"1\">green</option>\n</select>"
   },
   {
