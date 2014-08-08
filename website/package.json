@@ -16,5 +16,7 @@
     "karma-jasmine": "^0.1.5",
     "lodash": "^2.4.1"
   },
-  "install": "./node_modules/bower/bin/bower install"
+  "scripts": {
+    "install": "./node_modules/bower/bin/bower install"
+  }
 }
