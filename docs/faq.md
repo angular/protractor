@@ -41,7 +41,7 @@ once before any of your tests. See this example ([withLoginConf.js](https://gith
 
 Which browsers are supported?
 -----------------------------
-The last two major versions of Chrome, Firefox, IE, and Safari. See details at [Setting Up the Browser](https://github.com/angular/protractor/blob/master/docs/browser-setup.md).
+The last two major versions of Chrome, Firefox, IE, and Safari. See details at [Setting Up the Browser](/docs/browser-setup.md).
 
 The result of `getText` from an input element is always empty
 -------------------------------------------------------------

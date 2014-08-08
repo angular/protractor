@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="css/protractor.css"/>
+  <title>Protractor - end to end testing for AngularJS</title>
+</head>
+<body ng-app="protractorApp">
+<nav class="navbar navbar-default navbar-static navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-example-js-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="container">
+      <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
+        <ul class="nav navbar-nav">
+          <!-- Home -->
+          <li><a href="#">Home</a></li>
+
+          <!-- Quick start -->
+          <li class="dropdown">
+            <a id="drop1" class="dropdown-toggle" data-toggle="dropdown">Quick Start <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a tabindex="-1" href="#/tutorial">Tutorial</a></li>
+            </ul>
+          </li>
+
+          <!-- Protractor Setup -->
+          <li class="dropdown">
+            <a id="drop2" class="dropdown-toggle" data-toggle="dropdown">Protractor Setup <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a tabindex="-1" href="#/protractor-setup">Setting Up Protractor</a></li>
+              <li><a tabindex="-1" href="#/server-setup">Setting Up the Selenium Server</a></li>
+              <li><a tabindex="-1" href="#/browser-setup">Setting Up the Browser</a></li>
+              <li><a tabindex="-1" href=#/frameworks>Choosing a Framework</a></li>
+            </ul>
+          </li>
+
+          <!-- Protractor Tests -->
+          <li class="dropdown">
+            <a id="drop3" class="dropdown-toggle" data-toggle="dropdown">Protractor Tests <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a tabindex="-1" href="#/getting-started">Getting Started</a></li>
+              <li><a tabindex="-1" href="#/tutorial">Tutorial</a></li>
+              <li><a tabindex="-1" href="#/api-overview">Working with Spec and Config Files</a></li>
+              <li><a tabindex="-1" href="#/system-setup">Setting Up the System Under Test</a></li>
+              <li><a tabindex="-1" href="#/locators">Using Locators</a></li>
+              <li><a tabindex="-1" href="#/page-objects">Using Page Objects to Organize Tests</a></li>
+              <li><a tabindex="-1" href="#/debugging">Debugging Protractor Tests</a></li>
+            </ul>
+          </li>
+
+          <!-- Reference -->
+          <li class="dropdown">
+            <a id="drop4" class="dropdown-toggle" data-toggle="dropdown">Reference <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">Configuration File Reference</a></li>
+              <li><a tabindex="-1" href="#/api">Protractor API</a></li>
+              <li><a tabindex="-1" href="#/timeouts">Timeouts</a></li>
+              <li><a tabindex="-1" href="#/control-flow">The WebDriver Control Flow</a></li>
+              <li><a tabindex="-1" href="#/infrastructure">How It Works</a></li>
+              <li><a tabindex="-1" href="#/faq">FAQ</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container protractor-container" ng-view autoscroll="true"></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular-route.min.js"></script>
+<script src="protractorApp.js"></script>
+</body>
+</html>
