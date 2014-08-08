@@ -1,0 +1,4 @@
+{
+  "version": "{{doc.version}}",
+  "items": {{doc.toc|json}}
+}

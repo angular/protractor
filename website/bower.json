@@ -1,0 +1,16 @@
+{
+  "name": "protractor",
+  "version": "1.0.0",
+  "homepage": "https://github.com/andresdominguez/protractor",
+  "authors": [
+    "andres <code@karateca.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "angular": "~1.2.21",
+    "angular-mocks": "~1.2.21",
+    "angular-route": "~1.2.21",
+    "underscore": "~1.6.0"
+  }
+}
