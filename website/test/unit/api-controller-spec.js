@@ -26,6 +26,7 @@ describe('ApiCtrl', function() {
       version: '1.0.0',
       items: [
         {
+          alias: 'element.all(locator)',
           name: 'ElementArrayFinder',
           fileName: 'protractor'
         },
@@ -99,6 +100,15 @@ describe('ApiCtrl', function() {
 
     // Expect the title to be parent + name.
     expect(scope.items[2].title).toBe('parent.fn');
+  });
+
+  it('should assign type to each item', function() {
+    createController(getSampleToc());
+
+    var items = scope.items;
+    expect(items[0].type).toBe('title');
+    expect(items[1].type).toBeUndefined();
+    expect(items[2].type).toBe('child');
   });
 
   it('should add isChild flag to children', function() {

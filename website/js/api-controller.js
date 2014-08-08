@@ -116,6 +116,7 @@
         parent.isChild = false;
 
         item.isChild = true;
+        item.type = 'child';
         item.displayName =
             item.displayName.replace(new RegExp('^' + parent.name + '\\.'), '');
 
@@ -150,6 +151,7 @@
         itemsWithTitles.push({
           displayName: item.fileName,
           isTitle: true,
+          type: 'title',
           children: byFileName[item.fileName]
         });
       }

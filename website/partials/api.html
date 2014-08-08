@@ -27,12 +27,21 @@
         <ul class="list-unstyled">
           <li ng-repeat="item in items | filter:searchTerm"
               title="{{item.name}}"
-              ng-switch="item.isTitle">
-          <span ng-switch-when="true"
-              class="title"><strong>{{item.displayName}}</strong></span>
-            <a ng-switch-default
-                ng-click="showElement(item)"
-                ng-class="{child: item.isChild}">{{item.displayName}}</a>
+              ng-switch="item.type">
+            <span ng-switch-when="title" class="title">
+              <strong>{{item.displayName}}</strong>
+            </span>
+            <span ng-switch-when="child">
+              <a href="javascript:void(0);" class="child"
+                  ng-click="showElement(item)">
+                <span>{{item.displayName}}</span>
+              </a>
+            </span>
+            <span ng-switch-default>
+              <a href="javascript:void(0);"
+                  ng-click="showElement(item)"
+                  ng-bind="item.title"></a>
+            </span>
           </li>
         </ul>
       <!--</div>-->
@@ -44,7 +53,8 @@
         <small ng-if="currentItem.sourceLink">
           <a href="{{currentItem.sourceLink}}" target="_blank">View source</a>
         </small>
-        <h4 ng-if="currentItem.alias" class="text-muted">{{currentItem.name}}</h4>
+        <h4 ng-if="currentItem.alias != currentItem.displayName"
+            class="text-muted">{{currentItem.name}}</h4>
       </h3>
       <p ng-bind="currentItem.description"></p>
 
