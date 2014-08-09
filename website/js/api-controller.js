@@ -3,11 +3,12 @@
    * Controller for the protractor api view.
    *
    * @constructor
-   * @param $http
-   * @param $location
-   * @param $scope
+   * @param $http HTTP service.
+   * @param $location Location service.
+   * @param $sce Strict Contextual Escaping service.
+   * @param $scope Angular scope.
    */
-  var ApiCtrl = function($http, $location, $scope) {
+  var ApiCtrl = function($http, $location, $sce, $scope) {
     this.$http = $http;
     this.$location = $location;
     this.$scope = $scope;
@@ -34,6 +35,21 @@
       // Update the query string with the view name.
       $location.search('view', item.name);
       $scope.currentItem = item;
+    };
+
+    /**
+     * Use the $sce service to trust the html rendered in the view.
+     * @param html
+     */
+    $scope.trust = function(html) {
+      // Does it come with a type? Types come escaped as [theType].
+      var match = html.match(/.*(\[(.*)\]).*/);
+      if (match) {
+        var link = '<a href="#/api?view=' + match[2] + '">' + match[2] + '</a>';
+        html = html.replace(match[1], link);
+      }
+
+      return $sce.trustAsHtml(html);
     };
   };
 

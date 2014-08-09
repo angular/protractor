@@ -53,7 +53,7 @@
         ],
         "optional": true,
         "name": "opt_parentElementFinder",
-        "paramString": "[ElementFinder](#elementfinder)="
+        "paramString": "[ElementFinder]="
       }
     ],
     "returns": {
@@ -76,7 +76,7 @@
         "ElementArrayFinder"
       ]
     },
-    "returnString": "[ElementArrayFinder](#elementarrayfinder)",
+    "returnString": "[ElementArrayFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L69",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
@@ -168,7 +168,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L127",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
@@ -199,7 +199,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L151",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
@@ -230,7 +230,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L173",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
@@ -299,7 +299,7 @@
           "function(ElementFinder)"
         ],
         "name": "fn",
-        "paramString": "function([ElementFinder](#elementfinder))"
+        "paramString": "function([ElementFinder])"
       }
     ],
     "returnString": "",
@@ -343,7 +343,7 @@
           "function(ElementFinder, number)"
         ],
         "name": "mapFn",
-        "paramString": "function([ElementFinder](#elementfinder), number)"
+        "paramString": "function([ElementFinder], number)"
       }
     ],
     "returns": {
@@ -412,7 +412,7 @@
           "function(ElementFinder, number): webdriver.WebElement.Promise"
         ],
         "name": "filterFn",
-        "paramString": "function([ElementFinder](#elementfinder), number): webdriver.WebElement.Promise"
+        "paramString": "function([ElementFinder], number): webdriver.WebElement.Promise"
       }
     ],
     "returns": {
@@ -494,7 +494,7 @@
           "function(number, ElementFinder, number, Array.<ElementFinder>)"
         ],
         "name": "reduceFn",
-        "paramString": "function(number, [ElementFinder](#elementfinder), number, Array.&lt;ElementFinder&gt;)"
+        "paramString": "function(number, [ElementFinder], number, Array.&lt;ElementFinder&gt;)"
       },
       {
         "tagDef": {
@@ -595,7 +595,7 @@
         ],
         "optional": true,
         "name": "opt_parentElementFinder",
-        "paramString": "[ElementFinder](#elementfinder)="
+        "paramString": "[ElementFinder]="
       },
       {
         "tagDef": {
@@ -664,7 +664,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L421",
     "view": "<span>{{person.name}}</span>\n<span ng-bind=\"person.email\"></span>\n<input type=\"text\" ng-model=\"person.name\"/>"
   },
@@ -719,7 +719,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L498",
     "view": "<div class=\"parent\">\n  <div class=\"child\">\n    Child text\n    <div>{{person.phone}}</div>\n  </div>\n</div>"
   },
@@ -774,7 +774,7 @@
         "ElementArrayFinder"
       ]
     },
-    "returnString": "[ElementArrayFinder](#elementarrayfinder)",
+    "returnString": "[ElementArrayFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L529",
     "view": "<div class=\"parent\">\n  <ul>\n    <li class=\"one\">First</li>\n    <li class=\"two\">Second</li>\n    <li class=\"three\">Third</li>\n  </ul>\n</div>"
   },
@@ -818,7 +818,7 @@
         "canHaveType": true
       },
       "tagName": "return",
-      "description": "which identifies the located  [webdriver.WebElement](#webdriverwebelement)",
+      "description": "which identifies the located  [webdriver.WebElement]",
       "startingLine": 566,
       "typeExpression": "ElementFinder",
       "type": {
@@ -829,7 +829,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L552",
     "view": "<div class=\"count\">\n  <span class=\"one\">First</span>\n  <span class=\"two\">Second</span>\n</div>"
   },
@@ -873,7 +873,7 @@
         "canHaveType": true
       },
       "tagName": "return",
-      "description": "which identifies the array of the located [webdriver.WebElement](#webdriverwebelement)s.",
+      "description": "which identifies the array of the located [webdriver.WebElement]s.",
       "startingLine": 594,
       "typeExpression": "ElementArrayFinder",
       "type": {
@@ -884,7 +884,7 @@
         "ElementArrayFinder"
       ]
     },
-    "returnString": "[ElementArrayFinder](#elementarrayfinder)",
+    "returnString": "[ElementArrayFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L574",
     "view": "<div class=\"count\">\n  <span class=\"one\">First</span>\n  <span class=\"two\">Second</span>\n</div>"
   },
@@ -914,7 +914,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L602",
     "view": "<span>{{person.name}}</span>"
   },
@@ -942,7 +942,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L627"
   },
   {
@@ -997,7 +997,7 @@
         "webdriver.WebElement"
       ]
     },
-    "returnString": "[webdriver.WebElement](#webdriverwebelement)",
+    "returnString": "[webdriver.WebElement]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L646"
   },
   {
@@ -1048,7 +1048,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L699"
   },
   {
@@ -1099,7 +1099,7 @@
         "ElementFinder"
       ]
     },
-    "returnString": "[ElementFinder](#elementfinder)",
+    "returnString": "[ElementFinder]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L717"
   },
   {
@@ -1184,7 +1184,7 @@
           "webdriver.WebDriver"
         ],
         "name": "webdriver",
-        "paramString": "[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "[webdriver.WebDriver]"
       },
       {
         "tagDef": {
@@ -1291,7 +1291,7 @@
         "webdriver.WebElement"
       ]
     },
-    "returnString": "&#33;[webdriver.WebElement](#webdriverwebelement)",
+    "returnString": "&#33;[webdriver.WebElement]",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L915"
   },
   {
@@ -1307,7 +1307,7 @@
         "canHaveType": true
       },
       "tagName": "return",
-      "description": "A promise that will be resolved to an array of the located [webdriver.WebElement](#webdriverwebelement)s.",
+      "description": "A promise that will be resolved to an array of the located [webdriver.WebElement]s.",
       "startingLine": 926,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
@@ -2348,7 +2348,7 @@
         "webdriver.WebDriver"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)",
+    "returnString": "&#33;[webdriver.WebDriver]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#87"
   },
   {
@@ -2424,7 +2424,7 @@
         "webdriver.WebDriver"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)",
+    "returnString": "&#33;[webdriver.WebDriver]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#102"
   },
   {
@@ -3529,7 +3529,7 @@
         "webdriver.WebElement"
       ]
     },
-    "returnString": "&#33;[webdriver.WebElement](#webdriverwebelement)",
+    "returnString": "&#33;[webdriver.WebElement]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#642"
   },
   {
@@ -3764,7 +3764,7 @@
         "webdriver.WebDriver.Options"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver.Options](#webdriverwebdriveroptions)",
+    "returnString": "&#33;[webdriver.WebDriver.Options]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#876"
   },
   {
@@ -3792,7 +3792,7 @@
         "webdriver.WebDriver.Navigation"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver.Navigation](#webdriverwebdrivernavigation)",
+    "returnString": "&#33;[webdriver.WebDriver.Navigation]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#885"
   },
   {
@@ -3820,7 +3820,7 @@
         "webdriver.WebDriver.TargetLocator"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver.TargetLocator](#webdriverwebdrivertargetlocator)",
+    "returnString": "&#33;[webdriver.WebDriver.TargetLocator]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#894"
   },
   {
@@ -3849,7 +3849,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       }
     ],
     "returnString": "",
@@ -4057,7 +4057,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       }
     ],
     "returnString": "",
@@ -4488,7 +4488,7 @@
         "webdriver.WebDriver.Logs"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver.Logs](#webdriverwebdriverlogs)",
+    "returnString": "&#33;[webdriver.WebDriver.Logs]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1114"
   },
   {
@@ -4516,7 +4516,7 @@
         "webdriver.WebDriver.Timeouts"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver.Timeouts](#webdriverwebdrivertimeouts)",
+    "returnString": "&#33;[webdriver.WebDriver.Timeouts]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1123"
   },
   {
@@ -4544,7 +4544,7 @@
         "webdriver.WebDriver.Window"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver.Window](#webdriverwebdriverwindow)",
+    "returnString": "&#33;[webdriver.WebDriver.Window]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1132"
   },
   {
@@ -4573,7 +4573,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       }
     ],
     "returnString": "",
@@ -4791,7 +4791,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       }
     ],
     "returnString": "",
@@ -5149,7 +5149,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       }
     ],
     "returnString": "",
@@ -5302,7 +5302,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       }
     ],
     "returnString": "",
@@ -5333,7 +5333,7 @@
         "webdriver.WebElement"
       ]
     },
-    "returnString": "&#33;[webdriver.WebElement](#webdriverwebelement)",
+    "returnString": "&#33;[webdriver.WebElement]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1375"
   },
   {
@@ -5533,7 +5533,7 @@
         "webdriver.Alert"
       ]
     },
-    "returnString": "&#33;[webdriver.Alert](#webdriveralert)",
+    "returnString": "&#33;[webdriver.Alert]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1449"
   },
   {
@@ -5614,7 +5614,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       },
       {
         "tagDef": {
@@ -5679,7 +5679,7 @@
           "webdriver.WebElement"
         ],
         "name": "a",
-        "paramString": "&#33;[webdriver.WebElement](#webdriverwebelement)"
+        "paramString": "&#33;[webdriver.WebElement]"
       },
       {
         "tagDef": {
@@ -5702,7 +5702,7 @@
           "webdriver.WebElement"
         ],
         "name": "b",
-        "paramString": "&#33;[webdriver.WebElement](#webdriverwebelement)"
+        "paramString": "&#33;[webdriver.WebElement]"
       }
     ],
     "returns": {
@@ -5763,7 +5763,7 @@
         "webdriver.WebDriver"
       ]
     },
-    "returnString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)",
+    "returnString": "&#33;[webdriver.WebDriver]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1613"
   },
   {
@@ -5868,7 +5868,7 @@
         "webdriver.WebElement"
       ]
     },
-    "returnString": "&#33;[webdriver.WebElement](#webdriverwebelement)",
+    "returnString": "&#33;[webdriver.WebElement]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#1650"
   },
   {
@@ -6741,7 +6741,7 @@
           "webdriver.WebDriver"
         ],
         "name": "driver",
-        "paramString": "&#33;[webdriver.WebDriver](#webdriverwebdriver)"
+        "paramString": "&#33;[webdriver.WebDriver]"
       },
       {
         "tagDef": {
@@ -7012,7 +7012,7 @@
           "webdriver.Alert"
         ],
         "name": "alert",
-        "paramString": "&#33;[webdriver.Alert](#webdriveralert)"
+        "paramString": "&#33;[webdriver.Alert]"
       }
     ],
     "returnString": "",
@@ -7043,7 +7043,7 @@
         "webdriver.Alert"
       ]
     },
-    "returnString": "&#33;[webdriver.Alert](#webdriveralert)",
+    "returnString": "&#33;[webdriver.Alert]",
     "sourceLink": "https://code.google.com/p/selenium/source/browse/javascript/webdriver/webdriver.js#2127"
   }
 ]

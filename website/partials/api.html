@@ -85,7 +85,7 @@
         <h4 ng-if="currentItem.alias != currentItem.displayName"
             class="text-muted">{{currentItem.name}}</h4>
       </h3>
-      <p ng-bind="currentItem.description"></p>
+      <p ng-bind-html="trust(currentItem.description)"></p>
 
       <div ng-if="currentItem.example">
         <h4>Example</h4>
@@ -117,7 +117,7 @@
             <tbody>
             <tr ng-repeat="param in currentItem.params">
               <td>{{param.name}}</td>
-              <td>{{param.paramString}}</td>
+              <td ng-bind-html="trust(param.paramString)"></td>
               <td>{{param.description}}</td>
             </tr>
             </tbody>
@@ -139,7 +139,7 @@
             </thead>
             <tbody>
             <tr>
-              <td>{{currentItem.returnString}}</td>
+              <td ng-bind-html="trust(currentItem.returnString)"></td>
               <td>{{currentItem.returns.description}}</td>
             </tr>
             </tbody>

@@ -50,13 +50,12 @@ var escape = function(str) {
 };
 
 /**
- * Create a markdown link with the following format: '[foo.Bar](#foobar)'
+ * Create a link with the following format: '[foo.Bar]'
  * @param {string} type The type you want to link.
- * return {string} A markdown link for the type.
+ * return {string} A link for the type.
  */
 var toMarkdownLinkFormat = function(type) {
-  var lowercaseType = type.replace(/[\.\$]/g, '').toLocaleLowerCase();
-  return '[' + type + '](#' + lowercaseType + ')';
+  return '[' + type + ']';
 };
 
 /**
