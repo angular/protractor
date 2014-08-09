@@ -11,7 +11,9 @@ module.exports = function(config) {
       'js/*.js',
       'test/unit/*.js'
     ],
-    exclude: [],
+    exclude: [
+      'js/bootstrap.min.js'
+    ],
     reporters: ['progress'],
     port: 9876,
     colors: true,

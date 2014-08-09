@@ -11,7 +11,13 @@ var paths = {
   build: ['build', 'docgen/build'],
   dgeniTemplates: ['docgen/templates/*.txt', 'docgen/processors/add-toc.js'],
   html: ['index.html', 'partials/*.html'],
-  js: ['js/modules.js', 'js/**/*.js'],
+  js: [
+//    'js/jquery.min.js',
+//    'js/angular.min.js',
+//    'js/angular-route.min.js',
+    'js/modules.js',
+    'js/**/*.js'
+  ],
   less: ['css/protractor.less'],
   outputDir: 'build/'
 };
@@ -24,6 +30,14 @@ gulp.task('clean', function(cb) {
 gulp.task('dgeni', function() {
   var config = path.resolve(__dirname, './docgen/dgeni-config.js');
   dgeni(config).generateDocs();
+});
+
+gulp.task('copyBowerFiles', function() {
+  // Bootstrap.
+  gulp.src('bower_components/bootstrap/dist/js/bootstrap.min.js')
+      .pipe(gulp.dest('js'));
+  gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
+      .pipe(gulp.dest('css'));
 });
 
 gulp.task('copyFiles', function() {
@@ -77,4 +91,4 @@ gulp.task('watch', function() {
   gulp.watch(paths.dgeniTemplates, ['dgeni', 'copyFiles', 'reloadServer']);
 });
 
-gulp.task('default', ['dgeni', 'less', 'js', 'copyFiles', 'connect', 'watch']);
+gulp.task('default', ['copyBowerFiles', 'dgeni', 'less', 'js', 'copyFiles', 'connect', 'watch']);

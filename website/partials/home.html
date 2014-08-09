@@ -86,7 +86,20 @@
       </p>
       <p>Copy the following into <code>todo-spec.js</code>:</p>
       <div>
-        <script src="https://gist.github.com/andresdominguez/c6dca267814122535e48.js"></script>
+<pre ptor-inline-code>
+describe('angularjs homepage todo list', function() {
+  it('should add a todo', function() {
+    browser.get('http://www.angularjs.org');
+
+    element(by.model('todoText')).sendKeys('write a protractor test');
+    element(by.css('[value="add"]')).click();
+
+    var todoList = element.all(by.repeater('todo in todos'));
+    expect(todoList.count()).toEqual(3);
+    expect(todoList.get(2).getText()).toEqual('write a protractor test');
+  });
+});
+</pre>
       </div>
       <p>
         The <code>describe</code> and <code>it</code> syntax is from the Jasmine
@@ -103,7 +116,12 @@
         Now create the configuration file. Copy the following into
         <code>conf.js</code>:
       </p>
-      <script src="https://gist.github.com/andresdominguez/f29c7fb4ff0fbebf8797.js"></script>
+<pre ptor-inline-code>
+exports.config = {
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+  specs: ['todo-spec.js']
+};
+</pre>
       <p>
         This configuration tells Protractor where your test files
         (<code>specs</code>) are, and where to talk to your Selenium Server
