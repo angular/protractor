@@ -166,4 +166,35 @@ describe('ApiCtrl', function() {
     expect(firstItem.isTitle).toBe(true);
     expect(firstItem.children).toBeDefined();
   });
+
+  describe('Menu visibility', function() {
+    beforeEach(function() {
+      createController(testToc());
+    });
+
+    it('should start with the nav bar hidden', function() {
+      expect(scope.isMenuVisible).toBe(false);
+    });
+
+    it('should toggle visibility', function() {
+      // Given that the menu is not visible.
+      expect(scope.isMenuVisible).toBe(false);
+
+      // When you toggle the menu.
+      scope.toggleMenu();
+
+      // Then ensure the menu is visible.
+      expect(scope.isMenuVisible).toBe(true);
+    });
+
+    it('should get toggle menu label', function() {
+      expect(scope.toggleMenuLabel()).toBe('Show list');
+
+      // When you toggle the menu.
+      scope.toggleMenu();
+
+      // Then ensure the label has changed.
+      expect(scope.toggleMenuLabel()).toBe('Hide list');
+    });
+  });
 });

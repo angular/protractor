@@ -22,6 +22,14 @@
           'contain the Protractor reference materials.'
     };
 
+    $scope.toggleMenuLabel = function() {
+      return $scope.isMenuVisible ? 'Hide list' : 'Show list';
+    };
+
+    $scope.toggleMenu = function() {
+      $scope.isMenuVisible = !$scope.isMenuVisible;
+    };
+
     $scope.showElement = function(item) {
       // Update the query string with the view name.
       $location.search('view', item.name);

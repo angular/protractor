@@ -3,6 +3,8 @@
 @protractor-red-dark: #b52e31;
 @padding-top: 50px;
 @api-padding-top: 10px;
+@child-color: #999;
+@mobile-menu-margin: 15px;
 
 .protractor-container {
   margin-bottom: 50px;
@@ -62,7 +64,7 @@
   }
 
   .child {
-    color: #999;
+    color: @child-color;
     margin-left: 20px;
   }
 }
@@ -71,5 +73,35 @@
 @media (min-width: 1200px) {
   .container {
     max-width: 960px;
+  }
+}
+
+.toggle-menu-button-container {
+  padding: 0 @mobile-menu-margin;
+
+  button {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+.mobile-menu {
+  margin: @mobile-menu-margin;
+
+  .title {
+    font-size: 1.5em;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .parent {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+
+  .child {
+    color: @child-color;
+    font-size: 1.1em;
+    padding-right: 10px;
   }
 }

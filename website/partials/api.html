@@ -19,10 +19,38 @@
 
   <div class="row">
     <!-- Small screen -->
-    <!--<div class="visible-xs"></div>-->
+    <div class="visible-xs">
+      <div class="toggle-menu-button-container">
+        <button type="button"
+            id="toggle-menu-button"
+            class="btn btn-primary"
+            ng-click="toggleMenu()"
+            ng-bind="toggleMenuLabel()"></button>
+      </div>
+
+      <div ng-if="isMenuVisible" class="mobile-menu">
+        <span ng-repeat="item in items | filter:searchTerm"
+            ng-switch="item.type">
+            <div ng-switch-when="title" class="title">
+            <strong>{{item.displayName}}</strong>
+            </div>
+            <span ng-switch-when="child">
+              <a href="javascript:void(0);" class="child"
+                  ng-click="showElement(item)">
+                <span>{{item.displayName}}</span>
+              </a>
+            </span>
+            <div ng-switch-default class="parent">
+              <a href="javascript:void(0);"
+                  ng-click="showElement(item)"
+                  ng-bind="item.title"></a>
+            </div>
+        </span>
+      </div>
+    </div>
 
     <!-- Large screen -->
-    <!--<div class="hidden-xs">-->
+    <div class="hidden-xs">
       <div class="col-sm-3 api-left-nav">
         <ul class="list-unstyled">
           <li ng-repeat="item in items | filter:searchTerm"
@@ -44,8 +72,9 @@
             </span>
           </li>
         </ul>
-      <!--</div>-->
+      </div>
     </div>
+
 
     <div class="col-sm-9">
       <h3 class="api-title">
