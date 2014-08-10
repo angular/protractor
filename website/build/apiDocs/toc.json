@@ -114,7 +114,7 @@
         "Array.<webdriver.WebElement>"
       ]
     },
-    "returnString": "Array.&lt;webdriver.WebElement&gt;",
+    "returnString": "Array.&lt;[webdriver.WebElement]&gt;",
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L101"
   },
   {
@@ -946,7 +946,7 @@
     "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L627"
   },
   {
-    "description": "",
+    "description": "Get the element locator used to create this element finder.",
     "fileName": "protractor",
     "name": "ElementFinder.prototype.locator",
     "returns": {
@@ -958,8 +958,8 @@
         "canHaveType": true
       },
       "tagName": "return",
-      "description": "",
-      "startingLine": 639,
+      "description": "An element locator.",
+      "startingLine": 640,
       "typeExpression": "webdriver.Locator",
       "type": {
         "type": "NameExpression",
@@ -987,7 +987,7 @@
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 659,
+      "startingLine": 660,
       "typeExpression": "webdriver.WebElement",
       "type": {
         "type": "NameExpression",
@@ -998,7 +998,7 @@
       ]
     },
     "returnString": "[webdriver.WebElement]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L646"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L647"
   },
   {
     "description": "Evaluates the input as if it were on the scope of the current element.",
@@ -1015,7 +1015,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 700,
+        "startingLine": 701,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1038,7 +1038,7 @@
       },
       "tagName": "return",
       "description": "which resolves to the evaluated expression. The result will be resolved as in {@link webdriver.WebDriver.executeScript}. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.",
-      "startingLine": 702,
+      "startingLine": 703,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1049,7 +1049,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L699"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L700"
   },
   {
     "description": "Determine if animation is allowed on the current element.",
@@ -1066,7 +1066,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 718,
+        "startingLine": 719,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1089,7 +1089,7 @@
       },
       "tagName": "return",
       "description": "which resolves to whether animation is allowed.",
-      "startingLine": 720,
+      "startingLine": 721,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1100,7 +1100,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L717"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L718"
   },
   {
     "description": "Access the underlying actionResult of ElementFinder. Implementation allows\nElementFinder to be used as a webdriver.promise.Promise",
@@ -1117,7 +1117,7 @@
         },
         "tagName": "param",
         "description": "Function which takes  the value of the underlying actionResult.",
-        "startingLine": 733,
+        "startingLine": 734,
         "typeExpression": "function(webdriver.promise.Promise)",
         "type": {
           "type": "FunctionType",
@@ -1145,7 +1145,7 @@
       },
       "tagName": "return",
       "description": "Promise which contains the results of  evaluating fn.",
-      "startingLine": 736,
+      "startingLine": 737,
       "typeExpression": "webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1156,7 +1156,7 @@
       ]
     },
     "returnString": "webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L731"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L732"
   },
   {
     "alias": "browser",
@@ -1175,7 +1175,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 762,
+        "startingLine": 763,
         "typeExpression": "webdriver.WebDriver",
         "type": {
           "type": "NameExpression",
@@ -1197,7 +1197,7 @@
         },
         "tagName": "param",
         "description": "A base URL to run get requests against.",
-        "startingLine": 763,
+        "startingLine": 764,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -1221,7 +1221,7 @@
         },
         "tagName": "param",
         "description": "Selector element that has an ng-app in scope.",
-        "startingLine": 764,
+        "startingLine": 765,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -1237,7 +1237,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L759"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L760"
   },
   {
     "description": "Instruct webdriver to wait until Angular has finished rendering and has\nno outstanding $http calls before continuing.",
@@ -1253,7 +1253,7 @@
       },
       "tagName": "return",
       "description": "A promise that will resolve to the scripts return value.",
-      "startingLine": 880,
+      "startingLine": 881,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1265,7 +1265,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L877"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L878"
   },
   {
     "description": "Waits for Angular to finish rendering before searching for elements.",
@@ -1281,7 +1281,7 @@
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 918,
+      "startingLine": 919,
       "typeExpression": "!webdriver.WebElement",
       "type": {
         "type": "NameExpression",
@@ -1293,7 +1293,7 @@
       ]
     },
     "returnString": "&#33;[webdriver.WebElement]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L916"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L917"
   },
   {
     "description": "Waits for Angular to finish rendering before searching for elements.",
@@ -1309,7 +1309,7 @@
       },
       "tagName": "return",
       "description": "A promise that will be resolved to an array of the located [webdriver.WebElement]s.",
-      "startingLine": 927,
+      "startingLine": 928,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1321,7 +1321,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L925"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L926"
   },
   {
     "description": "Tests if an element is present on the page.",
@@ -1337,7 +1337,7 @@
       },
       "tagName": "return",
       "description": "A promise that will resolve to whether the element is present on the page.",
-      "startingLine": 937,
+      "startingLine": 938,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1349,7 +1349,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L935"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L936"
   },
   {
     "description": "Add a module to load before Angular whenever Protractor.get is called.\nModules will be registered after existing modules already on the page,\nso any module registered here will override preexisting modules with the same\nname.",
@@ -1366,7 +1366,7 @@
         },
         "tagName": "param",
         "description": "The name of the module to load or override.",
-        "startingLine": 952,
+        "startingLine": 953,
         "typeExpression": "!string",
         "type": {
           "type": "NameExpression",
@@ -1389,7 +1389,7 @@
         },
         "tagName": "param",
         "description": "The JavaScript to load the module.",
-        "startingLine": 953,
+        "startingLine": 954,
         "typeExpression": "!string|Function",
         "type": {
           "type": "TypeUnion",
@@ -1422,7 +1422,7 @@
         },
         "tagName": "param",
         "description": "Any additional arguments will be provided to the script and may be referenced using the `arguments` object.",
-        "startingLine": 954,
+        "startingLine": 955,
         "typeExpression": "...*",
         "type": {
           "type": "AllLiteral",
@@ -1436,14 +1436,14 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L947"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L948"
   },
   {
     "description": "Clear the list of registered mock modules.",
     "fileName": "protractor",
     "name": "Protractor.prototype.clearMockModules",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L968"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L969"
   },
   {
     "description": "Remove a registered mock module.",
@@ -1460,7 +1460,7 @@
         },
         "tagName": "param",
         "description": "The name of the module to remove.",
-        "startingLine": 976,
+        "startingLine": 977,
         "typeExpression": "!string",
         "type": {
           "type": "NameExpression",
@@ -1475,7 +1475,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L975"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L976"
   },
   {
     "description": "See webdriver.WebDriver.get\n\nNavigate to the given destination and loads mock modules before\nAngular. Assumes that the page being loaded uses Angular.\nIf you need to access a page which does not have Angular on load, use\nthe wrapped webdriver directly.",
@@ -1492,7 +1492,7 @@
         },
         "tagName": "param",
         "description": "Destination URL.",
-        "startingLine": 994,
+        "startingLine": 995,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1514,7 +1514,7 @@
         },
         "tagName": "param",
         "description": "Number of milliseconds to wait for Angular to start.",
-        "startingLine": 995,
+        "startingLine": 996,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -1530,7 +1530,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L987"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L988"
   },
   {
     "description": "See webdriver.WebDriver.refresh\n\nMakes a full reload of the current page and loads mock modules before\nAngular. Assumes that the page being loaded uses Angular.\nIf you need to access a page which does not have Angular on load, use\nthe wrapped webdriver directly.",
@@ -1547,7 +1547,7 @@
         },
         "tagName": "param",
         "description": "Number of seconds to wait for Angular to start.",
-        "startingLine": 1076,
+        "startingLine": 1077,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -1563,14 +1563,14 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1069"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1070"
   },
   {
     "description": "Mixin navigation methods back into the navigation object so that\nthey are invoked as before, i.e. driver.navigate().refresh()",
     "fileName": "protractor",
     "name": "Protractor.prototype.navigate",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1092"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1093"
   },
   {
     "description": "Browse to another page using in-page navigation.",
@@ -1587,7 +1587,7 @@
         },
         "tagName": "param",
         "description": "In page URL using the same syntax as $location.url()",
-        "startingLine": 1104,
+        "startingLine": 1105,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1610,7 +1610,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will resolve once page has been changed.",
-      "startingLine": 1105,
+      "startingLine": 1106,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1622,14 +1622,14 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1102"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1103"
   },
   {
     "description": "Returns the current absolute url from AngularJS.",
     "fileName": "protractor",
     "name": "Protractor.prototype.getLocationAbsUrl",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1120"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1121"
   },
   {
     "description": "Pauses the test and injects some helper functions into the browser, so that\ndebugging may be done in the browser console.\n\nThis should be used under node in debug mode, i.e. with\nprotractor debug <configuration.js>",
@@ -1637,7 +1637,7 @@
     "fileName": "protractor",
     "name": "Protractor.prototype.debugger",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1128"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1129"
   },
   {
     "description": "Beta (unstable) pause function for debugging webdriver tests. Use\nbrowser.pause() in your test to enter the protractor debugger from that\npoint in the control flow.\nDoes not require changes to the command line (no need to add 'debug').",
@@ -1654,7 +1654,7 @@
         },
         "tagName": "param",
         "description": "Optional port to use for the debugging process",
-        "startingLine": 1159,
+        "startingLine": 1160,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -1670,7 +1670,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1154"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1155"
   },
   {
     "alias": "by",
