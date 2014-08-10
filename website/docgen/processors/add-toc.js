@@ -38,12 +38,13 @@ module.exports = {
       );
     });
 
-    // Add the table of contents.
+    // Replace all the docs with the table of contents.
+    docs.length = 0;
     docs.push({
       outputPath: 'toc.json',
       template: 'toc',
       toc: toc,
       version: require('../../../package.json').version
-    });
+    })
   }
 };
