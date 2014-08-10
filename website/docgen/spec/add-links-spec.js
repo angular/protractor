@@ -119,12 +119,10 @@ describe('add-links', function() {
       return docs[1].params[index].paramString;
     };
     expect(getDesc(0)).toBe(
-        'function([webdriver.WebElement](#webdriverwebelement), number)');
-    expect(getDesc(1)).toBe(
-        '[Protractor](#protractor)');
+        'function([webdriver.WebElement], number)');
+    expect(getDesc(1)).toBe('[Protractor]');
 
-    expect(docs[1].returnString).toBe(
-        '[webdriver.WebElement](#webdriverwebelement)');
+    expect(docs[1].returnString).toBe('[webdriver.WebElement]');
   });
 
   it('should add @link links', function() {
@@ -163,9 +161,9 @@ describe('add-links', function() {
     addLinks(docs);
 
     // Then ensure a link was added to the type.
-    expect(docs[1].description).toBe('A promise that ' +
-        '[webdriver.WebElement](#webdriverwebelement)s');
-    expect(docs[1].returns.description).toBe('A promise located ' +
-        '[webdriver.WebElement](#webdriverwebelement)s.');
+    expect(docs[1].description).
+        toBe('A promise that [webdriver.WebElement]s');
+    expect(docs[1].returns.description).
+        toBe('A promise located [webdriver.WebElement]s.');
   });
 });
