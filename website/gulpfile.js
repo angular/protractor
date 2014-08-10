@@ -9,12 +9,9 @@ var path = require('path');
 
 var paths = {
   build: ['build', 'docgen/build'],
-  dgeniTemplates: ['docgen/templates/*.txt', 'docgen/processors/add-toc.js'],
+  dgeniTemplates: ['docgen/templates/*.txt', 'docgen/processors/*.js'],
   html: ['index.html', 'partials/*.html'],
   js: [
-//    'js/jquery.min.js',
-//    'js/angular.min.js',
-//    'js/angular-route.min.js',
     'js/modules.js',
     'js/**/*.js'
   ],
@@ -93,4 +90,12 @@ gulp.task('watch', function() {
   gulp.watch(paths.dgeniTemplates, ['dgeni', 'copyFiles', 'reloadServer']);
 });
 
-gulp.task('default', ['copyBowerFiles', 'dgeni', 'less', 'js', 'copyFiles', 'connect', 'watch']);
+gulp.task('default', [
+  'copyBowerFiles',
+  'dgeni',
+  'less',
+  'js',
+  'copyFiles',
+  'connect',
+  'watch'
+]);
