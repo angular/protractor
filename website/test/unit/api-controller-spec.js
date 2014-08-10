@@ -111,22 +111,22 @@ describe('ApiCtrl', function() {
     expect(items[2].type).toBe('child');
   });
 
-  it('should add isChild flag to children', function() {
+  it('should add child type to children', function() {
     createController(getSampleToc());
     var items = _.map(scope.items, function(item) {
-      return _.pick(item, 'isChild', 'displayName');
+      return _.pick(item, 'type', 'displayName');
     });
     expect(items).toEqual([
-      {displayName: 'protractor'},
-      {isChild: false, displayName: 'ElementArrayFinder'},
-      {isChild: true, displayName: 'getWebElements'},
-      {isChild: true, displayName: 'get'},
-      {displayName: 'webdriver'},
-      {isChild: false, displayName: 'webdriver.WebDriver'},
-      {isChild: true, displayName: 'createSession'},
-      {isChild: true, displayName: 'controlFlow'},
-      {isChild: false, displayName: 'Options'},
-      {isChild: true, displayName: 'addCookie'}
+      {type: 'title', displayName: 'protractor'},
+      {displayName: 'ElementArrayFinder'},
+      {type: 'child', displayName: 'getWebElements'},
+      {type: 'child', displayName: 'get'},
+      {type: 'title', displayName: 'webdriver'},
+      {displayName: 'webdriver.WebDriver'},
+      {type: 'child', displayName: 'createSession'},
+      {type: 'child', displayName: 'controlFlow'},
+      {type: 'child', displayName: 'Options'},
+      {type: 'child', displayName: 'addCookie'}
     ]);
   });
 
@@ -155,16 +155,6 @@ describe('ApiCtrl', function() {
       'getWebElements',
       'get'
     ]);
-  });
-
-  it('should add children to the protractor title', function() {
-    // When you get the sample table of contents.
-    createController(testToc());
-
-    // Then ensure the title has children.
-    var firstItem = scope.items[0];
-    expect(firstItem.isTitle).toBe(true);
-    expect(firstItem.children).toBeDefined();
   });
 
   describe('Menu visibility', function() {

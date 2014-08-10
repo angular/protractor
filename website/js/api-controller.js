@@ -70,8 +70,8 @@
         return item.name !== 'WebdriverBy.prototype';
       });
 
-      self.setDisplayNameAndMarkChildren(list);
-      var items = self.addTitles(list);
+      self.setViewProperties(list);
+      var items = self.addTitleItems(list);
 
       $scope.items = items;
       $scope.version = data.version;
@@ -91,10 +91,10 @@
   };
 
   /**
-   * Set the 'displayName' and the 'isChild' flags.
+   * Set the extra properties used by the view to show the docs.
    * @param list
    */
-  ApiCtrl.prototype.setDisplayNameAndMarkChildren = function(list) {
+  ApiCtrl.prototype.setViewProperties = function(list) {
     var itemsByName = {};
     
     var getTitle = function(item) {
@@ -149,13 +149,9 @@
     list.forEach(function(item) {
       var parent = findClosestParent(item);
       if (parent) {
-        parent.isChild = false;
-
-        item.isChild = true;
         item.type = 'child';
         item.displayName =
             item.displayName.replace(new RegExp('^' + parent.name + '\\.'), '');
-
 
         if (!parent.children) {
           parent.children = [];
@@ -170,32 +166,24 @@
    * @param list
    * @return {Array}
    */
-  ApiCtrl.prototype.addTitles = function(list) {
-    var itemsWithTitles = [],
-        prevFileName = null,
-        byFileName = {};
+  ApiCtrl.prototype.addTitleItems = function(list) {
+    var itemsPlusTitles = [],
+        prevFileName = null;
 
     list.forEach(function(item) {
-      // Group items by file name.
-      if (!byFileName[item.fileName]) {
-        byFileName[item.fileName] = [];
-      }
-      byFileName[item.fileName].push(item);
-
       if (prevFileName !== item.fileName) {
         prevFileName = item.fileName;
-        itemsWithTitles.push({
+        itemsPlusTitles.push({
           displayName: item.fileName,
           isTitle: true,
-          type: 'title',
-          children: byFileName[item.fileName]
+          type: 'title'
         });
       }
 
-      itemsWithTitles.push(item);
+      itemsPlusTitles.push(item);
     });
 
-    return itemsWithTitles;
+    return itemsPlusTitles;
   };
 
   ApiCtrl.prototype.addExtends = function(list) {
@@ -205,11 +193,12 @@
       }
 
       // Remove braces from {type}.
-      var name = item.extends.replace(/[{}]/g, '');
-      var nameExpr = new RegExp(name + '\\.prototype');
+      var parentName = item.extends.replace(/[{}]/g, '');
+      var nameExpr = new RegExp(parentName + '\\.prototype');
 
+      // Find all the parent functions.
       item.base = {
-        name: name,
+        name: parentName,
         items: _.filter(list, function(item) {
           return item.name && item.name.match(nameExpr);
         })
