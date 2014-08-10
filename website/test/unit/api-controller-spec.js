@@ -197,4 +197,21 @@ describe('ApiCtrl', function() {
       expect(scope.toggleMenuLabel()).toBe('Hide list');
     });
   });
+
+  describe('Extends', function() {
+    it('should add parent reference', function() {
+      // When you have an items that extends.
+      createController({items: [
+        {name: 'name1', alias: 'parent'},
+        {name: 'name1.prototype.fn'},
+        {name: 'name2', extends: '{name1}'}
+      ]});
+      
+      // Then ensure the extending item has the functions of the parent.
+      var item = scope.items[3];
+      expect(item.title).toBe('name2');
+      expect(item.base.name).toBe('name1');
+      expect(item.base.items.length).toBe(1);
+    });
+  });
 });

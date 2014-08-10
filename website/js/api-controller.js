@@ -204,6 +204,7 @@
         return;
       }
 
+      // Remove braces from {type}.
       var name = item.extends.replace(/[{}]/g, '');
       var nameExpr = new RegExp(name + '\\.prototype');
 

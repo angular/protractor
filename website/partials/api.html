@@ -146,6 +146,33 @@
           </table>
         </div>
       </div>
+
+      <!-- Extends -->
+      <div ng-if="currentItem.extends">
+        <h4>Extends {{currentItem.base.name}}</h4>
+
+        <div class="table-responsive" ng-if="currentItem.base.items">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Function</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in currentItem.base.items">
+              <td>
+                <a href="javascript:void(0);" class="child"
+                    ng-click="showElement(item)"
+                    ng-bind="item.displayName">
+                </a>
+              </td>
+              <td ng-bind="item.shortDescription"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
