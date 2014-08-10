@@ -36,9 +36,8 @@
             </div>
             <span ng-switch-when="child">
               <a href="javascript:void(0);" class="child"
-                  ng-click="showElement(item)">
-                <span>{{item.displayName}}</span>
-              </a>
+                  ng-click="showElement(item)"
+                  ng-bind="item.displayName"></a>
             </span>
             <div ng-switch-default class="parent">
               <a href="javascript:void(0);"
