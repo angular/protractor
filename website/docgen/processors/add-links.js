@@ -78,6 +78,13 @@ var getTypeString = function(param) {
 
   if (type.type === 'FunctionType') {
     _.each(type.params, replaceWithLinkIfPresent);
+  } else if(type.type === 'TypeApplication') {
+    // Is this an Array.<type>?
+    var match = str.match(/Array\.<(.*)>/);
+    if (match && typeTable[match[1]]) {
+      var typeInsideArray = match[1];
+      str = str.replace(typeInsideArray, toMarkdownLinkFormat(typeInsideArray));
+    }
   } else if (type.type === 'NameExpression') {
     replaceWithLinkIfPresent(type);
   }
