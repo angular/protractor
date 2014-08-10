@@ -33,9 +33,11 @@ gulp.task('dgeni', function() {
 });
 
 gulp.task('copyBowerFiles', function() {
-  // Bootstrap.
-  gulp.src('bower_components/bootstrap/dist/js/bootstrap.min.js')
-      .pipe(gulp.dest('js'));
+  // Bootstrap, lodash.
+  gulp.src([
+    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+    'bower_components/lodash/dist/lodash.min.js'
+  ]).pipe(gulp.dest('js'));
   gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
       .pipe(gulp.dest('css'));
 });

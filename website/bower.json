@@ -11,6 +11,6 @@
     "angular": "~1.2.21",
     "angular-mocks": "~1.2.21",
     "angular-route": "~1.2.21",
-    "underscore": "~1.6.0"
+    "lodash": "~2.4.1"
   }
 }
