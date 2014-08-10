@@ -26,6 +26,7 @@ module.exports = {
           'alias',
           'description',
           'example',
+          'extends',
           'fileName',
           'htmlView',
           'name',

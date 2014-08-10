@@ -47,6 +47,7 @@ module.exports = function(config) {
   tagDefs.push({name: 'augments'});
   tagDefs.push({name: 'deprecated'});
   tagDefs.push({name: 'example'});
+  tagDefs.push({name: 'extends'});
   tagDefs.push({name: 'private'});
   tagDefs.push({name: 'see'});
   tagDefs.push({name: 'type'});

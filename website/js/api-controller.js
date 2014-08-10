@@ -42,6 +42,10 @@
      * @param html
      */
     $scope.trust = function(html) {
+      if (!html) {
+        return;
+      }
+
       // Does it come with a type? Types come escaped as [theType].
       var match = html.match(/.*(\[(.*)\]).*/);
       if (match) {
@@ -81,6 +85,8 @@
           }
         })
       }
+
+      self.addExtends(list);
     });
   };
 
@@ -117,6 +123,12 @@
       itemsByName[nameWithoutPrototype] = item;
 
       item.displayName = nameWithoutPrototype;
+
+      // Add short description.
+      if (item.description) {
+        item.shortDescription =
+            item.description.substring(0., item.description.indexOf('.') + 1);
+      }
     });
 
     /**
@@ -184,6 +196,24 @@
     });
 
     return itemsWithTitles;
+  };
+
+  ApiCtrl.prototype.addExtends = function(list) {
+    list.forEach(function(item) {
+      if (!item.extends) {
+        return;
+      }
+
+      var name = item.extends.replace(/[{}]/g, '');
+      var nameExpr = new RegExp(name + '\\.prototype');
+
+      item.base = {
+        name: name,
+        items: _.filter(list, function(item) {
+          return item.name && item.name.match(nameExpr);
+        })
+      };
+    });
   };
 
   angular.module('protractorApp').controller('ApiCtrl', ApiCtrl);
