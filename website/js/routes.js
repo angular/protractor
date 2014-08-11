@@ -28,6 +28,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/locators', {
         templateUrl: 'partials/locators.html'
       }).
+      when('/page-objects', {
+        templateUrl: 'partials/page-objects.html'
+      }).
       when('/protractor-setup', {
         templateUrl: 'partials/protractor-setup.html'
       }).
