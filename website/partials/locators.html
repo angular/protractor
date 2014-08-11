@@ -113,61 +113,53 @@ el.getText().then(function(text) {
   <p>
     Any action available in WebDriverJS on a WebElement is available on an
     ElementFinder.
-    <a href="#/api?view=webdriver.WebElement.prototype.getDriver">See a full list</a>.
+    <a href="#/api?view=ElementFinder">See a full list</a>.
   </p>
 
   <h2>
     <a name="user-content-finding-multiple-elements" class="anchor" href="#finding-multiple-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Multiple Elements
   </h2>
 
-  <p>To deal with multiple DOM elements, use the
-    <code>element.all</code> function. This also takes a locator as its only parameter.
+  <p>To deal with multiple DOM elements, use the <code>element.all</code>
+    function. This also takes a locator as its only parameter.
   </p>
 
-  <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'.selector'</span><span class="p">)).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">elements</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// elements is an array of ElementFinders.</span>
-<span class="p">});</span>
+<pre ptor-inline-code>
+element.all(by.css('.selector')).then(function(elements) {
+  // elements is an array of ElementFinders.
+});
 </pre>
-  </div>
 
   <p><code>element.all()</code> has several helper functions:</p>
 
-  <div class="highlight highlight-js"><pre><span class="c1">// Number of elements.</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">count</span><span class="p">();</span>
+<pre ptor-inline-code>
+// Number of elements.
+element.all(locator).count();
 
-<span class="c1">// Get my index (starting at 0).</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
+// Get my index (starting at 0).
+element.all(locator).get(index);
 
-<span class="c1">// First and last.</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">last</span><span class="p">();</span>
+// First and last.
+element.all(locator).first();
+element.all(locator).last();
 </pre>
-  </div>
 
-  <h2>
-    <a name="user-content-finding-sub-elements" class="anchor" href="#finding-sub-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Sub-Elements
-  </h2>
+  <h2> Finding Sub-Elements </h2>
 
-  <p>To find sub-elements, simply chain element and element.all functions together as shown below.</p>
+  <p>To find sub-elements, simply chain element and element.all functions
+    together as shown below.</p>
 
   <p>Using a single locator to find:</p>
 
-  <ul class="task-list">
-    <li>
-      <p>an element</p>
 
-      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">));</span>
-</pre>
-      </div>
-    </li>
-    <li>
-      <p>a list of elements:</p>
+  <p>an element</p>
 
-      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">));</span>
-</pre>
-      </div>
-    </li>
-  </ul>
+  <pre ptor-inline-code>element(by.css('some-css'));</pre>
+
+  <p>a list of elements:</p>
+
+  <pre ptor-inline-code>element.all(by.css('some-css'));</pre>
+
   <p>Using chained locators to find:</p>
 
   <ul class="task-list">
