@@ -17,6 +17,7 @@
     "lodash": "^2.4.1"
   },
   "scripts": {
-    "install": "./node_modules/bower/bin/bower install"
+    "install": "./node_modules/bower/bin/bower install",
+    "postinstall": "./node_modules/.bin/gulp"
   }
 }
