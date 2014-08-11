@@ -1,0 +1,100 @@
+<article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1>
+  <a name="user-content-using-page-objects-to-organize-tests" class="anchor" href="#using-page-objects-to-organize-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using Page Objects to Organize Tests
+</h1>
+
+  <p>When writing end-to-end tests, a common pattern is to use
+    <a href="https://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.
+  </p>
+
+  <h2>
+    <a name="user-content-without-page-objects" class="anchor" href="#without-page-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Without Page Objects
+  </h2>
+
+  <p>Here’s a simple test script (<a href="/angular/protractor/blob/master/example/example_sped.js">example_spec.js</a>) for ‘The Basics’ example on the
+    <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
+
+  <div class="highlight highlight-js"><pre><span class="nx">describe</span><span class="p">(</span><span class="s1">'angularjs homepage'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s1">'should greet the named user'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://www.angularjs.org'</span><span class="p">);</span>
+    <span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">'yourName'</span><span class="p">)).</span><span class="nx">sendKeys</span><span class="p">(</span><span class="s1">'Julie'</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">binding</span><span class="p">(</span><span class="s1">'yourName'</span><span class="p">));</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">greeting</span><span class="p">.</span><span class="nx">getText</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">'Hello Julie!'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+  </div>
+
+  <h2>
+    <a name="user-content-with-pageobjects" class="anchor" href="#with-pageobjects" aria-hidden="true"><span class="octicon octicon-link"></span></a>With PageObjects
+  </h2>
+
+  <p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
+
+  <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">AngularHomepage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">nameInput</span> <span class="o">=</span> <span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">'yourName'</span><span class="p">));</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">greeting</span> <span class="o">=</span> <span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">binding</span><span class="p">(</span><span class="s1">'yourName'</span><span class="p">));</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">get</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://www.angularjs.org'</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">setName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">nameInput</span><span class="p">.</span><span class="nx">sendKeys</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</pre>
+  </div>
+
+  <p>The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the
+    <em>functionality</em> of the test script itself does not change (nothing is added or deleted).
+  </p>
+
+  <div class="highlight highlight-js"><pre><span class="nx">describe</span><span class="p">(</span><span class="s1">'angularjs homepage'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s1">'should greet the named user'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">angularHomepage</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AngularHomepage</span><span class="p">();</span>
+    <span class="nx">angularHomepage</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+
+    <span class="nx">angularHomepage</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s1">'Julie'</span><span class="p">);</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">angularHomepage</span><span class="p">.</span><span class="nx">greeting</span><span class="p">.</span><span class="nx">getText</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">'Hello Julie!'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+  </div>
+
+  <h2>
+    <a name="user-content-configuring-test-suites" class="anchor" href="#configuring-test-suites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuring Test Suites
+  </h2>
+
+  <p>It is possible to separate your tests into various test suites. In your config file, you could setup the suites option as shown below. </p>
+
+  <div class="highlight highlight-js"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1">// The address of a running selenium server.</span>
+  <span class="nx">seleniumAddress</span><span class="o">:</span> <span class="s1">'http://localhost:4444/wd/hub'</span><span class="p">,</span>
+
+  <span class="c1">// Capabilities to be passed to the webdriver instance.</span>
+  <span class="nx">capabilities</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">'browserName'</span><span class="o">:</span> <span class="s1">'chrome'</span>
+  <span class="p">},</span>
+
+  <span class="c1">// Spec patterns are relative to the location of the spec file. They may</span>
+  <span class="c1">// include glob patterns.</span>
+  <span class="nx">suites</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">homepage</span><span class="o">:</span> <span class="s1">'tests/e2e/homepage/**/*Spec.js'</span><span class="p">,</span>
+    <span class="nx">search</span><span class="o">:</span> <span class="p">[</span><span class="s1">'tests/e2e/contact_search/**/*Spec.js'</span><span class="p">,</span>
+      <span class="s1">'tests/e2e/venue_search/**/*Spec.js'</span><span class="p">]</span>
+  <span class="p">},</span>
+
+  <span class="c1">// Options to be passed to Jasmine-node.</span>
+  <span class="nx">jasmineNodeOpts</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">showColors</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Use colors in the command line report.</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre>
+  </div>
+
+  <p>From the command line, you can then easily switch between running one or the other suite of tests. This command will run only the homepage section of the tests:</p>
+
+<pre><code>protractor protractor.conf.js --suite homepage
+</code></pre>
+</article>
