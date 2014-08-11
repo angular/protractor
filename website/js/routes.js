@@ -25,6 +25,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/frameworks', {
         templateUrl: 'partials/frameworks.html'
       }).
+      when('/timeouts', {
+        templateUrl: 'partials/timeouts.html'
+      }).
       otherwise({
         redirectTo: '/'
       });
