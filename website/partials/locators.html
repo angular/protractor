@@ -151,7 +151,6 @@ element.all(locator).last();
 
   <p>Using a single locator to find:</p>
 
-
   <p>an element</p>
 
   <pre ptor-inline-code>element(by.css('some-css'));</pre>
@@ -162,66 +161,74 @@ element.all(locator).last();
 
   <p>Using chained locators to find:</p>
 
-  <ul class="task-list">
-    <li>
-      <p>a sub-element:</p>
 
-      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
-</pre>
-      </div>
-    </li>
-    <li>
-      <p>to find a list of sub-elements:</p>
+  <p>a sub-element:</p>
 
-      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+<pre ptor-inline-code>
+element(by.css('some-css')).element(by.tagName('tag-within-css'));
 </pre>
-      </div>
-    </li>
-  </ul>
+
+
+  <p>to find a list of sub-elements:</p>
+
+<pre ptor-inline-code>
+element(by.css('some-css')).all(by.tagName('tag-within-css'));
+</pre>
+
   <p>You can chain with get/first/last as well like so:</p>
 
-  <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">first</span><span class="p">().</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">get</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">first</span><span class="p">().</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+<pre ptor-inline-code>
+element.all(by.css('some-css')).first().element(by.tagName('tag-within-css'));
+element.all(by.css('some-css')).get(index).element(by.tagName('tag-within-css'));
+element.all(by.css('some-css')).first().all(by.tagName('tag-within-css'));
 </pre>
-  </div>
 
-  <h2>
-    <a name="user-content-behind-the-scenes-elementfinders-versus-webelements" class="anchor" href="#behind-the-scenes-elementfinders-versus-webelements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Behind the Scenes: ElementFinders versus WebElements
-  </h2>
+  <h2> Behind the Scenes: ElementFinders versus WebElements </h2>
 
-  <p>If you're familiar with WebDriver and WebElements, or you're just curious about the WebElements mentioned above, you may be wondering how they relate to ElementFinders.</p>
+  <p>If you're familiar with WebDriver and WebElements, or you're just curious
+    about the WebElements mentioned above, you may be wondering how they relate
+    to ElementFinders.</p>
 
-  <p>When you call
-    <code>driver.findElement(locator)</code>, WebDriver immediately sends a command over to the browser asking it to locate the element. This isn't great for creating page objects, because we want to be able to do things in setup (before a page may have been loaded) like
+  <p>
+    When you call <code>driver.findElement(locator)</code>, WebDriver
+    immediately sends a command over to the browser asking it to locate the
+    element. This isn't great for creating page objects, because we want to be
+    able to do things in setup (before a page may have been loaded) like
   </p>
 
-  <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">myButton</span> <span class="o">=</span> <span class="o">??</span><span class="p">;</span>
+<pre ptor-inline-code>
+var myButton = ??;
 </pre>
-  </div>
 
-  <p>and re-use the varialbe
-    <code>myButton</code> throughout your test. ElementFinders get around this by simply storing the locator information until an action is called.
+  <p>
+    and re-use the varialbe <code>myButton</code> throughout your test.
+    ElementFinders get around this by simply storing the locator information
+    until an action is called.
   </p>
 
-  <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">myButton</span> <span class="o">=</span> <span class="nx">element</span><span class="p">(</span><span class="nx">locator</span><span class="p">);</span>
-<span class="c1">// No command has been sent to the browser yet.</span>
+<pre ptor-inline-code>
+var myButton = element(locator);
+// No command has been sent to the browser yet.
 </pre>
-  </div>
 
   <p>The browser will not receive any commands until you call an action.</p>
 
-  <div class="highlight highlight-js"><pre><span class="nx">myButton</span><span class="p">.</span><span class="nx">click</span><span class="p">();</span>
-<span class="c1">// Now two commands are sent to the browser - find the element, and then click it</span>
+<pre ptor-inline-code>
+myButton.click();
+// Now two commands are sent to the browser - find the element, and then click it
 </pre>
-  </div>
 
-  <p>ElementFinders also enable chaining to find subelements, such as
+  <p>
+    ElementFinders also enable chaining to find subelements, such as
     <code>element(locator1).element(locator2)</code>.</p>
 
-  <p>All WebElement actions are wrapped in this way and available on the ElementFinder, in addition to a couple helper methods like
-    <code>isPresent</code>. </p>
+  <p>
+    All WebElement actions are wrapped in this way and available on the
+    ElementFinder, in addition to a couple helper methods like <code>isPresent</code>.
+  </p>
 
-  <p>You can always access the underlying WebElement using
+  <p>
+    You can always access the underlying WebElement using
     <code>element(locator).getWebElement()</code>, but you should not need to.
-  </p></div>
+  </p>
+</div>
