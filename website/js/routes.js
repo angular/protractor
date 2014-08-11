@@ -1,10 +1,10 @@
 angular.module('protractorApp').config(function($routeProvider) {
   $routeProvider.
       when('/', {
-        templateUrl: '/partials/home.html'
+        templateUrl: 'partials/home.html'
       }).
       when('/api', {
-        templateUrl: '/partials/api.html',
+        templateUrl: 'partials/api.html',
         controller: 'ApiCtrl'
       }).
       otherwise({
