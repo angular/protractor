@@ -1,0 +1,235 @@
+<div>
+  <h1> Using Locators </h1>
+
+  <p>The heart of end-to-end tests for webpages is finding DOM elements,
+    interacting with them, and getting information about the current state of
+    your application. This doc is an overview of how to locate and perform
+    actions on DOM elements using Protractor.</p>
+
+  <h2> Overview </h2>
+
+  <p>
+    Protractor exports a global function <code>element</code>, which takes a
+    <em>Locator</em> and will return an <em>ElementFinder</em>. This function
+    finds a single element - if you need to manipulate multiple elements, use
+    the <code>element.all</code> function.</p>
+
+  <p>
+    The <em>ElementFinder</em> has a set of <em>action methods</em>, such as
+    <code>click()</code>, <code>getText()</code>, and <code>sendKeys</code>.
+    These are the core way to interact with an element and get information back
+    from it.
+  </p>
+
+  <p>
+    When you find elements in Protractor all actions are asynchronous. Behind
+    the scenes, all actions are sent to the browser being controlled using the
+    JSON Webdriver Wire Protocol. The browser then performs the action as a
+    user natively would.</p>
+
+  <h2> Locators </h2>
+
+  <p>
+    A locator tells Protractor how to find a certain DOM element. Protractor
+    exports locator factories on the global <code>by</code> object. The most
+    common locators are:</p>
+
+<pre ptor-inline-code>
+// find an element using a css selector
+by.css('.myclass')
+
+// find an element with the given id
+by.id('myid')
+
+// find an element with a certain ng-model
+by.model('name')
+
+// find an element bound to the given variable
+by.binding('bindingname')
+</pre>
+
+  <p>
+    For a list of Protractor-specific locators, see the
+    <a href="#/api?view=ProtractorBy">Protractor API: ProtractorBy</a>.
+  </p>
+
+  <p>The locators are passed to the <code>element</code> function, as below:</p>
+
+<pre ptor-inline-code>
+element(by.css('some-css'));
+element(by.model('item.name'));
+element(by.binding('item.name'));
+</pre>
+
+  <p>When using CSS Selectors as a locator, you can use the shortcut $()
+    notation:</p>
+
+<pre ptor-inline-code>
+$('my-css');
+
+// Is the same as
+
+element(by.css('my-css'));
+</pre>
+
+  <h2> Actions </h2>
+
+  <p>
+    The <code>element()</code> function returns an ElementFinder object. The
+    ElementFinder knows how to locate the DOM element using the locator you
+    passed in as a parameter, but it has not actually done so yet. It will not
+    contact the browser until an <em>action</em> method has been called.</p>
+
+  <p>The most common action methods are:</p>
+
+<pre ptor-inline-code>
+var el = element(locator);
+
+// Click on the element
+el.click();
+
+// Send keys to the element (usually an input)
+el.sendKeys('my text');
+
+// Clear the text in an element (usually an input)
+el.clear();
+
+// Get the value of an attribute, for example, get the value of an input
+el.getAttribute('value');
+</pre>
+
+  <p>Since all actions are asynchronous, all action methods return a
+    <a href="https://code.google.com/p/selenium/wiki/WebDriverJs#Promises">promise</a>.
+    So, to log the text of an element, you would do something like:
+  </p>
+
+<pre ptor-inline-code>
+var el = element(locator);
+el.getText().then(function(text) {
+  console.log(text);
+});
+</pre>
+
+  <p>
+    Any action available in WebDriverJS on a WebElement is available on an
+    ElementFinder.
+    <a href="#/api?view=webdriver.WebElement.prototype.getDriver">See a full list</a>.
+  </p>
+
+  <h2>
+    <a name="user-content-finding-multiple-elements" class="anchor" href="#finding-multiple-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Multiple Elements
+  </h2>
+
+  <p>To deal with multiple DOM elements, use the
+    <code>element.all</code> function. This also takes a locator as its only parameter.
+  </p>
+
+  <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'.selector'</span><span class="p">)).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">elements</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// elements is an array of ElementFinders.</span>
+<span class="p">});</span>
+</pre>
+  </div>
+
+  <p><code>element.all()</code> has several helper functions:</p>
+
+  <div class="highlight highlight-js"><pre><span class="c1">// Number of elements.</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">count</span><span class="p">();</span>
+
+<span class="c1">// Get my index (starting at 0).</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
+
+<span class="c1">// First and last.</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">locator</span><span class="p">).</span><span class="nx">last</span><span class="p">();</span>
+</pre>
+  </div>
+
+  <h2>
+    <a name="user-content-finding-sub-elements" class="anchor" href="#finding-sub-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Sub-Elements
+  </h2>
+
+  <p>To find sub-elements, simply chain element and element.all functions together as shown below.</p>
+
+  <p>Using a single locator to find:</p>
+
+  <ul class="task-list">
+    <li>
+      <p>an element</p>
+
+      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">));</span>
+</pre>
+      </div>
+    </li>
+    <li>
+      <p>a list of elements:</p>
+
+      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">));</span>
+</pre>
+      </div>
+    </li>
+  </ul>
+  <p>Using chained locators to find:</p>
+
+  <ul class="task-list">
+    <li>
+      <p>a sub-element:</p>
+
+      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+</pre>
+      </div>
+    </li>
+    <li>
+      <p>to find a list of sub-elements:</p>
+
+      <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+</pre>
+      </div>
+    </li>
+  </ul>
+  <p>You can chain with get/first/last as well like so:</p>
+
+  <div class="highlight highlight-js"><pre><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">first</span><span class="p">().</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">get</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'some-css'</span><span class="p">)).</span><span class="nx">first</span><span class="p">().</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">tagName</span><span class="p">(</span><span class="s1">'tag-within-css'</span><span class="p">));</span>
+</pre>
+  </div>
+
+  <h2>
+    <a name="user-content-behind-the-scenes-elementfinders-versus-webelements" class="anchor" href="#behind-the-scenes-elementfinders-versus-webelements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Behind the Scenes: ElementFinders versus WebElements
+  </h2>
+
+  <p>If you're familiar with WebDriver and WebElements, or you're just curious about the WebElements mentioned above, you may be wondering how they relate to ElementFinders.</p>
+
+  <p>When you call
+    <code>driver.findElement(locator)</code>, WebDriver immediately sends a command over to the browser asking it to locate the element. This isn't great for creating page objects, because we want to be able to do things in setup (before a page may have been loaded) like
+  </p>
+
+  <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">myButton</span> <span class="o">=</span> <span class="o">??</span><span class="p">;</span>
+</pre>
+  </div>
+
+  <p>and re-use the varialbe
+    <code>myButton</code> throughout your test. ElementFinders get around this by simply storing the locator information until an action is called.
+  </p>
+
+  <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">myButton</span> <span class="o">=</span> <span class="nx">element</span><span class="p">(</span><span class="nx">locator</span><span class="p">);</span>
+<span class="c1">// No command has been sent to the browser yet.</span>
+</pre>
+  </div>
+
+  <p>The browser will not receive any commands until you call an action.</p>
+
+  <div class="highlight highlight-js"><pre><span class="nx">myButton</span><span class="p">.</span><span class="nx">click</span><span class="p">();</span>
+<span class="c1">// Now two commands are sent to the browser - find the element, and then click it</span>
+</pre>
+  </div>
+
+  <p>ElementFinders also enable chaining to find subelements, such as
+    <code>element(locator1).element(locator2)</code>.</p>
+
+  <p>All WebElement actions are wrapped in this way and available on the ElementFinder, in addition to a couple helper methods like
+    <code>isPresent</code>. </p>
+
+  <p>You can always access the underlying WebElement using
+    <code>element(locator).getWebElement()</code>, but you should not need to.
+  </p></div>

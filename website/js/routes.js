@@ -19,11 +19,14 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/faq', {
         templateUrl: 'partials/faq.html'
       }).
+      when('/frameworks', {
+        templateUrl: 'partials/frameworks.html'
+      }).
       when('/getting-started', {
         templateUrl: 'partials/getting-started.html'
       }).
-      when('/tutorial', {
-        templateUrl: 'partials/tutorial.html'
+      when('/locators', {
+        templateUrl: 'partials/locators.html'
       }).
       when('/protractor-setup', {
         templateUrl: 'partials/protractor-setup.html'
@@ -34,11 +37,11 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/system-setup', {
         templateUrl: 'partials/system-setup.html'
       }).
-      when('/frameworks', {
-        templateUrl: 'partials/frameworks.html'
-      }).
       when('/timeouts', {
         templateUrl: 'partials/timeouts.html'
+      }).
+      when('/tutorial', {
+        templateUrl: 'partials/tutorial.html'
       }).
       otherwise({
         redirectTo: '/'
