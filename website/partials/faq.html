@@ -1,0 +1,183 @@
+<article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1>
+  <a name="user-content-faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ
+</h1>
+
+  <h2>
+    <a name="user-content-my-tests-time-out-in-protractor-but-everythings-working-fine-when-running-manually-whats-up" class="anchor" href="#my-tests-time-out-in-protractor-but-everythings-working-fine-when-running-manually-whats-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>My tests time out in Protractor, but everything's working fine when running manually. What's up?
+  </h2>
+
+  <p>There are several ways that Protractor can time out - see the
+    <a href="/angular/protractor/blob/master/docs/timeouts.md">Timeouts</a>
+    reference for full documentation.</p>
+
+  <h2>
+    <a name="user-content-whats-the-difference-between-karma-and-protractor-when-do-i-use-which" class="anchor" href="#whats-the-difference-between-karma-and-protractor-when-do-i-use-which" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's the difference between Karma and Protractor? When do I use which?
+  </h2>
+
+  <p>
+    <a href="http://karma-runner.github.io">Karma</a> is a great tool for unit testing, and Protractor is intended for
+    end to end or integration testing. This means that small tests for the logic
+    of your individual controllers, directives, and services should be run using
+    Karma. Big tests in which you have a running instance of your entire application
+    should be run using Protractor. Protractor is intended to run tests from a
+    user's point of view - if your test could be written down as instructions
+    for a human interacting with your application, it should be an end to end test
+    written with Protractor.</p>
+
+  <p>Here's a
+    <a href="http://www.yearofmoo.com/2013/09/advanced-testing-and-debugging-in-angularjs.html">great blog post</a>
+    with more info.</p>
+
+  <h2>
+    <a name="user-content-angular-cant-be-found-on-my-page" class="anchor" href="#angular-cant-be-found-on-my-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Angular can't be found on my page
+  </h2>
+
+  <p>Protractor supports angular 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.</p>
+
+  <p>The
+    <code>angular</code> variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if
+    <code>angular</code> is defined.</p>
+
+  <h2>
+    <a name="user-content-how-do-i-deal-with-my-log-in-page" class="anchor" href="#how-do-i-deal-with-my-log-in-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I deal with my log-in page?
+  </h2>
+
+  <p>If your app needs log-in, there are a couple ways to deal with it. If your login
+    page is not written with Angular, you'll need to interact with it via
+    unwrapped webdriver, which can be accessed like
+    <code>browser.driver.get()</code>. </p>
+
+  <p>You can put your log-in code into an
+    <code>onPrepare</code> function, which will be run
+    once before any of your tests. See this example (<a href="https://github.com/angular/protractor/blob/master/spec/withLoginConf.js">withLoginConf.js</a>]
+  </p>
+
+  <h2>
+    <a name="user-content-which-browsers-are-supported" class="anchor" href="#which-browsers-are-supported" aria-hidden="true"><span class="octicon octicon-link"></span></a>Which browsers are supported?
+  </h2>
+
+  <p>The last two major versions of Chrome, Firefox, IE, and Safari. See details at
+    <a href="https://github.com/angular/protractor/blob/master/docs/browser-setup.md">Setting Up the Browser</a>.
+  </p>
+
+  <h2>
+    <a name="user-content-the-result-of-gettext-from-an-input-element-is-always-empty" class="anchor" href="#the-result-of-gettext-from-an-input-element-is-always-empty" aria-hidden="true"><span class="octicon octicon-link"></span></a>The result of
+    <code>getText</code> from an input element is always empty</h2>
+
+  <p>This is a
+    <a href="http://grokbase.com/t/gg/webdriver/12bcmvwhcm/extarcting-text-from-the-input-field">webdriver quirk</a>.
+    <code>&lt;input&gt;</code> and
+    <code>&lt;textarea&gt;</code> elements always have
+    empty <code>getText</code> values. Instead, try
+    <code>element.getAttribute('value')</code>.</p>
+
+  <h2>
+    <a name="user-content-how-can-i-interact-directly-with-the-javascript-running-in-my-app" class="anchor" href="#how-can-i-interact-directly-with-the-javascript-running-in-my-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can I interact directly with the JavaScript running in my app?
+  </h2>
+
+  <p>In general, the design of WebDriver tests is to interact with the page as a user would, so it gets a little tricky if you want to interact with the JavaScript directly. You should avoid it unless you have a good reason. However, there are ways of doing it.</p>
+
+  <p>You can use the
+    <code>evaluate</code> function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.
+  </p>
+
+  <div class="highlight highlight-javascript"><pre><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">'.foo'</span><span class="p">).</span><span class="nx">evaluate</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">)</span>
+</pre>
+  </div>
+
+  <p>would return whatever
+    <code>{{bar}}</code> is in the scope of the element with class 'foo'.</p>
+
+  <p>You can also execute arbitrary JavaScript in the browser with</p>
+
+  <div class="highlight highlight-javascript"><pre><span class="nx">browser</span><span class="p">.</span><span class="nx">executeScript</span><span class="p">(</span><span class="s1">'your script as a string'</span><span class="p">)</span>
+</pre>
+  </div>
+
+  <h2>
+    <a name="user-content-how-can-i-get-hold-of-the-browsers-console" class="anchor" href="#how-can-i-get-hold-of-the-browsers-console" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can I get hold of the browser's console?
+  </h2>
+
+  <p>In your test:</p>
+
+  <div class="highlight highlight-javascript"><pre><span class="nx">browser</span><span class="p">.</span><span class="nx">manage</span><span class="p">().</span><span class="nx">logs</span><span class="p">().</span><span class="nx">get</span><span class="p">(</span><span class="s1">'browser'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">browserLog</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'log: '</span> <span class="o">+</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'util'</span><span class="p">).</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">browserLog</span><span class="p">));</span>
+<span class="p">});</span>
+</pre>
+  </div>
+
+  <p>This will output logs from the browser console. Note that logs below the set logging level will be ignored. WebDriver does not currently support changing the logging level for browser logs.</p>
+
+  <p>See an example (<a href="https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js">spec.js</a>) of using this API to fail tests if the console has errors.
+  </p>
+
+  <h2>
+    <a name="user-content-how-can-i-get-screenshots-of-failures" class="anchor" href="#how-can-i-get-screenshots-of-failures" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can I get screenshots of failures?
+  </h2>
+
+  <p>First, this is how you can take a screenshot:</p>
+
+  <div class="highlight highlight-javascript"><pre><span class="nx">browser</span><span class="p">.</span><span class="nx">takeScreenshot</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">png</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s2">"/tmp/screenshot.png"</span><span class="p">);</span>
+  <span class="nx">stream</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="k">new</span> <span class="nx">Buffer</span><span class="p">(</span><span class="nx">png</span><span class="p">,</span> <span class="s1">'base64'</span><span class="p">));</span>
+  <span class="nx">stream</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+<span class="p">});</span>
+</pre>
+  </div>
+
+  <p>The method to take a screenshot automatically on failure would depend on the type of failure.</p>
+
+  <ul class="task-list">
+    <li>For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as such:</li>
+  </ul>
+  <div class="highlight highlight-javascript"><pre><span class="nx">jasmine</span><span class="p">.</span><span class="nx">getEnv</span><span class="p">().</span><span class="nx">addReporter</span><span class="p">(</span><span class="k">new</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">reportSpecResults</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">spec</span><span class="p">.</span><span class="nx">results</span><span class="p">().</span><span class="nx">passed</span><span class="p">())</span> <span class="p">{</span>
+      <span class="c1">//take screenshot</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+</pre>
+  </div>
+
+  <p>Note, you can also choose to take a screenshot in
+    <code>afterEach</code>. However, because Jasmine does not execute
+    <code>afterEach</code> for timeouts, those would not produce screenshots</p>
+
+  <ul class="task-list">
+    <li>For failures of individual expectations, you can override jasmine's addMatcherResult function as such:</li>
+  </ul>
+  <div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">originalAddMatcherResult</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">addMatcherResult</span><span class="p">;</span>
+<span class="nx">jasmine</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">addMatcherResult</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">passed</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">//take screenshot</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">originalAddMatcherResult</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="p">};</span>
+</pre>
+  </div>
+
+  <p>
+    <a href="https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js">See an example of taking screenshot on spec failures</a>.
+  </p>
+
+  <h2>
+    <a name="user-content-how-do-i-produce-an-xml-report-of-my-test-results" class="anchor" href="#how-do-i-produce-an-xml-report-of-my-test-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I produce an XML report of my test results?
+  </h2>
+
+  <p>You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this
+    <a href="https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js">example (junitOutputConf.js)</a>. Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you'll need to be sure to use version 1.0.0.
+  </p>
+
+  <h2>
+    <a name="user-content-how-can-i-catch-errors-such-as-elementnotfound" class="anchor" href="#how-can-i-catch-errors-such-as-elementnotfound" aria-hidden="true"><span class="octicon octicon-link"></span></a>How can I catch errors such as ElementNotFound?
+  </h2>
+
+  <p>WebDriver throws errors when commands cannot be completed - e.g. not being able to click on an element which is obscured by another element. If you need to retry these actions, try using
+    <a href="https://github.com/juliemr/webdriverjs-retry">webdriverjs-retry</a>. If you would just like to catch the error, do so like this
+  </p>
+
+  <div class="highlight highlight-javascript"><pre><span class="nx">elm</span><span class="p">.</span><span class="nx">click</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* passing case */</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* error handling here */</span><span class="p">})</span>
+</pre>
+  </div>
+</article>
