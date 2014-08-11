@@ -7,6 +7,9 @@ angular.module('protractorApp').config(function($routeProvider) {
         templateUrl: 'partials/api.html',
         controller: 'ApiCtrl'
       }).
+      when('/browser-setup', {
+        templateUrl: 'partials/browser-setup.html'
+      }).
       when('/control-flow', {
         templateUrl: 'partials/control-flow.html'
       }).
