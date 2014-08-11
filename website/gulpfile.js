@@ -90,12 +90,16 @@ gulp.task('watch', function() {
   gulp.watch(paths.dgeniTemplates, ['dgeni', 'copyFiles', 'reloadServer']);
 });
 
+// Start a server and watch for changes.
+gulp.task('liveReload', [
+  'default',
+  'connect',
+  'watch'
+]);
+
 gulp.task('default', [
   'copyBowerFiles',
   'dgeni',
   'less',
-  'js',
-  'copyFiles',
-  'connect',
-  'watch'
+  'js'
 ]);
