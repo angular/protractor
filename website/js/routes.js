@@ -31,6 +31,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/server-setup', {
         templateUrl: 'partials/server-setup.html'
       }).
+      when('/system-setup', {
+        templateUrl: 'partials/system-setup.html'
+      }).
       when('/frameworks', {
         templateUrl: 'partials/frameworks.html'
       }).
