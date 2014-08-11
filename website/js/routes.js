@@ -10,6 +10,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/tutorial', {
         templateUrl: 'partials/tutorial.html'
       }).
+      when('/protractor-setup', {
+        templateUrl: 'partials/protractor-setup.html'
+      }).
       otherwise({
         redirectTo: '/'
       });
