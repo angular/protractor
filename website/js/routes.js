@@ -16,6 +16,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/faq', {
         templateUrl: 'partials/faq.html'
       }).
+      when('/getting-started', {
+        templateUrl: 'partials/getting-started.html'
+      }).
       when('/tutorial', {
         templateUrl: 'partials/tutorial.html'
       }).
