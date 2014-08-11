@@ -13,6 +13,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/protractor-setup', {
         templateUrl: 'partials/protractor-setup.html'
       }).
+      when('/server-setup', {
+        templateUrl: 'partials/server-setup.html'
+      }).
       otherwise({
         redirectTo: '/'
       });
