@@ -16,7 +16,7 @@
     command below. Then look at all the stack traces.
   </p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 protractor debugging/failureConf.js
 </pre>
 
@@ -42,7 +42,7 @@ protractor debugging/failureConf.js
     <code>browser.debugger();</code> into your test where you want
     to break:</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 it('should fail to find a non-existent element', function() {
   browser.get('app/index.html#/form');
 
@@ -59,7 +59,7 @@ it('should fail to find a non-existent element', function() {
 
   <p>Then run the test in debug mode:</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 protractor debug debugging/failureConf.js
 </pre>
 
@@ -84,7 +84,7 @@ protractor debug debugging/failureConf.js
     <code>window.clientSideScripts</code>. They can be
     used from the browser's console.</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 // In the browser console (e.g. from Chrome Dev Tools)
 > window.clientSideScripts.findInputs('username');
 // Should return the input element with model 'username'.
@@ -142,13 +142,13 @@ node ./bin/elementexplorer.js <urL>
     <code>element</code> and <code>protractor</code> variables will
     be available. Enter a command such as:</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 > element(by.id('foobar')).getText()
 </pre>
 
   <p>or</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 &gt; browser.get('http://www.angularjs.org')
 </pre>
   <p>To get a list of functions you can call, try:</p>
@@ -168,7 +168,7 @@ node ./bin/elementexplorer.js <urL>
 
   <p>Sample usage:</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 // at the top of the test spec:
 var fs = require('fs');
 

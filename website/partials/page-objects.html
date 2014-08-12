@@ -33,7 +33,7 @@ describe('angularjs homepage', function() {
 
   <p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 var AngularHomepage = function() {
   this.nameInput = element(by.model('yourName'));
   this.greeting = element(by.binding('yourName'));
@@ -69,7 +69,7 @@ describe('angularjs homepage', function() {
 
   <p>It is possible to separate your tests into various test suites. In your config file, you could setup the suites option as shown below. </p>
 
-<pre ptor-inline-code="">
+<pre ptor-inline-code>
 exports.config = {
   // The address of a running selenium server.
   seleniumAddress: 'http://localhost:4444/wd/hub',
