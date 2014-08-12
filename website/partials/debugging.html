@@ -7,7 +7,7 @@
     can be difficult to debug because of long error messages and the separation
     between the browser and the process running the test.</p>
 
-  <h2> Types of Failure </h2>
+  <h2>Types of Failure</h2>
 
   <p>
     Protractor comes with examples of failing tests
@@ -35,7 +35,7 @@ protractor debugging/failureConf.js
     </li>
   </ul>
 
-  <h2> Pausing to Debug </h2>
+  <h2>Pausing to Debug</h2>
 
   <p>Protractor allows you to pause your test at any point and interact with the
     browser. To do this insert
@@ -93,7 +93,7 @@ protractor debug debugging/failureConf.js
 > window.clientSideScripts.findInputs('username', document.getElementById('#myEl'));
 </pre>
 
-  <h2> Setting Up WebStorm for Debugging </h2>
+  <h2>Setting Up WebStorm for Debugging</h2>
 
   <p>To set up WebStorm for Protractor, do the following:</p>
 
@@ -122,7 +122,7 @@ protractor debug debugging/failureConf.js
     <li>Click OK, place some breakpoints, and start debugging.</li>
   </ol>
 
-  <h2> Testing Out Protractor Interactively </h2>
+  <h2>Testing Out Protractor Interactively</h2>
 
   <p>When debugging or first writing test suites, you may find it helpful to
     try out Protractor commands without starting up the entire test suite. You can
@@ -160,7 +160,7 @@ node ./bin/elementexplorer.js <urL>
   <p>Typing tab at a blank prompt will fill in a suggestion for finding
     elements.</p>
 
-  <h2> Taking Screenshots </h2>
+  <h2>Taking Screenshots</h2>
 
   <p>WebDriver can snap a screenshot with <code>browser.takeScreenshot()</code>.
     This returns a promise which will resolve to the screenshot as a base-64
@@ -190,7 +190,7 @@ browser.takeScreenshot().then(function (png) {
 });
 </pre>
 
-  <h2> Timeouts </h2>
+  <h2>Timeouts</h2>
 
   <p>There are several ways that Protractor can time out. See the
     <a href="#/timeouts">Timeouts</a>

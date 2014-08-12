@@ -6,7 +6,7 @@
     your application. This doc is an overview of how to locate and perform
     actions on DOM elements using Protractor.</p>
 
-  <h2> Overview </h2>
+  <h2>Overview</h2>
 
   <p>
     Protractor exports a global function <code>element</code>, which takes a
@@ -27,7 +27,7 @@
     JSON Webdriver Wire Protocol. The browser then performs the action as a
     user natively would.</p>
 
-  <h2> Locators </h2>
+  <h2>Locators</h2>
 
   <p>
     A locator tells Protractor how to find a certain DOM element. Protractor
@@ -72,7 +72,7 @@ $('my-css');
 element(by.css('my-css'));
 </pre>
 
-  <h2> Actions </h2>
+  <h2>Actions</h2>
 
   <p>
     The <code>element()</code> function returns an ElementFinder object. The
@@ -116,9 +116,7 @@ el.getText().then(function(text) {
     <a href="#/api?view=ElementFinder">See a full list</a>.
   </p>
 
-  <h2>
-    <a name="user-content-finding-multiple-elements" class="anchor" href="#finding-multiple-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Multiple Elements
-  </h2>
+  <h2>Finding Multiple Elements</h2>
 
   <p>To deal with multiple DOM elements, use the <code>element.all</code>
     function. This also takes a locator as its only parameter.
@@ -144,7 +142,7 @@ element.all(locator).first();
 element.all(locator).last();
 </pre>
 
-  <h2> Finding Sub-Elements </h2>
+  <h2>Finding Sub-Elements</h2>
 
   <p>To find sub-elements, simply chain element and element.all functions
     together as shown below.</p>
@@ -183,7 +181,7 @@ element.all(by.css('some-css')).get(index).element(by.tagName('tag-within-css'))
 element.all(by.css('some-css')).first().all(by.tagName('tag-within-css'));
 </pre>
 
-  <h2> Behind the Scenes: ElementFinders versus WebElements </h2>
+  <h2>Behind the Scenes: ElementFinders versus WebElements</h2>
 
   <p>If you're familiar with WebDriver and WebElements, or you're just curious
     about the WebElements mentioned above, you may be wondering how they relate
