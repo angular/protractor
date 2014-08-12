@@ -3,14 +3,15 @@
    * Controller for the protractor api view.
    *
    * @constructor
+   * @ngInject
    * @param $http HTTP service.
-   * @param $location Location service.
+   * @param $route Route service.
    * @param $sce Strict Contextual Escaping service.
    * @param $scope Angular scope.
    */
-  var ApiCtrl = function($http, $location, $sce, $scope) {
+  var ApiCtrl = function($http, $route, $sce, $scope) {
     this.$http = $http;
-    this.$location = $location;
+    this.$route = $route;
     this.$scope = $scope;
 
     this.loadTableOfContents();
@@ -33,7 +34,7 @@
 
     $scope.showElement = function(item) {
       // Update the query string with the view name.
-      $location.search('view', item.name);
+      $route.current.params.view = item.name;
       $scope.currentItem = item;
     };
 
@@ -77,7 +78,7 @@
       $scope.version = data.version;
 
       // Show the view if is defined in the query string.
-      var view = self.$location.search().view;
+      var view = self.$route.current.params.view;
       if (view) {
         items.forEach(function(item) {
           if (view === item.name) {
