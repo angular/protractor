@@ -50,7 +50,7 @@
       // Does it come with a type? Types come escaped as [theType].
       var match = html.match(/.*(\[(.*)\]).*/);
       if (match) {
-        var link = '<a href="#/api?view=' + match[2] + '">' + match[2] + '</a>';
+        var link = '<a href="#/api/' + match[2] + '">' + match[2] + '</a>';
         html = html.replace(match[1], link);
       }
 

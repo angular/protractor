@@ -15,6 +15,7 @@ describe('ApiCtrl', function() {
 
   var createController = function(tocData) {
     $httpBackend.expectGET('apiDocs/toc.json').respond(tocData);
+    $httpBackend.whenGET('partials/home.html').respond({});
 
     scope = $rootScope_.$new();
     ctrl = $controller_('ApiCtrl', {$scope: scope});
