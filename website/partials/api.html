@@ -31,17 +31,17 @@
       <div ng-if="isMenuVisible" class="mobile-menu">
         <span ng-repeat="item in items | filter:searchTerm"
             ng-switch="item.type">
-            <div ng-switch-when="title" class="title">
-            <strong>{{item.displayName}}</strong>
+            <div ng-switch-when="title"
+                class="title"
+                ng-bind="item.displayName">
             </div>
             <span ng-switch-when="child">
-              <a href="javascript:void(0);" class="child"
-                  ng-click="showElement(item)"
+              <a href="#/api?view={{item.name}}"
+                  class="child"
                   ng-bind="item.displayName"></a>
             </span>
             <div ng-switch-default class="parent">
-              <a href="javascript:void(0);"
-                  ng-click="showElement(item)"
+              <a href="#/api?view={{item.name}}"
                   ng-bind="item.title"></a>
             </div>
         </span>
@@ -55,20 +55,18 @@
           <li ng-repeat="item in items | filter:searchTerm"
               title="{{item.name}}"
               ng-switch="item.type">
-            <span ng-switch-when="title" class="title">
-              <strong>{{item.displayName}}</strong>
+            <span ng-switch-when="title"
+                class="title"
+                ng-bind="item.displayName">
             </span>
-            <span ng-switch-when="child">
-              <a href="javascript:void(0);" class="child"
-                  ng-click="showElement(item)">
-                <span>{{item.displayName}}</span>
-              </a>
-            </span>
-            <span ng-switch-default>
-              <a href="javascript:void(0);"
-                  ng-click="showElement(item)"
-                  ng-bind="item.title"></a>
-            </span>
+            <a ng-switch-when="child"
+                href="#/api?view={{item.name}}"
+                class="child"
+                ng-bind="item.displayName">
+            </a>
+            <a ng-switch-default
+                href="#/api?view={{item.name}}"
+                ng-bind="item.title"></a>
           </li>
         </ul>
       </div>
