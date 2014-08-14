@@ -47,4 +47,37 @@
       templateUrl: 'partials/ptor-function-list.html'
     }
   });
+
+  /**
+   * Twitter button. Copy pasted from:
+   * https://about.twitter.com/resources/buttons#follow
+   */
+  module.directive('ptorTwitter', function() {
+    var showFollowButton = function() {
+      var tagName = 'script',
+          id = 'twitter-wjs',
+          fjs = document.getElementsByTagName(tagName)[0],
+          protocol = /^http:/.test(document.location) ? 'http' : 'https';
+
+      if (!document.getElementById(id)) {
+        var js = document.createElement(tagName);
+        js.id = id;
+        js.src = protocol + '://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      } else {
+        // The twitter script was loaded already.
+        window.twttr.widgets.load();
+      }
+    };
+
+    return {
+      link: function() {
+        showFollowButton();
+      },
+      template: '<div class="twitter">' +
+      '<a href="https://twitter.com/ProtractorTest" ' +
+      'class="twitter-follow-button" data-show-count="false" ' +
+      'data-size="large">Follow @ProtractorTest</a></div>'
+    }
+  });
 })();
