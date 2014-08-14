@@ -44,10 +44,6 @@
       scope: {
         list: '=ptorFunctionList'
       },
-      link: function(scope) {
-        // This is an isolate scope. Call the parent to showElement.
-        scope.showElement = scope.$parent.showElement;
-      },
       templateUrl: 'partials/ptor-function-list.html'
     }
   });
