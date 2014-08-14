@@ -5,11 +5,12 @@
    * @constructor
    * @ngInject
    * @param $http HTTP service.
+   * @param $location Location service.
    * @param $route Route service.
    * @param $sce Strict Contextual Escaping service.
    * @param $scope Angular scope.
    */
-  var ApiCtrl = function($http, $route, $sce, $scope) {
+  var ApiCtrl = function($http, $location, $route, $sce, $scope) {
     this.$http = $http;
     this.$route = $route;
     this.$scope = $scope;
@@ -18,11 +19,30 @@
 
     $scope.items = [];
     $scope.isMenuVisible = false;
-    $scope.currentItem = {
+    var defaultItem = {
       title: 'Protractor API Docs',
       description: 'Welcome to the Protractor API docs page. These pages ' +
-          'contain the Protractor reference materials.'
+      'contain the Protractor reference materials.'
     };
+    $scope.currentItem = defaultItem;
+
+    // Watch for location changes to show the correct item.
+    $scope.$on('$locationChangeSuccess', function() {
+      // Not going to api? ignore event.
+      if (!$location.url().match(/^\/api/)) {
+        return;
+      }
+
+      var view = $route.current.params.view,
+          item = _.findWhere($scope.items, {name: view});
+
+      if (view && item) {
+        $scope.showElement(item);
+      } else {
+        // No view? Show default item.
+        $scope.currentItem = defaultItem;
+      }
+    });
 
     $scope.toggleMenuLabel = function() {
       return $scope.isMenuVisible ? 'Hide list' : 'Show list';
@@ -34,7 +54,7 @@
 
     $scope.showElement = function(item) {
       // Update the query string with the view name.
-      $route.current.params.view = item.name;
+      $location.search('view', item.name);
       $scope.currentItem = item;
     };
 
@@ -50,7 +70,7 @@
       // Does it come with a type? Types come escaped as [theType].
       var match = html.match(/.*(\[(.*)\]).*/);
       if (match) {
-        var link = '<a href="#/api/' + match[2] + '">' + match[2] + '</a>';
+        var link = '<a href="#/api?view=' + match[2] + '">' + match[2] + '</a>';
         html = html.replace(match[1], link);
       }
 
