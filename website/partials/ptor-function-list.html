@@ -9,8 +9,8 @@
     <tbody>
     <tr ng-repeat="item in list">
       <td>
-        <a href="javascript:void(0);" class="child"
-            ng-click="showElement(item)"
+        <a href="#/api?view={{item.name}}"
+            class="child"
             ng-bind="item.displayName">
         </a>
       </td>
