@@ -4,13 +4,14 @@
    *
    * @constructor
    * @ngInject
+   * @param $anchorScroll anchorScroll service.
    * @param $http HTTP service.
    * @param $location Location service.
    * @param $route Route service.
    * @param $sce Strict Contextual Escaping service.
    * @param $scope Angular scope.
    */
-  var ApiCtrl = function($http, $location, $route, $sce, $scope) {
+  var ApiCtrl = function($anchorScroll, $http, $location, $route, $sce, $scope) {
     this.$http = $http;
     this.$route = $route;
     this.$scope = $scope;
@@ -56,6 +57,9 @@
       // Update the query string with the view name.
       $location.search('view', item.name);
       $scope.currentItem = item;
+
+      // Scroll to the top.
+      $anchorScroll();
     };
 
     /**
