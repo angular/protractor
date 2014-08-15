@@ -35,10 +35,18 @@ var ApiPage = function() {
 
   /**
    * Click on a returns type on the returns table.
-   * @param name
+   * @param {string} name
    */
   this.clickOnReturnsType = function(name) {
     $('[ng-if="currentItem.returns"]').element(by.linkText(name)).click();
+  };
+
+  /**
+   * Click on a type of the extends table.
+   * @param {string} name
+   */
+  this.clickOnExtendsType = function(name) {
+    $('[ng-if="currentItem.extends"]').element(by.linkText(name)).click();
   };
 };
 

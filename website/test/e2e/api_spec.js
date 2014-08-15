@@ -52,4 +52,16 @@ describe('Api', function() {
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).toBe('element(locator) View code');
   });
+
+  it('should view inherited function', function() {
+    // Given that you are viewing 'browser'.
+    apiPage.clickOnMenuItem('browser');
+
+    // When you click on the 'executeAsyncScript' item of the extends table.
+    apiPage.clickOnExtendsType('executeAsyncScript');
+
+    // Then ensure the type is shown.
+    expect(apiPage.title.getText()).
+        toBe('webdriver.WebDriver.executeAsyncScript View code');
+  });
 });
