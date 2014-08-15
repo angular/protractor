@@ -24,6 +24,14 @@ var ApiPage = function() {
       return item.getText();
     });
   };
+
+  /**
+   * Click on a param type on the params table.
+   * @param {string} name
+   */
+  this.clickOnParamType = function(name) {
+    $('[ng-if="currentItem.params"]').element(by.linkText(name)).click();
+  };
 };
 
 /** @type {ApiPage} */
