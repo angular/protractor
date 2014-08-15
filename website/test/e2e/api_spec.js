@@ -29,6 +29,7 @@ describe('Api', function() {
 
     // Then ensure the item is shown.
     expect(apiPage.title.getText()).toBe('element.all(locator) View code');
+    expect(browser.getCurrentUrl()).toMatch(/api\?view=ElementArrayFinder/);
   });
 
   it('should view item in param link', function() {
@@ -40,6 +41,7 @@ describe('Api', function() {
 
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).toBe('element(locator) View code');
+    expect(browser.getCurrentUrl()).toMatch(/api\?view=ElementFinder/);
   });
 
   it('should view item in returns link', function() {
@@ -51,6 +53,7 @@ describe('Api', function() {
 
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).toBe('element(locator) View code');
+    expect(browser.getCurrentUrl()).toMatch(/api\?view=ElementFinder/);
   });
 
   it('should view inherited function', function() {
@@ -63,5 +66,7 @@ describe('Api', function() {
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).
         toBe('webdriver.WebDriver.executeAsyncScript View code');
+    expect(browser.getCurrentUrl()).
+        toMatch(/api\?view=webdriver.WebDriver.prototype.executeAsyncScript/);
   });
 });
