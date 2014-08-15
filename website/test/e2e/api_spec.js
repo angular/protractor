@@ -1,3 +1,6 @@
+/** @type {ApiPage} */
+var apiPage = require('./api-page');
+
 describe('Api', function() {
   beforeEach(function() {
     browser.get('#/api');
@@ -5,25 +8,26 @@ describe('Api', function() {
 
   it('should navigate to the api page', function() {
     expect($('#title').getText()).toBe('Protractor API 1.0.0');
-  });
-
-  it('should show element.all()', function() {
-    var present = $('.api-left-nav').
-        element(by.linkText('element.all(locator)')).isPresent();
-    expect(present).toBe(true);
+    expect(apiPage.title.getText()).toBe('Protractor API Docs');
   });
 
   it('should search and find map', function() {
-    $('#searchInput').sendKeys('map');
+    apiPage.searchInput.sendKeys('map');
 
     // Ensure the following elements are shown:
     // element.all
     // map
-    $('.api-left-nav').$$('li').map(function(item) {
-      return item.getText();
-    }).then(function(items) {
+    apiPage.getMenuItems().then(function(items) {
       expect(items[0]).toBe('element.all(locator)');
       expect(items[1]).toBe('map');
     });
+  });
+  
+  it('should show item when you click on it', function() {
+    // When you click on element.all(locator).
+    apiPage.clickOnMenuItem('element.all(locator)');
+    
+    // Then ensure the item is shown.
+    expect(apiPage.title.getText()).toBe('element.all(locator) View code');
   });
 });
