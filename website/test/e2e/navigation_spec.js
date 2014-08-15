@@ -45,5 +45,11 @@ ddescribe('Navigation', function() {
 
       expect($('h1').getText()).toBe('Setting Up the Browser');
     });
+
+    it('should go to Choosing a Framework', function() {
+      menu.dropdown('Protractor Setup').item('Choosing a Framework');
+
+      expect($('h1').getText()).toBe('Choosing a Framework');
+    });
   });
 });
