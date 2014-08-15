@@ -41,4 +41,15 @@ describe('Api', function() {
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).toBe('element(locator) View code');
   });
+
+  it('should view item in returns link', function() {
+    // Given that you are viewing 'element.all(locator).first()'.
+    apiPage.clickOnMenuItem('first');
+
+    // When you click on the 'ElementFinder' link of the Returns table.
+    apiPage.clickOnReturnsType('ElementFinder');
+
+    // Then ensure the type is shown.
+    expect(apiPage.title.getText()).toBe('element(locator) View code');
+  });
 });

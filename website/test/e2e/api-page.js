@@ -32,6 +32,14 @@ var ApiPage = function() {
   this.clickOnParamType = function(name) {
     $('[ng-if="currentItem.params"]').element(by.linkText(name)).click();
   };
+
+  /**
+   * Click on a returns type on the returns table.
+   * @param name
+   */
+  this.clickOnReturnsType = function(name) {
+    $('[ng-if="currentItem.returns"]').element(by.linkText(name)).click();
+  };
 };
 
 /** @type {ApiPage} */
