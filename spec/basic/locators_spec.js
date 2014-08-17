@@ -225,6 +225,12 @@ describe('locators', function() {
       });
     });
 
+    it('should allow chaining while returning a single column', function() {
+      var secondName = element(by.css('.allinfo')).element(
+        by.repeater('allinfo in days').column('name').row(2));
+      expect(secondName.getText()).toEqual('Wednesday');
+    });
+
     it('should return a single row', function() {
       var secondRow = element(
           by.repeater('allinfo in days').row(1));
