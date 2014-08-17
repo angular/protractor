@@ -172,6 +172,15 @@ describe('ElementFinder', function() {
     });
   });
 
+  it('should keep a reference to the array original locator', function() {
+    var byCss = by.css('.menu li a');
+    var byModel = by.model('color');
+    browser.get('index.html#/form');
+
+    expect(element.all(byCss).locator()).toEqual(byCss);
+    expect(element.all(byModel).locator()).toEqual(byModel);
+  });
+
   it('should map each element on array and with promises', function() {
     browser.get('index.html#/form');
     var labels = element.all(by.css('.menu li a')).map(function(elm, index) {
