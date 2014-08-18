@@ -1,7 +1,7 @@
 /** @type {ApiPage} */
 var apiPage = require('./api-page');
 
-ddescribe('Api', function() {
+describe('Api', function() {
   beforeEach(function() {
     browser.get('#/api');
   });
