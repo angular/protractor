@@ -42,6 +42,15 @@ var ApiPage = function() {
   };
 
   /**
+   * Click on a child function of a parent element like element, element.all,
+   * etc.
+   * @param {string} name
+   */
+  this.clickOnChildFunction = function(name) {
+    $('[ng-if="currentItem.children"]').element(by.linkText(name)).click();
+  };
+
+  /**
    * Click on a type of the extends table.
    * @param {string} name
    */

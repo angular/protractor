@@ -1,7 +1,7 @@
 /** @type {ApiPage} */
 var apiPage = require('./api-page');
 
-describe('Api', function() {
+ddescribe('Api', function() {
   beforeEach(function() {
     browser.get('#/api');
   });
@@ -54,6 +54,20 @@ describe('Api', function() {
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).toBe('element(locator) View code');
     expect(browser.getCurrentUrl()).toMatch(/api\?view=ElementFinder/);
+  });
+  
+  it('should show child functions', function() {
+    // Given that you go to element.all().
+    apiPage.clickOnMenuItem('element.all(locator)');
+
+    // When you click on 'first'.
+    apiPage.clickOnChildFunction('first');
+
+    // Then ensure the 'first' function is shown.
+    expect(apiPage.title.getText()).
+        toBe('element.all(locator).first() View code');
+    expect(browser.getCurrentUrl()).
+        toMatch(/api\?view=ElementArrayFinder\.prototype\.first/)
   });
 
   it('should view inherited function', function() {
