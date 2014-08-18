@@ -11,12 +11,31 @@ ddescribe('Api', function() {
     expect(apiPage.title.getText()).toBe('Protractor API Docs');
   });
 
-  it('should search and find map', function() {
+  it('should navigate to function', function() {
+    // When you navigate to a url.
+    browser.get('#/api?view=ElementFinder.prototype.isElementPresent');
+
+    // Then ensure the function is shown.
+    expect(apiPage.title.getText()).
+        toBe('element(locator).isElementPresent View code');
+  });
+
+  it('should go to api home when url is incorrect', function() {
+    // When you navigate to a non-existent function.
+    browser.get('#/api?view=blah_blah_blah');
+
+    // Then ensure the default view is shown.
+    expect(apiPage.title.getText()).toBe('Protractor API Docs');
+  });
+
+  it('should search and find function', function() {
+    // When you search for the 'map' function.
     apiPage.searchInput.sendKeys('map');
 
     // Ensure the following elements are shown:
     // element.all
     // map
+    // ...
     apiPage.getMenuItems().then(function(items) {
       expect(items[0]).toBe('element.all(locator)');
       expect(items[1]).toBe('map');
