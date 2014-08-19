@@ -128,5 +128,6 @@ gulp.task('default', [
   'dgeni',
   'less',
   'markdown',
-  'js'
+  'js',
+  'copyFiles'
 ]);
