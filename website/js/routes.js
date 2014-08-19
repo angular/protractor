@@ -50,6 +50,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/timeouts', {
         templateUrl: 'partials/timeouts.html'
       }).
+      when('/toc', {
+        templateUrl: 'partials/toc.html'
+      }).
       when('/tutorial', {
         templateUrl: 'partials/tutorial.html'
       }).
