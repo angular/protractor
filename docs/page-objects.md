@@ -6,7 +6,7 @@ When writing end-to-end tests, a common pattern is to use [Page Objects](https:/
 Without Page Objects
 --------------------
 
-Here’s a simple test script ([example_spec.js](/example/example_sped.js)) for ‘The Basics’ example on the [angularjs.org](http://www.angularjs.org) homepage.
+Here’s a simple test script ([example_spec.js](/example/example_spec.js)) for ‘The Basics’ example on the [angularjs.org](http://www.angularjs.org) homepage.
 
 ```js
 describe('angularjs homepage', function() {
