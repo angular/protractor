@@ -1,5 +1,5 @@
-Getting Installed
-=================
+Setting Up Protractor
+=====================
 
 Prerequisites
 -------------
