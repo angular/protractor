@@ -22,15 +22,25 @@
   });
 
   /**
-   * Used to pretty print inline code:
-   * <pre ptor-inline-code>some code</pre>
+   * Used to pretty print code inside a <code> tag. The tag must have a class
+   * 'lang-js' or 'lang-javascript' in order to be painted.
+   *
    */
-  module.directive('ptorInlineCode', function() {
+  module.directive('code', function() {
     return {
-      compile: function(tElement) {
-        var html = tElement.html();
+      restrict: 'E',
+      compile: function(tElement, attrs) {
+        var prettyHtml,
+            shouldPaint = /lang-j.*/.test(attrs.class);
+
+        if (shouldPaint) {
+          prettyHtml = prettyPrintOne(tElement.html());
+        }
+
         return function(scope, element) {
-          element.html(prettyPrintOne(html));
+          if (shouldPaint) {
+            element.html(prettyHtml);
+          }
         }
       }
     }
