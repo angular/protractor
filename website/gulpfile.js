@@ -4,8 +4,10 @@ var del = require('del');
 var dgeni = require('dgeni');
 var gulp = require('gulp');
 var less = require('gulp-less');
+var marked = require('gulp-marked');
 var minifyCSS = require('gulp-minify-css');
 var path = require('path');
+var rename = require("gulp-rename");
 
 var paths = {
   build: ['build', 'docgen/build'],
@@ -88,6 +90,16 @@ gulp.task('watch', function() {
   gulp.watch(paths.js, ['js', 'reloadServer']);
   gulp.watch(paths.less, ['less', 'reloadServer']);
   gulp.watch(paths.dgeniTemplates, ['dgeni', 'copyFiles', 'reloadServer']);
+});
+
+// Transform md files to html.
+gulp.task('markdown', function() {
+  gulp.src('../docs/*.md')
+      .pipe(marked())
+      .pipe(rename(function(path) {
+        path.extname = '.html'
+      }))
+      .pipe(gulp.dest('./build/html'))
 });
 
 // Start a server and watch for changes.
