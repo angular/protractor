@@ -101,9 +101,11 @@ gulp.task('markdown', function() {
       .pipe(replace(/\/docs\/(.*)\.md/g, '#/$1'))
       // Fix reference conf links.
       .pipe(replace(
-          /^\/(\w+)\/([\w\-]+).js/g,
-          'https://github.com/angular/protractor/blob/master/$1/$2.js'
+          /\/docs\/referenceConf.js/g,
+          'https://github.com/angular/protractor/blob/master/docs/referenceConf.js'
       ))
+      // Decorate tables.
+      .pipe(replace(/<table>/, '<table class="table table-striped">'))
       .pipe(rename(function(path) {
         path.extname = '.html'
       }))
