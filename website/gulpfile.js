@@ -127,5 +127,6 @@ gulp.task('default', [
   'copyBowerFiles',
   'dgeni',
   'less',
+  'markdown',
   'js'
 ]);
