@@ -85,7 +85,7 @@
       </p>
       <p>Copy the following into <code>todo-spec.js</code>:</p>
       <div>
-<pre ptor-inline-code>
+<pre><code class="lang-js">
 describe('angularjs homepage todo list', function() {
   it('should add a todo', function() {
     browser.get('http://www.angularjs.org');
@@ -98,7 +98,7 @@ describe('angularjs homepage todo list', function() {
     expect(todoList.get(2).getText()).toEqual('write a protractor test');
   });
 });
-</pre>
+</code></pre>
       </div>
       <p>
         The <code>describe</code> and <code>it</code> syntax is from the Jasmine
@@ -115,12 +115,12 @@ describe('angularjs homepage todo list', function() {
         Now create the configuration file. Copy the following into
         <code>conf.js</code>:
       </p>
-<pre ptor-inline-code>
+<pre><code class="lang-js">
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['todo-spec.js']
 };
-</pre>
+</code></pre>
       <p>
         This configuration tells Protractor where your test files
         (<code>specs</code>) are, and where to talk to your Selenium Server
