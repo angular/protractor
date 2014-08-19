@@ -136,4 +136,36 @@ describe('Navigation', function() {
       expect($('h1').getText()).toBe('Debugging Protractor Tests');
     });
   });
+
+  describe('Reference', function() {
+    it('should go to Protractor API', function() {
+      menu.dropdown('Reference').item('Protractor API');
+
+      expect($('#title').getText()).toBe('Protractor API 1.0.0');
+    });
+
+    it('should go to Timeouts', function() {
+      menu.dropdown('Reference').item('Timeouts');
+
+      expect($('h1').getText()).toBe('Timeouts');
+    });
+
+    it('should go to The WebDriver Control Flow', function() {
+      menu.dropdown('Reference').item('The WebDriver Control Flow');
+
+      expect($('h1').getText()).toBe('The WebDriver Control Flow');
+    });
+
+    it('should go to How It Works', function() {
+      menu.dropdown('Reference').item('How It Works');
+
+      expect($('h1').getText()).toBe('How It Works');
+    });
+
+    it('should go to FAQ', function() {
+      menu.dropdown('Reference').item('FAQ');
+
+      expect($('h1').getText()).toBe('FAQ');
+    });
+  });
 });
