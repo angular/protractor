@@ -8,6 +8,7 @@ var marked = require('gulp-marked');
 var minifyCSS = require('gulp-minify-css');
 var path = require('path');
 var rename = require("gulp-rename");
+var replace = require('gulp-replace');
 
 var paths = {
   build: ['build', 'docgen/build'],
@@ -94,12 +95,19 @@ gulp.task('watch', function() {
 
 // Transform md files to html.
 gulp.task('markdown', function() {
-  gulp.src('../docs/*.md')
+  gulp.src(['../docs/*.md', '!../docs/api.md'])
       .pipe(marked())
+      // Fix md links.
+      .pipe(replace(/\/docs\/(.*)\.md/g, '#/$1'))
+      // Fix reference conf links.
+      .pipe(replace(
+          /^\/(\w+)\/([\w\-]+).js/g,
+          'https://github.com/angular/protractor/blob/master/$1/$2.js'
+      ))
       .pipe(rename(function(path) {
         path.extname = '.html'
       }))
-      .pipe(gulp.dest('./build/html'))
+      .pipe(gulp.dest('./build/partials'))
 });
 
 // Start a server and watch for changes.
