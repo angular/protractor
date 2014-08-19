@@ -11,6 +11,29 @@ var optimist = require('optimist');
 var childProcess = require('child_process');
 
 /**
+ * Load the NPM config and return it in a promise.
+ * @return {Promise<object>}
+ */
+var loadNpmConf = function() {
+  if (loadNpmConf.promise) {
+    return loadNpmConf.promise;
+  }
+
+  var q = require('q');
+  var npmconf = require('npmconf');
+
+  var deferred = q.defer();
+  npmconf.load(function(err, conf){
+    if (err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(conf);
+    }
+  });
+  return loadNpmConf.promise = deferred.promise;
+};
+
+/**
  * Download the requested binaries to node_modules/protractor/selenium/
  */
 var SELENIUM_DIR = path.resolve(__dirname, '../selenium');
@@ -123,30 +146,38 @@ var resolveProxy = function(fileUrl) {
  * big dependency cost. It's required for now to follow redirects.
  */
 var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
-  console.log('downloading ' + fileUrl + '...');
-  var filePath = path.join(outputDir, fileName);
-  var file = fs.createWriteStream(filePath);
+  return loadNpmConf().then(function(npmconf){  // load npm config first
+    console.log('downloading ' + fileUrl + '...');
+    var filePath = path.join(outputDir, fileName);
+    var file = fs.createWriteStream(filePath);
+    var strictSSL = npmconf.get('strict-ssl');
+    
+    if (!strictSSL) {
+      console.log('Ignoring SSL certificate because your npm strict-ssl config is: ' + strictSSL);
+    }
 
-  var options = {
-    url: fileUrl,
-    proxy: resolveProxy(fileUrl)
-  }
-  request(options, function (error, response) {
-    if (error) {
-      fs.unlink(filePath);
-      console.error('Error: Got error ' + error + ' from ' + fileUrl);
-      return;
+    var options = {
+      url: fileUrl,
+      strictSSL: strictSSL,
+      proxy: resolveProxy(fileUrl)
     }
-    if (response.statusCode !== 200) {
-      fs.unlink(filePath);
-      console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
-      return;
-    }
-    console.log(fileName + ' downloaded to ' + filePath);
-    if (callback) {
-      callback(filePath);
-    }
-  }).pipe(file);
+    request(options, function (error, response) {
+      if (error) {
+        fs.unlink(filePath);
+        console.error('Error: Got error ' + error + ' from ' + fileUrl);
+        return;
+      }
+      if (response.statusCode !== 200) {
+        fs.unlink(filePath);
+        console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
+        return;
+      }
+      console.log(fileName + ' downloaded to ' + filePath);
+      if (callback) {
+        callback(filePath);
+      }
+    }).pipe(file);
+  });
 };
 
 /**
