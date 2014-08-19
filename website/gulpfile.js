@@ -12,6 +12,7 @@ var replace = require('gulp-replace');
 
 var paths = {
   build: ['build', 'docgen/build'],
+  docs: ['../docs/*.md'],
   dgeniTemplates: ['docgen/templates/*.txt', 'docgen/processors/*.js'],
   html: ['index.html', 'partials/*.html'],
   js: [
@@ -88,6 +89,7 @@ gulp.task('reloadServer', function() {
 
 gulp.task('watch', function() {
   gulp.watch(paths.html, ['copyFiles', 'reloadServer']);
+  gulp.watch(paths.docs, ['markdown', 'reloadServer']);
   gulp.watch(paths.js, ['js', 'reloadServer']);
   gulp.watch(paths.less, ['less', 'reloadServer']);
   gulp.watch(paths.dgeniTemplates, ['dgeni', 'copyFiles', 'reloadServer']);
@@ -101,11 +103,13 @@ gulp.task('markdown', function() {
       .pipe(replace(/\/docs\/(.*)\.md/g, '#/$1'))
       // Fix reference conf links.
       .pipe(replace(
-          /\/docs\/referenceConf.js/g,
-          'https://github.com/angular/protractor/blob/master/docs/referenceConf.js'
+          /"\/(docs|example|spec\/basic)\/(\w+\.js)"/g,
+          'https://github.com/angular/protractor/blob/master/$1/$2'
       ))
       // Decorate tables.
       .pipe(replace(/<table>/, '<table class="table table-striped">'))
+      // Fix image links.
+      .pipe(replace(/"\/docs\/(\w+\.png)"/g, '"img/$1"'))
       .pipe(rename(function(path) {
         path.extname = '.html'
       }))
