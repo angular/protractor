@@ -86,10 +86,12 @@ var cli = optimist.
     describe('out_dir', 'Location to output/expect ').
     default('out_dir', SELENIUM_DIR).
     describe('seleniumPort', 'Optional port for the selenium standalone server').
-    describe('proxy', 'proxy to use for the install or update command');
+    describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
+    default('ignore_ssl', false).
+    describe('proxy', 'Proxy to use for the install or update command');
 
 for (bin in binaries) {
-  cli.describe(bin, 'install or update ' + binaries[bin].name).
+  cli.describe(bin, 'Install or update ' + binaries[bin].name).
   boolean(bin).
   default(bin, binaries[bin].isDefault);
 }
@@ -126,9 +128,15 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   console.log('downloading ' + fileUrl + '...');
   var filePath = path.join(outputDir, fileName);
   var file = fs.createWriteStream(filePath);
+  var ignoreSSL = argv.ignore_ssl;
+
+  if (ignoreSSL) {
+    console.log('Ignoring SSL certificate');
+  }
 
   var options = {
     url: fileUrl,
+    strictSSL: !ignoreSSL,
     proxy: resolveProxy(fileUrl)
   }
   request(options, function (error, response) {
