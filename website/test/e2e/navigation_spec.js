@@ -92,4 +92,48 @@ describe('Navigation', function() {
       expect($('h1').getText()).toBe('Choosing a Framework');
     });
   });
+
+  describe('Protractor Tests', function() {
+    it('should go to Getting Started', function() {
+      menu.dropdown('Protractor Tests').item('Getting Started');
+
+      expect($('h1').getText()).toBe('Getting Started');
+    });
+
+    it('should go to Tutorial', function() {
+      menu.dropdown('Protractor Tests').item('Tutorial');
+
+      expect($('h1').getText()).toBe('Tutorial');
+    });
+
+    it('should go to Working with Spec and Config Files', function() {
+      menu.dropdown('Protractor Tests').item('Working with Spec and Config Files');
+
+      expect($$('h1').get(0).getText()).toBe('Working with Spec and Config Files');
+    });
+
+    it('should go to Setting Up the System Under Test', function() {
+      menu.dropdown('Protractor Tests').item('Setting Up the System Under Test');
+
+      expect($('h1').getText()).toBe('Setting Up the System Under Test');
+    });
+
+    it('should go to Using Locators', function() {
+      menu.dropdown('Protractor Tests').item('Using Locators');
+
+      expect($('h1').getText()).toBe('Using Locators');
+    });
+
+    it('should go to Using Page Objects to Organize Tests', function() {
+      menu.dropdown('Protractor Tests').item('Using Page Objects to Organize Tests');
+
+      expect($('h1').getText()).toBe('Using Page Objects to Organize Tests');
+    });
+
+    it('should go to Debugging Protractor Tests', function() {
+      menu.dropdown('Protractor Tests').item('Debugging Protractor Tests');
+
+      expect($('h1').getText()).toBe('Debugging Protractor Tests');
+    });
+  });
 });
