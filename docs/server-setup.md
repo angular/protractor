@@ -66,6 +66,7 @@ In your config file, set these options:
 
 Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort` and `seleniumArgs` will be ignored.
 
+You also need to set `tunnel-identifier` and `build` options to `process.env.TRAVIS_JOB_NUMBER` in order to connect to Sauce Labs.
 
 Selenium Server and the Chrome Browser
 --------------------------------------
