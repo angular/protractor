@@ -71,7 +71,7 @@ describe('Navigation', function() {
     it('should go to Setting Up Protractor', function() {
       menu.dropdown('Protractor Setup').item('Setting Up Protractor');
 
-      expect($('h1').getText()).toBe('Getting Installed');
+      expect($('h1').getText()).toBe('Setting Up Protractor');
     });
     
     it('should go to Setting Up the Selenium Server', function() {
