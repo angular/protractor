@@ -29,6 +29,9 @@ The website includes 3 types of tests:
 
 ###Start the server first
 
+The following command will start a server on [localhost:8080](http://localhost:8080/).
+The server is used to run the protractor tests.
+
 ```shell
 npm run server
 ```
@@ -45,13 +48,13 @@ npm test
 ./node_modules/.bin/minijasminenode docgen/spec/*
 ```
 
-Run the karma tests
+###Run the karma tests
 
 ```shell
 ./node_modules/karma/bin/karma start
 ```
 
-Run the protractor tests
+###Run the protractor tests
 
 ```shell
 ../bin/protractor
