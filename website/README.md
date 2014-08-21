@@ -21,14 +21,38 @@ And point your browser to: [localhost:8080](http://localhost:8080/)
 
 ##How to run the tests
 
-Start the server first
+The website includes 3 types of tests:
+
+* minijasminenode unit tests for the dgeni modules.
+* karma unit tests for the angular controllers.
+* protractor for e2e testing.
+
+###Start the server first
 
 ```shell
 npm run server
 ```
 
-Run the tests
+###Run all the tests
 
 ```shell
 npm test
+```
+
+###Run the dgeni tests
+
+```shell
+./node_modules/.bin/minijasminenode docgen/spec/*
+```
+
+Run the karma tests
+
+```shell
+./node_modules/karma/bin/karma start
+```
+
+Run the protractor tests
+
+```shell
+../bin/protractor
 ```
