@@ -160,7 +160,7 @@ describe('ApiCtrl', function() {
 
   describe('Menu visibility', function() {
     beforeEach(function() {
-      createController(testToc());
+      createController(getSampleToc());
     });
 
     it('should start with the nav bar hidden', function() {
