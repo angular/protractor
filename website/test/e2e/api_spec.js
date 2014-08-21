@@ -7,7 +7,7 @@ describe('Api', function() {
   });
 
   it('should navigate to the api page', function() {
-    expect($('#title').getText()).toBe('Protractor API 1.0.0');
+    expect($('#title').getText()).toMatch('Protractor API');
     expect(apiPage.title.getText()).toBe('Protractor API Docs');
   });
 
