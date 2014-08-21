@@ -1,3 +1,68 @@
+# 1.1.0
+
+## Features
+
+- ([316961c](https://github.com/angular/protractor/commit/316961c6a5d7410d73a2784a9622b106008b0930)) 
+  feat(runner/hosted): add support for promises for seleniumAddress and capabilities
+
+  Change driverProviders/hosted to resolve promise values in configuration to allow async jobs in
+  setup. Specifically, seleniumAddress, capabilities, and multiCapabilities may be promises.
+  Primarily, this would be for a network call to acquire a selenium host or to start a proxy
+  server.
+
+- ([953faf7](https://github.com/angular/protractor/commit/953faf7ebee345f686bfedff61ebcb29c5170083)) 
+  feat(runner): allow onPrepare functions to return a promise
+
+  If onPrepare is a function which returns a promise (or a file which exports a promise), the test
+  runner will now wait for that promise to be fulfilled before starting tests.
+
+- ([6de2e32](https://github.com/angular/protractor/commit/6de2e32328fc30b43428973457db08f34b7c1839)) 
+  feat(runner): Add support for async onCleanUp functions
+
+  If the onCleanUp function returns a promise, the process will allow it to resolve before exiting.
+  This is useful for performing async operations like writing to a file or calling an API at the
+  end of a test run.
+
+- ([cd575ee](https://github.com/angular/protractor/commit/cd575ee3a4d8c0930db23ad66649bf0d665ce2d6)) 
+  feat(sauce provider): allow for custom server addresses when running against SauceLabs.
+
+  Use `config.sauceSeleniumAddress` to connect to a custom URL for Sauce Labs.
+
+- ([1b16c26](https://github.com/angular/protractor/commit/1b16c26ac143910d3f3e92a3db4ac6ab168a8544)) 
+  feat(suites): allow more than one suite from the command line
+
+  Allow a comma-separated list of suites be provided on the command line, like
+  `--suite=suite1,suite2`
+
+- ([25cf88c](https://github.com/angular/protractor/commit/25cf88c29449cef6b925d19ec9cd17671f1befc9)) 
+  feat(ElementArrayFinder): keep a reference to the original locator
+
+## Bug Fixes
+
+- ([d15d35a](https://github.com/angular/protractor/commit/d15d35a82a5a267bb7ae9c675017f091901c019f)) 
+  fix issue where ElementFinder.then does not return a promise
+
+  See https://github.com/angular/protractor/issues/1152
+
+- ([9e36584](https://github.com/angular/protractor/commit/9e365848820a9a56547e884592e5ea13ef8460ea)) 
+  fix(webdriver-manager): removed ssl on chromedriver url for consistency
+
+  Other URLs use http, make chromedriver use this as well.
+
+- ([0da1e0c](https://github.com/angular/protractor/commit/0da1e0c65ba7a2b55ad2f5a4582e229dd876f940)) 
+  fix(protractor): add dummy isPending function
+
+  See https://github.com/angular/protractor/issues/1021
+
+- ([9814af1](https://github.com/angular/protractor/commit/9814af11f35973f0b4a3325fcd0d9e0d91233e61)) 
+  fix issue where color formatting text is leaking
+
+  See https://github.com/angular/protractor/issues/1131
+
+- ([8f1b447](https://github.com/angular/protractor/commit/8f1b4472430ec2d24f102d284e807b073d17ad81)) 
+  fix(launcher): fix issue where test passes on unexpected failures
+
+
 # 1.0.0
 
 No changes from rc6.
