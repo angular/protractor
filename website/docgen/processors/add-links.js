@@ -8,6 +8,17 @@ var templateMapping = {
 };
 
 /**
+ * A lookup table with all the types in the parsed files.
+ * @type {Object.<string, Array.<Object>>}
+ */
+var typeTable;
+
+/**
+ * The hash used to generate the links to the source code.
+ */
+var linksHash;
+
+/**
  * Add a link to the source code.
  * @param {!Object} doc Current document.
  */
@@ -91,17 +102,6 @@ var getTypeString = function(param) {
 
   return escape(str);
 };
-
-/**
- * A lookup table with all the types in the parsed files.
- * @type {Object.<string, Array.<Object>>}
- */
-var typeTable;
-
-/**
- * The hash used to generate the links to the source code.
- */
-var linksHash;
 
 module.exports = {
   name: 'add-links',
