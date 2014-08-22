@@ -315,13 +315,22 @@ describe('locators', function() {
     });
   });
 
-  describe('by css containing text', function () {
+  ddescribe('by css containing text', function () {
     it('should find elements by css and partial text', function () {
       element.all(by.cssContainingText('#inner ul .pet', 'dog')).then(function(arr) {
         expect(arr.length).toEqual(2);
         expect(arr[0].getAttribute('id')).toBe('bigdog');
         expect(arr[1].getAttribute('id')).toBe('smalldog');
       });
+    });
+
+    it('should find elements with text-transform style', function () {
+      expect(element(by.cssContainingText('#transformedtext div', 'Uppercase'))
+          .getAttribute('id')).toBe('textuppercase');
+      expect(element(by.cssContainingText('#transformedtext div', 'Lowercase'))
+          .getAttribute('id')).toBe('textlowercase');
+      expect(element(by.cssContainingText('#transformedtext div', 'capitalize'))
+          .getAttribute('id')).toBe('textcapitalize');
     });
   });
 
