@@ -1,3 +1,7 @@
+# 1.1.1
+This is a minor release with no functional changes. It contains a couple
+implementation switches that new versions of Angular will use.
+
 # 1.1.0
 
 ## Features
