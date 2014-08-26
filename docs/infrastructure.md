@@ -26,7 +26,7 @@ The Selenium Server takes care of interpreting commands from the test and forwar
 
 With Protractor, the test script is run using Node.js. Protractor runs an extra command before performing any action on the browser to ensure that the application being tested has stabilized. For example, let's look at the following snippet of test code.
 
-    `element(by.css('button.myclass')).click();`
+    element(by.css('button.myclass')).click();
 
 This will result in three commands being sent to the Browser Driver
 
