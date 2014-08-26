@@ -159,7 +159,7 @@ When you call `driver.findElement(locator)`, WebDriver immediately sends a comma
 var myButton = ??;
 ```
 
-and re-use the varialbe `myButton` throughout your test. ElementFinders get around this by simply storing the locator information until an action is called.
+and re-use the variable `myButton` throughout your test. ElementFinders get around this by simply storing the locator information until an action is called.
 
 ```js
 var myButton = element(locator);
