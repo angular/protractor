@@ -141,7 +141,7 @@ describe('Navigation', function() {
     it('should go to Protractor API', function() {
       menu.dropdown('Reference').item('Protractor API');
 
-      expect($('#title').getText()).toBe('Protractor API 1.0.0');
+      expect($('#title').getText()).toMatch('Protractor API');
     });
 
     it('should go to Timeouts', function() {
