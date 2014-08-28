@@ -2,6 +2,7 @@ Tutorial
 ========
 
 This is a simple tutorial that shows you how to set up Protractor and start running tests.
+(Japanese version is [here](http://qiita.com/weed/items/30098f7be2f753580f63)
 
 Prerequisites
 -------------
