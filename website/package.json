@@ -21,9 +21,10 @@
     "minijasminenode": "^1.1.1"
   },
   "scripts": {
-    "install": "./node_modules/bower/bin/bower install",
-    "postinstall": "./node_modules/.bin/gulp",
-    "server": "gulp liveReload",
+    "prepublish": "./node_modules/bower/bin/bower install",
+    "clean": "./node_modules/.bin/gulp clean",
+    "build": "./node_modules/.bin/gulp",
+    "start": "gulp liveReload",
     "test": "./run-tests.js"
   }
 }

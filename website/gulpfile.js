@@ -27,7 +27,8 @@ gulp.task('clean', function(cb) {
   del(paths.build, cb);
 });
 
-// Generate the table of contents json file using Dgeni.
+// Generate the table of contents json file using Dgeni. This is output to
+// docgen/build/toc.json
 gulp.task('dgeni', function() {
   var config = path.resolve(__dirname, './docgen/dgeni-config.js');
   dgeni(config).generateDocs();
@@ -38,9 +39,9 @@ gulp.task('copyBowerFiles', function() {
   gulp.src([
     'bower_components/bootstrap/dist/js/bootstrap.min.js',
     'bower_components/lodash/dist/lodash.min.js'
-  ]).pipe(gulp.dest('js'));
+  ]).pipe(gulp.dest(paths.outputDir + '/js'));
   gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
-      .pipe(gulp.dest('css'));
+      .pipe(gulp.dest(paths.outputDir + '/css'));
 });
 
 gulp.task('copyFiles', function() {
@@ -48,7 +49,7 @@ gulp.task('copyFiles', function() {
   gulp.src('index.html')
       .pipe(gulp.dest(paths.outputDir));
   gulp.src('partials/*.html')
-      .pipe(gulp.dest(paths.outputDir+ '/partials'));
+      .pipe(gulp.dest(paths.outputDir + '/partials'));
 
   // Degeni docs.
   gulp.src(['docgen/build/*.json'])
@@ -124,10 +125,10 @@ gulp.task('liveReload', [
 ]);
 
 gulp.task('default', [
-  'copyBowerFiles',
   'dgeni',
   'less',
   'markdown',
   'js',
-  'copyFiles'
+  'copyFiles',
+  'copyBowerFiles'
 ]);
