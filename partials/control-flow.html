@@ -1,0 +1,35 @@
+<h1 id="the-webdriver-control-flow">The WebDriver Control Flow</h1>
+<p>The <a href="https://code.google.com/p/selenium/wiki/WebDriverJs#Understanding_the_API">WebDriverJS API</a> is based on <a href="https://code.google.com/p/selenium/wiki/WebDriverJs#Promises">promises</a>,
+which are managed by a <a href="https://code.google.com/p/selenium/wiki/WebDriverJs#Control_Flows">control flow</a>
+and adapted for <a href="http://jasmine.github.io/1.3/introduction.html">Jasmine</a>.
+A short summary about how Protractor interacts with the control flow is presented below.</p>
+<h2 id="promises-and-the-control-flow">Promises and the Control Flow</h2>
+<p>WebDriverJS (and thus, Protractor) APIs are entirely asynchronous. All functions
+return promises.</p>
+<p>WebDriverJS maintains a queue of pending promises, called the control flow,
+to keep execution organized. For example, consider this test:</p>
+<pre><code class="lang-javascript">  it(&#39;should find an element by text input model&#39;, function() {
+    browser.get(&#39;app/index.html#/form&#39;);
+
+    var username = element(by.model(&#39;username&#39;));
+    username.clear();
+    username.sendKeys(&#39;Jane Doe&#39;);
+
+    var name = element(by.binding(&#39;username&#39;));
+
+    expect(name.getText()).toEqual(&#39;Jane Doe&#39;);
+
+    // Point A
+  });</code></pre>
+<p>At Point A, none of the tasks have executed yet. The <code>browser.get</code> call is at
+the front of the control flow queue, and the <code>name.getText()</code> call is at the
+back. The value of <code>name.getText()</code> at point A is an unresolved promise
+object.</p>
+<h2 id="protractor-adaptations">Protractor Adaptations</h2>
+<p>Protractor adapts Jasmine so that each spec automatically waits until the
+control flow is empty before exiting. This means you don&#39;t need to worry
+about calling runs() and waitsFor() blocks. </p>
+<p>Jasmine expectations are also adapted to understand promises. That&#39;s why this
+line works - the code actually adds an expectation task to the control flow,
+which will run after the other tasks:</p>
+<pre><code class="lang-javascript">  expect(name.getText()).toEqual(&#39;Jane Doe&#39;);</code></pre>

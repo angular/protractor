@@ -1,0 +1,57 @@
+<h1 id="setting-up-the-selenium-server">Setting Up the Selenium Server</h1>
+<p>When working with Protractor you will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols). </p>
+<p>The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations. </p>
+<pre><code>     [Test Scripts] &lt; ------------ &gt; [Selenium Server] &lt; ------------ &gt; [Browser Drivers]</code></pre>
+<p>The <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>reference config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
+<h2 id="standalone-selenium-server">Standalone Selenium Server</h2>
+<p>To run the Selenium Server on your local machine, use the standalone Selenium Server. </p>
+<p><strong>JDK</strong></p>
+<p>To run a local Selenium Server, you will need to have the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit (JDK)</a> installed.  Check this by running <code>java -version</code> from the command line.</p>
+<p><strong>Installing and Starting the Server</strong></p>
+<p>To install and start the standalone Selenium Server manually, use the webdriver-manager command line tool, which comes with Protractor.</p>
+<ol>
+<li><p>Run the update command:
+ <code>webdriver-manager update</code>
+  This will install the server and ChromeDriver.</p>
+</li>
+<li><p>Run the start command:
+<code>webdriver-manager start</code>
+ This will start the server. You will see a lot of output logs, starting with INFO. The last 
+ line will  be &#39;Info - Started org.openqa.jetty.jetty.Server&#39;.</p>
+</li>
+<li><p>Leave the server running while you conduct your test sessions.</p>
+</li>
+</ol>
+<p><strong>Starting the Server from a Test Script</strong></p>
+<p>To start the standalone Selenium Server from within your test script, set these options in your config file:</p>
+<ul>
+<li><p><code>seleniumServerJar</code> -  The location of the jar file for the standalone Selenium Server. Specify a file location.</p>
+</li>
+<li><p><code>seleniumPort</code> - The port to use to start the standalone Selenium Server. If not specified, defaults to 4444.</p>
+</li>
+<li><p><code>seleniumArgs</code> -  Array of command line options to pass to the server. For a full list, start the server with the <code>-help</code> flag.</p>
+</li>
+</ul>
+<p><strong>Connecting to a Running Server</strong></p>
+<p>To connect to a running instance of a standalone Selenium Server, set this option:</p>
+<ul>
+<li><code>seleniumAddress</code> -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.</li>
+</ul>
+<p>Please note that if you set seleniumAddress, the settings for <code>seleniumServerJar</code>, <code>seleniumPort</code> and <code>seleniumArgs</code> will be ignored.</p>
+<h2 id="remote-selenium-server">Remote Selenium Server</h2>
+<p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="http://www.saucelabs.com">Sauce Labs</a>.</p>
+<p>In your config file, set these options:</p>
+<ul>
+<li><code>sauceUser</code> -  The username for your Sauce Labs account.</li>
+<li><code>sauceKey</code> -  The key for your Sauce Labs account.</li>
+</ul>
+<p>Please note that if you set <code>sauceUser</code> and <code>sauceKey</code>, the settings for <code>seleniumServerJar</code>, <code>seleniumPort</code> and <code>seleniumArgs</code> will be ignored.</p>
+<h2 id="selenium-server-and-the-chrome-browser">Selenium Server and the Chrome Browser</h2>
+<p>The Selenium Server is optional when you test against the Chrome browser. In your config file, you can set the chromeOnly option to true or false:</p>
+<ul>
+<li><p><code>chromeOnly: false</code> -  Your test script communicates with the Selenium Server (running locally or remotely). This is the default setting.</p>
+</li>
+<li><p><code>chromeOnly: true</code> -  Your test script communicates directly with the ChromeDriver. The Selenium Server (running locally or remotely) will be ignored.</p>
+</li>
+</ul>
+<p>The advantage of running only with Chrome is that your test scripts will start up and run faster. For more detailed information about chromeOnly, see the <a href="https://code.google.com/p/selenium/source/browse/javascript/node/selenium-webdriver/chrome.js">chrome.js source code</a>.</p>

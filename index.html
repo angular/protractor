@@ -4,8 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="app/css/styles.css"/>
+  <link rel="stylesheet" href="css/protractor.css"/>
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
   <title>Protractor - end to end testing for AngularJS</title>
 </head>
 <body ng-app="protractorApp">
@@ -22,49 +22,52 @@
     <div class="container">
       <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
         <ul class="nav navbar-nav">
+          <!-- Home -->
+          <li><a href="#">Home</a></li>
+
           <!-- Quick start -->
           <li class="dropdown">
-            <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Start <span class="caret"></span></a>
+            <a id="drop1" class="dropdown-toggle" data-toggle="dropdown">Quick Start <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/tutorial.md">Tutorial</a></li>
+              <li><a tabindex="-1" href="#/tutorial">Tutorial</a></li>
             </ul>
           </li>
 
           <!-- Protractor Setup -->
           <li class="dropdown">
-            <a id="drop2" href="#" class="dropdown-toggle" data-toggle="dropdown">Protractor Setup <span class="caret"></span></a>
+            <a id="drop2" class="dropdown-toggle" data-toggle="dropdown">Protractor Setup <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/protractor-setup.md">Setting Up Protractor</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/server-setup.md">Setting Up the Selenium Server</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/browser-setup.md">Setting Up the Browser</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/frameworks.md">Choosing a Framework</a></li>
+              <li><a tabindex="-1" href="#/protractor-setup">Setting Up Protractor</a></li>
+              <li><a tabindex="-1" href="#/server-setup">Setting Up the Selenium Server</a></li>
+              <li><a tabindex="-1" href="#/browser-setup">Setting Up the Browser</a></li>
+              <li><a tabindex="-1" href=#/frameworks>Choosing a Framework</a></li>
             </ul>
           </li>
 
           <!-- Protractor Tests -->
           <li class="dropdown">
-            <a id="drop3" href="#" class="dropdown-toggle" data-toggle="dropdown">Protractor Tests <span class="caret"></span></a>
+            <a id="drop3" class="dropdown-toggle" data-toggle="dropdown">Protractor Tests <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/getting-started.md">Getting Started</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/tutorial.md">Tutorial</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/api-overview.md">Working with Spec and Config Files</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/system-setup.md">Setting Up the System Under Test</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/locators.md">Using Locators</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/page-objects.md">Using Page Objects to Organize Tests</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/debugging.md">Debugging Protractor Tests</a></li>
+              <li><a tabindex="-1" href="#/getting-started">Getting Started</a></li>
+              <li><a tabindex="-1" href="#/tutorial">Tutorial</a></li>
+              <li><a tabindex="-1" href="#/api-overview">Working with Spec and Config Files</a></li>
+              <li><a tabindex="-1" href="#/system-setup">Setting Up the System Under Test</a></li>
+              <li><a tabindex="-1" href="#/locators">Using Locators</a></li>
+              <li><a tabindex="-1" href="#/page-objects">Using Page Objects to Organize Tests</a></li>
+              <li><a tabindex="-1" href="#/debugging">Debugging Protractor Tests</a></li>
             </ul>
           </li>
 
           <!-- Reference -->
           <li class="dropdown">
-            <a id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <span class="caret"></span></a>
+            <a id="drop4" class="dropdown-toggle" data-toggle="dropdown">Reference <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">Configuration File Reference</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/api.md">Protractor API</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/timeouts.md">Timeouts</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/control-flow.md">The WebDriver Control Flow</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/infrastructure.md">How It Works</a></li>
-              <li><a tabindex="-1" href="https://github.com/angular/protractor/blob/master/docs/faq.md">FAQ</a></li>
+              <li><a tabindex="-1" href="#/api">Protractor API</a></li>
+              <li><a tabindex="-1" href="#/timeouts">Timeouts</a></li>
+              <li><a tabindex="-1" href="#/control-flow">The WebDriver Control Flow</a></li>
+              <li><a tabindex="-1" href="#/infrastructure">How It Works</a></li>
+              <li><a tabindex="-1" href="#/faq">FAQ</a></li>
             </ul>
           </li>
         </ul>
@@ -72,148 +75,12 @@
     </div>
   </div><!-- /.container-fluid -->
 </nav>
-<div class="container protractor-container">
-
-  <div class="protractor-header">
-    <span class="protractor-logo"></span>
-  </div>
-
-  <div class="text-center">
-    <a class="btn btn-large btn-danger github-button" href="https://github.com/angular/protractor">
-      <img src="app/img/GitHub-Mark-Light-32px.png" alt="github logo"/>View on GitHub
-    </a>
-  </div>
-  <div class="twitter">
-    <a href="https://twitter.com/ProtractorTest" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @ProtractorTest</a>
-  </div>
-
-  <p>
-    Protractor is an end-to-end test framework for AngularJS applications.
-    Protractor runs tests against your application running in a real browser,
-    interacting with it as a user would.
-  </p>
-
-  <div class="row">
-    <div class="col-sm-4">
-      <h3>Test Like a User</h3>
-      Protractor is built on top of WebDriverJS, which uses native events
-      and browser-specific drivers to interact with your application as a user
-      would.
-    </div>
-    <div class="col-sm-4">
-      <h3>For AngularJS Apps</h3>
-      Protractor supports Angular-specific locator strategies, which allows you
-      to test Angular-specific elements without any setup effort on your part.
-    </div>
-    <div class="col-sm-4">
-      <h3>Automatic Waiting</h3>
-      You no longer need to add waits and sleeps to your test. Protractor can
-      automatically execute the next step in your test the moment the webpage
-      finishes pending tasks, so you don’t have to worry about waiting for your
-      test and webpage to sync.
-    </div>
-  </div>
-
-  <div class="row example">
-    <div class="col-md-12">
-      <h2>Setup</h2>
-      <p>
-        Use npm to install Protractor globally with:
-      </p>
-      <pre>npm install -g protractor</pre>
-      <p>
-        This will install two command line tools, <code>protractor</code> and
-        <code>webdriver-manager</code>. Try running
-        <code>protractor --version</code> to make sure it's working.
-      </p>
-      <p>
-        The <code>webdriver-manager</code> is a helper tool to easily get an
-        instance of a Selenium Server running. Use it to download the necessary
-        binaries with:
-      </p>
-      <pre>webdriver-manager update</pre>
-      <p>
-        Now start up a server with:
-      </p>
-      <pre>webdriver-manager start</pre>
-      <p>
-        This will start up a Selenium Server and will output a bunch of info
-        logs. Your Protractor test will send requests to this server to control
-        a local browser. You can see information about the status of the server
-        at
-        <a href="http://localhost:4444/wd/hub" target="_blank">http://localhost:4444/wd/hub</a>.
-      </p>
-    </div>
-  </div>
-  <div class="row example">
-    <div class="col-md-12">
-      <h2>Write a test</h2>
-      <p>
-        Open a new command line or terminal window and create a clean folder
-        for testing.
-      </p>
-      <p>
-        Protractor needs two files to run, a spec file and a configuration file.
-      </p>
-      <p>
-        Let's start with a simple test that navigates to the todo list example
-        in the AngluarJS website and adds a new todo item to the list.
-      </p>
-      <p>Copy the following into <code>todo-spec.js</code>:</p>
-      <div>
-        <script src="https://gist.github.com/andresdominguez/c6dca267814122535e48.js"></script>
-      </div>
-      <p>
-        The <code>describe</code> and <code>it</code> syntax is from the Jasmine
-        framework. <code>browser</code> is a global created by Protractor,
-        which is used for browser-level commands such as navigation with
-        <code>browser.get</code>.
-      </p>
-    </div>
-  </div>
-  <div class="row example">
-    <div class="col-md-12">
-      <h2>Configuration</h2>
-      <p>
-        Now create the configuration file. Copy the following into
-        <code>conf.js</code>:
-      </p>
-      <script src="https://gist.github.com/andresdominguez/f29c7fb4ff0fbebf8797.js"></script>
-      <p>
-        This configuration tells Protractor where your test files
-        (<code>specs</code>) are, and where to talk to your Selenium Server
-        (<code>seleniumAddress</code>). It will use the defaults for all other
-        configuration. Chrome is the default browser.
-      </p>
-    </div>
-  </div>
-  <div class="row example">
-    <div class="col-md-12">
-      <h2>Run the test</h2>
-      <p>Now run the test with:</p>
-      <pre>protractor conf.js</pre>
-      <p>
-        You should see a Chrome browser window open up and navigate to the 
-        todo list in the AngularJS page, then close itself (this should be very
-        fast!). The test output should be
-        <code>1 test, 2 assertions, 0 failures</code>. Congratulations, you've
-        run your first Protractor test!
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Learn More</h2>
-      <p>Learn more with the
-        <a href="https://github.com/angular/protractor/blob/master/docs/tutorial.md">Tutorial</a>.
-      </p>
-    </div>
-  </div>
-</div>
+<div class="container protractor-container" ng-view autoscroll="true"></div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="app/app.js"></script>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular-route.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/lodash.min.js"></script>
+<script src="protractorApp.js"></script>
 </body>
 </html>

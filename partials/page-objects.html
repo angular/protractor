@@ -1,0 +1,63 @@
+<h1 id="using-page-objects-to-organize-tests">Using Page Objects to Organize Tests</h1>
+<p>When writing end-to-end tests, a common pattern is to use <a href="https://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.</p>
+<h2 id="without-page-objects">Without Page Objects</h2>
+<p>Here’s a simple test script (<a href=https://github.com/angular/protractor/blob/master/example/example_spec.js>example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
+<pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
+  it(&#39;should greet the named user&#39;, function() {
+    browser.get(&#39;http://www.angularjs.org&#39;);
+    element(by.model(&#39;yourName&#39;)).sendKeys(&#39;Julie&#39;);
+    var greeting = element(by.binding(&#39;yourName&#39;));
+    expect(greeting.getText()).toEqual(&#39;Hello Julie!&#39;);
+  });
+});</code></pre>
+<h2 id="with-pageobjects">With PageObjects</h2>
+<p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
+<pre><code class="lang-js">var AngularHomepage = function() {
+  this.nameInput = element(by.model(&#39;yourName&#39;));
+  this.greeting = element(by.binding(&#39;yourName&#39;));
+
+  this.get = function() {
+    browser.get(&#39;http://www.angularjs.org&#39;);
+  };
+
+  this.setName = function(name) {
+    this.nameInput.sendKeys(name);
+  };
+};</code></pre>
+<p>The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the <em>functionality</em> of the test script itself does not change (nothing is added or deleted).</p>
+<pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
+  it(&#39;should greet the named user&#39;, function() {
+    var angularHomepage = new AngularHomepage();
+    angularHomepage.get();
+
+    angularHomepage.setName(&#39;Julie&#39;);
+
+    expect(angularHomepage.greeting.getText()).toEqual(&#39;Hello Julie!&#39;);
+  });
+});</code></pre>
+<h2 id="configuring-test-suites">Configuring Test Suites</h2>
+<p>It is possible to separate your tests into various test suites. In your config file, you could setup  the suites option as shown below. </p>
+<pre><code class="lang-js">exports.config = {
+  // The address of a running selenium server.
+  seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
+
+  // Capabilities to be passed to the webdriver instance.
+  capabilities: {
+    &#39;browserName&#39;: &#39;chrome&#39;
+  },
+
+  // Spec patterns are relative to the location of the spec file. They may
+  // include glob patterns.
+  suites: {
+    homepage: &#39;tests/e2e/homepage/**/*Spec.js&#39;,
+    search: [&#39;tests/e2e/contact_search/**/*Spec.js&#39;,
+      &#39;tests/e2e/venue_search/**/*Spec.js&#39;]
+  },
+
+  // Options to be passed to Jasmine-node.
+  jasmineNodeOpts: {
+    showColors: true, // Use colors in the command line report.
+  }
+};</code></pre>
+<p>From the command line, you can then easily switch between running one or the other suite of tests. This command will run only the homepage section of the tests:</p>
+<pre><code>protractor protractor.conf.js --suite homepage</code></pre>

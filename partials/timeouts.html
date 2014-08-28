@@ -1,0 +1,90 @@
+<h1 id="timeouts">Timeouts</h1>
+<p>Because WebDriver tests are asynchronous and involve many components, there are several reasons why a timeout could occur in a Protractor test.</p>
+<h2 id="timeouts-from-protractor">Timeouts from Protractor</h2>
+<p><strong>Waiting for Page to Load</strong></p>
+<p>When navigating to a new page using <code>browser.get</code>, Protractor waits for the page to
+be loaded and the new URL to appear before continuing.</p>
+<ul>
+<li><p>Looks like: an error in your test results - <code>Error: Timed out waiting for page to load after 10000ms</code></p>
+</li>
+<li><p>Default timeout: 10 seconds</p>
+</li>
+<li><p>How to change: To change globally, add <code>getPageTimeout: timeout_in_millis</code> to your Protractor configuration file. For an individual call to <code>get</code>, pass an additional parameter: <code>browser.get(address, timeout_in_millis)</code></p>
+</li>
+</ul>
+<p><strong>Waiting for Page Synchronization</strong></p>
+<p>Before performing any action, Protractor asks Angular to wait until the page is synchronized. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, it will
+never be registered as completely loaded. You should use the
+$interval service (<a href="https://github.com/angular/angular.js/blob/master/src/ng/interval.js">interval.js</a>) for anything that polls continuously (introduced in Angular 1.2rc3).</p>
+<ul>
+<li><p>Looks like: an error in your test results - <code>Timed out waiting for Protractor to synchronize with the page after 11 seconds.</code></p>
+</li>
+<li><p>Default timeout: 11 seconds</p>
+</li>
+<li><p>How to change: Add <code>allScriptsTimeout: timeout_in_millis</code> to your Protractor configuration file.</p>
+</li>
+</ul>
+<p><strong>Waiting for Angular</strong></p>
+<p>Protractor only works with Angular applications, so it waits for the <code>angular</code> variable to be present when it is loading a new page.</p>
+<ul>
+<li><p>Looks like: an error in your test results - <code>Angular could not be found on the page: retries looking for angular exceeded</code></p>
+</li>
+<li><p>Default timeout: 10 seconds</p>
+</li>
+<li><p>How to change: To change globally, add <code>getPageTimeout: timeout_in_millis</code> to your Protractor configuration file. For an individual call to <code>get</code>, pass an additional parameter: <code>browser.get(address, timeout_in_millis)</code></p>
+</li>
+</ul>
+<h2 id="timeouts-from-webdriver">Timeouts from WebDriver</h2>
+<p><strong>Asynchronous Script Timeout</strong></p>
+<p>Sets the amount of time to wait for an asynchronous script to finish execution before throwing an error.</p>
+<ul>
+<li><p>Looks like: an error in your test results - <code>ScriptTimeoutError: asynchronous script timeout: result was not received in 11 seconds</code></p>
+</li>
+<li><p>Default timeout: 11 seconds</p>
+</li>
+<li><p>How to change: Add <code>allScriptsTimeout: timeout_in_millis</code> to your Protractor configuration file.</p>
+</li>
+</ul>
+<h2 id="timeouts-from-jasmine">Timeouts from Jasmine</h2>
+<p><strong>Spec Timeout</strong></p>
+<p>If a spec (an &#39;it&#39; block) takes longer than the Jasmine timeout for any reason, it will fail.</p>
+<ul>
+<li><p>Looks like: a failure in your test results - <code>timeout: timed out after 30000 msec waiting for spec to complete</code></p>
+</li>
+<li><p>Default timeout: 30 seconds</p>
+</li>
+<li><p>How to change: To change for all specs, add <code>jasmineNodeOpts: {defaultTimeoutInterval: timeout_in_millis}</code> to your Protractor configuration file. To change for one individual spec, pass a third parameter to <code>it</code>: <code>it(description, testFn, timeout_in_millis)</code>.</p>
+</li>
+</ul>
+<h2 id="timeouts-from-sauce-labs">Timeouts from Sauce Labs</h2>
+<p>If you are using Sauce Labs, there are a couple additional ways your test can time out. See <a href="https://docs.saucelabs.com/reference/test-configuration/#timeouts">Sauce Labs Timeouts Documentation</a> for more information.</p>
+<p><strong>Maximum Test Duration</strong></p>
+<p>Sauce Labs limits the maximum total duration for a test.</p>
+<ul>
+<li><p>Looks like: <code>Test exceeded maximum duration after 1800 seconds</code></p>
+</li>
+<li><p>Default timeout: 30 minutes</p>
+</li>
+<li><p>How to change: Edit the &quot;max-duration&quot; key in the capabilities object.</p>
+</li>
+</ul>
+<p><strong>Command Timeout</strong></p>
+<p>As a safety measure to prevent Selenium crashes from making your tests run indefinitely, Sauce limits how long Selenium can take to run a command in browsers. This is set to 300 seconds by default.</p>
+<ul>
+<li><p>Looks like: <code>Selenium took too long to run your command</code></p>
+</li>
+<li><p>Default timeout: 300 seconds</p>
+</li>
+<li><p>How to change: Edit the &quot;command-timeout&quot; key in the capabilities object.</p>
+</li>
+</ul>
+<p><strong>Idle Timeout</strong></p>
+<p>As a safety measure to prevent tests from running too long after something has gone wrong, Sauce limits how long a browser can wait for a test to send a new command. This is set to 90 seconds by default. You can adjust this limit on a per-job basis.</p>
+<ul>
+<li><p>Looks like: <code>Test did not see a new command for 90 seconds. Timing out.</code></p>
+</li>
+<li><p>Default timeout: 90 seconds</p>
+</li>
+<li><p>How to change: Edit the &quot;idle-duration&quot; key in the capabilities object.</p>
+</li>
+</ul>

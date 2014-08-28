@@ -1,0 +1,21 @@
+<div class="table-responsive" ng-if="list">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in list">
+      <td>
+        <a href="#/api?view={{item.name}}"
+            class="child"
+            ng-bind="item.displayName">
+        </a>
+      </td>
+      <td ng-bind="item.shortDescription"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
