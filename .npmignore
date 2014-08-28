@@ -5,6 +5,7 @@ selenium/
 debugging/
 testapp/inbrowsertest
 docgen/
+website/
 
 .npmignore
 .travis.yml
