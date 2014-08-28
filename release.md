@@ -29,8 +29,6 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
 
    - Breaking changes should be in their own section and include before/after examples of how to fix code that needs to change.
 
- - Generate new API documentation. Run `scripts/generate-docs.js`
-
  - Make a commit with the API and package.json changes titled chore(release): version bump and changelog for 0.0.K.
 
  - Tag the release with `git tag 0.0.K`
@@ -42,6 +40,8 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
  - Verify that the changelog and tags look sane on github
 
  - NPM publish
+
+ - Update the website. `cd website; npm run build`. Then copy the output `build` directory to the gh-pages branch.
 
  - Let people know
    - Have @ProtractorTest tweet about it

@@ -1,6 +1,7 @@
 Protractor API 1.1.1
 ==============
 
+## Please note - this file is deprecated and replaced by searchable docs at [http://www.protractortest.org/#/api](http://www.protractortest.org/#/api)
 
 
 ##protractor
