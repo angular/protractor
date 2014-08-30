@@ -1,11 +1,15 @@
-var tagFixer = require('../processors/tag-fixer');
+var tagFixerFn = require('../processors/tag-fixer');
 
 describe('tag fixer', function() {
-  var expressionDoc, declarationDoc, docs;
+  var expressionDoc, declarationDoc, docs, tagFixer;
+
+  beforeEach(function() {
+    tagFixer = tagFixerFn();
+  });
 
   beforeEach(function() {
     expressionDoc = {
-      code: {
+      codeNode: {
         node: {
           expression: {
             left: {
@@ -25,7 +29,7 @@ describe('tag fixer', function() {
     };
 
     declarationDoc = {
-      code: {
+      codeNode: {
         node: {
           declarations: [
             {
@@ -46,7 +50,7 @@ describe('tag fixer', function() {
 
   it('should find name in code expression', function() {
     // When you process the docs.
-    tagFixer.process(docs);
+    tagFixer.$process(docs);
 
     // Then ensure the name was parsed.
     expect(expressionDoc.name).toBe('element.all');
@@ -54,7 +58,7 @@ describe('tag fixer', function() {
 
   it('should find name in code declaration', function() {
     // When you process the docs.
-    tagFixer.process(docs);
+    tagFixer.$process(docs);
 
     // Then ensure the name was parsed.
     expect(declarationDoc.name).toBe('element');
@@ -66,7 +70,7 @@ describe('tag fixer', function() {
     declarationDoc.name = 'name2';
 
     // When you process the docs.
-    tagFixer.process(docs);
+    tagFixer.$process(docs);
 
     // Then ensure the name was not changed.
     expect(expressionDoc.name).toBe('name1');

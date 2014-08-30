@@ -1,46 +1,12 @@
 var _ = require('lodash');
 var path = require('path');
-var packagePath = __dirname;
-var basePackage = require('dgeni-packages/jsdoc');
+var Package = require('dgeni').Package;
 
-module.exports = function(config) {
+var jsDocProcessor = require('dgeni-packages/jsdoc');
 
-  config = basePackage(config);
-
-  // Use the jsdoc extractor instead of the default to parse the function name.
-  config.set('source.extractors', [
-    require('dgeni-packages/jsdoc/extractors/jsdoc.js')
-  ]);
-
-  /*
-   * Add a couple of processors to the pipe to do extra parsing and rendering.
-   *
-   * tag-fixer: Get the name of the function, format the @param and @return
-   *     annotations to prepare them for rendering.
-   * filter-jsdoc: Filter the functions that will not be part of the output
-   *     documentation and generate a unique name for the output partial file.
-   * set-file-name: Add a file name that can be sorted alphabetically.
-   * add-links: Add links to the source code for protractor.js, locators.js,
-   *     and webdriver.js.
-   * add-toc: Add the table of contents.
-   */
-  config.append('processing.processors', [
-    require('./processors/tag-fixer'),
-    require('./processors/filter-jsdoc'),
-    require('./processors/set-file-name'),
-    require('./processors/add-links'),
-    require('./processors/add-toc')
-  ]);
-
-  /*
-   * Add custom filters.
-   */
-  config.append('rendering.filters', [
-    require('./filters/link-slugify')
-  ]);
-
-  // Configure the tags that will be parsed from the jsDoc.
-  var tagDefs = require('dgeni-packages/jsdoc/tag-defs');
+// Configure the tags that will be parsed from the jsDoc.
+jsDocProcessor.config(function(parseTagsProcessor) {
+  var tagDefs = parseTagsProcessor.tagDefinitions;
 
   // Parse the following annotations.
   tagDefs.push({name: 'alias'});
@@ -56,36 +22,50 @@ module.exports = function(config) {
   // The name tag should not be required.
   var nameTag = _.find(tagDefs, {name: 'name'});
   nameTag.required = false;
+});
 
-  config.set('processing.tagDefinitions', tagDefs);
+var myPackage = new Package('myPackage', [
+  jsDocProcessor,
+  require('dgeni-packages/nunjucks')
+]);
 
-  // OutputPath for docs that do not already have them.
-  config.set('rendering.contentsFolder',
-      path.resolve(config.basePath, 'build'));
+/*
+ * Add a couple of processors to the pipe to do extra parsing and rendering.
+ *
+ * tag-fixer: Get the name of the function, format the @param and @return
+ *     annotations to prepare them for rendering.
+ * filter-jsdoc: Filter the functions that will not be part of the output
+ *     documentation and generate a unique name for the output partial file.
+ * add-links: Add links to the source code for protractor.js, locators.js,
+ *     and webdriver.js.
+ * add-toc: Add the table of contents.
+ */
+myPackage.processor(require('./processors/tag-fixer'));
+myPackage.processor(require('./processors/filter-jsdoc'));
+myPackage.processor(require('./processors/set-file-name'));
+myPackage.processor(require('./processors/add-links'));
+myPackage.processor(require('./processors/add-toc'));
 
-  // Base path is the protractor root dir.
-  var basePath = path.resolve(packagePath, '../..');
+myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcessor) {
 
-  // Generate documentation for protractor, locators, and webdriver.
-  config.set('source.files', [
-    {pattern: 'lib/**/protractor.js', basePath: basePath},
-    {pattern: 'lib/**/locators.js', basePath: basePath},
-    {pattern: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js',
-      basePath: basePath}
-  ]);
+  // Go to the protractor project root.
+  readFilesProcessor.basePath = path.resolve(__dirname, '../..');
 
-  // TODO(andres): Add ability to link to previous versions.
-  config.set('linksHash', 'master');
-  config.set('source.projectPath', basePath);
-  config.set('rendering.outputFolder', 'build');
-  config.set('logging.level', 'debug');
+  readFilesProcessor.sourceFiles = [
+    {include: 'lib/**/protractor.js'},
+    {include: 'lib/**/locators.js'},
+    {include: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js'}
+  ];
 
-  var docsPath = path.resolve('docgen/templates');
-  config.set('rendering.templateFolders', [docsPath]);
+  // Add a folder to search for our own templates to use when rendering docs
+  templateFinder.templateFolders.unshift(path.resolve('docgen/templates'));
 
-  config.set('rendering.templatePatterns', [
-    '${ doc.template }-template.txt'
-  ]);
+  // Specify how to match docs to templates.
+  // In this case we just use the same static template for all docs
+  templateFinder.templatePatterns.unshift('toc-template.txt');
 
-  return config;
-};
+  // Specify where the writeFilesProcessor will write our generated doc files
+  writeFilesProcessor.outputFolder = 'website/docgen/build';
+});
+
+module.exports = myPackage;
