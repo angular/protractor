@@ -10,9 +10,6 @@ describe('add-links', function() {
   });
 
   var addLinks = function(docs) {
-    linksProcessor.init({
-      linksHash: 'master'
-    });
     linksProcessor.$process(docs);
   };
 
