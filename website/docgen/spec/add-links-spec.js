@@ -1,13 +1,19 @@
-var linksProcessor = require('../processors/add-links');
+var linksProcessorFn = require('../processors/add-links');
 var _ = require('lodash');
 
 
 describe('add-links', function() {
+  var linksProcessor;
+
+  beforeEach(function() {
+    linksProcessor = linksProcessorFn()
+  });
+
   var addLinks = function(docs) {
     linksProcessor.init({
       linksHash: 'master'
     });
-    linksProcessor.process(docs);
+    linksProcessor.$process(docs);
   };
 
   it('should add protractor link', function() {

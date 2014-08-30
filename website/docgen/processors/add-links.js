@@ -103,34 +103,38 @@ var getTypeString = function(param) {
   return escape(str);
 };
 
-module.exports = {
-  name: 'add-links',
-  description: 'Add links to the external documents',
-  runAfter: ['extracting-tags'],
-  runBefore: ['tags-extracted'],
-  init: function(config) {
-    linksHash = config.linksHash;
-  },
-  process: function(docs) {
-    typeTable = _.groupBy(docs, 'name');
+/**
+ * Add links to the external documents
+ */
+module.exports = function addLinks() {
+  return {
+    $runAfter: ['extracting-tags'],
+    $runBefore: ['tags-extracted'],
+    // TODO(andresdom): remove config.
+    init: function(config) {
+      linksHash = config.linksHash;
+    },
+    $process: function(docs) {
+      typeTable = _.groupBy(docs, 'name');
 
-    docs.forEach(function(doc) {
-      addLinkToSourceCode(doc);
-      doc.description = addLinkToLinkAnnotation(doc.description);
+      docs.forEach(function(doc) {
+        addLinkToSourceCode(doc);
+        doc.description = addLinkToLinkAnnotation(doc.description);
 
-      // Add links for the param types.
-      _.each(doc.params, function(param) {
-        param.paramString = getTypeString(param);
+        // Add links for the param types.
+        _.each(doc.params, function(param) {
+          param.paramString = getTypeString(param);
+        });
+
+        // Add links for the return types.
+        var returns = doc.returns;
+        if (returns) {
+          doc.returnString = getTypeString(returns);
+          returns.description = addLinkToLinkAnnotation(returns.description);
+        } else {
+          doc.returnString = '';
+        }
       });
-
-      // Add links for the return types.
-      var returns = doc.returns;
-      if (returns) {
-        doc.returnString = getTypeString(returns);
-        returns.description = addLinkToLinkAnnotation(returns.description);
-      } else {
-        doc.returnString = '';
-      }
-    });
+    }
   }
 };

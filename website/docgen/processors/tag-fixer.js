@@ -90,24 +90,22 @@ var fixParamsAndReturns = function(doc) {
   }
 };
 
-module.exports = {
-  name: 'tag-fixer',
-  description: 'Get the name of the function, format the @param and @return ' +
-      'annotations to prepare them for rendering.',
-  runAfter: ['extracting-tags'],
-  runBefore: ['tags-extracted'],
-  init: function(config) {
-  },
-  process: function(docs) {
-    docs.forEach(function(doc) {
-      addDescription(doc);
-      doc.name = findName(doc);
-      fixParamsAndReturns(doc);
+/**
+ * Get the name of the function, format the @param and @return annotations to
+ * prepare them for rendering.
+ */
+module.exports = function tagFixer() {
+  return {
+    $runAfter: ['extracting-tags'],
+    $runBefore: ['tags-extracted'],
+    $process: function(docs) {
+      docs.forEach(function(doc) {
+        addDescription(doc);
+        doc.name = findName(doc);
+        fixParamsAndReturns(doc);
+      });
 
-      // Set the template name to use api-template.md.
-      doc.template = 'api';
-    });
-
-    return docs;
+      return docs;
+    }
   }
 };

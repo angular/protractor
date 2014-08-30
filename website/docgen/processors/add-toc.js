@@ -8,43 +8,44 @@ var escapeHtml = function(htmlCode) {
       replace(/>/g, '&gt;');
 };
 
-module.exports = {
-  name: 'add-toc',
-  description: 'Add table of contents',
-  runAfter: ['extracting-tags'],
-  runBefore: ['tags-extracted'],
-  init: function(config) {
-  },
-  process: function(docs) {
-    // Get the properties that will be copied to the table of contents.
-    var toc = _.map(docs, function(doc) {
-      if (doc.view) {
-        doc.htmlView = escapeHtml(doc.view);
-      }
+/**
+ * Add table of contents.
+ */
+module.exports = function addToc() {
+  return {
+    $runAfter: ['extracting-tags'],
+    $runBefore: ['tags-extracted'],
+    $process: function(docs) {
+      // Get the properties that will be copied to the table of contents.
+      var toc = _.map(docs, function(doc) {
+        if (doc.view) {
+          doc.htmlView = escapeHtml(doc.view);
+        }
 
-      return _.pick(doc,
-          'alias',
-          'description',
-          'example',
-          'extends',
-          'fileName',
-          'htmlView',
-          'name',
-          'params',
-          'returns',
-          'returnString',
-          'sourceLink',
-          'view'
-      );
-    });
+        return _.pick(doc,
+            'alias',
+            'description',
+            'example',
+            'extends',
+            'fileName',
+            'htmlView',
+            'name',
+            'params',
+            'returns',
+            'returnString',
+            'sourceLink',
+            'view'
+        );
+      });
 
-    // Replace all the docs with the table of contents.
-    docs.length = 0;
-    docs.push({
-      outputPath: 'toc.json',
-      template: 'toc',
-      toc: toc,
-      version: require('../../../package.json').version
-    })
+      // Replace all the docs with the table of contents.
+      docs.length = 0;
+      docs.push({
+        outputPath: 'toc.json',
+        template: 'toc',
+        toc: toc,
+        version: require('../../../package.json').version
+      })
+    }
   }
 };
