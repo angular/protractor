@@ -35,7 +35,8 @@ gulp.task('dgeni', function() {
 
   dgeni.generate().then(function(docs) {
     console.log(docs.length, 'docs generated');
-  });});
+  });
+});
 
 gulp.task('copyBowerFiles', function() {
   // Bootstrap, lodash.
