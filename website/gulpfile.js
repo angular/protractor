@@ -30,7 +30,7 @@ gulp.task('clean', function(cb) {
 // Generate the table of contents json file using Dgeni. This is output to
 // docgen/build/toc.json
 gulp.task('dgeni', function() {
-  var packages = [require('./docgen/dgeni')];
+  var packages = [require('./docgen/dgeni-config')];
   var dgeni = new Dgeni(packages);
 
   dgeni.generate().then(function(docs) {
