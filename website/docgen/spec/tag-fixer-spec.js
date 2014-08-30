@@ -9,7 +9,7 @@ describe('tag fixer', function() {
 
   beforeEach(function() {
     expressionDoc = {
-      code: {
+      codeNode: {
         node: {
           expression: {
             left: {
@@ -29,7 +29,7 @@ describe('tag fixer', function() {
     };
 
     declarationDoc = {
-      code: {
+      codeNode: {
         node: {
           declarations: [
             {

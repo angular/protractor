@@ -6,7 +6,7 @@ var _ = require('lodash');
  * @param {!Object} doc Current doc.
  */
 var addDescription = function(doc) {
-  doc.description = (doc.tags.description || '').replace(/\n$/, '');
+  doc.description = (doc.description || '').replace(/\n$/, '');
 };
 
 /**
@@ -19,7 +19,7 @@ var findName = function(doc) {
   }
 
   try {
-    var node = doc.code.node;
+    var node = doc.codeNode.node;
 
     // Is this a simple declaration? "var element = function() {".
     if (node.declarations && node.declarations.length) {
