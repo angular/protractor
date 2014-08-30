@@ -16,7 +16,9 @@
         code: '=ptorCode'
       },
       link: function(scope, element) {
-        element.html(prettyPrintOne(scope.code));
+        scope.$watch('code', function() {
+          element.html(prettyPrintOne(scope.code));
+        });
       }
     };
   });
