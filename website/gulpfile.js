@@ -1,7 +1,7 @@
 var concat = require('gulp-concat');
 var connect = require('gulp-connect');
 var del = require('del');
-var dgeni = require('dgeni');
+var Dgeni = require('dgeni');
 var gulp = require('gulp');
 var less = require('gulp-less');
 var marked = require('gulp-marked');
@@ -30,9 +30,12 @@ gulp.task('clean', function(cb) {
 // Generate the table of contents json file using Dgeni. This is output to
 // docgen/build/toc.json
 gulp.task('dgeni', function() {
-  var config = path.resolve(__dirname, './docgen/dgeni-config.js');
-  dgeni(config).generateDocs();
-});
+  var packages = [require('./docgen/dgeni')];
+  var dgeni = new Dgeni(packages);
+
+  dgeni.generate().then(function(docs) {
+    console.log(docs.length, 'docs generated');
+  });});
 
 gulp.task('copyBowerFiles', function() {
   // Bootstrap, lodash.
