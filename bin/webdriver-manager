@@ -32,7 +32,7 @@ var binaries = {
     prefix: 'selenium-server-standalone',
     filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
     url: function() {
-      return 'http://selenium-release.storage.googleapis.com/' +
+      return 'https://selenium-release.storage.googleapis.com/' +
           shortVersion(versions.selenium) + '/' +
           'selenium-server-standalone-' + versions.selenium + '.jar';
     }
@@ -43,7 +43,7 @@ var binaries = {
     prefix: 'chromedriver_',
     filename: 'chromedriver_' + versions.chromedriver + '.zip',
     url: function() {
-      var urlPrefix = 'http://chromedriver.storage.googleapis.com/' +
+      var urlPrefix = 'https://chromedriver.storage.googleapis.com/' +
           versions.chromedriver + '/chromedriver_';
       if (os.type() == 'Darwin') {
         return urlPrefix + 'mac32.zip';
@@ -64,7 +64,7 @@ var binaries = {
     prefix: 'IEDriverServer',
     filename: 'IEDriverServer_' + versions.iedriver + '.zip',
     url: function() {
-      var urlPrefix = 'http://selenium-release.storage.googleapis.com/' +
+      var urlPrefix = 'https://selenium-release.storage.googleapis.com/' +
           shortVersion(versions.iedriver) + '/IEDriverServer';
       if (os.type() == 'Windows_NT') {
         if (os.arch() == 'x64') {
