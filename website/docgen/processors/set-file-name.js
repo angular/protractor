@@ -1,17 +1,16 @@
 /**
- * Set the file name of the output file.
+ * Set the input file name.
  */
 module.exports = function setFileName() {
   return {
     $runAfter: ['extracting-tags'],
     $runBefore: ['tags-extracted'],
     $process: function(docs) {
-      // Generate the output file name.
       docs.forEach(function(doc) {
-        doc.outputPath = doc.name + '.html';
+        doc.fileName = doc.fileInfo.baseName;
       });
 
-      return  docs;
+      return docs;
     }
   }
 };
