@@ -16,7 +16,7 @@ var typeTable;
 /**
  * The hash used to generate the links to the source code.
  */
-var linksHash;
+var linksHash = 'master';
 
 /**
  * Add a link to the source code.
@@ -110,10 +110,6 @@ module.exports = function addLinks() {
   return {
     $runAfter: ['extracting-tags'],
     $runBefore: ['tags-extracted'],
-    // TODO(andresdom): remove config.
-    init: function(config) {
-      linksHash = config.linksHash;
-    },
     $process: function(docs) {
       typeTable = _.groupBy(docs, 'name');
 
