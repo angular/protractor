@@ -1,3 +1,34 @@
+# 1.2.0
+
+## Features
+
+- ([830f511](https://github.com/angular/protractor/commit/830f51128d1ca6c8858c99617b2752172044a752)) 
+  feat(protractor): allow file:// baseUrls
+
+  Modified protractor to support testing node-webkit by using string concatenation vs url.resolve()
+  when the baseUrl begins with file://
+
+  Closes #1266.
+
+- ([71b9c97](https://github.com/angular/protractor/commit/71b9c97432316a8409c7c83e28a3b1eba2d83f25)) 
+  feat(cucumber): process the Cucumber 'coffee' param
+
+## Bug Fixes
+
+- ([ade9a92](https://github.com/angular/protractor/commit/ade9a9277558a564e15e46266a82aeb43261d958)) 
+  fix(webdriver-manager): always use https for downloading webdriver binaries
+
+  This fixes issues with unzipping - see #1259
+
+- ([9a8f45a](https://github.com/angular/protractor/commit/9a8f45af49633f1637c88960ba079d7d425ca72c)) 
+  fix(locators): locators should use the root element provided in config
+
+  Previously, locators used 'document' as the root for their search. After this change, they will
+  use the root element provided in the config file -
+  `config.rootElement`. This will make sure behavior is correct if there are multiple angular apps
+  on one page, and also enables the getTestability path, because that requires a root element under
+  an ng-app.
+
 # 1.1.1
 This is a minor release with no functional changes. It contains a couple
 implementation switches that new versions of Angular will use.
