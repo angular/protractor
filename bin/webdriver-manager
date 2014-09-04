@@ -86,7 +86,7 @@ var cli = optimist.
     describe('out_dir', 'Location to output/expect ').
     default('out_dir', SELENIUM_DIR).
     describe('seleniumPort', 'Optional port for the selenium standalone server').
-    describe('proxy', 'proxy to use for the install or update command');
+    describe('proxy', 'proxy to use for the install or update command').
     describe('hub', 'run as Selenium Grid hub role');
 
 for (bin in binaries) {
@@ -230,7 +230,7 @@ switch (argv._[0]) {
       args.push('-port', argv.seleniumPort);
     }
     if (argv.hub) {
-        args.push('-role hub')
+        args.push('-role', 'hub');
     } else {
         if (binaries.chrome.exists) {
             args.push('-Dwebdriver.chrome.driver=' +
