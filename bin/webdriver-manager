@@ -89,6 +89,7 @@ var cli = optimist.
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
     default('ignore_ssl', false).
     describe('proxy', 'Proxy to use for the install or update command');
+    describe('hub', 'run as Selenium Grid hub role');
 
 for (bin in binaries) {
   cli.describe(bin, 'Install or update ' + binaries[bin].name).
@@ -236,13 +237,17 @@ switch (argv._[0]) {
     if (argv.seleniumPort) {
       args.push('-port', argv.seleniumPort);
     }
-    if (binaries.chrome.exists) {
-      args.push('-Dwebdriver.chrome.driver=' +
-          path.join(argv.out_dir, executableName('chromedriver')));
-    }
-    if (binaries.ie.exists) {
-       args.push('-Dwebdriver.ie.driver=' +
-          path.join(argv.out_dir, executableName('IEDriverServer')));
+    if (argv.hub) {
+        args.push('-role hub')
+    } else {
+        if (binaries.chrome.exists) {
+            args.push('-Dwebdriver.chrome.driver=' +
+                path.join(argv.out_dir, executableName('chromedriver')));
+        }
+        if (binaries.ie.exists) {
+            args.push('-Dwebdriver.ie.driver=' +
+                path.join(argv.out_dir, executableName('IEDriverServer')));
+        }
     }
     var seleniumProcess = spawnCommand('java', args);
     console.log('seleniumProcess.pid: ' + seleniumProcess.pid);
