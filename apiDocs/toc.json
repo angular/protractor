@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.2.0",
   "items": [
   {
     "alias": "element.all(locator)",
@@ -14,12 +14,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "An element locator.",
-        "startingLine": 87,
+        "startingLine": 89,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -36,12 +39,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The element finder previous to   this. (i.e. opt_parentElementFinder.all(locator) => this)",
-        "startingLine": 88,
+        "startingLine": 90,
         "typeExpression": "ElementFinder=",
         "type": {
           "type": "NameExpression",
@@ -62,11 +68,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 90,
+      "startingLine": 92,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -77,7 +86,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L69",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L71",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -90,11 +99,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 101,
+      "startingLine": 103,
       "typeExpression": "webdriver.Locator",
       "type": {
         "type": "NameExpression",
@@ -105,7 +117,7 @@
       ]
     },
     "returnString": "webdriver.Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L101"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L103"
   },
   {
     "alias": "element.all(locator).getWebElements()",
@@ -118,11 +130,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 111,
+      "startingLine": 113,
       "typeExpression": "Array.<webdriver.WebElement>",
       "type": {
         "type": "TypeApplication",
@@ -142,7 +157,7 @@
       ]
     },
     "returnString": "Array.&lt;[webdriver.WebElement]&gt;",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L108"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L110"
   },
   {
     "alias": "element.all(locator).get(index)",
@@ -157,12 +172,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Element index.",
-        "startingLine": 150,
+        "startingLine": 152,
         "typeExpression": "number",
         "type": {
           "type": "NameExpression",
@@ -181,11 +199,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "finder representing element at the given index.",
-      "startingLine": 151,
+      "startingLine": 153,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -196,7 +217,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L134",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L136",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -212,11 +233,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "finder representing the first matching element",
-      "startingLine": 173,
+      "startingLine": 175,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -227,7 +251,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L158",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L160",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -243,11 +267,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "finder representing the last matching element",
-      "startingLine": 195,
+      "startingLine": 197,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -258,7 +285,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L180",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L182",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -274,11 +301,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise which resolves to the number of elements matching the locator.",
-      "startingLine": 216,
+      "startingLine": 218,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -290,7 +320,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L202",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L204",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -306,12 +336,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Input function",
-        "startingLine": 285,
+        "startingLine": 287,
         "typeExpression": "function(ElementFinder)",
         "type": {
           "type": "FunctionType",
@@ -330,7 +363,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L269",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L271",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -346,12 +379,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Map function that will be applied to each element.",
-        "startingLine": 322,
+        "startingLine": 324,
         "typeExpression": "function(ElementFinder, number)",
         "type": {
           "type": "FunctionType",
@@ -379,11 +415,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that resolves to an array of values returned by the map function.",
-      "startingLine": 324,
+      "startingLine": 326,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -395,7 +434,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L296",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L298",
     "view": "<ul class=\"items\">\n  <li class=\"one\">First</li>\n  <li class=\"two\">Second</li>\n  <li class=\"three\">Third</li>\n</ul>"
   },
   {
@@ -411,12 +450,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Filter function that will test if an element should be returned. filterFn should return a promise that resolves to a boolean.",
-        "startingLine": 364,
+        "startingLine": 366,
         "typeExpression": "function(ElementFinder, number): webdriver.WebElement.Promise",
         "type": {
           "type": "FunctionType",
@@ -448,11 +490,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that resolves to an array of ElementFinders that satisfy the filter function.",
-      "startingLine": 367,
+      "startingLine": 369,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -464,7 +509,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L342",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L344",
     "view": "<ul class=\"items\">\n  <li class=\"one\">First</li>\n  <li class=\"two\">Second</li>\n  <li class=\"three\">Third</li>\n</ul>"
   },
   {
@@ -480,12 +525,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Reduce function that reduces every element into a single value.",
-        "startingLine": 409,
+        "startingLine": 411,
         "typeExpression": "function(number, ElementFinder, number, Array.<ElementFinder>)",
         "type": {
           "type": "FunctionType",
@@ -528,12 +576,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Initial value of the accumulator.",
-        "startingLine": 411,
+        "startingLine": 413,
         "typeExpression": "*",
         "type": {
           "type": "AllLiteral"
@@ -551,11 +602,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that resolves to the final value of the accumulator.",
-      "startingLine": 412,
+      "startingLine": 414,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -567,7 +621,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L385",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L387",
     "view": "<ul class=\"items\">\n  <li class=\"one\">First</li>\n  <li class=\"two\">Second</li>\n  <li class=\"three\">Third</li>\n</ul>"
   },
   {
@@ -583,12 +637,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "An element locator.",
-        "startingLine": 461,
+        "startingLine": 463,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -605,12 +662,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The element finder previous  to this. (i.e. opt_parentElementFinder.element(locator) => this)",
-        "startingLine": 462,
+        "startingLine": 464,
         "typeExpression": "ElementFinder=",
         "type": {
           "type": "NameExpression",
@@ -629,12 +689,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The promise which  will be retrieved with then. Resolves to the latest action result,  or null if no action has been called.",
-        "startingLine": 464,
+        "startingLine": 466,
         "typeExpression": "webdriver.promise.Promise",
         "type": {
           "type": "NameExpression",
@@ -651,12 +714,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The index of the element to retrieve. null means retrieve the only element, while -1 means retrieve the last element",
-        "startingLine": 467,
+        "startingLine": 469,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -677,11 +743,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 469,
+      "startingLine": 471,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -692,7 +761,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L428",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L430",
     "view": "<span>{{person.name}}</span>\n<span ng-bind=\"person.email\"></span>\n<input type=\"text\" ng-model=\"person.name\"/>"
   },
   {
@@ -708,12 +777,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 528,
+        "startingLine": 530,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -732,11 +804,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 529,
+      "startingLine": 531,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -747,7 +822,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L505",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L507",
     "view": "<div class=\"parent\">\n  <div class=\"child\">\n    Child text\n    <div>{{person.phone}}</div>\n  </div>\n</div>"
   },
   {
@@ -763,12 +838,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 551,
+        "startingLine": 553,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -787,11 +865,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 552,
+      "startingLine": 554,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -802,7 +883,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L536",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L538",
     "view": "<div class=\"parent\">\n  <ul>\n    <li class=\"one\">First</li>\n    <li class=\"two\">Second</li>\n    <li class=\"three\">Third</li>\n  </ul>\n</div>"
   },
   {
@@ -818,12 +899,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "A css selector",
-        "startingLine": 572,
+        "startingLine": 574,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -842,11 +926,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "which identifies the located  [webdriver.WebElement]",
-      "startingLine": 573,
+      "startingLine": 575,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -857,7 +944,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L559",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L561",
     "view": "<div class=\"count\">\n  <span class=\"one\">First</span>\n  <span class=\"two\">Second</span>\n</div>"
   },
   {
@@ -873,12 +960,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "a css selector",
-        "startingLine": 600,
+        "startingLine": 602,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -897,11 +987,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "which identifies the array of the located [webdriver.WebElement]s.",
-      "startingLine": 601,
+      "startingLine": 603,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -912,7 +1005,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L581",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L583",
     "view": "<div class=\"count\">\n  <span class=\"one\">First</span>\n  <span class=\"two\">Second</span>\n</div>"
   },
   {
@@ -927,11 +1020,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "which resolves to whether the element is present on the page.",
-      "startingLine": 621,
+      "startingLine": 623,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -942,24 +1038,54 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L609",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L611",
     "view": "<span>{{person.name}}</span>"
   },
   {
     "description": "Override for WebElement.prototype.isElementPresent so that protractor waits\nfor Angular to settle before making the check.",
     "fileName": "protractor",
     "name": "ElementFinder.prototype.isElementPresent",
+    "params": [
+      {
+        "tagDef": {
+          "name": "param",
+          "multi": true,
+          "docProperty": "params",
+          "transforms": [
+            null,
+            null,
+            null
+          ]
+        },
+        "tagName": "param",
+        "description": "Locator for element to look for.",
+        "startingLine": 641,
+        "typeExpression": "webdriver.Locator",
+        "type": {
+          "type": "NameExpression",
+          "name": "webdriver.Locator"
+        },
+        "typeList": [
+          "webdriver.Locator"
+        ],
+        "name": "subLocator",
+        "paramString": "webdriver.Locator"
+      }
+    ],
     "returns": {
       "tagDef": {
         "name": "returns",
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "which resolves to whether the element is present on the page.",
-      "startingLine": 638,
+      "startingLine": 642,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -970,7 +1096,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L634"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L636"
   },
   {
     "description": "Get the element locator used to create this element finder.",
@@ -982,11 +1108,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "An element locator.",
-      "startingLine": 647,
+      "startingLine": 651,
       "typeExpression": "webdriver.Locator",
       "type": {
         "type": "NameExpression",
@@ -997,7 +1126,7 @@
       ]
     },
     "returnString": "webdriver.Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L646"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L650"
   },
   {
     "description": "Returns the WebElement represented by this ElementFinder. \nThrows the WebDriver error if the element doesn't exist.\nIf index is null, it makes sure that there is only one underlying\nWebElement described by the chain of locators and issues a warning \notherwise. If index is not null, it retrieves the WebElement specified by \nthe index.",
@@ -1010,11 +1139,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 667,
+      "startingLine": 671,
       "typeExpression": "webdriver.WebElement",
       "type": {
         "type": "NameExpression",
@@ -1025,7 +1157,7 @@
       ]
     },
     "returnString": "[webdriver.WebElement]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L654"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L658"
   },
   {
     "description": "Evaluates the input as if it were on the scope of the current element.",
@@ -1037,12 +1169,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 708,
+        "startingLine": 712,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1061,11 +1196,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "which resolves to the evaluated expression. The result will be resolved as in {@link webdriver.WebDriver.executeScript}. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.",
-      "startingLine": 710,
+      "startingLine": 714,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1076,7 +1214,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L707"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L711"
   },
   {
     "description": "Determine if animation is allowed on the current element.",
@@ -1088,12 +1226,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 726,
+        "startingLine": 730,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1112,11 +1253,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "which resolves to whether animation is allowed.",
-      "startingLine": 728,
+      "startingLine": 732,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1127,7 +1271,7 @@
       ]
     },
     "returnString": "[ElementFinder]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L725"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L729"
   },
   {
     "description": "Access the underlying actionResult of ElementFinder. Implementation allows\nElementFinder to be used as a webdriver.promise.Promise",
@@ -1139,12 +1283,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Function which takes  the value of the underlying actionResult.",
-        "startingLine": 741,
+        "startingLine": 745,
         "typeExpression": "function(webdriver.promise.Promise)",
         "type": {
           "type": "FunctionType",
@@ -1168,11 +1315,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "Promise which contains the results of  evaluating fn.",
-      "startingLine": 744,
+      "startingLine": 748,
       "typeExpression": "webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1183,7 +1333,7 @@
       ]
     },
     "returnString": "webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L739"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L743"
   },
   {
     "description": "Webdriver rely on this function to be present on Promises, so adding\nthis dummy function as we inherited from webdriver.promise.Promise, but\nthis function is irrelevant to our usage",
@@ -1195,11 +1345,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "Always false as ElementFinder is never in pending state.",
-      "startingLine": 760,
+      "startingLine": 764,
       "typeExpression": "boolean",
       "type": {
         "type": "NameExpression",
@@ -1210,7 +1363,7 @@
       ]
     },
     "returnString": "boolean",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L756"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L760"
   },
   {
     "alias": "browser",
@@ -1224,12 +1377,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 781,
+        "startingLine": 785,
         "typeExpression": "webdriver.WebDriver",
         "type": {
           "type": "NameExpression",
@@ -1246,12 +1402,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "A base URL to run get requests against.",
-        "startingLine": 782,
+        "startingLine": 786,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -1270,12 +1429,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Selector element that has an ng-app in scope.",
-        "startingLine": 783,
+        "startingLine": 787,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -1291,7 +1453,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L778"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L782"
   },
   {
     "description": "Instruct webdriver to wait until Angular has finished rendering and has\nno outstanding $http calls before continuing.",
@@ -1303,11 +1465,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to the scripts return value.",
-      "startingLine": 899,
+      "startingLine": 905,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1319,7 +1484,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L896"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L902"
   },
   {
     "description": "Waits for Angular to finish rendering before searching for elements.",
@@ -1331,11 +1496,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 937,
+      "startingLine": 943,
       "typeExpression": "!webdriver.WebElement",
       "type": {
         "type": "NameExpression",
@@ -1347,7 +1515,7 @@
       ]
     },
     "returnString": "&#33;[webdriver.WebElement]",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L935"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L941"
   },
   {
     "description": "Waits for Angular to finish rendering before searching for elements.",
@@ -1359,11 +1527,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved to an array of the located [webdriver.WebElement]s.",
-      "startingLine": 946,
+      "startingLine": 952,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1375,7 +1546,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L944"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L950"
   },
   {
     "description": "Tests if an element is present on the page.",
@@ -1387,11 +1558,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to whether the element is present on the page.",
-      "startingLine": 956,
+      "startingLine": 962,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1403,7 +1577,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L954"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L960"
   },
   {
     "description": "Add a module to load before Angular whenever Protractor.get is called.\nModules will be registered after existing modules already on the page,\nso any module registered here will override preexisting modules with the same\nname.",
@@ -1415,12 +1589,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the module to load or override.",
-        "startingLine": 971,
+        "startingLine": 977,
         "typeExpression": "!string",
         "type": {
           "type": "NameExpression",
@@ -1438,12 +1615,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The JavaScript to load the module.",
-        "startingLine": 972,
+        "startingLine": 978,
         "typeExpression": "!string|Function",
         "type": {
           "type": "TypeUnion",
@@ -1471,12 +1651,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Any additional arguments will be provided to the script and may be referenced using the `arguments` object.",
-        "startingLine": 973,
+        "startingLine": 979,
         "typeExpression": "...*",
         "type": {
           "type": "AllLiteral",
@@ -1490,14 +1673,14 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L966"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L972"
   },
   {
     "description": "Clear the list of registered mock modules.",
     "fileName": "protractor",
     "name": "Protractor.prototype.clearMockModules",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L987"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L993"
   },
   {
     "description": "Remove a registered mock module.",
@@ -1509,12 +1692,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the module to remove.",
-        "startingLine": 995,
+        "startingLine": 1002,
         "typeExpression": "!string",
         "type": {
           "type": "NameExpression",
@@ -1529,7 +1715,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L994"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1001"
   },
   {
     "description": "See webdriver.WebDriver.get\n\nNavigate to the given destination and loads mock modules before\nAngular. Assumes that the page being loaded uses Angular.\nIf you need to access a page which does not have Angular on load, use\nthe wrapped webdriver directly.",
@@ -1541,12 +1727,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Destination URL.",
-        "startingLine": 1013,
+        "startingLine": 1036,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1563,12 +1752,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Number of milliseconds to wait for Angular to start.",
-        "startingLine": 1014,
+        "startingLine": 1037,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -1584,7 +1776,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1006"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1029"
   },
   {
     "description": "See webdriver.WebDriver.refresh\n\nMakes a full reload of the current page and loads mock modules before\nAngular. Assumes that the page being loaded uses Angular.\nIf you need to access a page which does not have Angular on load, use\nthe wrapped webdriver directly.",
@@ -1596,12 +1788,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Number of seconds to wait for Angular to start.",
-        "startingLine": 1095,
+        "startingLine": 1119,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -1617,14 +1812,14 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1088"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1112"
   },
   {
     "description": "Mixin navigation methods back into the navigation object so that\nthey are invoked as before, i.e. driver.navigate().refresh()",
     "fileName": "protractor",
     "name": "Protractor.prototype.navigate",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1111"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1135"
   },
   {
     "description": "Browse to another page using in-page navigation.",
@@ -1636,12 +1831,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "In page URL using the same syntax as $location.url()",
-        "startingLine": 1123,
+        "startingLine": 1147,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1660,11 +1858,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "returns",
       "description": "A promise that will resolve once page has been changed.",
-      "startingLine": 1124,
+      "startingLine": 1148,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1676,14 +1877,14 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1121"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1145"
   },
   {
     "description": "Returns the current absolute url from AngularJS.",
     "fileName": "protractor",
     "name": "Protractor.prototype.getLocationAbsUrl",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1139"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1163"
   },
   {
     "description": "Pauses the test and injects some helper functions into the browser, so that\ndebugging may be done in the browser console.\n\nThis should be used under node in debug mode, i.e. with\nprotractor debug <configuration.js>",
@@ -1691,7 +1892,7 @@
     "fileName": "protractor",
     "name": "Protractor.prototype.debugger",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1147"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1171"
   },
   {
     "description": "Beta (unstable) pause function for debugging webdriver tests. Use\nbrowser.pause() in your test to enter the protractor debugger from that\npoint in the control flow.\nDoes not require changes to the command line (no need to add 'debug').",
@@ -1703,12 +1904,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Optional port to use for the debugging process",
-        "startingLine": 1178,
+        "startingLine": 1202,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -1724,7 +1928,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1173"
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/protractor.js#L1197"
   },
   {
     "alias": "by",
@@ -1744,7 +1948,7 @@
   {
     "alias": "by.addLocator(locatorName, functionOrScript)",
     "description": "Add a locator to this instance of ProtractorBy. This locator can then be\nused with element(by.locatorName(args)).",
-    "example": "// Add the custom locator.\nby.addLocator('buttonTextSimple', function(buttonText, opt_parentElement) {\n  // This function will be serialized as a string and will execute in the\n  // browser. The first argument is the text for the button. The second\n  // argument is the parent element, if any.\n  var using = opt_parentElement || document,\n  buttons = using.querySelectorAll('button');\n\n  // Return an array of buttons with the text.\n  return Array.prototype.filter.call(buttons, function(button) {\n    return button.textContent === buttonText;\n  });\n});\n\n// Use the custom locator.\nelement(by.buttonTextSimple('Go!')).click();",
+    "example": "// Add the custom locator.\nby.addLocator('buttonTextSimple',\n    function(buttonText, opt_parentElement, opt_rootSelector) {\n  // This function will be serialized as a string and will execute in the\n  // browser. The first argument is the text for the button. The second\n  // argument is the parent element, if any.\n  var using = opt_parentElement || document.querySelector(opt_rootSelector),\n  buttons = using.querySelectorAll('button');\n\n  // Return an array of buttons with the text.\n  return Array.prototype.filter.call(buttons, function(button) {\n    return button.textContent === buttonText;\n  });\n});\n\n// Use the custom locator.\nelement(by.buttonTextSimple('Go!')).click();",
     "fileName": "locators",
     "htmlView": "&lt;button ng-click=&quot;doAddition()&quot;&gt;Go!&lt;/button&gt;",
     "name": "ProtractorBy.prototype.addLocator",
@@ -1754,12 +1958,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the new locator.",
-        "startingLine": 48,
+        "startingLine": 49,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1776,12 +1983,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
-        "description": "A script to be run in the context of the browser. This script will be passed an array of arguments that contains any args passed into the locator followed by the element scoping the search. It should return an array of elements.",
-        "startingLine": 49,
+        "description": "A script to be run in the context of the browser. This script will be passed an array of arguments that contains any args passed into the locator followed by the element scoping the search and the css selector for the root angular element. It should return an array of elements.",
+        "startingLine": 50,
         "typeExpression": "Function|string",
         "type": {
           "type": "TypeUnion",
@@ -1820,12 +2030,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 90,
+        "startingLine": 93,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1844,11 +2057,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 91,
+      "startingLine": 94,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -1891,7 +2107,7 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L77",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L80",
     "view": "<span>{{person.name}}</span>\n<span ng-bind=\"person.email\"></span>"
   },
   {
@@ -1906,12 +2122,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 122,
+        "startingLine": 125,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1930,11 +2149,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 123,
+      "startingLine": 126,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -1977,7 +2199,7 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L107",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L110",
     "view": "<span>{{ person.name }}</span>\n<span ng-bind=\"person-email\"></span>\n<span>{{person_phone|uppercase}}</span>"
   },
   {
@@ -1993,12 +2215,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "ng-model expression.",
-        "startingLine": 150,
+        "startingLine": 153,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2012,7 +2237,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L139",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L142",
     "view": "<input type=\"text\" ng-model=\"person.name\"/>"
   },
   {
@@ -2027,12 +2252,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 173,
+        "startingLine": 177,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2051,11 +2279,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 174,
+      "startingLine": 178,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -2098,7 +2329,7 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L165",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L169",
     "view": "<button>Save</button>"
   },
   {
@@ -2113,12 +2344,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 198,
+        "startingLine": 202,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2137,11 +2371,14 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "",
-      "startingLine": 199,
+      "startingLine": 203,
       "typeExpression": "{findElementsOverride: findElementsOverride, toString: Function|string}",
       "type": {
         "type": "RecordType",
@@ -2184,7 +2421,7 @@
       ]
     },
     "returnString": "{findElementsOverride: findElementsOverride, toString: Function&#124;string}",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L190",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L194",
     "view": "<button>Save my file</button>"
   },
   {
@@ -2194,7 +2431,7 @@
     "htmlView": "&lt;div ng-repeat=&quot;cat in pets&quot;&gt;\n  &lt;span&gt;{{cat.name}}&lt;/span&gt;\n  &lt;span&gt;{{cat.age}}&lt;/span&gt;\n&lt;/div&gt;\n\n&lt;div class=&quot;book-img&quot; ng-repeat-start=&quot;book in library&quot;&gt;\n  &lt;span&gt;{{$index}}&lt;/span&gt;\n&lt;/div&gt;\n&lt;div class=&quot;book-info&quot; ng-repeat-end&gt;\n  &lt;h4&gt;{{book.name}}&lt;/h4&gt;\n  &lt;p&gt;{{book.blurb}}&lt;/p&gt;\n&lt;/div&gt;",
     "name": "ProtractorBy.prototype.repeater",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L216",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L220",
     "view": "<div ng-repeat=\"cat in pets\">\n  <span>{{cat.name}}</span>\n  <span>{{cat.age}}</span>\n</div>\n\n<div class=\"book-img\" ng-repeat-start=\"book in library\">\n  <span>{{$index}}</span>\n</div>\n<div class=\"book-info\" ng-repeat-end>\n  <h4>{{book.name}}</h4>\n  <p>{{book.blurb}}</p>\n</div>"
   },
   {
@@ -2204,7 +2441,7 @@
     "htmlView": "&lt;ul&gt;\n  &lt;li class=&quot;pet&quot;&gt;Dog&lt;/li&gt;\n  &lt;li class=&quot;pet&quot;&gt;Cat&lt;/li&gt;\n&lt;/ul&gt;",
     "name": "ProtractorBy.prototype.cssContainingText",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L331",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L335",
     "view": "<ul>\n  <li class=\"pet\">Dog</li>\n  <li class=\"pet\">Cat</li>\n</ul>"
   },
   {
@@ -2220,12 +2457,15 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "ng-options expression.",
-        "startingLine": 372,
+        "startingLine": 376,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2239,7 +2479,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L357",
+    "sourceLink": "https://github.com/angular/protractor/blob/master/lib/locators.js#L361",
     "view": "<select ng-model=\"color\" ng-options=\"c for c in colors\">\n  <option value=\"0\" selected=\"selected\">red</option>\n  <option value=\"1\">green</option>\n</select>"
   },
   {
@@ -2252,8 +2492,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Either a known session or a promise that will be resolved to a session.",
@@ -2285,8 +2528,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The executor to use when sending commands to the browser.",
@@ -2308,8 +2554,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The flow to schedule commands through. Defaults to the active flow object.",
@@ -2341,8 +2590,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Command executor to use when querying for session details.",
@@ -2364,8 +2616,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "ID of the session to attach to.",
@@ -2388,7 +2643,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A new client for the specified session.",
@@ -2416,8 +2674,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The executor to create the new session with.",
@@ -2439,8 +2700,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The desired capabilities for the new session.",
@@ -2464,7 +2728,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The driver for the newly created session.",
@@ -2492,7 +2759,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The control flow used by this instance.",
@@ -2520,8 +2790,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The command to schedule.",
@@ -2543,8 +2816,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "A description of the command for debugging.",
@@ -2567,7 +2843,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the command result.",
@@ -2604,7 +2883,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise for this client's session.",
@@ -2642,7 +2924,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve with the this instance's capabilities.",
@@ -2680,7 +2965,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the command has completed.",
@@ -2718,7 +3006,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A new action sequence for this instance.",
@@ -2746,8 +3037,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The script to execute.",
@@ -2779,8 +3073,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The arguments to pass to the script.",
@@ -2803,7 +3100,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to the scripts return value.",
@@ -2840,8 +3140,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The script to execute.",
@@ -2873,8 +3176,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The arguments to pass to the script.",
@@ -2897,7 +3203,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to the scripts return value.",
@@ -2934,8 +3243,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The function to execute.",
@@ -2980,8 +3292,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The object in whose scope to execute the function.",
@@ -3004,8 +3319,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Any arguments to pass to the function.",
@@ -3028,7 +3346,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved' with the function's result.",
@@ -3065,8 +3386,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The function to evaluate as a wait condition.",
@@ -3091,8 +3415,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "How long to wait for the condition to be true.",
@@ -3113,8 +3440,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "An optional message to use if the wait times out.",
@@ -3139,7 +3469,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the wait condition has been satisfied.",
@@ -3167,8 +3500,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The amount of time, in milliseconds, to sleep.",
@@ -3191,7 +3527,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the sleep has finished.",
@@ -3229,7 +3568,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the current window handle.",
@@ -3266,7 +3608,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with an array of window handles.",
@@ -3313,7 +3658,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the current page source.",
@@ -3350,7 +3698,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when this command has completed.",
@@ -3388,8 +3739,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The fully qualified URL to open.",
@@ -3412,7 +3766,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the document has finished loading.",
@@ -3450,7 +3807,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the current URL.",
@@ -3487,7 +3847,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the current page's title.",
@@ -3524,8 +3887,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The locator to use.",
@@ -3569,7 +3935,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A WebElement that can be used to issue commands against the located element. If the element is not found, the element will be invalidated and all scheduled commands aborted.",
@@ -3597,8 +3966,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The locator to use, or the actual DOM element to be located by the server.",
@@ -3642,7 +4014,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve with whether the element is present on the page.",
@@ -3679,8 +4054,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The locator strategy to use when searching for the element.",
@@ -3719,7 +4097,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to an array of WebElements.",
@@ -3767,7 +4148,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved to the screenshot as a base-64 encoded PNG.",
@@ -3804,7 +4188,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The options interface for this instance.",
@@ -3832,7 +4219,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The navigation interface for this instance.",
@@ -3860,7 +4250,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The target locator interface for this instance.",
@@ -3888,8 +4281,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent driver.",
@@ -3920,8 +4316,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The URL to navigate to.",
@@ -3944,7 +4343,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the URL has been loaded.",
@@ -3982,7 +4384,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the navigation event has completed.",
@@ -4020,7 +4425,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the navigation event has completed.",
@@ -4058,7 +4466,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the navigation event has completed.",
@@ -4096,8 +4507,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent driver.",
@@ -4128,8 +4542,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The cookie name.",
@@ -4150,8 +4567,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The cookie value.",
@@ -4172,8 +4592,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The cookie path.",
@@ -4196,8 +4619,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The cookie domain.",
@@ -4220,8 +4646,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Whether the cookie is secure.",
@@ -4244,8 +4673,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "When the cookie expires. If specified as a number, should be in milliseconds since midnight, January 1, 1970 UTC.",
@@ -4281,7 +4713,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the cookie has been added to the page.",
@@ -4319,7 +4754,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when all cookies have been deleted.",
@@ -4357,8 +4795,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the cookie to delete.",
@@ -4381,7 +4822,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the cookie has been deleted.",
@@ -4419,7 +4863,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the cookies visible to the current page.",
@@ -4466,8 +4913,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the cookie to retrieve.",
@@ -4490,7 +4940,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the named cookie, or {@code null} if there is no such cookie.",
@@ -4528,7 +4981,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The interface for managing driver logs.",
@@ -4556,7 +5012,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The interface for managing driver timeouts.",
@@ -4584,7 +5043,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The interface for managing the current window.",
@@ -4612,8 +5074,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent driver.",
@@ -4644,8 +5109,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The amount of time to wait, in milliseconds.",
@@ -4668,7 +5136,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the implicit wait timeout has been set.",
@@ -4706,8 +5177,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The amount of time to wait, in milliseconds.",
@@ -4730,7 +5204,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the script timeout has been set.",
@@ -4768,8 +5245,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The amount of time to wait, in milliseconds.",
@@ -4792,7 +5272,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the timeout has been set.",
@@ -4830,8 +5313,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent driver.",
@@ -4862,7 +5348,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the window's position in the form of a {x:number, y:number} object literal.",
@@ -4922,8 +5411,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The desired horizontal position, relative to the left side of the screen.",
@@ -4944,8 +5436,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The desired vertical position, relative to the top of the of the screen.",
@@ -4968,7 +5463,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the command has completed.",
@@ -5006,7 +5504,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the window's size in the form of a {width:number, height:number} object literal.",
@@ -5066,8 +5567,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The desired window width.",
@@ -5088,8 +5592,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The desired window height.",
@@ -5112,7 +5619,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the command has completed.",
@@ -5150,7 +5660,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the command has completed.",
@@ -5188,8 +5701,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent driver.",
@@ -5220,8 +5736,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The desired log type.",
@@ -5245,7 +5764,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to a list of log entries for the specified type.",
@@ -5293,7 +5815,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to a list of available log types.",
@@ -5341,8 +5866,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent driver.",
@@ -5373,7 +5901,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The active element.",
@@ -5401,7 +5932,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the driver has changed focus to the default content.",
@@ -5439,8 +5973,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The frame locator.",
@@ -5473,7 +6010,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the driver has changed focus to the specified frame.",
@@ -5511,8 +6051,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name or window handle of the window to switch focus to.",
@@ -5535,7 +6078,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the driver has changed focus to the specified window.",
@@ -5573,7 +6119,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The open alert.",
@@ -5601,8 +6150,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The key sequence to concatenate.",
@@ -5626,7 +6178,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The null-terminated key sequence.",
@@ -5654,8 +6209,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The parent WebDriver instance for this element.",
@@ -5677,8 +6235,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Either the opaque ID for the underlying DOM element assigned by the server, or a promise that will resolve to that ID or another WebElement.",
@@ -5719,8 +6280,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "A WebElement.",
@@ -5742,8 +6306,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "A WebElement.",
@@ -5767,7 +6334,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved to whether the two WebElements are equal.",
@@ -5804,7 +6374,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The parent driver for this instance.",
@@ -5832,7 +6405,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that resolves to this element's JSON representation as defined by the WebDriver wire protocol.",
@@ -5869,8 +6445,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The locator strategy to use when searching for the element.",
@@ -5909,7 +6488,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A WebElement that can be used to issue commands against the located element. If the element is not found, the element will be invalidated and all scheduled commands aborted.",
@@ -5937,8 +6519,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The locator strategy to use when searching for the element.",
@@ -5977,7 +6562,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with whether an element could be located on the page.",
@@ -6014,8 +6602,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The locator strategy to use when searching for the elements.",
@@ -6054,7 +6645,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will resolve to an array of WebElements.",
@@ -6102,7 +6696,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the click command has completed.",
@@ -6140,8 +6737,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The sequence of keys to type. All arguments will be joined into a single sequence (var_args is permitted for convenience).",
@@ -6165,7 +6765,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when all keys have been typed.",
@@ -6203,7 +6806,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the element's tag name.",
@@ -6240,8 +6846,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the CSS style property to look up.",
@@ -6264,7 +6873,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the requested CSS value.",
@@ -6301,8 +6913,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The name of the attribute to query.",
@@ -6325,7 +6940,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the attribute's value. The returned value will always be either a string or null.",
@@ -6363,7 +6981,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the element's visible text.",
@@ -6400,7 +7021,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the element's size as a {@code {width:number, height:number}} object.",
@@ -6460,7 +7084,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved to the element's location as a {@code {x:number, y:number}} object.",
@@ -6520,7 +7147,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with whether this element is currently enabled.",
@@ -6557,7 +7187,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with whether this element is currently selected.",
@@ -6594,7 +7227,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the form has been submitted.",
@@ -6632,7 +7268,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when the element has been cleared.",
@@ -6670,7 +7309,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with whether this element is currently visible on the page.",
@@ -6707,7 +7349,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the element's outer HTML.",
@@ -6744,7 +7389,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved with the element's inner HTML.",
@@ -6782,8 +7430,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The driver controlling the browser this alert is attached to.",
@@ -6805,8 +7456,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "Either the message text displayed with this alert, or a promise that will be resolved to said text.",
@@ -6856,7 +7510,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved to the text displayed with this alert.",
@@ -6893,7 +7550,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when this command has completed.",
@@ -6931,7 +7591,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when this command has completed.",
@@ -6969,8 +7632,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The text to set.",
@@ -6993,7 +7659,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "A promise that will be resolved when this command has completed.",
@@ -7032,8 +7701,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The error message.",
@@ -7054,8 +7726,11 @@
           "name": "param",
           "multi": true,
           "docProperty": "params",
-          "canHaveName": true,
-          "canHaveType": true
+          "transforms": [
+            null,
+            null,
+            null
+          ]
         },
         "tagName": "param",
         "description": "The alert handle.",
@@ -7086,7 +7761,10 @@
         "aliases": [
           "return"
         ],
-        "canHaveType": true
+        "transforms": [
+          null,
+          null
+        ]
       },
       "tagName": "return",
       "description": "The open alert.",
