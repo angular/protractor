@@ -7,7 +7,7 @@ Protractor [![Build Status](https://travis-ci.org/angular/protractor.png?branch=
 Getting Started
 ---------------
 
-The Protractor documentation for users is located in the [protractor/docs](https://github.com/angular/protractor/tree/master/docs) folder.
+The Protractor documentation for users is located in the  [protractor/docs](https://github.com/angular/protractor/tree/master/docs) folder.
 
 To get set up and running  quickly:
  - The [Protractor Website](http://angular.github.io/protractor)
