@@ -3,15 +3,19 @@
   <span>{{allinfo.initial}}</span>
   <span>{{allinfo.name}}</span>
 </li></ul>
-<ul><li ng-repeat="baz in days | filter:'T'">{{baz.initial}}</li></ul>
-<ul><li data-ng-repeat="day in days">{{day.initial}}</li></ul>
-<ul><li ng:repeat="bar in days">{{bar.initial}}</li></ul>
-<ul><li ng_repeat="foo in days">{{foo.initial}}</li></ul>
-<ul><li x-ng-repeat="qux in days">{{qux.initial}}</li></ul>
+<ul><li ng-repeat="baz in days | filter:'T'">
+  <span>{{baz.initial}}</span>
+</li></ul>
+<ul><li data-ng-repeat="day in days">
+  <span>{{day.initial}}</span>
+</li></ul>
+<ul><li ng:repeat="bar in days">
+  <span>{{bar.initial}}</span>
+</li></ul>
 <div ng-repeat-start="bloop in days">
-  {{bloop.initial}}
+  <span>{{bloop.initial}}</span>
 </div>
 <span>-</span>
 <div ng-repeat-end>
-  {{bloop.name}}
+  <span>{{bloop.name}}</span>
 </div>
