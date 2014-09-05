@@ -14,6 +14,7 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
  - Make sure [Travis](https://travis-ci.org/angular/protractor/builds) is passing. Note that there is an 'allowed failures' section in Travis - make sure that all failures are known.
 
  - Make sure `npm test` is passing (this runs more that just what is run on Travis)
+   - Run `npm test` against AngularJS 1.2.x. Do this by starting the testapp with the flag `--ngversion 1.2.9`.
 
  - Make sure .gitignore and .npmignore are updated with any new files that need to be ignored.
 
