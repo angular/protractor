@@ -2,6 +2,8 @@
 
 var glob = require('glob').sync;
 var spawn = require('child_process').spawn;
+var isWindows = process.platform.indexOf('win') === 0;
+var path = require('path');
 
 var scripts = [
   'node lib/cli.js spec/basicConf.js',
@@ -23,16 +25,21 @@ var scripts = [
 ];
 
 scripts.push(
-    'node node_modules/.bin/minijasminenode ' +
-    glob('spec/unit/*.js').join(' ') + ' ' +
-    glob('docgen/spec/*.js').join(' '));
+  (isWindows? 'node_modules/.bin/minijasminenode.cmd' : 'node node_modules/.bin/minijasminenode') + ' ' +
+  glob('spec/unit/*.js').join(' ') + ' ' +
+  glob('docgen/spec/*.js').join(' ')
+);
 
 var failed = false;
 
 (function runTests(i) {
   if (i < scripts.length) {
-    console.log('node ' + scripts[i]);
-    var args = scripts[i].split(/\s/);
+    var command = scripts[i];
+    if (isWindows) {
+      command = path.normalize(command);
+    }
+    console.log('node ' + command);
+    var args = command.split(/\s/);
 
     var test = spawn(args[0], args.slice(1), {stdio: 'inherit'});
     test.on('error', function(err) {
