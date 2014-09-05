@@ -91,6 +91,34 @@ describe('ElementFinder', function() {
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
   });
 
+  it('should allow handling errors', function() {
+    browser.get('index.html#/form');
+    var elmFinder = $('.nopenopenope').getText().then(function(success) {
+      // This should throw an error. Fail.
+      expect(true).toEqual(false);
+    }, function(err) {
+      expect(true).toEqual(true);
+    });
+  });
+
+  it('should allow handling chained errors', function() {
+    browser.get('index.html#/form');
+    var elmFinder = $('.nopenopenope').$('furthernope').getText().then(
+      function(success) {
+        // This should throw an error. Fail.
+        expect(true).toEqual(false);
+      }, function(err) {
+        expect(true).toEqual(true);
+      });
+  });
+
+  it('isPresent() should not raise error on chained finders', function() {
+    browser.get('index.html#/form');
+    var elmFinder = $('.nopenopenope').element(by.binding('greet'));
+
+    expect(elmFinder.isPresent()).toBe(false);
+  });
+
   it('should export an allowAnimations helper', function() {
     browser.get('index.html#/animation');
     var animationTop = element(by.id('animationTop'));
