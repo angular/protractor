@@ -34,9 +34,7 @@
     "cucumber": "~0.3.3",
     "express": "~3.3.4",
     "lodash": "~2.4.1",
-    "rimraf": "~2.2.6",
-    "dgeni": "~0.2.2",
-    "dgeni-packages": "~0.6.0"
+    "rimraf": "~2.2.6"
   },
   "repository": {
     "type": "git",
@@ -53,7 +51,7 @@
     "start": "testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "webdriverVersions": {
     "selenium": "2.42.2",
     "chromedriver": "2.10",

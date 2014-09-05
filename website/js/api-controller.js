@@ -3,25 +3,47 @@
    * Controller for the protractor api view.
    *
    * @constructor
+   * @ngInject
+   * @param $anchorScroll anchorScroll service.
    * @param $http HTTP service.
    * @param $location Location service.
+   * @param $route Route service.
    * @param $sce Strict Contextual Escaping service.
    * @param $scope Angular scope.
    */
-  var ApiCtrl = function($http, $location, $sce, $scope) {
+  var ApiCtrl = function($anchorScroll, $http, $location, $route, $sce, $scope) {
     this.$http = $http;
-    this.$location = $location;
+    this.$route = $route;
     this.$scope = $scope;
 
     this.loadTableOfContents();
 
     $scope.items = [];
     $scope.isMenuVisible = false;
-    $scope.currentItem = {
+    var defaultItem = {
       title: 'Protractor API Docs',
       description: 'Welcome to the Protractor API docs page. These pages ' +
-          'contain the Protractor reference materials.'
+      'contain the Protractor reference materials.'
     };
+    $scope.currentItem = defaultItem;
+
+    // Watch for location changes to show the correct item.
+    $scope.$on('$locationChangeSuccess', function() {
+      // Not going to api? ignore event.
+      if (!$location.url().match(/^\/api/)) {
+        return;
+      }
+
+      var view = $route.current.params.view,
+          item = _.findWhere($scope.items, {name: view});
+
+      if (view && item) {
+        $scope.showElement(item);
+      } else {
+        // No view? Show default item.
+        $scope.currentItem = defaultItem;
+      }
+    });
 
     $scope.toggleMenuLabel = function() {
       return $scope.isMenuVisible ? 'Hide list' : 'Show list';
@@ -35,6 +57,9 @@
       // Update the query string with the view name.
       $location.search('view', item.name);
       $scope.currentItem = item;
+
+      // Scroll to the top.
+      $anchorScroll();
     };
 
     /**
@@ -77,7 +102,7 @@
       $scope.version = data.version;
 
       // Show the view if is defined in the query string.
-      var view = self.$location.search().view;
+      var view = self.$route.current.params.view;
       if (view) {
         items.forEach(function(item) {
           if (view === item.name) {

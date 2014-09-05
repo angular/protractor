@@ -27,12 +27,13 @@ var filterDocs = function(docs) {
   });
 };
 
-module.exports = {
-  name: 'filter-jsdoc',
-  description: 'Filter functions that will not go into the documentation.',
-  runAfter: ['extracting-tags'],
-  runBefore: ['tags-extracted'],
-  init: function(config) {
-  },
-  process: filterDocs
+/**
+ * Filter functions that will not go into the documentation.
+ */
+module.exports = function filterJsDocs() {
+  return {
+    $runAfter: ['extracting-tags'],
+    $runBefore: ['tags-extracted'],
+    $process: filterDocs
+  }
 };

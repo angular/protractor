@@ -1,7 +1,6 @@
 {
-  "name": "protractor",
+  "name": "protractor-site",
   "version": "1.0.0",
-  "homepage": "https://github.com/andresdominguez/protractor",
   "authors": [
     "andres <code@karateca.com>"
   ],

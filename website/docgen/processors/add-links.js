@@ -8,6 +8,17 @@ var templateMapping = {
 };
 
 /**
+ * A lookup table with all the types in the parsed files.
+ * @type {Object.<string, Array.<Object>>}
+ */
+var typeTable;
+
+/**
+ * The hash used to generate the links to the source code.
+ */
+var linksHash = 'master';
+
+/**
  * Add a link to the source code.
  * @param {!Object} doc Current document.
  */
@@ -93,44 +104,33 @@ var getTypeString = function(param) {
 };
 
 /**
- * A lookup table with all the types in the parsed files.
- * @type {Object.<string, Array.<Object>>}
+ * Add links to the external documents
  */
-var typeTable;
+module.exports = function addLinks() {
+  return {
+    $runAfter: ['extracting-tags'],
+    $runBefore: ['tags-extracted'],
+    $process: function(docs) {
+      typeTable = _.groupBy(docs, 'name');
 
-/**
- * The hash used to generate the links to the source code.
- */
-var linksHash;
+      docs.forEach(function(doc) {
+        addLinkToSourceCode(doc);
+        doc.description = addLinkToLinkAnnotation(doc.description);
 
-module.exports = {
-  name: 'add-links',
-  description: 'Add links to the external documents',
-  runAfter: ['extracting-tags'],
-  runBefore: ['tags-extracted'],
-  init: function(config) {
-    linksHash = config.linksHash;
-  },
-  process: function(docs) {
-    typeTable = _.groupBy(docs, 'name');
+        // Add links for the param types.
+        _.each(doc.params, function(param) {
+          param.paramString = getTypeString(param);
+        });
 
-    docs.forEach(function(doc) {
-      addLinkToSourceCode(doc);
-      doc.description = addLinkToLinkAnnotation(doc.description);
-
-      // Add links for the param types.
-      _.each(doc.params, function(param) {
-        param.paramString = getTypeString(param);
+        // Add links for the return types.
+        var returns = doc.returns;
+        if (returns) {
+          doc.returnString = getTypeString(returns);
+          returns.description = addLinkToLinkAnnotation(returns.description);
+        } else {
+          doc.returnString = '';
+        }
       });
-
-      // Add links for the return types.
-      var returns = doc.returns;
-      if (returns) {
-        doc.returnString = getTypeString(returns);
-        returns.description = addLinkToLinkAnnotation(returns.description);
-      } else {
-        doc.returnString = '';
-      }
-    });
+    }
   }
 };

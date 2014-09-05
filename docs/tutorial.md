@@ -239,7 +239,7 @@ Since the Calculator reports the oldest result at the bottom, the oldest additio
 
 Fix the test so that it correctly expects the first history entry to contain the text "3 + 4".
 
-ElementArrayFinder also has methods `each`, `map`, `filter`, and `reduce` which are analogous to JavaScript Array methods. [Read the API for more details](/docs/api.md#api-elementarrayfinder).
+ElementArrayFinder also has methods `each`, `map`, `filter`, and `reduce` which are analogous to JavaScript Array methods. [Read the API for more details](#/api?view=ElementArrayFinder).
 
 Where to go next
 ----------------

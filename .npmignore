@@ -3,8 +3,8 @@ spec/
 stress/
 selenium/
 debugging/
-testapp/inbrowsertest
-docgen/
+testapp/inbrowsertest/
+website/
 
 .npmignore
 .travis.yml
