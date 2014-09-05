@@ -11,29 +11,6 @@ var optimist = require('optimist');
 var childProcess = require('child_process');
 
 /**
- * Load the NPM config and return it in a promise.
- * @return {Promise<object>}
- */
-var loadNpmConf = function() {
-  if (loadNpmConf.promise) {
-    return loadNpmConf.promise;
-  }
-
-  var q = require('q');
-  var npmconf = require('npmconf');
-
-  var deferred = q.defer();
-  npmconf.load(function(err, conf){
-    if (err) {
-      deferred.reject(err);
-    } else {
-      deferred.resolve(conf);
-    }
-  });
-  return loadNpmConf.promise = deferred.promise;
-};
-
-/**
  * Download the requested binaries to node_modules/protractor/selenium/
  */
 var SELENIUM_DIR = path.resolve(__dirname, '../selenium');
@@ -109,6 +86,7 @@ var cli = optimist.
     describe('out_dir', 'Location to output/expect ').
     default('out_dir', SELENIUM_DIR).
     describe('seleniumPort', 'Optional port for the selenium standalone server').
+    describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').default('ignore_ssl', false).
     describe('proxy', 'proxy to use for the install or update command');
 
 for (bin in binaries) {
@@ -146,38 +124,36 @@ var resolveProxy = function(fileUrl) {
  * big dependency cost. It's required for now to follow redirects.
  */
 var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
-  return loadNpmConf().then(function(npmconf){  // load npm config first
-    console.log('downloading ' + fileUrl + '...');
-    var filePath = path.join(outputDir, fileName);
-    var file = fs.createWriteStream(filePath);
-    var strictSSL = npmconf.get('strict-ssl');
-    
-    if (!strictSSL) {
-      console.log('Ignoring SSL certificate because your npm strict-ssl config is: ' + strictSSL);
-    }
+  console.log('downloading ' + fileUrl + '...');
+  var filePath = path.join(outputDir, fileName);
+  var file = fs.createWriteStream(filePath);
+  var ignoreSSL = argv.ignore_ssl;
 
-    var options = {
-      url: fileUrl,
-      strictSSL: strictSSL,
-      proxy: resolveProxy(fileUrl)
+  if (ignoreSSL) {
+    console.log('Ignoring SSL certificate');
+  }
+
+  var options = {
+    url: fileUrl,
+    strictSSL: !ignoreSSL,
+    proxy: resolveProxy(fileUrl)
+  }
+  request(options, function (error, response) {
+    if (error) {
+      fs.unlink(filePath);
+      console.error('Error: Got error ' + error + ' from ' + fileUrl);
+      return;
     }
-    request(options, function (error, response) {
-      if (error) {
-        fs.unlink(filePath);
-        console.error('Error: Got error ' + error + ' from ' + fileUrl);
-        return;
-      }
-      if (response.statusCode !== 200) {
-        fs.unlink(filePath);
-        console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
-        return;
-      }
-      console.log(fileName + ' downloaded to ' + filePath);
-      if (callback) {
-        callback(filePath);
-      }
-    }).pipe(file);
-  });
+    if (response.statusCode !== 200) {
+      fs.unlink(filePath);
+      console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
+      return;
+    }
+    console.log(fileName + ' downloaded to ' + filePath);
+    if (callback) {
+      callback(filePath);
+    }
+  }).pipe(file);
 };
 
 /**
