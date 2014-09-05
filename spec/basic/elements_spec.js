@@ -278,6 +278,13 @@ describe('ElementFinder', function() {
     expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
   });
 
+  it('isPresent() shouldn\'t raise error on chained finders', function() {
+    browser.get('index.html#/form');
+    var elmFinder = $('.nopenopenope').element(by.binding('greet'));
+
+    expect(elmFinder.isPresent()).toBe(false);
+  });
+
   it('should export an allowAnimations helper', function() {
     browser.get('index.html#/animation');
     var animationTop = element(by.id('animationTop'));
