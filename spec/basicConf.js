@@ -20,6 +20,11 @@ exports.config = {
 
   baseUrl: env.baseUrl,
 
+  jasmineNodeOpts: {
+    isVerbose: true,
+    realtimeFailure: true
+  },
+
   params: {
     login: {
       user: 'Jane',

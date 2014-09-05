@@ -92,11 +92,11 @@ describe('protractor library', function() {
     it('should get the absolute URL', function() {
       browser.get('index.html');
       expect(browser.getLocationAbsUrl()).
-          toMatch('index.html#/form');
+          toMatch('/form');
 
       element(by.linkText('repeater')).click();
       expect(browser.getLocationAbsUrl()).
-          toMatch('index.html#/repeater');
+          toMatch('/repeater');
     });
 
     it('should navigate to another url with setLocation', function() {
@@ -105,7 +105,7 @@ describe('protractor library', function() {
       browser.setLocation('/repeater');
 
       expect(browser.getLocationAbsUrl()).
-          toMatch('index.html#/repeater');
+          toMatch('/repeater');
     });
   });
 });
