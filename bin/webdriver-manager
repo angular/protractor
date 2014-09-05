@@ -87,10 +87,10 @@ var cli = optimist.
     default('out_dir', SELENIUM_DIR).
     describe('seleniumPort', 'Optional port for the selenium standalone server').
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').default('ignore_ssl', false).
-    describe('proxy', 'proxy to use for the install or update command');
+    describe('proxy', 'Proxy to use for the install or update command');
 
 for (bin in binaries) {
-  cli.describe(bin, 'install or update ' + binaries[bin].name).
+  cli.describe(bin, 'Install or update ' + binaries[bin].name).
   boolean(bin).
   default(bin, binaries[bin].isDefault);
 }
