@@ -25,13 +25,6 @@ var shortVersion = function(version) {
   return version.slice(0, version.lastIndexOf('.'));
 }
 
-/**
- * Add string.endsWith method
- */
-String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
-
 var binaries = {
   standalone: {
     name: 'selenium standalone',
