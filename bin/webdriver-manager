@@ -25,6 +25,13 @@ var shortVersion = function(version) {
   return version.slice(0, version.lastIndexOf('.'));
 }
 
+/**
+ * Add string.endsWith method
+ */
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
 var binaries = {
   standalone: {
     name: 'selenium standalone',
@@ -32,6 +39,9 @@ var binaries = {
     prefix: 'selenium-server-standalone',
     filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
     url: function() {
+      if ("seleniumDownloadUrl" in versions) {
+          return versions.seleniumDownloadUrl;
+      }
       return 'https://selenium-release.storage.googleapis.com/' +
           shortVersion(versions.selenium) + '/' +
           'selenium-server-standalone-' + versions.selenium + '.jar';
@@ -43,6 +53,9 @@ var binaries = {
     prefix: 'chromedriver_',
     filename: 'chromedriver_' + versions.chromedriver + '.zip',
     url: function() {
+      if ("chromeDownloadUrl" in versions) {
+        return versions.chromeDownloadUrl;
+      }
       var urlPrefix = 'https://chromedriver.storage.googleapis.com/' +
           versions.chromedriver + '/chromedriver_';
       if (os.type() == 'Darwin') {
@@ -64,6 +77,9 @@ var binaries = {
     prefix: 'IEDriverServer',
     filename: 'IEDriverServer_' + versions.iedriver + '.zip',
     url: function() {
+      if ("iedriverDownloadUrl" in versions) {
+        return versions.iedriverDownloadUrl;
+      }
       var urlPrefix = 'https://selenium-release.storage.googleapis.com/' +
           shortVersion(versions.iedriver) + '/IEDriverServer';
       if (os.type() == 'Windows_NT') {
@@ -88,8 +104,8 @@ var cli = optimist.
     describe('seleniumPort', 'Optional port for the selenium standalone server').
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
     default('ignore_ssl', false).
-    describe('proxy', 'Proxy to use for the install or update command');
-    describe('hub', 'run as Selenium Grid hub role');
+    describe('proxy', 'Proxy to use for the install or update command').
+    describe('hub', 'Run as Selenium Grid hub role');
 
 for (bin in binaries) {
   cli.describe(bin, 'Install or update ' + binaries[bin].name).
