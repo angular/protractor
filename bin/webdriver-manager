@@ -254,7 +254,7 @@ switch (argv._[0]) {
       args.push('-port', argv.seleniumPort);
     }
     if (argv.hub) {
-        args.push('-role hub')
+        args.push('-role', 'hub');
     } else {
         if (binaries.chrome.exists) {
             args.push('-Dwebdriver.chrome.driver=' +
