@@ -22,14 +22,6 @@ describe('locators', function() {
       expect(element(by.binding('greeting'))).toHaveText('Hiya');
     });
 
-    it('ElementFinder.then should be equivalent to itself', function() {
-      var elem = element(by.binding('greeting'));
-
-      elem.then(function(elem2) {
-        expect(elem.toWireValue()).toEqual(elem2.toWireValue());
-      });
-    });
-
     it('should find a binding by partial match', function() {
       var greeting = element(by.binding('greet'));
 
