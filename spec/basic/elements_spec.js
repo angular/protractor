@@ -155,6 +155,15 @@ describe('ElementFinder', function() {
     });
     expect(successful).toEqual(false);
   });
+
+  it('then function should be equivalent to itself', function() {
+    browser.get('index.html#/form');
+    var elem = element(by.binding('greeting'));
+
+    elem.then(function(elem2) {
+      expect(elem.toWireValue()).toEqual(elem2.toWireValue());
+    });
+  });
 });
 
 describe('ElementArrayFinder', function() {
