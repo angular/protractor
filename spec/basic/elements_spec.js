@@ -164,6 +164,25 @@ describe('ElementFinder', function() {
       expect(elem.toWireValue()).toEqual(elem2.toWireValue());
     });
   });
+
+  it('should not resolve to itself', function() {
+    browser.get('index.html#/form');
+    var elem1 = element(by.binding('greeting'));
+    elem1.then(function(result) {
+      expect(result === elem1).toBe(false);
+    });
+  });
+
+  it('should be returned from a helper without infinite loops', function() {
+    browser.get('index.html#/form');
+    var helperPromise = element(by.binding('greeting')).then(function(result) {
+      return result;
+    });
+
+    helperPromise.then(function(finalResult) {
+      expect(finalResult.getText()).toEqual('Hiya');
+    });
+  });
 });
 
 describe('ElementArrayFinder', function() {
