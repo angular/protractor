@@ -130,7 +130,7 @@ exports.config = {
   // with relative paths will be prepended with this.
   baseUrl: 'http://localhost:9876',
 
-  // Selector for the element housing the angular app - this defaults to
+  // CSS Selector for the element housing the angular app - this defaults to
   // body, but is necessary if ng-app is on a descendant of <body>.
   rootElement: 'body',
 
