@@ -13,7 +13,7 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.36.0",
-    "selenium-webdriver": "2.42.1",
+    "selenium-webdriver": "2.43.4",
     "minijasminenode": "1.1.1",
     "jasminewd": "1.0.4",
     "saucelabs": "~0.1.0",
@@ -53,8 +53,8 @@
   "license": "MIT",
   "version": "1.2.0",
   "webdriverVersions": {
-    "selenium": "2.42.2",
+    "selenium": "2.43.1",
     "chromedriver": "2.10",
-    "iedriver": "2.42.0"
+    "iedriver": "2.43.0"
   }
 }
