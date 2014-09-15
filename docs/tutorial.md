@@ -38,7 +38,7 @@ Open a new command line or terminal window and create a clean folder for testing
 
 Protractor needs two files to run, a **spec file** and a **configuration file**. 
 
-Let's start with a simple test that navigates to an example AngluarJS application and checks its title. We’ll use the Super Calculator application at [http://juliemr.github.io/protractor-demo/](http://juliemr.github.io/protractor-demo/).
+Let's start with a simple test that navigates to an example AngularJS application and checks its title. We’ll use the Super Calculator application at [http://juliemr.github.io/protractor-demo/](http://juliemr.github.io/protractor-demo/).
 
 Copy the following into spec.js:
 
