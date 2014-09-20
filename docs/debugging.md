@@ -104,7 +104,7 @@ try out Protractor commands without starting up the entire test suite. You can
 do this with the element explorer.
 
 Currently, the explorer runs only with chrome and expects a standalone Selenium
-Server to be running at http://localhost:4444 (see [Setting Up the Selenium Server](https://github.com/angular/protractor/blob/master/docs/server-setup.md#standalone-selenium-server)).
+Server to be running at http://localhost:4444 (see [Setting Up the Selenium Server](/docs/server-setup.md)).
 
 From the Protractor directory, run with:
 
