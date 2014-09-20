@@ -59,7 +59,7 @@ You can use the `evaluate` function on a WebElement to get the value of an Angul
 ```javascript
 by.css('.foo').evaluate('bar')
 ```
-would return whatever `{{bar}}` is in the scope of the element with class 'foo'.
+would return whatever <code ng-non-bindable>{{bar}}</code> is in the scope of the element with class 'foo'.
 
 You can also execute arbitrary JavaScript in the browser with
 ```javascript
