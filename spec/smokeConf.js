@@ -19,7 +19,7 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '34',
+    'version': '35',
     'selenium-version': '2.43.1',
     'platform': 'OS X 10.9'
   }, {
@@ -27,15 +27,15 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '29',
-    'selenium-version': '2.43.1',
+    'version': '31',
+    'selenium-version': '2.43.1'
   }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '7',
-    'selenium-version': '2.43.1',
+    'selenium-version': '2.43.1'
   }, {
     'browserName': 'internet explorer',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
