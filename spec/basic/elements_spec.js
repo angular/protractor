@@ -9,6 +9,7 @@ describe('ElementFinder', function() {
   it('should return the same result as browser.findElement', function() {
     browser.get('index.html#/form');
     var nameByElement = element(by.binding('username'));
+
     expect(nameByElement.getText()).toEqual(
         browser.findElement(by.binding('username')).getText());
   });
@@ -161,13 +162,14 @@ describe('ElementFinder', function() {
     var elem = element(by.binding('greeting'));
 
     elem.then(function(elem2) {
-      expect(elem.toWireValue()).toEqual(elem2.toWireValue());
+      expect(elem.getId()).toEqual(elem2.getId());
     });
   });
 
   it('should not resolve to itself', function() {
     browser.get('index.html#/form');
     var elem1 = element(by.binding('greeting'));
+
     elem1.then(function(result) {
       expect(result === elem1).toBe(false);
     });

@@ -13,9 +13,9 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.36.0",
-    "selenium-webdriver": "2.42.1",
+    "selenium-webdriver": "2.43.5",
     "minijasminenode": "1.1.1",
-    "jasminewd": "1.0.4",
+    "jasminewd": "1.1.0",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
     "adm-zip": "0.4.4",
