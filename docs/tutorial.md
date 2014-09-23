@@ -99,7 +99,7 @@ This uses the globals `element` and `by`, which are also created by Protractor. 
 
   - `by.model('first')` to find the element with `ng-model="first"`. If you inspect the Calculator page source, you will see this is `<input type=text ng-model="first">`.
   - `by.id('gobutton')` to find the element with the given id. This finds `<button id="gobutton">`.
-  - `by.binding('latest')` to find the element bound to the variable `latest`. This finds the span containing `{{latest}}`
+  - `by.binding('latest')` to find the element bound to the variable `latest`. This finds the span containing <code ng-non-bindable>{{latest}}</code>
 
   [Learn more about locators and ElementFinders](/docs/locators.md).
 
