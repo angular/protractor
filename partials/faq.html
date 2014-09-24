@@ -15,24 +15,24 @@ written with Protractor.</p>
 with more info.</p>
 <h2 id="angular-can-t-be-found-on-my-page">Angular can&#39;t be found on my page</h2>
 <p>Protractor supports angular 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.</p>
-<p>The <code>angular</code> variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if <code>angular</code> is defined.</p>
+<p>The <code ng-non-bindable>angular</code> variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if <code ng-non-bindable>angular</code> is defined.</p>
 <h2 id="how-do-i-deal-with-my-log-in-page-">How do I deal with my log-in page?</h2>
 <p>If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you&#39;ll need to interact with it via 
-unwrapped webdriver, which can be accessed like <code>browser.driver.get()</code>. </p>
-<p>You can put your log-in code into an <code>onPrepare</code> function, which will be run
+unwrapped webdriver, which can be accessed like <code ng-non-bindable>browser.driver.get()</code>. </p>
+<p>You can put your log-in code into an <code ng-non-bindable>onPrepare</code> function, which will be run
 once before any of your tests. See this example (<a href="https://github.com/angular/protractor/blob/master/spec/withLoginConf.js">withLoginConf.js</a>]</p>
 <h2 id="which-browsers-are-supported-">Which browsers are supported?</h2>
 <p>The last two major versions of Chrome, Firefox, IE, and Safari. See details at <a href="#/browser-setup">Setting Up the Browser</a>.</p>
-<h2 id="the-result-of-gettext-from-an-input-element-is-always-empty">The result of <code>getText</code> from an input element is always empty</h2>
+<h2 id="the-result-of-gettext-from-an-input-element-is-always-empty">The result of <code ng-non-bindable>getText</code> from an input element is always empty</h2>
 <p>This is a <a href="http://grokbase.com/t/gg/webdriver/12bcmvwhcm/extarcting-text-from-the-input-field">webdriver quirk</a>.
-<code>&lt;input&gt;</code> and <code>&lt;textarea&gt;</code> elements always have
-empty <code>getText</code> values. Instead, try <code>element.getAttribute(&#39;value&#39;)</code>.</p>
+<code ng-non-bindable>&lt;input&gt;</code> and <code ng-non-bindable>&lt;textarea&gt;</code> elements always have
+empty <code ng-non-bindable>getText</code> values. Instead, try <code ng-non-bindable>element.getAttribute(&#39;value&#39;)</code>.</p>
 <h2 id="how-can-i-interact-directly-with-the-javascript-running-in-my-app-">How can I interact directly with the JavaScript running in my app?</h2>
 <p>In general, the design of WebDriver tests is to interact with the page as a user would, so it gets a little tricky if you want to interact with the JavaScript directly. You should avoid it unless you have a good reason. However, there are ways of doing it.</p>
-<p>You can use the <code>evaluate</code> function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.</p>
+<p>You can use the <code ng-non-bindable>evaluate</code> function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.</p>
 <pre><code class="lang-javascript">by.css(&#39;.foo&#39;).evaluate(&#39;bar&#39;)</code></pre>
-<p>would return whatever <code>{{bar}}</code> is in the scope of the element with class &#39;foo&#39;.</p>
+<p>would return whatever <code ng-non-bindable>{{bar}}</code> is in the scope of the element with class &#39;foo&#39;.</p>
 <p>You can also execute arbitrary JavaScript in the browser with</p>
 <pre><code class="lang-javascript">browser.executeScript(&#39;your script as a string&#39;)</code></pre>
 <h2 id="how-can-i-get-hold-of-the-browser-s-console-">How can I get hold of the browser&#39;s console?</h2>
@@ -60,7 +60,7 @@ empty <code>getText</code> values. Instead, try <code>element.getAttribute(&#39;
     }
   };
 });</code></pre>
-<p>Note, you can also choose to take a screenshot in <code>afterEach</code>. However, because Jasmine does not execute <code>afterEach</code> for timeouts, those would not produce screenshots</p>
+<p>Note, you can also choose to take a screenshot in <code ng-non-bindable>afterEach</code>. However, because Jasmine does not execute <code ng-non-bindable>afterEach</code> for timeouts, those would not produce screenshots</p>
 <ul>
 <li>For failures of individual expectations, you can override jasmine&#39;s addMatcherResult function as such:</li>
 </ul>

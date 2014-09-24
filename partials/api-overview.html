@@ -27,13 +27,13 @@
 <h2 id="global-variables">Global Variables</h2>
 <p>Protractor exports these global variables to your spec (test) file:</p>
 <ul>
-<li><p><code>browser</code> - A wrapper around an instance of WebDriver, used for navigation and page-wide information. The <code>browser.get</code> method loads a page. Protractor expects Angular to be present on a page, so it will throw an error if the page it is attempting to load does not contain the Angular library. (If you need to interact with a non-Angular page, you may access the wrapped webdriver instance directly with <code>browser.driver</code>).</p>
+<li><p><code ng-non-bindable>browser</code> - A wrapper around an instance of WebDriver, used for navigation and page-wide information. The <code ng-non-bindable>browser.get</code> method loads a page. Protractor expects Angular to be present on a page, so it will throw an error if the page it is attempting to load does not contain the Angular library. (If you need to interact with a non-Angular page, you may access the wrapped webdriver instance directly with <code ng-non-bindable>browser.driver</code>).</p>
 </li>
-<li><p><code>element</code> - A helper function for finding and interacting with DOM elements on the page you are testing. The <code>element</code> function searches for an element on the page. It requires one parameter, a locator strategy for locating the element. See <a href="#/locators">Using Locators</a> for more information. See Protractor&#39;s findelements test suite (<a href=https://github.com/angular/protractor/blob/master/spec/basic/elements_spec.js>elements_spec.js</a>) for more examples.</p>
+<li><p><code ng-non-bindable>element</code> - A helper function for finding and interacting with DOM elements on the page you are testing. The <code ng-non-bindable>element</code> function searches for an element on the page. It requires one parameter, a locator strategy for locating the element. See <a href="#/locators">Using Locators</a> for more information. See Protractor&#39;s findelements test suite (<a href=https://github.com/angular/protractor/blob/master/spec/basic/elements_spec.js>elements_spec.js</a>) for more examples.</p>
 </li>
-<li><p><code>by</code> - A collection of element locator strategies. For example, elements can be found by CSS selector, by ID, or by the attribute they are bound to with ng-model. See <a href="#/locators">Using Locators</a>.</p>
+<li><p><code ng-non-bindable>by</code> - A collection of element locator strategies. For example, elements can be found by CSS selector, by ID, or by the attribute they are bound to with ng-model. See <a href="#/locators">Using Locators</a>.</p>
 </li>
-<li><p><code>protractor</code> - The Protractor namespace which wraps the WebDriver namespace. Contains static variables and classes, such as <code>protractor.Key</code> which enumerates the codes for special keyboard signals.</p>
+<li><p><code ng-non-bindable>protractor</code> - The Protractor namespace which wraps the WebDriver namespace. Contains static variables and classes, such as <code ng-non-bindable>protractor.Key</code> which enumerates the codes for special keyboard signals.</p>
 </li>
 </ul>
 <h1 id="config-files">Config Files</h1>

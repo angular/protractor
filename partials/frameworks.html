@@ -6,7 +6,7 @@
 <p><em>Note: Limited support for Mocha is available as of December 2013. For more information, see the <a href="http://visionmedia.github.io/mocha/">Mocha GitHub site</a>.</em></p>
 <p>If you would like to use the Mocha test framework, you&#39;ll need to use the BDD interface and Chai assertions with <a href="http://chaijs.com/plugins/chai-as-promised">Chai As Promised</a>.</p>
 <p>Download the dependencies with npm. Mocha should be installed in the same place as Protractor - so if protractor was installed globally, install Mocha with -g.</p>
-<pre><code>npm install -g mocha
+<pre><code ng-non-bindable>npm install -g mocha
 npm install chai
 npm install chai-as-promised</code></pre>
 <p>You will need to require and set up Chai inside your test files:</p>
@@ -17,7 +17,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;</code></pre>
 <p>You can then use Chai As Promised as such:</p>
 <pre><code class="lang-js">expect(myElement.getText()).to.eventually.equal(&#39;some text&#39;);</code></pre>
-<p>Finally, set the &#39;framework&#39; property to &#39;mocha&#39;, either by adding <code>framework: &#39;mocha&#39;</code> to the config file or by adding <code>--framework=mocha</code> to the command line.</p>
+<p>Finally, set the &#39;framework&#39; property to &#39;mocha&#39;, either by adding <code ng-non-bindable>framework: &#39;mocha&#39;</code> to the config file or by adding <code ng-non-bindable>--framework=mocha</code> to the command line.</p>
 <p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="https://github.com/angular/protractor/blob/master/spec/mochaConf.js">config file</a> with mochaOpts:</p>
 <pre><code class="lang-js">mochaOpts: {
   reporter: &quot;spec&quot;,
@@ -27,8 +27,8 @@ var expect = chai.expect;</code></pre>
 <h2 id="using-cucumber">Using Cucumber</h2>
 <p><em>Note: Limited support for Cucumber is available as of January 2014. Support for Cucumber in Protractor is maintained by the community, so bug fixes may be slow. For more information, see the <a href="https://github.com/cucumber/cucumber-js">Cucumber GitHub site</a>.</em></p>
 <p>If you would  like to use the Cucumber test framework, download the dependencies with npm. Cucumber should be installed in the same place as Protractor - so if protractor was installed globally, install Cucumber with -g.</p>
-<pre><code>npm install -g cucumber</code></pre>
-<p>Set the &#39;framework&#39; property to cucumber, either by adding <code>framework: &#39;cucumber&#39;</code> to the <a href="https://github.com/angular/protractor/blob/master/spec/cucumberConf.js">config file</a> or by adding <code>--framework=cucumber</code> to the command line.</p>
+<pre><code ng-non-bindable>npm install -g cucumber</code></pre>
+<p>Set the &#39;framework&#39; property to cucumber, either by adding <code ng-non-bindable>framework: &#39;cucumber&#39;</code> to the <a href="https://github.com/angular/protractor/blob/master/spec/cucumberConf.js">config file</a> or by adding <code ng-non-bindable>--framework=cucumber</code> to the command line.</p>
 <p>Options for Cucumber such as &#39;format&#39; can be given in the config file with cucumberOpts:</p>
 <pre><code class="lang-js">cucumberOpts: {
   format: &quot;summary&quot;

@@ -21,9 +21,9 @@ to keep execution organized. For example, consider this test:</p>
 
     // Point A
   });</code></pre>
-<p>At Point A, none of the tasks have executed yet. The <code>browser.get</code> call is at
-the front of the control flow queue, and the <code>name.getText()</code> call is at the
-back. The value of <code>name.getText()</code> at point A is an unresolved promise
+<p>At Point A, none of the tasks have executed yet. The <code ng-non-bindable>browser.get</code> call is at
+the front of the control flow queue, and the <code ng-non-bindable>name.getText()</code> call is at the
+back. The value of <code ng-non-bindable>name.getText()</code> at point A is an unresolved promise
 object.</p>
 <h2 id="protractor-adaptations">Protractor Adaptations</h2>
 <p>Protractor adapts Jasmine so that each spec automatically waits until the

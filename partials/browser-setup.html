@@ -62,7 +62,7 @@
 <li>These drivers are not yet in the Protractor smoke tests.</li>
 </ul>
 <h2 id="configuring-browsers">Configuring Browsers</h2>
-<p>In your Protractor config file (see <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>referenceConf.js</a>), all browser setup is done within the <code>capabilities</code> object. This object is passed directly to the WebDriver builder (<a href="https://code.google.com/p/selenium/source/browse/javascript/webdriver/builder.js">builder.js</a>). </p>
+<p>In your Protractor config file (see <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>referenceConf.js</a>), all browser setup is done within the <code ng-non-bindable>capabilities</code> object. This object is passed directly to the WebDriver builder (<a href="https://code.google.com/p/selenium/source/browse/javascript/webdriver/builder.js">builder.js</a>). </p>
 <p>See <a href="https://code.google.com/p/selenium/wiki/DesiredCapabilities">DesiredCapabilities</a> for full information on which properties are available.</p>
 <h2 id="using-browsers-other-than-chrome">Using Browsers Other Than Chrome</h2>
 <p>To use a browser other than Chrome, simply set a different browser name in the capabilities object.</p>
@@ -71,31 +71,31 @@
 }</code></pre>
 <p>You may need to install a separate binary to run another browser, such as IE or Android. For more information, see <a href="http://docs.seleniumhq.org/download/">SeleniumHQ Downloads</a>.</p>
 <h2 id="adding-chrome-specific-options">Adding Chrome-Specific Options</h2>
-<p>Chrome options are nested in the <code>chromeOptions</code> object. A full list of options is at the <a href="https://sites.google.com/a/chromium.org/chromedriver/capabilities">ChromeDriver</a> site. For example, to show an FPS counter in the upper right, your configuration would look like this:</p>
+<p>Chrome options are nested in the <code ng-non-bindable>chromeOptions</code> object. A full list of options is at the <a href="https://sites.google.com/a/chromium.org/chromedriver/capabilities">ChromeDriver</a> site. For example, to show an FPS counter in the upper right, your configuration would look like this:</p>
 <pre><code class="lang-javascript">capabilities: {
   &#39;browserName&#39;: &#39;chrome&#39;,
   &#39;chromeOptions&#39;: {
     &#39;args&#39;: [&#39;show-fps-counter=true&#39;]
   }
 },</code></pre>
-<p>If running with <code>chromeOnly</code> and <code>chromeOptions</code> together, chromeOptions.args and chromeOptions.extensions are required due to <a href="https://code.google.com/p/selenium/issues/detail?id=6627&amp;thanks=6627&amp;ts=1385488060">Issue 6627</a> of selenium-webdriver currently(@2.37.0). So in order to avoid the issue, you may simply set them(or one of them) to an empty array.</p>
+<p>If running with <code ng-non-bindable>chromeOnly</code> and <code ng-non-bindable>chromeOptions</code> together, chromeOptions.args and chromeOptions.extensions are required due to <a href="https://code.google.com/p/selenium/issues/detail?id=6627&amp;thanks=6627&amp;ts=1385488060">Issue 6627</a> of selenium-webdriver currently(@2.37.0). So in order to avoid the issue, you may simply set them(or one of them) to an empty array.</p>
 <h2 id="testing-against-multiple-browsers">Testing Against Multiple Browsers</h2>
-<p>If you would like to test against multiple browsers, use the <code>multiCapabilities</code> configuration option.</p>
+<p>If you would like to test against multiple browsers, use the <code ng-non-bindable>multiCapabilities</code> configuration option.</p>
 <pre><code class="lang-javascript">multiCapabilities: [{
   &#39;browserName&#39;: &#39;firefox&#39;
 }, {
   &#39;browserName&#39;: &#39;chrome&#39;
 }]</code></pre>
-<p>Protractor will run tests in parallel against each set of capabilities. Please note that if <code>multiCapabilities</code> is defined, the runner will ignore the <code>capabilities</code> configuration.</p>
+<p>Protractor will run tests in parallel against each set of capabilities. Please note that if <code ng-non-bindable>multiCapabilities</code> is defined, the runner will ignore the <code ng-non-bindable>capabilities</code> configuration.</p>
 <h2 id="setting-up-protractor-with-appium-android-chrome">Setting Up Protractor with Appium - Android/Chrome</h2>
 <h6 id="setup">Setup</h6>
 <ul>
 <li>Install Java SDK (&gt;1.6) and configure JAVA_HOME (Important: make sure it&#39;s not pointing to JRE).</li>
 <li>Follow <a href="http://spring.io/guides/gs/android/">http://spring.io/guides/gs/android/</a> to install and set up Android developer environment. Do not set up Android Virtual Device as instructed here.</li>
-<li>From commandline, <code>android avd</code> and then install an AVD, taking note of the following:<ul>
+<li>From commandline, <code ng-non-bindable>android avd</code> and then install an AVD, taking note of the following:<ul>
 <li>Start with an ARM ABI</li>
-<li>Enable hardware keyboard: <code>hw.keyboard=yes</code></li>
-<li>Enable hardware battery: <code>hw.battery=yes</code></li>
+<li>Enable hardware keyboard: <code ng-non-bindable>hw.keyboard=yes</code></li>
+<li>Enable hardware battery: <code ng-non-bindable>hw.battery=yes</code></li>
 <li>Use the Host GPU</li>
 <li>Here&#39;s an example:</li>
 </ul>
@@ -125,7 +125,7 @@ Available Android Virtual Devices:
 <li>NOTE: Appium suggests installing Maven 3.0.5 (I haven&#39;t tried later versions, but 3.0.5 works for sure).</li>
 </ul>
 </li>
-<li>Install Appium using node <code>npm install -g appium</code>. Make sure you don&#39;t install as sudo or else Appium will complain.<ul>
+<li>Install Appium using node <code ng-non-bindable>npm install -g appium</code>. Make sure you don&#39;t install as sudo or else Appium will complain.<ul>
 <li>You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories.</li>
 </ul>
 </li>
@@ -205,7 +205,7 @@ info: socket.io started</code></pre>
 <li>NOTE: Appium suggests installing Maven 3.0.5 (I haven&#39;t tried later versions, but 3.0.5 works for sure).</li>
 </ul>
 </li>
-<li>Install Appium using node <code>npm install -g appium</code>. Make sure you don&#39;t install as sudo or else Appium will complain.<ul>
+<li>Install Appium using node <code ng-non-bindable>npm install -g appium</code>. Make sure you don&#39;t install as sudo or else Appium will complain.<ul>
 <li>You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories.</li>
 </ul>
 </li>
@@ -330,7 +330,7 @@ HAX is working and emulator runs in fast virt mode</code></pre>
 <li>baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator</li>
 </ul>
 <h2 id="setting-up-phantomjs">Setting up PhantomJS</h2>
-<p>In order to test locally with <a href="http://phantomjs.org/">PhantomJS</a>, you&#39;ll need to either have it installed globally, or relative to your project. For global install see the <a href="http://phantomjs.org/download.html">PhantomJS download page</a>. For relative install run: <code>npm install --save-dev phantomjs</code>.</p>
+<p>In order to test locally with <a href="http://phantomjs.org/">PhantomJS</a>, you&#39;ll need to either have it installed globally, or relative to your project. For global install see the <a href="http://phantomjs.org/download.html">PhantomJS download page</a>. For relative install run: <code ng-non-bindable>npm install --save-dev phantomjs</code>.</p>
 <p>Add phantomjs to the driver capabilities, and include a path to the binary if using local installation:</p>
 <pre><code class="lang-javascript">capabilities: {
   &#39;browserName&#39;: &#39;phantomjs&#39;,
