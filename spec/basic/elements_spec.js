@@ -209,6 +209,15 @@ describe('ElementArrayFinder', function() {
     expect(multiElement.getText()).toEqual(['Outer: outer', 'Inner: inner']);
   });
 
+  it('click action should act on all elements', function() {
+    var checkboxesElms = $$('#checkboxes input');
+    browser.get('index.html');
+
+    expect(checkboxesElms.isSelected()).toEqual([true, false, false]);
+    checkboxesElms.click();
+    expect(checkboxesElms.isSelected()).toEqual([false, true, true]);
+  });
+
   it('action should act on all elements selected by filter', function() {
     browser.get('index.html');
 
