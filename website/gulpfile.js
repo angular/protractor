@@ -112,9 +112,11 @@ gulp.task('markdown', function() {
           'https://github.com/angular/protractor/blob/master/$1/$2'
       ))
       // Decorate tables.
-      .pipe(replace(/<table>/, '<table class="table table-striped">'))
+      .pipe(replace(/<table>/g, '<table class="table table-striped">'))
       // Fix image links.
       .pipe(replace(/"\/docs\/(\w+\.png)"/g, '"img/$1"'))
+      // Fix <code> blocks to not interpolate Angular
+      .pipe(replace(/<code>/g, '<code ng-non-bindable>'))
       .pipe(rename(function(path) {
         path.extname = '.html'
       }))

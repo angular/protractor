@@ -13,7 +13,7 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.36.0",
-    "selenium-webdriver": "~2.42",
+    "selenium-webdriver": "2.43.5",
     "minijasminenode": "1.1.1",
     "jasminewd": "git://github.com/elgalu/jasminewd.git#e2emerge",
     "saucelabs": "~0.1.0",
@@ -30,7 +30,7 @@
     "chai-as-promised": "~4.1.0",
     "jasmine-reporters": "~0.2.1",
     "jshint": "2.5.0",
-    "mocha": "~1.18.0",
+    "mocha": "1.21.4",
     "cucumber": "~0.3.3",
     "express": "~3.3.4",
     "lodash": "~2.4.1",
@@ -51,10 +51,10 @@
     "start": "testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "webdriverVersions": {
-    "selenium": "2.42.2",
+    "selenium": "2.43.1",
     "chromedriver": "2.10",
-    "iedriver": "2.42.0"
+    "iedriver": "2.43.0"
   }
 }

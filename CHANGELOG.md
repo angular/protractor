@@ -1,3 +1,79 @@
+# 1.3.0
+
+## Features
+
+- ([4f1fe68](https://github.com/angular/protractor/commit/4f1fe68882dedba662752e722b9e7b76bfed19b6)) 
+  feat(runner): Allow onCleanup to accept a file
+
+- ([548f0c0](https://github.com/angular/protractor/commit/548f0c09748502cb6ae87e602db09e6df78df348)) 
+  feat(webdriver): bump WebDriver to version 2.43
+
+- ([466b383](https://github.com/angular/protractor/commit/466b3831569dc28c5fc2be31fbdf96574e57c3f0)) 
+  feat(protractor): allow advanced features for ElementArrayFinder
+
+  changed ElementFinder as a subset of an ElementArrayFinder.
+
+  This enables actions on ElementArrayFinders, such as:
+  `element.all(by.css('.foo')).click()`
+
+  The function `filter` now returns an ElementArrayFinder, so you may also do:
+  `element.all(by.css('.foo')).filter(filterFn).click()`
+
+  or
+
+  `element.all(by.css('.foo')).filter(filterFn).last().click()`
+
+- ([7bd2dde](https://github.com/angular/protractor/commit/7bd2dde0a6fca8c8481ad68d0683b4f411d611b9)) 
+  chore(angular): upgrade angular to version 1.3.
+
+  This change updates Protractor's test application from 1.2.9 to 1.3.0-r0.
+
+  There is a significant behind-the-scenes change in the implementation of locating elements and
+  waiting for the page to be stable. If you are updating your application to Angular 1.3, you may
+  run into some changes you will need to make in your tests:
+
+   - `by.binding` no longer allows using the surrounding `{{}}`. Previously, these
+     were optional.
+     Before: `var el = element(by.binding('{{foo}}'))`
+     After: `var el = element(by.binding('foo'))`
+
+   - Prefixes `ng_` and `x-ng-` are no longer allowed for models. Use `ng-model`.
+
+   - `by.repeater` cannot find elements by row and column which are not children
+    of the row. For example, if your template is
+    `<div ng-repeat="foo in foos">{{foo.name}}</div>`
+    Before: `var el = element(by.repeater('foo in foos').row(2).column('foo.name'))`
+    After: You may either enclose `{{foo.name}}` in a child element or simply use:
+    `var el = element(by.repeater('foo in foos').row(2))`
+
+- ([ee82f9e](https://github.com/angular/protractor/commit/ee82f9e3d0656b3c88f041f0115743352bc08941)) 
+  feat(webdriver-manager): ignore ssl checks with --ignore_ssl option
+
+  Allow ability to ignore SSL checks when downloading webdriver binaries. Usage: `webdriver-manager
+  update --ignore_ssl`
+
+## Bug Fixes
+
+- ([838f5a2](https://github.com/angular/protractor/commit/838f5a2b248b1539b7ece13a8ccb921eda08ee45)) 
+  fix(element): isPresent should not throw on chained finders
+
+  Now, `$('nonexistant').$('foo').isPresent()` will return false instead of throwing an error. This
+  change also adds tests that ensure that catching errors from promises works as expected.
+
+## Breaking Changes
+
+- ([f7c3c37](https://github.com/angular/protractor/commit/f7c3c370a239218f6143a4992b1fc4763f4cdd3d)) 
+  feat(webdriver): update to WebDriverJS 2.43.5
+
+  Breaking Changes WebDriverJS has introduced changes in the way that Promises are handled in
+  version 2.43. See
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+  - `webdriver.WebElement` has now been split into `webdriver.WebElementPromise`
+    and `webdriver.WebElement` so that it does not resolve to itself. This change
+    should be largely transparent to users.
+  - `WebElement.toWireValue` has been removed.
+
+
 # 1.2.0
 
 ## Features
