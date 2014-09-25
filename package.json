@@ -15,7 +15,7 @@
     "request": "~2.36.0",
     "selenium-webdriver": "2.43.5",
     "minijasminenode": "1.1.1",
-    "jasminewd": "git://github.com/elgalu/jasminewd.git#e2emerge",
+    "jasminewd": "git://github.com/elgalu/jasminewd.git#fv1.1.0",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
     "adm-zip": "0.4.4",
