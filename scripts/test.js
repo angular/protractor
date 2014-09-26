@@ -34,10 +34,7 @@ var failed = false;
 
 (function runTests(i) {
   if (i < scripts.length) {
-    var command = scripts[i];
-    if (isWindows) {
-      command = path.normalize(command);
-    }
+    var command = path.normalize(scripts[i]);
     console.log('node ' + command);
     var args = command.split(/\s/);
 
