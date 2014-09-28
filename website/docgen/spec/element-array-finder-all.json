@@ -1,0 +1,27 @@
+{
+  "codeNode": {
+    "type": "ExpressionStatement",
+    "expression": {
+      "type": "AssignmentExpression",
+      "operator": "=",
+      "left": {
+        "type": "MemberExpression",
+        "object": {
+          "type": "MemberExpression",
+          "object": {
+            "type": "Identifier",
+            "name": "ElementArrayFinder"
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "prototype"
+          }
+        },
+        "property": {
+          "type": "Identifier",
+          "name": "all"
+        }
+      }
+    }
+  }
+}
