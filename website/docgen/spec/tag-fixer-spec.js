@@ -1,79 +1,48 @@
 var tagFixerFn = require('../processors/tag-fixer');
+var elementArrayFinder = require('./element-array-finder.json');
+var elementAll = require('./element-array-finder-all.json');
+var _ = require('lodash');
 
 describe('tag fixer', function() {
-  var expressionDoc, declarationDoc, docs, tagFixer;
+  var classMethodStatement, constructorStatement, docs, tagFixer;
 
   beforeEach(function() {
     tagFixer = tagFixerFn();
   });
 
   beforeEach(function() {
-    expressionDoc = {
-      codeNode: {
-        node: {
-          expression: {
-            left: {
-              object: {
-                name: 'element'
-              },
-              property: {
-                name: 'all'
-              }
-            }
-          }
-        }
-      },
-      tags: {
-        description: 'element description'
-      }
-    };
+    constructorStatement = _.cloneDeep(elementArrayFinder);
+    classMethodStatement = _.cloneDeep(elementAll);
 
-    declarationDoc = {
-      codeNode: {
-        node: {
-          declarations: [
-            {
-              id: {
-                name: 'element'
-              }
-            }
-          ]
-        }
-      },
-      tags: {
-        description: 'element description'
-      }
-    };
-
-    docs = [expressionDoc, declarationDoc];
+    docs = [constructorStatement, classMethodStatement];
   });
 
-  it('should find name in code expression', function() {
+  it('should find name for method declaration', function() {
     // When you process the docs.
     tagFixer.$process(docs);
 
     // Then ensure the name was parsed.
-    expect(expressionDoc.name).toBe('element.all');
+    expect(classMethodStatement.name).toBe('ElementArrayFinder.prototype.all');
   });
 
-  it('should find name in code declaration', function() {
+  it('should find name for constructor declaration', function() {
     // When you process the docs.
     tagFixer.$process(docs);
 
     // Then ensure the name was parsed.
-    expect(declarationDoc.name).toBe('element');
+    expect(constructorStatement.name).toBe('ElementArrayFinder');
   });
 
   it('should not override name', function() {
     // Given that the doc has a @name.
-    expressionDoc.name = 'name1';
-    declarationDoc.name = 'name2';
+    classMethodStatement.name = 'name1';
+    constructorStatement.name = 'name2';
 
     // When you process the docs.
     tagFixer.$process(docs);
 
     // Then ensure the name was not changed.
-    expect(expressionDoc.name).toBe('name1');
-    expect(declarationDoc.name).toBe('name2');
+    expect(classMethodStatement.name).toBe('name1');
+    expect(constructorStatement.name).toBe('name2');
   });
 });
