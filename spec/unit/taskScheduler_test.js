@@ -221,4 +221,26 @@ describe('the task scheduler', function() {
 
     expect(scheduler.numTasksRemaining()).toEqual(0);
   });
+
+  it('should exclude capability-specific specs', function() {
+    var toAdd = {
+      specs: [
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
+      ],
+      multiCapabilities: [{
+        'browserName': 'chrome',
+        exclude: 'spec/unit/data/fakespecB.js'
+      }]
+    };
+    var config = new ConfigParser().addConfig(toAdd).getConfig();
+    var scheduler = new TaskScheduler(config);
+
+    var task = scheduler.nextTask();
+    expect(task.capability.browserName).toEqual('chrome');
+    expect(task.specs.length).toEqual(1);
+
+    expect(scheduler.numTasksRemaining()).toEqual(0);
+  });
+
 });
