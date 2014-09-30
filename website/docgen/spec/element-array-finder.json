@@ -6,88 +6,9 @@
         "type": "VariableDeclarator",
         "id": {
           "type": "Identifier",
-          "name": "ElementArrayFinder",
-          "range": [
-            4272,
-            4290
-          ],
-          "loc": {
-            "start": {"line": 123, "column": 6},
-            "end": {"line": 123, "column": 24}
-          }
-        },
-        "init": {
-          "type": "FunctionExpression",
-          "id": null,
-          "params": [
-            {
-              "type": "Identifier",
-              "name": "getWebElements",
-              "range": [
-                4302,
-                4316
-              ],
-              "loc": {
-                "start": {"line": 123, "column": 36},
-                "end": {"line": 123, "column": 50}
-              }
-            },
-            {
-              "type": "Identifier",
-              "name": "locator",
-              "range": [
-                4318,
-                4325
-              ],
-              "loc": {
-                "start": {"line": 123, "column": 52},
-                "end": {"line": 123, "column": 59}
-              }
-            },
-            {
-              "type": "Identifier",
-              "name": "opt_actionResults",
-              "range": [
-                4327,
-                4344
-              ],
-              "loc": {
-                "start": {"line": 123, "column": 61},
-                "end": {"line": 123, "column": 78}
-              }
-            }
-          ],
-          "defaults": [],
-          "rest": null,
-          "generator": false,
-          "expression": false,
-          "range": [
-            4293,
-            4940
-          ],
-          "loc": {
-            "start": {"line": 123, "column": 27},
-            "end": {"line": 142, "column": 3}
-          }
-        },
-        "range": [
-          4272,
-          4940
-        ],
-        "loc": {
-          "start": {"line": 123, "column": 6},
-          "end": {"line": 142, "column": 3}
+          "name": "ElementArrayFinder"
         }
       }
-    ],
-    "kind": "var",
-    "range": [
-      4268,
-      4941
-    ],
-    "loc": {
-      "start": {"line": 123, "column": 2},
-      "end": {"line": 142, "column": 4}
-    }
+    ]
   }
 }
