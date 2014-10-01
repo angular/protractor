@@ -109,7 +109,11 @@ exports.config = {
     maxInstances: 1,
 
     // Additional spec files to be run on this capability only.
-    specs: ['spec/chromeOnlySpec.js']
+    specs: ['spec/chromeOnlySpec.js'],
+
+    // Spec files to be excluded on this capability only.
+    exclude: ['spec/doNotRunInChromeSpec.js']
+
   },
 
   // If you would like to run more than one instance of WebDriver on the same
