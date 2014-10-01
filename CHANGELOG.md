@@ -1,3 +1,12 @@
+# 1.3.1
+
+## Bug Fixes
+
+- ([714e4e2](https://github.com/angular/protractor/commit/714e4e28ab90fb5dfeca4375a68469ef609e2722)) 
+  fix(locators): fix regression passing root element to locator scripts
+
+  Closes #1378
+
 # 1.3.0
 
 ## Features

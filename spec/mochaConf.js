@@ -16,6 +16,7 @@ exports.config = {
   baseUrl: env.baseUrl,
 
   mochaOpts: {
-    reporter: 'spec'
+    reporter: 'spec',
+    timeout: 4000
   }
 };
