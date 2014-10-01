@@ -8,7 +8,7 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
  - Check if there are new versions of [selenium and iedriver](http://selenium-release.storage.googleapis.com/index.html), [chromedriver](http://chromedriver.storage.googleapis.com/index.html), or [latest browsers](https://saucelabs.com/platforms) that the configuration needs to be updated against. We test against the latest two versions of Chrome, Firefox, and IE.
 
    - The latest selenium version should be used in spec/ciConf.js and spec/smokeConf.js.
-   - The versions in package.json/webdriverVersions should be up to date, and you should run `webdriver-manager update` locally.
+   - The versions in config.json/webdriverVersions should be up to date, and you should run `webdriver-manager update` locally.
    - The latest version of Chrome and Firefox should be used in spec/ciConf.js. All other browsers we support should be listed in spec/smokeConf.js.
 
  - Make sure [Travis](https://travis-ci.org/angular/protractor/builds) is passing. Note that there is an 'allowed failures' section in Travis - make sure that all failures are known.
