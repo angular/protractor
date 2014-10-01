@@ -185,6 +185,19 @@ describe('ElementFinder', function() {
       expect(finalResult.getText()).toEqual('Hiya');
     });
   });
+  
+  it('should allow null as succeshandler', function() {
+    browser.get('index.html#/form');
+
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    expect(name.getText()).toEqual('Anon');
+    expect(
+      name.getText().then(null, function(){})
+    ).toEqual('Anon');
+
+  });
 });
 
 describe('ElementArrayFinder', function() {
