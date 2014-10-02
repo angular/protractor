@@ -323,6 +323,11 @@ describe('locators', function() {
         expect(arr[1].getAttribute('id')).toBe('smalldog');
       });
     });
+    it('should find elements with text-transform style', function () {
+      expect(element(by.cssContainingText('#transformedtext div', 'Uppercase')).getAttribute('id')).toBe('textuppercase');
+      expect(element(by.cssContainingText('#transformedtext div', 'Lowercase')).getAttribute('id')).toBe('textlowercase');
+      expect(element(by.cssContainingText('#transformedtext div', 'capitalize')).getAttribute('id')).toBe('textcapitalize');
+    });
   });
 
   describe('by options', function() {
