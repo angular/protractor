@@ -366,18 +366,28 @@ describe('ElementArrayFinder', function() {
     expect(colorList.get(2).getAttribute('value')).toEqual('red');
   });
 
+  it('should get an element from an array using negative indices', function() {
+    var colorList = element.all(by.model('color'));
+
+    browser.get('index.html#/form');
+
+    expect(colorList.get(-3).getAttribute('value')).toEqual('blue');
+    expect(colorList.get(-2).getAttribute('value')).toEqual('green');
+    expect(colorList.get(-1).getAttribute('value')).toEqual('red');
+  });
+
   it('should get the first element from an array', function() {
     var colorList = element.all(by.model('color'));
     browser.get('index.html#/form');
 
-    expect(colorList.first(0).getAttribute('value')).toEqual('blue');
+    expect(colorList.first().getAttribute('value')).toEqual('blue');
   });
 
   it('should get the last element from an array', function() {
     var colorList = element.all(by.model('color'));
     browser.get('index.html#/form');
 
-    expect(colorList.last(0).getAttribute('value')).toEqual('red');
+    expect(colorList.last().getAttribute('value')).toEqual('red');
   });
 
   it('should perform an action on each element in an array', function() {
