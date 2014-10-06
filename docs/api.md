@@ -978,7 +978,7 @@ The reset URL to use between page loads.
 
 
 
-##<a name="api-protractor-prototype-waitforangular"></a>[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L894)
+##<a name="api-protractor-prototype-waitforangular"></a>[Protractor.prototype.waitForAngular](https://github.com/angular/protractor/blob/master/lib/protractor.js#L1105)
 
 Instruct webdriver to wait until Angular has finished rendering and has
 no outstanding $http calls before continuing.
