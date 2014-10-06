@@ -349,7 +349,7 @@ capabilities: {
    * Can be used to specify the phantomjs binary path.
    * This can generally be ommitted if you installed phantomjs globally.
    */
-  'phantomjs.binary.path':'./node_modules/phantomjs/bin/phantomjs',
+  'phantomjs.binary.path': require('phantomjs').path
   
   /*
    * Command line arugments to pass to phantomjs. 
