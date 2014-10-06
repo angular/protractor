@@ -315,7 +315,7 @@ describe('locators', function() {
     });
   });
 
-  ddescribe('by css containing text', function () {
+  describe('by css containing text', function () {
     it('should find elements by css and partial text', function () {
       element.all(by.cssContainingText('#inner ul .pet', 'dog')).then(function(arr) {
         expect(arr.length).toEqual(2);
