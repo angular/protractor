@@ -146,6 +146,16 @@ exports.config = {
   // How long to wait for a page to load.
   getPageTimeout: 10000,
 
+  // A callback function called once configs are read but before any environment
+  // setup. This will only run once, and before onPrepare.
+  // You can specify a file containing code to run by setting beforeLaunch to
+  // the filename string.
+  beforeLaunch: function() {
+    // At this point, global variable 'protractor' object will NOT be set up, 
+    // and globals from the test framework will NOT be available. The main
+    // purpose of this function should be to bring up test dependencies.
+  },
+
   // A callback function called once protractor is ready and available, and
   // before the specs are executed.
   // If multiple capabilities are being run, this will run once per
@@ -168,8 +178,14 @@ exports.config = {
 
   // A callback function called once the tests have finished running and
   // the WebDriver instance has been shut down. It is passed the exit code
-  // (0 if the tests passed or 1 if not). This is called once per capability.
+  // (0 if the tests passed). This is called once per capability.
   onCleanUp: function(exitCode) {},
+
+  // A callback function called once all tests have finished running and
+  // the WebDriver instance has been shut down. It is passed the exit code
+  // (0 if the tests passed). This is called only once before the program
+  // exits (after onCleanUp).
+  afterLaunch: function() {},
 
   // The params object will be passed directly to the Protractor instance,
   // and can be accessed from your test as browser.params. It is an arbitrary
