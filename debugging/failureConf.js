@@ -1,4 +1,4 @@
-var env = require('../environment.js');
+var env = require('../spec/environment.js');
 
 // Examples of tests to show how debugging works with Protractor. Tests
 // should be run against the testapp.
