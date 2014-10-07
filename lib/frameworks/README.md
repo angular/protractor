@@ -19,7 +19,7 @@ Requirements
 
  - `runner.emit` must be called with `testPass` and `testFail` messages.
 
- - `runner.runTestPreparers` must be called before any tests are run.
+ - `runner.runTestPreparer` must be called before any tests are run.
 
  - `runner.getConfig().onComplete` must be called when tests are finished.
 
