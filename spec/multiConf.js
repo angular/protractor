@@ -9,8 +9,6 @@ exports.config = {
     'basic/lib_spec.js'
   ],
 
-  chromeOnly: false,
-
   multiCapabilities: [{
     'browserName': 'chrome'
   }, {

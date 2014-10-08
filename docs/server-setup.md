@@ -1,9 +1,9 @@
 Setting Up the Selenium Server
 ==============================
 
-When working with Protractor you will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols). 
+When working with Protractor, you need to specify how to connect to the browser drivers which will start up and control the browsers you are testing on. You will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols).
 
-The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations. 
+The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations.
 
          [Test Scripts] < ------------ > [Selenium Server] < ------------ > [Browser Drivers]
 
@@ -34,6 +34,9 @@ To install and start the standalone Selenium Server manually, use the webdriver-
     line will  be 'Info - Started org.openqa.jetty.jetty.Server'.
 
 3. Leave the server running while you conduct your test sessions.
+
+4. In your config file, set `seleniumAddress` to the address of the running server. This defaults to
+   `http://localhost:4444/wd/hub`.
 
 
 **Starting the Server from a Test Script**
@@ -67,13 +70,11 @@ In your config file, set these options:
 Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort` and `seleniumArgs` will be ignored.
 
 
-Selenium Server and the Chrome Browser
+Connecting Directly to Browser Drivers
 --------------------------------------
 
-The Selenium Server is optional when you test against the Chrome browser. In your config file, you can set the chromeOnly option to true or false:
+Protractor can test directly against Chrome and Firefox without using a Selenium Server. To use this, in your config file set `directConnect: true`.
 
- - `chromeOnly: false` -  Your test script communicates with the Selenium Server (running locally or remotely). This is the default setting.
+ - `directConnect: true` -  Your test script communicates directly Chrome Driver or Firefox Driver, bypassing any Selenium Server. If this is true, settings for `seleniumAddress` and `seleniumServerJar` will be ignored. If you attempt to use a browser other than Chrome or Firefox an error will be thrown.
 
- - `chromeOnly: true` -  Your test script communicates directly with the ChromeDriver. The Selenium Server (running locally or remotely) will be ignored.
-
-The advantage of running only with Chrome is that your test scripts will start up and run faster. For more detailed information about chromeOnly, see the [chrome.js source code](https://code.google.com/p/selenium/source/browse/javascript/node/selenium-webdriver/chrome.js).
+The advantage of directly connecting to browser drivers is that your test scripts may start up and run faster.

@@ -44,11 +44,23 @@ var chromeConfig = {
     browserName: 'chrome'
   }
 };
-testDriverProvider(require('../lib/driverProviders/chrome')(chromeConfig)).
+testDriverProvider(require('../lib/driverProviders/direct')(chromeConfig)).
     then(function() {
-      console.log('chrome.dp working!');
+      console.log('direct.dp with chrome working!');
     }, function(err) {
-      console.log('chrome.dp failed with ' + err);
+      console.log('direct.dp with chrome failed with ' + err.stack);
+    });
+
+var firefoxConfig = {
+  capabilities: {
+    browserName: 'firefox'
+  }
+};
+testDriverProvider(require('../lib/driverProviders/direct')(firefoxConfig)).
+    then(function() {
+      console.log('direct.dp with firefox working!');
+    }, function(err) {
+      console.log('direct.dp with firefox failed with ' + err.stack);
     });
 
 var hostedConfig = {

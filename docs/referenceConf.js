@@ -6,48 +6,47 @@
 
 exports.config = {
   // ---------------------------------------------------------------------------
-  // ----- How to setup Selenium -----------------------------------------------
+  // ----- How to connect to Browser Drivers -----------------------------------
   // ---------------------------------------------------------------------------
   //
-  // There are three ways to use the Selenium Server. Specify one of the
-  // following:
+  // Protractor needs to know how to connect to Drivers for the browsers
+  // it is testing on. This is usually done through a Selenium Server.
+  // There are four options - specify one of the following:
   //
   // 1. seleniumServerJar - to start a standalone Selenium Server locally.
   // 2. seleniumAddress - to connect to a Selenium Server which is already
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
-  //
-  // You can bypass a Selenium Server if you only want to test using Chrome.
-  // Set chromeOnly to true and ChromeDriver will be used directly (from the
-  // location specified in chromeDriver).
+  // 4. directConnect - to connect directly to the browser Drivers.
+  //    This option is only available for Firefox and Chrome.
 
+  // ---- 1. To start a standalone Selenium Server locally ---------------------
   // The location of the standalone Selenium Server jar file, relative
   // to the location of this config. If no other method of starting Selenium
   // Server is found, this will default to
   // node_modules/protractor/selenium/selenium-server...
   seleniumServerJar: null,
   // The port to start the Selenium Server on, or null if the server should
-  // find its own unused port.
+  // find its own unused port. Ignored if seleniumServerJar is null.
   seleniumPort: null,
   // Additional command line options to pass to selenium. For example,
   // if you need to change the browser timeout, use
-  // seleniumArgs: ['-browserTimeout=60'],
+  // seleniumArgs: ['-browserTimeout=60']
+  // Ignored if seleniumServerJar is null.
   seleniumArgs: [],
-  // ChromeDriver location is used to help the standalone Selenium Server
-  // find the chromedriver binary. This will be passed to the Selenium jar as
-  // the system property webdriver.chrome.driver. If null, Selenium will
+  // ChromeDriver location is used to help find the chromedriver binary.
+  // This will be passed to the Selenium jar as the system property
+  // webdriver.chrome.driver. If null, Selenium will
   // attempt to find ChromeDriver using PATH.
   chromeDriver: './selenium/chromedriver',
 
-  // If true, only ChromeDriver will be started, not a Selenium Server.
-  // Tests for browsers other than Chrome will not run.
-  chromeOnly: false,
-
+  // ---- 2. To connect to a Selenium Server which is already running ----------
   // The address of a running Selenium Server. If specified, Protractor will
   // connect to an already running instance of Selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
 
+  // ---- 3. To use remote browsers via Sauce Labs -----------------------------
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
   // The tests will be run remotely using Sauce Labs.
   sauceUser: null,
@@ -57,6 +56,20 @@ exports.config = {
   // traffic through a sauce connect tunnel). Default is
   // ondemand.saucelabs.com:80/wd/hub
   sauceSeleniumAddress: null,
+
+  // ---- 4. To connect directly to Drivers ------------------------------------
+  // Boolean. If true, Protractor will connect directly to the browser Drivers
+  // at the locations specified by chromeDriver and firefoxPath. Only Chrome
+  // and Firefox are supported for direct connect.
+  directConnect: false,
+  // Path to the firefox application binary. If null, will attempt to find
+  // firefox in the default locations.
+  firefoxPath: null,
+
+  // **DEPRECATED**
+  // If true, only ChromeDriver will be started, not a Selenium Server.
+  // This should be replaced with directConnect.
+  chromeOnly: false,
 
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
