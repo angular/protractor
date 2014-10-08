@@ -20,7 +20,8 @@ describe('the task scheduler', function() {
     expect(task.capability.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(2);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should schedule single capability tests with sharding', function() {
@@ -46,7 +47,9 @@ describe('the task scheduler', function() {
     expect(task2.capability.browserName).toEqual('chrome');
     expect(task2.specs.length).toEqual(1);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task1.done();
+    task2.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should schedule single capability tests with count', function() {
@@ -71,7 +74,9 @@ describe('the task scheduler', function() {
     expect(task2.capability.browserName).toEqual('chrome');
     expect(task2.specs.length).toEqual(2);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task1.done();
+    task2.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should schedule multiCapabilities tests', function() {
@@ -97,7 +102,9 @@ describe('the task scheduler', function() {
     expect(task2.capability.browserName).toEqual('firefox');
     expect(task2.specs.length).toEqual(2);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task1.done();
+    task2.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should obey maxInstances', function() {
@@ -121,14 +128,16 @@ describe('the task scheduler', function() {
 
     var task2 = scheduler.nextTask();
     expect(task2).toBeNull();
-    expect(scheduler.numTasksRemaining()).toEqual(1);
-    
+
     task1.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(1);
+    
     var task3 = scheduler.nextTask();
     expect(task3.capability.browserName).toEqual('chrome');
     expect(task3.specs.length).toEqual(1);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task3.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should allow capability-specific specs', function() {
@@ -149,7 +158,8 @@ describe('the task scheduler', function() {
     expect(task.capability.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(3);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should handle multiCapabilities with mixture of features', function() {
@@ -202,7 +212,7 @@ describe('the task scheduler', function() {
     expect(task6.specs.length).toEqual(1);
     task6.done();
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should default to chrome when no capability is defined', function() {
@@ -219,7 +229,8 @@ describe('the task scheduler', function() {
     expect(task.capability.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(2);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
   it('should exclude capability-specific specs', function() {
@@ -240,7 +251,8 @@ describe('the task scheduler', function() {
     expect(task.capability.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(1);
 
-    expect(scheduler.numTasksRemaining()).toEqual(0);
+    task.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
 });
