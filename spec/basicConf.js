@@ -14,8 +14,6 @@ exports.config = {
     'basic/exclude*.js'
   ],
 
-  chromeOnly: false,
-
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,

@@ -10,8 +10,6 @@ exports.config = {
     failingtest: 'suites/always_fail_spec.js'
   },
 
-  chromeOnly: false,
-
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,
