@@ -184,7 +184,8 @@ exports.config = {
   // A callback function called once all tests have finished running and
   // the WebDriver instance has been shut down. It is passed the exit code
   // (0 if the tests passed). This is called only once before the program
-  // exits (after onCleanUp).
+  // exits (after onCleanUp). The program will exit after this event loop,
+  // so this must perform only synchronous operations.
   afterLaunch: function() {},
 
   // The params object will be passed directly to the Protractor instance,
