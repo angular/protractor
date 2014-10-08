@@ -338,7 +338,9 @@ exports.config = {
 
 Setting up PhantomJS
 --------------------
-In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For relative install run: `npm install --save-dev phantomjs`.
+_Note: We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers._
+
+In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For local install run: `npm install phantomjs`.
 
 Add phantomjs to the driver capabilities, and include a path to the binary if using local installation:
 ```javascript
@@ -352,10 +354,9 @@ capabilities: {
   'phantomjs.binary.path': require('phantomjs').path,
   
   /*
-   * Command line arugments to pass to phantomjs. 
-   * Can be ommitted if no arguments need to be passed. 
-   * Acceptable cli arugments: https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-command-line-options
+   * Command line args to pass to ghostdriver, phantomjs's browser driver.
+   * See https://github.com/detro/ghostdriver#faq
    */
-  'phantomjs.cli.args':['--logfile=PATH', '--loglevel=DEBUG']
+  'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG']
 }
 ```
