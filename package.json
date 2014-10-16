@@ -46,7 +46,7 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "pretest": "node_modules/.bin/jshint lib spec",
+    "pretest": "node_modules/.bin/jshint lib spec scripts",
     "test": "scripts/test.js",
     "start": "testapp/scripts/web-server.js"
   },
