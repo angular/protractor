@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
+var Executor = require('./test/test_util').Executor;
 var glob = require('glob').sync;
-var spawn = require('child_process').spawn;
 
-var scripts = [
+var passingTests = [
   'node lib/cli.js spec/basicConf.js',
   'node lib/cli.js spec/multiConf.js',
   'node lib/cli.js spec/altRootConf.js',
@@ -22,29 +22,68 @@ var scripts = [
   'node lib/cli.js spec/suitesConf.js --suite okmany,okspec'
 ];
 
-scripts.push(
+passingTests.push(
     'node node_modules/.bin/minijasminenode ' +
     glob('spec/unit/*.js').join(' ') + ' ' +
     glob('docgen/spec/*.js').join(' '));
 
-var failed = false;
+var executor = new Executor();
 
-(function runTests(i) {
-  if (i < scripts.length) {
-    console.log('node ' + scripts[i]);
-    var args = scripts[i].split(/\s/);
+passingTests.forEach(function(passing_test) {
+  executor.addCommandlineTest(passing_test)
+      .assertExitCodeOnly();
+});
 
-    var test = spawn(args[0], args.slice(1), {stdio: 'inherit'});
-    test.on('error', function(err) {
-      throw err;
+/*************************
+ *Below are failure tests*
+ *************************/
+
+// assert stacktrace shows line of failure
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/singleFailureConf.js')
+    .expectExitCode(1)
+    .expectErrors({
+      stackTrace: 'single_failure_spec1.js:5:32'
     });
-    test.on('exit', function(code) {
-      if (code != 0) {
-        failed = true;
-      }
-      runTests(i + 1);
+
+// assert timeout works 
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/timeoutConf.js')
+    .expectExitCode(1)
+    .expectErrors({
+      message: 'timeout: timed out after 1 msec waiting for spec to complete'
+    })
+    .expectTestDuration(0, 100);
+
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/afterLaunchChangesExitCodeConf.js')
+    .expectExitCode(11)
+    .expectErrors({
+      message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.'
     });
-  } else {
-    process.exit(failed ? 1 : 0);
-  }
-}(0));
+
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/multiFailureConf.js')
+    .expectExitCode(1)
+    .expectErrors([{
+      message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
+      stacktrace: 'single_failure_spec1.js:5:32'
+    }, {
+      message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
+      stacktrace: 'single_failure_spec2.js:5:32'
+    }]);
+
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/shardedFailureConf.js')
+    .expectExitCode(1)
+    .expectErrors([{
+      message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
+      stacktrace: 'single_failure_spec1.js:5:32'
+    }, {
+      message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
+      stacktrace: 'single_failure_spec2.js:5:32'
+    }]);
+
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/mochaFailureConf.js')
+    .expectExitCode(1)
+    .expectErrors([{
+      message: 'expected \'My AngularJS App\' to equal \'INTENTIONALLY INCORRECT\'',
+      stacktrace: 'mocha_failure_spec.js:11:20'
+    }]);
+
+executor.execute();
