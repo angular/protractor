@@ -138,23 +138,30 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
     url: fileUrl,
     strictSSL: !ignoreSSL,
     proxy: resolveProxy(fileUrl)
-  }
-  request(options, function (error, response) {
-    if (error) {
-      fs.unlink(filePath);
-      console.error('Error: Got error ' + error + ' from ' + fileUrl);
-      return;
-    }
-    if (response.statusCode !== 200) {
-      fs.unlink(filePath);
-      console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
-      return;
-    }
-    console.log(fileName + ' downloaded to ' + filePath);
-    if (callback) {
-      callback(filePath);
-    }
-  }).pipe(file);
+  };
+
+  request(options)
+      .on('response', function(response) {
+        if (response.statusCode !== 200) {
+          fs.unlink(filePath);
+          console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
+        }
+      })
+      .on('error', function(error) {
+        fs.unlink(filePath);
+        console.error('Error: Got error ' + error + ' from ' + fileUrl);
+      })
+      .on('data', function(data) {
+        file.write(data);
+      })
+      .on('end', function() {
+        file.end(function() {
+          console.log(fileName + ' downloaded to ' + filePath);
+          if (callback) {
+            callback(filePath);
+          }
+        });
+      });
 };
 
 /**
