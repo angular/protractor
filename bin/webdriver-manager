@@ -141,15 +141,15 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   };
 
   request(options)
-    .on('response', function(res) {
-      if (res.statusCode !== 200) {
+    .on('response', function(response) {
+      if (response.statusCode !== 200) {
         fs.unlink(filePath);
-        throw new Error('Got code ' + res.statusCode + ' from ' + fileUrl);
+        console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
       }
     })
     .on('error', function(error) {
       fs.unlink(filePath);
-      throw new Error('Got code ' + error + ' from ' + fileUrl);
+      console.error('Error: Got error ' + error + ' from ' + fileUrl);
     })
     .on('data', function(data) {
       file.write(data);
