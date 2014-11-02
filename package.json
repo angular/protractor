@@ -33,6 +33,7 @@
   "bin": "bin/protractor",
   "main": "lib/protractor.js",
   "scripts": {
+    "start": "node testapp/scripts/web-server.js",
     "test": "node lib/cli.js spec/basicConf.js; node lib/cli.js spec/altRootConf.js; node lib/cli.js spec/onPrepareConf.js; node_modules/.bin/minijasminenode jasminewd/spec/adapterSpec.js"
   },
   "license" : "MIT",

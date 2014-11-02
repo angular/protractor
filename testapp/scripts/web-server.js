@@ -2,9 +2,10 @@
 
 var express = require('express');
 var util = require('util');
+var path = require('path');
 var testApp = express();
 var DEFAULT_PORT = 8000;
-var testAppDir = process.cwd();
+var testAppDir = path.join(process.cwd(), 'testapp');
 
 var main = function(argv) {
   var port = Number(argv[2]) || DEFAULT_PORT;
