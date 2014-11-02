@@ -16,5 +16,16 @@ function FormCtrl($scope, $window) {
   $scope.doAlert = function() {
     $window.alert('Hello');
   }
+
+  $scope.addOnbeforeunload = function() {
+    $window.onbeforeunload = function() {
+      return 'Are you sure?';
+    }
+  }
+
+  $scope.removeOnbeforeunload = function() {
+    $window.onbeforeunload = null;
+  }
+
 }
 FormCtrl.$inject = ['$scope', '$window'];
