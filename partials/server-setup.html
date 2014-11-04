@@ -1,6 +1,6 @@
 <h1 id="setting-up-the-selenium-server">Setting Up the Selenium Server</h1>
-<p>When working with Protractor you will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols). </p>
-<p>The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations. </p>
+<p>When working with Protractor, you need to specify how to connect to the browser drivers which will start up and control the browsers you are testing on. You will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols).</p>
+<p>The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations.</p>
 <pre><code ng-non-bindable>     [Test Scripts] &lt; ------------ &gt; [Selenium Server] &lt; ------------ &gt; [Browser Drivers]</code></pre>
 <p>The <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>reference config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
 <h2 id="standalone-selenium-server">Standalone Selenium Server</h2>
@@ -20,6 +20,9 @@
  line will  be &#39;Info - Started org.openqa.jetty.jetty.Server&#39;.</p>
 </li>
 <li><p>Leave the server running while you conduct your test sessions.</p>
+</li>
+<li><p>In your config file, set <code ng-non-bindable>seleniumAddress</code> to the address of the running server. This defaults to
+<code ng-non-bindable>http://localhost:4444/wd/hub</code>.</p>
 </li>
 </ol>
 <p><strong>Starting the Server from a Test Script</strong></p>
@@ -46,12 +49,9 @@
 <li><code ng-non-bindable>sauceKey</code> -  The key for your Sauce Labs account.</li>
 </ul>
 <p>Please note that if you set <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code>, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code> and <code ng-non-bindable>seleniumArgs</code> will be ignored.</p>
-<h2 id="selenium-server-and-the-chrome-browser">Selenium Server and the Chrome Browser</h2>
-<p>The Selenium Server is optional when you test against the Chrome browser. In your config file, you can set the chromeOnly option to true or false:</p>
+<h2 id="connecting-directly-to-browser-drivers">Connecting Directly to Browser Drivers</h2>
+<p>Protractor can test directly against Chrome and Firefox without using a Selenium Server. To use this, in your config file set <code ng-non-bindable>directConnect: true</code>.</p>
 <ul>
-<li><p><code ng-non-bindable>chromeOnly: false</code> -  Your test script communicates with the Selenium Server (running locally or remotely). This is the default setting.</p>
-</li>
-<li><p><code ng-non-bindable>chromeOnly: true</code> -  Your test script communicates directly with the ChromeDriver. The Selenium Server (running locally or remotely) will be ignored.</p>
-</li>
+<li><code ng-non-bindable>directConnect: true</code> -  Your test script communicates directly Chrome Driver or Firefox Driver, bypassing any Selenium Server. If this is true, settings for <code ng-non-bindable>seleniumAddress</code> and <code ng-non-bindable>seleniumServerJar</code> will be ignored. If you attempt to use a browser other than Chrome or Firefox an error will be thrown.</li>
 </ul>
-<p>The advantage of running only with Chrome is that your test scripts will start up and run faster. For more detailed information about chromeOnly, see the <a href="https://code.google.com/p/selenium/source/browse/javascript/node/selenium-webdriver/chrome.js">chrome.js source code</a>.</p>
+<p>The advantage of directly connecting to browser drivers is that your test scripts may start up and run faster.</p>
