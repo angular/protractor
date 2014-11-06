@@ -77,3 +77,5 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 <h2 id="how-can-i-catch-errors-such-as-elementnotfound-">How can I catch errors such as ElementNotFound?</h2>
 <p>WebDriver throws errors when commands cannot be completed - e.g. not being able to click on an element which is obscured by another element. If you need to retry these actions, try using <a href="https://github.com/juliemr/webdriverjs-retry">webdriverjs-retry</a>. If you would just like to catch the error, do so like this</p>
 <pre><code class="lang-javascript">elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})</code></pre>
+<h2 id="why-is-browser-debugger-not-pausing">Why is browser.debugger(); not pausing the test?</h2>
+<p>The most likely reason is that you are not running the test in debug mode. To do this you run: <code ng-non-bindable>protractor debug</code> followed by the path to your protractor configuration file.</p>
