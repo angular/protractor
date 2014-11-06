@@ -23,5 +23,16 @@ Requirements
 
  - `runner.getConfig().onComplete` must be called when tests are finished.
 
- - The returned promise must be resolved when tests are finished and it should return a results object.
- This object must have a `failedCount` property.
+ - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults` 
+ object of the following structure:
+ ```
+   specResults = [{
+     description: string,
+     assertions: [{
+       passed: boolean,
+       errorMsg: string,
+       stackTrace: string 
+     }],
+     duration: integer
+   }]
+ ```
