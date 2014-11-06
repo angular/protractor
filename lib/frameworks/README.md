@@ -25,6 +25,7 @@ Requirements
 
  - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults` 
  object of the following structure:
+ ```
    specResults = [{
      description: string,
      assertions: [{
@@ -34,3 +35,4 @@ Requirements
      }],
      duration: integer
    }]
+ ```
