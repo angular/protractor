@@ -17,7 +17,7 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task = scheduler.nextTask();
-    expect(task.capability.browserName).toEqual('chrome');
+    expect(task.capabilities.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(2);
 
     task.done();
@@ -40,11 +40,11 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task1 = scheduler.nextTask();
-    expect(task1.capability.browserName).toEqual('chrome');
+    expect(task1.capabilities.browserName).toEqual('chrome');
     expect(task1.specs.length).toEqual(1);
 
     var task2 = scheduler.nextTask();
-    expect(task2.capability.browserName).toEqual('chrome');
+    expect(task2.capabilities.browserName).toEqual('chrome');
     expect(task2.specs.length).toEqual(1);
 
     task1.done();
@@ -67,11 +67,11 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task1 = scheduler.nextTask();
-    expect(task1.capability.browserName).toEqual('chrome');
+    expect(task1.capabilities.browserName).toEqual('chrome');
     expect(task1.specs.length).toEqual(2);
 
     var task2 = scheduler.nextTask();
-    expect(task2.capability.browserName).toEqual('chrome');
+    expect(task2.capabilities.browserName).toEqual('chrome');
     expect(task2.specs.length).toEqual(2);
 
     task1.done();
@@ -95,11 +95,11 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task1 = scheduler.nextTask();
-    expect(task1.capability.browserName).toEqual('chrome');
+    expect(task1.capabilities.browserName).toEqual('chrome');
     expect(task1.specs.length).toEqual(2);
 
     var task2 = scheduler.nextTask();
-    expect(task2.capability.browserName).toEqual('firefox');
+    expect(task2.capabilities.browserName).toEqual('firefox');
     expect(task2.specs.length).toEqual(2);
 
     task1.done();
@@ -123,7 +123,7 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task1 = scheduler.nextTask();
-    expect(task1.capability.browserName).toEqual('chrome');
+    expect(task1.capabilities.browserName).toEqual('chrome');
     expect(task1.specs.length).toEqual(1);
 
     var task2 = scheduler.nextTask();
@@ -133,7 +133,7 @@ describe('the task scheduler', function() {
     expect(scheduler.numTasksOutstanding()).toEqual(1);
     
     var task3 = scheduler.nextTask();
-    expect(task3.capability.browserName).toEqual('chrome');
+    expect(task3.capabilities.browserName).toEqual('chrome');
     expect(task3.specs.length).toEqual(1);
 
     task3.done();
@@ -155,7 +155,7 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task = scheduler.nextTask();
-    expect(task.capability.browserName).toEqual('chrome');
+    expect(task.capabilities.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(3);
 
     task.done();
@@ -183,32 +183,32 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task1 = scheduler.nextTask();
-    expect(task1.capability.browserName).toEqual('chrome');
+    expect(task1.capabilities.browserName).toEqual('chrome');
     expect(task1.specs.length).toEqual(2);
     task1.done();
 
     var task2 = scheduler.nextTask();
-    expect(task2.capability.browserName).toEqual('chrome');
+    expect(task2.capabilities.browserName).toEqual('chrome');
     expect(task2.specs.length).toEqual(2);
     task2.done();
 
     var task3 = scheduler.nextTask();
-    expect(task3.capability.browserName).toEqual('firefox');
+    expect(task3.capabilities.browserName).toEqual('firefox');
     expect(task3.specs.length).toEqual(1);
     task3.done();
 
     var task4 = scheduler.nextTask();
-    expect(task4.capability.browserName).toEqual('firefox');
+    expect(task4.capabilities.browserName).toEqual('firefox');
     expect(task4.specs.length).toEqual(1);
     task4.done();
 
     var task5 = scheduler.nextTask();
-    expect(task5.capability.browserName).toEqual('firefox');
+    expect(task5.capabilities.browserName).toEqual('firefox');
     expect(task5.specs.length).toEqual(1);
     task5.done();
 
     var task6 = scheduler.nextTask();
-    expect(task6.capability.browserName).toEqual('firefox');
+    expect(task6.capabilities.browserName).toEqual('firefox');
     expect(task6.specs.length).toEqual(1);
     task6.done();
 
@@ -226,7 +226,7 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task = scheduler.nextTask();
-    expect(task.capability.browserName).toEqual('chrome');
+    expect(task.capabilities.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(2);
 
     task.done();
@@ -248,7 +248,7 @@ describe('the task scheduler', function() {
     var scheduler = new TaskScheduler(config);
 
     var task = scheduler.nextTask();
-    expect(task.capability.browserName).toEqual('chrome');
+    expect(task.capabilities.browserName).toEqual('chrome');
     expect(task.specs.length).toEqual(1);
 
     task.done();
