@@ -19,7 +19,8 @@ var passingTests = [
   'node lib/cli.js spec/withLoginConf.js',
   'node lib/cli.js spec/suitesConf.js --suite okmany',
   'node lib/cli.js spec/suitesConf.js --suite okspec',
-  'node lib/cli.js spec/suitesConf.js --suite okmany,okspec'
+  'node lib/cli.js spec/suitesConf.js --suite okmany,okspec',
+  'node lib/cli.js spec/pluginsBasicConf.js'
 ];
 
 passingTests.push(
