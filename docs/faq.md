@@ -129,3 +129,8 @@ WebDriver throws errors when commands cannot be completed - e.g. not being able 
 ```javascript
 elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 ```
+
+I'm having trouble getting a browser to start
+---------------------------------------------
+
+Protractor comes with a troubleshooting script at `bin/troubleshoot-config.js`. Try running this with your configuration file as the only argument - it should give you isolated information about what is wrong with your setup.
