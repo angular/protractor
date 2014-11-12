@@ -2,7 +2,6 @@
 
 var glob = require('glob').sync;
 var spawn = require('child_process').spawn;
-var isWindows = process.platform.indexOf('win') === 0;
 var path = require('path');
 
 var scripts = [
@@ -25,7 +24,7 @@ var scripts = [
 ];
 
 scripts.push(
-  (isWindows? 'node_modules/.bin/minijasminenode.cmd' : 'node node_modules/.bin/minijasminenode') + ' ' +
+  'node node_modules/minijasminenode/bin/minijn ' +
   glob('spec/unit/*.js').join(' ') + ' ' +
   glob('docgen/spec/*.js').join(' ')
 );
