@@ -2,11 +2,6 @@
 
 var Executor = require('./test/test_util').Executor;
 var glob = require('glob').sync;
-<<<<<<< HEAD
-=======
-var spawn = require('child_process').spawn;
-var path = require('path');
->>>>>>> fix(test): use a platform agnostic way to run minijasminenode
 
 var passingTests = [
   'node lib/cli.js spec/basicConf.js',
