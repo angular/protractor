@@ -4,9 +4,15 @@ Contributing
 Questions
 ---------
 
-Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/protractor),
-and read through the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md)
-and issue archives.
+Please first read through the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
+
+Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/protractor) or [Google Group discussion list](https://groups.google.com/forum/?fromgroups#!forum/angular).
+
+Any questions posted to Protractor's Github Issues will be closed with this note:
+
+`
+Please read the [contributing guidelines](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions); these types of questions are ill-suited for GitHub. Thanks!
+`
 
 
 Issues

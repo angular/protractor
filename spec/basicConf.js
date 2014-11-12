@@ -14,11 +14,14 @@ exports.config = {
     'basic/exclude*.js'
   ],
 
-  chromeOnly: false,
-
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,
+
+  jasmineNodeOpts: {
+    isVerbose: true,
+    realtimeFailure: true
+  },
 
   params: {
     login: {

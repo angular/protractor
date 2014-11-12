@@ -51,11 +51,11 @@ describe('Api', function() {
     expect(browser.getCurrentUrl()).toMatch(/api\?view=ElementArrayFinder/);
   });
 
-  it('should view item in param link', function() {
-    // Given that you are viewing element.all.
-    apiPage.clickOnMenuItem('element.all(locator)');
+  it('should view item in param type link', function() {
+    // Given that you are viewing element.all.filter.
+    apiPage.clickOnMenuItem('filter');
 
-    // When you click on the ElementFinder link of the params table.
+    // When you click on the ElementFinder type link of the params table.
     apiPage.clickOnParamType('ElementFinder');
 
     // Then ensure the type is shown.

@@ -1,0 +1,14 @@
+{
+  "codeNode": {
+    "type": "VariableDeclaration",
+    "declarations": [
+      {
+        "type": "VariableDeclarator",
+        "id": {
+          "type": "Identifier",
+          "name": "ElementArrayFinder"
+        }
+      }
+    ]
+  }
+}

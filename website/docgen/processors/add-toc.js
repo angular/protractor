@@ -41,6 +41,8 @@ module.exports = function addToc() {
       // Replace all the docs with the table of contents.
       docs.length = 0;
       docs.push({
+        id: 'x',
+        docType: 'js',
         outputPath: 'toc.json',
         template: 'toc',
         toc: toc,

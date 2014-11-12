@@ -5,7 +5,7 @@ describe('locators', function() {
 
   describe('by binding', function() {
     it('should find an element by binding', function() {
-      var greeting = element(by.binding('{{greeting}}'));
+      var greeting = element(by.binding('greeting'));
 
       expect(greeting.getText()).toEqual('Hiya');
     });
@@ -19,15 +19,7 @@ describe('locators', function() {
         }
       });
 
-      expect(element(by.binding('{{greeting}}'))).toHaveText('Hiya');
-    });
-
-    it('ElementFinder.then should resolve to itself', function() {
-      var elem = element(by.binding('{{greeting}}'));
-
-      elem.then(function(elem2) {
-        expect(elem).toEqual(elem2);
-      });
+      expect(element(by.binding('greeting'))).toHaveText('Hiya');
     });
 
     it('should find a binding by partial match', function() {
@@ -57,7 +49,7 @@ describe('locators', function() {
 
     it('should find an element by binding with ng-bind-template attribute',
         function() {
-      var name = element(by.binding('{{nickname|uppercase}}'));
+      var name = element(by.binding('nickname|uppercase'));
 
       expect(name.getText()).toEqual('(ANNIE)');
     });
@@ -116,12 +108,6 @@ describe('locators', function() {
 
       element(by.model('check.x')).click();
       expect(letterList.getText()).toBe('wx');
-
-      element(by.model('check.y')).click();
-      expect(letterList.getText()).toBe('wxy');
-
-      element(by.model('check.z')).click();
-      expect(letterList.getText()).toBe('wxyz');
     });
 
     it('should find multiple inputs', function() {
@@ -182,7 +168,7 @@ describe('locators', function() {
     it('should find by partial match', function() {
       var fullMatch = element(
           by.repeater('baz in days | filter:\'T\'').
-              row(0).column('{{baz.initial}}'));
+              row(0).column('baz.initial'));
       expect(fullMatch.getText()).toEqual('T');
 
       var partialMatch = element(
@@ -274,28 +260,6 @@ describe('locators', function() {
       expect(byCol.getText()).toEqual('W');
     });
 
-    it('should find using ng_repeat', function() {
-      var byRow =
-        element(by.repeater('foo in days').row(2));
-      expect(byRow.getText()).toEqual('W');
-
-      var byCol =
-          element(by.repeater('foo in days').row(2).
-          column('foo'));
-      expect(byCol.getText()).toEqual('W');
-    });
-
-    it('should find using x-ng-repeat', function() {
-      var byRow =
-        element(by.repeater('qux in days').row(2));
-      expect(byRow.getText()).toEqual('W');
-
-      var byCol =
-          element(by.repeater('qux in days').row(2).
-          column('qux'));
-      expect(byCol.getText()).toEqual('W');
-    });
-
     it('should determine if repeater elements are present', function() {
       expect(element(by.repeater('allinfo in days').row(3)).isPresent()).
           toBe(true);
@@ -358,6 +322,15 @@ describe('locators', function() {
         expect(arr[0].getAttribute('id')).toBe('bigdog');
         expect(arr[1].getAttribute('id')).toBe('smalldog');
       });
+    });
+
+    it('should find elements with text-transform style', function () {
+      expect(element(by.cssContainingText('#transformedtext div', 'Uppercase'))
+          .getAttribute('id')).toBe('textuppercase');
+      expect(element(by.cssContainingText('#transformedtext div', 'Lowercase'))
+          .getAttribute('id')).toBe('textlowercase');
+      expect(element(by.cssContainingText('#transformedtext div', 'capitalize'))
+          .getAttribute('id')).toBe('textcapitalize');
     });
   });
 

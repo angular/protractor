@@ -37,7 +37,7 @@ page is not written with Angular, you'll need to interact with it via
 unwrapped webdriver, which can be accessed like `browser.driver.get()`. 
 
 You can put your log-in code into an `onPrepare` function, which will be run
-once before any of your tests. See this example ([withLoginConf.js](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js)]
+once before any of your tests. See this example ([withLoginConf.js](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js))
 
 Which browsers are supported?
 -----------------------------
@@ -129,3 +129,7 @@ WebDriver throws errors when commands cannot be completed - e.g. not being able 
 ```javascript
 elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 ```
+
+Why is browser.debugger(); not pausing the test?
+-----------------------------------------------
+The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.

@@ -1,5 +1,5 @@
 exports.config = {
-  chromeOnly: true,
+  directConnect: true,
 
   // Spec patterns are relative to the location of this config.
   specs: [

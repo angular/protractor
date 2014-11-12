@@ -57,7 +57,6 @@ capabilities: {
   }
 },
 ```
-If running with `chromeOnly` and `chromeOptions` together, chromeOptions.args and chromeOptions.extensions are required due to [Issue 6627](https://code.google.com/p/selenium/issues/detail?id=6627&thanks=6627&ts=1385488060) of selenium-webdriver currently(@2.37.0). So in order to avoid the issue, you may simply set them(or one of them) to an empty array.
 
 Testing Against Multiple Browsers
 ---------------------------------
@@ -166,24 +165,31 @@ info: socket.io started
 exports.config = {
   seleniumAddress: 'http://localhost:4723/wd/hub',
 
-  specs: [
-    'basic/*_spec.js'
-  ],
+  specs: ['basic/*_spec.js'],
 
-  chromeOnly: false,
-
+  // Reference: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers/caps.js
   capabilities: {
-    device: 'android',
-    'browserName': '',
-    //'deviceName' : 'emulator-5554',
-    'app' : 'chrome'
+    browserName: 'chrome',
+    'appium-version': '1.0',
+    platformName: 'Android',
+    platformVersion: '4.4.2',
+    deviceName: 'Android Emulator',
   },
 
-  baseUrl: 'http://10.0.2.2:' + (process.env.HTTP_PORT || '8000'),
+  baseUrl: 'http://10.0.2.2:8000',
+ 
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require('wd'),
+      protractor = require('protractor'),
+      wdBridge = require('wd-bridge')(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
 };
 ```
 *Note the following:*
- - under capabilities: browserName is '', device is 'android', and app is 'chrome'  
  - baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator  
  - selenium address is using port 4723
  
@@ -196,6 +202,8 @@ Setting Up Protractor with Appium - iOS/Safari
    * NOTE: Appium suggests installing Maven 3.0.5 (I haven't tried later versions, but 3.0.5 works for sure).
 *   Install Appium using node ```npm install -g appium```. Make sure you don't install as sudo or else Appium will complain.
    * You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories.
+*  Run the following: `appium-doctor` and `authorize_ios` (sudo if necessary)
+*  You need XCode >= 4.6.3, 5.1.1 recommended. Note, iOS8 (XCode 6) does not work off the shelf (see https://github.com/appium/appium/pull/3517)
 
 ###### Running Tests
 *   Ensure app is running if testing local app (Skip if testing public website):
@@ -225,15 +233,26 @@ exports.config = {
     'basic/*_spec.js'
   ],
 
-  chromeOnly: false,
-
+  // Reference: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers/caps.js
   capabilities: {
-    browserName: '',
-    device: 'iPhone',
-    app: 'safari'
+    browserName: 'safari',
+    'appium-version': '1.0',
+    platformName: 'iOS',
+    platformVersion: '7.1',
+    deviceName: 'iPhone Simulator',
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+  baseUrl: 'http://localhost:8000',
+
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require('wd'),
+      protractor = require('protractor'),
+      wdBridge = require('wd-bridge')(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
 };
 ```
 
@@ -246,16 +265,26 @@ exports.config = {
     'basic/*_spec.js'
   ],
 
-  chromeOnly: false,
-
+  // Reference: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers/caps.js
   capabilities: {
-    browserName: '',
-    device: 'iPad',
-    app: 'safari',
-    deviceName: 'iPad Simulator'
+    browserName: 'safari',
+    'appium-version': '1.0',
+    platformName: 'iOS',
+    platformVersion: '7.1',
+    deviceName: 'IPad Simulator',
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+  baseUrl: 'http://localhost:8000',
+
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require('wd'),
+      protractor = require('protractor'),
+      wdBridge = require('wd-bridge')(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
 };
 
 ```
@@ -321,13 +350,11 @@ exports.config = {
     'basic/*_spec.js'
   ],
 
-  chromeOnly: false,
-
   capabilities: {
     'browserName': 'android'
   },
 
-  baseUrl: 'http://10.0.2.2:' + (process.env.HTTP_PORT || '8000')
+  baseUrl: 'http://10.0.2.2:8000'
 };
 ```
 
@@ -338,7 +365,9 @@ exports.config = {
 
 Setting up PhantomJS
 --------------------
-In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For relative install run: `npm install --save-dev phantomjs`.
+_Note: We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers._
+
+In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For local install run: `npm install phantomjs`.
 
 Add phantomjs to the driver capabilities, and include a path to the binary if using local installation:
 ```javascript
@@ -349,13 +378,12 @@ capabilities: {
    * Can be used to specify the phantomjs binary path.
    * This can generally be ommitted if you installed phantomjs globally.
    */
-  'phantomjs.binary.path':'./node_modules/phantomjs/bin/phantomjs',
+  'phantomjs.binary.path': require('phantomjs').path,
   
   /*
-   * Command line arugments to pass to phantomjs. 
-   * Can be ommitted if no arguments need to be passed. 
-   * Acceptable cli arugments: https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-command-line-options
+   * Command line args to pass to ghostdriver, phantomjs's browser driver.
+   * See https://github.com/detro/ghostdriver#faq
    */
-  'phantomjs.cli.args':['--logfile=PATH', '--loglevel=DEBUG']
+  'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG']
 }
 ```

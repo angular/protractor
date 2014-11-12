@@ -6,48 +6,47 @@
 
 exports.config = {
   // ---------------------------------------------------------------------------
-  // ----- How to setup Selenium -----------------------------------------------
+  // ----- How to connect to Browser Drivers -----------------------------------
   // ---------------------------------------------------------------------------
   //
-  // There are three ways to use the Selenium Server. Specify one of the
-  // following:
+  // Protractor needs to know how to connect to Drivers for the browsers
+  // it is testing on. This is usually done through a Selenium Server.
+  // There are four options - specify one of the following:
   //
   // 1. seleniumServerJar - to start a standalone Selenium Server locally.
   // 2. seleniumAddress - to connect to a Selenium Server which is already
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
-  //
-  // You can bypass a Selenium Server if you only want to test using Chrome.
-  // Set chromeOnly to true and ChromeDriver will be used directly (from the
-  // location specified in chromeDriver).
+  // 4. directConnect - to connect directly to the browser Drivers.
+  //    This option is only available for Firefox and Chrome.
 
+  // ---- 1. To start a standalone Selenium Server locally ---------------------
   // The location of the standalone Selenium Server jar file, relative
   // to the location of this config. If no other method of starting Selenium
   // Server is found, this will default to
   // node_modules/protractor/selenium/selenium-server...
   seleniumServerJar: null,
   // The port to start the Selenium Server on, or null if the server should
-  // find its own unused port.
+  // find its own unused port. Ignored if seleniumServerJar is null.
   seleniumPort: null,
   // Additional command line options to pass to selenium. For example,
   // if you need to change the browser timeout, use
-  // seleniumArgs: ['-browserTimeout=60'],
+  // seleniumArgs: ['-browserTimeout=60']
+  // Ignored if seleniumServerJar is null.
   seleniumArgs: [],
-  // ChromeDriver location is used to help the standalone Selenium Server
-  // find the chromedriver binary. This will be passed to the Selenium jar as
-  // the system property webdriver.chrome.driver. If null, Selenium will
+  // ChromeDriver location is used to help find the chromedriver binary.
+  // This will be passed to the Selenium jar as the system property
+  // webdriver.chrome.driver. If null, Selenium will
   // attempt to find ChromeDriver using PATH.
   chromeDriver: './selenium/chromedriver',
 
-  // If true, only ChromeDriver will be started, not a Selenium Server.
-  // Tests for browsers other than Chrome will not run.
-  chromeOnly: false,
-
+  // ---- 2. To connect to a Selenium Server which is already running ----------
   // The address of a running Selenium Server. If specified, Protractor will
   // connect to an already running instance of Selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
 
+  // ---- 3. To use remote browsers via Sauce Labs -----------------------------
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
   // The tests will be run remotely using Sauce Labs.
   sauceUser: null,
@@ -57,6 +56,20 @@ exports.config = {
   // traffic through a sauce connect tunnel). Default is
   // ondemand.saucelabs.com:80/wd/hub
   sauceSeleniumAddress: null,
+
+  // ---- 4. To connect directly to Drivers ------------------------------------
+  // Boolean. If true, Protractor will connect directly to the browser Drivers
+  // at the locations specified by chromeDriver and firefoxPath. Only Chrome
+  // and Firefox are supported for direct connect.
+  directConnect: false,
+  // Path to the firefox application binary. If null, will attempt to find
+  // firefox in the default locations.
+  firefoxPath: null,
+
+  // **DEPRECATED**
+  // If true, only ChromeDriver will be started, not a Selenium Server.
+  // This should be replaced with directConnect.
+  chromeOnly: false,
 
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
@@ -109,7 +122,11 @@ exports.config = {
     maxInstances: 1,
 
     // Additional spec files to be run on this capability only.
-    specs: ['spec/chromeOnlySpec.js']
+    specs: ['spec/chromeOnlySpec.js'],
+
+    // Spec files to be excluded on this capability only.
+    exclude: ['spec/doNotRunInChromeSpec.js']
+
   },
 
   // If you would like to run more than one instance of WebDriver on the same
@@ -130,7 +147,7 @@ exports.config = {
   // with relative paths will be prepended with this.
   baseUrl: 'http://localhost:9876',
 
-  // Selector for the element housing the angular app - this defaults to
+  // CSS Selector for the element housing the angular app - this defaults to
   // body, but is necessary if ng-app is on a descendant of <body>.
   rootElement: 'body',
 
@@ -141,6 +158,16 @@ exports.config = {
 
   // How long to wait for a page to load.
   getPageTimeout: 10000,
+
+  // A callback function called once configs are read but before any environment
+  // setup. This will only run once, and before onPrepare.
+  // You can specify a file containing code to run by setting beforeLaunch to
+  // the filename string.
+  beforeLaunch: function() {
+    // At this point, global variable 'protractor' object will NOT be set up, 
+    // and globals from the test framework will NOT be available. The main
+    // purpose of this function should be to bring up test dependencies.
+  },
 
   // A callback function called once protractor is ready and available, and
   // before the specs are executed.
@@ -164,8 +191,14 @@ exports.config = {
 
   // A callback function called once the tests have finished running and
   // the WebDriver instance has been shut down. It is passed the exit code
-  // (0 if the tests passed or 1 if not). This is called once per capability.
+  // (0 if the tests passed). This is called once per capability.
   onCleanUp: function(exitCode) {},
+
+  // A callback function called once all tests have finished running and
+  // the WebDriver instance has been shut down. It is passed the exit code
+  // (0 if the tests passed). This is called only once before the program
+  // exits (after onCleanUp).
+  afterLaunch: function() {},
 
   // The params object will be passed directly to the Protractor instance,
   // and can be accessed from your test as browser.params. It is an arbitrary
@@ -178,6 +211,10 @@ exports.config = {
       password: '1234'
     }
   },
+
+  // If set, protractor will save the test output in json format at this path.
+  // The path is relative to the location of this config.
+  resultJsonOutputFile: null,
 
   // ---------------------------------------------------------------------------
   // ----- The test framework --------------------------------------------------
