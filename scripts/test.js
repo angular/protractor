@@ -2,6 +2,11 @@
 
 var Executor = require('./test/test_util').Executor;
 var glob = require('glob').sync;
+<<<<<<< HEAD
+=======
+var spawn = require('child_process').spawn;
+var path = require('path');
+>>>>>>> fix(test): use a platform agnostic way to run minijasminenode
 
 var passingTests = [
   'node lib/cli.js spec/basicConf.js',
@@ -29,9 +34,9 @@ var passingTests = [
 ];
 
 passingTests.push(
-    'node node_modules/.bin/minijasminenode ' +
-    glob('spec/unit/*.js').join(' ') + ' ' +
-    glob('website/docgen/spec/*.js').join(' '));
+  'node node_modules/minijasminenode/bin/minijn ' +
+  glob('spec/unit/*.js').join(' ') + ' ' +
+  glob('website/docgen/spec/*.js').join(' '));
 
 var executor = new Executor();
 
