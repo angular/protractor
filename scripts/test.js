@@ -34,7 +34,7 @@ var failed = false;
 (function runTests(i) {
   if (i < scripts.length) {
     var command = path.normalize(scripts[i]);
-    console.log('node ' + command);
+    console.log('run test script: ' + command);
     var args = command.split(/\s/);
 
     var test = spawn(args[0], args.slice(1), {stdio: 'inherit'});
