@@ -317,7 +317,7 @@ describe('locators', function() {
 
   describe('by css containing text', function () {
     it('should find elements by css and partial text', function () {
-      element.all(by.cssContainingText('#inner ul .pet', 'dog')).then(function(arr) {
+      element.all(by.cssContainingText('#animals ul .pet', 'dog')).then(function(arr) {
         expect(arr.length).toEqual(2);
         expect(arr[0].getAttribute('id')).toBe('bigdog');
         expect(arr[1].getAttribute('id')).toBe('smalldog');
