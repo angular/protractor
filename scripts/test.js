@@ -21,7 +21,8 @@ var passingTests = [
   'node lib/cli.js spec/suitesConf.js --suite okspec',
   'node lib/cli.js spec/suitesConf.js --suite okmany,okspec',
   'node lib/cli.js spec/pluginsBasicConf.js',
-  'node lib/cli.js spec/pluginsFullConf.js'
+  'node lib/cli.js spec/pluginsFullConf.js',
+  'node lib/cli.js spec/interactionConf.js'
 ];
 
 passingTests.push(
