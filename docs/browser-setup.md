@@ -141,7 +141,7 @@ Success
 *   Ensure app is running if testing local app (Skip if testing public website):
 
 ```shell
-> ./scripts/web-server.js
+> npm start # or `./scripts/web-server.js`
 Starting express web server in /workspace/protractor/testapp on port 8000
 ```
 *   If your AVD isn't already started from the setup, start it now:
@@ -209,7 +209,7 @@ Setting Up Protractor with Appium - iOS/Safari
 *   Ensure app is running if testing local app (Skip if testing public website):
 
 ```shell
-> ./scripts/web-server.js
+> npm start # or `./scripts/web-server.js`
 Starting express web server in /workspace/protractor/testapp on port 8000
 ```
 *   Start Appium:
@@ -315,7 +315,7 @@ Available Android Virtual Devices:
 *   Ensure app is running if testing local app (Skip if testing public website):
 
 ```shell
-> ./scripts/web-server.js
+> npm start # or `./scripts/web-server.js`
 Starting express web server in /workspace/protractor/testapp on port 8000
 ```
 
