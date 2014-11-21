@@ -38,6 +38,6 @@ function InteractionCtrl($scope, $interval, $http) {
 
   $interval(function() {
     loadMessages();
-  }, 500);
+  }, 100);
 }
 InteractionCtrl.$inject = ['$scope', '$interval', '$http'];

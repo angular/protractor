@@ -9,8 +9,6 @@ exports.config = {
     'interaction/*_spec.js'
   ],
 
-  numDrivers: 2,
-
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl
