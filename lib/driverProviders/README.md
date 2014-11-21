@@ -16,7 +16,7 @@ DriverProvider.prototype.setupEnv
 /**
  * @return {webdriver.WebDriver} A new setup driver instance.
  */
-DriverProvider.prototype.getDriver
+DriverProvider.prototype.getNewDriver
 
 /**
  * @return {q.promise} A promise which will resolve when the environment
@@ -37,6 +37,6 @@ DriverProvider.prototype.updateJob
 Requirements
 ------------
 
- - `setupEnv` and `getDriver` will be called before the test framework is loaded, so any pre-work which might cause timeouts on the first test should be done there.
+ - `setupEnv` and `getNewDriver` will be called before the test framework is loaded, so any pre-work which might cause timeouts on the first test should be done there.
 
  - `teardownEnv` should call the driver's `quit` method.
