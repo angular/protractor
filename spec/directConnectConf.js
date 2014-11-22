@@ -1,6 +1,6 @@
 var env = require('./environment.js');
 
-// An configuration file running a simple direct connect spec
+// A configuration file running a simple direct connect spec
 exports.config = {
   directConnect: true,
 

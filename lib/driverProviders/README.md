@@ -37,6 +37,10 @@ DriverProvider.prototype.updateJob
 Requirements
 ------------
 
- - `setupEnv` and `getNewDriver` will be called before the test framework is loaded, so any pre-work which might cause timeouts on the first test should be done there.
+ - `setupEnv` will be called before the test framework is loaded, so any
+ pre-work which might cause timeouts on the first test should be done there. 
+ `getNewDriver` will be called once right after `setupEnv` to generate the
+ initial driver, and possibly during the middle of the test if users request
+ additional browsers.
 
  - `teardownEnv` should call the driver's `quit` method.

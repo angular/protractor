@@ -31,7 +31,7 @@ describe('Browser', function() {
     browser.get('index.html');
     newBrowser = browser.forkNewDriverInstance(true);
     expect(newBrowser.driver.getCurrentUrl()).
-        toEqual('http://localhost:8081/index.html#/form');
+        toMatch('index.html#/form');
   });
 
   it('should be able to copy mock modules on fork', function() {
