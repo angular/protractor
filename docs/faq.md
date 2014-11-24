@@ -129,3 +129,7 @@ WebDriver throws errors when commands cannot be completed - e.g. not being able 
 ```javascript
 elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 ```
+
+Why is browser.debugger(); not pausing the test?
+-----------------------------------------------
+The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.

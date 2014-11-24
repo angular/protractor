@@ -1,3 +1,98 @@
+# 1.4.0
+
+## Features
+
+- ([adef9b2](https://github.com/angular/protractor/commit/adef9b208fcba2a9d60347bda38a3fe3fac6bf50)) 
+  feat(runner): add a new method of getting browser drivers - directConnect
+
+  directConnect as an option on the configuration will replace chromeOnly. Now, WebDriverJS allows
+  Firefox to be used directly as well, so directConnect will work for Chrome and Firefox, and throw
+  an error if another browser is used.
+
+  This change deprecates but does not remove the chromeOnly option.
+
+- ([0626963](https://github.com/angular/protractor/commit/06269636f52f9b3a9c73beb6191ae89a7a376cfb)) 
+  feat(config): Option to exclude test for specific capability
+
+  Add the option to exclude spec files for a specific capability. This way you can ignore spec
+  files for one capability only. For example if the test is known to fail in the capability.
+
+  Closes #1230
+
+- ([710cad7](https://github.com/angular/protractor/commit/710cad7c5a2d838a0c4184defa1b7d4240f577f6)) 
+  feat(runner/frameworks): Change interface contract of the protractor runner instance so that it
+  returns a promise instead of calling a callback function
+
+- ([50f44f4](https://github.com/angular/protractor/commit/50f44f430851cbd76dbb3a41d6071198f6f479a4)) 
+  feat(protractor): add clone methods for ElementFinder and ElementArrayFinder
+
+- ([eedf50b](https://github.com/angular/protractor/commit/eedf50b48ca55f18e8555ce5aa64ad92b03887c8)) 
+  feat(launcher): add beforeLaunch and afterLaunch
+
+- ([8dd60b7](https://github.com/angular/protractor/commit/8dd60b73a3013bd29213c8d281819da6e545c7ff)) 
+  feat(protractor): wrap negative indices for ElementArrayFinder.get(i)
+
+  Closes #1213
+
+- ([be236e7](https://github.com/angular/protractor/commit/be236e7f44c5306df36b62bb21bb3ba940c86944)) 
+  feat(debugging): use custom messages when executing scripts to improve stack traces
+
+  Now, instead of asynchronous events during executeScript all being described as
+  `WebDriver.executeScript`, they have their own custom messages. The schedule shown when debugging
+  will be more informative.
+
+## Dependency Version Upgrades
+
+- ([889a5a7](https://github.com/angular/protractor/commit/889a5a70c1f980d09a615cf1e8ceaea33272ba8e)) 
+  feat(webdriver): version bumps for webdriver, chromedriver, webdriverJS
+
+  Upgrade to WebDriver 2.44.0 and ChromeDriver 2.12.
+
+## Bug Fixes
+
+- ([2fbaf52](https://github.com/angular/protractor/commit/2fbaf52fd59f03929e173ebf760a97de34bf91d4)) 
+  fix(element): use the root element only to find the testability API, not scope searches
+
+  In 9a8f45a a change was introduced which made Protractor's custom locators (by.binding, by.model,
+  etc) use config.rootElement as the root for all their searches. This meant that
+  config.rootElement was used both to specify how to get hold of Angular's injector as well as
+  where to begin searching for elements. This does not work for all cases, for example if a dialog 
+  should be searched for elements but is a sibling, not a child, of ng-app.
+
+  This reverts that change, and uses document as the parent for all searches. This is consistent
+  with the behavior of the native locators by.id, by.css, and friends, which do not scope their
+  search based on config.rootElement.
+
+- ([9db5327](https://github.com/angular/protractor/commit/9db5327e4ada7eb3caa271b394bcda0ba5e8fd62)) 
+  fix(ElementFinder): ElementFinder should allow null as success handler. Passes the value to the
+  next in the chain.
+
+- ([0858280](https://github.com/angular/protractor/commit/0858280db156f924ef126c3aaeae6973b8d44067)) 
+  fix(locators): by.cssContainingText now operates on pre-transformed text
+
+  Previously, the implementation depended on the browser. Now, it will always operate on the text
+  before text-transform is applied. Closes #1217
+
+- ([1a4eea4](https://github.com/angular/protractor/commit/1a4eea4eb89362822dc86be6904c1ddfba95661e)) 
+  fix(elementexplorer): elementexplorer hangs when returning ElementFinder
+
+- ([f4e6b40](https://github.com/angular/protractor/commit/f4e6b40c597dc1c59dc7eccfe236abcc336a46a9)) 
+  fix(runner): webdriver could get into lock when there is async promise
+
+- ([cf284b9](https://github.com/angular/protractor/commit/cf284b994fb6766c8ab34d0af9b4ccf8fd866bd1)) 
+  fix(clientsidescripts): by.exactBinding not working because of regex typo
+
+  Closes #1441
+
+- ([9cc0f63](https://github.com/angular/protractor/commit/9cc0f6398146ed9bfc757c1efc05d1806bab1e16)) 
+  fix(runner): gracefully shutdown browsers after test
+
+- ([86ead2c](https://github.com/angular/protractor/commit/86ead2c5a20d474e59c3b9796b5438dc2090a6ed)) 
+  fix(webdriver-manager): Avoid incompatibility between request with callback and pipe.
+
+- ([7283fdf](https://github.com/angular/protractor/commit/7283fdfa1e4c69bcab6af8f28f8f1b77634a50fd)) 
+  fix(launcher): exit code is always 100 for sharded and 1 for nonsharded tests
+
 # 1.3.1
 
 ## Bug Fixes

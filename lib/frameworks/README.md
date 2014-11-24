@@ -9,9 +9,9 @@ Each file details the adapter for one test framework. Each file must export a `r
 /**
  * @param {Runner} runner The Protractor runner instance.
  * @param {Array.<string>} specs A list of absolute filenames.
- * @param {Function} done A callback for when tests are finished.
+ * @return {q.Promise} Promise resolved with the test results
  */
-exports.run = function(runner, specs, done)
+exports.run = function(runner, specs)
 ```
 
 Requirements
@@ -19,8 +19,20 @@ Requirements
 
  - `runner.emit` must be called with `testPass` and `testFail` messages.
 
- - `runner.runTestPreparers` must be called before any tests are run.
+ - `runner.runTestPreparer` must be called before any tests are run.
 
  - `runner.getConfig().onComplete` must be called when tests are finished.
 
- - When finished, `done` must be invoked and passed a results object. This object must have a `failedCount` property.
+ - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults` 
+ object of the following structure:
+ ```
+   specResults = [{
+     description: string,
+     assertions: [{
+       passed: boolean,
+       errorMsg: string,
+       stackTrace: string 
+     }],
+     duration: integer
+   }]
+ ```

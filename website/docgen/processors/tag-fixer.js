@@ -19,7 +19,7 @@ var findName = function(doc) {
   }
 
   try {
-    var node = doc.codeNode.node;
+    var node = doc.codeNode;
 
     // Is this a simple declaration? "var element = function() {".
     if (node.declarations && node.declarations.length) {

@@ -26,7 +26,7 @@ describe('modes of failure', function() {
 
   it('should fail within a promise', function () {
     browser.get('index.html#/form');
-    var greeting = element(by.binding('{{greeting}}'));
+    var greeting = element(by.binding('greeting'));
 
     greeting.getText().then(function(text) {
       expect(text).toEqual('This is not what it equals');
@@ -36,7 +36,7 @@ describe('modes of failure', function() {
   it('should fail an assertion', function() {
     browser.get('index.html#/form');
 
-    var greeting = element(by.binding('{{greeting}}'));
+    var greeting = element(by.binding('greeting'));
 
     expect(greeting.getText()).toEqual('This is not what it equals');
   });
@@ -44,7 +44,7 @@ describe('modes of failure', function() {
   it('should fail comparing a promise to another promise', function() {
     browser.get('index.html#/form');
 
-    var greeting = element(by.binding('{{greeting}}'));
+    var greeting = element(by.binding('greeting'));
 
     expect(greeting.getText()).toEqual(greeting.getAttribute('value'));
   });

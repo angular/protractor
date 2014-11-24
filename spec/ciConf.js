@@ -20,7 +20,7 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '36',
+    'version': '38',
     'platform': 'OS X 10.9',
     'selenium-version': '2.43.1'
   }, {
@@ -28,7 +28,7 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '32',
+    'version': '33',
     'selenium-version': '2.43.1'
   }],
 

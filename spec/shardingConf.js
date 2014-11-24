@@ -16,7 +16,6 @@ exports.config = {
     'basic/exclude*.js'
   ],
 
-  chromeOnly: false,
   framework: 'debugprint',
   maxSessions: 3,
   multiCapabilities: [{

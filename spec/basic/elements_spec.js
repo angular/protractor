@@ -185,6 +185,19 @@ describe('ElementFinder', function() {
       expect(finalResult.getText()).toEqual('Hiya');
     });
   });
+
+  it('should allow null as success handler', function() {
+    browser.get('index.html#/form');
+
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    expect(name.getText()).toEqual('Anon');
+    expect(
+      name.getText().then(null, function(){})
+    ).toEqual('Anon');
+
+  });
 });
 
 describe('ElementArrayFinder', function() {
@@ -194,6 +207,15 @@ describe('ElementArrayFinder', function() {
 
     var multiElement = element.all(by.binding('item.reusedBinding'));
     expect(multiElement.getText()).toEqual(['Outer: outer', 'Inner: inner']);
+  });
+
+  it('click action should act on all elements', function() {
+    var checkboxesElms = $$('#checkboxes input');
+    browser.get('index.html');
+
+    expect(checkboxesElms.isSelected()).toEqual([true, false, false]);
+    checkboxesElms.click();
+    expect(checkboxesElms.isSelected()).toEqual([false, true, true]);
   });
 
   it('action should act on all elements selected by filter', function() {
@@ -217,9 +239,9 @@ describe('ElementArrayFinder', function() {
   });
 
   it('filter should work in page object', function() {
-    var elements = element.all(by.css('.menu li a')).filter(function(elem) {
+    var elements = element.all(by.css('#animals ul li')).filter(function(elem) {
       return elem.getText().then(function(text) {
-        return text === 'bindings';
+        return text === 'big dog';
       });
     });
 
@@ -228,55 +250,55 @@ describe('ElementArrayFinder', function() {
   });
 
   it('should be able to get ElementFinder from filtered ElementArrayFinder', function() {
-    var containsI = function(elem) {
+    var isDog = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("i") > -1;
+        return text.indexOf("dog") > -1;
       });
     };
-    var elements = element.all(by.css('.menu li a')).filter(containsI);
+    var elements = element.all(by.css('#animals ul li')).filter(isDog);
 
     browser.get('index.html#/form');
-    expect(elements.count()).toEqual(4);
-    expect(elements.get(3).getText()).toEqual('animation');
+    expect(elements.count()).toEqual(3);
+    expect(elements.get(2).getText()).toEqual('other dog');
   });
 
   it('filter should be compoundable', function() {
-    var containsA = function(elem) {
+    var isDog = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("a") > -1;
+        return text.indexOf("dog") > -1;
       });
     };
-    var containsI = function(elem) {
+    var isBig = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("i") > -1;
+        return text.indexOf("big") > -1;
       });
     };
-    var elements = element.all(by.css('.menu li a')).filter(containsA).filter(containsI);
+    var elements = element.all(by.css('#animals ul li')).filter(isDog).filter(isBig);
 
     browser.get('index.html#/form');
     expect(elements.count()).toEqual(1);
     elements.then(function(arr) {
-      expect(arr[0].getText()).toEqual('animation');
+      expect(arr[0].getText()).toEqual('big dog');
     });
   });
 
   it('filter should work with reduce', function() {
-    var containsA = function(elem) {
+    var isDog = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("a") > -1;
+        return text.indexOf("dog") > -1;
       });
     };
     browser.get('index.html#/form');
-    var value = element.all(by.css('.menu li a')).filter(containsA).
+    var value = element.all(by.css('#animals ul li')).filter(isDog).
         reduce(function(currentValue, elem, index, elemArr) {
           return elem.getText().then(function(text) {
             return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
           });
         }, '');
 
-    expect(value).toEqual('0/3: repeater\n' +
-                          '1/3: async\n' +
-                          '2/3: animation\n');
+    expect(value).toEqual('0/3: big dog\n' +
+                          '1/3: small dog\n' +
+                          '2/3: other dog\n');
   });
 
   it('should find multiple elements scoped properly with chaining', function() {
@@ -344,18 +366,28 @@ describe('ElementArrayFinder', function() {
     expect(colorList.get(2).getAttribute('value')).toEqual('red');
   });
 
+  it('should get an element from an array using negative indices', function() {
+    var colorList = element.all(by.model('color'));
+
+    browser.get('index.html#/form');
+
+    expect(colorList.get(-3).getAttribute('value')).toEqual('blue');
+    expect(colorList.get(-2).getAttribute('value')).toEqual('green');
+    expect(colorList.get(-1).getAttribute('value')).toEqual('red');
+  });
+
   it('should get the first element from an array', function() {
     var colorList = element.all(by.model('color'));
     browser.get('index.html#/form');
 
-    expect(colorList.first(0).getAttribute('value')).toEqual('blue');
+    expect(colorList.first().getAttribute('value')).toEqual('blue');
   });
 
   it('should get the last element from an array', function() {
     var colorList = element.all(by.model('color'));
     browser.get('index.html#/form');
 
-    expect(colorList.last(0).getAttribute('value')).toEqual('red');
+    expect(colorList.last().getAttribute('value')).toEqual('red');
   });
 
   it('should perform an action on each element in an array', function() {
@@ -368,7 +400,7 @@ describe('ElementArrayFinder', function() {
   });
 
   it('should keep a reference to the array original locator', function() {
-    var byCss = by.css('.menu li a');
+    var byCss = by.css('#animals ul li');
     var byModel = by.model('color');
     browser.get('index.html#/form');
 
@@ -378,7 +410,7 @@ describe('ElementArrayFinder', function() {
 
   it('should map each element on array and with promises', function() {
     browser.get('index.html#/form');
-    var labels = element.all(by.css('.menu li a')).map(function(elm, index) {
+    var labels = element.all(by.css('#animals ul li')).map(function(elm, index) {
       return {
         index: index,
         text: elm.getText()
@@ -386,60 +418,54 @@ describe('ElementArrayFinder', function() {
     });
 
     expect(labels).toEqual([
-      {index: 0, text: 'repeater'},
-      {index: 1, text: 'bindings'},
-      {index: 2, text: 'form'},
-      {index: 3, text: 'async'},
-      {index: 4, text: 'conflict'},
-      {index: 5, text: 'polling'},
-      {index: 6, text: 'animation'}
+      {index: 0, text: 'big dog'},
+      {index: 1, text: 'small dog'},
+      {index: 2, text: 'other dog'},
+      {index: 3, text: 'big cat'},
+      {index: 4, text: 'small cat'}
     ]);
   });
 
   it('should map and resolve multiple promises', function() {
     browser.get('index.html#/form');
-    var labels = element.all(by.css('.menu li a')).map(function(elm) {
+    var labels = element.all(by.css('#animals ul li')).map(function(elm) {
       return {
         text: elm.getText(),
-        inner: elm.getInnerHtml(),
-        outer: elm.getOuterHtml()
+        inner: elm.getInnerHtml()
       };
     });
 
     var newExpected = function(expectedLabel) {
       return {
         text: expectedLabel,
-        inner: expectedLabel,
-        outer: '<a href="#/' + expectedLabel + '">' + expectedLabel + '</a>'
+        inner: expectedLabel
       };
     };
 
     expect(labels).toEqual([
-      newExpected('repeater'),
-      newExpected('bindings'),
-      newExpected('form'),
-      newExpected('async'),
-      newExpected('conflict'),
-      newExpected('polling'),
-      newExpected('animation')
+      newExpected('big dog'),
+      newExpected('small dog'),
+      newExpected('other dog'),
+      newExpected('big cat'),
+      newExpected('small cat')
     ]);
   });
 
   it('should map each element from a literal and promise array', function() {
     browser.get('index.html#/form');
     var i = 1;
-    var labels = element.all(by.css('.menu li a')).map(function(elm) {
+    var labels = element.all(by.css('#animals ul li')).map(function(elm) {
       return i++;
     });
 
-    expect(labels).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(labels).toEqual([1, 2, 3, 4, 5]);
   });
 
   it('should filter elements', function() {
     browser.get('index.html#/form');
-    var count = element.all(by.css('.menu li a')).filter(function(elem) {
+    var count = element.all(by.css('#animals ul li')).filter(function(elem) {
       return elem.getText().then(function(text) {
-        return text === 'bindings';
+        return text === 'big dog';
       });
     }).then(function(filteredElements) {
       return filteredElements.length;
@@ -450,20 +476,18 @@ describe('ElementArrayFinder', function() {
 
   it('should reduce elements', function() {
     browser.get('index.html#/form');
-    var value = element.all(by.css('.menu li a')).
+    var value = element.all(by.css('#animals ul li')).
         reduce(function(currentValue, elem, index, elemArr) {
           return elem.getText().then(function(text) {
             return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
           });
         }, '');
 
-    expect(value).toEqual('0/7: repeater\n' +
-                          '1/7: bindings\n' +
-                          '2/7: form\n' +
-                          '3/7: async\n' +
-                          '4/7: conflict\n' +
-                          '5/7: polling\n' +
-                          '6/7: animation\n');
+    expect(value).toEqual('0/5: big dog\n' +
+                          '1/5: small dog\n' +
+                          '2/5: other dog\n' +
+                          '3/5: big cat\n' +
+                          '4/5: small cat\n');
   });
 
   it('should always return a promise when calling then', function() {
