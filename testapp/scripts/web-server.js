@@ -24,6 +24,7 @@ var main = function() {
       join(" "));
 };
 
+var storage = {};
 var testMiddleware = function(req, res, next) {
   if (req.path == '/fastcall') {
     res.send(200, 'done');
@@ -37,6 +38,25 @@ var testMiddleware = function(req, res, next) {
     setTimeout(function() {
       res.send(200, 'slow template contents');
     }, 5000);
+  } else if (req.path == '/storage') {
+    if (req.method === 'GET') {
+      var value;
+      if (req.query.q) {
+        value = storage[req.query.q];
+        res.send(200, value);
+      } else {
+        res.send(400, 'must specify query');
+      }
+    } else if (req.method === 'POST') {
+      if (req.body.key && req.body.value) {
+        storage[req.body.key] = req.body.value;
+        res.send(200);
+      } else {
+        res.send(400, 'must specify key/value pair');
+      }
+    } else {
+      res.send(400, 'only accepts GET/POST');
+    }
   } else {
     return next();
   }
@@ -45,6 +65,7 @@ var testMiddleware = function(req, res, next) {
 testApp.configure(function() {
   testApp.use('/lib/angular', express.static(angularDir));
   testApp.use(express.static(testAppDir));
+  testApp.use(express.json());
   testApp.use(testMiddleware);
 });
 
