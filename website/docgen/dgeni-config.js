@@ -29,6 +29,12 @@ var myPackage = new Package('myPackage', [
   require('dgeni-packages/nunjucks')
 ]);
 
+//Handle Inline Tags
+myPackage.factory(require('./inline_tags/code'))
+.config(function(inlineTagProcessor, codeTagDef) {
+  inlineTagProcessor.inlineTagDefinitions.push(codeTagDef);
+});
+
 /*
  * Add a couple of processors to the pipe to do extra parsing and rendering.
  *
