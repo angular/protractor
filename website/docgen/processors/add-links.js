@@ -3,8 +3,8 @@ var _ = require('lodash');
 var templateMapping = {
   protractor: _.template('https://github.com/angular/protractor/blob/' +
       '<%= linksHash %>/lib/<%= fileName %>.js#L<%= startingLine %>'),
-  webdriver: _.template('https://code.google.com/p/selenium/source/browse/' +
-      'javascript/webdriver/<%= fileName %>.js#<%= startingLine %>')
+  webdriver: _.template('https://github.com/SeleniumHQ/selenium/blob/master/' +
+      'javascript/webdriver/<%= fileName %>.js#L<%= startingLine %>')
 };
 
 /**
@@ -34,8 +34,9 @@ var addLinkToSourceCode = function(doc) {
 };
 
 /**
- * Add links to @link annotations. For example: {@link foo.bar} will be
- * transformed into '[foo.bar]'.
+ * Add links to @link annotations. For example: `{@link foo.bar}` will be
+ * transformed into `[foo.bar](foo.bar)` and `{@link foo.bar FooBar Link}` will
+ * be transfirned into `[FooBar Link](foo.bar)`
  * @param {string} str The string with the annotations.
  * @param {!Object} doc Current document.
  * @return {string} A link in markdown format.
@@ -44,8 +45,11 @@ var addLinkToLinkAnnotation = function(str, doc) {
   var oldStr = null;
   while(str != oldStr) {
     oldStr = str;
-    var matches = /{\s*@link\s+([^{}]+?)\s*}/.exec(str);
+    var matches = /{\s*@link\s+([^]+?)\s*}/.exec(str);
     if (matches) {
+      if(matches[1].indexOf('}') != -1)
+        for(var i = 0; i < 22; i++)
+          console.log(matches[0]); 
       var str = str.replace(
           new RegExp('{\\s*@link\\s+' + matches[1] + '\\s*}'),
           toMarkdownLinkFormat(matches[1], doc)
@@ -64,8 +68,8 @@ var escape = function(str) {
 };
 
 /**
- * Takes a link of the format 'type' or 'type description' and creats one of the
- * format '[type](description)'.
+ * Takes a link of the format 'type' or 'type description' and creates one of
+ * the format '[description](type)'.
  *
  * Also does some minor reformatting of the type.
  *
@@ -78,7 +82,7 @@ var toMarkdownLinkFormat = function(link, doc) {
 
   // Split type and description
   var i = link.indexOf(' ');
-  if(i == -1) {
+  if (i == -1) {
     desc = type = link;
   } else {
     desc = link.substr(i).trim();
@@ -86,14 +90,14 @@ var toMarkdownLinkFormat = function(link, doc) {
   }
 
   // Remove extra '()' at the end of types
-  if(type.substr(-2) == '()') {
+  if (type.substr(-2) == '()') {
     type = type.substr(0, type.length - 2);
   }
 
   // Expand '#' at the start of types
-  if(type[0] == '#') {
+  if (type[0] == '#') {
     var i = doc.name.lastIndexOf('.');
-    if(i == -1) {
+    if (i == -1) {
         i = 0;
     }
     type = doc.name.substr(0, i) + type.substr(1);
@@ -103,8 +107,8 @@ var toMarkdownLinkFormat = function(link, doc) {
   type = type.replace(new RegExp('#', 'g'), '.');
 
   // Only create a link if it's in the API
-  if(typeTable[type]) {
-    return '['+type+']('+desc+')';
+  if (typeTable[type]) {
+    return '['+desc+']('+type+')';
   } else {
     return desc;
   }
@@ -130,7 +134,7 @@ var getTypeString = function(param) {
 
   if (type.type === 'FunctionType') {
     _.each(type.params, replaceWithLinkIfPresent);
-  } else if(type.type === 'TypeApplication') {
+  } else if (type.type === 'TypeApplication') {
     // Is this an Array.<type>?
     var match = str.match(/Array\.<(.*)>/);
     if (match) {
@@ -158,10 +162,10 @@ module.exports = function addLinks() {
         addLinkToSourceCode(doc);
         doc.description = addLinkToLinkAnnotation(doc.description, doc);
         //Remove @link annotations we don't process
-        if(doc.params) {
+        if (doc.params) {
           for(var i = 0; i < doc.params.length; i++) {
-            doc.params[i].description =  doc.params[i].description.replace(
-                /{\s*@link\s+([^{}]+?)\s*}/, '$1');
+            doc.params[i].description = doc.params[i].description.replace(
+                /{\s*@link\s+([^]+?)\s*}/, '$1');
           }
         }
 

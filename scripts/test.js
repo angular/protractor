@@ -30,7 +30,7 @@ var passingTests = [
 passingTests.push(
     'node node_modules/.bin/minijasminenode ' +
     glob('spec/unit/*.js').join(' ') + ' ' +
-    glob('docgen/spec/*.js').join(' '));
+    glob('website/docgen/spec/*.js').join(' '));
 
 var executor = new Executor();
 

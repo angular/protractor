@@ -29,11 +29,11 @@ var myPackage = new Package('myPackage', [
   require('dgeni-packages/nunjucks')
 ]);
 
-//Handle Inline Tags
+// Handle Inline Tags
 myPackage.factory(require('./inline_tags/code'))
-.config(function(inlineTagProcessor, codeTagDef) {
-  inlineTagProcessor.inlineTagDefinitions.push(codeTagDef);
-});
+    .config(function(inlineTagProcessor, codeTagDef) {
+      inlineTagProcessor.inlineTagDefinitions.push(codeTagDef);
+    });
 
 /*
  * Add a couple of processors to the pipe to do extra parsing and rendering.
@@ -59,7 +59,8 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
 
   readFilesProcessor.sourceFiles = [
     {include: 'lib/**/protractor.js'},
-    {include: '**/lib/**/locators.js'},
+    {include: 'lib/**/locators.js'},
+    {include: 'node_modules/selenium-webdriver/lib/**/locators.js'},
     {include: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js'}
   ];
 
