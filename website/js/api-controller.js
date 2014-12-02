@@ -71,10 +71,10 @@
         return;
       }
 
-      // Does it come with a type? Types come escaped as [theType](description).
+      // Does it come with a type? Types come escaped as [description](theType).
       var match;
       while (match = html.match(/(\[(.*?)\]\((.*?)\))/)) {
-        var link = '<a href="#/api?view=' + match[2] + '">' + match[3] + '</a>';
+        var link = '<a href="#/api?view=' + match[3] + '">' + match[2] + '</a>';
         html = html.replace(match[1], link);
       }
 

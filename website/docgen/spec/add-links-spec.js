@@ -16,6 +16,7 @@ describe('add-links', function() {
   it('should add protractor link', function() {
     var doc = {
       fileName: 'protractor',
+      fileInfo: { filePath: '' },
       startingLine: 123
     };
     addLinks([doc]);
@@ -26,17 +27,19 @@ describe('add-links', function() {
   it('should add webdriver link', function() {
     var doc = {
       fileName: 'webdriver',
+      fileInfo: { filePath: 'selenium-webdriver' },
       startingLine: 123
     };
     addLinks([doc]);
-    expect(doc.sourceLink).toBe('https://code.google.com/p/selenium/' +
-        'source/browse/javascript/webdriver/webdriver.js#123');
+    expect(doc.sourceLink).toBe('https://github.com/SeleniumHQ/selenium/' +
+        'blob/master/javascript/webdriver/webdriver.js#L123');
   });
 
   it('should add links to types', function() {
     var docWithFunction = {
       typeExpression: 'function(webdriver.WebElement, number)',
       fileName: 'protractor',
+      fileInfo: { filePath: '' },
       startingLine: 123,
       returns: {
         tagDef: {
@@ -104,12 +107,14 @@ describe('add-links', function() {
       {
         name: 'webdriver.WebElement',
         fileName: 'webdriver',
+        fileInfo: { filePath: 'selenium-webdriver' },
         startingLine: 123
       },
       docWithFunction,
       {
         name: 'Protractor',
         fileName: 'protractor',
+        fileInfo: { filePath: '' },
         startingLine: 3
       }
     ];
@@ -122,10 +127,10 @@ describe('add-links', function() {
       return docs[1].params[index].paramString;
     };
     expect(getDesc(0)).toBe(
-        'function([webdriver.WebElement], number)');
-    expect(getDesc(1)).toBe('[Protractor]');
+        'function([webdriver.WebElement](webdriver.WebElement), number)');
+    expect(getDesc(1)).toBe('[Protractor](Protractor)');
 
-    expect(docs[1].returnString).toBe('[webdriver.WebElement]');
+    expect(docs[1].returnString).toBe('[webdriver.WebElement](webdriver.WebElement)');
   });
 
   it('should add @link links', function() {
@@ -134,12 +139,14 @@ describe('add-links', function() {
       {
         name: 'webdriver.WebElement',
         fileName: 'webdriver',
+        fileInfo: { filePath: 'selenium-webdriver' },
         startingLine: 123
       },
       {
         name: 'element.findElements',
         description: 'A promise that {@link webdriver.WebElement}s',
         fileName: 'protractor',
+        fileInfo: { filePath: '' },
         startingLine: 3,
         returns: {
           tagDef: {
@@ -165,8 +172,8 @@ describe('add-links', function() {
 
     // Then ensure a link was added to the type.
     expect(docs[1].description).
-        toBe('A promise that [webdriver.WebElement]s');
+        toBe('A promise that [webdriver.WebElement](webdriver.WebElement)s');
     expect(docs[1].returns.description).
-        toBe('A promise located [webdriver.WebElement]s.');
+        toBe('A promise located [webdriver.WebElement](webdriver.WebElement)s.');
   });
 });
