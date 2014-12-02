@@ -15,7 +15,7 @@ jsDocProcessor.config(function(parseTagsProcessor) {
   tagDefs.push({name: 'example'});
   tagDefs.push({name: 'extends'});
   tagDefs.push({name: 'private'});
-  tagDefs.push({name: 'see'});
+  tagDefs.push({name: 'see', multi: true});
   tagDefs.push({name: 'type'});
   tagDefs.push({name: 'view'});
 
@@ -59,7 +59,7 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
 
   readFilesProcessor.sourceFiles = [
     {include: 'lib/**/protractor.js'},
-    {include: 'lib/**/locators.js'},
+    {include: '**/lib/**/locators.js'},
     {include: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js'}
   ];
 
