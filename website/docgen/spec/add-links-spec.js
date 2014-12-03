@@ -176,4 +176,137 @@ describe('add-links', function() {
     expect(docs[1].returns.description).
         toBe('A promise located [webdriver.WebElement](webdriver.WebElement)s.');
   });
+
+  it('should handle {@link type desc} links', function() {
+    // Given a doc with a @link annotation.
+    var docs = [
+      {
+        name: 'webdriver.WebElement',
+        fileName: 'webdriver',
+        fileInfo: { filePath: 'selenium-webdriver' },
+        startingLine: 123
+      },
+      {
+        name: 'element.findElements',
+        description: 'A promise that {@link webdriver.WebElement Web Elements}',
+        fileName: 'protractor',
+        fileInfo: { filePath: '' },
+        startingLine: 3,
+        returns: {
+          tagDef: {
+            name: 'returns',
+            aliases: ['return'],
+            canHaveType: true
+          },
+          tagName: 'return',
+          description: 'A promise located {@link webdriver.NOT_A_THING Web Elements}.',
+          startingLine: 119,
+          typeExpression: 'webdriver.WebElement',
+          type: {
+            type: 'NameExpression',
+            name: 'webdriver.WebElement'
+          },
+          typeList: ['webdriver.WebElement']
+        }
+      }
+    ];
+
+    // When you add links.
+    addLinks(docs);
+
+    // Then ensure a link was added to the type.
+    expect(docs[1].description).
+        toBe('A promise that [Web Elements](webdriver.WebElement)');
+    expect(docs[1].returns.description).
+        toBe('A promise located Web Elements.');
+  });
+
+  it('should handle "#" in @link links', function() {
+    // Given a doc with a @link annotation.
+    var docs = [
+      {
+        name: 'webdriver.WebDriver',
+        fileName: 'webdriver',
+        fileInfo: { filePath: 'selenium-webdriver' },
+        startingLine: 123
+      },
+      {
+        name: 'webdriver.WebElement',
+        description: 'A promise that {@link #WebDriver Web Drivers}',
+        fileName: 'webdriver',
+        fileInfo: { filePath: 'selenium-webdriver' },
+        startingLine: 3,
+        returns: {
+          tagDef: {
+            name: 'returns',
+            aliases: ['return'],
+            canHaveType: true
+          },
+          tagName: 'return',
+          description: 'A promise located {@link webdriver#WebElement Web Elements}.',
+          startingLine: 119,
+          typeExpression: 'webdriver.WebElement',
+          type: {
+            type: 'NameExpression',
+            name: 'webdriver.WebElement'
+          },
+          typeList: ['webdriver.WebElement']
+        }
+      }
+    ];
+
+    // When you add links.
+    addLinks(docs);
+
+    // Then ensure a link was added to the type.
+    expect(docs[1].description).
+        toBe('A promise that [Web Drivers](webdriver.WebDriver)');
+    expect(docs[1].returns.description).
+        toBe('A promise located [Web Elements](webdriver.WebElement).');
+  });
+
+  it("should remove extraneous chatacters from @link links", function() {
+    // Given a doc with a @link annotation.
+    var docs = [
+      {
+        name: 'webdriver.WebElement',
+        fileName: 'webdriver',
+        fileInfo: { filePath: 'selenium-webdriver' },
+        startingLine: 123
+      },
+      {
+        name: 'element.findElements',
+        description: 'A promise that {@link webdriver.WebElement()}',
+        fileName: 'protractor',
+        fileInfo: { filePath: '' },
+        startingLine: 3,
+        returns: {
+          tagDef: {
+            name: 'returns',
+            aliases: ['return'],
+            canHaveType: true
+          },
+          tagName: 'return',
+          description: 'A promise located {@link webdriver.WebElement    Web Elements }.',
+          startingLine: 119,
+          typeExpression: 'webdriver.WebElement',
+          type: {
+            type: 'NameExpression',
+            name: 'webdriver.WebElement'
+          },
+          typeList: ['webdriver.WebElement']
+        }
+      }
+    ];
+
+    // When you add links.
+    addLinks(docs);
+
+    // Then ensure a link was added to the type.
+    expect(docs[1].description).
+        toBe('A promise that [webdriver.WebElement()](webdriver.WebElement)');
+    expect(docs[1].returns.description).
+        toBe('A promise located [Web Elements](webdriver.WebElement).');
+
+  });
 });
