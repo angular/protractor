@@ -23,7 +23,7 @@ Before submitting an issue, please search the issue archive to help reduce dupli
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
 When submitting an issue, please include context from your test and
-your application. If there's an error, please include the error text.
+your application. If there's an error, please include the error text. Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
 
 Please format code and markup in your issue using [github markdown](https://help.github.com/articles/github-flavored-markdown).
 
