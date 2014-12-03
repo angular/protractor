@@ -47,11 +47,9 @@ var addLinkToLinkAnnotation = function(str, doc) {
     oldStr = str;
     var matches = /{\s*@link\s+([^]+?)\s*}/.exec(str);
     if (matches) {
-      if(matches[1].indexOf('}') != -1)
-        for(var i = 0; i < 22; i++)
-          console.log(matches[0]); 
       var str = str.replace(
-          new RegExp('{\\s*@link\\s+' + matches[1] + '\\s*}'),
+          new RegExp('{\\s*@link\\s+' +
+              matches[1].replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\s*}'),
           toMarkdownLinkFormat(matches[1], doc)
       );
     }
@@ -96,11 +94,7 @@ var toMarkdownLinkFormat = function(link, doc) {
 
   // Expand '#' at the start of types
   if (type[0] == '#') {
-    var i = doc.name.lastIndexOf('.');
-    if (i == -1) {
-        i = 0;
-    }
-    type = doc.name.substr(0, i) + type.substr(1);
+    type = doc.name.substr(0, doc.name.lastIndexOf('.')+1) + type.substr(1);
   }
 
   // Replace '#' in the middle of types with '.'
