@@ -52,3 +52,12 @@ which will run after the other tasks:
 ```javascript
   expect(name.getText()).toEqual('Jane Doe');
 ```
+
+Mocha Users
+-----------
+
+If you are using Mocha as your test framework, the control flow will still
+automatically empty itself before each test completes. However, the `expect`
+function in Mocha is _not_ adapted to understand promises - that's why you'll
+need to use an assertion framework such as Chai as Promised. See
+[Choosing a Framework](/docs/frameworks.md) for more information.
