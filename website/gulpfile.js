@@ -4,7 +4,7 @@ var del = require('del');
 var Dgeni = require('dgeni');
 var gulp = require('gulp');
 var less = require('gulp-less');
-var marked = require('gulp-marked');
+var markdown = require('gulp-markdown');
 var minifyCSS = require('gulp-minify-css');
 var path = require('path');
 var rename = require("gulp-rename");
@@ -103,7 +103,7 @@ gulp.task('watch', function() {
 // Transform md files to html.
 gulp.task('markdown', function() {
   gulp.src(['../docs/*.md', '!../docs/api.md'])
-      .pipe(marked())
+      .pipe(markdown())
       // Fix md links.
       .pipe(replace(/\/docs\/(.*)\.md/g, '#/$1'))
       // Fix reference conf links.
