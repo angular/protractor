@@ -18,6 +18,14 @@ jsDocProcessor.config(function(parseTagsProcessor) {
   tagDefs.push({name: 'see', multi: true});
   tagDefs.push({name: 'type'});
   tagDefs.push({name: 'view'});
+  tagDefs.push({name: 'template'});
+  tagDefs.push({name: 'fileoverview'});
+  tagDefs.push({name: 'const'});
+  tagDefs.push({name: 'throws'});
+  tagDefs.push({name: 'typedef'});
+  tagDefs.push({name: 'override'});
+  tagDefs.push({name: 'implements'});
+  tagDefs.push({name: 'final'});
 
   // The name tag should not be required.
   var nameTag = _.find(tagDefs, {name: 'name'});
