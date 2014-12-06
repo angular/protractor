@@ -1,3 +1,64 @@
+# 1.5.0
+
+## Features
+
+- ([55a91ea](https://github.com/angular/protractor/commit/55a91ea137395891248db148df75dd6408c3b3a2)) 
+  feat(launcher): reorganize launcher + add option to store test results as JSON
+
+  You may now use `config.resultJsonOutputFile` to specify a location for
+  output. See docs/referenceConf.js for more usage.
+
+- ([6a88642](https://github.com/angular/protractor/commit/6a886425a11b28fce83b6eec1f52296c4f78b7f0)) 
+  feat(plugins): basic tools for adding plugins
+
+- ([2572feb](https://github.com/angular/protractor/commit/2572febe2c607d459a21e2ba99a1dcece2083d2d)) 
+  feat(plugin): ngHint plugin
+
+  For information on usage, see `plugins/ngHintPlugin.js`. More documentation
+  on plugins will be added soon.
+
+- ([0bbfd2b](https://github.com/angular/protractor/commit/0bbfd2b6d38392938781d846ad37b5a0fd964004)) 
+  feat(protractor/runner): allow multiple browser in test
+
+  Closes https://github.com/angular/protractor/issues/381
+  Usage: `browser.forkNewDriverInstance`.
+
+- ([8b5ae8b](https://github.com/angular/protractor/commit/8b5ae8ba3d2b3f1de75c0add91694e39e9c591a8)) 
+  feat(troubleshoot): Add more information when the --troubleshoot flag is used
+
+  Improve error messages and add debug info when
+  - the configuration file cannot be parsed
+  - a webdriver session cannot be started
+  - more than one element is found using `element`
+
+  Unify format used for warnings and errors.
+
+## Bug Fixes
+
+- ([30023f2](https://github.com/angular/protractor/commit/30023f2689171bc4f51a173d9cfd62a18fe276c5)) 
+  fix(runner): setTestPreparer does not work
+
+  setTestPreparer would always set the testPrepare to config.onprepare during
+  `runner.run()`. This is breaking for code that relies on setTestPreparer directly.
+
+- ([47f12ba](https://github.com/angular/protractor/commit/47f12ba31754346062a1e1d20380346a1c7a0659)) 
+  fix(clientsidescripts): make findByCssContainingText tolerate elements with no
+  textContent/innerText
+
+- ([6a9b87c](https://github.com/angular/protractor/commit/6a9b87cac9b85cde6ae464eafe4abbba27e4fe4f)) 
+  fix(elementexplorer): eval always treat result as promise
+
+- ([289dbb9](https://github.com/angular/protractor/commit/289dbb91a0676add40c12bb85d134904c57dcefd)) 
+  fix(util): properly handle exceptions from onPrepare and onExit
+
+- ([a132fac](https://github.com/angular/protractor/commit/a132fac0afed5dc5fe8e2663e5aa1c1a90586920)) 
+  fix(jasmine): fix errors when iit was used
+
+  Errors were due to Jasmine not calling reportSpecStarting when iit was used, but calling
+  reportSpecResults.
+
+  Closes #1602
+
 # 1.4.0
 
 ## Features
