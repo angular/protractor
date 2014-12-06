@@ -9,7 +9,8 @@
     var greeting = element(by.binding(&#39;yourName&#39;));
     expect(greeting.getText()).toEqual(&#39;Hello Julie!&#39;);
   });
-});</code></pre>
+});
+</code></pre>
 <h2 id="with-pageobjects">With PageObjects</h2>
 <p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
 <pre><code class="lang-js">var AngularHomepage = function() {
@@ -23,7 +24,8 @@
   this.setName = function(name) {
     this.nameInput.sendKeys(name);
   };
-};</code></pre>
+};
+</code></pre>
 <p>The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the <em>functionality</em> of the test script itself does not change (nothing is added or deleted).</p>
 <pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, function() {
@@ -34,7 +36,8 @@
 
     expect(angularHomepage.greeting.getText()).toEqual(&#39;Hello Julie!&#39;);
   });
-});</code></pre>
+});
+</code></pre>
 <h2 id="configuring-test-suites">Configuring Test Suites</h2>
 <p>It is possible to separate your tests into various test suites. In your config file, you could setup  the suites option as shown below. </p>
 <pre><code class="lang-js">exports.config = {
@@ -58,6 +61,8 @@
   jasmineNodeOpts: {
     showColors: true, // Use colors in the command line report.
   }
-};</code></pre>
+};
+</code></pre>
 <p>From the command line, you can then easily switch between running one or the other suite of tests. This command will run only the homepage section of the tests:</p>
-<pre><code ng-non-bindable>protractor protractor.conf.js --suite homepage</code></pre>
+<pre><code ng-non-bindable>protractor protractor.conf.js --suite homepage
+</code></pre>

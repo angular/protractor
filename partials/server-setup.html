@@ -1,8 +1,8 @@
 <h1 id="setting-up-the-selenium-server">Setting Up the Selenium Server</h1>
 <p>When working with Protractor, you need to specify how to connect to the browser drivers which will start up and control the browsers you are testing on. You will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols).</p>
 <p>The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations.</p>
-<pre><code ng-non-bindable>     [Test Scripts] &lt; ------------ &gt; [Selenium Server] &lt; ------------ &gt; [Browser Drivers]</code></pre>
-<p>The <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>reference config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
+<pre><code ng-non-bindable>     [Test Scripts] &lt; ------------ &gt; [Selenium Server] &lt; ------------ &gt; [Browser Drivers]
+</code></pre><p>The <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>reference config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
 <h2 id="standalone-selenium-server">Standalone Selenium Server</h2>
 <p>To run the Selenium Server on your local machine, use the standalone Selenium Server. </p>
 <p><strong>JDK</strong></p>
@@ -40,7 +40,7 @@
 <ul>
 <li><code ng-non-bindable>seleniumAddress</code> -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.</li>
 </ul>
-<p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code> and <code ng-non-bindable>seleniumArgs</code> will be ignored.</p>
+<p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code> and <code ng-non-bindable>seleniumArgs</code> will be ignored (it will also override the sauce options listed below).</p>
 <h2 id="remote-selenium-server">Remote Selenium Server</h2>
 <p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="http://www.saucelabs.com">Sauce Labs</a>.</p>
 <p>In your config file, set these options:</p>
