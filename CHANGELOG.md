@@ -59,6 +59,29 @@
 
   Closes #1602
 
+## Breaking Changes
+
+- ([0bbfd2b](https://github.com/angular/protractor/commit/0bbfd2b6d38392938781d846ad37b5a0fd964004)) 
+  feat(protractor/runner): allow multiple browser in test
+
+  `protractor.getInstance()` had been unused (replaced by global `browser` in v0.12.0)
+  and is now removed.
+
+  Before:
+  ```js
+  var myBrowser2 = protractor.getInstance();
+  ```
+
+  After:
+  ```js
+  // In normal tests, just use the exported global browser
+  var myBrowser2 = browser;
+  ```
+
+  If you are creating your own instance of the Protractor class, you may still
+  use `protractor.wrapDriver` as before.
+
+
 # 1.4.0
 
 ## Features
