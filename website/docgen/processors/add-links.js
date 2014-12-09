@@ -155,17 +155,11 @@ module.exports = function addLinks() {
       docs.forEach(function(doc) {
         addLinkToSourceCode(doc);
         doc.description = addLinkToLinkAnnotation(doc.description, doc);
-        //Remove @link annotations we don't process
-        if (doc.params) {
-          for(var i = 0; i < doc.params.length; i++) {
-            doc.params[i].description = doc.params[i].description.replace(
-                /{\s*@link\s+([^]+?)\s*}/, '$1');
-          }
-        }
 
-        // Add links for the param types.
+        // Add links for the params.
         _.each(doc.params, function(param) {
           param.paramString = getTypeString(param);
+          param.description = addLinkToLinkAnnotation(param.description, doc);
         });
 
         // Add links for the return types.
