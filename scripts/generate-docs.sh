@@ -13,15 +13,11 @@ if [ $(git status --porcelain | wc -l) != "0" ]; then
 fi
 
 #Generate files
-gulp
+npm run build
 if [ $? -ne 0 ]; then
   echo
   echo "-----------------------------------------------------------------------"
-  echo "Gulp failed.  If you got a message that you were missing a required"
-  echo "package, try running the following in /website/:"
-  echo
-  echo "npm install del dgeni-packages dgeni gulp gulp-concat gulp-connect \\"
-  echo "    gulp-less gulp-markdown gulp-minify-css gulp-rename gulp-replace"
+  echo "Build failed. Try running 'npm install' in /website/."
   echo
   exit 1
 fi
@@ -37,4 +33,7 @@ git reset --hard
 cp -r website/build/* .
 git add -A
 git commit -m "chore(website): automatic docs update"
+echo
+echo -e "\tCreated update commit in gh-pages branch"
+echo
 git checkout "${EXEC_BRANCH}"
