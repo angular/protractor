@@ -15,7 +15,6 @@ jsDocProcessor.config(function(parseTagsProcessor) {
   tagDefs.push({name: 'example'});
   tagDefs.push({name: 'extends'});
   tagDefs.push({name: 'private'});
-  tagDefs.push({name: 'see', multi: true});
   tagDefs.push({name: 'type'});
   tagDefs.push({name: 'view'});
   tagDefs.push({name: 'template'});
@@ -45,18 +44,22 @@ myPackage.factory(require('./inline_tags/code'))
 
 /*
  * Add a couple of processors to the pipe to do extra parsing and rendering.
+ * Note that the order in which these are included is very important.
  *
  * tag-fixer: Get the name of the function, format the @param and @return
  *     annotations to prepare them for rendering.
  * filter-jsdoc: Filter the functions that will not be part of the output
  *     documentation and generate a unique name for the output partial file.
+ * transfer-see: Takes the information in @see tags and appends it to the
+ *     description
  * add-links: Add links to the source code for protractor.js, locators.js,
  *     and webdriver.js.
- * add-toc: Add the table of contents.
+ * add-toc: Generates the table of contents.
  */
 myPackage.processor(require('./processors/tag-fixer'));
 myPackage.processor(require('./processors/filter-jsdoc'));
 myPackage.processor(require('./processors/set-file-name'));
+myPackage.processor(require('./processors/transfer-see'));
 myPackage.processor(require('./processors/add-links'));
 myPackage.processor(require('./processors/add-toc'));
 

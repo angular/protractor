@@ -87,25 +87,26 @@ var toMarkdownLinkFormat = function(link, doc) {
     type = link.substr(0, i).trim();
   }
 
-  // Remove extra '()' at the end of types
-  if (type.substr(-2) == '()') {
-    type = type.substr(0, type.length - 2);
-  }
+  if(!type.match(/^https?:\/\//)) {
+    // Remove extra '()' at the end of types
+    if (type.substr(-2) == '()') {
+      type = type.substr(0, type.length - 2);
+    }
 
-  // Expand '#' at the start of types
-  if (type[0] == '#') {
-    type = doc.name.substr(0, doc.name.lastIndexOf('.')+1) + type.substr(1);
-  }
+    // Expand '#' at the start of types
+    if (type[0] == '#') {
+      type = doc.name.substr(0, doc.name.lastIndexOf('.') + 1) + type.substr(1);
+    }
 
-  // Replace '#' in the middle of types with '.'
-  type = type.replace(new RegExp('#', 'g'), '.');
+    // Replace '#' in the middle of types with '.'
+    type = type.replace(new RegExp('#', 'g'), '.');
 
-  // Only create a link if it's in the API
-  if (typeTable[type]) {
-    return '['+desc+']('+type+')';
-  } else {
-    return desc;
+    // Only create a link if it's in the API
+    if (!typeTable[type]) {
+      return desc;
+    }
   }
+  return '[' + desc + '](' + type + ')';
 };
 
 /**
