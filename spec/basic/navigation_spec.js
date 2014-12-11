@@ -15,6 +15,20 @@ describe('navigation', function() {
     alertDialog.accept();
   });
 
+  it('should deal with dialogs', function() {
+    var addOnbeforeunload = $('#addOnbeforeunload');
+    var removeOnbeforeunload = $('#removeOnbeforeunload');
+    
+    addOnbeforeunload.click();
+    browser.navigate().refresh();
+    var alertDialog = browser.switchTo().alert();
+    
+    expect(alertDialog.getText()).toEqual('Are you sure?');
+
+    alertDialog.accept();
+    removeOnbeforeunload.click();
+  });
+
   it('should refresh properly', function() {
     var username = element(by.model('username'));
     var name = element(by.binding('username'));
