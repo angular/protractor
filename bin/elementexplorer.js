@@ -63,6 +63,71 @@ var list = function(locator) {
   });
 };
 
+var highlight = function() {
+  var locator = arguments[0];
+  var timeFlashing = arguments[1];
+  if (timeFlashing == undefined){ timeFlashing = 5;}
+
+  var xPaths = [];
+  var cssBorders = [];
+  
+  var getXPath = function(element){
+    var xpath = '';
+    for ( ; element && element.nodeType == 1; element = element.parentNode )
+    {
+        var id = $(element.parentNode).children(element.tagName).index(element) + 1;
+        id > 1 ? (id = '[' + id + ']') : (id = '');
+        xpath = '/' + element.tagName.toLowerCase() + id + xpath;
+    }
+    return xpath;
+  }
+  
+  var setElementBorder = function(xPath, borderValue)
+  {
+    var x = document.evaluate(xPath, document, null, XPathResult.ANY_TYPE, null);
+    var xx = x.iterateNext();
+    xx.style.border = borderValue;
+  }
+
+  return browser.findElements(locator).then(function(arr) {
+    for (var i = 0; i < arr.length; ++i) {
+      driver.executeScript(getXPath, arr[i]).then(function(result){
+        xPaths.push(result);
+      });
+
+      arr[i].getCssValue("border").then(function(val) {
+        cssBorders.push(val);
+			});
+		}
+		
+		if(arr.length == 0) {
+			return "No elements found.";
+		}
+	}).then(function() {
+		var timesFlashed = timeFlashing*2;
+		var waitTime = 500;
+		
+		for (var t = 0; t < timesFlashed; t++) {
+			var borderValue = "5px inset rgb(256, 0, 0)";
+			if (t%2 == 1) {
+				borderValue = "5px inset rgb(256, 256, 0)";
+			}
+      
+			for (var i = 0; i < xPaths.length; i++) {
+				driver.executeScript(setElementBorder, xPaths[i], borderValue);	
+			}
+      
+			driver.sleep(waitTime);
+		}
+	}).then(function() {
+		for (var j = 0; j < cssBorders.length; j++) {
+			driver.executeScript(setElementBorder, xPaths[j], borderValue);
+		}
+		
+		return "Highlighting Completed.";
+	});
+};
+
 var flowEval = function(code, context, file, callback) {
 
   var vmErr,
@@ -137,7 +202,7 @@ var startUp = function() {
     global.element = browser.element;
     global.by = global.By = protractor.By;
     global.list = list;
-
+    global.highlight = highlight;
 
     util.puts('Type <tab> to see a list of locator strategies.');
     util.puts('Use the `list` helper function to find elements by strategy:');
