@@ -125,14 +125,26 @@ exports.config = {
     specs: ['spec/chromeOnlySpec.js'],
 
     // Spec files to be excluded on this capability only.
-    exclude: ['spec/doNotRunInChromeSpec.js']
+    exclude: ['spec/doNotRunInChromeSpec.js'],
 
+    // Optional: override global seleniumAddress on this capability only.
+    seleniumAddress: null
   },
 
   // If you would like to run more than one instance of WebDriver on the same
   // tests, use multiCapabilities, which takes an array of capabilities.
   // If this is specified, capabilities will be ignored.
   multiCapabilities: [],
+
+  // If you need to resolve multiCapabilities asynchronously (i.e. wait for 
+  // server/proxy, set firefox profile, etc), you can specify a function here
+  // which will return either `multiCapabilities` or a promise to
+  // `multiCapabilities`.
+  // If this returns a promise, it is resolved immediately after 
+  // `beforeLaunch` is run, and before any driver is set up.
+  // If this is specified, both capabilities and multiCapabilities will be
+  // ignored.
+  getMultiCapabilities: null,
 
   // Maximum number of total browser sessions to run. Tests are queued in
   // sequence if number of browser sessions is limited by this parameter.
