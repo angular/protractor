@@ -216,6 +216,10 @@ exports.config = {
   // The path is relative to the location of this config.
   resultJsonOutputFile: null,
 
+  // If true, protractor will restart the browser between each test. 
+  // CAUTION: This will cause your tests to slow down drastically.
+  restartBrowserBetweenTests: false,
+
   // ---------------------------------------------------------------------------
   // ----- The test framework --------------------------------------------------
   // ---------------------------------------------------------------------------
