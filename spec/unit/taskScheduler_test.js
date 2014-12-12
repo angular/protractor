@@ -9,9 +9,9 @@ describe('the task scheduler', function() {
         'spec/unit/data/fakespecA.js',
         'spec/unit/data/fakespecB.js'
       ],
-      capabilities: {
+      multiCapabilities: [{
         browserName: 'chrome'
-      }
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);
@@ -30,11 +30,11 @@ describe('the task scheduler', function() {
         'spec/unit/data/fakespecA.js',
         'spec/unit/data/fakespecB.js'
       ],
-      capabilities: {
+      multiCapabilities: [{
         shardTestFiles: true,
         maxInstances: 2,
         browserName: 'chrome'
-      }
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);
@@ -58,10 +58,10 @@ describe('the task scheduler', function() {
         'spec/unit/data/fakespecA.js',
         'spec/unit/data/fakespecB.js'
       ],
-      capabilities: {
+      multiCapabilities: [{
         count: 2,
         browserName: 'chrome'
-      }
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);
@@ -113,11 +113,11 @@ describe('the task scheduler', function() {
         'spec/unit/data/fakespecA.js',
         'spec/unit/data/fakespecB.js'
       ],
-      capabilities: {
+      multiCapabilities: [{
         shardTestFiles: true,
         maxInstances: 1,
         browserName: 'chrome'
-      }
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);
@@ -212,24 +212,6 @@ describe('the task scheduler', function() {
     expect(task6.specs.length).toEqual(1);
     task6.done();
 
-    expect(scheduler.numTasksOutstanding()).toEqual(0);
-  });
-
-  it('should default to chrome when no capability is defined', function() {
-    var toAdd = {
-      specs: [
-        'spec/unit/data/fakespecA.js',
-        'spec/unit/data/fakespecB.js'
-      ]
-    };
-    var config = new ConfigParser().addConfig(toAdd).getConfig();
-    var scheduler = new TaskScheduler(config);
-
-    var task = scheduler.nextTask();
-    expect(task.capabilities.browserName).toEqual('chrome');
-    expect(task.specs.length).toEqual(2);
-
-    task.done();
     expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 

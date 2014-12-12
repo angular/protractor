@@ -25,7 +25,8 @@ var passingTests = [
   'node lib/cli.js spec/ngHintSuccessConfig.js',
   'node lib/cli.js spec/interactionConf.js',
   'node lib/cli.js spec/directConnectConf.js',
-  'node lib/cli.js spec/restartBrowserBetweenTestsConf.js'
+  'node lib/cli.js spec/restartBrowserBetweenTestsConf.js',
+  'node lib/cli.js spec/getCapabilitiesConf.js'
 ];
 
 passingTests.push(
