@@ -1,1 +1,21 @@
 .pln{color:#000}@media screen{.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.clo,.opn,.pun{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}}@media print,projection{.str{color:#060}.kwd{color:#006;font-weight:700}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:700}.lit{color:#044}.clo,.opn,.pun{color:#440}.tag{color:#006;font-weight:700}.atn{color:#404}.atv{color:#060}}pre.prettyprint{padding:2px;border:1px solid #888}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}li.L1,li.L3,li.L5,li.L7,li.L9{background:#eee}.protractor-container{margin-bottom:50px;padding-top:50px}.protractor-container .protractor-header{text-align:center;margin-bottom:50px;margin-top:40px}.gist{margin:20px 0}.github-button{background-color:#e23237}.github-button:hover{background-color:#b52e31}.github-button img{margin-right:12px}.protractor-logo{display:inline-block}@media (max-width:500px){.protractor-logo{background-image:url(../img/protractor-logo-300.png);height:67px;width:300px}}@media (min-width:500px){.protractor-logo{background-image:url(../img/protractor-logo-450.png);height:101px;width:450px}}.twitter{margin:20px 0;text-align:center}.api-title{margin-top:10px}.api-left-nav .title{display:inline-block;font-size:1.2em;margin:10px 0 5px}.api-left-nav .child{color:#777;margin-left:20px}@media (min-width:1200px){.container{max-width:960px}}.toggle-menu-button-container{padding:0 15px}.toggle-menu-button-container button{margin-top:10px;width:100%}.mobile-menu{margin:15px}.mobile-menu .title{font-size:1.5em;margin-top:10px;text-align:center}.mobile-menu .parent{font-size:1.2em;margin-top:10px}.mobile-menu .child{color:#777;font-size:1.1em;padding-right:10px}
+
+@media (min-width: 500px) and (-webkit-min-device-pixel-ratio: 1.5),
+	only screen and (-o-min-device-pixel-ratio: 3/2),
+	only screen and (min--moz-device-pixel-ratio: 1.5),
+	only screen and (min-device-pixel-ratio: 1.5) {
+	.protractor-logo {
+		background-image: url('../img/protractor-logo-900.png');
+		background-size: 100%;
+	}
+}
+
+@media (max-width: 500px) and (-webkit-min-device-pixel-ratio: 1.5),
+	only screen and (-o-min-device-pixel-ratio: 3/2),
+	only screen and (min--moz-device-pixel-ratio: 1.5),
+	only screen and (min-device-pixel-ratio: 1.5) {
+	.protractor-logo {
+		background-image: url('../img/protractor-logo-600.png');
+		background-size: 100%;
+	}
+}
