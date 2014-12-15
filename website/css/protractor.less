@@ -37,13 +37,20 @@
 
 .protractor-logo {
   display: inline-block;
+  background-size: 100%;
   @media (max-width: 500px) {
     background-image: url(../img/protractor-logo-300.png);
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+      background-image: url(../img/protractor-logo-600.png);
+    }
     height: 67px;
     width: 300px;
   }
   @media (min-width: 500px) {
     background-image: url(../img/protractor-logo-450.png);
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+      background-image: url(../img/protractor-logo-900.png);
+    }
     height: 101px;
     width: 450px;
   }
