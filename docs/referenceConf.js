@@ -104,6 +104,9 @@ exports.config = {
   // https://code.google.com/p/selenium/wiki/DesiredCapabilities
   //
   // In addition, you may specify count, shardTestFiles, and maxInstances.
+  // 
+  // Capabilities can be a promise, which is resolved immediately after 
+  // `beforeLaunch` is run, and before any driver set up.
   capabilities: {
     browserName: 'chrome',
 
@@ -125,8 +128,10 @@ exports.config = {
     specs: ['spec/chromeOnlySpec.js'],
 
     // Spec files to be excluded on this capability only.
-    exclude: ['spec/doNotRunInChromeSpec.js']
+    exclude: ['spec/doNotRunInChromeSpec.js'],
 
+    // Override global seleniumAddress on this capability only.
+    seleniumAddress: null,
   },
 
   // If you would like to run more than one instance of WebDriver on the same
