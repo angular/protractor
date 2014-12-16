@@ -29,7 +29,7 @@ var passingTests = [
 ];
 
 passingTests.push(
-    'node node_modules/.bin/minijasminenode ' +
+    'node node_modules/minijasminenode/bin/minijn ' +
     glob('spec/unit/*.js').join(' ') + ' ' +
     glob('website/docgen/spec/*.js').join(' '));
 
@@ -51,7 +51,7 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/singleFailureConf.js
       stackTrace: 'single_failure_spec1.js:5:32'
     });
 
-// assert timeout works 
+// assert timeout works
 executor.addCommandlineTest('node lib/cli.js spec/errorTest/timeoutConf.js')
     .expectExitCode(1)
     .expectErrors({

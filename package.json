@@ -47,8 +47,8 @@
   "main": "lib/protractor.js",
   "scripts": {
     "pretest": "node_modules/.bin/jshint lib spec scripts",
-    "test": "scripts/test.js",
-    "start": "testapp/scripts/web-server.js"
+    "test": "node scripts/test.js",
+    "start": "node testapp/scripts/web-server.js"
   },
   "license": "MIT",
   "version": "1.5.0"
