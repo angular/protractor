@@ -35,9 +35,13 @@
 
 var webdriver = require('selenium-webdriver');
 var protractor = require('../lib/protractor.js');
+var locatorFinder = require('../lib/locatorFinder.js');
 var repl = require('repl');
 var util = require('util');
 var vm = require('vm');
+var path = require('path');
+var http = require('http');
+var url = require('url');
 
 var driver, browser;
 
@@ -61,6 +65,71 @@ var list = function(locator) {
     }
     return found;
   });
+};
+
+/**
+ * Open a server on port 13000 that will receive queries from the chrome
+ * extension.
+ */
+var startServer = function() {
+
+  var testSelector = function(flow, selector) {
+    return flow.execute(function() {
+      return vm.runInThisContext(selector, null);
+    }).then(function(res) {
+      return res;
+    }, function(err) {
+      return 'There was a webdriver error: ' + err.name + ' ' + err.message;
+    });
+  };
+
+  http.createServer(function (request, response) {
+    var flow = webdriver.promise.controlFlow(),
+        parsedUrl = url.parse(request.url, true),
+        locatorResults = {};
+
+    // Is this a popup query or a devtools query?
+    if (parsedUrl.query.popupInput) {
+      var popupInput = parsedUrl.query.popupInput;
+
+      console.log('Testing popup input', popupInput);
+
+      // If the popup input starts with 'by' then execute a count expression.
+      var expr = /^by/.test(popupInput) ?
+          'element.all(' + popupInput + ').count()' : popupInput;
+
+      locatorResults[expr] = testSelector(flow, expr);
+    } else {
+      var locators = JSON.parse(parsedUrl.query.locators),
+          suggestionList = locatorFinder.buildLocatorList(locators);
+
+      console.log('Testing locators', locators);
+      console.log('Testing locator list', suggestionList);
+
+      // Go through all the selectors and test them.
+      suggestionList.forEach(function(suggestion) {
+        locatorResults[suggestion.locator] =
+            testSelector(flow, suggestion.countExpression);
+      });
+    }
+
+    var sendResponse = function(results) {
+      console.log('Sending locator results', results);
+      response.writeHead(200,
+          {'Content-Type': 'application/json; charset=utf-8'});
+      response.end(JSON.stringify({
+        results: results
+      }));
+    };
+
+    // Does it have any locators to test?
+    if (Object.keys(locatorResults).length) {
+      webdriver.promise.fullyResolved(locatorResults).then(sendResponse);
+    } else {
+      sendResponse({log: 'Cannot find suggestions'});
+    }
+  }).listen(13000);
+  console.log('Listening on port 13000');
 };
 
 var flowEval = function(code, context, file, callback) {
@@ -119,9 +188,17 @@ var startRepl = function() {
 };
 
 var startUp = function() {
+  // Resolve the path for the chrome extension.
+  var extensionPath = path.resolve(__dirname, '../extension');
+
   driver = new webdriver.Builder().
-    usingServer('http://localhost:4444/wd/hub').
-    withCapabilities({'browserName': 'chrome'}).build();
+      usingServer('http://localhost:4444/wd/hub').
+      withCapabilities({
+        'browserName': 'chrome',
+        'chromeOptions': {
+          'args': ['--load-extension=' + extensionPath]
+        }
+      }).build();
 
   driver.getSession().then(function(session) {
     driver.manage().timeouts().setScriptTimeout(11000);
@@ -143,10 +220,17 @@ var startUp = function() {
     util.puts('Use the `list` helper function to find elements by strategy:');
     util.puts('  e.g., list(by.binding(\'\')) gets all bindings.');
     util.puts('');
+    util.puts('IMPORTANT:');
+    util.puts('The element explorer will not work when the dev tools window ' +
+        'is open on the first tab of the launched chrome browser. To use the ' +
+        'dev tools duplicate the first tab and inspect on the second tab.');
+    util.puts('');
 
     var url = process.argv[2] || 'about:blank';
     util.puts('Getting page at: ' + url);
     driver.get(url);
+
+    startServer();
 
     startRepl();
   });

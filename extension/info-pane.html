@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Protractor</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <style>
+    body {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    dt {
+      margin-top: 10px;
+    }
+
+    img {
+      margin-bottom: 8px;
+    }
+
+    .container {
+      margin-bottom: 40px;
+    }
+
+    .ptor-header h1 {
+      font-size: 40px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="ptor-header">
+    <h1>
+      <img src="images/icon-38.png" alt="Protractor"/> Protractor tester
+    </h1>
+  </div>
+
+  <p class="lead">Test protractor selectors from your browser</p>
+
+  <h3>Instructions</h3>
+
+  <p>
+    The extension includes two components:
+  </p>
+  <ul>
+    <li>A popup to enter protractor locators and expressions.</li>
+    <li>A developer tools to suggest locators for the selected element.</li>
+  </ul>
+
+  <h3>Using the popup</h3>
+
+  <p>
+    You can use the popup to enter Protractor selectors or execute commands that
+    you would normally enter in the element explorer.
+  </p>
+
+  <p>
+    When you enter a locator starting with <code>by.</code> (e.g.
+    <code>by.css</code>, <code>by.model</code>, <code>by.binding</code>, etc.)
+    then it will be executed as a count expression
+    <code>element.all(&lt;your locator&gt;).count()</code> by the element
+    explorer.
+  </p>
+
+  <img src="images/popup-screen.png" class="img-rounded" alt="popup screenshot"/>
+
+  <h3>Using the developer tools</h3>
+
+  <p>
+    The developer tools extension tries to find protractor locators for the
+    currently selected item. To open the extension go to Developer tools >
+    Elements and then on the side pane (Styles, Computed, etc.) choose
+    Protractor.
+  </p>
+
+  <img src="images/dev-tools.png" alt="open dev tools"/>
+
+  <p>
+    The DevTools extension is limited because you cannot use it in the same
+    browser tab launched by the element explorer. To use the extension you need
+    to open a new tab with the same page for which you want to find locator
+    suggestions. Once the dev tools in the second tab is open then it will
+    provide locator suggestions every time you change the selected element in
+    the elements tab.
+  </p>
+
+  <p>
+    When you open the DevTools window, ChromeDriver is automatically
+    disconnected. When ChromeDriver receives a command, if disconnected, it
+    will attempt to close the DevTools window and reconnect.
+    (<a href="https://sites.google.com/a/chromium.org/chromedriver/help/devtools-window-keeps-closing" target="_blank">source</a>).
+  </p>
+  <img src="images/dev-tools2.png" alt="selectors"/>
+</div>
+</body>
+</html>

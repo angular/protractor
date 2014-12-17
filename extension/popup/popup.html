@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Protractor selector tester</title>
+  <style>
+    body {
+      min-width: 600px;
+      max-width: 900px;
+    }
+
+    a {
+      cursor: pointer;
+    }
+
+    .remove,
+    .remove:hover {
+      color: #000;
+      margin-right: 8px;
+      text-decoration: none;
+    }
+
+    #history-list {
+      max-height: 320px;
+      overflow: scroll;
+    }
+
+    #history-list.panel {
+      margin-bottom: 0;
+    }
+  </style>
+  <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+  <script src="../js/angular.min.js"></script>
+  <script src="../js/angular-resource.min.js"></script>
+  <script src="popup.js"></script>
+</head>
+<body ng-app="ptorApp" ng-controller="LocatorCtrl">
+<form ng-submit="testLocator()">
+  <label for="locator">Enter locator or command | </label>
+  <a title="Load current url in the element explorer window"
+      ng-click="syncUrl()"><strong>Sync url</strong></a>
+  <div class="input-group">
+    <input
+        id="locator"
+        type="text"
+        placeholder="e.g. by.css('.foo') or $('.foo').getText()"
+        ng-model="locator"
+        class="form-control">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-danger">Submit</button>
+      </span>
+  </div>
+</form>
+<div id="history-list" class="panel panel-default"
+    ng-if="history.length">
+
+  <div class="panel-heading">
+    Results history | <a ng-click="clearHistory()" title="Clear history">Clear</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Expression</th>
+        <th>Results</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in history">
+      <td>
+        <a ng-click="remove($index)"
+            title="Remove from history"
+            class="remove">&#x2715;</a><a ng-bind="row.locator"
+            ng-click="copyToInput(row)"
+            title="copy to input field"></a>
+      </td>
+      <td ng-bind="row.count"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
