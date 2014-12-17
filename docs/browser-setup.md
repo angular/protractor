@@ -74,6 +74,50 @@ multiCapabilities: [{
 Protractor will run tests in parallel against each set of capabilities. Please note that if `multiCapabilities` is defined, the runner will ignore the `capabilities` configuration.
 
 
+Using Multiple Browsers in the Same Test
+----------------------------------------
+If you are testing apps where two browsers need to interact with each other (e.g. chat systems), you can do that with protractor by dynamically creating browsers on the go in your test. Protractor exposes a function in the `browser` object to help you achieve this: `browser.forkNewDriverInstance(opt_useSameUrl, opt_copyMockModules)`. 
+Calling this will return a new independent browser object. The first parameter in the function denotes whether you want the new browser to start with the same url as the browser you forked from. The second parameter denotes whether you want the new browser to copy the mock modules from the browser you forked from.
+
+```javascript
+browser.get('http://www.angularjs.org');
+browser.addMockModule('moduleA', "angular.module('moduleA', []).value('version', '3');");
+
+// To create a new browser.
+var browser2 = browser.forkNewDriverInstance();
+
+// To create a new browser with url as 'http://www.angularjs.org':
+var browser3 = browser.forkNewDriverInstance(true);
+
+// To create a new browser with mock modules injected:
+var browser4 = browser.forkNewDriverInstance(false, true);
+
+// To create a new browser with url as 'http://www.angularjs.org' and mock modules injected:
+var browser4 = browser.forkNewDriverInstance(true, true);
+```
+
+Now you can interact with the browsers. However, note that the globals `element`, `$`, `$$` and `browser` are all associated with the original browser. In order to interact with the new browsers, you must specifically tell protractor to do so like the following:
+
+```javascript
+var element2 = browser2.element;
+var $2 = browser2.$;
+var $$2 = browser2.$$;
+element2(by.model(...)).click();
+$2('.css').click();
+$$2('.css').click();
+```
+
+Protractor will ensure that commands will automatically run in sync. For example, in the following code, `element(by.model(...)).click()` will run before `browser2.$('.css').click()`:
+
+```javascript
+browser.get('http://www.angularjs.org');
+browser2.get('http://localhost:1234');
+
+browser.sleep(5000);
+element(by.model(...)).click();
+browser2.$('.css').click();
+```
+
 Setting Up Protractor with Appium - Android/Chrome
 -------------------------------------
 ###### Setup
