@@ -1,4 +1,5 @@
 // Configuration for stress testing.
+var env = require('../spec/environment.js');
 
 // Before running locally, start up sauce connect and the test appliation.
 // Then set the environment variables SAUCE_USERNAME, SAUCE_ACCESS_KEY,
@@ -60,7 +61,7 @@ exports.config = {
     'platform': 'Windows 7'
   }],
 
-  baseUrl: 'http://localhost:8081',
+  baseUrl: env.baseUrl,
 
   jasmineNodeOpts: {
     isVerbose: true,

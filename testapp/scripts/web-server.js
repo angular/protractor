@@ -4,9 +4,10 @@ var express = require('express');
 var optimist = require('optimist');
 var util = require('util');
 var path = require('path');
+var env = require('../../spec/environment.js');
 
 var testApp = express();
-var DEFAULT_PORT = process.env.HTTP_PORT || 8081;
+var DEFAULT_PORT = process.env.HTTP_PORT || env.webServerDefaultPort;
 var testAppDir = path.resolve(__dirname, '..');
 
 var argv = optimist.describe('port', 'port').
