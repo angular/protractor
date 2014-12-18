@@ -1,4 +1,6 @@
  // Common configuration files with defaults plus overrides from environment vars
+var webServerDefaultPort = 8081;
+
 module.exports = {
   // The address of a running selenium server.
   seleniumAddress: 
@@ -12,9 +14,12 @@ module.exports = {
         (process.env.TEST_BROWSER_VERSION || 'ANY')
   },
 
+  // Default http port to host the web server
+  webServerDefaultPort: webServerDefaultPort,
+
   // A base URL for your application under test.
   baseUrl:
     'http://' + (process.env.HTTP_HOST || 'localhost') +
-          ':' + (process.env.HTTP_PORT || '8081')
+          ':' + (process.env.HTTP_PORT || webServerDefaultPort)
 
 };
