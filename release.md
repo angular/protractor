@@ -42,9 +42,11 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
 
  - NPM publish
 
- - Update the website. `./scripts/generate-docs.sh`.  Then switch to the
+ - Update the website. `./scripts/generate-docs.sh`. Run unit and e2e tests. Then switch to the
    `gh-pages` branch, edit the commit message with `git commit --amend`,
    and push the new website.
+
+ - Run e2e test against the published website.
 
  - Let people know
    - Have @ProtractorTest tweet about it
