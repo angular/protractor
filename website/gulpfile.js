@@ -17,7 +17,9 @@ var paths = {
   html: ['index.html', 'partials/*.html'],
   js: [
     'js/modules.js',
-    'js/**/*.js'
+    'js/**/*.js',
+    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+    'bower_components/lodash/dist/lodash.min.js'
   ],
   less: ['css/protractor.less'],
   outputDir: 'build/'
@@ -40,16 +42,6 @@ gulp.task('dgeni', function() {
     gulp.src(['docgen/build/*.json'])
         .pipe(gulp.dest(paths.outputDir + '/apiDocs'));
   });
-});
-
-gulp.task('copyBowerFiles', function() {
-  // Bootstrap, lodash.
-  gulp.src([
-    'bower_components/bootstrap/dist/js/bootstrap.min.js',
-    'bower_components/lodash/dist/lodash.min.js'
-  ]).pipe(gulp.dest(paths.outputDir + '/js'));
-  gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
-      .pipe(gulp.dest(paths.outputDir + '/css'));
 });
 
 gulp.task('copyFiles', function() {
@@ -135,6 +127,5 @@ gulp.task('default', [
   'less',
   'markdown',
   'js',
-  'copyFiles',
-  'copyBowerFiles'
+  'copyFiles'
 ]);
