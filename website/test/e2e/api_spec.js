@@ -37,8 +37,7 @@ describe('Api', function() {
     // map
     // ...
     apiPage.getMenuItems().then(function(items) {
-      expect(items[0]).toBe('element.all(locator)');
-      expect(items[1]).toBe('map');
+      expect(items[0]).toBe('map');
     });
   });
 
@@ -87,6 +86,39 @@ describe('Api', function() {
         toBe('element.all(locator).first() View code');
     expect(browser.getCurrentUrl()).
         toMatch(/api\?view=ElementArrayFinder\.prototype\.first/)
+  });
+
+  it('should show element.all functions', function() {
+    // When you show element.all().
+    apiPage.clickOnMenuItem('element.all(locator)');
+
+    // Then ensure the child functions are shown.
+    expect(apiPage.getChildFunctionNames()).toEqual([
+      'clone', 'all', 'filter', 'get', 'first', 'last', 'count', 'locator',
+      'each', 'map', 'reduce', 'evaluate', 'allowAnimations']);
+  });
+
+  it('should show element functions', function() {
+    // When you show element().
+    apiPage.clickOnMenuItem('element(locator)');
+
+    // Then ensure the child functions are shown.
+    expect(apiPage.getChildFunctionNames()).toEqual([
+      'clone', 'locator', 'getWebElement', 'then', 'all', 'element', '$$',
+      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations',
+      'isPending']);
+  });
+
+  it('should show browser functions', function() {
+    // When you show browser.
+    apiPage.clickOnMenuItem('browser');
+
+    // Then ensure the child functions are shown.
+    expect(apiPage.getChildFunctionNames()).toEqual([
+      'waitForAngular', 'findElement', 'findElements', 'isElementPresent',
+      'addMockModule', 'clearMockModules', 'removeMockModule', 'get',
+      'refresh', 'navigate', 'setLocation', 'getLocationAbsUrl', 'debugger',
+      'pause']);
   });
 
   it('should view inherited function', function() {
