@@ -1,3 +1,5 @@
+var shardCount = 2;
+
 exports.config = {
   directConnect: true,
 
@@ -6,9 +8,13 @@ exports.config = {
     'test/e2e/*_spec.js'
   ],
 
+  maxSessions: shardCount,
+
   capabilities: {
-    'browserName': 'chrome',
-    'chromeOptions': {'args': ['--disable-extensions']}
+    browserName: 'chrome',
+    chromeOptions: {args: ['--disable-extensions']},
+    maxInstances: shardCount,
+    shardTestFiles: true
   },
 
   // A base URL for your application under test. Calls to protractor.get()

@@ -51,6 +51,16 @@ var ApiPage = function() {
   };
 
   /**
+   * Gets the function names of a parent item such as element(), element.all(),
+   * browser, and by.
+   * @return {!webdriver.promise.Promise.<string>} A promise that will be
+   *     resolved with the function names.
+   */
+  this.getChildFunctionNames = function() {
+    return $('[ptor-function-list="currentItem.children"]').$$('a').getText();
+  };
+
+  /**
    * Click on a type of the extends table.
    * @param {string} name
    */
