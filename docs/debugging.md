@@ -27,12 +27,78 @@ This test suite shows various types of failure:
 -  Expectation Failure - Shows what a normal expectation failure looks
    like.
 
+
+Timeouts
+--------
+
+There are several ways that Protractor can time out. See the [Timeouts](/docs/timeouts.md)
+reference for full documentation.
+
+
 Pausing to Debug
 ----------------
 
-Protractor allows you to pause your test at any point and interact with the
-browser. To do this insert `browser.debugger();` into your test where you want
-to break:
+Protractor supports two methods for pausing to debug - `browser.pause()` and
+`browser.debugger()`. You probably want to use `browser.pause()`, unless you
+would like precise control over the node debugger.
+
+**Using pause**
+
+Insert `browser.pause()` into your test where you want to pause.
+
+```js
+it('should fail to find a non-existent element', function() {
+  browser.get('app/index.html#/form');
+
+  browser.pause();
+
+  // This element doesn't exist, so this fails.
+  var nonExistant = element(by.binding('nopenopenope')).getText();
+});
+```
+
+Run your tests normally.
+
+`protractor failureConf.js`
+
+The test will pause execution after the scheduled navigation to `app/index.html#/form`
+but before trying to get text from the nonnexistant element. The terminal will
+print instructions for continuing or inspecting the application and a list of the
+currently pending tasks on the WebDriver control flow.
+
+```
+-- WebDriver control flow schedule
+ |- waiting for debugger to attach
+ |---    at [object Object].<anonymous> (failure_spec.js:13:13)
+ |- Protractor.waitForAngular()
+ |---    at [object Object].<anonymous> (failure_spec.js:16:59)
+wd-debug>
+```
+
+Enter `c` to move the test forward by one task.
+Enter `repl` to enter interactive mode. In interactive mode, you can send
+WebDriver commands to your browser. The resulting value or error will
+be reported to the terminal.
+
+```
+> element(by.binding('nopenopenope')).getText()
+NoSuchElementError: No element found using locator: by.binding("nopenopenope")
+>
+> element(by.binding('user')).getText()
+'Anon'
+```
+
+While the test is paused you may also interact with the browser. Note that
+if you open the Chrome Dev Tools, you must close them before continuing
+the test because ChromeDriver cannot operate when the Dev Tools are open.
+
+When you finish debugging, exit by pressing `Ctrl-C`. Your tests will continue
+where they left off, using the same browser.
+
+
+**Using debugger**
+
+Insert `browser.debugger();` into your test where you want to break:
 
 ```javascript
 it('should fail to find a non-existent element', function() {
@@ -45,17 +111,17 @@ it('should fail to find a non-existent element', function() {
   browser.debugger();
 
   // This element doesn't exist, so this fails.
-  var nonExistant = element(by.binding('nopenopenope'));
+  var nonExistant = element(by.binding('nopenopenope')).getText();
 });
 ```
 
-Then run the test in debug mode:
+Then run the test _in debug mode_:
 
 ```
 protractor debug debugging/failureConf.js
 ```
 
-This example uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
+This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
 `c` to start execution and continue after the breakpoint.
 
 We use `browser.debugger();` instead of node's `debugger;` statement so that
@@ -127,12 +193,14 @@ To get a list of functions you can call, try:
 Typing tab at a blank prompt will fill in a suggestion for finding
 elements.
 
+
 Taking Screenshots
 ------------------
 
-WebDriver can snap a screenshot with `browser.takeScreenshot()`.
-This returns a promise which will resolve to the screenshot as a base-64
-encoded PNG.
+WebDriver can snap a screenshot with `browser.takeScreenshot()`. This can be a
+good way to help debug tests, especially for tests that run on a continuous integration
+server. The method returns a promise which will resolve to the screenshot as a
+base-64 encoded PNG.
 
 Sample usage:
 ``` javascript
@@ -156,9 +224,3 @@ browser.takeScreenshot().then(function (png) {
     writeScreenShot(png, 'exception.png');
 });
 ```
-
-Timeouts
---------
-
-There are several ways that Protractor can time out. See the [Timeouts](/docs/timeouts.md)
-reference for full documentation.
