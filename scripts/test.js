@@ -29,6 +29,11 @@ var passingTests = [
   'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json'
 ];
 
+// Plugins
+passingTests.push('node node_modules/minijasminenode/bin/minijn ' + 
+    'plugins/timeline/spec/unit.js');
+passingTests.push('node lib/cli.js plugins/timeline/spec/conf.js');
+
 var executor = new Executor();
 
 passingTests.forEach(function(passing_test) {
