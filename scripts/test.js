@@ -30,9 +30,14 @@ var passingTests = [
 ];
 
 passingTests.push(
-  'node node_modules/minijasminenode/bin/minijn ' +
-  glob('spec/unit/*.js').join(' ') + ' ' +
-  glob('website/docgen/spec/*.js').join(' '));
+    'node node_modules/minijasminenode/bin/minijn ' +
+    glob('spec/unit/*.js').join(' ') + ' ' +
+    glob('website/docgen/spec/*.js').join(' '));
+
+// Plugins
+passingTests.push('node node_modules/minijasminenode/bin/minijn ' + 
+    'plugins/timeline/spec/unit.js');
+passingTests.push('node lib/cli.js plugins/timeline/spec/conf.js');
 
 var executor = new Executor();
 
