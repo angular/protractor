@@ -6,6 +6,8 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
+  framework: 'jasmine2',
+
   specs: [
     'basic/locators_spec.js',
     'basic/mockmodule_spec.js',

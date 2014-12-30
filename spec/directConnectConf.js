@@ -4,6 +4,8 @@ var env = require('./environment.js');
 exports.config = {
   directConnect: true,
 
+  framework: 'jasmine2',
+
   capabilities: {
     'browserName': 'chrome'
   },

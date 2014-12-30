@@ -12,10 +12,16 @@ describe('locators', function() {
 
     it('should allow custom expectations to expect an element', function() {
       this.addMatchers({
-        toHaveText: function(actualText) {
-          return this.actual.getText().then(function(expectedText) {
-            return expectedText === actualText;
-          });
+        toHaveText: function() {
+          return {
+            compare: function(actual, expected) {
+              return {
+                pass: actual.getText().then(function(actual) {
+                  return actual === expected;
+                })
+              };
+            }
+          };
         }
       });
 

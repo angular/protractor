@@ -7,6 +7,8 @@ var q = require('q');
 exports.config = {
   seleniumAddress: env.seleniumAddress,
 
+  framework: 'jasmine2',
+
   specs: [
     'onPrepare/*_spec.js'
   ],
