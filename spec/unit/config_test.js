@@ -41,7 +41,7 @@ describe('the config parser', function() {
 
   describe('resolving globs', function() {
     it('should resolve relative to the cwd', function() {
-      spyOn(process, 'cwd').andReturn(__dirname + '/');
+      spyOn(process, 'cwd').and.returnValue(__dirname + '/');
       var toAdd = {
         specs: 'data/*spec[AB].js'
       };
