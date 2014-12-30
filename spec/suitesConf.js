@@ -3,6 +3,8 @@ var env = require('./environment.js');
 exports.config = {
   seleniumAddress: env.seleniumAddress,
 
+  framework: 'jasmine2',
+
   // Spec patterns are relative to this directory.
   suites: {
     okspec: 'suites/ok_spec.js',

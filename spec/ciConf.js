@@ -5,6 +5,8 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
+  framework: 'jasmine2',
+
   // Spec patterns are relative to this directory.
   specs: [
     'basic/*_spec.js'

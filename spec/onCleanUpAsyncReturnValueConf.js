@@ -5,6 +5,8 @@ var q = require('q');
 exports.config = {
   seleniumAddress: env.seleniumAddress,
 
+  framework: 'jasmine2',
+
   specs: [
     'onCleanUp/*_spec.js'
   ],
