@@ -56,6 +56,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/tutorial', {
         templateUrl: 'partials/tutorial.html'
       }).
+      when('/jasmine-upgrade', {
+        templateUrl: 'partials/jasmine-upgrade.html'
+      }).
       otherwise({
         redirectTo: '/'
       });
