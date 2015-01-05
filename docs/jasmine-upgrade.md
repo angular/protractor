@@ -1,14 +1,14 @@
-## Upgrading from Jasmine 1.3 to 2.0
+## Upgrading from Jasmine 1.3 to 2.x
 
 First, please read [Jasmine's official upgrade documentation](http://jasmine.github.io/2.0/upgrading.html).
 
 ### In your conf file
 
-Specify that you want to use jasmine2.0:
+Specify that you want to use jasmine2.x:
 
 ```javascript
 exports.config = {
-  // Specify you want to use jasmine 2.0 as you would with mocha and cucumber.
+  // Specify you want to use jasmine 2.x as you would with mocha and cucumber.
   framework: 'jasmine2'
 };
 
@@ -50,7 +50,7 @@ toHaveText: function() {
 
 #### Asynchronous specs
 
-Note: `minijasminenode` provided asynchronous support for jasmine1.3 before (i.e. via done callback). Jasmine 2.0 now provides the support natively, but the change is mostly transparent to protractor users who are upgrading from jasmine1.3.
+Note: `minijasminenode` provided asynchronous support for jasmine1.3 before (i.e. via done callback). Jasmine 2.x now provides the support natively, but the change is mostly transparent to protractor users who are upgrading from jasmine1.3.
 
 You can still pass in the done parameter as part of your asynchronous spec, but the syntax for failing it has changed.
 
