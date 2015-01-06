@@ -43,13 +43,13 @@ describe('the config parser', function() {
     it('should resolve relative to the cwd', function() {
       spyOn(process, 'cwd').andReturn(__dirname + '/');
       var toAdd = {
-        specs: {spec: 'data/*spec[AB].js', suite: undefined }
+        specs: 'data/*spec[AB].js'
       };
       var config = new ConfigParser().addConfig(toAdd).getConfig();
       var specs = ConfigParser.resolveFilePatterns(config.specs);
       expect(specs.length).toEqual(2);
-      expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
-      expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
+      expect(specs[0].spec.indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
+      expect(specs[1].spec.indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
 
     it('should resolve relative to the config file dir', function() {
@@ -59,8 +59,8 @@ describe('the config parser', function() {
       var specs = ConfigParser.resolveFilePatterns(
           config.specs, false, config.configDir);
       expect(specs.length).toEqual(2);
-      expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
-      expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
+      expect(specs[0].spec.indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
+      expect(specs[1].spec.indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
   });
 });
