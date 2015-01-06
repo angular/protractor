@@ -5,7 +5,7 @@ describe('the task scheduler', function() {
 
   it('should schedule single capability tests', function() {
     var toAdd = {
-        specs: [
+      specs: [
         'spec/unit/data/fakespecA.js',
         'spec/unit/data/fakespecB.js'
       ],

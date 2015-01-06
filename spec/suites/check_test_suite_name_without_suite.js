@@ -1,5 +1,5 @@
-describe('This test is not called inside a suite', function(){
-    it('should have the name of the suite', function(){
+describe('This test', function(){
+    it('should have an undefined currentSuite name', function(){
         expect(protractor.currentSuite).toBe(undefined);
     });
 });
