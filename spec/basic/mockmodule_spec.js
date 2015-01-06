@@ -85,6 +85,16 @@ describe('mock modules', function() {
     expect(element(by.css('[app-version]')).getText()).toEqual('42beta');
   });
 
+  it('should retrieve a list of current mock modules', function() {
+    browser.addMockModule('moduleA', mockModuleA);
+    browser.addMockModule('moduleC', mockModuleC, '2', 'B');
+
+    // Should have 3 mock modules, A, C, and the base.
+    expect(browser.getRegisteredMockModules().length).toBe(3);
+    expect(browser.getRegisteredMockModules()[1]).toEqual(mockModuleA);
+    expect(browser.getRegisteredMockModules()[2]).toEqual(mockModuleC);
+  });
+
   it('should load mock modules after refresh', function() {
     browser.addMockModule('moduleA', mockModuleA);
 
