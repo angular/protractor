@@ -15,7 +15,7 @@ describe('the Protractor runner', function() {
   it('should run', function(done) {
     var config = {
       mockSelenium: true,
-        specs: [{spec: '*.js'}],
+      specs: [{spec: '*.js'}],
       framework: 'debugprint'
     };
     var exitCode;
