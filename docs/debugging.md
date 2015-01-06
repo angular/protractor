@@ -124,12 +124,13 @@ protractor debug debugging/failureConf.js
 This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
 `c` to start execution and continue after the breakpoint.
 
-We use `browser.debugger();` instead of node's `debugger;` statement so that
-the test pauses after the get command has been executed. Using `debugger;`
+`browser.debugger();` is different from from node's `debugger;` statement because
+it adds a breakpoint task asynchronous queue. This means the example above will
+pause after the `get` statement has been executing. Using `debugger;`
 pauses the test after the get command is scheduled but has not yet
-been sent to the browser.
+been executed.
 
-Protractor's `debugger` method works by scheduling a node debug breakpoint
+Protractor's `debugger()` method works by scheduling a node debug breakpoint
 on the control flow.
 
 When `debugger()` is called, it also inserts all the client side scripts
