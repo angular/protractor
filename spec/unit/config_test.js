@@ -43,7 +43,7 @@ describe('the config parser', function() {
     it('should resolve relative to the cwd', function() {
       spyOn(process, 'cwd').andReturn(__dirname + '/');
       var toAdd = {
-        specs: 'data/*spec[AB].js'
+        specs: {spec: 'data/*spec[AB].js', suite: undefined }
       };
       var config = new ConfigParser().addConfig(toAdd).getConfig();
       var specs = ConfigParser.resolveFilePatterns(config.specs);
