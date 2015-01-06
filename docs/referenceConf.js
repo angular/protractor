@@ -265,8 +265,13 @@ exports.config = {
     showColors: true,
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 30000,
-    // Function called to print jasmine results
+    // Function called to print jasmine results.
     print: function() {},
+    // If set, only execute specs whose names match the pattern, which is
+    // internally compiled to a RegExp.
+    grep: 'pattern',
+    // Inverts 'grep' matches
+    invertGrep: false
   },
 
   // Options to be passed to Mocha.
