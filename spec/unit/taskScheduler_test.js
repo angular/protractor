@@ -5,9 +5,9 @@ describe('the task scheduler', function() {
 
   it('should schedule single capability tests', function() {
     var toAdd = {
-      specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        specs: [
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         browserName: 'chrome'
@@ -27,8 +27,8 @@ describe('the task scheduler', function() {
   it('should schedule single capability tests with sharding', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         shardTestFiles: true,
@@ -55,8 +55,8 @@ describe('the task scheduler', function() {
   it('should schedule single capability tests with count', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         count: 2,
@@ -82,8 +82,8 @@ describe('the task scheduler', function() {
   it('should schedule multiCapabilities tests', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}                      
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'                      
       ],
       multiCapabilities: [{
         'browserName': 'chrome'
@@ -110,8 +110,8 @@ describe('the task scheduler', function() {
   it('should obey maxInstances', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         shardTestFiles: true,
@@ -143,8 +143,8 @@ describe('the task scheduler', function() {
   it('should allow capability-specific specs', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         'browserName': 'chrome',
@@ -165,8 +165,8 @@ describe('the task scheduler', function() {
   it('should handle multiCapabilities with mixture of features', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         'browserName': 'chrome',
@@ -218,8 +218,8 @@ describe('the task scheduler', function() {
   it('should exclude capability-specific specs', function() {
     var toAdd = {
       specs: [
-        {spec: 'spec/unit/data/fakespecA.js'},
-        {spec: 'spec/unit/data/fakespecB.js'}
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js'
       ],
       multiCapabilities: [{
         'browserName': 'chrome',
