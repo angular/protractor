@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var Executor = require('./test/test_util').Executor;
-var glob = require('glob').sync;
 
 var passingTests = [
   'node lib/cli.js spec/basicConf.js',
@@ -28,13 +27,14 @@ var passingTests = [
   'node lib/cli.js spec/interactionConf.js',
   'node lib/cli.js spec/directConnectConf.js',
   'node lib/cli.js spec/restartBrowserBetweenTestsConf.js',
-  'node lib/cli.js spec/getCapabilitiesConf.js'
+  'node lib/cli.js spec/getCapabilitiesConf.js',
+  'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json'
 ];
 
-passingTests.push(
-  'node node_modules/minijasminenode/bin/minijn ' +
-  glob('spec/unit/*.js').join(' ') + ' ' +
-  glob('website/docgen/spec/*.js').join(' '));
+// Plugins
+passingTests.push('node node_modules/minijasminenode/bin/minijn ' + 
+    'plugins/timeline/spec/unit.js');
+passingTests.push('node lib/cli.js plugins/timeline/spec/conf.js');
 
 var executor = new Executor();
 
@@ -58,7 +58,8 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/singleFailureConf.js
 executor.addCommandlineTest('node lib/cli.js spec/errorTest/timeoutConf.js')
     .expectExitCode(1)
     .expectErrors({
-      message: 'timeout: timed out after 1 msec waiting for spec to complete'
+      message: 'Timeout - Async callback was not invoked within timeout ' +
+          'specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.'
     })
     .expectTestDuration(0, 100);
 

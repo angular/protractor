@@ -236,7 +236,7 @@ exports.config = {
   // ----- The test framework --------------------------------------------------
   // ---------------------------------------------------------------------------
 
-  // Test framework to use. This may be jasmine, cucumber, or mocha.
+  // Test framework to use. This may be jasmine, jasmine2, cucumber, or mocha.
   //
   // Jasmine is fully supported as a test and assertion framework.
   // Mocha and Cucumber have limited beta support. You will need to include your
@@ -255,6 +255,23 @@ exports.config = {
     includeStackTrace: true,
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 30000
+  },
+
+  // Options to be passed to jasmine2.
+  //
+  // See the full list at https://github.com/jasmine/jasmine-npm
+  jasmineNodeOpts: {
+    // If true, print colors to the terminal.
+    showColors: true,
+    // Default time to wait in ms before a test fails.
+    defaultTimeoutInterval: 30000,
+    // Function called to print jasmine results.
+    print: function() {},
+    // If set, only execute specs whose names match the pattern, which is
+    // internally compiled to a RegExp.
+    grep: 'pattern',
+    // Inverts 'grep' matches
+    invertGrep: false
   },
 
   // Options to be passed to Mocha.

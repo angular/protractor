@@ -22,4 +22,6 @@ Reference
  - [Timeouts](/docs/timeouts.md)
  - [The WebDriver Control Flow](/docs/control-flow.md)
  - [How It Works](/docs/infrastructure.md)
+ - [Upgrading to Jasmine 2.0](/docs/jasmine-upgrade.md)
+ - [Mobile Setup](/docs/mobile-setup.md)
  - [FAQ](/docs/faq.md)
