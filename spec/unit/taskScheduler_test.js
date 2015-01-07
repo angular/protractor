@@ -83,7 +83,7 @@ describe('the task scheduler', function() {
     var toAdd = {
       specs: [
         'spec/unit/data/fakespecA.js',
-        'spec/unit/data/fakespecB.js'
+        'spec/unit/data/fakespecB.js'                      
       ],
       multiCapabilities: [{
         'browserName': 'chrome'
