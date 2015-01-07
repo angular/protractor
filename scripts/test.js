@@ -26,6 +26,7 @@ var passingTests = [
   'node lib/cli.js spec/directConnectConf.js',
   'node lib/cli.js spec/restartBrowserBetweenTestsConf.js',
   'node lib/cli.js spec/getCapabilitiesConf.js',
+  'node lib/cli.js spec/controlLockConf.js',
   'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json'
 ];
 
