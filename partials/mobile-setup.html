@@ -1,0 +1,292 @@
+<h1 id="mobile-setup">Mobile Setup</h1>
+<p>There are many options for using WebDriver to test on mobile browsers. Protractor
+does not yet officially support or run its own tests against a particular configuration, but the following are some notes on various setup options.</p>
+<h2 id="setting-up-protractor-with-appium-android-chrome">Setting Up Protractor with Appium - Android/Chrome</h2>
+<h6 id="setup">Setup</h6>
+<ul>
+<li>Install Java SDK (&gt;1.6) and configure JAVA_HOME (Important: make sure it&#39;s not pointing to JRE).</li>
+<li>Follow <a href="http://spring.io/guides/gs/android/">http://spring.io/guides/gs/android/</a> to install and set up Android developer environment. Do not set up Android Virtual Device as instructed here.</li>
+<li>From commandline, <code ng-non-bindable>android avd</code> and then install an AVD, taking note of the following:<ul>
+<li>Start with an ARM ABI</li>
+<li>Enable hardware keyboard: <code ng-non-bindable>hw.keyboard=yes</code></li>
+<li>Enable hardware battery: <code ng-non-bindable>hw.battery=yes</code></li>
+<li>Use the Host GPU</li>
+<li>Here&#39;s an example:</li>
+</ul>
+</li>
+</ul>
+<p>Phone:</p>
+<pre><code class="lang-shell">&gt; android list avd
+Available Android Virtual Devices:
+    Name: LatestAndroid
+  Device: Nexus 5 (Google)
+    Path: /Users/hankduan/.android/avd/LatestAndroid.avd
+  Target: Android 4.4.2 (API level 19)
+ Tag/ABI: default/armeabi-v7a
+    Skin: HVGA
+</code></pre>
+<p>Tablet:</p>
+<pre><code class="lang-shell">&gt; android list avd
+Available Android Virtual Devices:
+    Name: LatestTablet
+  Device: Nexus 10 (Google)
+    Path: /Users/hankduan/.android/avd/LatestTablet.avd
+  Target: Android 4.4.2 (API level 19)
+ Tag/ABI: default/armeabi-v7a
+    Skin: WXGA800-7in
+</code></pre>
+<ul>
+<li>Follow <a href="http://ant.apache.org/manual/index.html">http://ant.apache.org/manual/index.html</a> to install ant and set up the environment.</li>
+<li>Follow <a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a> to install mvn (Maven) and set up the environment. <ul>
+<li>NOTE: Appium suggests installing Maven 3.0.5 (I haven&#39;t tried later versions, but 3.0.5 works for sure).</li>
+</ul>
+</li>
+<li>Install Appium using node <code ng-non-bindable>npm install -g appium</code>. Make sure you don&#39;t install as sudo or else Appium will complain.<ul>
+<li>You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories.</li>
+</ul>
+</li>
+<li>Start emulator manually (at least the first time) and unlock screen.</li>
+</ul>
+<pre><code class="lang-shell">&gt; emulator -avd LatestAndroid
+</code></pre>
+<ul>
+<li>Your devices should show up under adb now:</li>
+</ul>
+<pre><code class="lang-shell">&gt; adb devices
+List of devices attached 
+emulator-5554 device
+</code></pre>
+<ul>
+<li>If the AVD does not have chrome (and it probably won&#39;t if it just created), you need to install it:<ul>
+<li>You can get v34.0.1847.114 from <a href="http://www.apk4fun.com/apk/1192/">http://www.apk4fun.com/apk/1192/</a></li>
+<li>Once you download the apk, install to your AVD as such:</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-shell">&gt; adb install ~/Desktop/chrome-browser-google-34.0.1847.114-www.apk4fun.com.apk 
+2323 KB/s (30024100 bytes in 12.617s)
+Success
+</code></pre>
+<ul>
+<li>If you check your AVD now, it should have Chrome.</li>
+</ul>
+<h6 id="running-tests">Running Tests</h6>
+<ul>
+<li>Ensure app is running if testing local app (Skip if testing public website):</li>
+</ul>
+<pre><code class="lang-shell">&gt; npm start # or `./scripts/web-server.js`
+Starting express web server in /workspace/protractor/testapp on port 8000
+</code></pre>
+<ul>
+<li>If your AVD isn&#39;t already started from the setup, start it now:</li>
+</ul>
+<pre><code class="lang-shell">&gt; emulator -avd LatestAndroid
+</code></pre>
+<ul>
+<li>Start Appium:</li>
+</ul>
+<pre><code class="lang-shell">&gt; appium
+info: Welcome to Appium v1.0.0-beta.1 (REV 6fcf54391fb06bb5fb03dfcf1582c84a1d9838b6)
+info: Appium REST http interface listener started on 0.0.0.0:4723
+info: socket.io started
+</code></pre>
+<p><em>Note Appium listens to port 4723 instead of 4444</em></p>
+<ul>
+<li>Configure protractor:</li>
+</ul>
+<pre><code class="lang-javascript">exports.config = {
+  seleniumAddress: &#39;http://localhost:4723/wd/hub&#39;,
+
+  specs: [&#39;basic/*_spec.js&#39;],
+
+  // Reference: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers/caps.js
+  capabilities: {
+    browserName: &#39;chrome&#39;,
+    &#39;appium-version&#39;: &#39;1.0&#39;,
+    platformName: &#39;Android&#39;,
+    platformVersion: &#39;4.4.2&#39;,
+    deviceName: &#39;Android Emulator&#39;,
+  },
+
+  baseUrl: &#39;http://10.0.2.2:8000&#39;,
+
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require(&#39;wd&#39;),
+      protractor = require(&#39;protractor&#39;),
+      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
+};
+</code></pre>
+<p><em>Note the following:</em></p>
+<ul>
+<li>baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator  </li>
+<li>selenium address is using port 4723</li>
+</ul>
+<h2 id="setting-up-protractor-with-appium-ios-safari">Setting Up Protractor with Appium - iOS/Safari</h2>
+<h6 id="setup">Setup</h6>
+<ul>
+<li>Install Java SDK (&gt;1.6) and configure JAVA_HOME (Important: make sure it&#39;s not pointing to JRE).</li>
+<li>Follow <a href="http://ant.apache.org/manual/index.html">http://ant.apache.org/manual/index.html</a> to install ant and set up the environment.</li>
+<li>Follow <a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a> to install mvn (Maven) and set up the environment. <ul>
+<li>NOTE: Appium suggests installing Maven 3.0.5 (I haven&#39;t tried later versions, but 3.0.5 works for sure).</li>
+</ul>
+</li>
+<li>Install Appium using node <code ng-non-bindable>npm install -g appium</code>. Make sure you don&#39;t install as sudo or else Appium will complain.<ul>
+<li>You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories.</li>
+</ul>
+</li>
+<li>Run the following: <code ng-non-bindable>appium-doctor</code> and <code ng-non-bindable>authorize_ios</code> (sudo if necessary)</li>
+<li>You need XCode &gt;= 4.6.3, 5.1.1 recommended. Note, iOS8 (XCode 6) does not work off the shelf (see <a href="https://github.com/appium/appium/pull/3517">https://github.com/appium/appium/pull/3517</a>)</li>
+</ul>
+<h6 id="running-tests">Running Tests</h6>
+<ul>
+<li>Ensure app is running if testing local app (Skip if testing public website):</li>
+</ul>
+<pre><code class="lang-shell">&gt; npm start # or `./scripts/web-server.js`
+Starting express web server in /workspace/protractor/testapp on port 8000
+</code></pre>
+<ul>
+<li>Start Appium:</li>
+</ul>
+<pre><code class="lang-shell">&gt; appium
+info: Welcome to Appium v1.0.0-beta.1 (REV 6fcf54391fb06bb5fb03dfcf1582c84a1d9838b6)
+info: Appium REST http interface listener started on 0.0.0.0:4723
+info: socket.io started
+</code></pre>
+<p><em>Note: Appium listens to port 4723 instead of 4444.</em></p>
+<ul>
+<li>Configure protractor:</li>
+</ul>
+<p>iPhone:</p>
+<pre><code class="lang-javascript">exports.config = {
+  seleniumAddress: &#39;http://localhost:4723/wd/hub&#39;,
+
+  specs: [
+    &#39;basic/*_spec.js&#39;
+  ],
+
+  // Reference: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers/caps.js
+  capabilities: {
+    browserName: &#39;safari&#39;,
+    &#39;appium-version&#39;: &#39;1.0&#39;,
+    platformName: &#39;iOS&#39;,
+    platformVersion: &#39;7.1&#39;,
+    deviceName: &#39;iPhone Simulator&#39;,
+  },
+
+  baseUrl: &#39;http://localhost:8000&#39;,
+
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require(&#39;wd&#39;),
+      protractor = require(&#39;protractor&#39;),
+      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
+};
+</code></pre>
+<p>iPad:</p>
+<pre><code class="lang-javascript">exports.config = {
+  seleniumAddress: &#39;http://localhost:4723/wd/hub&#39;,
+
+  specs: [
+    &#39;basic/*_spec.js&#39;
+  ],
+
+  // Reference: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers/caps.js
+  capabilities: {
+    browserName: &#39;safari&#39;,
+    &#39;appium-version&#39;: &#39;1.0&#39;,
+    platformName: &#39;iOS&#39;,
+    platformVersion: &#39;7.1&#39;,
+    deviceName: &#39;IPad Simulator&#39;,
+  },
+
+  baseUrl: &#39;http://localhost:8000&#39;,
+
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require(&#39;wd&#39;),
+      protractor = require(&#39;protractor&#39;),
+      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
+};
+</code></pre>
+<p><em>Note the following:</em></p>
+<ul>
+<li>note capabilities</li>
+<li>baseUrl is localhost (not 10.0.2.2)</li>
+<li>selenium address is using port 4723</li>
+</ul>
+<h2 id="setting-up-protractor-with-selendroid">Setting Up Protractor with Selendroid</h2>
+<h6 id="setup">Setup</h6>
+<ul>
+<li>Install Java SDK (&gt;1.6) and configure JAVA_HOME (Important: make sure it&#39;s not pointing to JRE).</li>
+<li>Follow <a href="http://spring.io/guides/gs/android/">http://spring.io/guides/gs/android/</a> to install and set up Android developer environment. Do not set up Android Virtual Device as instructed here.</li>
+<li>From commandline, &#39;android avd&#39; and then follow Selendroid&#39;s recommendation (<a href="http://selendroid.io/setup.html#androidDevices">http://selendroid.io/setup.html#androidDevices</a>). Take note of the emulator accelerator. Here&#39;s an example:</li>
+</ul>
+<pre><code class="lang-shell">&gt; android list avd
+Available Android Virtual Devices:
+    Name: myAvd
+  Device: Nexus 5 (Google)
+    Path: /Users/hankduan/.android/avd/Hank.avd
+  Target: Android 4.4.2 (API level 19)
+ Tag/ABI: default/x86
+    Skin: WVGA800
+</code></pre>
+<h6 id="running-tests">Running Tests</h6>
+<ul>
+<li>Ensure app is running if testing local app (Skip if testing public website):</li>
+</ul>
+<pre><code class="lang-shell">&gt; npm start # or `./scripts/web-server.js`
+Starting express web server in /workspace/protractor/testapp on port 8000
+</code></pre>
+<ul>
+<li>Start emulator manually (at least the first time):</li>
+</ul>
+<pre><code class="lang-shell">&gt; emulator -avd myAvd
+HAX is working and emulator runs in fast virt mode
+</code></pre>
+<p><em>Note: The last line that tells you the emulator accelerator is running.</em></p>
+<ul>
+<li>Start selendroid:</li>
+</ul>
+<pre><code class="lang-shell">&gt; java -jar selendroid-standalone-0.9.0-with-dependencies.jar
+...
+</code></pre>
+<ul>
+<li>Once selendroid is started, you should be able to go to &quot;<a href="http://localhost:4444/wd/hub/status">http://localhost:4444/wd/hub/status</a>&quot; and see your device there:</li>
+</ul>
+<pre><code class="lang-javascript">{&quot;value&quot;:{&quot;os&quot;:{&quot;name&quot;:&quot;Mac OS X&quot;,&quot;arch&quot;:&quot;x86_64&quot;,&quot;version&quot;:&quot;10.9.2&quot;},&quot;build&quot;:{&quot;browserName&quot;:&quot;selendroid&quot;,&quot;version&quot;:&quot;0.9.0&quot;},&quot;supportedDevices&quot;:[{&quot;emulator&quot;:true,&quot;screenSize&quot;:&quot;WVGA800&quot;,&quot;avdName&quot;:&quot;Hank&quot;,&quot;androidTarget&quot;:&quot;ANDROID19&quot;}],&quot;supportedApps&quot;:[{&quot;mainActivity&quot;:&quot;io.selendroid.androiddriver.WebViewActivity&quot;,&quot;appId&quot;:&quot;io.selendroid.androiddriver:0.9.0&quot;,&quot;basePackage&quot;:&quot;io.selendroid.androiddriver&quot;}]},&quot;status&quot;:0}
+</code></pre>
+<ul>
+<li>Configure protractor:</li>
+</ul>
+<pre><code class="lang-javascript">exports.config = {
+  seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
+
+  specs: [
+    &#39;basic/*_spec.js&#39;
+  ],
+
+  capabilities: {
+    &#39;browserName&#39;: &#39;android&#39;
+  },
+
+  baseUrl: &#39;http://10.0.2.2:8000&#39;
+};
+</code></pre>
+<p><em>Note the following:</em></p>
+<ul>
+<li>browserName is &#39;android&#39;</li>
+<li>baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator</li>
+</ul>

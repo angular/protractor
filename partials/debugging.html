@@ -18,10 +18,52 @@ instance directly with <code ng-non-bindable>browser.driver</code>.</li>
 <li>Expectation Failure - Shows what a normal expectation failure looks
 like.</li>
 </ul>
+<h2 id="timeouts">Timeouts</h2>
+<p>There are several ways that Protractor can time out. See the <a href="#/timeouts">Timeouts</a>
+reference for full documentation.</p>
 <h2 id="pausing-to-debug">Pausing to Debug</h2>
-<p>Protractor allows you to pause your test at any point and interact with the
-browser. To do this insert <code ng-non-bindable>browser.debugger();</code> into your test where you want
-to break:</p>
+<p>Protractor supports two methods for pausing to debug - <code ng-non-bindable>browser.pause()</code> and
+<code ng-non-bindable>browser.debugger()</code>. You probably want to use <code ng-non-bindable>browser.pause()</code>, unless you
+would like precise control over the node debugger.</p>
+<p><strong>Using pause</strong></p>
+<p>Insert <code ng-non-bindable>browser.pause()</code> into your test where you want to pause.</p>
+<pre><code class="lang-js">it(&#39;should fail to find a non-existent element&#39;, function() {
+  browser.get(&#39;app/index.html#/form&#39;);
+
+  browser.pause();
+
+  // This element doesn&#39;t exist, so this fails.
+  var nonExistant = element(by.binding(&#39;nopenopenope&#39;)).getText();
+});
+</code></pre>
+<p>Run your tests normally.</p>
+<p><code ng-non-bindable>protractor failureConf.js</code></p>
+<p>The test will pause execution after the scheduled navigation to <code ng-non-bindable>app/index.html#/form</code>
+but before trying to get text from the nonnexistant element. The terminal will
+print instructions for continuing or inspecting the application and a list of the
+currently pending tasks on the WebDriver control flow.</p>
+<pre><code ng-non-bindable>-- WebDriver control flow schedule
+ |- waiting for debugger to attach
+ |---    at [object Object].&lt;anonymous&gt; (failure_spec.js:13:13)
+ |- Protractor.waitForAngular()
+ |---    at [object Object].&lt;anonymous&gt; (failure_spec.js:16:59)
+wd-debug&gt;
+</code></pre><p>Enter <code ng-non-bindable>c</code> to move the test forward by one task.
+Enter <code ng-non-bindable>repl</code> to enter interactive mode. In interactive mode, you can send
+WebDriver commands to your browser. The resulting value or error will
+be reported to the terminal.</p>
+<pre><code ng-non-bindable>&gt; element(by.binding(&#39;nopenopenope&#39;)).getText()
+NoSuchElementError: No element found using locator: by.binding(&quot;nopenopenope&quot;)
+&gt;
+&gt; element(by.binding(&#39;user&#39;)).getText()
+&#39;Anon&#39;
+</code></pre><p>While the test is paused you may also interact with the browser. Note that
+if you open the Chrome Dev Tools, you must close them before continuing
+the test because ChromeDriver cannot operate when the Dev Tools are open.</p>
+<p>When you finish debugging, exit by pressing <code ng-non-bindable>Ctrl-C</code>. Your tests will continue
+where they left off, using the same browser.</p>
+<p><strong>Using debugger</strong></p>
+<p>Insert <code ng-non-bindable>browser.debugger();</code> into your test where you want to break:</p>
 <pre><code class="lang-javascript">it(&#39;should fail to find a non-existent element&#39;, function() {
   browser.get(&#39;app/index.html#/form&#39;);
 
@@ -32,18 +74,19 @@ to break:</p>
   browser.debugger();
 
   // This element doesn&#39;t exist, so this fails.
-  var nonExistant = element(by.binding(&#39;nopenopenope&#39;));
+  var nonExistant = element(by.binding(&#39;nopenopenope&#39;)).getText();
 });
 </code></pre>
-<p>Then run the test in debug mode:</p>
+<p>Then run the test <em>in debug mode</em>:</p>
 <pre><code ng-non-bindable>protractor debug debugging/failureConf.js
-</code></pre><p>This example uses the <a href="http://nodejs.org/api/debugger.html">node debugger</a>. Enter
+</code></pre><p>This uses the <a href="http://nodejs.org/api/debugger.html">node debugger</a>. Enter
 <code ng-non-bindable>c</code> to start execution and continue after the breakpoint.</p>
-<p>We use <code ng-non-bindable>browser.debugger();</code> instead of node&#39;s <code ng-non-bindable>debugger;</code> statement so that
-the test pauses after the get command has been executed. Using <code ng-non-bindable>debugger;</code>
+<p><code ng-non-bindable>browser.debugger();</code> is different from from node&#39;s <code ng-non-bindable>debugger;</code> statement because
+it adds a breakpoint task asynchronous queue. This means the example above will
+pause after the <code ng-non-bindable>get</code> statement has been executing. Using <code ng-non-bindable>debugger;</code>
 pauses the test after the get command is scheduled but has not yet
-been sent to the browser.</p>
-<p>Protractor&#39;s <code ng-non-bindable>debugger</code> method works by scheduling a node debug breakpoint
+been executed.</p>
+<p>Protractor&#39;s <code ng-non-bindable>debugger()</code> method works by scheduling a node debug breakpoint
 on the control flow.</p>
 <p>When <code ng-non-bindable>debugger()</code> is called, it also inserts all the client side scripts
 from Protractor into the browser as <code ng-non-bindable>window.clientSideScripts</code>. They can be
@@ -89,9 +132,10 @@ be available. Enter a command such as:</p>
 </code></pre><p>Typing tab at a blank prompt will fill in a suggestion for finding
 elements.</p>
 <h2 id="taking-screenshots">Taking Screenshots</h2>
-<p>WebDriver can snap a screenshot with <code ng-non-bindable>browser.takeScreenshot()</code>.
-This returns a promise which will resolve to the screenshot as a base-64
-encoded PNG.</p>
+<p>WebDriver can snap a screenshot with <code ng-non-bindable>browser.takeScreenshot()</code>. This can be a
+good way to help debug tests, especially for tests that run on a continuous integration
+server. The method returns a promise which will resolve to the screenshot as a
+base-64 encoded PNG.</p>
 <p>Sample usage:</p>
 <pre><code class="lang-javascript">// at the top of the test spec:
 var fs = require(&#39;fs&#39;);
@@ -113,6 +157,3 @@ browser.takeScreenshot().then(function (png) {
     writeScreenShot(png, &#39;exception.png&#39;);
 });
 </code></pre>
-<h2 id="timeouts">Timeouts</h2>
-<p>There are several ways that Protractor can time out. See the <a href="#/timeouts">Timeouts</a>
-reference for full documentation.</p>
