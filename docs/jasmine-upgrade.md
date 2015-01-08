@@ -20,6 +20,11 @@ exports.config = {
 
 Instead of `iit`, please use `fit`. Instead of `ddescribe`, please use `fdescribe`.
 
+#### Timeouts
+
+Having a custom timeout for an `it` block as a third parameter is not currently
+supported in Jasmine2, but it will be supported in a release soon. See [this issue](https://github.com/angular/protractor/issues/1701).
+
 #### Custom matchers
 
 See http://jasmine.github.io/2.0/upgrading.html#section-Custom_Matchers
