@@ -55,13 +55,15 @@ describe('Navigation', function() {
       ]);
     });
 
-    it('should have itmes under Reference', function() {
+    it('should have items under Reference', function() {
       expect(menu.dropdown('Reference').itemNames()).toEqual([
         'Configuration File Reference',
         'Protractor API',
         'Timeouts',
         'The WebDriver Control Flow',
         'How It Works',
+        'Upgrading to Jasmine 2.0',
+        'Mobile Setup',
         'FAQ'
       ]);
     });
