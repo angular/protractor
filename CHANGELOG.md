@@ -676,7 +676,7 @@ _Note: Major version 0 releases are for initial development, and backwards incom
 - ([3c0e727](https://github.com/angular/protractor/commit/3c0e727136ab3d397c1a9a2bb02692d0aeb9be40)) 
   refactor(protractor): reorganize internal structure of elementFinder/webelement
 
-  - Allow chaining of actions (i.e. `element(By.x).clear().sendKeys('abc)`)
+  - Allow chaining of actions (i.e. `element(By.x).clear().sendKeys('abc')`)
   - first(), last(), and get(index) are not executed immediately, allowing
       them to be placed in page objects
   - Rework the way that elementFinder and wrappedWebElement is represented
@@ -1107,7 +1107,7 @@ _Note: Major version 0 releases are for initial development, and backwards incom
       window.clientSideScripts.findInputs('username');
 
     Also, any custom locators using addLocator will now break since the
-    arguments order has chnaged. To migrate the code follow the example below:
+    arguments order has changed. To migrate the code follow the example below:
 
       Before:
 
@@ -1543,7 +1543,7 @@ _Note: Major version 0 releases are for initial development, and backwards incom
 
 _Note: Major version 0 releases are for initial development, and backwards incompatible changes may be introduced at any time._
 
-This change introduces major syntax updates. Using the new syntax is recommeded, but the old version is still supported for now. Note also that the test application, docs, and example tests have been updated.
+This change introduces major syntax updates. Using the new syntax is recommended, but the old version is still supported for now. Note also that the test application, docs, and example tests have been updated.
 
 ## Features
 
@@ -1664,7 +1664,7 @@ Adds better messages in the selenium server install script, and also
 makes the script output a 'start' executable which can be used to quickly
 start up the selenium standalone. *not yet windows friendly*. Closes #108.
 
-- ([b32f5a5](https://github.com/angular/protractor/commit/b32f5a59169f1324271bd5abc09c17fcd9c4f249)) feat(config): add exmples for dealing with log-in
+- ([b32f5a5](https://github.com/angular/protractor/commit/b32f5a59169f1324271bd5abc09c17fcd9c4f249)) feat(config): add examples for dealing with log-in
 
 Adds examples for how to log in when the login page is not written
 in Angular. New examples are in spec/login.
