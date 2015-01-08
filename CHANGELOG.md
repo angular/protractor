@@ -1,3 +1,145 @@
+# 1.6.0
+
+## Features
+
+- ([1e60a95](https://github.com/angular/protractor/commit/1e60a9504c883a95f3500eafa38e1fc11dc28c9b)) 
+  feat(frameworks): add jasmine2 framework
+
+  Jasmine2.x may now be used by setting `framework: jasmine2` in your config.
+  See https://github.com/angular/protractor/blob/master/docs/jasmine-upgrade.md
+
+- ([0b93003](https://github.com/angular/protractor/commit/0b930035905d1868225667de358222e51394f3ac)) 
+  feat(jasmine2): add 'grep' option to jasmine2
+
+  Allow users to filter the specs that they want to run using simple string match. To use this
+  feature, either: 1) specify jasmineNodeOpts.grep in your conf.js file
+   or 2) via commandline like "protractor conf.js --grep='pattern to match'"
+
+- ([4368842](https://github.com/angular/protractor/commit/4368842da73d4ed501df21b61daf71951e59524b)) 
+  feat(wddebugger): enable repl (with autocomplete) for browser.pause
+
+  See https://github.com/angular/protractor/blob/master/docs/debugging.md for
+  usage.
+
+- ([9c9ed31](https://github.com/angular/protractor/commit/9c9ed31591f5a3c552222ad7feb1ecd650973902)) 
+  feat(launcher): allow multicapabilities to take array of promises
+
+  Enables adding `getMultiCapabilities: function(){}` to your configuration file. The function
+  returns either multiCapabilities or a promise of a multiCapabilities that is resolved after
+  `afterLaunch` and before driver set up. If this is specified, both capabilities and
+  multiCapabilities will be ignored.
+
+  Also allows specifying `seleniumAddress` in the capabilities/multiCapabilities object, which will
+  override the global `seleniumAddress`. This allows you to use a different `seleniumAddress` per
+  capabilities.
+
+  Breaking Changes:
+  `capabilities` can no longer be a promise. Use getMultiCapabilities if you need to return a
+  promise.
+  `seleniumAddress` can no longer be a promise. Likewise, use getMultiCapabilities.
+
+- ([1670384](https://github.com/angular/protractor/commit/167038499aacfd5def03472f9f548529b273e1e0)) 
+  feat(runner): allow protractor to restart browser between tests
+
+  Enables adding `restartBrowserBetweenTests: true` to your configuration file. Note that this will
+  slow down test suites considerably. Closes #1435
+
+- ([56beb24](https://github.com/angular/protractor/commit/56beb24b9473ceedc491f3ca00fbce1bb9a18f29)) 
+  feat(protractor): add browser.getRegisteredMockModules()
+
+  Now `browser.getRegisteredMockModules()` returns a list of the functions or strings that have
+  been registered as mock modules. For troubleshooting.
+
+  Closes #1434.
+
+- ([5a404c2](https://github.com/angular/protractor/commit/5a404c27326fdb130e5d4ac5c4704b4013c78853)) 
+  feat(timeline): add timeline plugin
+
+  This plugin gathers test timeline information from the protractor test process, the selenium
+  client logs (if available), and sauce labs (if available), and presents the output visually. This
+  improves understanding of where latency issues are in tests. See #674
+
+  Usage:
+
+  Add the plugin to your configuration file:
+
+  ```js
+  exports.config = {
+   plugins: [{
+     path: 'node_modules/protractor/plugins/timeline/index.js',
+
+      // Output json and html will go in this folder.
+     outdir: 'timelines',
+
+      // Optional - if sauceUser and sauceKey are specified, logs from
+     // SauceLabs will also be parsed after test invocation.
+       sauceUser: 'Jane',
+       sauceKey: 'abcdefg'
+     }],
+   // other configuration settings
+  };
+  ```
+
+- ([a9d83f7](https://github.com/angular/protractor/commit/a9d83f7ebbce1be7f7f8c2986d1bfebccff1d6f3)) 
+  feat(plugins): add postResults hook for plugins
+
+  Allows plugins to include a postResults function, which will be called after webdriver has been
+  quit and the environment has been torn down. This step may not modify the contents of the test
+  results object.
+
+## Dependency Version Upgrades
+
+- ([2b4ac07](https://github.com/angular/protractor/commit/2b4ac07eaccafec2ad88c05747a75268a3529759)) 
+  feat(webdriver): version bumps for chromedriver and supported browsers
+
+  Chromedriver to 2.13. CI browser version bumps for Chrome 39 and Firefox 34.
+
+
+## Bug Fixes
+
+- ([adf30ba](https://github.com/angular/protractor/commit/adf30ba701d2a1ec992912001723de19366bea57)) 
+  fix(test): use a platform agnostic way to run minijasminenode
+
+- ([50ee0b4](https://github.com/angular/protractor/commit/50ee0b4d1a1b93cedf3d099d349b937b25ee9e79)) 
+  fix(test): allow to run 'npm start' or 'npm test' from windows too
+
+- ([b28355d](https://github.com/angular/protractor/commit/b28355dabde4c507ac620b973104e98e96279f2a)) 
+  fix(cucumber): emit on cucumber scenario instead of step
+
+- ([33dcd77](https://github.com/angular/protractor/commit/33dcd777fe34c6682b64bda0adc4f3595b03394b)) 
+  fix(util): webdriver could deadlock
+
+  when prepare scripts containing promises are wrapped in a flow.execute
+
+- ([a877268](https://github.com/angular/protractor/commit/a877268f35cb0df8f34f60b71ad7201fef58d189)) 
+  fix(locators): ng-repeat-start should not return extra null element
+
+- ([d505249](https://github.com/angular/protractor/commit/d505249fff773d0eaee8b17435ab751be8fbefa6)) 
+  fix(waitforangular): improve error messages when waitForAngular fails
+
+  Previously, caught errors were being interpreted as an empty object, causing lots of errors such
+  as
+  'Uncaught exception: Error while waiting for Protractor to sync with the page: {}' Now the error
+  message will be displayed, and a more useful custom message will be thrown if the variable
+  'angular' is not present or the root element is not part of the ng-app.
+
+  See #1474
+
+## Breaking Changes
+
+- Due to ([9c9ed31](https://github.com/angular/protractor/commit/9c9ed31591f5a3c552222ad7feb1ecd650973902)) 
+  feat(launcher): allow multicapabilities to take array of promises
+
+  Breaking Changes:
+  `capabilities` can no longer be a promise. Use getMultiCapabilities if you need to return a
+  promise.
+  `seleniumAddress` can no longer be a promise. Likewise, use getMultiCapabilities.
+
+  Why is this breaking change not causing a major version bump? This feature was
+  not fully supported previously and we worked with all known users when making
+  the change.
+
+
 # 1.5.0
 
 ## Features
