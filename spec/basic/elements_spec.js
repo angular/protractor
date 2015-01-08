@@ -221,16 +221,16 @@ describe('ElementArrayFinder', function() {
     var checkboxesElms = $$('#checkboxes input');
     browser.get('index.html');
 
-    expect(checkboxesElms.isSelected()).toEqual([true, false, false]);
+    expect(checkboxesElms.isSelected()).toEqual([true, false, false, false]);
     checkboxesElms.click();
-    expect(checkboxesElms.isSelected()).toEqual([false, true, true]);
+    expect(checkboxesElms.isSelected()).toEqual([false, true, true, true]);
   });
 
   it('action should act on all elements selected by filter', function() {
     browser.get('index.html');
 
     var multiElement = $$('#checkboxes input').filter(function(elem, index) {
-      return index == 1 || index == 2;
+      return index == 2 || index == 3;
     });
     multiElement.click();
     expect($('#letterlist').getText()).toEqual('wx');
@@ -240,7 +240,7 @@ describe('ElementArrayFinder', function() {
     browser.get('index.html');
 
     var elem = $$('#checkboxes input').filter(function(elem, index) {
-      return index == 1 || index == 2;
+      return index == 2 || index == 3;
     }).last();
     elem.click();
     expect($('#letterlist').getText()).toEqual('x');
