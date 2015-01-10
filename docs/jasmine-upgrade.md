@@ -1,4 +1,5 @@
-## Upgrading from Jasmine 1.3 to 2.x
+Upgrading from Jasmine 1.3 to 2.x
+=================================
 
 First, please read [Jasmine's official upgrade documentation](http://jasmine.github.io/2.0/upgrading.html).
 
