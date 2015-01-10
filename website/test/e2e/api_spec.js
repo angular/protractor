@@ -116,9 +116,9 @@ describe('Api', function() {
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
       'waitForAngular', 'findElement', 'findElements', 'isElementPresent',
-      'addMockModule', 'clearMockModules', 'removeMockModule', 'get',
-      'refresh', 'navigate', 'setLocation', 'getLocationAbsUrl', 'debugger',
-      'pause']);
+      'addMockModule', 'clearMockModules', 'removeMockModule',
+      'getRegisteredMockModules', 'get', 'refresh', 'navigate', 'setLocation',
+      'getLocationAbsUrl', 'debugger', 'pause']);
   });
 
   it('should view inherited function', function() {
