@@ -163,6 +163,19 @@ describe('Navigation', function() {
 
       expect($('h1').getText()).toBe('How It Works');
     });
+    
+    it('should go to Upgrading to Jasmine 2.0', function() {
+      menu.dropdown('Reference').item('Upgrading to Jasmine 2.0');
+
+      expect($('h1').getText()).toBe('Upgrading from Jasmine 1.3 to 2.x');
+    });
+    
+    it('should go to Mobile Setup', function() {
+      menu.dropdown('Reference').item('Mobile Setup');
+
+      expect($('h1').getText()).toBe('Mobile Setup');
+
+    });
 
     it('should go to FAQ', function() {
       menu.dropdown('Reference').item('FAQ');
