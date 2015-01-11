@@ -7,6 +7,8 @@ describe('Navigation', function() {
   });
 
   it('should go to home', function() {
+    menu.dropdown('Home').open();
+
     expect($('.protractor-logo').isPresent()).toBe(true);
   });
   
@@ -19,7 +21,7 @@ describe('Navigation', function() {
   describe('Menu items', function() {
     it('should have menu items', function() {
       // Make sure all the top level menu labels are present.
-      expect(menu.getTopMenuItems()).toEqual([
+      expect(menu.topMenuItems.getText()).toEqual([
         'Home',
         'Quick Start',
         'Protractor Setup',
