@@ -174,7 +174,6 @@ describe('Navigation', function() {
       menu.dropdown('Reference').item('Mobile Setup');
 
       expect($('h1').getText()).toBe('Mobile Setup');
-
     });
 
     it('should go to FAQ', function() {
