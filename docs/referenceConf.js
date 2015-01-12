@@ -276,7 +276,7 @@ exports.config = {
 
   // Options to be passed to Mocha.
   //
-  // See the full list at http://visionmedia.github.io/mocha/
+  // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
     reporter: 'list'

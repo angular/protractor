@@ -13,7 +13,7 @@ Currently, Jasmine Versions 1.3 and 2.0 are supported. Jasmine 1.3 is the defaul
 Using Mocha
 -----------
 
-_Note: Limited support for Mocha is available as of December 2013. For more information, see the [Mocha GitHub site](http://visionmedia.github.io/mocha/)._
+_Note: Limited support for Mocha is available as of December 2013. For more information, see the [Mocha documentation site](http://mochajs.org/)._
 
 If you would like to use the Mocha test framework, you'll need to use the BDD interface and Chai assertions with [Chai As Promised](http://chaijs.com/plugins/chai-as-promised).
 
