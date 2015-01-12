@@ -14,6 +14,26 @@ exports.config = {
 
 ```
 
+Similar to jasmine 1.3, you may include `jasmineNodeOpts` in the config file. However, because we changed the runner from "https://github.com/juliemr/minijasminenode" to "https://github.com/jasmine/jasmine-npm", the options have changed slightly. In particular, we will only support the options in the official "jasmine-npm":
+
+```javascript
+jasmineNodeOpts: {
+  // If true, print colors to the terminal.
+  showColors: true,
+  // Default time to wait in ms before a test fails.
+  defaultTimeoutInterval: 30000,
+  // Function called to print jasmine results.
+  print: function() {},
+  // If set, only execute specs whose names match the pattern, which is
+  // internally compiled to a RegExp.
+  grep: 'pattern',
+  // Inverts 'grep' matches
+  invertGrep: false
+}
+```
+
+Notably options `print` and `grep` are new, but we will no longer support options `isVerbose` and `includeStackTrace` (unless, of course, "jasmine-npm" introduces these options).
+
 ### In your specs
 
 #### Focused specs
