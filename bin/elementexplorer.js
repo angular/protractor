@@ -32,124 +32,15 @@
  * Typing tab at a blank prompt will fill in a suggestion for finding
  * elements.
  */
+console.log('Please use "protractor [configFile] [options] --elementExplorer"' + 
+  ' for full functionality\n');
 
-var webdriver = require('selenium-webdriver');
-var protractor = require('../lib/protractor.js');
-var repl = require('repl');
-var util = require('util');
-var vm = require('vm');
+if (process.argv.length > 3) {
+  console.log('usage: elementexplorer.js [urL]');
+  process.exit(1);
+} else if (process.argv.length === 3) {
+  process.argv[2] = ('--baseUrl=' + process.argv[2]);
+}
 
-var driver, browser;
-
-var INITIAL_SUGGESTIONS = [
-  'element(by.id(\'\'))',
-  'element(by.css(\'\'))',
-  'element(by.name(\'\'))',
-  'element(by.binding(\'\'))',
-  'element(by.xpath(\'\'))',
-  'element(by.tagName(\'\'))',
-  'element(by.className(\'\'))'
-];
-
-var list = function(locator) {
-  return browser.findElements(locator).then(function(arr) {
-    var found = [];
-    for (var i = 0; i < arr.length; ++i) {
-      arr[i].getText().then(function(text) {
-        found.push(text);
-      });
-    }
-    return found;
-  });
-};
-
-var flowEval = function(code, context, file, callback) {
-
-  var vmErr,
-      result,
-      flow = webdriver.promise.controlFlow();
-
-  flow.execute(function() {
-    try {
-      result = vm.runInThisContext(code, file);
-    } catch (e) {
-      vmErr = e;
-      callback(vmErr, null);
-    }
-    if (vmErr && process.domain) {
-      process.domain.emit('error', vmErr);
-      process.domain.exit();
-    }
-
-    if (webdriver.promise.isPromise(result)) {
-      return result.then(function(val) {return val});
-    } else {
-      return result; 
-    }
-  }).then(function(res) {
-    if (!vmErr) {
-      callback(null, res);
-    }
-  }, function(err) {
-    callback('There was a webdriver error: ' + err.name + ' ' + err.message,
-        null);
-  });
-};
-
-var startRepl = function() {
-  var flowRepl = repl.start({
-    'useGlobal': true,
-    'eval': flowEval
-  });
-
-  var originalComplete = flowRepl.complete;
-
-  flowRepl.complete = function(line, completeCallback) {
-    if (line == '') {
-      completeCallback(null, [INITIAL_SUGGESTIONS, '']);
-    } else {
-      originalComplete.apply(this, arguments);
-    }
-  };
-
-  flowRepl.on('exit', function() {
-    driver.quit();
-    util.puts('Shutting down. Goodbye.');
-  });
-};
-
-var startUp = function() {
-  driver = new webdriver.Builder().
-    usingServer('http://localhost:4444/wd/hub').
-    withCapabilities({'browserName': 'chrome'}).build();
-
-  driver.getSession().then(function(session) {
-    driver.manage().timeouts().setScriptTimeout(11000);
-
-    browser = protractor.wrapDriver(driver);
-
-    // Set up globals to be available from the command line.
-    global.driver = driver;
-    global.protractor = protractor;
-    global.browser = browser;
-    global.$ = browser.$;
-    global.$$ = browser.$$;
-    global.element = browser.element;
-    global.by = global.By = protractor.By;
-    global.list = list;
-
-
-    util.puts('Type <tab> to see a list of locator strategies.');
-    util.puts('Use the `list` helper function to find elements by strategy:');
-    util.puts('  e.g., list(by.binding(\'\')) gets all bindings.');
-    util.puts('');
-
-    var url = process.argv[2] || 'about:blank';
-    util.puts('Getting page at: ' + url);
-    driver.get(url);
-
-    startRepl();
-  });
-};
-
-startUp();
+process.argv.push('--elementExplorer');
+require('../lib/cli.js');
