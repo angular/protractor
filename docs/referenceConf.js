@@ -193,6 +193,14 @@ exports.config = {
     // are using Jasmine, you can add a reporter with:
     //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
     //         'outputdir/', true, true));
+    //
+    // As a convenience, if you need access back to the current configuration
+    // object, you may use a pattern like the following:
+    //     browser.getProcessedConfig().then(function(config) {
+    //       // config.capabilities is the CURRENT capability being run, if
+    //       // you are using multiCapabilities.
+    //       console.log('Executing capability', config.capabilities);
+    //     });
   },
 
   // A callback function called once tests are finished.
