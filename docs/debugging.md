@@ -170,29 +170,43 @@ When debugging or first writing test suites, you may find it helpful to
 try out Protractor commands without starting up the entire test suite. You can
 do this with the element explorer.
 
-Currently, the explorer runs only with chrome and expects a standalone Selenium
-Server to be running at http://localhost:4444 (see [Setting Up the Selenium Server](/docs/server-setup.md)).
+To run element explorer, simply run protractor as you normally would, but pass in
+the flag --elementExplorer:
 
-From the Protractor directory, run with:
-
-    node ./bin/elementexplorer.js <urL>
+    protractor --elementExplorer
 
 This will load up the URL on WebDriver and put the terminal into a REPL loop.
 You will see a > prompt. The `browser`, `element` and `protractor` variables will
 be available. Enter a command such as:
 
-    > element(by.id('foobar')).getText()
+    > browser.get('http://www.angularjs.org')
 
 or
 
-    > browser.get('http://www.angularjs.org')
-
-To get a list of functions you can call, try:
-
-    > browser
+    > element(by.id('foobar')).getText()
 
 Typing tab at a blank prompt will fill in a suggestion for finding
-elements.
+elements. You can also use the `list(locator)` command to list all elements
+matching a locator.
+
+Element explorer will start chrome by default. However, you can specify
+another browser, change browser settings, or specify any other config that you
+normally would with your protractor test. To do this, pass configs to 
+protractor like you normally would, 
+but with the `--elementExplorer` flag set:
+
+    protractor [configFile] [options] --elementExplorer
+
+For example, to connect to ChromeDriver directly, use
+
+    protractor --directConnect --elementExplorer
+
+Element explore will ignore your specs, not set up your framework (e.g. jasmine, 
+mocha, cucumber), and only allow you to pass in 1 capability, but will honor
+every other parameter in your config.
+
+Note `baseUrl` is used here as the initial page, i.e. element explorer will try 
+to navigate to `baseUrl` automatically on start.
 
 
 Taking Screenshots
