@@ -44,8 +44,8 @@ git pull https://github.com/angular/protractor.git gh-pages:gh-pages -f
 git reset --hard
 cp -r website/build/* .
 git add -A
-git commit -m "chore(website): docs updated to ${VERSION}"
-echo
-echo -e "\tCreated update commit in gh-pages branch"
-echo
+git commit -m "chore(website): automatic docs update for ${VERSION}"
+echo -e "\033[0;32m" # Green
+echo "Created update commit in gh-pages branch"
+echo -e "\033[0m" 1>&2 # Normal Color
 git checkout "${EXEC_BRANCH}"
