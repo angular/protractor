@@ -1,4 +1,4 @@
-<h2 id="upgrading-from-jasmine-1-3-to-2-x">Upgrading from Jasmine 1.3 to 2.x</h2>
+<h1 id="upgrading-from-jasmine-1-3-to-2-x">Upgrading from Jasmine 1.3 to 2.x</h1>
 <p>First, please read <a href="http://jasmine.github.io/2.0/upgrading.html">Jasmine&#39;s official upgrade documentation</a>.</p>
 <h3 id="in-your-conf-file">In your conf file</h3>
 <p>Specify that you want to use jasmine2.x:</p>
@@ -7,6 +7,22 @@
   framework: &#39;jasmine2&#39;
 };
 </code></pre>
+<p>Similar to jasmine 1.3, you may include <code ng-non-bindable>jasmineNodeOpts</code> in the config file. However, because we changed the runner from &quot;<a href="https://github.com/juliemr/minijasminenode">https://github.com/juliemr/minijasminenode</a>&quot; to &quot;<a href="https://github.com/jasmine/jasmine-npm">https://github.com/jasmine/jasmine-npm</a>&quot;, the options have changed slightly. In particular, we will only support the options in the official &quot;jasmine-npm&quot;:</p>
+<pre><code class="lang-javascript">jasmineNodeOpts: {
+  // If true, print colors to the terminal.
+  showColors: true,
+  // Default time to wait in ms before a test fails.
+  defaultTimeoutInterval: 30000,
+  // Function called to print jasmine results.
+  print: function() {},
+  // If set, only execute specs whose names match the pattern, which is
+  // internally compiled to a RegExp.
+  grep: &#39;pattern&#39;,
+  // Inverts &#39;grep&#39; matches
+  invertGrep: false
+}
+</code></pre>
+<p>Notably options <code ng-non-bindable>print</code> and <code ng-non-bindable>grep</code> are new, but we will no longer support options <code ng-non-bindable>isVerbose</code> and <code ng-non-bindable>includeStackTrace</code> (unless, of course, &quot;jasmine-npm&quot; introduces these options).</p>
 <h3 id="in-your-specs">In your specs</h3>
 <h4 id="focused-specs">Focused specs</h4>
 <p>Instead of <code ng-non-bindable>iit</code>, please use <code ng-non-bindable>fit</code>. Instead of <code ng-non-bindable>ddescribe</code>, please use <code ng-non-bindable>fdescribe</code>.</p>
