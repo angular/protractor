@@ -53,5 +53,5 @@
     "start": "node testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "1.6.0"
+  "version": "1.6.1"
 }
