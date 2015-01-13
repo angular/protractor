@@ -16,7 +16,7 @@ var typeTable;
 /**
  * The hash used to generate the links to the source code.
  */
-var linksHash = 'master';
+var linksHash = require('../../../package.json').version;
 
 /**
  * Add a link to the source code.
