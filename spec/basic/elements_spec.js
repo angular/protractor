@@ -503,6 +503,25 @@ describe('ElementArrayFinder', function() {
     var e1 = element(by.tagName('body')).then(function(){});
     expect(e1 instanceof protractor.promise.Promise).toBe(true);
   });
+
+  it('should allow using protractor locator within map', function() {
+    browser.get('index.html#/repeater');
+
+    var expected = [ { first: 'M', second: 'Monday' },
+        { first: 'T', second: 'Tuesday' },
+        { first: 'W', second: 'Wednesday' },
+        { first: 'Th', second: 'Thursday' },
+        { first: 'F', second: 'Friday' } ];
+
+    var result = element.all(by.repeater('allinfo in days')).map(function(el) {
+      return {
+        first: el.element(by.binding('allinfo.initial')).getText(),
+        second: el.element(by.binding('allinfo.name')).getText(),
+      };
+    });
+
+    expect(result).toEqual(expected);
+  });
 });
 
 describe('evaluating statements', function() {
