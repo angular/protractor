@@ -1,7 +1,8 @@
 #!/bin/sh
 
-#Check that directory is clean
 cd "$( dirname "${BASH_SOURCE[0]}" )/../website"
+
+# Check that directory is clean
 if [ $(git status --porcelain | wc -l) != "0" ]; then
   echo -e "\033[0;31m" 1>&2 # Red
   echo "We cannot push the generated docs unless the working directory is" 1>&2
@@ -12,7 +13,20 @@ if [ $(git status --porcelain | wc -l) != "0" ]; then
   exit 1
 fi
 
-#Generate files
+# Switch to the branch were the version was bumped
+VERSION=$(node ../scripts/get-version.js)
+EXEC_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+git checkout "${VERSION}"
+if [ $? -ne 0 ]; then
+  echo -e "\033[0;31m" 1>&2 # Red
+  echo "The package.json file indicates that the current version is" 1>&2
+  echo "\"${VERSION}\", but there is no corresponding git tag" 1>&2
+  echo -e "\033[0m" 1>&2 # Normal Color
+  exit 1
+fi
+
+
+# Generate files
 npm run build
 if [ $? -ne 0 ]; then
   echo -e "\033[0;31m" 1>&2 # Red
@@ -21,9 +35,8 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-#Transfer files to gh-pages
+# Transfer files to gh-pages
 cd ".."
-EXEC_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 git branch -D gh-pages
 git branch gh-pages
 git checkout gh-pages
@@ -31,7 +44,7 @@ git pull https://github.com/angular/protractor.git gh-pages:gh-pages -f
 git reset --hard
 cp -r website/build/* .
 git add -A
-git commit -m "chore(website): automatic docs update"
+git commit -m "chore(website): docs updated to ${VERSION}"
 echo
 echo -e "\tCreated update commit in gh-pages branch"
 echo
