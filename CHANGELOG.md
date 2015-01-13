@@ -1,3 +1,13 @@
+# 1.6.1
+
+## Bug Fixes
+
+- ([92c5d17](https://github.com/angular/protractor/commit/92c5d17844a2b4dc56c483ab4a65e2bf631175f9)) 
+  fix(element): test crashes when using certain locators with `fromWebElement_`
+
+  Protractor crashes when one uses locators with findElementsOverride (i.e. any custom protractor
+  locator like by.binding/repeater/etc) in map/filter/then/each/reduce
+
 # 1.6.0
 
 ## Features
