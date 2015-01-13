@@ -3,22 +3,21 @@
 #Check that directory is clean
 cd "$( dirname "${BASH_SOURCE[0]}" )/../website"
 if [ $(git status --porcelain | wc -l) != "0" ]; then
-  echo
-  echo "We cannot push the generated docs unless the working directory is"
-  echo "clean.  Either commit your changes, stash them, or generate the docs"
-  echo "manually by running gulp in /website/ and push them to gh-pages"
-  echo "at a later date"
-  echo
+  echo -e "\033[0;31m" 1>&2 # Red
+  echo "We cannot push the generated docs unless the working directory is" 1>&2
+  echo "clean.  Either commit your changes, stash them, or generate the" 1>&2
+  echo "docs manually by running gulp in /website/ and push them to" 1>&2
+  echo "gh-pages at a later date" 1>&2
+  echo -e "\033[0m" 1>&2 # Normal color
   exit 1
 fi
 
 #Generate files
 npm run build
 if [ $? -ne 0 ]; then
-  echo
-  echo "-----------------------------------------------------------------------"
-  echo "Build failed. Try running 'npm install' in /website/."
-  echo
+  echo -e "\033[0;31m" 1>&2 # Red
+  echo "Build failed. Try running 'npm install' in /website/." 1>&2
+  echo -e "\033[0m" 1>&2 # Normal Color
   exit 1
 fi
 
