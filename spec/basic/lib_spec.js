@@ -44,6 +44,26 @@ describe('protractor library', function() {
         expect(browser.driver.getCurrentUrl()).toMatch('#/form');
       });
 
+  it('should have access to the processed config block', function() {
+    function containsMatching(arr, string) {
+      var contains = false;
+      for (var i = 0; i < arr.length; ++i) {
+        if (arr[i].indexOf(string) !== -1) {
+          contains = true;
+        }
+      }
+      return contains;
+    }
+
+    browser.getProcessedConfig().then(function(config) {
+      expect(config.params.login).toBeDefined();
+      expect(config.params.login.user).toEqual('Jane');
+      expect(config.params.login.password).toEqual('1234');
+      expect(containsMatching(config.specs, 'lib_spec.js')).toBe(true);
+      expect(config.capabilities).toBeDefined();
+    });
+  });
+
   it('should allow adding custom locators', function() {
     var findMenuItem = function() {
       var itemName = arguments[0];
