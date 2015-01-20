@@ -160,8 +160,8 @@ exports.config = {
   baseUrl: 'http://localhost:9876',
 
   // CSS Selector for the element housing the angular app - this defaults to
-  // body, but is necessary if ng-app is on a descendant of <body>.
-  rootElement: 'body',
+  // an attribute selector of [ng-app].
+  rootElement: '[ng-app]',
 
   // The timeout in milliseconds for each script run on the browser. This should
   // be longer than the maximum time your application needs to stabilize between
