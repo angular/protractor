@@ -1,7 +1,7 @@
 Upgrading from Jasmine 1.3 to 2.x
 =================================
 
-First, please read [Jasmine's official upgrade documentation](http://jasmine.github.io/2.0/upgrading.html).
+First, please read [Jasmine's official upgrade documentation](http://jasmine.github.io/2.1/upgrading.html).
 
 ### In your conf file
 
@@ -105,3 +105,10 @@ it('async spec', function(done) {
   }, 5000);
 });
 ```
+
+#### Reporters
+
+The syntax for custom reporters has changed for Jasmine2. If you were previously
+adding reporters from a node module, such as the `jasmine-reporters` package on
+npm, make sure you upgrade to a version which supports Jasmine2. If you are
+writing your own reporter, see the [Jasmine docs on custom reporters](http://jasmine.github.io/2.1/custom_reporter.html).
