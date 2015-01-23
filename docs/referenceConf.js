@@ -267,7 +267,8 @@ exports.config = {
 
   // Options to be passed to jasmine2.
   //
-  // See the full list at https://github.com/jasmine/jasmine-npm
+  // See https://github.com/jasmine/jasmine-npm/blob/master/lib/jasmine.js
+  // for the exact options available.
   jasmineNodeOpts: {
     // If true, print colors to the terminal.
     showColors: true,
