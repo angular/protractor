@@ -244,7 +244,15 @@ exports.config = {
   // ----- The test framework --------------------------------------------------
   // ---------------------------------------------------------------------------
 
-  // Test framework to use. This may be jasmine, jasmine2, cucumber, or mocha.
+  // Test framework to use. This may be one of:
+  //  jasmine, jasmine2, cucumber, mocha or custom.
+  //
+  // When the framework is set to "custom" you'll need to additionally
+  // set frameworkPath with the path relative to the config file or absolute
+  //  framework: 'custom',
+  //  frameworkPath: './frameworks/my_custom_jasmine.js',
+  // See github.com/angular/protractor/blob/master/lib/frameworks/README.md
+  // to comply with the interface details of your custom implementation.
   //
   // Jasmine is fully supported as a test and assertion framework.
   // Mocha and Cucumber have limited beta support. You will need to include your
