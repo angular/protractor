@@ -46,4 +46,17 @@ describe('the Protractor runner', function() {
       runner.run();
     }).toThrow();
   });
+
+  it('should fail when no custom framework is defined', function(done) {
+    var config = {
+      mockSelenium: true,
+      specs: ['*.js'],
+      framework: 'custom'
+    };
+
+    var runner = new Runner(config);
+    runner.run().then(function() {
+      done.fail('expected error when no custom framework is defined');
+    }, done);
+  });
 });

@@ -36,3 +36,24 @@ Requirements
      duration: integer
    }]
  ```
+
+Custom Frameworks
+-----------------
+
+If you have created/adapted a custom framework and want it added to 
+Protractor core please send a PR so it can evaluated for addition as an 
+official supported framework. In the meantime you can instruct Protractor
+to use your own framework via the config file:
+
+```js
+exports.config = {
+  // set to "custom" instead of jasmine/jasmine2/mocha/cucumber.
+  framework: 'custom',
+  // path relative to the current config file
+  frameworkPath: './frameworks/my_custom_jasmine.js',
+};
+```
+
+More on this at [referenceConf](../../docs/referenceConf.js) "The test framework" section.
+
+**Disclaimer**: current framework interface can change without a major version bump.
