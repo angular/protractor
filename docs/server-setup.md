@@ -69,7 +69,7 @@ In your config file, set these options:
 
 Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort` and `seleniumArgs` will be ignored.
 
-You can optionally set the [`name` property](referenceConf.js#L113) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unanmed Job`.
+You can optionally set the [`name` property](referenceConf.js#L113) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
 
 
 Connecting Directly to Browser Drivers

@@ -108,7 +108,7 @@ exports.config = {
     browserName: 'chrome',
 
     // Name of the process executing this capability.  Not used directly by
-    // protractor or the browser, but instead pass directly to third patries
+    // protractor or the browser, but instead pass directly to third parties
     // like SauceLabs as the name of the job running this test
     name: 'Unnamed Job',
 
