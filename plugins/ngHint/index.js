@@ -33,7 +33,7 @@ var q = require('q'),
  */
 
 /*
- * The stratagy for this plugin is as follows:
+ * The strategy for this plugin is as follows:
  *
  * During setup, install the ngHint code and listeners to capture its output.
  * Store the output in the following format:

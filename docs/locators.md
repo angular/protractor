@@ -102,7 +102,7 @@ element.all(by.css('.selector')).then(function(elements) {
 // Number of elements.
 element.all(locator).count();
 
-// Get my index (starting at 0).
+// Get by index (starting at 0).
 element.all(locator).get(index);
 
 // First and last.
