@@ -5,23 +5,10 @@ Protractor works with [Selenium WebDriver](http://docs.seleniumhq.org/docs/03_we
 
 Browser Support
 ---------------
-Protractor support for a particular browser is tied to the capabilities available in the driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.
-
 Protractor supports the two latest major versions of Chrome, Firefox, Safari, and IE.
 
-| Driver                 | Support      | Known Issues    |
-|------------------------|--------------|-----------------|
-|ChromeDriver            |Yes           |                 |
-|FirefoxDriver           |Yes           |[#480](https://github.com/angular/protractor/issues/480) clicking options doesn't update the model|
-|SafariDriver            |Yes           |[#481](https://github.com/angular/protractor/issues/481) minus key doesn't work, SafariDriver does not support modals, [#1051](https://github.com/angular/protractor/issues/1051) We see occasional page loading timeouts|
-|IEDriver                |Yes           |[#778](https://github.com/angular/protractor/issues/778),  can be slow, [#1052](https://github.com/angular/protractor/issues/1052) often times out waiting for page load|
-|OperaDriver             |No            |                 |
-|ios-Driver              |No            |                 |
-|Appium - iOS/Safari     |Yes*           | drag and drop not supported (session/:sessionid/buttondown unimplemented) |
-|Appium - Android/Chrome |Yes*           |                 |
-|Selendroid              |Yes*           |                 |
-
-* These drivers are not yet in the Protractor smoke tests.
+Please see [Browser Support](/docs/browser-support.md) for a full list of
+supported browsers and known issues.
 
 
 Configuring Browsers
@@ -52,6 +39,7 @@ capabilities: {
 
 You may need to install a separate binary to run another browser, such as IE or Android. For more information, see [SeleniumHQ Downloads](http://docs.seleniumhq.org/download/).
 
+
 Adding Chrome-Specific Options
 ------------------------------
 
@@ -65,6 +53,7 @@ capabilities: {
   }
 },
 ```
+
 
 Testing Against Multiple Browsers
 ---------------------------------

@@ -41,7 +41,7 @@ once before any of your tests. See this example ([withLoginConf.js](https://gith
 
 Which browsers are supported?
 -----------------------------
-The last two major versions of Chrome, Firefox, IE, and Safari. See details at [Setting Up the Browser](/docs/browser-setup.md).
+The last two major versions of Chrome, Firefox, IE, and Safari. See details at [Setting Up the Browser](/docs/browser-setup.md) and [Browser Support](/docs/browser-support.md).
 
 The result of `getText` from an input element is always empty
 -------------------------------------------------------------
@@ -91,9 +91,10 @@ browser.takeScreenshot().then(function(png) {
 ```
 
 The method to take a screenshot automatically on failure would depend on the type of failure.
-* For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as such:
+* For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as below:
 
 ```javascript
+// Note: this is using Jasmine 1.3 reporter syntax.
 jasmine.getEnv().addReporter(new function() {
   this.reportSpecResults = function(spec) {
     if (!spec.results().passed()) {
