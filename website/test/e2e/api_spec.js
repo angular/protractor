@@ -118,7 +118,7 @@ describe('Api', function() {
       'waitForAngular', 'findElement', 'findElements', 'isElementPresent',
       'addMockModule', 'clearMockModules', 'removeMockModule',
       'getRegisteredMockModules', 'get', 'refresh', 'navigate', 'setLocation',
-      'getLocationAbsUrl', 'debugger', 'pause']);
+      'getLocationAbsUrl', 'debugger', 'enterRepl', 'pause']);
   });
 
   it('should view inherited function', function() {

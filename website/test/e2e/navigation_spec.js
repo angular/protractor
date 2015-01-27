@@ -61,6 +61,7 @@ describe('Navigation', function() {
       expect(menu.dropdown('Reference').itemNames()).toEqual([
         'Configuration File Reference',
         'Protractor API',
+        'Browser Support',
         'Timeouts',
         'The WebDriver Control Flow',
         'How It Works',
@@ -152,6 +153,12 @@ describe('Navigation', function() {
       menu.dropdown('Reference').item('Timeouts');
 
       expect($('h1').getText()).toBe('Timeouts');
+    });
+
+    it('should go to Browser Support', function() {
+      menu.dropdown('Reference').item('Browser Support');
+
+      expect($('h1').getText()).toBe('Browser Support');
     });
 
     it('should go to The WebDriver Control Flow', function() {
