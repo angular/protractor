@@ -133,3 +133,25 @@ elm.click().then(function() { /* passing case */}, function(err) { /* error hand
 Why is browser.debugger(); not pausing the test?
 -----------------------------------------------
 The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.
+
+How can I get the Protractor configuration object inside my test
+-----------------------------------------------
+
+As the protractor configuration file is a module (using exports keyword), you can import this module in your tests, in order to use one property of this object. For exemple, if you need the baseUrl property : 
+
+```js
+(function(){
+	'use strict';
+
+	var conf = require('../protractor.conf.js');
+	console.log(conf.config.baseUrl);
+
+	describe('Home Page ', function() {
+
+		beforeEach(function () {
+			browser.get('/#/');
+		});
+	});
+})();
+
+```
