@@ -58,7 +58,7 @@ For a full example, see Protractor’s own test: [/spec/mocha](https://github.co
 Using Cucumber
 --------------
 
-_Note: Limited support for Cucumber is available as of January 2014. Support for Cucumber in Protractor is maintained by the community, so bug fixes may be slow. For more information, see the [Cucumber GitHub site](https://github.com/cucumber/cucumber-js)._
+_Note: Limited support for Cucumber is available as of January 2015. Support for Cucumber in Protractor is maintained by the community, so bug fixes may be slow. For more information, see the [Cucumber GitHub site](https://github.com/cucumber/cucumber-js)._
 
 
 If you would  like to use the Cucumber test framework, download the dependencies with npm. Cucumber should be installed in the same place as Protractor - so if protractor was installed globally, install Cucumber with -g.
