@@ -63,4 +63,63 @@ describe('the config parser', function() {
       expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
   });
+
+  describe('merging configs', function() {
+    it('should merge two entries', function() {
+      var config = new ConfigParser()
+          .addConfig({key: {a1: 1.1, a2: 1.2}})
+          .addConfig({key2: {b1: 2.1, b2: 2.2}})
+          .getConfig();
+      expect(config.key).toEqual({a1: 1.1, a2: 1.2});
+      expect(config.key2).toEqual({b1: 2.1, b2: 2.2});
+    });
+
+    it('should overwrite overlapping objects', function() {
+      var config = new ConfigParser()
+          .addConfig({key: {a1: 1.1, a2: 1.2}})
+          .addConfig({key: 1})
+          .getConfig();
+      expect(config.key).toEqual(1);
+    });
+
+    it('should overwrite overlapping entries within an object', function() {
+      var config = new ConfigParser()
+          .addConfig({key: {a1: 1.1, a2: 1.2}})
+          .addConfig({key: {a1: 1}})
+          .getConfig();
+      expect(config.key).toEqual({a1: 1, a2: 1.2});
+    });
+
+    it('should insert entries', function() {
+      var config = new ConfigParser()
+          .addConfig({key: {a1: 1.1, a2: 1.2}})
+          .addConfig({key: {c1: 3.1}})
+          .getConfig();
+      expect(config.key).toEqual({a1: 1.1, a2: 1.2, c1: 3.1});
+    });
+
+    it('should insert using array-like objects', function() {
+      var config = new ConfigParser()
+          .addConfig({key: []})
+          .addConfig({key: {0: 'a', 1: 'b'}}) // ['a', 'b']
+          .getConfig();
+      expect(config.key).toEqual(['a', 'b']);
+    });
+
+    it('should replace using array-like objects', function() {
+      var config = new ConfigParser()
+          .addConfig({key: ['a', 'b']})
+          .addConfig({key: {0: 'c', 2: 'd'}}) // ['c', undefined, 'd']
+          .getConfig();
+      expect(config.key).toEqual(['c', 'b', 'd']);
+    });
+
+    it('should selectively replace in a multi-layered object', function() {
+      var config = new ConfigParser()
+          .addConfig({key: [{'a': {'b': 1, 'c': 2}}]})
+          .addConfig({key: {0: {'a': {'c': 3}}}}) // [{'a': {'c': 3}}]
+          .getConfig();
+      expect(config.key).toEqual([{'a': {'b': 1, 'c': 3}}]);
+    });
+  });
 });
