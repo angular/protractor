@@ -274,6 +274,11 @@ describe('locators', function() {
           toBe(false);
     });
 
+    it('should have by.exactRepeater working', function() {
+      expect(element(by.exactRepeater('day in d')).isPresent()).toBe(false);
+      expect(element(by.exactRepeater('day in days')).isPresent()).toBe(true);
+    });
+
     describe('repeaters using ng-repeat-start and ng-repeat-end', function() {
       it('should return all elements when unmodified', function() {
         var all =
