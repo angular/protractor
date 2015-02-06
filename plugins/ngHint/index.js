@@ -16,15 +16,13 @@ var q = require('q'),
  * You enable this plugin in your config file:
  *
  *    exports.config = {
- *      ...
- *      plugins: {
- *        ...
- *        ngHint: {
- *          asTests: {Boolean},
- *          excludeURLs: {(String|RegExp)[]}
- *        }
- *      }
- *    }
+ *      plugins: [{
+ *        path: 'node_modules/protractor/plugins/ngHint',
+ *
+ *        asTests: {Boolean},
+ *        excludeURLs: {(String|RegExp)[]}
+ *      }]
+ *    };
  *
  * asTests specifies if the plugin should generate passed/failed test results
  * based on the ngHint output or instead log the results to the console.
