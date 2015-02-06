@@ -3,9 +3,9 @@ var env = require('./environment.js');
 exports.config = {
   seleniumAddress: env.seleniumAddress,
   framework: 'jasmine2',
-  specs: ['ngHint/fail_spec.js'],
+  specs: ['fail_spec.js'],
   baseUrl: env.baseUrl,
   plugins: [{
-    path: "../plugins/ngHintPlugin.js"
+    path: "../index.js"
   }]
 };

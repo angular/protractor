@@ -21,7 +21,6 @@ var passingTests = [
   'node lib/cli.js spec/suitesConf.js --suite okmany,okspec',
   'node lib/cli.js spec/pluginsBasicConf.js',
   'node lib/cli.js spec/pluginsFullConf.js',
-  'node lib/cli.js spec/ngHintSuccessConfig.js',
   'node lib/cli.js spec/interactionConf.js',
   'node lib/cli.js spec/directConnectConf.js',
   'node lib/cli.js spec/restartBrowserBetweenTestsConf.js',
@@ -34,7 +33,9 @@ var passingTests = [
 // Plugins
 passingTests.push('node node_modules/minijasminenode/bin/minijn ' + 
     'plugins/timeline/spec/unit.js');
-passingTests.push('node lib/cli.js plugins/timeline/spec/conf.js');
+passingTests.push(
+    'node lib/cli.js plugins/timeline/spec/conf.js',
+    'node lib/cli.js plugins/ngHint/spec/successConfig.js');
 
 var executor = new Executor();
 
@@ -98,7 +99,8 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/mochaFailureConf.js'
 
 // Check ngHint plugin
 
-executor.addCommandlineTest('node lib/cli.js spec/ngHintFailConfig.js')
+executor.addCommandlineTest(
+    'node lib/cli.js plugins/ngHint/spec/failureConfig.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'warning -- ngHint plugin cannot be run as ngHint code was ' +
