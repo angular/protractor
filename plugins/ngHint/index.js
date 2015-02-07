@@ -73,20 +73,20 @@ function setup(config) {
     angular.hint.onMessage = function(module, message, type) {
       var ngHintLog = JSON.parse(localStorage.getItem(
                                   'ngHintLog_protractor') || '{}');
-      var pageLog =  ngHintLog[location] || {};
+      var pageLog = ngHintLog[location] || {};
       var moduleLog = pageLog[module] || {};
       moduleLog[message] = type;
       pageLog[module] = moduleLog;
       ngHintLog[location] = pageLog;
       localStorage.setItem('ngHintLog_protractor',
-                            JSON.stringify(ngHintLog)); 
+                            JSON.stringify(ngHintLog));
     };
     if (!hintInstalled) {
       angular.hint.onMessage('General', 'ngHint plugin cannot be run as ' +
           'ngHint code was never included into the page', 'warning');
     }
   });
-};
+}
 
 /**
  * Checks if a URL should not be examined by the ngHint plugin
@@ -99,7 +99,7 @@ function setup(config) {
 function isExcluded(url, config) {
   var excludeURLs = config.excludeURLs || [];
   for (var i = 0; i < excludeURLs.length; i++) {
-    if (typeof excludeURLs[i] == typeof "") {
+    if (typeof excludeURLs[i] == typeof '') {
       if (url == excludeURLs[i]) {
         return true;
       }
@@ -183,7 +183,7 @@ function teardown(config) {
               if (!isMessageToIgnore(message)) {
                 assertions.push({
                   passed: false,
-                  errorMsg: messages[message] + " -- " + message,
+                  errorMsg: messages[message] + ' -- ' + message,
                   stackTrace: ''
                 });
               }

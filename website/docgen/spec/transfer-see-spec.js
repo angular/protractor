@@ -5,7 +5,7 @@ describe('transfer-see', function() {
   var seeProcessor;
 
   beforeEach(function() {
-    seeProcessor = seeProcessorFn()
+    seeProcessor = seeProcessorFn();
   });
 
   var transferSee = function(docs) {

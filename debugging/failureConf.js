@@ -8,7 +8,7 @@ exports.config = {
   // Spec patterns are relative to the current working directly when
   // protractor is called.
   specs: [
-    'failure_spec.js',
+    'failure_spec.js'
   ],
 
   capabilities: env.capabilities,

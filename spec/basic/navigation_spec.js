@@ -26,9 +26,9 @@ describe('navigation', function() {
     expect(name.getText()).toEqual('Anon');
   });
 
-  // Back and forward do NOT work at the moment because of an issue 
+  // Back and forward do NOT work at the moment because of an issue
   // bootstrapping with Angular
-  /*   
+  /*
   it('should navigate back and forward properly', function() {
     browser.get('index.html#/repeater');
     expect(browser.getCurrentUrl()).
@@ -37,24 +37,24 @@ describe('navigation', function() {
     browser.navigate().back();
     expect(browser.getCurrentUrl()).
       toEqual(env.baseUrl+'/index.html#/form');
-    
+
     browser.navigate().forward();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/repeater'); 
+      toEqual(env.baseUrl+'/index.html#/repeater');
   });
   */
 
   it('should navigate back and forward properly from link', function() {
     element(by.linkText('repeater')).click();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/repeater');
+      toEqual(env.baseUrl + '/index.html#/repeater');
 
     browser.navigate().back();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/form');
-    
+      toEqual(env.baseUrl + '/index.html#/form');
+
     browser.navigate().forward();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/repeater'); 
+      toEqual(env.baseUrl + '/index.html#/repeater');
   });
 });

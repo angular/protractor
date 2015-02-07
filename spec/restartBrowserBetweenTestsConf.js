@@ -20,5 +20,5 @@ exports.config = {
     realtimeFailure: true
   },
 
-  restartBrowserBetweenTests: true,
+  restartBrowserBetweenTests: true
 };

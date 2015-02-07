@@ -8,7 +8,7 @@ exports.config = {
 
   // Spec patterns are relative to this config.
   specs: [
-    'altRoot/*_spec.js',
+    'altRoot/*_spec.js'
   ],
 
   capabilities: env.capabilities,

@@ -1,34 +1,34 @@
 function BindingsCtrl($scope) {
   $scope.planets = [
-    { name: "Mercury",
+    { name: 'Mercury',
       radius: 1516
     },
-    { name: "Venus",
+    { name: 'Venus',
       radius: 3760
     },
-    { name: "Earth",
+    { name: 'Earth',
       radius: 3959,
-      moons: ["Luna"]
+      moons: ['Luna']
     },
-    { name: "Mars",
+    { name: 'Mars',
       radius: 2106,
-      moons: ["Phobos", "Deimos"]
+      moons: ['Phobos', 'Deimos']
     },
-    { name: "Jupiter",
+    { name: 'Jupiter',
       radius: 43441,
-      moons: ["Europa", "Io", "Ganymede", "Castillo"]
+      moons: ['Europa', 'Io', 'Ganymede', 'Castillo']
     },
-    { name: "Saturn",
+    { name: 'Saturn',
       radius: 36184,
-      moons: ["Titan", "Rhea", "Iapetus", "Dione"]
+      moons: ['Titan', 'Rhea', 'Iapetus', 'Dione']
     },
-    { name: "Uranus",
+    { name: 'Uranus',
       radius: 15759,
-      moons: ["Titania", "Oberon", "Umbriel", "Ariel"]
+      moons: ['Titania', 'Oberon', 'Umbriel', 'Ariel']
     },
-    { name: "Neptune",
+    { name: 'Neptune',
       radius: 15299,
-      moons: ["Triton", "Proteus", "Nereid", "Larissa"]
+      moons: ['Triton', 'Proteus', 'Nereid', 'Larissa']
     }
   ];
 

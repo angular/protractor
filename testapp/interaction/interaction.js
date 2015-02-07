@@ -1,13 +1,13 @@
 function InteractionCtrl($scope, $interval, $http) {
 
   $scope.messages = [];
-  $scope.message = "";
-  $scope.user = "";
-  $scope.userInput = "";
+  $scope.message = '';
+  $scope.user = '';
+  $scope.userInput = '';
 
   $scope.sendUser = function() {
     $scope.user = $scope.userInput;
-  }
+  };
 
   var loadMessages = function() {
     $http.get('/storage?q=chatMessages').
@@ -17,18 +17,18 @@ function InteractionCtrl($scope, $interval, $http) {
       error(function(err) {
         $scope.messages = ['server request failed with: ' + err];
       });
-  }
+  };
   var saveMessages = function() {
     var data = {
       key: 'chatMessages',
       value: $scope.messages
-    }
+    };
     $http.post('/storage', data);
   };
 
   $scope.sendMessage = function() {
     $scope.messages.push($scope.user + ': ' + $scope.message);
-    $scope.message = "";
+    $scope.message = '';
     saveMessages();
   };
   $scope.clearMessages = function() {

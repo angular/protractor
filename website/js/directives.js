@@ -45,7 +45,7 @@
           }
         }
       }
-    }
+    };
   });
 
   /**
@@ -57,7 +57,7 @@
         list: '=ptorFunctionList'
       },
       templateUrl: 'partials/ptor-function-list.html'
-    }
+    };
   });
 
   /**
@@ -90,6 +90,6 @@
       '<a href="https://twitter.com/ProtractorTest" ' +
       'class="twitter-follow-button" data-show-count="false" ' +
       'data-size="large">Follow @ProtractorTest</a></div>'
-    }
+    };
   });
 })();

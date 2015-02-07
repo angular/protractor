@@ -11,5 +11,5 @@ function PollingCtrl($scope, $timeout) {
 
     poll();
   };
-};
+}
 PollingCtrl.$inject = ['$scope', '$timeout'];

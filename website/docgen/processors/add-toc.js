@@ -47,7 +47,7 @@ module.exports = function addToc() {
         template: 'toc',
         toc: toc,
         version: require('../../../package.json').version
-      })
+      });
     }
-  }
+  };
 };

@@ -7,4 +7,4 @@ module.exports = function codeTagDef() {
     description: 'Handle inline code tags',
     aliases: ['monospace']
   };
-}
+};

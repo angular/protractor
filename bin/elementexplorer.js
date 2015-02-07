@@ -32,7 +32,7 @@
  * Typing tab at a blank prompt will fill in a suggestion for finding
  * elements.
  */
-console.log('Please use "protractor [configFile] [options] --elementExplorer"' + 
+console.log('Please use "protractor [configFile] [options] --elementExplorer"' +
   ' for full functionality\n');
 
 if (process.argv.length > 3) {

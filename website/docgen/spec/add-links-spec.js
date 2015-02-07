@@ -6,7 +6,7 @@ describe('add-links', function() {
   var linksProcessor;
 
   beforeEach(function() {
-    linksProcessor = linksProcessorFn()
+    linksProcessor = linksProcessorFn();
   });
 
   var addLinks = function(docs) {
@@ -266,7 +266,7 @@ describe('add-links', function() {
         toBe('A promise located [Web Elements](webdriver.WebElement).');
   });
 
-  it("should remove extraneous chatacters from @link links", function() {
+  it('should remove extraneous chatacters from @link links', function() {
     // Given a doc with a @link annotation.
     var docs = [
       {

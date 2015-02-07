@@ -9,7 +9,7 @@ exports.config = {
   framework: 'jasmine2',
 
   specs: [
-    'control/spec.js',
+    'control/spec.js'
   ],
 
   capabilities: env.capabilities,

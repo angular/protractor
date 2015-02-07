@@ -6,11 +6,11 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'basic/mock*',
+    'basic/mock*'
   ],
 
   framework: 'debugprint',
-  getMultiCapabilities: function() { 
+  getMultiCapabilities: function() {
     var deferred = q.defer();
     // Wait for a server to be ready or get capabilities asynchronously.
     setTimeout(function() {

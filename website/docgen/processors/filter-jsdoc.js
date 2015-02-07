@@ -35,5 +35,5 @@ module.exports = function filterJsDocs() {
     $runAfter: ['extracting-tags'],
     $runBefore: ['tags-extracted'],
     $process: filterDocs
-  }
+  };
 };

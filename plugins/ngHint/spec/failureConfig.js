@@ -6,6 +6,6 @@ exports.config = {
   specs: ['fail_spec.js'],
   baseUrl: env.baseUrl,
   plugins: [{
-    path: "../index.js"
+    path: '../index.js'
   }]
 };

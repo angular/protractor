@@ -5,7 +5,7 @@ var child_process = require('child_process'),
     fs = require('fs');
 
 var CommandlineTest = function(command) {
-  var self = this; 
+  var self = this;
   this.command_ = command;
   this.expectedExitCode_ = 0;
   this.stdioOnlyOnFailures_ = true;
@@ -27,7 +27,7 @@ var CommandlineTest = function(command) {
     return self;
   };
 
-  // Set the expected exit code for the test command. 
+  // Set the expected exit code for the test command.
   this.expectExitCode = function(exitCode) {
     self.expectedExitCode_ = exitCode;
     return self;
@@ -41,7 +41,7 @@ var CommandlineTest = function(command) {
   };
 
   /**
-   * Add expected error(s) for the test command. 
+   * Add expected error(s) for the test command.
    * Input is an object or list of objects of the following form:
    * {
    *   message: string, // optional regex
@@ -86,13 +86,13 @@ var CommandlineTest = function(command) {
           output += data;
         });
       } else {
-        test_process = child_process.spawn(args[0], args.slice(1), {stdio:'inherit'});
+        test_process = child_process.spawn(args[0], args.slice(1), {stdio: 'inherit'});
       }
-      
+
       test_process.on('error', function(err) {
         reject(err);
       });
-      
+
       test_process.on('exit', function(exitCode) {
         resolve(exitCode);
       });
@@ -130,7 +130,7 @@ var CommandlineTest = function(command) {
 
           // if expected message is defined and messages don't match
           if (expectedError.message) {
-            if (!actualError.errorMsg || 
+            if (!actualError.errorMsg ||
                 !actualError.errorMsg.match(new RegExp(expectedError.message))) {
                   continue;
                 }
@@ -148,14 +148,14 @@ var CommandlineTest = function(command) {
 
         if (!found) {
           if (expectedError.message && expectedError.stackTrace) {
-            flushAndFail('did not fail with expected error with message: [' + 
-              expectedError.message + '] and stackTrace: [' + 
+            flushAndFail('did not fail with expected error with message: [' +
+              expectedError.message + '] and stackTrace: [' +
               expectedError.stackTrace + ']');
           } else if (expectedError.message) {
-            flushAndFail('did not fail with expected error with message: [' + 
+            flushAndFail('did not fail with expected error with message: [' +
               expectedError.message + ']');
           } else if (expectedError.stackTrace) {
-            flushAndFail('did not fail with expected error with stackTrace: [' + 
+            flushAndFail('did not fail with expected error with stackTrace: [' +
               expectedError.stackTrace + ']');
           }
         } else {
@@ -169,12 +169,12 @@ var CommandlineTest = function(command) {
 
       if (self.expectedMinTestDuration_
           && duration < self.expectedMinTestDuration_) {
-            flushAndFail('expecting test min duration: ' + 
+            flushAndFail('expecting test min duration: ' +
                 self.expectedMinTestDuration_ + ', actual: ' + duration);
       }
-      if (self.expectedMaxTestDuration_ 
+      if (self.expectedMaxTestDuration_
           && duration > self.expectedMaxTestDuration_) {
-            flushAndFail('expecting test max duration: ' + 
+            flushAndFail('expecting test max duration: ' +
                 self.expectedMaxTestDuration_ + ', actual: ' + duration);
       }
     }).fin(function() {
@@ -199,7 +199,7 @@ exports.Executor = function() {
   this.addCommandlineTest = function(command) {
     var test = new CommandlineTest(command);
     tests.push(test);
-    return test; 
+    return test;
   };
 
   this.execute = function() {

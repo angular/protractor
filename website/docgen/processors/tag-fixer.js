@@ -107,5 +107,5 @@ module.exports = function tagFixer() {
 
       return docs;
     }
-  }
+  };
 };

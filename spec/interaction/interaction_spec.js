@@ -9,7 +9,7 @@ describe('Browser', function() {
     // You can choose to not quit the browser, and protractor will quit all of
     // them for you when it exits (i.e. if you need a static number of browsers
     // throughout all of your tests). However, I'm forking browsers in my tests
-    // and don't want to pile up my browser count. 
+    // and don't want to pile up my browser count.
     if (newBrowser) {
       newBrowser.quit().then(function() {
         done();
@@ -74,7 +74,7 @@ describe('Browser', function() {
       };
 
       this.getMessages = function() {
-        return element.all(by.repeater("msg in messages track by $index"));
+        return element.all(by.repeater('msg in messages track by $index'));
       };
     };
 
