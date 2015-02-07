@@ -31,7 +31,7 @@ exports.config = {
     'browserName': 'firefox',
     maxInstances: 2,
     count: 2,
-    specs: 'basic/action*',
+    specs: 'basic/action*'
   }],
 
   baseUrl: env.baseUrl,

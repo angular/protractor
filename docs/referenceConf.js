@@ -77,7 +77,7 @@ exports.config = {
 
   // Spec patterns are relative to the location of this config.
   specs: [
-    'spec/*_spec.js',
+    'spec/*_spec.js'
   ],
 
   // Patterns to exclude.
@@ -136,11 +136,11 @@ exports.config = {
   // If this is specified, capabilities will be ignored.
   multiCapabilities: [],
 
-  // If you need to resolve multiCapabilities asynchronously (i.e. wait for 
+  // If you need to resolve multiCapabilities asynchronously (i.e. wait for
   // server/proxy, set firefox profile, etc), you can specify a function here
   // which will return either `multiCapabilities` or a promise to
   // `multiCapabilities`.
-  // If this returns a promise, it is resolved immediately after 
+  // If this returns a promise, it is resolved immediately after
   // `beforeLaunch` is run, and before any driver is set up.
   // If this is specified, both capabilities and multiCapabilities will be
   // ignored.
@@ -176,7 +176,7 @@ exports.config = {
   // You can specify a file containing code to run by setting beforeLaunch to
   // the filename string.
   beforeLaunch: function() {
-    // At this point, global variable 'protractor' object will NOT be set up, 
+    // At this point, global variable 'protractor' object will NOT be set up,
     // and globals from the test framework will NOT be available. The main
     // purpose of this function should be to bring up test dependencies.
   },
@@ -236,7 +236,7 @@ exports.config = {
   // The path is relative to the location of this config.
   resultJsonOutputFile: null,
 
-  // If true, protractor will restart the browser between each test. 
+  // If true, protractor will restart the browser between each test.
   // CAUTION: This will cause your tests to slow down drastically.
   restartBrowserBetweenTests: false,
 

@@ -23,6 +23,6 @@ exports.config = {
 
   afterLaunch: function(exitCode) {
     return exitCode + 10;
-  },
+  }
 
 };

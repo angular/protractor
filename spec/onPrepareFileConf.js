@@ -15,6 +15,6 @@ exports.config = {
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,
-  
+
   onPrepare: 'onPrepare/startup.js'
 };

@@ -16,7 +16,7 @@ describe('mock modules', function() {
 
   // A third module overriding the 'version' service. This function
   // references the additional arguments provided through addMockModule().
-  var mockModuleC = function () {
+  var mockModuleC = function() {
     var newModule = angular.module('moduleC', []);
     newModule.value('version', arguments[0] + arguments[1]);
   };

@@ -12,5 +12,5 @@ module.exports = function setFileName() {
 
       return docs;
     }
-  }
+  };
 };

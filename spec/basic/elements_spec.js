@@ -202,7 +202,7 @@ describe('ElementFinder', function() {
 
     expect(name.getText()).toEqual('Anon');
     expect(
-      name.getText().then(null, function(){})
+      name.getText().then(null, function() {})
     ).toEqual('Anon');
 
   });
@@ -260,7 +260,7 @@ describe('ElementArrayFinder', function() {
   it('should be able to get ElementFinder from filtered ElementArrayFinder', function() {
     var isDog = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("dog") > -1;
+        return text.indexOf('dog') > -1;
       });
     };
     var elements = element.all(by.css('#animals ul li')).filter(isDog);
@@ -273,12 +273,12 @@ describe('ElementArrayFinder', function() {
   it('filter should be compoundable', function() {
     var isDog = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("dog") > -1;
+        return text.indexOf('dog') > -1;
       });
     };
     var isBig = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("big") > -1;
+        return text.indexOf('big') > -1;
       });
     };
     var elements = element.all(by.css('#animals ul li')).filter(isDog).filter(isBig);
@@ -293,7 +293,7 @@ describe('ElementArrayFinder', function() {
   it('filter should work with reduce', function() {
     var isDog = function(elem) {
       return elem.getText().then(function(text) {
-        return text.indexOf("dog") > -1;
+        return text.indexOf('dog') > -1;
       });
     };
     browser.get('index.html#/form');
@@ -500,23 +500,23 @@ describe('ElementArrayFinder', function() {
 
   it('should always return a promise when calling then', function() {
     browser.get('index.html#/form');
-    var e1 = element(by.tagName('body')).then(function(){});
+    var e1 = element(by.tagName('body')).then(function() {});
     expect(e1 instanceof protractor.promise.Promise).toBe(true);
   });
 
   it('should allow using protractor locator within map', function() {
     browser.get('index.html#/repeater');
 
-    var expected = [ { first: 'M', second: 'Monday' },
+    var expected = [{ first: 'M', second: 'Monday' },
         { first: 'T', second: 'Tuesday' },
         { first: 'W', second: 'Wednesday' },
         { first: 'Th', second: 'Thursday' },
-        { first: 'F', second: 'Friday' } ];
+        { first: 'F', second: 'Friday' }];
 
     var result = element.all(by.repeater('allinfo in days')).map(function(el) {
       return {
         first: el.element(by.binding('allinfo.initial')).getText(),
-        second: el.element(by.binding('allinfo.name')).getText(),
+        second: el.element(by.binding('allinfo.name')).getText()
       };
     });
 
@@ -551,7 +551,7 @@ describe('shortcut css notation', function() {
         toEqual(element(by.css('.planet-info')).getText());
     expect($$('option').count()).toEqual(element.all(by.css('option')).count());
   });
-  
+
   it('should chain $$ with $', function() {
     var withoutShortcutCount =
         element(by.css('select')).all(by.css('option')).then(function(options) {

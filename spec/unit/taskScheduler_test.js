@@ -89,7 +89,7 @@ describe('the task scheduler', function() {
         'browserName': 'chrome'
       }, {
         'browserName': 'firefox'
-      }],
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);
@@ -131,7 +131,7 @@ describe('the task scheduler', function() {
 
     task1.done();
     expect(scheduler.numTasksOutstanding()).toEqual(1);
-    
+
     var task3 = scheduler.nextTask();
     expect(task3.capabilities.browserName).toEqual('chrome');
     expect(task3.specs.length).toEqual(1);
@@ -149,7 +149,7 @@ describe('the task scheduler', function() {
       multiCapabilities: [{
         'browserName': 'chrome',
         specs: 'spec/unit/data/fakespecC.js'
-      }],
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);
@@ -177,7 +177,7 @@ describe('the task scheduler', function() {
         shardTestFiles: true,
         maxInstances: 1,
         count: 2
-      }],
+      }]
     };
     var config = new ConfigParser().addConfig(toAdd).getConfig();
     var scheduler = new TaskScheduler(config);

@@ -31,7 +31,7 @@ var passingTests = [
 ];
 
 // Plugins
-passingTests.push('node node_modules/minijasminenode/bin/minijn ' + 
+passingTests.push('node node_modules/minijasminenode/bin/minijn ' +
     'plugins/timeline/spec/unit.js');
 passingTests.push(
     'node lib/cli.js plugins/timeline/spec/conf.js',
@@ -55,7 +55,7 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/singleFailureConf.js
       stackTrace: 'single_failure_spec1.js:5:32'
     });
 
-// assert timeout works 
+// assert timeout works
 executor.addCommandlineTest('node lib/cli.js spec/errorTest/timeoutConf.js')
     .expectExitCode(1)
     .expectErrors({

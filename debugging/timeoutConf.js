@@ -8,7 +8,7 @@ exports.config = {
   // Spec patterns are relative to the current working directly when
   // protractor is called.
   specs: [
-    'timeout_spec.js',
+    'timeout_spec.js'
   ],
 
   capabilities: env.capabilities,

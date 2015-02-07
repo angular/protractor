@@ -4,7 +4,7 @@ var q = require('q');
 describe('the Protractor runner', function() {
   it('should export its config', function() {
     var config = {
-      foo: 'bar',
+      foo: 'bar'
     };
 
     var runner = new Runner(config);

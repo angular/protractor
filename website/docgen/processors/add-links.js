@@ -43,7 +43,7 @@ var addLinkToSourceCode = function(doc) {
  */
 var addLinkToLinkAnnotation = function(str, doc) {
   var oldStr = null;
-  while(str != oldStr) {
+  while (str != oldStr) {
     oldStr = str;
     var matches = /{\s*@link\s+([^]+?)\s*}/.exec(str);
     if (matches) {
@@ -87,7 +87,7 @@ var toMarkdownLinkFormat = function(link, doc) {
     type = link.substr(0, i).trim();
   }
 
-  if(!type.match(/^https?:\/\//)) {
+  if (!type.match(/^https?:\/\//)) {
     // Remove extra '()' at the end of types
     if (type.substr(-2) == '()') {
       type = type.substr(0, type.length - 2);
@@ -173,5 +173,5 @@ module.exports = function addLinks() {
         }
       });
     }
-  }
+  };
 };

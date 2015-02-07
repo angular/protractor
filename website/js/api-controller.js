@@ -110,7 +110,7 @@
           if (view === item.name) {
             self.$scope.showElement(item);
           }
-        })
+        });
       }
 
       self.addExtends(list);
@@ -123,7 +123,7 @@
    */
   ApiCtrl.prototype.setViewProperties = function(list) {
     var itemsByName = {};
-    
+
     var getTitle = function(item) {
       if (item.alias) {
         return item.alias;

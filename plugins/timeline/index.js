@@ -53,7 +53,7 @@ var TimelinePlugin = function() {
   this.outdir;
   this.sessionId;
   this.testProcessSetTimeoutTimestamp = 0;
-}
+};
 
 /**
  * Parse a selenium log in array form. For example, the logs returned
@@ -80,7 +80,7 @@ TimelinePlugin.parseArrayLog = function(logArr, sourceName, referenceStart) {
       return event.timestamp;
     }
   }, referenceStart);
-}
+};
 
 /**
  * Parse a selenium log from a string. For example, the logs returned from
@@ -113,7 +113,7 @@ TimelinePlugin.parseTextLog = function(text, sourceName, referenceStart) {
         // Timestamps begin the line and are formatted as
         // HH:MM:SS.SSS
         // We don't care about the date so just set it to 0.
-        return Date.parse('01 Jan 1970 ' + event.slice(0, 12)); 
+        return Date.parse('01 Jan 1970 ' + event.slice(0, 12));
       }
     };
   } else {
@@ -146,7 +146,7 @@ TimelinePlugin.parseTextLog = function(text, sourceName, referenceStart) {
  * @param {isEventStart: function,
            isEventEnd: function,
            extractCommand: function,
-           extractTimestamp: function} actions Methods to interpret entries. 
+           extractTimestamp: function} actions Methods to interpret entries.
  * @param {number} referenceStart Date in millis.
  */
 TimelinePlugin.parseLog =
@@ -191,14 +191,14 @@ TimelinePlugin.parseLog =
 TimelinePlugin.prototype.outputResults = function(done) {
   try {
     fs.mkdirSync(this.outdir);
-  } catch(e) {
-    if ( e.code != 'EEXIST' ) throw e;
+  } catch (e) {
+    if (e.code != 'EEXIST') throw e;
   }
   var stream = fs.createReadStream(
       path.join(__dirname, 'indextemplate.html'));
   var outfile = path.join(this.outdir, 'timeline.json');
   fs.writeFileSync(outfile, JSON.stringify(this.timeline));
-  stream.pipe(fs.createWriteStream(path.join(this.outdir, 'index.html')))
+  stream.pipe(fs.createWriteStream(path.join(this.outdir, 'index.html')));
   stream.on('end', done);
 };
 
@@ -223,7 +223,7 @@ TimelinePlugin.prototype.setup = function(config) {
       end: null
     };
     if (!self.testProcessSetTimeoutTimestamp &&
-        timelineEvent.command.name_ =='setScriptTimeout') {
+        timelineEvent.command.name_ == 'setScriptTimeout') {
       self.testProcessSetTimeoutTimestamp = timelineEvent.start;
     }
     self.timeline.push(timelineEvent);
@@ -233,7 +233,7 @@ TimelinePlugin.prototype.setup = function(config) {
     };
     originalExecute.apply(browser.driver.executor_, [command, wrappedCallback]);
   };
-  
+
   // Clear the logs here.
   browser.manage().logs().getAvailableLogTypes().then(function(result) {
     // The Selenium standalone server stores its logs in the 'client' channel.
@@ -242,7 +242,7 @@ TimelinePlugin.prototype.setup = function(config) {
       deferred.resolve();
       // browser.manage().logs().get('client').then(function() {
       //   deferred.resolve();
-      // }); 
+      // });
     } else {
       deferred.resolve();
     }
@@ -269,7 +269,7 @@ TimelinePlugin.prototype.teardown = function(config) {
   // If running with a Selenium Standalone server, get the client logs.
   if (self.clientLogAvailable) {
     browser.manage().logs().get('client').then(function(result) {
-      var serverTimeline =TimelinePlugin.parseArrayLog(
+      var serverTimeline = TimelinePlugin.parseArrayLog(
           result, 'Selenium Client', self.testProcessSetTimeoutTimestamp);
       self.timeline = self.timeline.concat(serverTimeline);
       deferred.resolve();

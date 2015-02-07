@@ -21,7 +21,7 @@ var testDriverProvider = function(driverProvider) {
     driver.get('about:blank');
     driver.getCurrentUrl().then(function(url) {
       if (url != 'about:blank') {
-        throw new Error ('url was not about:blank, instead found ' + url);
+        throw new Error('url was not about:blank, instead found ' + url);
       }
       deferred.resolve();
     });

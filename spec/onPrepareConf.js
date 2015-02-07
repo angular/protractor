@@ -15,7 +15,7 @@ exports.config = {
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,
-  
+
   onPrepare: function() {
     browser.params.password = '12345';
   }

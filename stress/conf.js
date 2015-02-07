@@ -66,5 +66,5 @@ exports.config = {
   jasmineNodeOpts: {
     isVerbose: true,
     showTiming: true
-  },
+  }
 };

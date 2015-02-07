@@ -18,5 +18,5 @@ exports.config = {
     timeout: 4000
   },
 
-  framework: 'mocha',
+  framework: 'mocha'
 };

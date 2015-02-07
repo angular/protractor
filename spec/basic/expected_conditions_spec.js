@@ -12,7 +12,7 @@ describe('expected conditions', function() {
     var alertButton = $('#alertbutton');
     alertButton.click();
     expect(alertIsPresent.call()).toBe(true);
-    
+
     browser.switchTo().alert().accept();
   });
 
@@ -115,13 +115,13 @@ describe('expected conditions', function() {
 
     expect(EC.and(presenceOfValidElement, validityOfTitle).call()).toBe(true);
     // support multiple conditions
-    expect(EC.and(presenceOfValidElement, 
+    expect(EC.and(presenceOfValidElement,
        validityOfTitle, presenceOfInvalidElement).call()).toBe(false);
   });
 
   it('and should shortcircuit', function() {
     var invalidElem = $('#INVALID');
-    
+
     var presenceOfInvalidElement = EC.presenceOf(invalidElem);
     var isDisplayed = invalidElem.isDisplayed.bind(invalidElem);
 
@@ -139,14 +139,14 @@ describe('expected conditions', function() {
 
     expect(EC.or(presenceOfInvalidElement, presenceOfInvalidElement2).call()).toBe(false);
     // support multiple conditions
-    expect(EC.or(presenceOfInvalidElement, 
+    expect(EC.or(presenceOfInvalidElement,
         presenceOfInvalidElement2, presenceOfValidElement).call()).toBe(true);
   });
 
   it('or should shortcircuit', function() {
     var validElem = $('#shower');
     var invalidElem = $('#INVALID');
-    
+
     var presenceOfValidElement = EC.presenceOf(validElem);
     var isDisplayed = invalidElem.isDisplayed.bind(invalidElem);
 

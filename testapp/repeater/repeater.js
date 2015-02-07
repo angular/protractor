@@ -4,8 +4,8 @@ function RepeaterCtrl($scope) {
     {initial: 'T', name: 'Tuesday'},
     {initial: 'W', name: 'Wednesday'},
     {initial: 'Th', name: 'Thursday'},
-    {initial: 'F', name: 'Friday'},
+    {initial: 'F', name: 'Friday'}
   ];
-};
+}
 
 RepeaterCtrl.$inject = ['$scope'];

@@ -7,7 +7,7 @@ var less = require('gulp-less');
 var markdown = require('gulp-markdown');
 var minifyCSS = require('gulp-minify-css');
 var path = require('path');
-var rename = require("gulp-rename");
+var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 
 var paths = {
@@ -59,14 +59,14 @@ gulp.task('copyFiles', function() {
 gulp.task('js', function() {
   gulp.src(paths.js)
       .pipe(concat('protractorApp.js'))
-      .pipe(gulp.dest(paths.outputDir))
+      .pipe(gulp.dest(paths.outputDir));
 });
 
 gulp.task('less', function() {
   gulp.src(paths.less)
       .pipe(less())
       .pipe(minifyCSS())
-      .pipe(gulp.dest(paths.outputDir + '/css'))
+      .pipe(gulp.dest(paths.outputDir + '/css'));
 });
 
 gulp.task('connect', function() {
@@ -110,9 +110,9 @@ gulp.task('markdown', function() {
       // Fix <code> blocks to not interpolate Angular
       .pipe(replace(/<code>/g, '<code ng-non-bindable>'))
       .pipe(rename(function(path) {
-        path.extname = '.html'
+        path.extname = '.html';
       }))
-      .pipe(gulp.dest('./build/partials'))
+      .pipe(gulp.dest('./build/partials'));
 });
 
 // Start a server and watch for changes.

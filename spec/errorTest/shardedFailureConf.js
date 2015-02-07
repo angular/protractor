@@ -22,6 +22,6 @@ exports.config = {
     isVerbose: true,
     showTiming: true,
     defaultTimeoutInterval: 90000
-  },
+  }
 
 };
