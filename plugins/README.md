@@ -74,5 +74,5 @@ exports.teardown = function(config) {};
 exports.postResults = function(config) {};
 ```
 
-The protractor results object follows the the format specified in
+The protractor results object follows the format specified in
 the [Framework documentation](../lib/frameworks/README.md).
