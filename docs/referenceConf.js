@@ -107,6 +107,11 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
 
+    // Name of the process executing this capability.  Not used directly by
+    // protractor or the browser, but instead pass directly to third patries
+    // like SauceLabs as the name of the job running this test
+    name: 'Unnamed Job',
+
     // Number of times to run this set of capabilities (in parallel, unless
     // limited by maxSessions). Default is 1.
     count: 1,
