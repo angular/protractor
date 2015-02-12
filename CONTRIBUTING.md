@@ -31,7 +31,11 @@ Please format code and markup in your issue using [github markdown](https://help
 Contributing to Source Code (Pull Requests)
 ===========================================
 
-Loosely, follow the [Angular contribution rules](http://docs.angularjs.org/misc/contribute).
+Loosely, follow the [Angular contribution rules](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md).
+
+ * If your PR changes any behavior or fixes an issue, it should have an associated test.
+ * New features should be general and as simple as possible.
+ * Breaking changes should be avoided if possible.
 
 Protractor specific rules
 -------------------------
@@ -44,15 +48,13 @@ Protractor specific rules
 Commit Messages
 ---------------
 
-Protractor follows AngularJS's [commit message format](https://docs.google.com/a/google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.z8a3t6ehl060).
+Please write meaningful commit messages - they are used to generate the changelog, so the commit message should tell a user everything they need to know about a commit. Protractor follows AngularJS's [commit message format](https://docs.google.com/a/google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.z8a3t6ehl060).
 
 In summary, this style is
 
     <type>(<scope>): <subject>
     <BLANK LINE>
     <body>
-    <BLANK LINE>
-    <footer>
 
 Where `<type>` is one of [feat, fix, docs, style, refactor, test, chore] and
 `<scope>` is a quick descriptor of the location of the change, such as cli, clientSideScripts, element.
