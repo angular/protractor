@@ -10,3 +10,5 @@ libpeerconnection.log
 changes.sh
 xmloutput*
 npm-debug.log
+
+*.swp
