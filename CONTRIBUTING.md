@@ -36,6 +36,7 @@ Loosely, follow the [Angular contribution rules](https://github.com/angular/angu
  * If your PR changes any behavior or fixes an issue, it should have an associated test.
  * New features should be general and as simple as possible.
  * Breaking changes should be avoided if possible.
+ * All pull requests require review. No PR will be submitted without a comment from a team member stating LGTM (Looks good to me).
 
 Protractor specific rules
 -------------------------
