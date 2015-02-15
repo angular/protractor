@@ -290,7 +290,7 @@ switch (argv._[0]) {
           // Expected contents of the zip:
           //   mac/linux: chromedriver
           //   windows: chromedriver.exe
-          zip.extractAllTo(argv.out_dir);
+          zip.extractAllTo(argv.out_dir, true);
           if (os.type() != 'Windows_NT') {
             fs.chmodSync(path.join(argv.out_dir, 'chromedriver'), 0755);
           }
