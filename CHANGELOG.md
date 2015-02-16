@@ -1,3 +1,96 @@
+# 1.7.1
+
+## Dependency Version Upgrades
+
+- ([2658865](https://github.com/angular/protractor/commit/2658865640d82617e69208cdb2263a2073a20156)) 
+  feat(webdriver): bump chromedriver to 2.14
+
+  Chromedriver 2.14 contains support for accessing elements inside the shadow DOM.
+
+## Features
+
+- ([d220ecf](https://github.com/angular/protractor/commit/d220ecf5ebc7ba023eab728d4a684e978ff77c83)) 
+  feat(locators): add by.deepCss selector for finding elements in the shadow dom
+
+  Usage:
+
+  ```
+  element(by.deepCss('.foo'))
+  equivalent to 'element(by.css('* /deep/ .foo'))
+  ```
+
+- ([324f69d](https://github.com/angular/protractor/commit/324f69d6aa7c23ad77f1d50e26e0a56bade40132)) 
+  feat(locators): add by.exactRepeater
+
+- ([eb9d567](https://github.com/angular/protractor/commit/eb9d56755fa93401502e7608c7c3d0f16927c082)) 
+  feat(frameworks): add support for custom frameworks
+
+  Usage:
+
+  ```js
+  exports.config = {
+    framework: 'custom',
+    frameworkPath: '/path/to/your/framework/index.js'
+  }
+  ```
+
+- ([9bc1c53](https://github.com/angular/protractor/commit/9bc1c53e40161521b0c125a810f86235c974f100)) 
+  feat(expectedConditions): add helper library for syncing with non-angular apps
+
+  Usage:
+
+  ```javascript
+  var EC = protractor.ExpectedConditions;
+  var button = $('#xyz');
+  var isClickable = EC.elementToBeClickable(button);
+
+  browser.get(URL); browser.wait(isClickable, 5000); //wait for an element to become clickable 
+  button.click();
+  ```
+
+  You can also customize the conditions:
+
+  ```javascript
+  var urlChanged = function() {
+    return browser.getCurrentUrl().then(function(url) {
+      return url != 'http://www.angularjs.org';
+    });
+  };
+
+  // condition to wait for url to change, title to contain 'foo', and $('abc') element to contain text 'bar'
+  var condition = EC.and(urlChanged, EC.titleContains('foo'),
+      EC.textToBePresentInElement($('abc'), 'bar'));
+  $('navButton').click(); browser.wait(condition, 5000); //wait for condition to be true.
+  // do other things
+  ```
+
+- ([fb099de](https://github.com/angular/protractor/commit/fb099dedf92a64732d88401dd1b0d4d30b22650d)) 
+  feat(elementExplorer): Combine browser.pause with elementExplorer
+
+   * reuse logic for browser.pause for elementExplorer
+   * introduce browser.enterRepl
+   * allow customization of driver for elementExplorer
+   * fix bug where repl cannot return an ElementFinder (related #1600)
+
+    Closes #1314, #1315
+
+- ([9def5e0](https://github.com/angular/protractor/commit/9def5e0e67e031949010fed4ed47178a534c99e8)) 
+  feat(runner): add browser.getProcessedConfig method
+
+  Now, instances of the `browser` object have a `getProcessedConfig` method which returns a promise
+  that resolves to the current Protractor configuration object for the current runner instance. This
+  means that if multiCapabilities are being used or tests are sharded, `getProcessedConfig` will
+  return an object with the `capabilities` and `specs` property specific to the current instance.
+
+  Closes #1724
+
+## Bug Fixes
+
+- ([ccb165d](https://github.com/angular/protractor/commit/ccb165d99b69e1ae66e4c1badd2f4e04f1481e75)) 
+  fix(webdriver-manager): unzipping chromedriver should override old version
+
+  See #1813
+
 # 1.6.1
 
 ## Bug Fixes
