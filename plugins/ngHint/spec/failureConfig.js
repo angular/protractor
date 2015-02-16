@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+var env = require('../../../spec/environment.js');
 
 exports.config = {
   seleniumAddress: env.seleniumAddress,
