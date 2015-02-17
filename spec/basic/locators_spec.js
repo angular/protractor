@@ -360,22 +360,28 @@ describe('locators', function() {
       browser.get('index.html#/shadow');
     });
 
-    it('should find items inside the shadow DOM', function() {
-      var parentHeading = element(by.deepCss('.parentshadowheading'));
-      var olderChildHeading = element(by.deepCss('.oldershadowheading'));
-      var youngerChildHeading = element(by.deepCss('.youngershadowheading'));
+    // Shadow DOM is not currently supported outside of Chrome.
+    browser.getCapabilities().then(function(capabilities) {
+      if (capabilities.get('browserName') == 'chrome') {
 
-      expect(parentHeading.isPresent()).toBe(true);
-      expect(olderChildHeading.isPresent()).toBe(true);
-      expect(youngerChildHeading.isPresent()).toBe(true);
+        it('should find items inside the shadow DOM', function() {
+          var parentHeading = element(by.deepCss('.parentshadowheading'));
+          var olderChildHeading = element(by.deepCss('.oldershadowheading'));
+          var youngerChildHeading = element(by.deepCss('.youngershadowheading'));
 
-      expect(parentHeading.getText()).toEqual('Parent');
-      expect(olderChildHeading.getText()).toEqual('Older Child');
-      expect(youngerChildHeading.getText()).toEqual('Younger Child');
+          expect(parentHeading.isPresent()).toBe(true);
+          expect(olderChildHeading.isPresent()).toBe(true);
+          expect(youngerChildHeading.isPresent()).toBe(true);
 
-      expect(element(by.deepCss('.originalcontent')).getText())
-          .toEqual('original content');
-    });
+          expect(parentHeading.getText()).toEqual('Parent');
+          expect(olderChildHeading.getText()).toEqual('Older Child');
+          expect(youngerChildHeading.getText()).toEqual('Younger Child');
+
+          expect(element(by.deepCss('.originalcontent')).getText())
+              .toEqual('original content');
+        });
+      }
+    })
   });
 
   it('should determine if an element is present', function() {
