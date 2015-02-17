@@ -117,20 +117,31 @@ used from the browser&#39;s console.</p>
 <p>When debugging or first writing test suites, you may find it helpful to
 try out Protractor commands without starting up the entire test suite. You can
 do this with the element explorer.</p>
-<p>Currently, the explorer runs only with chrome and expects a standalone Selenium
-Server to be running at <a href="http://localhost:4444">http://localhost:4444</a> (see <a href="#/server-setup">Setting Up the Selenium Server</a>).</p>
-<p>From the Protractor directory, run with:</p>
-<pre><code ng-non-bindable>node ./bin/elementexplorer.js &lt;urL&gt;
+<p>To run element explorer, simply run protractor as you normally would, but pass in
+the flag --elementExplorer:</p>
+<pre><code ng-non-bindable>protractor --elementExplorer
 </code></pre><p>This will load up the URL on WebDriver and put the terminal into a REPL loop.
 You will see a &gt; prompt. The <code ng-non-bindable>browser</code>, <code ng-non-bindable>element</code> and <code ng-non-bindable>protractor</code> variables will
 be available. Enter a command such as:</p>
-<pre><code ng-non-bindable>&gt; element(by.id(&#39;foobar&#39;)).getText()
-</code></pre><p>or</p>
 <pre><code ng-non-bindable>&gt; browser.get(&#39;http://www.angularjs.org&#39;)
-</code></pre><p>To get a list of functions you can call, try:</p>
-<pre><code ng-non-bindable>&gt; browser
+</code></pre><p>or</p>
+<pre><code ng-non-bindable>&gt; element(by.id(&#39;foobar&#39;)).getText()
 </code></pre><p>Typing tab at a blank prompt will fill in a suggestion for finding
-elements.</p>
+elements. You can also use the <code ng-non-bindable>list(locator)</code> command to list all elements
+matching a locator.</p>
+<p>Element explorer will start chrome by default. However, you can specify
+another browser, change browser settings, or specify any other config that you
+normally would with your protractor test. To do this, pass configs to 
+protractor like you normally would, 
+but with the <code ng-non-bindable>--elementExplorer</code> flag set:</p>
+<pre><code ng-non-bindable>protractor [configFile] [options] --elementExplorer
+</code></pre><p>For example, to connect to ChromeDriver directly, use</p>
+<pre><code ng-non-bindable>protractor --directConnect --elementExplorer
+</code></pre><p>Element explore will ignore your specs, not set up your framework (e.g. jasmine, 
+mocha, cucumber), and only allow you to pass in 1 capability, but will honor
+every other parameter in your config.</p>
+<p>Note <code ng-non-bindable>baseUrl</code> is used here as the initial page, i.e. element explorer will try 
+to navigate to <code ng-non-bindable>baseUrl</code> automatically on start.</p>
 <h2 id="taking-screenshots">Taking Screenshots</h2>
 <p>WebDriver can snap a screenshot with <code ng-non-bindable>browser.takeScreenshot()</code>. This can be a
 good way to help debug tests, especially for tests that run on a continuous integration

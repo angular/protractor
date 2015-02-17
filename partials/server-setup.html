@@ -49,6 +49,7 @@
 <li><code ng-non-bindable>sauceKey</code> -  The key for your Sauce Labs account.</li>
 </ul>
 <p>Please note that if you set <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code>, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code> and <code ng-non-bindable>seleniumArgs</code> will be ignored.</p>
+<p>You can optionally set the <a href="referenceConf.js#L113"><code ng-non-bindable>name</code> property</a> in a capability in order to give the jobs a name on the server.  Otherwise they will just be called <code ng-non-bindable>Unnamed Job</code>.</p>
 <h2 id="connecting-directly-to-browser-drivers">Connecting Directly to Browser Drivers</h2>
 <p>Protractor can test directly against Chrome and Firefox without using a Selenium Server. To use this, in your config file set <code ng-non-bindable>directConnect: true</code>.</p>
 <ul>

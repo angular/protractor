@@ -114,7 +114,7 @@ angular.module('protractorApp', ['ngRoute']);
           if (view === item.name) {
             self.$scope.showElement(item);
           }
-        })
+        });
       }
 
       self.addExtends(list);
@@ -127,7 +127,7 @@ angular.module('protractorApp', ['ngRoute']);
    */
   ApiCtrl.prototype.setViewProperties = function(list) {
     var itemsByName = {};
-    
+
     var getTitle = function(item) {
       if (item.alias) {
         return item.alias;
@@ -287,7 +287,7 @@ angular.module('protractorApp', ['ngRoute']);
           }
         }
       }
-    }
+    };
   });
 
   /**
@@ -299,7 +299,7 @@ angular.module('protractorApp', ['ngRoute']);
         list: '=ptorFunctionList'
       },
       templateUrl: 'partials/ptor-function-list.html'
-    }
+    };
   });
 
   /**
@@ -332,7 +332,7 @@ angular.module('protractorApp', ['ngRoute']);
       '<a href="https://twitter.com/ProtractorTest" ' +
       'class="twitter-follow-button" data-show-count="false" ' +
       'data-size="large">Follow @ProtractorTest</a></div>'
-    }
+    };
   });
 })();
 
@@ -382,6 +382,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       }).
       when('/browser-setup', {
         templateUrl: 'partials/browser-setup.html'
+      }).
+      when('/browser-support', {
+        templateUrl: 'partials/browser-support.html'
       }).
       when('/control-flow', {
         templateUrl: 'partials/control-flow.html'

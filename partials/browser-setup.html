@@ -1,66 +1,9 @@
 <h1 id="setting-up-the-browser">Setting Up the Browser</h1>
 <p>Protractor works with <a href="http://docs.seleniumhq.org/docs/03_webdriver.jsp">Selenium WebDriver</a>, a browser automation framework. Selenium WebDriver supports several browser implementations or <a href="http://docs.seleniumhq.org/docs/03_webdriver.jsp#selenium-webdriver-s-drivers">drivers</a> which are discussed below.</p>
 <h2 id="browser-support">Browser Support</h2>
-<p>Protractor support for a particular browser is tied to the capabilities available in the driver for that browser. Notably, Protractor requires the driver to implement asynchronous script execution.</p>
 <p>Protractor supports the two latest major versions of Chrome, Firefox, Safari, and IE.</p>
-<table class="table table-striped">
-<thead>
-<tr>
-<th>Driver</th>
-<th>Support</th>
-<th>Known Issues</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ChromeDriver</td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td>FirefoxDriver</td>
-<td>Yes</td>
-<td><a href="https://github.com/angular/protractor/issues/480">#480</a> clicking options doesn&#39;t update the model</td>
-</tr>
-<tr>
-<td>SafariDriver</td>
-<td>Yes</td>
-<td><a href="https://github.com/angular/protractor/issues/481">#481</a> minus key doesn&#39;t work, SafariDriver does not support modals, <a href="https://github.com/angular/protractor/issues/1051">#1051</a> We see occasional page loading timeouts</td>
-</tr>
-<tr>
-<td>IEDriver</td>
-<td>Yes</td>
-<td><a href="https://github.com/angular/protractor/issues/778">#778</a>,  can be slow, <a href="https://github.com/angular/protractor/issues/1052">#1052</a> often times out waiting for page load</td>
-</tr>
-<tr>
-<td>OperaDriver</td>
-<td>No</td>
-<td></td>
-</tr>
-<tr>
-<td>ios-Driver</td>
-<td>No</td>
-<td></td>
-</tr>
-<tr>
-<td>Appium - iOS/Safari</td>
-<td>Yes*</td>
-<td>drag and drop not supported (session/:sessionid/buttondown unimplemented)</td>
-</tr>
-<tr>
-<td>Appium - Android/Chrome</td>
-<td>Yes*</td>
-<td></td>
-</tr>
-<tr>
-<td>Selendroid</td>
-<td>Yes*</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>These drivers are not yet in the Protractor smoke tests.</li>
-</ul>
+<p>Please see <a href="#/browser-support">Browser Support</a> for a full list of
+supported browsers and known issues.</p>
 <h2 id="configuring-browsers">Configuring Browsers</h2>
 <p>In your Protractor config file (see <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>referenceConf.js</a>), all browser setup is done within the <code ng-non-bindable>capabilities</code> object. This object is passed directly to the WebDriver builder (<a href="https://code.google.com/p/selenium/source/browse/javascript/webdriver/builder.js">builder.js</a>). </p>
 <p>See <a href="https://code.google.com/p/selenium/wiki/DesiredCapabilities">DesiredCapabilities</a> for full information on which properties are available.</p>

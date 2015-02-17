@@ -23,7 +23,7 @@ unwrapped webdriver, which can be accessed like <code ng-non-bindable>browser.dr
 <p>You can put your log-in code into an <code ng-non-bindable>onPrepare</code> function, which will be run
 once before any of your tests. See this example (<a href="https://github.com/angular/protractor/blob/master/spec/withLoginConf.js">withLoginConf.js</a>)</p>
 <h2 id="which-browsers-are-supported-">Which browsers are supported?</h2>
-<p>The last two major versions of Chrome, Firefox, IE, and Safari. See details at <a href="#/browser-setup">Setting Up the Browser</a>.</p>
+<p>The last two major versions of Chrome, Firefox, IE, and Safari. See details at <a href="#/browser-setup.md">Setting Up the Browser</a> and <a href="/docs/browser-support">Browser Support</a>.</p>
 <h2 id="the-result-of-gettext-from-an-input-element-is-always-empty">The result of <code ng-non-bindable>getText</code> from an input element is always empty</h2>
 <p>This is a <a href="http://grokbase.com/t/gg/webdriver/12bcmvwhcm/extarcting-text-from-the-input-field">webdriver quirk</a>.
 <code ng-non-bindable>&lt;input&gt;</code> and <code ng-non-bindable>&lt;textarea&gt;</code> elements always have
@@ -55,9 +55,10 @@ empty <code ng-non-bindable>getText</code> values. Instead, try <code ng-non-bin
 </code></pre>
 <p>The method to take a screenshot automatically on failure would depend on the type of failure.</p>
 <ul>
-<li>For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as such:</li>
+<li>For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as below:</li>
 </ul>
-<pre><code class="lang-javascript">jasmine.getEnv().addReporter(new function() {
+<pre><code class="lang-javascript">// Note: this is using Jasmine 1.3 reporter syntax.
+jasmine.getEnv().addReporter(new function() {
   this.reportSpecResults = function(spec) {
     if (!spec.results().passed()) {
       //take screenshot

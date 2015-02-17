@@ -20,21 +20,23 @@ var expect = chai.expect;
 <pre><code class="lang-js">expect(myElement.getText()).to.eventually.equal(&#39;some text&#39;);
 </code></pre>
 <p>Finally, set the &#39;framework&#39; property to &#39;mocha&#39;, either by adding <code ng-non-bindable>framework: &#39;mocha&#39;</code> to the config file or by adding <code ng-non-bindable>--framework=mocha</code> to the command line.</p>
-<p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="https://github.com/angular/protractor/blob/master/spec/mochaConf.js">config file</a> with mochaOpts:</p>
+<p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="../spec/mochaConf.js">config file</a> with mochaOpts:</p>
 <pre><code class="lang-js">mochaOpts: {
   reporter: &quot;spec&quot;,
   slow: 3000
 }
 </code></pre>
-<p>For a full example, see Protractor’s own test: <a href="https://github.com/angular/protractor/tree/master/spec/mocha">/spec/mocha</a>.</p>
+<p>For a full example, see Protractor’s own test: <a href="../spec/mocha">/spec/mocha</a>.</p>
 <h2 id="using-cucumber">Using Cucumber</h2>
-<p><em>Note: Limited support for Cucumber is available as of January 2014. Support for Cucumber in Protractor is maintained by the community, so bug fixes may be slow. For more information, see the <a href="https://github.com/cucumber/cucumber-js">Cucumber GitHub site</a>.</em></p>
+<p><em>Note: Limited support for Cucumber is available as of January 2015. Support for Cucumber in Protractor is maintained by the community, so bug fixes may be slow. For more information, see the <a href="https://github.com/cucumber/cucumber-js">Cucumber GitHub site</a>.</em></p>
 <p>If you would  like to use the Cucumber test framework, download the dependencies with npm. Cucumber should be installed in the same place as Protractor - so if protractor was installed globally, install Cucumber with -g.</p>
 <pre><code ng-non-bindable>npm install -g cucumber
-</code></pre><p>Set the &#39;framework&#39; property to cucumber, either by adding <code ng-non-bindable>framework: &#39;cucumber&#39;</code> to the <a href="https://github.com/angular/protractor/blob/master/spec/cucumberConf.js">config file</a> or by adding <code ng-non-bindable>--framework=cucumber</code> to the command line.</p>
+</code></pre><p>Set the &#39;framework&#39; property to cucumber, either by adding <code ng-non-bindable>framework: &#39;cucumber&#39;</code> to the <a href="../spec/cucumberConf.js">config file</a> or by adding <code ng-non-bindable>--framework=cucumber</code> to the command line.</p>
 <p>Options for Cucumber such as &#39;format&#39; can be given in the config file with cucumberOpts:</p>
 <pre><code class="lang-js">cucumberOpts: {
   format: &quot;summary&quot;
 }
 </code></pre>
-<p>For a full example, see Protractor’s own test: <a href="https://github.com/angular/protractor/tree/master/spec/cucumber">/spec/cucumber</a>.</p>
+<p>For a full example, see Protractor’s own test: <a href="../spec/cucumber">/spec/cucumber</a>.</p>
+<h2 id="using-a-custom-framework">Using a Custom Framework</h2>
+<p>Check section <a href="../lib/frameworks/README.md">Framework Adapters for Protractor</a> specifically <a href="../lib/frameworks/README.md#custom-frameworks">Custom Frameworks</a></p>

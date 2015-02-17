@@ -1,0 +1,66 @@
+<h1 id="browser-support">Browser Support</h1>
+<p>Protractor supports the two latest major versions of Chrome, Firefox, Safari, and IE. These are used in Protractor&#39;s own suite of tests. You can view the current status <a href="https://travis-ci.org/angular/protractor">on Travis</a>.</p>
+<p>Note that because Protractor uses WebDriver to drive browsers, any issues with WebDriver implementations (such as FireFoxDriver, ChromeDriver, and IEDriver) will show up in Protractor. The chart below links to major known issues. You can search through all WebDriver issues at <a href="https://code.google.com/p/selenium/issues/list">the Selenium issue tracker</a>.</p>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Driver</th>
+<th>Support</th>
+<th>Known Issues</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChromeDriver</td>
+<td>Yes</td>
+<td><a href="https://github.com/angular/protractor/labels/browser%3A%20chrome">Link</a></td>
+</tr>
+<tr>
+<td>FirefoxDriver</td>
+<td>Yes</td>
+<td><a href="https://github.com/angular/protractor/labels/browser%3A%20firefox">Link</a></td>
+</tr>
+<tr>
+<td>SafariDriver</td>
+<td>Yes</td>
+<td><a href="https://github.com/angular/protractor/labels/browser%3A%20safari">Link</a></td>
+</tr>
+<tr>
+<td>IEDriver</td>
+<td>Yes</td>
+<td><a href="https://github.com/angular/protractor/labels/browser%3A%20IE">Link</a></td>
+</tr>
+<tr>
+<td>OperaDriver</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>ios-Driver</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>Appium - iOS/Safari</td>
+<td>Yes*</td>
+<td>drag and drop not supported (session/:sessionid/buttondown unimplemented)</td>
+</tr>
+<tr>
+<td>Appium - Android/Chrome</td>
+<td>Yes*</td>
+<td></td>
+</tr>
+<tr>
+<td>Selendroid</td>
+<td>Yes*</td>
+<td></td>
+</tr>
+<tr>
+<td>PhantomJS / GhostDriver</td>
+<td>**</td>
+<td><a href="https://github.com/angular/protractor/labels/browser%3A%20phantomjs">Link</a></td>
+</tr>
+</tbody>
+</table>
+<p>(*) These drivers are not yet in the Protractor smoke tests.</p>
+<p>(**) We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers.</p>
