@@ -23,6 +23,7 @@ exports.config = {
     'name': 'Protractor smoke tests',
     'version': '38',
     'selenium-version': '2.43.1',
+    'chromedriver-version': '2.14',
     'platform': 'OS X 10.9'
   }, {
     'browserName': 'firefox',
