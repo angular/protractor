@@ -13,8 +13,8 @@ Note that because Protractor uses WebDriver to drive browsers, any issues with W
 |IEDriver                |Yes           |[Link](https://github.com/angular/protractor/labels/browser%3A%20IE) |
 |OperaDriver             |No            |                 |
 |ios-Driver              |No            |                 |
-|Appium - iOS/Safari     |Yes*          | drag and drop not supported (session/:sessionid/buttondown unimplemented) |
-|Appium - Android/Chrome |Yes*          |                 |
+|Appium - iOS/Safari     |Yes*          |[Link](https://github.com/angular/protractor/labels/browser%3A%20iOS%20safari) |
+|Appium - Android/Chrome |Yes*          |[Link](https://github.com/angular/protractor/labels/browser%3A%20android%20chrome) |
 |Selendroid              |Yes*          |                 |
 |PhantomJS / GhostDriver |**            |[Link](https://github.com/angular/protractor/labels/browser%3A%20phantomjs) | 
 
