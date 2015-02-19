@@ -9,7 +9,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'basic/*_spec.js'
+    'basic/lib_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
