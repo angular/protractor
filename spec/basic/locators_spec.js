@@ -381,7 +381,7 @@ describe('locators', function() {
               .toEqual('original content');
         });
       }
-    })
+    });
   });
 
   it('should determine if an element is present', function() {
