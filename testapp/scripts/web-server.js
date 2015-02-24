@@ -13,7 +13,7 @@ var testAppDir = path.resolve(__dirname, '..');
 var argv = optimist.describe('port', 'port').
     default('port', DEFAULT_PORT).
     describe('ngversion', 'version of AngularJS to use').
-    default('ngversion', '1.3.0-rc0').
+    default('ngversion', '1.3.13').
     argv;
 
 var angularDir = path.join(testAppDir, 'lib/angular_v' + argv.ngversion);
