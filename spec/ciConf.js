@@ -32,6 +32,7 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
     'version': '34',
+    'chromedriver-version': '2.14',
     'selenium-version': '2.44.0'
   }],
 
