@@ -16,7 +16,7 @@ To get set up and running  quickly:
 
 Once you are familiar with the tutorial, you’re ready to move on. To modify your environment, see the Protractor Setup docs. To start writing tests, see the Protractor Tests docs.
 
-To better understand how Protractor works with the Selenium WebDriver and Selenium Sever see the reference materials.
+To better understand how Protractor works with the Selenium WebDriver and Selenium Server see the reference materials.
 
 
 For Contributors
