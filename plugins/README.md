@@ -36,6 +36,10 @@ exports.config = {
 Writing Plugins
 ---------------
 
+Plugins are designed to work with any test framework (Jasmine, Mocha, etc),
+so they use generic hooks which Protractor provides. Plugins may change
+the output of Protractor by returning a results object.
+
 Plugins are node modules which export an object with the following API:
 
 ```js
@@ -72,6 +76,18 @@ exports.teardown = function(config) {};
  * @return Return values are ignored.
  */
 exports.postResults = function(config) {};
+
+/**
+ * Called after each test block (in Jasmine, this means an `it` block)
+ * completes.
+ *
+ * @param {Object} config The plugin configuration object.
+ * @param {boolean} passed True if the test passed.
+ *
+ * @return Object If an object is returned, it is merged with the Protractor
+ *     result object. May return a promise.
+ */
+exports.postTest = function(config, passed) {};
 ```
 
 The protractor results object follows the format specified in
