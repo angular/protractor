@@ -97,6 +97,16 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/mochaFailureConf.js'
       stacktrace: 'mocha_failure_spec.js:11:20'
     }]);
 
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/pluginsFailingConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'Expected true to be false'},
+      {message: 'from setup'},
+      {message: 'from postTest passing'},
+      {message: 'from postTest failing'},
+      {message: 'from teardown'}
+    ]);
+
 // Check ngHint plugin
 
 executor.addCommandlineTest(
