@@ -302,7 +302,7 @@ switch (argv._[0]) {
           var zip = new AdmZip(filename);
           // Expected contents of the zip:
           //   IEDriverServer.exe
-          zip.extractAllTo(argv.out_dir);
+          zip.extractAllTo(argv.out_dir, true);
         });
     }
     break;
