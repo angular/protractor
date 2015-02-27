@@ -129,13 +129,10 @@ executor.addCommandlineTest(
     'node lib/cli.js plugins/accessibility/spec/failureConfig.js')
     .expectExitCode(1)
     .expectErrors([{
-      message: '2 elements failed:'+
-      '\n\t\t<input ng-model="firstName" type="text" class="ng-pristine ng-valid ng-touched">'+
-      '\n\t\t<input ng-model="lastName" type="text" class="ng-pristine ng-untouched ng-valid">'
+      message: '3 elements failed:'
     },
     {
-      message: '1 element failed:'+
-      '\n\t\t<img src="http://example.com/img.jpg">'
+      message: '1 element failed:'
     }]);
 
 executor.execute();
