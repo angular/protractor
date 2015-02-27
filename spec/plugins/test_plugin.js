@@ -30,5 +30,7 @@ module.exports = {
     return q.delay(100).then(function() {
       return passingResult;
     });
-  }
+  },
+
+  name: 'some plugin name'
 };
