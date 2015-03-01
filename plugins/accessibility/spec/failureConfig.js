@@ -13,7 +13,9 @@ exports.config = {
       },
       printAll: false
     },
-    chromeA11YDevTools: true,
+    chromeA11YDevTools: {
+      treatWarningsAsFailures: true
+    },
     path: '../index.js'
   }]
 };
