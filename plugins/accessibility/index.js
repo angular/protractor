@@ -104,11 +104,23 @@ function runTenonIO(config) {
   });
 
   function processTenonResults(response) {
+
+    var testHeader = 'Tenon.io - ';
+
+    if (!response.resultSet) {
+      if (response.code === 'daily_limit_reached') {
+        console.log(testHeader, 'Daily limit reached');
+        console.log(response.moreInfo);
+      }
+      else {
+        console.log('Tenon.io error');
+      }
+      return;
+    }
+
     var numResults = response.resultSet.length;
 
     testOut.failedCount = numResults;
-
-    var testHeader = 'Tenon.io - ';
 
     if (numResults === 0) {
       return testOut.specResults.push({
@@ -127,9 +139,10 @@ function runTenonIO(config) {
     }
 
     return response.resultSet.forEach(function(result) {
+      var ref = (result.ref === null) ? '' : result.ref;
       var errorMsg = result.errorDescription + '\n\n' +
                      '\t\t' +entities.decode(result.errorSnippet) +
-                     '\n\n\t\t' +result.ref + '\n';
+                     '\n\n\t\t' + ref + '\n';
 
 
       testOut.specResults.push({
