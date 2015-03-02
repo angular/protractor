@@ -1,3 +1,50 @@
+# 1.8.0
+
+## Dependency Version Upgrades
+
+- ([1159612](https://github.com/angular/protractor/commit/1159612ed76bb65612dbb2cc648e45928a251b10)) 
+  fix(webdriver): bump selenium to 2.45.0
+
+  Bump the selenium standalone binary to 2.45.0.
+
+  See https://code.google.com/p/selenium/source/browse/java/CHANGELOG for a full list of changes to
+  the selenium server.
+
+  Closes #1734
+
+## Features
+
+- ([54163dc](https://github.com/angular/protractor/commit/54163dcd22cee27cf16685fbb4d53a2712233d26)) 
+  feat(a11yPlugin): plugin for integrating with Chrome Accessibility Developer Tools
+
+  Also includes missing Angular map files. See plugins/accessibility/index.js for usage.
+
+- ([658902b](https://github.com/angular/protractor/commit/658902bd04bf809bde2751db79e93ae00de2f810)) 
+  feat(plugins): add postTest hook for plugins
+
+  Additionally, add some tests to make sure that plugins can fail properly.
+
+  Closes #1842
+
+- ([13d34c9](https://github.com/angular/protractor/commit/13d34c9192a06634827d89bf356bea33fea75747)) 
+  feat(a11yPlugin): add support for Tenon.io
+
+- ([5f8cffd](https://github.com/angular/protractor/commit/5f8cffd95c50ab4e7949376425f10e13747eb922)) 
+  feat(plugins): allow plugins to export a name for use in reporting
+
+## Bug Fixes
+
+- ([aabdd56](https://github.com/angular/protractor/commit/aabdd567ee62d0d48fad499ee5decbb5d7d6b939)) 
+  fix(debugger): breakpoint isn't set properly for windows
+
+- ([361ae21](https://github.com/angular/protractor/commit/361ae21ee761eb78d1e2c9b2b7d270873a28ef81)) 
+  fix(plugins): add a 'test' or 'fail' string to plugins
+
+  Closes #1843
+
+- ([847e739](https://github.com/angular/protractor/commit/847e73961e52caa1537df269589d9cfe6373b986)) 
+  fix(webdriver-manager): unzipping ie driver should overwrite old version
+
 # 1.7.0
 
 ## Dependency Version Upgrades
