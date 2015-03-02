@@ -13,7 +13,9 @@ var q = require('q'),
  *    exports.config = {
  *      ...
  *      plugins: [{
- *        chromeA11YDevTools: true,
+ *        chromeA11YDevTools: {
+ *          treatWarningsAsFailures: true
+ *        },
  *        path: 'node_modules/protractor.plugins/accessiblity'
  *      }]
  *    }
@@ -165,7 +167,7 @@ function runTenonIO(config) {
  *    failed tests
  * @private
  */
-function runChromeDevTools() {
+function runChromeDevTools(config) {
 
   var data = fs.readFileSync(AUDIT_FILE, 'utf-8');
   data = data + ' return axs.Audit.run();';
@@ -202,10 +204,17 @@ function runChromeDevTools() {
 
       return audit.forEach(function(result, index) {
         if (result.result === 'FAIL') {
-          result.passed = false;
-          testOut.failedCount++;
-
           var label = result.elementCount === 1 ? ' element ' : ' elements ';
+          if (result.rule.severity !== 'Warning'
+              || config.chromeA11YDevTools.treatWarningsAsFailures) {
+            result.passed = false;
+            testOut.failedCount++;
+          } else {
+            result.passed = true;
+            result.rule.heading = '\x1b[33m(WARNING) '
+                + result.rule.heading + ' (' + result.elementCount
+                + label + 'failed)';
+          }
           result.output = '\n\t\t' + result.elementCount + label + 'failed:';
 
           // match elements returned via promises
