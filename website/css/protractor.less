@@ -114,3 +114,30 @@
     padding-right: 10px;
   }
 }
+
+//Anchors
+h1, h2 {
+  position: relative;
+  margin-left: -1.5em;
+  padding-left: 1.5em;
+
+  a.anchor {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0em;
+    width: 2em;
+    height: 1em;
+    line-height: 1em;
+    margin: auto;
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.75em;
+    display: none;
+  }
+
+  &:hover a.anchor {
+    display: inline-block;
+  }
+}
