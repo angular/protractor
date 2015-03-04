@@ -81,7 +81,7 @@ See an example ([spec.js](https://github.com/juliemr/protractor-demo/blob/master
 
 How can I get screenshots of failures?
 -------------------------------------------- 
-First, this is how you can take a screenshot:
+First, this is how you can save a screenshot to a file:
 ```javascript
 browser.takeScreenshot().then(function(png) {
   var stream = fs.createWriteStream("/tmp/screenshot.png");
@@ -95,12 +95,12 @@ The method to take a screenshot automatically on failure would depend on the typ
 
 ```javascript
 // Note: this is using Jasmine 1.3 reporter syntax.
-jasmine.getEnv().addReporter(new function() {
-  this.reportSpecResults = function(spec) {
+jasmine.getEnv().addReporter({
+  reportSpecResults: function(spec) {
     if (!spec.results().passed()) {
       //take screenshot
     }
-  };
+  },
 });
 ```
 Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
