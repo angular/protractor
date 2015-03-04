@@ -116,28 +116,39 @@
 }
 
 //Anchors
-h1, h2 {
-  position: relative;
-  margin-left: -1.5em;
-  padding-left: 1.5em;
+.anchored {
+  div {
+    position: relative;
+    margin-left: -1.5em;
+    padding-left: 1.5em;
 
-  a.anchor {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0em;
-    width: 2em;
-    height: 1em;
-    line-height: 1em;
-    margin: auto;
-    text-align: center;
-    color: inherit;
-    text-decoration: none;
-    font-size: 0.75em;
-    display: none;
+    a {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0em;
+      width: 2em;
+      height: 1em;
+      line-height: 1em;
+      margin: auto;
+      text-align: center;
+      color: inherit;
+      text-decoration: none;
+      font-size: 0.75em;
+      display: none;
+    }
+
+    &:hover a {
+      display: inline-block;
+    }
   }
 
-  &:hover a.anchor {
-    display: inline-block;
+  //Offset
+  &:before {
+    content: " ";
+    display: block;
+    height: 70px;
+    margin-top: -70px;
+    visibility: hidden;
   }
 }
