@@ -62,6 +62,7 @@ describe('Navigation', function() {
         'Configuration File Reference',
         'Protractor API',
         'Browser Support',
+        'Plugins',
         'Timeouts',
         'The WebDriver Control Flow',
         'How It Works',
@@ -159,6 +160,12 @@ describe('Navigation', function() {
       menu.dropdown('Reference').item('Browser Support');
 
       expect($('h1').getText()).toBe('Browser Support');
+    });
+
+    it('should go to Plugins', function() {
+      menu.dropdown('Reference').item('Plugins');
+
+      expect($('h1').getText()).toBe('Plugins');
     });
 
     it('should go to The WebDriver Control Flow', function() {
