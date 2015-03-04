@@ -99,8 +99,8 @@ gulp.task('markdown', function() {
       // Fix md links.
       .pipe(replace(/\/docs\/(.*)\.md/g, '#/$1'))
       // Add anchor links
-      .pipe(replace(/<h2 id="([^"]*)">/g, '<h2 id="$1"><a ' +
-          'class="anchor" href="#{{path}}#$1">&#x1f517;</a>'))
+      .pipe(replace(/<h2 id="([^"]*)">(.*?)<\/h2>/g, '<h2 id="$1" class="' +
+          'anchored"><div><a href="#{{path}}#$1">&#x1f517;</a>$2</div></h2>'))
       // Fix reference conf links.
       .pipe(replace(
           /"\/(docs|example|spec\/basic)\/(\w+\.js)"/g,
