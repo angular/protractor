@@ -17,6 +17,9 @@ angular.module('protractorApp').config(function($routeProvider) {
       when('/browser-support', {
         templateUrl: 'partials/browser-support.html'
       }).
+      when('/plugins', {
+        templateUrl: 'partials/plugins.html'
+      }).
       when('/control-flow', {
         templateUrl: 'partials/control-flow.html'
       }).

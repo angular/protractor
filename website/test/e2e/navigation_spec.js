@@ -161,6 +161,12 @@ describe('Navigation', function() {
       expect($('h1').getText()).toBe('Browser Support');
     });
 
+    it('should go to Plugins', function() {
+      menu.dropdown('Reference').item('Plugins');
+
+      expect($('h1').getText()).toBe('Plugins');
+    });
+
     it('should go to The WebDriver Control Flow', function() {
       menu.dropdown('Reference').item('The WebDriver Control Flow');
 
