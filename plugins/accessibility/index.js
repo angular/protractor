@@ -175,6 +175,15 @@ function runChromeDevTools(config) {
   var elementPromises = [],
       elementStringLength = 200;
 
+  function trimText(text) {
+    if (text.length > elementStringLength) {
+      return text.substring(0, elementStringLength / 2) + ' ... '
+          + text.substring(text.length - elementStringLength / 2);
+    } else {
+      return text;
+    }
+  }
+
   var testHeader = 'Chrome A11Y - ';
 
   return browser.executeScript_(data, 'a11y developer tool rules').then(function(results) {
@@ -189,7 +198,7 @@ function runChromeDevTools(config) {
             elem.getOuterHtml().then(function(text) {
               return {
                 code: result.rule.code,
-                list: text.substring(0, elementStringLength)
+                list: trimText(text)
               };
             })
           );
