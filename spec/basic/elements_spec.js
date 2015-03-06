@@ -364,6 +364,17 @@ describe('ElementArrayFinder', function() {
     expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
 
+  it('should return not present when an element disappears within an array', 
+      function() {
+    browser.get('index.html#/form');
+    element.all(by.model('color')).then(function(elements) {
+      var disappearingElem = elements[0];
+      expect(disappearingElem.isPresent()).toBeTruthy();
+      browser.get('index.html#/bindings');
+      expect(disappearingElem.isPresent()).toBeFalsy();
+    });
+  });
+
   it('should get an element from an array', function() {
     var colorList = element.all(by.model('color'));
 
