@@ -4,6 +4,7 @@ testapp/inbrowsertest/
 website/bower_components/
 website/build/
 website/docgen/build/
+.idea
 
 chromedriver.log
 libpeerconnection.log
