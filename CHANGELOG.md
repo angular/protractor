@@ -1331,7 +1331,7 @@ _Note: Major version 0 releases are for initial development, and backwards incom
   fix(jasminewd): include full pre-async-call stack trace in expectation failure message
 
 - ([b6df2cf](https://github.com/angular/protractor/commit/b6df2cfcfd35b31e2e473604b6df9add744c6c2d)) 
-  fix(configParser): load coffee and typescript for child processes
+  fix(configParser): load coffee and LiveScript for child processes
 
   Without loading coffee in configParser.js, child processes which try and load a coffeescript
   config file do not have coffee registered with node's required, and child tests fail.
