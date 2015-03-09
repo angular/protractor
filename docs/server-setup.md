@@ -66,7 +66,8 @@ To run your tests against a remote Selenium Server, you will need an account wit
 In your config file, set these options:
  - `sauceUser` -  The username for your Sauce Labs account.
  - `sauceKey` -  The key for your Sauce Labs account.
-
+ - `sauceSeleniumAddress` - default: ondemand.saucelabs.com:80/wd/hub ; travis: localhost:4445/wd/hub
+ 
 Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort` and `seleniumArgs` will be ignored.
 
 You can optionally set the [`name` property](/docs/referenceConf.js#L113) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
