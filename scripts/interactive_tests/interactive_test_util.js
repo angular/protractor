@@ -141,7 +141,8 @@ exports.InteractiveTest = function(interactiveServerStartCmd, port) {
         };
         return verifyAll(0);
       }).fin(function() {
-        client.sendCommand(0x1D); // '^]' This is the term signal.
+        // '^]' This is the term signal.
+        client.sendCommand(String.fromCharCode(0x1D)); 
         client.disconnect();
       });
     }).done();
