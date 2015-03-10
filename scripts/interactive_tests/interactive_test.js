@@ -35,6 +35,10 @@ test.addCommandExpectation('element(by.binding("nonexistent")).getText()',
     'ERROR: NoSuchElementError: No element found using locator: ' + 
     'by.binding("nonexistent")');
 
+// Check global `list` works.
+test.addCommandExpectation('list(by.binding("greeting"))', '[ \'Hiya\' ]');
+test.addCommandExpectation('list(by.binding("nonexistent"))', '[]');
+
 // Check complete calls
 test.addCommandExpectation('\t', 
     '[["element(by.id(\'\'))","element(by.css(\'\'))",' + 
@@ -43,6 +47,8 @@ test.addCommandExpectation('\t',
     '"element(by.className(\'\'))"],""]');
 test.addCommandExpectation('ele\t', '[["element"],"ele"]');
 test.addCommandExpectation('br\t', '[["break","","browser"],"br"]');
+// Make sure the global 'list' we added shows up.
+test.addCommandExpectation('li\t', '[["list"],"li"]'); 
 
 test.run();
 
