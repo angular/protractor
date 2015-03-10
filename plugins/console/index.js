@@ -2,15 +2,39 @@ var q = require('q');
 
 var testOut = {failedCount: 0, specResults: []};
 
+/**
+ * This plugin scans the log after each test and can fail on error and warning messages
+ *
+ *    exports.config = {
+ *      plugins: [{
+ *        path: 'node_modules/protractor/plugins/console',
+ *        failOnWarning: {Boolean}  (Default - false),
+ *        failOnError: {Boolean}    (Default - true)
+ *      }]
+ *    };
+ */
 var ConsolePlugin = function () {
     this.failOnWarning = false;
     this.failOnError = true;
 };
 
+/**
+ * Gets the browser log
+ *
+ * @returns {!webdriver.promise.Promise.<!Array.<!webdriver.logging.Entry>>}
+ */
 ConsolePlugin.getBrowserLog = function () {
     return browser.manage().logs().get('browser');
 };
 
+/**
+ * Logs messages to the test output
+ *
+ * @param warnings
+ *      The list of warnings detected by the browser log
+ * @param errors
+ *      The list of errors detected by the browser log
+ */
 ConsolePlugin.logMessages = function (warnings, errors) {
     warnings.map(function (warning) {
         console.error(warning.level.name + ': ' + warning.message);
@@ -21,6 +45,13 @@ ConsolePlugin.logMessages = function (warnings, errors) {
     });
 };
 
+/**
+ * Parses the log and decides whether to throw an error or not
+ *
+ * @param config
+ *      The config from the protractor config file
+ * @returns {Deferred.promise}
+ */
 ConsolePlugin.parseLog = function (config) {
     var self = this;
     var deferred = q.defer();
@@ -49,10 +80,11 @@ ConsolePlugin.parseLog = function (config) {
     return deferred.promise;
 };
 
-ConsolePlugin.prototype.postTest = function (config, passed) {
-
-};
-
+/**
+ * Tear-down function used by protractor
+ *
+ * @param config
+ */
 ConsolePlugin.prototype.teardown = function (config) {
     var audits = [];
 
@@ -63,16 +95,8 @@ ConsolePlugin.prototype.teardown = function (config) {
     });
 };
 
-ConsolePlugin.prototype.postResults = function (config) {
-
-};
-
 var consolePlugin = new ConsolePlugin();
 
 exports.teardown = consolePlugin.teardown.bind(consolePlugin);
-exports.postResults = consolePlugin.postResults.bind(consolePlugin);
-exports.postTest = consolePlugin.postTest.bind(consolePlugin);
 
 exports.ConsolePlugin = ConsolePlugin;
-
-exports.name = '';
