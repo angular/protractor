@@ -1,6 +1,6 @@
 var q = require('q');
 
-var testOut = {failedCount: 0, specResults: []};
+var testOut = {failedCount: 0, specResults: {assertions: []}};
 
 /**
  * This plugin scans the log after each test and can fail on error and warning messages
@@ -10,12 +10,14 @@ var testOut = {failedCount: 0, specResults: []};
  *        path: 'node_modules/protractor/plugins/console',
  *        failOnWarning: {Boolean}  (Default - false),
  *        failOnError: {Boolean}    (Default - true)
+ *        exclude: {Array}          (Default - [])
  *      }]
  *    };
  */
-var ConsolePlugin = function () {
-    this.failOnWarning = false;
-    this.failOnError = true;
+var ConsolePlugin = function() {
+  this.failOnWarning = false;
+  this.failOnError = true;
+  this.exclude = [];
 };
 
 /**
@@ -23,8 +25,8 @@ var ConsolePlugin = function () {
  *
  * @returns {!webdriver.promise.Promise.<!Array.<!webdriver.logging.Entry>>}
  */
-ConsolePlugin.getBrowserLog = function () {
-    return browser.manage().logs().get('browser');
+ConsolePlugin.getBrowserLog = function() {
+  return browser.manage().logs().get('browser');
 };
 
 /**
@@ -35,14 +37,22 @@ ConsolePlugin.getBrowserLog = function () {
  * @param errors
  *      The list of errors detected by the browser log
  */
-ConsolePlugin.logMessages = function (warnings, errors) {
-    warnings.map(function (warning) {
-        console.error(warning.level.name + ': ' + warning.message);
-    });
+ConsolePlugin.logMessages = function(warnings, errors) {
+  warnings.map(function(warning) {
+    //testOut.specResults.assertions.push({description: warning.level.name + ': ' + warning.message, passed: false});
+    console.error(warning.level.name + ': ' + warning.message);
+  });
 
-    errors.map(function (error) {
-        console.error(error.level.name + ': ' + error.message);
-    });
+  errors.map(function(error) {
+    //testOut.specResults.assertions.push({description: error.level.name + ': ' + error.message, passed: false});
+    console.error(error.level.name + ': ' + error.message);
+  });
+};
+
+ConsolePlugin.includeLog = function(logMessage) {
+  return this.exclude.filter(function(e) {
+      return (e instanceof RegExp) ? logMessage.match(e) : logMessage.indexOf(e) > -1;
+    }).length === 0;
 };
 
 /**
@@ -52,32 +62,34 @@ ConsolePlugin.logMessages = function (warnings, errors) {
  *      The config from the protractor config file
  * @returns {Deferred.promise}
  */
-ConsolePlugin.parseLog = function (config) {
-    var self = this;
-    var deferred = q.defer();
-    var failOnWarning = config.failOnWarning || this.failOnWarning;
-    var failOnError = config.failOnError || this.failOnError;
-    this.getBrowserLog().then(function (log) {
+ConsolePlugin.parseLog = function(config) {
+  var self = this;
+  var deferred = q.defer();
+  var failOnWarning = config.failOnWarning || this.failOnWarning;
+  var failOnError = config.failOnError || this.failOnError;
+  this.exclude.concat(config.exclude || []);
 
-        var warnings = log.filter(function (node) {
-            return (node.level || {}).name === 'WARNING';
-        });
+  this.getBrowserLog().then(function(log) {
 
-        var errors = log.filter(function (node) {
-            return (node.level || {}).name === 'SEVERE';
-        });
-
-        if (warnings.length > 0 || errors.length > 0) {
-            self.logMessages(warnings, errors);
-        }
-
-        testOut.failedCount += (warnings.length > 0 && failOnWarning) ? 1 : 0;
-        testOut.failedCount += (errors.length > 0 && failOnError) ? 1 : 0;
-
-        deferred.resolve();
+    var warnings = log.filter(function(node) {
+      return (node.level || {}).name === 'WARNING' && self.includeLog(node.message);
     });
 
-    return deferred.promise;
+    var errors = log.filter(function(node) {
+      return (node.level || {}).name === 'SEVERE' && self.includeLog(node.message);
+    });
+
+    if(warnings.length > 0 || errors.length > 0) {
+      self.logMessages(warnings, errors);
+    }
+
+    testOut.failedCount += (warnings.length > 0 && failOnWarning) ? 1 : 0;
+    testOut.failedCount += (errors.length > 0 && failOnError) ? 1 : 0;
+
+    deferred.resolve();
+  });
+
+  return deferred.promise;
 };
 
 /**
@@ -85,14 +97,14 @@ ConsolePlugin.parseLog = function (config) {
  *
  * @param config
  */
-ConsolePlugin.prototype.teardown = function (config) {
-    var audits = [];
+ConsolePlugin.prototype.teardown = function(config) {
+  var audits = [];
 
-    audits.push(ConsolePlugin.parseLog(config));
+  audits.push(ConsolePlugin.parseLog(config));
 
-    return q.all(audits).then(function (result) {
-        return testOut;
-    });
+  return q.all(audits).then(function(result) {
+    return testOut;
+  });
 };
 
 var consolePlugin = new ConsolePlugin();

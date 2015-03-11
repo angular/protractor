@@ -1,5 +1,5 @@
  // Common configuration files with defaults plus overrides from environment vars
-var webServerDefaultPort = 8081;
+var webServerDefaultPort = 8000;
 
 module.exports = {
   // The address of a running selenium server.
