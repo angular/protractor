@@ -17,9 +17,6 @@ var testOut = {failedCount: 0, specResults: []};
  *    };
  */
 var ConsolePlugin = function() {
-  this.failOnWarning = false;
-  this.failOnError = true;
-  this.exclude = [];
 };
 
 /**
@@ -81,8 +78,8 @@ ConsolePlugin.includeLog = function(logMessage) {
 ConsolePlugin.parseLog = function(config) {
   var self = this;
   var deferred = q.defer();
-  var failOnWarning = config.failOnWarning || this.failOnWarning;
-  var failOnError = config.failOnError || this.failOnError;
+  var failOnWarning = config.failOnWarning || false;
+  var failOnError = config.failOnError || true;
   this.exclude = config.exclude || [];
 
   this.getBrowserLog().then(function(log) {
@@ -95,12 +92,12 @@ ConsolePlugin.parseLog = function(config) {
       return (node.level || {}).name === 'SEVERE' && self.includeLog(node.message);
     });
 
-    if(warnings.length > 0 || errors.length > 0) {
-      self.logMessages(warnings, errors);
-    }
-
     testOut.failedCount += (warnings.length > 0 && failOnWarning) ? 1 : 0;
     testOut.failedCount += (errors.length > 0 && failOnError) ? 1 : 0;
+
+    if(testOut.failedCount > 0) {
+      self.logMessages(warnings, errors);
+    }
 
     deferred.resolve();
   });
