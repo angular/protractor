@@ -91,8 +91,8 @@ ConsolePlugin.parseLog = function(config) {
       return (node.level || {}).name === 'SEVERE' && self.includeLog(node.message);
     });
 
-    testOut.failedCount += (warnings.length > 0 && failOnWarning) ? 1 : 0;
-    testOut.failedCount += (errors.length > 0 && failOnError) ? 1 : 0;
+    testOut.failedCount += (warnings.length > 0 && failOnWarning) ? warnings.length : 0;
+    testOut.failedCount += (errors.length > 0 && failOnError) ? errors.length : 0;
 
     if(testOut.failedCount > 0) {
       self.logMessages(warnings, errors);
