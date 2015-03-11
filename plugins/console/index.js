@@ -72,17 +72,16 @@ ConsolePlugin.includeLog = function(logMessage) {
  * Parses the log and decides whether to throw an error or not
  *
  * @param config
- *      The config from the protractor config file
- * @returns {Deferred.promise}
+ *        The config of the plugin defined in the protractor config file
+ * @returns {!webdriver.promise.Promise.<R>}
  */
 ConsolePlugin.parseLog = function(config) {
   var self = this;
-  var deferred = q.defer();
-  var failOnWarning = config.failOnWarning || false;
-  var failOnError = config.failOnError || true;
+  var failOnWarning = (config.failOnWarning === undefined) ? false : config.failOnWarning;
+  var failOnError = (config.failOnError == undefined) ? true : config.failOnError;
   this.exclude = config.exclude || [];
 
-  this.getBrowserLog().then(function(log) {
+  return this.getBrowserLog().then(function(log) {
 
     var warnings = log.filter(function(node) {
       return (node.level || {}).name === 'WARNING' && self.includeLog(node.message);
@@ -98,11 +97,8 @@ ConsolePlugin.parseLog = function(config) {
     if(testOut.failedCount > 0) {
       self.logMessages(warnings, errors);
     }
-
-    deferred.resolve();
   });
 
-  return deferred.promise;
 };
 
 /**
@@ -111,11 +107,7 @@ ConsolePlugin.parseLog = function(config) {
  * @param config
  */
 ConsolePlugin.prototype.teardown = function(config) {
-  var audits = [];
-
-  audits.push(ConsolePlugin.parseLog(config));
-
-  return q.all(audits).then(function(result) {
+  return ConsolePlugin.parseLog(config).then(function() {
     return testOut;
   });
 };
@@ -123,5 +115,3 @@ ConsolePlugin.prototype.teardown = function(config) {
 var consolePlugin = new ConsolePlugin();
 
 exports.teardown = consolePlugin.teardown.bind(consolePlugin);
-
-exports.ConsolePlugin = ConsolePlugin;
