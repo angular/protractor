@@ -8,19 +8,21 @@
     <script src="../../lib/angular/angular-aria.min.js"></script>
     <script type="text/javascript">
         angular.module('consolePlugin', [])
-                .controller('TestCtrl', ['$scope', function ($scope) {
+                .controller('TestCtrl', ['$scope', function($scope) {
 
-                    $scope.logMessage = function () {
+                    $scope.logMessage = function() {
                         console.log('This is a test log');
                         console.debug('This is a test debug');
                     };
 
-                    $scope.simulateWarning = function () {
+                    $scope.simulateWarning = function() {
                         console.warn('This is a test warning');
                     };
 
-                    $scope.simulateError = function () {
+                    $scope.simulateError = function() {
                         console.error('This is a test error');
+                        console.error('This should be filtered out by string');
+                        console.error('This should be filtered out by regex');
                     }
                 }]);
     </script>

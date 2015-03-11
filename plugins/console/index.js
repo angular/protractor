@@ -1,16 +1,18 @@
 var q = require('q');
 
-var testOut = {failedCount: 0, specResults: {assertions: []}};
+var testOut = {failedCount: 0, specResults: []};
 
 /**
- * This plugin scans the log after each test and can fail on error and warning messages
+ * This plugin checks the browser log after each test for warnings and errors. It can be configured to fail a test if either is detected.
+ * There is also an optional exclude parameter which accepts both regex and strings,
+ * Any log matching the exclude parameter will not fail the test or be logged to the console
  *
  *    exports.config = {
  *      plugins: [{
  *        path: 'node_modules/protractor/plugins/console',
- *        failOnWarning: {Boolean}  (Default - false),
- *        failOnError: {Boolean}    (Default - true)
- *        exclude: {Array}          (Default - [])
+ *        failOnWarning: {Boolean}                (Default - false),
+ *        failOnError: {Boolean}                  (Default - true)
+ *        exclude: {Array of strings and regex}   (Default - [])
  *      }]
  *    };
  */
@@ -39,16 +41,30 @@ ConsolePlugin.getBrowserLog = function() {
  */
 ConsolePlugin.logMessages = function(warnings, errors) {
   warnings.map(function(warning) {
-    //testOut.specResults.assertions.push({description: warning.level.name + ': ' + warning.message, passed: false});
-    console.error(warning.level.name + ': ' + warning.message);
+    testOut.specResults.push({
+      description: warning.level.name,
+      passed: false,
+      assertions: [{passed: false, errorMsg: warning.message}]
+    });
   });
 
   errors.map(function(error) {
-    //testOut.specResults.assertions.push({description: error.level.name + ': ' + error.message, passed: false});
-    console.error(error.level.name + ': ' + error.message);
+    testOut.specResults.push({
+      description: error.level.name,
+      passed: false,
+      assertions: [{passed: false, errorMsg: error.message}]
+    });
   });
 };
 
+/**
+ * Determines if a log message is filtered out or not. This can be set at the config stage using the exclude parameter.
+ * The parameter accepts both strings and regex
+ *
+ * @param logMessage
+ *      Current log message
+ * @returns {boolean}
+ */
 ConsolePlugin.includeLog = function(logMessage) {
   return this.exclude.filter(function(e) {
       return (e instanceof RegExp) ? logMessage.match(e) : logMessage.indexOf(e) > -1;
@@ -67,7 +83,7 @@ ConsolePlugin.parseLog = function(config) {
   var deferred = q.defer();
   var failOnWarning = config.failOnWarning || this.failOnWarning;
   var failOnError = config.failOnError || this.failOnError;
-  this.exclude.concat(config.exclude || []);
+  this.exclude = config.exclude || [];
 
   this.getBrowserLog().then(function(log) {
 

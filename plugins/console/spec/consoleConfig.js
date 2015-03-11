@@ -8,6 +8,10 @@ exports.config = {
     plugins: [{
         path: '../index.js',
         failOnWarning: true,
-        failOnError: true
+        failOnError: true,
+        exclude: [
+          'string',
+          /regex/
+        ]
     }]
 };
