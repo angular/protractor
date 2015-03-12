@@ -1,6 +1,12 @@
 var q = require('q');
 
-var testOut = {failedCount: 0, specResults: []};
+var testOut = {
+  failedCount: 0, specResults: [{
+    description: "Console output",
+    assertions: [],
+    duration: 0
+  }]
+};
 
 /**
  * This plugin checks the browser log after each test for warnings and errors. It can be configured to fail a test if either is detected.
@@ -37,20 +43,17 @@ ConsolePlugin.getBrowserLog = function() {
  *      The list of errors detected by the browser log
  */
 ConsolePlugin.logMessages = function(warnings, errors) {
+  var passed = (testOut.failedCount === 0);
   warnings.map(function(warning) {
-    testOut.specResults.push({
-      description: warning.level.name,
-      passed: testOut.failedCount > 0,
-      assertions: [{passed: false, errorMsg: warning.message}]
-    });
+    testOut.specResults[0].assertions.push(
+      {passed: passed, errorMsg: warning.level.name + ': ' + warning.message}
+    );
   });
 
   errors.map(function(error) {
-    testOut.specResults.push({
-      description: error.level.name,
-      passed: testOut.failedCount > 0,
-      assertions: [{passed: false, errorMsg: error.message}]
-    });
+    testOut.specResults[0].assertions.push(
+      {passed: passed, errorMsg: error.level.name + ': ' + error.message}
+    );
   });
 };
 
