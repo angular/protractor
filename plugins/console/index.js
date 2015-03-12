@@ -40,7 +40,7 @@ ConsolePlugin.logMessages = function(warnings, errors) {
   warnings.map(function(warning) {
     testOut.specResults.push({
       description: warning.level.name,
-      passed: false,
+      passed: testOut.failedCount > 0,
       assertions: [{passed: false, errorMsg: warning.message}]
     });
   });
@@ -48,7 +48,7 @@ ConsolePlugin.logMessages = function(warnings, errors) {
   errors.map(function(error) {
     testOut.specResults.push({
       description: error.level.name,
-      passed: false,
+      passed: testOut.failedCount > 0,
       assertions: [{passed: false, errorMsg: error.message}]
     });
   });
@@ -94,9 +94,7 @@ ConsolePlugin.parseLog = function(config) {
     testOut.failedCount += (warnings.length > 0 && failOnWarning) ? warnings.length : 0;
     testOut.failedCount += (errors.length > 0 && failOnError) ? errors.length : 0;
 
-    if(testOut.failedCount > 0) {
-      self.logMessages(warnings, errors);
-    }
+    self.logMessages(warnings, errors);
   });
 
 };
