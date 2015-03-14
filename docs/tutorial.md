@@ -44,7 +44,7 @@ Copy the following into spec.js:
 
 ```javascript
 // spec.js
-describe('angularjs homepage', function() {
+describe('Protractor Demo App', function() {
   it('should have a title', function() {
     browser.get('http://juliemr.github.io/protractor-demo/');
 
@@ -80,7 +80,7 @@ Now let's modify the test to interact with elements on the page. Change spec.js 
 
 ```js
 // spec.js
-describe('angularjs homepage', function() {
+describe('Protractor Demo App', function() {
   it('should add one and two', function() {
     browser.get('http://juliemr.github.io/protractor-demo/');
     element(by.model('first')).sendKeys(1);
@@ -116,7 +116,7 @@ Let's put these two tests together and clean them up a bit. Change spec.js to th
 
 ```js
 // spec.js
-describe('angularjs homepage', function() {
+describe('Protractor Demo App', function() {
   var firstNumber = element(by.model('first'));
   var secondNumber = element(by.model('second'));
   var goButton = element(by.id('gobutton'));
@@ -192,7 +192,7 @@ Sometimes, you will want to deal with a list of multiple elements. You can do th
 
 ```js
 // spec.js
-describe('angularjs homepage', function() {
+describe('Protractor Demo App', function() {
   var firstNumber = element(by.model('first'));
   var secondNumber = element(by.model('second'));
   var goButton = element(by.id('gobutton'));
