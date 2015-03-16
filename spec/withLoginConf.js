@@ -28,7 +28,7 @@ exports.config = {
     browser.driver.wait(function() {
       return browser.driver.getCurrentUrl().then(function(url) {
         return /index/.test(url);
-      }, 10000);
-    });
+      });
+    }, 10000);
   }
 };
