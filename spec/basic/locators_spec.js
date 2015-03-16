@@ -393,5 +393,5 @@ describe('locators', function() {
     expect(browser.isElementPresent(element(by.binding('greet')))).toBe(true);
     expect(browser.isElementPresent(element(by.binding('nopenopenope'))))
         .toBe(false);
-  })
+  });
 });
