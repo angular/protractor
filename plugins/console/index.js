@@ -2,16 +2,18 @@ var q = require('q');
 
 var testOut = {
   failedCount: 0, specResults: [{
-    description: "Console output",
+    description: 'Console output',
     assertions: [],
     duration: 0
   }]
 };
 
 /**
- * This plugin checks the browser log after each test for warnings and errors. It can be configured to fail a test if either is detected.
- * There is also an optional exclude parameter which accepts both regex and strings,
- * Any log matching the exclude parameter will not fail the test or be logged to the console
+ * This plugin checks the browser log after each test for warnings and errors.
+ * It can be configured to fail a test if either is detected.  There is also an
+ * optional exclude parameter which accepts both regex and strings.  Any log
+ * matching the exclude parameter will not fail the test or be logged to the
+ * console.
  *
  *    exports.config = {
  *      plugins: [{
@@ -26,21 +28,19 @@ var ConsolePlugin = function() {
 };
 
 /**
- * Gets the browser log
+ * Gets the browser log.
  *
- * @returns {!webdriver.promise.Promise.<!Array.<!webdriver.logging.Entry>>}
+ * @return {webdriver.promise.Promise.<!Array.<!webdriver.logging.Entry>>}
  */
 ConsolePlugin.getBrowserLog = function() {
   return browser.manage().logs().get('browser');
 };
 
 /**
- * Logs messages to the test output
+ * Logs messages to the test outputl
  *
- * @param warnings
- *      The list of warnings detected by the browser log
- * @param errors
- *      The list of errors detected by the browser log
+ * @param {Object} warnings The list of warnings detected by the browser log.
+ * @param {Object} errors The list of errors detected by the browser log.
  */
 ConsolePlugin.logMessages = function(warnings, errors) {
   var passed = (testOut.failedCount === 0);
@@ -58,54 +58,61 @@ ConsolePlugin.logMessages = function(warnings, errors) {
 };
 
 /**
- * Determines if a log message is filtered out or not. This can be set at the config stage using the exclude parameter.
- * The parameter accepts both strings and regex
+ * Determines if a log message is filtered out or not. This can be set at the
+ * config stage using the exclude parameter.  The parameter accepts both strings
+ * and regex.
  *
- * @param logMessage
- *      Current log message
- * @returns {boolean}
+ * @param {string} logMessage Current log message.
+ * @return {boolean} true iff the log should be included in the output
  */
 ConsolePlugin.includeLog = function(logMessage) {
-  return this.exclude.filter(function(e) {
-      return (e instanceof RegExp) ? logMessage.match(e) : logMessage.indexOf(e) > -1;
-    }).length === 0;
+  return ConsolePlugin.exclude.filter(function(e) {
+      return (e instanceof RegExp) ? logMessage.match(e) :
+          logMessage.indexOf(e) > -1;
+  }).length === 0;
 };
 
 /**
- * Parses the log and decides whether to throw an error or not
+ * Parses the log and decides whether to throw an error or not.
  *
- * @param config
- *        The config of the plugin defined in the protractor config file
- * @returns {!webdriver.promise.Promise.<R>}
+ * @param {Object} config The plugin's config block
+ * @return {!webdriver.promise.Promise.<R>} A promise which resolves when the
+ *    logs have been gathered
  */
 ConsolePlugin.parseLog = function(config) {
-  var self = this;
-  var failOnWarning = (config.failOnWarning === undefined) ? false : config.failOnWarning;
-  var failOnError = (config.failOnError == undefined) ? true : config.failOnError;
-  this.exclude = config.exclude || [];
+  var failOnWarning = (config.failOnWarning === undefined) ? false :
+      config.failOnWarning;
+  var failOnError = (config.failOnError === undefined) ? true :
+      config.failOnError;
+  ConsolePlugin.exclude = config.exclude || [];
 
-  return this.getBrowserLog().then(function(log) {
+  return ConsolePlugin.getBrowserLog().then(function(log) {
 
     var warnings = log.filter(function(node) {
-      return (node.level || {}).name === 'WARNING' && self.includeLog(node.message);
+      return (node.level || {}).name === 'WARNING' &&
+          ConsolePlugin.includeLog(node.message);
     });
 
     var errors = log.filter(function(node) {
-      return (node.level || {}).name === 'SEVERE' && self.includeLog(node.message);
+      return (node.level || {}).name === 'SEVERE' &&
+          ConsolePlugin.includeLog(node.message);
     });
 
-    testOut.failedCount += (warnings.length > 0 && failOnWarning) ? warnings.length : 0;
-    testOut.failedCount += (errors.length > 0 && failOnError) ? errors.length : 0;
+    testOut.failedCount += failOnWarning ? warnings.length : 0;
+    testOut.failedCount += failOnError ? errors.length : 0;
 
-    self.logMessages(warnings, errors);
+    ConsolePlugin.logMessages(warnings, errors);
   });
 
 };
 
 /**
- * Tear-down function used by protractor
+ * Gather the console logs and output them as test results.  See the
+ * documentation of the teardown function in the protractor plugin API.
  *
- * @param config
+ * @param {Object} config The plugin's config block
+ * @return {!webdriver.promise.Promise.<Object>} A promise which resolves to the
+ *    test results generated by the console logs
  */
 ConsolePlugin.prototype.teardown = function(config) {
   return ConsolePlugin.parseLog(config).then(function() {
