@@ -17,7 +17,7 @@ matrix:
   allow_failures:
     - env: "JOB=smoke"
   exclude:
-    - env: JOB=suite
+    - env: JOB=smoke
       node_js: "0.12"
 
 
