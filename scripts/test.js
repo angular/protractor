@@ -36,7 +36,9 @@ passingTests.push('node node_modules/minijasminenode/bin/minijn ' +
 passingTests.push(
     'node lib/cli.js plugins/timeline/spec/conf.js',
     'node lib/cli.js plugins/ngHint/spec/successConfig.js',
-    'node lib/cli.js plugins/accessibility/spec/successConfig.js');
+    'node lib/cli.js plugins/accessibility/spec/successConfig.js',
+    'node lib/cli.js plugins/console/spec/consolePassConfig.js'
+);
 
 var executor = new Executor();
 
@@ -134,5 +136,40 @@ executor.addCommandlineTest(
     {
       message: '1 element failed:'
     }]);
+
+// Check console plugin
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test warning'},
+    {message: 'This is a test error'},
+    {message: 'This should be filtered out by string'},
+    {message: 'This should be filtered out by regex'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailErrorConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test error'},
+    {message: 'This should be filtered out by string'},
+    {message: 'This should be filtered out by regex'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailWarningConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test warning'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailFilterConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test error'}
+  ]);
 
 executor.execute();
