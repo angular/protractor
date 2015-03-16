@@ -66,11 +66,6 @@ exports.config = {
   // firefox in the default locations.
   firefoxPath: null,
 
-  // **DEPRECATED**
-  // If true, only ChromeDriver will be started, not a Selenium Server.
-  // This should be replaced with directConnect.
-  chromeOnly: false,
-
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
   // ---------------------------------------------------------------------------
