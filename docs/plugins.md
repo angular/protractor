@@ -10,12 +10,12 @@ without a major version bump.
 The `plugins` folder contains default plugins for Protractor.
 
 ##In this document:
-* Using Plugins
-* Writing Plugins
+* [Using Plugins](#using-plugins)
+* [Writing Plugins](#writing-plugins)
 * Default Plugins
-  * Accessibility Plugin
-  * ngHint Plugin
-  * Timeline Plugin
+  * [Accessibility Plugin](#accessibility-plugin)
+  * [ngHint Plugin](#nghint-plugin)
+  * [Timeline Plugin](#timeline-plugin)
 
 Using Plugins
 -------------
@@ -126,7 +126,6 @@ exports.name = '';
 
 The protractor results object follows the format specified in
 the [Framework documentation](../lib/frameworks/README.md).
-```
 
 Accessibility Plugin
 --------------------
@@ -141,10 +140,10 @@ pass or fail your build.
 
 To understand how each of these tools can be used, see this support matrix:
 
-|Testing Library  | Pricing |API Key |External Request |No. of Tests |Info    |
-|-----------------------|--------------|----------------------|
-|Chrome Accessibility Developer Tools  |Free   |No |No        |14 |[Github](https://github.com/GoogleChrome/accessibility-developer-tools) |
-|Tenon.io    |Free limited accounts, paid subscriptions |Yes |Yes |63 |[Tenon.io](http://tenon.io/) |
+| Testing Library                      | Pricing                                   | API Key | External Request | No. of Tests | Info                                                                    |
+|--------------------------------------|-------------------------------------------|---------|------------------|--------------|-------------------------------------------------------------------------|
+| Chrome Accessibility Developer Tools | Free                                      | No      | No               | 14           | [Github](https://github.com/GoogleChrome/accessibility-developer-tools) |
+| Tenon.io                             | Free limited accounts, paid subscriptions | Yes     | Yes              | 63           | [Tenon.io](http://tenon.io/)                                            |
 
 Protractor now supports the [Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools), the same audit library used by the [Chrome browser extension](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en). Protractor
 [runs an audit](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules)
