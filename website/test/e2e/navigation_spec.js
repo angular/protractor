@@ -165,7 +165,7 @@ describe('Navigation', function() {
     it('should go to Plugins', function() {
       menu.dropdown('Reference').item('Plugins');
 
-      expect($('h1').getText()).toBe('Plugins');
+      expect($('h1').getText()).toBe('Protractor Plugins');
     });
 
     it('should go to The WebDriver Control Flow', function() {
