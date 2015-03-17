@@ -74,7 +74,7 @@ el.clear();
 el.getAttribute('value');
 ```
 
-Since all actions are asynchronous, all action methods return a [promise](https://code.google.com/p/selenium/wiki/WebDriverJs#Promises). So, to log the text of an element, you would do something like:
+Since all actions are asynchronous, all action methods return a [promise](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#promises). So, to log the text of an element, you would do something like:
 ```js
 var el = element(locator);
 el.getText().then(function(text) {

@@ -5,7 +5,7 @@ To get started quickly, begin with the [Tutorial](/docs/tutorial.md) which provi
 
 Protractor needs two files to run, the test or spec file, and the configuration file. For additional information, see [Working with Spec and Config Files](/docs/api-overview.md).
 
-When writing tests, keep in mind that Protractor is a wrapper around WebDriverJS. You may want to skim through the [WebDriverJS Users Guide](https://code.google.com/p/selenium/wiki/WebDriverJs) before writing any tests.
+When writing tests, keep in mind that Protractor is a wrapper around WebDriverJS. You may want to skim through the [WebDriverJS Users Guide](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs) before writing any tests.
 
 The WebDriverJS API is based on promises. To learn more, check out [The WebDriver Control Flow](/docs/control-flow.md).
 
