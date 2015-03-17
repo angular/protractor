@@ -72,6 +72,7 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
     {include: 'lib/**/element.js'},
     {include: 'lib/**/protractor.js'},
     {include: 'lib/**/locators.js'},
+    {include: 'lib/**/expectedConditions.js'},
     {include: 'node_modules/selenium-webdriver/lib/**/locators.js'},
     {include: 'node_modules/selenium-webdriver/lib/webdriver/webdriver.js'}
   ];
