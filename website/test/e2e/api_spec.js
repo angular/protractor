@@ -104,9 +104,8 @@ describe('Api', function() {
 
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
-      'clone', 'locator', 'getWebElement', 'then', 'all', 'element', '$$',
-      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations',
-      'isPending']);
+      'clone', 'locator', 'getWebElement', 'all', 'element', '$$',
+      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations']);
   });
 
   it('should show browser functions', function() {
