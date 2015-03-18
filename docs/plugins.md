@@ -51,13 +51,26 @@ using the 'ngHint' plugin is shown below.
   }]
 ```
 
-Finally, if your plugin is a node module, you may use it with the `package`
-option. For example, if you did `npm install example-protractor-plugin` your
-config would look like:
+If your plugin is a node module, you may use it with the `package` option. For
+example, if you did `npm install example-protractor-plugin` your config would
+look like:
 
 ```javascript
   plugins: [{
     package: 'example-protractor-plugin',
+  }]
+```
+
+Finally, if you are writing a small plugin which will only be used by one config
+file, you can write the plugin inline into the config:
+
+```javascript
+  plugins: [{
+    inline: {
+      setup: function() { ... },
+      teardown: function() { ... },
+      ...
+    }
   }]
 ```
 
@@ -123,6 +136,8 @@ exports.postTest = function(config, passed) {};
  */
 exports.name = '';
 ```
+
+Each of these exported properties are totally optional.
 
 The protractor results object follows the format specified in
 the [Framework documentation](../lib/frameworks/README.md).
