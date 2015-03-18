@@ -6,9 +6,11 @@ exports.config = {
 
   framework: 'jasmine2',
 
-  capabilities: {
+  multiCapabilities: [{
     'browserName': 'chrome'
-  },
+  }, {
+    'browserName': 'firefox'
+  }],
 
   baseUrl: env.baseUrl,
 
