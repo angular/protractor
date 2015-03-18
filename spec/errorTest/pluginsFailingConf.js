@@ -9,7 +9,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    '../plugins/fail_spec.js'
+    '../plugins/specs/fail_spec.js'
   ],
 
   capabilities: env.capabilities,
@@ -23,8 +23,8 @@ exports.config = {
 
   // Plugin patterns are relative to this directory.
   plugins: [{
-    path: '../plugins/basic_plugin.js'
+    path: '../plugins/plugins/basic_plugin.js'
   }, {
-    path: '../plugins/failing_plugin.js'
+    path: '../plugins/plugins/failing_plugin.js'
   }]
 };

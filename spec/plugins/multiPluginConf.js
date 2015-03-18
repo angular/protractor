@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+var env = require('../environment.js');
 
 // A small suite to make sure the full functionality of plugins work
 exports.config = {
@@ -8,7 +8,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'plugins/bigger_spec.js'
+    'specs/bigger_spec.js'
   ],
 
   capabilities: env.capabilities,
@@ -24,7 +24,7 @@ exports.config = {
   plugins: [{
     path: 'plugins/basic_plugin.js'
   }, {
-    path: 'plugins/test_plugin.js'
+    path: 'plugins/async_plugin.js'
   }, {
     inline: {
       setup: function() {
