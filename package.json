@@ -16,7 +16,7 @@
     "selenium-webdriver": "2.45.1",
     "minijasminenode": "1.1.1",
     "jasminewd": "1.1.0",
-    "jasminewd2": "0.0.2",
+    "jasminewd2": "0.0.3",
     "jasmine": "2.1.1",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
