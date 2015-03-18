@@ -336,6 +336,22 @@ angular.module('protractorApp', ['ngRoute']);
   });
 })();
 
+(function() {
+  /**
+   * Controller for webpages derived from markdown files
+   *
+   * @constructor
+   * @ngInject
+   * @param $location Location service.
+   * @param $scope Angular scope.
+   */
+  var MarkdownCtrl = function($location, $scope) {
+    $scope.path = $location.path();
+  };
+
+  angular.module('protractorApp').controller('MarkdownCtrl', MarkdownCtrl);
+})();
+
 !function(){var q=null;window.PR_SHOULD_USE_CONTINUATION=!0;
 (function(){function S(a){function d(e){var b=e.charCodeAt(0);if(b!==92)return b;var a=e.charAt(1);return(b=r[a])?b:"0"<=a&&a<="7"?parseInt(e.substring(1),8):a==="u"||a==="x"?parseInt(e.substring(2),16):e.charCodeAt(1)}function g(e){if(e<32)return(e<16?"\\x0":"\\x")+e.toString(16);e=String.fromCharCode(e);return e==="\\"||e==="-"||e==="]"||e==="^"?"\\"+e:e}function b(e){var b=e.substring(1,e.length-1).match(/\\u[\dA-Fa-f]{4}|\\x[\dA-Fa-f]{2}|\\[0-3][0-7]{0,2}|\\[0-7]{1,2}|\\[\S\s]|[^\\]/g),e=[],a=
 b[0]==="^",c=["["];a&&c.push("^");for(var a=a?1:0,f=b.length;a<f;++a){var h=b[a];if(/\\[bdsw]/i.test(h))c.push(h);else{var h=d(h),l;a+2<f&&"-"===b[a+1]?(l=d(b[a+2]),a+=2):l=h;e.push([h,l]);l<65||h>122||(l<65||h>90||e.push([Math.max(65,h)|32,Math.min(l,90)|32]),l<97||h>122||e.push([Math.max(97,h)&-33,Math.min(l,122)&-33]))}}e.sort(function(e,a){return e[0]-a[0]||a[1]-e[1]});b=[];f=[];for(a=0;a<e.length;++a)h=e[a],h[0]<=f[1]+1?f[1]=Math.max(f[1],h[1]):b.push(f=h);for(a=0;a<b.length;++a)h=b[a],c.push(g(h[0])),
@@ -370,7 +386,8 @@ h={};g()}};typeof define==="function"&&define.amd&&define("google-code-prettify"
 angular.module('protractorApp').config(function($routeProvider) {
   $routeProvider.
       when('/', {
-        templateUrl: 'partials/home.html'
+        templateUrl: 'partials/home.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/api', {
         templateUrl: 'partials/api.html',
@@ -378,61 +395,83 @@ angular.module('protractorApp').config(function($routeProvider) {
         reloadOnSearch: false
       }).
       when('/api-overview', {
-        templateUrl: 'partials/api-overview.html'
+        templateUrl: 'partials/api-overview.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/browser-setup', {
-        templateUrl: 'partials/browser-setup.html'
+        templateUrl: 'partials/browser-setup.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/browser-support', {
-        templateUrl: 'partials/browser-support.html'
+        templateUrl: 'partials/browser-support.html',
+        controller: 'MarkdownCtrl'
+      }).
+      when('/plugins', {
+        templateUrl: 'partials/plugins.html'
       }).
       when('/control-flow', {
-        templateUrl: 'partials/control-flow.html'
+        templateUrl: 'partials/control-flow.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/debugging', {
-        templateUrl: 'partials/debugging.html'
+        templateUrl: 'partials/debugging.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/faq', {
-        templateUrl: 'partials/faq.html'
+        templateUrl: 'partials/faq.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/frameworks', {
-        templateUrl: 'partials/frameworks.html'
+        templateUrl: 'partials/frameworks.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/getting-started', {
-        templateUrl: 'partials/getting-started.html'
+        templateUrl: 'partials/getting-started.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/infrastructure', {
-        templateUrl: 'partials/infrastructure.html'
+        templateUrl: 'partials/infrastructure.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/locators', {
-        templateUrl: 'partials/locators.html'
+        templateUrl: 'partials/locators.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/page-objects', {
-        templateUrl: 'partials/page-objects.html'
+        templateUrl: 'partials/page-objects.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/protractor-setup', {
-        templateUrl: 'partials/protractor-setup.html'
+        templateUrl: 'partials/protractor-setup.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/server-setup', {
-        templateUrl: 'partials/server-setup.html'
+        templateUrl: 'partials/server-setup.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/system-setup', {
-        templateUrl: 'partials/system-setup.html'
+        templateUrl: 'partials/system-setup.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/timeouts', {
-        templateUrl: 'partials/timeouts.html'
+        templateUrl: 'partials/timeouts.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/toc', {
-        templateUrl: 'partials/toc.html'
+        templateUrl: 'partials/toc.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/tutorial', {
-        templateUrl: 'partials/tutorial.html'
+        templateUrl: 'partials/tutorial.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/jasmine-upgrade', {
-        templateUrl: 'partials/jasmine-upgrade.html'
+        templateUrl: 'partials/jasmine-upgrade.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/mobile-setup', {
-        templateUrl: 'partials/mobile-setup.html'
+        templateUrl: 'partials/mobile-setup.html',
+        controller: 'MarkdownCtrl'
       }).
       otherwise({
         redirectTo: '/'

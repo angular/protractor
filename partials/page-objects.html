@@ -1,7 +1,7 @@
 <h1 id="using-page-objects-to-organize-tests">Using Page Objects to Organize Tests</h1>
-<p>When writing end-to-end tests, a common pattern is to use <a href="https://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.</p>
-<h2 id="without-page-objects">Without Page Objects</h2>
-<p>Here’s a simple test script (<a href=https://github.com/angular/protractor/blob/master/example/example_spec.js>example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
+<p>When writing end-to-end tests, a common pattern is to use <a href="https://github.com/SeleniumHQ/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.</p>
+<h2 id="without-page-objects" class="anchored"><div><a href="#{{path}}#without-page-objects">&#x1f517;</a>Without Page Objects</div></h2>
+<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/master/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
 <pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, function() {
     browser.get(&#39;http://www.angularjs.org&#39;);
@@ -11,7 +11,7 @@
   });
 });
 </code></pre>
-<h2 id="with-pageobjects">With PageObjects</h2>
+<h2 id="with-pageobjects" class="anchored"><div><a href="#{{path}}#with-pageobjects">&#x1f517;</a>With PageObjects</div></h2>
 <p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
 <pre><code class="lang-js">var AngularHomepage = function() {
   this.nameInput = element(by.model(&#39;yourName&#39;));
@@ -38,7 +38,7 @@
   });
 });
 </code></pre>
-<h2 id="configuring-test-suites">Configuring Test Suites</h2>
+<h2 id="configuring-test-suites" class="anchored"><div><a href="#{{path}}#configuring-test-suites">&#x1f517;</a>Configuring Test Suites</div></h2>
 <p>It is possible to separate your tests into various test suites. In your config file, you could setup  the suites option as shown below. </p>
 <pre><code class="lang-js">exports.config = {
   // The address of a running selenium server.

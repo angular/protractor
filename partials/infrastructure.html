@@ -5,22 +5,22 @@
 <p><img src="img/components.png" alt="Protractor Components Diagram"></p>
 <p>When working with Protractor, it’s important to keep the following in mind:</p>
 <ul>
-<li>Protractor is a wrapper around WebDriverJS, the JavaScript bindings for the Selenium WebDriver API (before writing any tests, skim through the <a href="https://code.google.com/p/selenium/wiki/WebDriverJs">WebDriverJS Users Guide</a>).</li>
+<li>Protractor is a wrapper around WebDriverJS, the JavaScript bindings for the Selenium WebDriver API (before writing any tests, skim through the <a href="https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs">WebDriverJS Users Guide</a>).</li>
 <li>WebDriver commands are asynchronus. They are scheduled on a control flow and return promises, not primitive values (see <a href="#/control-flow">The WebDriver Control Flow</a>).</li>
 <li>Your test scripts send commands to the Selenium Server, which in turn communicates with the browser driver. Read on for more details.</li>
 </ul>
-<h2 id="process-communication">Process Communication</h2>
+<h2 id="process-communication" class="anchored"><div><a href="#{{path}}#process-communication">&#x1f517;</a>Process Communication</div></h2>
 <p>A test using Selenium WebDriver involves three processes - the test script, the server, and the browser. The communication between these processes is shown in the diagram below.</p>
 <p><img src="img/processes.png" alt="WebDriver test Processes Diagram"></p>
-<p>The Selenium Server takes care of interpreting commands from the test and forwarding them to one or more browsers. Communication between the server and the browser uses the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">WebDriver Wire Protocol</a>, a JSON protocol. The command is interpreted by the Browser Driver.</p>
+<p>The Selenium Server takes care of interpreting commands from the test and forwarding them to one or more browsers. Communication between the server and the browser uses the <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol">WebDriver Wire Protocol</a>, a JSON protocol. The command is interpreted by the Browser Driver.</p>
 <p>With Protractor, the test script is run using Node.js. Protractor runs an extra command before performing any action on the browser to ensure that the application being tested has stabilized. For example, let&#39;s look at the following snippet of test code.</p>
 <pre><code ng-non-bindable>element(by.css(&#39;button.myclass&#39;)).click();
 </code></pre><p>This will result in three commands being sent to the Browser Driver</p>
 <ul>
-<li><p><a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/execute_async">/session/:sessionId/execute_async</a> - First, Protractor tells the browser to run a snippet of JavaScript. This is a custom command which asks Angular to respond when the application is done with all timeouts and asynchronous requests, and ready for the test to resume.</p>
+<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#/session/:sessionId/execute_async">/session/:sessionId/execute_async</a> - First, Protractor tells the browser to run a snippet of JavaScript. This is a custom command which asks Angular to respond when the application is done with all timeouts and asynchronous requests, and ready for the test to resume.</p>
 </li>
-<li><p><a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a> - Then, the command to find the element is sent.</p>
+<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a> - Then, the command to find the element is sent.</p>
 </li>
-<li><p><a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click">/session/:sessionId/element/:id/click</a> - Finally the command to perform a click action is sent.</p>
+<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click">/session/:sessionId/element/:id/click</a> - Finally the command to perform a click action is sent.</p>
 </li>
 </ul>

@@ -1,10 +1,10 @@
 <h1 id="tutorial">Tutorial</h1>
 <p>This is a simple tutorial that shows you how to set up Protractor and start running tests.</p>
-<h2 id="prerequisites">Prerequisites</h2>
+<h2 id="prerequisites" class="anchored"><div><a href="#{{path}}#prerequisites">&#x1f517;</a>Prerequisites</div></h2>
 <p>Protractor is a <a href="http://nodejs.org/">Node.js</a> program. To run, you will need to have Node.js installed. You will download Protractor package using <a href="https://www.npmjs.org/">npm</a>, which comes with Node.js. Check the version of Node.js you have by running <code ng-non-bindable>node --version</code>. It should be greater than v0.10.0.</p>
 <p>By default, Protractor uses the <a href="http://jasmine.github.io/1.3/introduction.html">Jasmine</a> test framework for its testing interface. This tutorial assumes some familiarity with Jasmine.</p>
 <p>This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit (JDK)</a> installed to run the standalone Selenium Server. Check this by running <code ng-non-bindable>java -version</code> from the command line.</p>
-<h2 id="setup">Setup</h2>
+<h2 id="setup" class="anchored"><div><a href="#{{path}}#setup">&#x1f517;</a>Setup</div></h2>
 <p>Use npm to install Protractor globally with:</p>
 <pre><code ng-non-bindable>npm install -g protractor
 </code></pre><p>This will install two command line tools, <code ng-non-bindable>protractor</code> and <code ng-non-bindable>webdriver-manager</code>. Try running <code ng-non-bindable>protractor --version</code> to make sure it&#39;s working.</p>
@@ -13,13 +13,13 @@
 </code></pre><p>Now start up a server with:</p>
 <pre><code ng-non-bindable>webdriver-manager start
 </code></pre><p>This will start up a Selenium Server and will output a bunch of info logs. Your Protractor test will send requests to this server to control a local browser. Leave this server running throughout the tutorial. You can see information about the status of the server at <code ng-non-bindable>http://localhost:4444/wd/hub</code>.</p>
-<h2 id="step-0-write-a-test">Step 0 - write a test</h2>
+<h2 id="step-0-write-a-test" class="anchored"><div><a href="#{{path}}#step-0-write-a-test">&#x1f517;</a>Step 0 - write a test</div></h2>
 <p>Open a new command line or terminal window and create a clean folder for testing.</p>
 <p>Protractor needs two files to run, a <strong>spec file</strong> and a <strong>configuration file</strong>. </p>
 <p>Let&#39;s start with a simple test that navigates to an example AngularJS application and checks its title. We’ll use the Super Calculator application at <a href="http://juliemr.github.io/protractor-demo/">http://juliemr.github.io/protractor-demo/</a>.</p>
 <p>Copy the following into spec.js:</p>
 <pre><code class="lang-javascript">// spec.js
-describe(&#39;angularjs homepage&#39;, function() {
+describe(&#39;Protractor Demo App&#39;, function() {
   it(&#39;should have a title&#39;, function() {
     browser.get(&#39;http://juliemr.github.io/protractor-demo/&#39;);
 
@@ -39,10 +39,10 @@ exports.config = {
 <p>Now run the test with</p>
 <pre><code ng-non-bindable>protractor conf.js
 </code></pre><p>You should see a Chrome browser window open up and navigate to the Calculator, then close itself (this should be very fast!). The test output should be <code ng-non-bindable>1 tests, 1 assertion, 0 failures</code>. Congratulations, you&#39;ve run your first Protractor test!</p>
-<h2 id="step-1-interacting-with-elements">Step 1 - interacting with elements</h2>
+<h2 id="step-1-interacting-with-elements" class="anchored"><div><a href="#{{path}}#step-1-interacting-with-elements">&#x1f517;</a>Step 1 - interacting with elements</div></h2>
 <p>Now let&#39;s modify the test to interact with elements on the page. Change spec.js to the following:</p>
 <pre><code class="lang-js">// spec.js
-describe(&#39;angularjs homepage&#39;, function() {
+describe(&#39;Protractor Demo App&#39;, function() {
   it(&#39;should add one and two&#39;, function() {
     browser.get(&#39;http://juliemr.github.io/protractor-demo/&#39;);
     element(by.model(&#39;first&#39;)).sendKeys(1);
@@ -67,10 +67,10 @@ describe(&#39;angularjs homepage&#39;, function() {
 <p>Run the tests with</p>
 <pre><code ng-non-bindable>protractor conf.js
 </code></pre><p>You should see the page enter two numbers and wait for the result to be displayed. Because the result is 3, not 5, our test fails. Fix the test and try running it again.</p>
-<h2 id="step-2-writing-multiple-scenarios">Step 2 - writing multiple scenarios</h2>
+<h2 id="step-2-writing-multiple-scenarios" class="anchored"><div><a href="#{{path}}#step-2-writing-multiple-scenarios">&#x1f517;</a>Step 2 - writing multiple scenarios</div></h2>
 <p>Let&#39;s put these two tests together and clean them up a bit. Change spec.js to the following:</p>
 <pre><code class="lang-js">// spec.js
-describe(&#39;angularjs homepage&#39;, function() {
+describe(&#39;Protractor Demo App&#39;, function() {
   var firstNumber = element(by.model(&#39;first&#39;));
   var secondNumber = element(by.model(&#39;second&#39;));
   var goButton = element(by.id(&#39;gobutton&#39;));
@@ -100,7 +100,7 @@ describe(&#39;angularjs homepage&#39;, function() {
 });
 </code></pre>
 <p>Here, we&#39;ve pulled the navigation out into a <code ng-non-bindable>beforeEach</code> function which is run before every <code ng-non-bindable>it</code> block. We&#39;ve also stored the ElementFinders for the first and second input in nice variables that can be reused. Fill out the second test using those variables, and run the tests again to ensure they pass.</p>
-<h2 id="step-3-changing-the-configuration">Step 3 - changing the configuration</h2>
+<h2 id="step-3-changing-the-configuration" class="anchored"><div><a href="#{{path}}#step-3-changing-the-configuration">&#x1f517;</a>Step 3 - changing the configuration</div></h2>
 <p>Now that we&#39;ve written some basic tests, let&#39;s take a look at the configuration file. The configuration file lets you change things like which browsers are used and how to connect to the Selenium Server. Let&#39;s change the browser. Change conf.js to the following:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
@@ -111,7 +111,7 @@ exports.config = {
   }
 }
 </code></pre>
-<p>Try running the tests again. You should see the tests running on Firefox instead of Chrome. The <code ng-non-bindable>capabilities</code> object describes the browser to be tested against. For a full list of options, see <a href=https://github.com/angular/protractor/blob/master/docs/referenceConf.js>the reference config file</a>.</p>
+<p>Try running the tests again. You should see the tests running on Firefox instead of Chrome. The <code ng-non-bindable>capabilities</code> object describes the browser to be tested against. For a full list of options, see <a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">the reference config file</a>.</p>
 <p>You can also run tests on more than one browser at once. Change conf.js to:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
@@ -125,11 +125,11 @@ exports.config = {
 }
 </code></pre>
 <p>Try running once again. You should see the tests running on Chrome and Firefox simultaneously, and the results reported separately on the command line.</p>
-<h2 id="step-4-lists-of-elements">Step 4 - lists of elements</h2>
+<h2 id="step-4-lists-of-elements" class="anchored"><div><a href="#{{path}}#step-4-lists-of-elements">&#x1f517;</a>Step 4 - lists of elements</div></h2>
 <p>Let&#39;s go back to the test files. Feel free to change the configuration back to using only one browser.</p>
 <p>Sometimes, you will want to deal with a list of multiple elements. You can do this with <code ng-non-bindable>element.all</code>, which returns an ElementArrayFinder. In our calculator application, every operation is logged in the history, which is implemented on the site as a table with <code ng-non-bindable>ng-repeat</code>. Let&#39;s do a couple of operations, then test that they&#39;re in the history. Change spec.js to:</p>
 <pre><code class="lang-js">// spec.js
-describe(&#39;angularjs homepage&#39;, function() {
+describe(&#39;Protractor Demo App&#39;, function() {
   var firstNumber = element(by.model(&#39;first&#39;));
   var secondNumber = element(by.model(&#39;second&#39;));
   var goButton = element(by.id(&#39;gobutton&#39;));
@@ -170,6 +170,6 @@ describe(&#39;angularjs homepage&#39;, function() {
 </code></pre>
 <p>Since the Calculator reports the oldest result at the bottom, the oldest addition (1 + 2) be the last history entry. We&#39;re using the <code ng-non-bindable>toContain</code> Jasmine matcher to assert that the element text contains &quot;1 + 2&quot;. The full element text will also contain the timestamp and the result. </p>
 <p>Fix the test so that it correctly expects the first history entry to contain the text &quot;3 + 4&quot;.</p>
-<p>ElementArrayFinder also has methods <code ng-non-bindable>each</code>, <code ng-non-bindable>map</code>, <code ng-non-bindable>filter</code>, and <code ng-non-bindable>reduce</code> which are analogous to JavaScript Array methods. <a href="#/api?view=ElementArrayFinder">Read the API for more details</a>.</p>
-<h2 id="where-to-go-next">Where to go next</h2>
+<p>ElementArrayFinder also has methods <code ng-non-bindable>each</code>, <code ng-non-bindable>map</code>, <code ng-non-bindable>filter</code>, and <code ng-non-bindable>reduce</code> which are analogous to JavaScript Array methods. <a href=#/{{path}}#/api?view=ElementArrayFinder>Read the API for more details</a>.</p>
+<h2 id="where-to-go-next" class="anchored"><div><a href="#{{path}}#where-to-go-next">&#x1f517;</a>Where to go next</div></h2>
 <p>This should get you started writing tests. To learn more, see the documentation <a href="#/toc">Table of Contents</a>.</p>

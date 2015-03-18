@@ -4,7 +4,7 @@ system, may depend on prior actions (such as log-in), and may change the
 state of the application they&#39;re testing. WebDriver tests in particular
 can be difficult to debug because of long error messages and the separation
 between the browser and the process running the test.</p>
-<h2 id="types-of-failure">Types of Failure</h2>
+<h2 id="types-of-failure" class="anchored"><div><a href="#{{path}}#types-of-failure">&#x1f517;</a>Types of Failure</div></h2>
 <p>Protractor comes with examples of failing tests (<a href="https://github.com/angular/protractor/blob/master/debugging/failure_spec.js">failure_spec.js</a>).
 To run, start up the test application and a Selenium Server, and run the command below. Then look at all the stack traces.</p>
 <pre><code ng-non-bindable>protractor debugging/failureConf.js
@@ -18,10 +18,10 @@ instance directly with <code ng-non-bindable>browser.driver</code>.</li>
 <li>Expectation Failure - Shows what a normal expectation failure looks
 like.</li>
 </ul>
-<h2 id="timeouts">Timeouts</h2>
+<h2 id="timeouts" class="anchored"><div><a href="#{{path}}#timeouts">&#x1f517;</a>Timeouts</div></h2>
 <p>There are several ways that Protractor can time out. See the <a href="#/timeouts">Timeouts</a>
 reference for full documentation.</p>
-<h2 id="pausing-to-debug">Pausing to Debug</h2>
+<h2 id="pausing-to-debug" class="anchored"><div><a href="#{{path}}#pausing-to-debug">&#x1f517;</a>Pausing to Debug</div></h2>
 <p>Protractor supports two methods for pausing to debug - <code ng-non-bindable>browser.pause()</code> and
 <code ng-non-bindable>browser.debugger()</code>. You probably want to use <code ng-non-bindable>browser.pause()</code>, unless you
 would like precise control over the node debugger.</p>
@@ -98,7 +98,7 @@ used from the browser&#39;s console.</p>
 // You can also limit the scope of the locator
 &gt; window.clientSideScripts.findInputs(&#39;username&#39;, document.getElementById(&#39;#myEl&#39;));
 </code></pre>
-<h2 id="setting-up-webstorm-for-debugging">Setting Up WebStorm for Debugging</h2>
+<h2 id="setting-up-webstorm-for-debugging" class="anchored"><div><a href="#{{path}}#setting-up-webstorm-for-debugging">&#x1f517;</a>Setting Up WebStorm for Debugging</div></h2>
 <p>To set up WebStorm for Protractor, do the following:</p>
 <ol>
 <li>Open the Run/Debug Configurations dialog</li>
@@ -113,7 +113,7 @@ used from the browser&#39;s console.</p>
 </li>
 <li>Click OK, place some breakpoints, and start debugging.</li>
 </ol>
-<h2 id="testing-out-protractor-interactively">Testing Out Protractor Interactively</h2>
+<h2 id="testing-out-protractor-interactively" class="anchored"><div><a href="#{{path}}#testing-out-protractor-interactively">&#x1f517;</a>Testing Out Protractor Interactively</div></h2>
 <p>When debugging or first writing test suites, you may find it helpful to
 try out Protractor commands without starting up the entire test suite. You can
 do this with the element explorer.</p>
@@ -142,7 +142,7 @@ mocha, cucumber), and only allow you to pass in 1 capability, but will honor
 every other parameter in your config.</p>
 <p>Note <code ng-non-bindable>baseUrl</code> is used here as the initial page, i.e. element explorer will try 
 to navigate to <code ng-non-bindable>baseUrl</code> automatically on start.</p>
-<h2 id="taking-screenshots">Taking Screenshots</h2>
+<h2 id="taking-screenshots" class="anchored"><div><a href="#{{path}}#taking-screenshots">&#x1f517;</a>Taking Screenshots</div></h2>
 <p>WebDriver can snap a screenshot with <code ng-non-bindable>browser.takeScreenshot()</code>. This can be a
 good way to help debug tests, especially for tests that run on a continuous integration
 server. The method returns a promise which will resolve to the screenshot as a

@@ -1,6 +1,6 @@
 <h1 id="timeouts">Timeouts</h1>
 <p>Because WebDriver tests are asynchronous and involve many components, there are several reasons why a timeout could occur in a Protractor test.</p>
-<h2 id="timeouts-from-protractor">Timeouts from Protractor</h2>
+<h2 id="timeouts-from-protractor" class="anchored"><div><a href="#{{path}}#timeouts-from-protractor">&#x1f517;</a>Timeouts from Protractor</div></h2>
 <p><strong>Waiting for Page to Load</strong></p>
 <p>When navigating to a new page using <code ng-non-bindable>browser.get</code>, Protractor waits for the page to
 be loaded and the new URL to appear before continuing.</p>
@@ -34,7 +34,7 @@ $interval service (<a href="https://github.com/angular/angular.js/blob/master/sr
 <li><p>How to change: To change globally, add <code ng-non-bindable>getPageTimeout: timeout_in_millis</code> to your Protractor configuration file. For an individual call to <code ng-non-bindable>get</code>, pass an additional parameter: <code ng-non-bindable>browser.get(address, timeout_in_millis)</code></p>
 </li>
 </ul>
-<h2 id="timeouts-from-webdriver">Timeouts from WebDriver</h2>
+<h2 id="timeouts-from-webdriver" class="anchored"><div><a href="#{{path}}#timeouts-from-webdriver">&#x1f517;</a>Timeouts from WebDriver</div></h2>
 <p><strong>Asynchronous Script Timeout</strong></p>
 <p>Sets the amount of time to wait for an asynchronous script to finish execution before throwing an error.</p>
 <ul>
@@ -45,7 +45,7 @@ $interval service (<a href="https://github.com/angular/angular.js/blob/master/sr
 <li><p>How to change: Add <code ng-non-bindable>allScriptsTimeout: timeout_in_millis</code> to your Protractor configuration file.</p>
 </li>
 </ul>
-<h2 id="timeouts-from-jasmine">Timeouts from Jasmine</h2>
+<h2 id="timeouts-from-jasmine" class="anchored"><div><a href="#{{path}}#timeouts-from-jasmine">&#x1f517;</a>Timeouts from Jasmine</div></h2>
 <p><strong>Spec Timeout</strong></p>
 <p>If a spec (an &#39;it&#39; block) takes longer than the Jasmine timeout for any reason, it will fail.</p>
 <ul>
@@ -56,7 +56,7 @@ $interval service (<a href="https://github.com/angular/angular.js/blob/master/sr
 <li><p>How to change: To change for all specs, add <code ng-non-bindable>jasmineNodeOpts: {defaultTimeoutInterval: timeout_in_millis}</code> to your Protractor configuration file. To change for one individual spec, pass a third parameter to <code ng-non-bindable>it</code>: <code ng-non-bindable>it(description, testFn, timeout_in_millis)</code>.</p>
 </li>
 </ul>
-<h2 id="timeouts-from-sauce-labs">Timeouts from Sauce Labs</h2>
+<h2 id="timeouts-from-sauce-labs" class="anchored"><div><a href="#{{path}}#timeouts-from-sauce-labs">&#x1f517;</a>Timeouts from Sauce Labs</div></h2>
 <p>If you are using Sauce Labs, there are a couple additional ways your test can time out. See <a href="https://docs.saucelabs.com/reference/test-configuration/#timeouts">Sauce Labs Timeouts Documentation</a> for more information.</p>
 <p><strong>Maximum Test Duration</strong></p>
 <p>Sauce Labs limits the maximum total duration for a test.</p>
