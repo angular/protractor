@@ -8,7 +8,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'plugins/basic_spec.js'
+    'plugins/bigger_spec.js'
   ],
 
   capabilities: env.capabilities,
@@ -25,5 +25,11 @@ exports.config = {
     path: 'plugins/basic_plugin.js'
   }, {
     path: 'plugins/test_plugin.js'
+  }, {
+    inline: {
+      setup: function() {
+        protractor.__INLINE_PLUGIN_RAN = true;
+      }
+    }
   }]
 };
