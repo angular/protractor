@@ -2,7 +2,6 @@ var env = require('./environment.js');
 
 // A small suite to make sure the full functionality of plugins work
 exports.config = {
-  // seleniumAddress: env.seleniumAddress,
   mockSelenium: true,
 
   framework: 'jasmine2',
