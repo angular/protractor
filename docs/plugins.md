@@ -124,11 +124,12 @@ exports.postResults = function(config) {};
  *
  * @param {Object} config The plugin configuration object.
  * @param {boolean} passed True if the test passed.
+ * @param {Object} testInfo information about the test which just ran.
  *
  * @return Object If an object is returned, it is merged with the Protractor
  *     result object. May return a promise.
  */
-exports.postTest = function(config, passed) {};
+exports.postTest = function(config, passed, testInfo) {};
 
 /**
  * Used when reporting results.
