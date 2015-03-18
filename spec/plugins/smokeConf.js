@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+var env = require('../environment.js');
 
 // A small suite to make sure the basic functionality of plugins work
 // Tests the (potential) edge case of exactly one plugin being used
@@ -9,7 +9,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'plugins/basic_spec.js'
+    'specs/smoke_spec.js'
   ],
 
   capabilities: env.capabilities,
