@@ -10,7 +10,7 @@ env:
     - LOGS_DIR=/tmp/protractor-build/logs
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   matrix:
-    - JOB=suite
+    - JOB=full
     - JOB=smoke
 
 matrix:
