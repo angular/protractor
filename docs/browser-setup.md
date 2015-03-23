@@ -17,7 +17,7 @@ Configuring Browsers
 In your Protractor config file (see [referenceConf.js](/docs/referenceConf.js)), all browser setup is done within the `capabilities` object. This object is passed directly to the WebDriver builder ([builder.js](https://code.google.com/p/selenium/source/browse/javascript/webdriver/builder.js)). 
 
 
-See [DesiredCapabilities](https://code.google.com/p/selenium/wiki/DesiredCapabilities) for full information on which properties are available.
+See [DesiredCapabilities](https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities) for full information on which properties are available.
 
 
 Using Mobile Browsers

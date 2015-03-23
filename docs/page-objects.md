@@ -1,7 +1,7 @@
 Using Page Objects to Organize Tests
 ====================================
 
-When writing end-to-end tests, a common pattern is to use [Page Objects](https://code.google.com/p/selenium/wiki/PageObjects). Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.
+When writing end-to-end tests, a common pattern is to use [Page Objects](https://github.com/SeleniumHQ/selenium/wiki/PageObjects). Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.
 
 Without Page Objects
 --------------------

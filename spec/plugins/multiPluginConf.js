@@ -1,7 +1,6 @@
-var env = require('./environment.js');
+var env = require('../environment.js');
 
-// A small suite to make sure the basic functionality of plugins work
-// Tests the (potential) edge case of exactly one plugin being used
+// A small suite to make sure the full functionality of plugins work
 exports.config = {
   mockSelenium: true,
 
@@ -9,7 +8,7 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'plugins/basic_spec.js'
+    'specs/bigger_spec.js'
   ],
 
   capabilities: env.capabilities,
@@ -24,5 +23,13 @@ exports.config = {
   // Plugin patterns are relative to this directory.
   plugins: [{
     path: 'plugins/basic_plugin.js'
+  }, {
+    path: 'plugins/async_plugin.js'
+  }, {
+    inline: {
+      setup: function() {
+        protractor.__INLINE_PLUGIN_RAN = true;
+      }
+    }
   }]
 };

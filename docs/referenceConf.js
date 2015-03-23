@@ -66,11 +66,6 @@ exports.config = {
   // firefox in the default locations.
   firefoxPath: null,
 
-  // **DEPRECATED**
-  // If true, only ChromeDriver will be started, not a Selenium Server.
-  // This should be replaced with directConnect.
-  chromeOnly: false,
-
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
   // ---------------------------------------------------------------------------
@@ -101,7 +96,7 @@ exports.config = {
   // testing on multiple browsers, use the multiCapabilities array.
 
   // For a list of available capabilities, see
-  // https://code.google.com/p/selenium/wiki/DesiredCapabilities
+  // https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
   //
   // In addition, you may specify count, shardTestFiles, and maxInstances.
   capabilities: {

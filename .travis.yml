@@ -10,14 +10,14 @@ env:
     - LOGS_DIR=/tmp/protractor-build/logs
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   matrix:
-    - JOB=suite
+    - JOB=full
     - JOB=smoke
 
 matrix:
   allow_failures:
     - env: "JOB=smoke"
   exclude:
-    - env: JOB=suite
+    - env: JOB=smoke
       node_js: "0.12"
 
 

@@ -31,8 +31,9 @@ var binaries = {
     isDefault: true,
     prefix: 'selenium-server-standalone',
     filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
+    cdn: 'https://selenium-release.storage.googleapis.com/',
     url: function() {
-      return 'https://selenium-release.storage.googleapis.com/' +
+      return this.cdn +
           shortVersion(versions.selenium) + '/' +
           'selenium-server-standalone-' + versions.selenium + '.jar';
     }
@@ -42,8 +43,9 @@ var binaries = {
     isDefault: true,
     prefix: 'chromedriver_',
     filename: 'chromedriver_' + versions.chromedriver + '.zip',
+    cdn: 'https://chromedriver.storage.googleapis.com/',
     url: function() {
-      var urlPrefix = 'https://chromedriver.storage.googleapis.com/' +
+      var urlPrefix = this.cdn +
           versions.chromedriver + '/chromedriver_';
       if (os.type() == 'Darwin') {
         return urlPrefix + 'mac32.zip';
@@ -63,8 +65,9 @@ var binaries = {
     isDefault: false,
     prefix: 'IEDriverServer',
     filename: 'IEDriverServer_' + versions.iedriver + '.zip',
+    cdn: 'https://selenium-release.storage.googleapis.com/',
     url: function() {
-      var urlPrefix = 'https://selenium-release.storage.googleapis.com/' +
+      var urlPrefix = this.cdn +
           shortVersion(versions.iedriver) + '/IEDriverServer';
       if (os.type() == 'Windows_NT') {
         if (os.arch() == 'x64') {
@@ -88,7 +91,8 @@ var cli = optimist.
     describe('seleniumPort', 'Optional port for the selenium standalone server').
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
     default('ignore_ssl', false).
-    describe('proxy', 'Proxy to use for the install or update command');
+    describe('proxy', 'Proxy to use for the install or update command').
+    describe('alternate_cdn', 'Alternate CDN to the binaries');
 
 for (bin in binaries) {
   cli.describe(bin, 'Install or update ' + binaries[bin].name).
@@ -221,6 +225,7 @@ var existingFiles = fs.readdirSync(argv.out_dir);
 
 for (name in binaries) {
   bin = binaries[name];
+  bin.cdn = argv.alternate_cdn || bin.cdn;
   var exists = fs.existsSync(path.join(argv.out_dir, bin.filename));
   var outOfDateExists = false;
   existingFiles.forEach(function(file) {

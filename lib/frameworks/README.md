@@ -17,7 +17,13 @@ exports.run = function(runner, specs)
 Requirements
 ------------
 
- - `runner.emit` must be called with `testPass` and `testFail` messages.
+ - `runner.emit` must be called with `testPass` and `testFail` messages.  These
+   messages must be passed a `testInfo` object, with a `name` and `category`
+   property.  The `category` property could be the name of the `describe` block
+   in jasmine/mocha, the `Feature` in cucumber, or the class name in something
+   like jUnit.  The `name` property could be the name of an `it` block in
+   jasmine/mocha, the `Scenario` in cucumber, or the method name in something
+   like jUnit.
 
  - `runner.runTestPreparer` must be called before any tests are run.
 

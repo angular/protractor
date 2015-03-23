@@ -205,28 +205,10 @@ describe('ElementFinder', function() {
     expect(successful).toEqual(false);
   });
 
-  it('then function should be equivalent to itself', function() {
-    browser.get('index.html#/form');
-    var elem = element(by.binding('greeting'));
-
-    elem.then(function(elem2) {
-      expect(elem.getId()).toEqual(elem2.getId());
-    });
-  });
-
-  it('should not resolve to itself', function() {
-    browser.get('index.html#/form');
-    var elem1 = element(by.binding('greeting'));
-
-    elem1.then(function(result) {
-      expect(result === elem1).toBe(false);
-    });
-  });
-
   it('should be returned from a helper without infinite loops', function() {
     browser.get('index.html#/form');
-    var helperPromise = element(by.binding('greeting')).then(function(result) {
-      return result;
+    var helperPromise = protractor.promise.when(true).then(function() {
+      return element(by.binding('greeting'));
     });
 
     helperPromise.then(function(finalResult) {
@@ -234,7 +216,7 @@ describe('ElementFinder', function() {
     });
   });
 
-  it('should be usable in WebDriver functions', function() {
+  it('should be usable in WebDriver functions via getWebElement', function() {
     // TODO(juliemr): should be able to do this without the getWebElement call
     browser.get('index.html#/form');
     var greeting = element(by.binding('greeting'));
@@ -412,6 +394,17 @@ describe('ElementArrayFinder', function() {
     expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
 
+  it('should return not present when an element disappears within an array', 
+      function() {
+    browser.get('index.html#/form');
+    element.all(by.model('color')).then(function(elements) {
+      var disappearingElem = elements[0];
+      expect(disappearingElem.isPresent()).toBeTruthy();
+      browser.get('index.html#/bindings');
+      expect(disappearingElem.isPresent()).toBeFalsy();
+    });
+  });
+
   it('should get an element from an array', function() {
     var colorList = element.all(by.model('color'));
 
@@ -568,16 +561,11 @@ describe('ElementArrayFinder', function() {
                           '4/5: small cat\n');
   });
 
-  it('should always return a promise when calling then', function() {
-    browser.get('index.html#/form');
-    var e1 = element(by.tagName('body')).then(function() {});
-    expect(e1 instanceof protractor.promise.Promise).toBe(true);
-  });
-
   it('should allow using protractor locator within map', function() {
     browser.get('index.html#/repeater');
 
-    var expected = [{ first: 'M', second: 'Monday' },
+    var expected = [
+        { first: 'M', second: 'Monday' },
         { first: 'T', second: 'Tuesday' },
         { first: 'W', second: 'Wednesday' },
         { first: 'Th', second: 'Thursday' },

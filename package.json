@@ -13,10 +13,10 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.36.0",
-    "selenium-webdriver": "2.44.0",
+    "selenium-webdriver": "2.45.1",
     "minijasminenode": "1.1.1",
     "jasminewd": "1.1.0",
-    "jasminewd2": "0.0.2",
+    "jasminewd2": "0.0.3",
     "jasmine": "2.1.1",
     "saucelabs": "~0.1.0",
     "glob": "~3.2",
@@ -32,7 +32,6 @@
     "expect.js": "~0.2.0",
     "chai": "~1.8.1",
     "chai-as-promised": "~4.1.0",
-    "jasmine-reporters": "~0.2.1",
     "jshint": "2.5.0",
     "mocha": "1.21.4",
     "cucumber": "~0.3.3",
@@ -55,5 +54,5 @@
     "start": "node testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "1.8.0"
+  "version": "2.0.0"
 }
