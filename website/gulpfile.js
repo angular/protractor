@@ -95,18 +95,28 @@ gulp.task('watch', function() {
 // Transform md files to html.
 gulp.task('markdown', function() {
   gulp.src(['../docs/*.md', '!../docs/api.md'])
+      // Parse markdown.
       .pipe(markdown())
-      // Fix md links.
-      .pipe(replace(/\/docs\/(.*)\.md/g, '#/$1'))
-      // Fix reference conf links.
+      // Fix in-page hash paths.
+      .pipe(replace(/"#([^ ]*?)"/g, '#/{{path}}#$1'))
+      // Fix md urls.
+      .pipe(replace(/"(?:\/docs\/)?([\w\-]+)\.md/g, '"#/$1'))
+      // Fix png urls.
+      .pipe(replace(/"(?:\/docs\/)?([\w\-]+\.png)"/g, '"img/$1"'))
+      // Fix urls to reference js files.
       .pipe(replace(
-          /"\/(docs|example|spec\/basic)\/(\w+\.js)"/g,
-          'https://github.com/angular/protractor/blob/master/$1/$2'
+          /"(?:\/([\-\.\w\/]+)\/)?(\w+\.js(?:#\w*)?)"/g,
+          function(match, path, file) {
+            path = path || 'docs';
+            return '"https://github.com/angular/protractor/blob/master/' +
+                path + '/' + file + '"';
+          }
       ))
+      // Add anchor links
+      .pipe(replace(/<h2 id="([^"]*)">(.*?)<\/h2>/g, '<h2 id="$1" class="' +
+          'anchored"><div><a href="#{{path}}#$1">&#x1f517;</a>$2</div></h2>'))
       // Decorate tables.
       .pipe(replace(/<table>/g, '<table class="table table-striped">'))
-      // Fix image links.
-      .pipe(replace(/"\/docs\/(\w+\.png)"/g, '"img/$1"'))
       // Fix <code> blocks to not interpolate Angular
       .pipe(replace(/<code>/g, '<code ng-non-bindable>'))
       .pipe(rename(function(path) {

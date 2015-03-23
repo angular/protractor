@@ -1,8 +1,8 @@
 var env = require('./environment.js');
 
-// The main suite of Protractor tests.
+// Test that onCleanUp actions are performed.
 exports.config = {
-  seleniumAddress: env.seleniumAddress,
+  mockSelenium: true,
 
   framework: 'jasmine2',
 

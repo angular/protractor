@@ -3,7 +3,7 @@ var env = require('./environment.js');
 // Configuration using a string in onPrepare to load a file with code to
 // execute once before tests.
 exports.config = {
-  seleniumAddress: env.seleniumAddress,
+  mockSelenium: true,
 
   framework: 'jasmine2',
 

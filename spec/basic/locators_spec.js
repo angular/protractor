@@ -388,4 +388,10 @@ describe('locators', function() {
     expect(browser.isElementPresent(by.binding('greet'))).toBe(true);
     expect(browser.isElementPresent(by.binding('nopenopenope'))).toBe(false);
   });
+
+  it('should determine if an ElementFinder is present', function() {
+    expect(browser.isElementPresent(element(by.binding('greet')))).toBe(true);
+    expect(browser.isElementPresent(element(by.binding('nopenopenope'))))
+        .toBe(false);
+  });
 });

@@ -1,3 +1,105 @@
+# 2.0.0
+
+_Why is this change version 2.0? Protractor is following semver, and there's some breaking changes here._
+
+## Dependency Version Upgrades
+
+- ([34f0eeb](https://github.com/angular/protractor/commit/34f0eebd7e73b10e9b990caa06b63b6fd22b2589)) 
+  fix(element): update to selenium-webdriver@2.45.1 and remove element.then
+
+  This change updates the version of WebDriverJS (selenium-webdriver node module) from 2.44 to
+  2.45.1. See the full changelog at 
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+
+- ([8976e75](https://github.com/angular/protractor/commit/8976e75dc1817817e6bd2dbb0b6cbc78d72035e9)) 
+  chore(jasmine): bump version of jasminewd2
+
+## Features
+
+- ([997937d](https://github.com/angular/protractor/commit/997937d189fb3a9fb51f1b2e4756981c8958ceba)) 
+  feat(console plugin): Added new console plugin
+
+- ([ef6a09d](https://github.com/angular/protractor/commit/ef6a09d798fd04124224f6ca48eb64d13eb01eff)) 
+  feat(webdriver-manager): allow a custom cdn for binaries
+
+  Added a cdn value for each binary to be overrided by the cli argument
+  `alternate_cdn`.
+
+## Bug Fixes
+
+- ([fb92be6](https://github.com/angular/protractor/commit/fb92be6d588e7302989bd171a064739359bb3c74)) 
+  fix(accessibility): improve output for long elements
+
+  Instead of just printing the first N characters of the element's template, print the first and
+  last N/2.
+
+  See #1854
+
+- ([2a765c7](https://github.com/angular/protractor/commit/2a765c76e121de13ff86a279fe3f21cb15c17783)) 
+  fix(element): return not present when an element disappears
+
+- ([8a3412e](https://github.com/angular/protractor/commit/8a3412e98614bb69978869b34b5b7243619f015d)) 
+  fix(bug): by.buttonText() should not be effected by CSS style
+
+  Closes issue #1904
+
+- ([5d23280](https://github.com/angular/protractor/commit/5d232807f1e32a9a3ba5a5e4f07ace5d535fc3cd)) 
+  fix(debugger): fix issue where output does not display circular dep and functions
+
+- ([ef0fbc0](https://github.com/angular/protractor/commit/ef0fbc096035bb01d136897ca463892ceca56b73)) 
+  fix(debugger): expose require into debugger
+
+## Breaking Changes
+
+- ([34f0eeb](https://github.com/angular/protractor/commit/34f0eebd7e73b10e9b990caa06b63b6fd22b2589)) 
+  fix(element): update to selenium-webdriver@2.45.1 and remove element.then
+
+  This change updates the version of WebDriverJS (selenium-webdriver node module) from 2.44 to
+  2.45.1. See the full changelog at 
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+
+  To enable the update and remove confusion, this removes the `element().then` function unless there
+  is an action result. This function is completely unnecessary, because it would always resolve to
+  itself, but the removal may cause breaking changes.
+
+  Before:
+  ```js
+  element(by.css('foo')).then(function(el) {
+    return el.getText().then(...);
+  });
+  ```
+
+  After:
+  ```js
+  element(by.css('foo')).getText().then(...);
+  ```
+
+  In other words, an ElementFinder is now no longer a promise until an action has been called.
+
+  Before:
+  ```js
+  var el = element(by.css('foo'));
+
+  protractor.promise.isPromise(el); // true
+  protractor.promise.isPromise(el.click()); // true
+  ```
+
+  After:
+  ```js
+  var el = element(by.css('foo'));
+
+  protractor.promise.isPromise(el); // false
+  protractor.promise.isPromise(el.click()); // true
+  ```
+
+  Also, fixes `filter` and `map` to work with the new WebDriverJS.
+
+- ([3c04858](https://github.com/angular/protractor/commit/3c048585ac811726d6c6d493ed6d43f6a3570bee)) 
+  chore(config): remove deprecated `chromeOnly`
+
+  This has been replaced with `directConnect`.
+
+
 # 1.8.0
 
 ## Dependency Version Upgrades
@@ -1331,7 +1433,7 @@ _Note: Major version 0 releases are for initial development, and backwards incom
   fix(jasminewd): include full pre-async-call stack trace in expectation failure message
 
 - ([b6df2cf](https://github.com/angular/protractor/commit/b6df2cfcfd35b31e2e473604b6df9add744c6c2d)) 
-  fix(configParser): load coffee and typescript for child processes
+  fix(configParser): load coffee and LiveScript for child processes
 
   Without loading coffee in configParser.js, child processes which try and load a coffeescript
   config file do not have coffee registered with node's required, and child tests fail.
