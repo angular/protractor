@@ -10,9 +10,7 @@ Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagge
 
 Any questions posted to Protractor's Github Issues will be closed with this note:
 
-`
-Please read the [contributing guidelines](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions); these types of questions are ill-suited for GitHub. Thanks!
-`
+> Please read the [contributing guidelines](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions); these types of questions are ill-suited for GitHub. Thanks!
 
 
 Issues
