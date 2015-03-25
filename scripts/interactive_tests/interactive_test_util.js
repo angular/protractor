@@ -57,7 +57,7 @@ var Client = function(port) {
   // Disconnect from the server.
   this.disconnect = function() {
     socket.end();
-  }
+  };
 
   // Send a command to the server and wait for a response. Return response as a 
   // promise. 
@@ -66,7 +66,7 @@ var Client = function(port) {
     var received = '';
     var timeoutObj = setTimeout(function() {
       var errMsg = 'Command <' + JSON.stringify(cmd) + 
-          '> did not receive a response in ' + TIMEOUT/1000 + 's.'
+          '> did not receive a response in ' + TIMEOUT/1000 + 's.';
       if (received) {
         errMsg += ' Received messages so far: ' + received;
       }
@@ -113,7 +113,7 @@ exports.InteractiveTest = function(interactiveServerStartCmd, port) {
     expectations.push({
       command: command,
       expectedResult: opt_expectedResult
-    })
+    });
   };
 
   // Execute the interactive test. This will first start Protractor and its

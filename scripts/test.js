@@ -32,8 +32,8 @@ var passingTests = [
   'node lib/cli.js spec/controlLockConf.js',
   'node lib/cli.js spec/customFramework.js',
   'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json',
-  'node scripts/interactive_tests/interactive_test1.js',
-  'node scripts/interactive_tests/interactive_test2.js'
+  'node scripts/interactive_tests/interactive_test.js',
+  'node scripts/interactive_tests/with_base_url.js'
 ];
 
 // Plugins

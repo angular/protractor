@@ -22,10 +22,24 @@ test.addCommandExpectation('greetings.getText()', 'Hiya');
 
 // Check require is injected.
 test.addCommandExpectation('var q = require("q")');
-test.addCommandExpectation('var deferred = q.defer(); setTimeout(function() {deferred.resolve(1)}, 100); deferred.promise', '1');
+test.addCommandExpectation(
+    'var deferred = q.defer(); ' + 
+    'setTimeout(function() {deferred.resolve(1)}, 100); ' + 
+    'deferred.promise', 
+    '1');
+
+// Check errors are handled gracefully
+test.addCommandExpectation('element(by.binding("nonexistent"))');
+test.addCommandExpectation('element(by.binding("nonexistent")).getText()', 
+    'ERROR: NoSuchElementError: No element found using locator: ' + 
+    'by.binding("nonexistent")');
 
 // Check complete calls
-test.addCommandExpectation('\t', '[["element(by.id(\'\'))","element(by.css(\'\'))","element(by.name(\'\'))","element(by.binding(\'\'))","element(by.xpath(\'\'))","element(by.tagName(\'\'))","element(by.className(\'\'))"],""]');
+test.addCommandExpectation('\t', 
+    '[["element(by.id(\'\'))","element(by.css(\'\'))",' + 
+    '"element(by.name(\'\'))","element(by.binding(\'\'))",' + 
+    '"element(by.xpath(\'\'))","element(by.tagName(\'\'))",' + 
+    '"element(by.className(\'\'))"],""]');
 test.addCommandExpectation('ele\t', '[["element"],"ele"]');
 test.addCommandExpectation('br\t', '[["break","","browser"],"br"]');
 
