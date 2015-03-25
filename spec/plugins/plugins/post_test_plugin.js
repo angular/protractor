@@ -22,4 +22,4 @@ exports.postTest = function(config, passed, testInfo) {
       duration: 0
     }]
   };
-}
+};
