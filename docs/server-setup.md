@@ -61,7 +61,7 @@ Please note that if you set seleniumAddress, the settings for `seleniumServerJar
 Remote Selenium Server
 ----------------------
 
-To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [Sauce Labs](http://www.saucelabs.com).
+To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [Sauce Labs](http://www.saucelabs.com). This setting is ignored when `seleniumAddress` is set.
 
 In your config file, set these options:
  - `sauceUser` -  The username for your Sauce Labs account.
