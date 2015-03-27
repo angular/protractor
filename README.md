@@ -9,7 +9,7 @@ Getting Started
 
 The Protractor documentation for users is located in the [protractor/docs](https://github.com/angular/protractor/tree/master/docs) folder.
 
-To get set up and running  quickly:
+To get set up and running quickly:
  - The [Protractor Website](http://angular.github.io/protractor)
  - Work through the [Tutorial](http://angular.github.io/protractor/#/tutorial)
  - Take a look at the [Table of Contents](http://angular.github.io/protractor/#/toc)
@@ -17,6 +17,22 @@ To get set up and running  quickly:
 Once you are familiar with the tutorial, you’re ready to move on. To modify your environment, see the Protractor Setup docs. To start writing tests, see the Protractor Tests docs.
 
 To better understand how Protractor works with the Selenium WebDriver and Selenium Server see the reference materials.
+
+
+Getting Help
+------------
+
+Check the
+[Protractor FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md)
+and read through
+the [Top 20 questions on StackOverflow](http://stackoverflow.com/questions/tagged/protractor?sort=votes&pageSize=20).
+
+Please ask usage and debugging questions on
+[StackOverflow](http://stackoverflow.com/questions/tagged/protractor) (use
+the "protractor" tag)
+or in the
+[Angular discussion group](https://groups.google.com/forum/?fromgroups#!forum/angular).
+(Please do not ask support questions here on Github.)
 
 
 For Contributors
