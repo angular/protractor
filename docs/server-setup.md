@@ -55,7 +55,7 @@ To connect to a running instance of a standalone Selenium Server, set this optio
 
  - `seleniumAddress` -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.
 
-Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort` and `seleniumArgs` will be ignored (it will also override the sauce options listed below).
+Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
 
 
 Remote Selenium Server
