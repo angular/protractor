@@ -68,6 +68,16 @@ describe('mock modules', function() {
     expect(element(by.css('[app-version]')).getText()).toEqual('2');
   });
 
+  it('should remove duplicate mock modules', function () {
+    browser.addMockModule('moduleA', mockModuleA);
+    browser.addMockModule('moduleA', mockModuleA);
+    browser.removeMockModule('moduleA');
+
+    browser.get('index.html');
+
+    expect(element(by.css('[app-version]')).getText()).toEqual('0.1');
+  });
+
   it('should be a noop to remove a module which does not exist', function() {
     browser.addMockModule('moduleA', mockModuleA);
     browser.removeMockModule('moduleB');
