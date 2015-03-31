@@ -99,6 +99,32 @@ _Why is this change version 2.0? Protractor is following semver, and there's som
 
   This has been replaced with `directConnect`.
 
+- Due to ([1159612](https://github.com/angular/protractor/commit/1159612ed76bb65612dbb2cc648e45928a251b10))
+
+  Due to changes in how scheduling works on the control flow, specs
+  in Jasmine1 will no longer wait for multiple commands scheduled in `onPrepare`
+  or in the global space of the test file.
+
+  Before:
+  ```js
+  onPrepare: function() {
+    browser.driver.manage().window().maximize();
+
+    // This second command will not finish before the specs start.
+    browser.get('http://juliemr.github.io/protractor-demo');
+  }
+  ```
+
+  To fix, return the last promise from onPrepare:
+
+  After:
+  ```js
+  onPrepare: function() {
+    browser.driver.manage().window().maximize();
+    return browser.get('http://juliemr.github.io/protractor-demo');
+  }
+  ```
+
 
 # 1.8.0
 
