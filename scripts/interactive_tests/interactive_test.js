@@ -1,5 +1,6 @@
+var env = require('../../spec/environment.js');
 var InteractiveTest = require('./interactive_test_util').InteractiveTest;
-var port = 6969;
+var port = env.interactiveTestPort;
 var test = new InteractiveTest('node lib/cli.js --elementExplorer true', port);
 
 // Check state persists.
@@ -12,9 +13,9 @@ test.addCommandExpectation('y', 'function (param) {return param;}');
 
 // Check promises complete.
 test.addCommandExpectation('browser.driver.getCurrentUrl()', 'data:,');
-test.addCommandExpectation('browser.get("http://localhost:8081")');
+test.addCommandExpectation('browser.get("http://localhost:' + env.webServerDefaultPort + '")');
 test.addCommandExpectation('browser.getCurrentUrl()', 
-    'http://localhost:8081/#/form'); 
+    'http://localhost:' + env.webServerDefaultPort + '/#/form'); 
 
 // Check promises are resolved before being returned.
 test.addCommandExpectation('var greetings = element(by.binding("greeting"))');
