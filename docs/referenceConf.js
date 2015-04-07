@@ -232,7 +232,7 @@ exports.config = {
     }
   },
 
-  // If set, protractor will save the test output in json format at this path.
+  // If output filename is set (i.e. 'output.json'), protractor will save the test output in json format at this path.
   // The path is relative to the location of this config.
   resultJsonOutputFile: null,
 
