@@ -1,14 +1,13 @@
 function printflow(tag) {
-  console.log(tag);
+  console.log('-----' + tag);
   console.log(protractor.promise.controlFlow().getSchedule());
 }
 
 describe('angularjs homepage', function() {
-  it('should get each 1', function() {
+  xit('should get each 1', function() {
     browser.get('http://localhost:8081');
 
     var stuffs = element.all(by.css('.teststuff'));
-    expect(stuffs.count()).toBe(2);
     stuffs.each(function(stuff) {
       console.log('In an each');
       expect(stuff.getAttribute('value').then(function(value) {
@@ -33,7 +32,6 @@ describe('angularjs homepage', function() {
     browser.get('http://localhost:8081');
 
     var stuffs = element.all(by.css('.rowlike'));
-    expect(stuffs.count()).toBe(2);
     stuffs.each(function(stuff) {
       console.log('In an each');
       var input = stuff.element(by.css('.teststuff')); // this is an ElementFinder
@@ -41,18 +39,41 @@ describe('angularjs homepage', function() {
         console.log('in expect, value = ' + value);
         return value;
       })).toEqual('10');
+      printflow('before sendKeys schedule');
       input.sendKeys(
         protractor.Key.chord(protractor.Key.COMMAND, 'a'),
         protractor.Key.NULL,
         '30').then(function() {
           console.log('After sendKeys');
+          printflow('after sendKeys');
         });
+      printflow('after sendKeys schedule');
     }).then(function() {
       console.log('Done with each');
     });
     // printflow('end');
   });
 
+
+  xit('remove each?', function() {
+    console.log('');
+    browser.get('http://localhost:8081');
+
+    var stuff = element.all(by.css('.rowlike')).get(1);
+
+    var input = stuff.element(by.css('.teststuff')); // this is an ElementFinder
+    expect(input.getAttribute('value').then(function(value) {
+      console.log('in expect, value = ' + value);
+      return value;
+    })).toEqual('10');
+    input.sendKeys(
+      protractor.Key.chord(protractor.Key.COMMAND, 'a'),
+      protractor.Key.NULL,
+      '30').then(function() {
+        console.log('After sendKeys');
+      });
+    printflow('end of last it');
+  });
 
 
   // it('should greet the named user', function() {
