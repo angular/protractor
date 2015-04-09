@@ -1,6 +1,6 @@
 function printflow(tag) {
-  console.log('-----' + tag);
-  console.log(protractor.promise.controlFlow().getSchedule());
+  // console.log('-----' + tag);
+  // console.log(protractor.promise.controlFlow().getSchedule());
 }
 
 describe('angularjs homepage', function() {
@@ -10,10 +10,9 @@ describe('angularjs homepage', function() {
     var stuffs = element.all(by.css('.teststuff'));
     stuffs.each(function(stuff) {
       console.log('In an each');
-      expect(stuff.getAttribute('value').then(function(value) {
-        console.log('in expect, value = ' + value);
-        return value;
-      })).toEqual('10');
+      stuff.getAttribute('value').then(function(value) {
+        console.log('get attribute, value = ' + value);
+      });
       stuff.sendKeys(
         protractor.Key.chord(protractor.Key.COMMAND, 'a'),
         protractor.Key.NULL,
@@ -34,22 +33,20 @@ describe('angularjs homepage', function() {
     var stuffs = element.all(by.css('.rowlike'));
     stuffs.each(function(stuff) {
       console.log('In an each');
+      printflow('in an each');
       var input = stuff.element(by.css('.teststuff')); // this is an ElementFinder
-      expect(input.getAttribute('value').then(function(value) {
+      input.getAttribute('value').then(function(value) {
         console.log('in expect, value = ' + value);
-        return value;
-      })).toEqual('10');
+      });
       printflow('before sendKeys schedule');
-      input.sendKeys(
-        protractor.Key.chord(protractor.Key.COMMAND, 'a'),
-        protractor.Key.NULL,
-        '30').then(function() {
+      input.sendKeys('30').then(function() {
           console.log('After sendKeys');
           printflow('after sendKeys');
         });
       printflow('after sendKeys schedule');
     }).then(function() {
       console.log('Done with each');
+      printflow('done with each');
     });
     // printflow('end');
   });
