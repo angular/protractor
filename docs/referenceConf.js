@@ -258,6 +258,7 @@ exports.config = {
   // Mocha and Cucumber have limited beta support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
   framework: 'jasmine',
+  //framework: 'jasmine2',//Sample, how to use the new jasmine2 framework
 
   // Options to be passed to minijasminenode.
   //
