@@ -1,28 +1,10 @@
+function printflow(tag) {
+  console.log(tag);
+  console.log(protractor.promise.controlFlow().getSchedule());
+}
+
 describe('angularjs homepage', function() {
   it('should get each 1', function() {
-    browser.get('http://localhost:8081');
-
-    var stuffs = element.all(by.css('.rowlike'));
-    expect(stuffs.count()).toBe(2);
-    stuffs.each(function(stuff) {
-      console.log('In an each');
-      var input = stuff.element(by.css('.teststuff'));
-      expect(input.getAttribute('value').then(function(value) {
-        console.log('in expect, value = ' + value);
-        return value;
-      })).toEqual('10');
-      input.sendKeys(
-        protractor.Key.chord(protractor.Key.CONTROL, 'a'),
-        protractor.Key.NULL,
-        '30').then(function() {
-          console.log('After sendKeys');
-        });
-    }).then(function() {
-      console.log('Done with each');
-    });
-  });
-
-  it('should get each 2', function() {
     browser.get('http://localhost:8081');
 
     var stuffs = element.all(by.css('.teststuff'));
@@ -34,7 +16,7 @@ describe('angularjs homepage', function() {
         return value;
       })).toEqual('10');
       stuff.sendKeys(
-        protractor.Key.chord(protractor.Key.CONTROL, 'a'),
+        protractor.Key.chord(protractor.Key.COMMAND, 'a'),
         protractor.Key.NULL,
         '30').then(function() {
           console.log('After sendKeys');
@@ -42,7 +24,36 @@ describe('angularjs homepage', function() {
     }).then(function() {
       console.log('Done with each');
     });
+    // printflow('end');
   });
+
+  it('should get each 2', function() {
+    console.log('');
+    // This fails.
+    browser.get('http://localhost:8081');
+
+    var stuffs = element.all(by.css('.rowlike'));
+    expect(stuffs.count()).toBe(2);
+    stuffs.each(function(stuff) {
+      console.log('In an each');
+      var input = stuff.element(by.css('.teststuff')); // this is an ElementFinder
+      expect(input.getAttribute('value').then(function(value) {
+        console.log('in expect, value = ' + value);
+        return value;
+      })).toEqual('10');
+      input.sendKeys(
+        protractor.Key.chord(protractor.Key.COMMAND, 'a'),
+        protractor.Key.NULL,
+        '30').then(function() {
+          console.log('After sendKeys');
+        });
+    }).then(function() {
+      console.log('Done with each');
+    });
+    // printflow('end');
+  });
+
+
 
   // it('should greet the named user', function() {
   //   browser.get('http://www.angularjs.org');
