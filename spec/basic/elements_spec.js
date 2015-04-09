@@ -400,6 +400,29 @@ describe('ElementArrayFinder', function() {
     });
   });
 
+  fit('should allow accessing subelements from within each', function() {
+    browser.get('index.html#/form');
+    var rows = element.all(by.css('.rowlike'));
+    rows.each(function(row) {
+      var input = row.element(by.css('.input'));
+      expect(input.getAttribute('value').then(function(value) {
+        console.log('value = ' + value);
+        return value;
+      })).toEqual('10');
+      // input.getAttribute('value').then(function(value) {
+      //   console.log('value = ' + value);
+      //   return value;
+      // });
+      input.sendKeys('1').then(function() {
+        console.log('sent keys');
+      });
+    });
+    rows.each(function(row) {
+      var input = row.element(by.css('input'));
+      expect(input.getAttribute('value')).toEqual('101');
+    });
+  });
+
   it('should keep a reference to the array original locator', function() {
     var byCss = by.css('#animals ul li');
     var byModel = by.model('color');
