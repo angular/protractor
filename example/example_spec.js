@@ -52,27 +52,6 @@ describe('angularjs homepage', function() {
   });
 
 
-  xit('remove each?', function() {
-    console.log('');
-    browser.get('http://localhost:8081');
-
-    var stuff = element.all(by.css('.rowlike')).get(1);
-
-    var input = stuff.element(by.css('.teststuff')); // this is an ElementFinder
-    expect(input.getAttribute('value').then(function(value) {
-      console.log('in expect, value = ' + value);
-      return value;
-    })).toEqual('10');
-    input.sendKeys(
-      protractor.Key.chord(protractor.Key.COMMAND, 'a'),
-      protractor.Key.NULL,
-      '30').then(function() {
-        console.log('After sendKeys');
-      });
-    printflow('end of last it');
-  });
-
-
   // it('should greet the named user', function() {
   //   browser.get('http://www.angularjs.org');
 
