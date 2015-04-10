@@ -254,10 +254,10 @@ exports.config = {
   // See github.com/angular/protractor/blob/master/lib/frameworks/README.md
   // to comply with the interface details of your custom implementation.
   //
-  // Jasmine is fully supported as a test and assertion framework.
-  // Mocha and Cucumber have limited beta support. You will need to include your
+  // Jasmine and Jasmine2 are fully supported as test and assertion frameworks.
+  // Mocha and Cucumber have limited support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
-  framework: 'jasmine',
+  framework: 'jasmine2',
 
   // Options to be passed to minijasminenode.
   //
