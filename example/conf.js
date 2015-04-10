@@ -7,6 +7,8 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  framework: 'jasmine2',
+
   // Spec patterns are relative to the current working directly when
   // protractor is called.
   specs: ['example_spec.js'],
