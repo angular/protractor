@@ -125,6 +125,23 @@ _Why is this change version 2.0? Protractor is following semver, and there's som
   }
   ```
 
+- Due to ([1159612](https://github.com/angular/protractor/commit/1159612ed76bb65612dbb2cc648e45928a251b10))
+
+  Due to changes in WebDriverJS, `wait` without a timeout will now default
+  to waiting for 0 ms instead of waiting indefinitely.
+
+  Before:
+  ```js
+  browser.wait(fn); // would wait indefinitely
+  ```
+
+  After
+  ```js
+  browser.wait(fn, 8000) // to fix, add an explicit timeout
+  ```
+
+  This will be reverted in the [next version of WebDriverJS](https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md#v2460-dev).
+
 
 # 1.8.0
 
