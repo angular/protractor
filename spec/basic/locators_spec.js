@@ -11,7 +11,7 @@ describe('locators', function() {
     });
 
     it('should allow custom expectations to expect an element', function() {
-      this.addMatchers({
+      jasmine.addMatchers({
         toHaveText: function() {
           return {
             compare: function(actual, expected) {
