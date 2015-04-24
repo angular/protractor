@@ -2,7 +2,10 @@
 //
 // This file shows all of the configuration options that may be passed
 // to Protractor.
-
+//
+// Because this file shows all of the options, if used in practice some
+// will be overridden or ignored. If you're looking for a seed configuration
+// file, see example/conf.js
 
 exports.config = {
   // ---------------------------------------------------------------------------
