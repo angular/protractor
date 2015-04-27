@@ -16,7 +16,7 @@ The `plugins` folder contains default plugins for Protractor.
   * [Accessibility Plugin](#accessibility-plugin)
   * [ngHint Plugin](#nghint-plugin)
   * [Timeline Plugin](#timeline-plugin)
-  * [Console Plugin](#console-plugin)
+  * [Console Plugin](#console-plugin-chrome-only)
 
 Using Plugins
 -------------
@@ -256,8 +256,8 @@ exports.config = {
 ```
 
 
-Console Plugin
---------------
+Console Plugin (Chrome only)
+----------------------------
 
 This plugin checks the browser log after each test for warnings and errors.  It
 can be configured to fail a test if either is detected.  There is also an
@@ -275,3 +275,6 @@ exports.config = {
   }]
 };
 ```
+
+Note that this plugin's behavior is undefined on browsers other than Chrome.
+Firefox users have reported flaky results.
