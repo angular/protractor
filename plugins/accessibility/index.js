@@ -49,28 +49,25 @@ var TENON_URL = 'http://www.tenon.io/api/';
  * Checks the information returned by the accessibility audit(s) and
  * displays passed/failed results as console output.
  *
- * @param {Object} config The configuration file for the accessibility plugin
- * @return {q.Promise} A promise which resolves to the results of any passed or
- *    failed tests
+ * @this {Object} The plugin context object
+ * @return {q.Promise} A promise which resolves when all audits are finished
  * @public
  */
-function teardown(config) {
+function teardown() {
 
   var audits = [];
 
-  if (config.chromeA11YDevTools) {
-    audits.push(runChromeDevTools(config));
+  if (this.config.chromeA11YDevTools) {
+    audits.push(runChromeDevTools(this));
   }
   // check for Tenon config and an actual API key, not the placeholder
-  if (config.tenonIO && /[A-Za-z][0-9]/.test(config.tenonIO.options.key)) {
-    audits.push(runTenonIO(config));
+  if (this.config.tenonIO && /[A-Za-z][0-9]/.test(
+      this.config.tenonIO.options.key)) {
+    audits.push(runTenonIO(this));
   }
-  return q.all(audits).then(function() {
-    return outputResults();
-  });
+  return q.all(audits);
 }
 
-var testOut = {failedCount: 0, specResults: []};
 var entities = new Entities();
 
 /**
@@ -78,16 +75,15 @@ var entities = new Entities();
  * more information about licensing and configuration available at
  * http://tenon.io/documentation/overview.php.
  *
- * @param {Object} config The configuration file for the accessibility plugin
- * @return {q.Promise} A promise which resolves to the results of any passed or
- *    failed tests
+ * @param {Object} context The plugin context object
+ * @return {q.Promise} A promise which resolves when the audit is finished
  * @private
  */
-function runTenonIO(config) {
+function runTenonIO(context) {
 
   return browser.driver.getPageSource().then(function(source) {
 
-    var options = _.assign(config.tenonIO.options, {src: source});
+    var options = _.assign(context.config.tenonIO.options, {src: source});
 
     // setup response as a deferred promise
     var deferred = q.defer();
@@ -122,39 +118,22 @@ function runTenonIO(config) {
 
     var numResults = response.resultSet.length;
 
-    testOut.failedCount = numResults;
-
     if (numResults === 0) {
-      return testOut.specResults.push({
-        description: testHeader + 'All tests passed!',
-        assertions: [{
-          passed: true,
-          errorMsg: ''
-        }],
-        duration: 1
-      });
+      context.addSuccess();
+      return;
     }
 
-    if (config.tenonIO.printAll) {
+    if (context.config.tenonIO.printAll) {
       console.log('\x1b[32m', testHeader + 'API response', '\x1b[39m');
       console.log(response);
     }
 
     return response.resultSet.forEach(function(result) {
       var ref = (result.ref === null) ? '' : result.ref;
-      var errorMsg = result.errorDescription + '\n\n' +
-                     '\t\t' +entities.decode(result.errorSnippet) +
-                     '\n\n\t\t' + ref + '\n';
 
-
-      testOut.specResults.push({
-        description: testHeader + result.errorTitle,
-        assertions: [{
-          passed: false,
-          errorMsg: errorMsg
-        }],
-        duration: 1
-      });
+      context.addFailure(result.errorDescription + '\n\n' +
+          '\t\t' +entities.decode(result.errorSnippet) +
+          '\n\n\t\t' + ref, {specName: testHeader + result.errorTitle});
     });
   }
 }
@@ -162,12 +141,11 @@ function runTenonIO(config) {
 /**
  * Audits page source against the Chrome Accessibility Developer Tools, if configured.
  *
- * @param {Object} config The configuration file for the accessibility plugin
- * @return {q.Promise} A promise which resolves to the results of any passed or
- *    failed tests
+ * @param {Object} context The plugin context object
+ * @return {q.Promise} A promise which resolves when the audit is finished
  * @private
  */
-function runChromeDevTools(config) {
+function runChromeDevTools(context) {
 
   var data = fs.readFileSync(AUDIT_FILE, 'utf-8');
   data = data + ' return axs.Audit.run();';
@@ -215,11 +193,10 @@ function runChromeDevTools(config) {
         if (result.result === 'FAIL') {
           var label = result.elementCount === 1 ? ' element ' : ' elements ';
           if (result.rule.severity !== 'Warning'
-              || config.chromeA11YDevTools.treatWarningsAsFailures) {
-            result.passed = false;
-            testOut.failedCount++;
+              || context.config.chromeA11YDevTools.treatWarningsAsFailures) {
+            result.warning = false;
           } else {
-            result.passed = true;
+            result.warning = true;
             result.rule.heading = '\x1b[33m(WARNING) '
                 + result.rule.heading + ' (' + result.elementCount
                 + label + 'failed)';
@@ -234,35 +211,15 @@ function runChromeDevTools(config) {
             }
           });
           result.output += '\n\n\t\t' + result.rule.url;
+          (result.warning ? context.addWarning : context.addFailure)(
+              result.output, {specName: testHeader + result.rule.heading});
         }
         else {
-          result.passed = true;
-          result.output = '';
+          context.addSuccess({specName: testHeader + result.rule.heading});
         }
-
-        testOut.specResults.push({
-          description: testHeader + result.rule.heading,
-          assertions: [{
-            passed: result.passed,
-            errorMsg: result.output
-          }],
-          duration: 1
-        });
       });
     });
   });
-}
-
-/**
- * Output results from either plugin configuration.
- *
- * @return {object} testOut An object containing number of failures and spec results
- * @private
- */
-function outputResults() {
-  if ((testOut.failedCount > 0) || (testOut.specResults.length > 0)) {
-    return testOut;
-  }
 }
 
 // Export
