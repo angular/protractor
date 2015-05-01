@@ -1,24 +1,17 @@
 var q = require('q');
 
-var passingResult = {
-  failedCount: 0,
-  specResults: [{
-    description: 'plugin test which passes',
-    assertions: [],
-    duration: 4
-  }]
-};
-
 module.exports = {
   setup: function() {
+    var self = this;
     return q.delay(100).then(function() {
-      return passingResult;
+      self.addSuccess();
     });
   },
 
   teardown: function() {
+    var self = this;
     return q.delay(100).then(function() {
-      return passingResult;
+      self.addSuccess();
     });
   },
 
@@ -27,8 +20,9 @@ module.exports = {
   },
 
   postTest: function() {
+    var self = this;
     return q.delay(100).then(function() {
-      return passingResult;
+      self.addSuccess();
     });
   },
 
