@@ -26,15 +26,19 @@ To switch to Page Objects, the first thing you need to do is create a Page Objec
 
 ```js
 var AngularHomepage = function() {
-  this.nameInput = element(by.model('yourName'));
-  this.greeting = element(by.binding('yourName'));
+  var nameInput = element(by.model('yourName'));
+  var greeting = element(by.binding('yourName'));
 
   this.get = function() {
     browser.get('http://www.angularjs.org');
   };
 
   this.setName = function(name) {
-    this.nameInput.sendKeys(name);
+    nameInput.sendKeys(name);
+  };
+  
+  this.getGreeting = function() {
+    return greeting.getText();
   };
 };
 ```
@@ -48,7 +52,7 @@ describe('angularjs homepage', function() {
 
     angularHomepage.setName('Julie');
 
-    expect(angularHomepage.greeting.getText()).toEqual('Hello Julie!');
+    expect(angularHomepage.getGreeting()).toEqual('Hello Julie!');
   });
 });
 ```
