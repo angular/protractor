@@ -23,11 +23,6 @@ test.addCommandExpectation('greetings.getText()', 'Hiya');
 
 // Check require is injected.
 test.addCommandExpectation('var q = require("q")');
-test.addCommandExpectation(
-    'var deferred = q.defer(); ' + 
-    'setTimeout(function() {deferred.resolve(1)}, 100); ' + 
-    'deferred.promise', 
-    '1');
 
 // Check errors are handled gracefully
 test.addCommandExpectation('element(by.binding("nonexistent"))');
