@@ -23,6 +23,7 @@ angular.module('protractorApp').config(function($routeProvider) {
       }).
       when('/plugins', {
         templateUrl: 'partials/plugins.html'
+        controller: 'MarkdownCtrl'
       }).
       when('/control-flow', {
         templateUrl: 'partials/control-flow.html',
