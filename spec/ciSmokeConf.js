@@ -14,7 +14,9 @@ exports.config = {
     'basic/synchronize_spec.js'
   ],
 
-  // Two latest versions of Chrome, Firefox, IE, Safari.
+  // Two latest versions of IE, and Safari.
+  // The second latest version of Chrome and Firefox (latest versions are
+  // tested against the full suite in ciFullConf)
   // TODO - add mobile.
   multiCapabilities: [{
     'browserName': 'chrome',
