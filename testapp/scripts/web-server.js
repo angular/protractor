@@ -39,7 +39,7 @@ var testMiddleware = function(req, res, next) {
     setTimeout(function() {
       res.send(200, 'slow template contents');
     }, 5000);
-  } else if (req.path == '/storage') {
+  } else if (req.path == '/chat') {
     if (req.method === 'GET') {
       var value;
       if (req.query.q) {
@@ -49,11 +49,17 @@ var testMiddleware = function(req, res, next) {
         res.send(400, 'must specify query');
       }
     } else if (req.method === 'POST') {
-      if (req.body.key && req.body.value) {
-        storage[req.body.key] = req.body.value;
+      if (req.body.key == 'newChatMessage') {
+        if (!storage['chatMessages']) {
+          storage['chatMessages'] = [];
+        }
+        storage['chatMessages'].push(req.body.value);
+        res.send(200);
+      } else if (req.body.key == 'clearChatMessages') {
+        storage['chatMessages'] = [];
         res.send(200);
       } else {
-        res.send(400, 'must specify key/value pair');
+        res.send(400, 'Unknown command');
       }
     } else {
       res.send(400, 'only accepts GET/POST');
