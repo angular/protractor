@@ -24,7 +24,7 @@ exports.config = {
     'name': 'Protractor suite tests',
     'version': '42',
     'selenium-version': '2.45.0',
-    'chromedriver-version': '2.14',
+    'chromedriver-version': '2.15',
     'platform': 'OS X 10.9'
   }, {
     'browserName': 'firefox',
