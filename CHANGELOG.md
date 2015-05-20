@@ -1,3 +1,102 @@
+# 2.1.1
+
+## Dependency Version Upgrades
+
+- ([25b1fa0](https://github.com/angular/protractor/commit/25b1fa052c195f6f56adcd3f5a116cb5eac238b0)) 
+  feat(jasmine): update jasmine dependency to 2.3.1
+
+  Updated from 2.1.1. See Jasmine's changelog at
+  https://github.com/jasmine/jasmine/tree/master/release_notes
+
+  Closes #1795. Closes #2094. Closes #1768.
+
+- ([25e3b86](https://github.com/angular/protractor/commit/25e3b8611f7333f0829aa3c315a0397891bbada7)) 
+  chore(chromedrivier): Update chromedriver to 2.15
+
+## Features
+
+- ([45341c9](https://github.com/angular/protractor/commit/45341c944bf60537849776c7f362ee0442b219e6)) 
+  feat(explorer): allow element explorer to start as a server
+
+  If element explorer is run with a port (i.e. --debuggerServerPort 1234), it will start up a server
+  that listens to command from the port instead of a repl that listens to process.stdin.
+
+- ([cf9a26f](https://github.com/angular/protractor/commit/cf9a26f1b4bdca7d928794d24738786be074619a)) 
+  feat(plugins): allow plugins.postTest to know what test just ran
+
+- ([0f80696](https://github.com/angular/protractor/commit/0f806964324cbeb4bceb54c5bd82c639b9f99a49)) 
+  feat(plugins): inline plugins
+
+- ([de49969](https://github.com/angular/protractor/commit/de499696eb88721cb073a195025ae48f59cbc905)) 
+  feat(debugger): make element explorer work with node 0.12.0
+
+  Node has changed its debugger significantly in 0.12.0, and these changes are necessary to get it
+  to work now.
+
+  Specifically here are the key points to take note:
+
+  * Before, the process continues running after `process._debugProcess(pid);` is called, but now,
+  the process stops.
+  > To over come this, the call to `process._debugProcess(pid)` is moved from protractor into the
+  debugger client. Secondly, because the process stops after the call, we call `reqContinue` once
+  the debugger connection is established, so that protractor continues into the first break point
+  (for backwards compatibility, we added an extra empty webdriver command so that in earlier 
+  versions of node, protractor doesn't go past the first break point from the reqContinue).
+
+  * Before repl provides '(foobar\n)' when an user inputs 'foobar'. Now it is just 'foobar\n'.
+  > We will parse and strip away both the parenthesis and '\n' to support all versions of node.
+
+  * Additionally (non-related to node 0.12.0), this change makes debugger processes fail fast if the
+  port is taken.
+
+- ([7b96db0](https://github.com/angular/protractor/commit/7b96db0ffb06608b12aa14765133cce42a0cad7f)) 
+  feat(browser.get): Return a promise that handles errors in browser.get
+
+## Bug Fixes
+
+- ([815ff5d](https://github.com/angular/protractor/commit/815ff5d092c8dda88e2a1d4c5c80f66bf20892fa)) 
+  fix(jasmine2): be consistent about passing assertions in output JSON
+
+  See #2051
+
+- ([e6e668c](https://github.com/angular/protractor/commit/e6e668c8d7353c8e797f730b30b996c6a6eb770f)) 
+  chore(jasmine): update jasminewd2 to 0.0.4
+
+  This improves the control flow schedule messages for debugging and fixes an issue with the `this`
+  variable inside tests. See https://github.com/angular/jasminewd/issues/22
+
+- ([e599cf3](https://github.com/angular/protractor/commit/e599cf301d1ff0fe705b2362fa6b4b17859ab8da)) 
+  fix(taskscheduler): label sharded tasks with numbers instead of letters
+
+  Letters run into a problem with a maximum of 26. See #2042
+
+- ([fda3236](https://github.com/angular/protractor/commit/fda323664db65a5c8f1590b9841fcfa53d4ab8fd)) 
+  fix(config): add sauceAgent property to protractor config
+
+  Closes #2040
+
+- ([fa699b8](https://github.com/angular/protractor/commit/fa699b8f1a6b807f2405d6829609797a9a3f8768)) 
+  fix(debugger): fix 'getControlFlowText()' broken in webdriver 2.45
+
+- ([b783dd8](https://github.com/angular/protractor/commit/b783dd865dfd16e5099a863d36d497499026b208)) 
+  fix(browser): remove subsequent duplicate module
+
+  browser.removeMockModule() misses next duplicate module because of iteration over an array it's
+  modifying.
+
+- ([e3d4ad1](https://github.com/angular/protractor/commit/e3d4ad164a04451fce3a57f06121355343c97f48)) 
+  fix(stacktrace): remove jasmine2 specific stacktraces
+
+- ([3cded9b](https://github.com/angular/protractor/commit/3cded9b8da247dc69c78a6fa0e25fe70f6c0f801)) 
+  fix(locators): escape query in byExactBinding
+
+  See http://stackoverflow.com/q/3561711
+
+  Closes #1918
+
+- ([e18d499](https://github.com/angular/protractor/commit/e18d4990878d70f77b29e8678eecbaab7c8cefb5)) 
+  fix(cucumber): process no-snippets param for cucumber framework
+
 # 2.0.0
 
 _Why is this change version 2.0? Protractor is following semver, and there's some breaking changes here._
