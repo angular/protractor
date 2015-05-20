@@ -12,6 +12,7 @@ without a major version bump.</p>
 <li><a href=#/{{path}}#accessibility-plugin>Accessibility Plugin</a></li>
 <li><a href=#/{{path}}#nghint-plugin>ngHint Plugin</a></li>
 <li><a href=#/{{path}}#timeline-plugin>Timeline Plugin</a></li>
+<li><a href=#/{{path}}#console-plugin-chrome-only>Console Plugin</a></li>
 </ul>
 </li>
 </ul>
@@ -41,11 +42,21 @@ using the &#39;ngHint&#39; plugin is shown below.</p>
     path: &#39;node_modules/protractor/plugins/ngHint&#39;,
   }]
 </code></pre>
-<p>Finally, if your plugin is a node module, you may use it with the <code ng-non-bindable>package</code>
-option. For example, if you did <code ng-non-bindable>npm install example-protractor-plugin</code> your
-config would look like:</p>
+<p>If your plugin is a node module, you may use it with the <code ng-non-bindable>package</code> option. For
+example, if you did <code ng-non-bindable>npm install example-protractor-plugin</code> your config would
+look like:</p>
 <pre><code class="lang-javascript">  plugins: [{
     package: &#39;example-protractor-plugin&#39;,
+  }]
+</code></pre>
+<p>Finally, if you are writing a small plugin which will only be used by one config
+file, you can write the plugin inline into the config:</p>
+<pre><code class="lang-javascript">  plugins: [{
+    inline: {
+      setup: function() { ... },
+      teardown: function() { ... },
+      ...
+    }
   }]
 </code></pre>
 <h2 id="writing-plugins" class="anchored"><div><a href="#{{path}}#writing-plugins">&#x1f517;</a>Writing Plugins</div></h2>
@@ -93,11 +104,12 @@ exports.postResults = function(config) {};
  *
  * @param {Object} config The plugin configuration object.
  * @param {boolean} passed True if the test passed.
+ * @param {Object} testInfo information about the test which just ran.
  *
  * @return Object If an object is returned, it is merged with the Protractor
  *     result object. May return a promise.
  */
-exports.postTest = function(config, passed) {};
+exports.postTest = function(config, passed, testInfo) {};
 
 /**
  * Used when reporting results.
@@ -105,6 +117,7 @@ exports.postTest = function(config, passed) {};
  */
 exports.name = &#39;&#39;;
 </code></pre>
+<p>Each of these exported properties are totally optional.</p>
 <p>The protractor results object follows the format specified in
 the <a href="../lib/frameworks/README.md">Framework documentation</a>.</p>
 <h2 id="accessibility-plugin" class="anchored"><div><a href="#{{path}}#accessibility-plugin">&#x1f517;</a>Accessibility Plugin</div></h2>
@@ -227,3 +240,20 @@ This improves understanding of where latency issues are in tests.</p>
   // other configuration settings
 };
 </code></pre>
+<h2 id="console-plugin-chrome-only-" class="anchored"><div><a href="#{{path}}#console-plugin-chrome-only-">&#x1f517;</a>Console Plugin (Chrome only)</div></h2>
+<p>This plugin checks the browser log after each test for warnings and errors.  It
+can be configured to fail a test if either is detected.  There is also an
+optional exclude parameter which accepts both regex and strings.  Any log
+matching the exclude parameter will not fail the test or be logged to the
+console.</p>
+<pre><code class="lang-js">exports.config = {
+  plugins: [{
+    path: &#39;node_modules/protractor/plugins/console&#39;,
+    failOnWarning: {Boolean}                (Default - false),
+    failOnError: {Boolean}                  (Default - true)
+    exclude: {Array of strings and regex}   (Default - [])
+  }]
+};
+</code></pre>
+<p>Note that this plugin&#39;s behavior is undefined on browsers other than Chrome.
+Firefox users have reported flaky results.</p>

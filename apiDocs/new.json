@@ -1,0 +1,4 @@
+  {
+    "description": "Locates elements matching a XPath selector. Care should be taken when\nusing an XPath selector with a [webdriver.WebElement](webdriver.WebElement) as WebDriver\nwill respect the context in the specified in the selector. For example,\ngiven the selector <code ng-non-bindable>\&quot;&#x2F;&#x2F;div\&quot;</code>, WebDriver will search from the\ndocument root regardless of whether the locator was used with a\nWebElement.<br />See [http://www.w3.org/TR/xpath/](http://www.w3.org/TR/xpath/)",
+    "other": "bar"
+  },

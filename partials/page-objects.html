@@ -14,15 +14,19 @@
 <h2 id="with-pageobjects" class="anchored"><div><a href="#{{path}}#with-pageobjects">&#x1f517;</a>With PageObjects</div></h2>
 <p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
 <pre><code class="lang-js">var AngularHomepage = function() {
-  this.nameInput = element(by.model(&#39;yourName&#39;));
-  this.greeting = element(by.binding(&#39;yourName&#39;));
+  var nameInput = element(by.model(&#39;yourName&#39;));
+  var greeting = element(by.binding(&#39;yourName&#39;));
 
   this.get = function() {
     browser.get(&#39;http://www.angularjs.org&#39;);
   };
 
   this.setName = function(name) {
-    this.nameInput.sendKeys(name);
+    nameInput.sendKeys(name);
+  };
+
+  this.getGreeting = function() {
+    return greeting.getText();
   };
 };
 </code></pre>
@@ -34,7 +38,7 @@
 
     angularHomepage.setName(&#39;Julie&#39;);
 
-    expect(angularHomepage.greeting.getText()).toEqual(&#39;Hello Julie!&#39;);
+    expect(angularHomepage.getGreeting()).toEqual(&#39;Hello Julie!&#39;);
   });
 });
 </code></pre>

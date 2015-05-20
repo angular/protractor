@@ -88,14 +88,19 @@
 <pre><code class="lang-js">
 describe('angularjs homepage todo list', function() {
   it('should add a todo', function() {
-    browser.get('http://www.angularjs.org');
+    browser.get('https://angularjs.org');
 
-    element(by.model('todoText')).sendKeys('write a protractor test');
+    element(by.model('todoList.todoText')).sendKeys('write first protractor test');
     element(by.css('[value="add"]')).click();
 
-    var todoList = element.all(by.repeater('todo in todos'));
+    var todoList = element.all(by.repeater('todo in todoList.todos'));
     expect(todoList.count()).toEqual(3);
-    expect(todoList.get(2).getText()).toEqual('write a protractor test');
+    expect(todoList.get(2).getText()).toEqual('write first protractor test');
+
+    // You wrote your first test, cross it off the list
+    todoList.get(2).element(by.css('input')).click();
+    var completedAmount = element.all(by.css('.done-true'));
+    expect(completedAmount.count()).toEqual(2);
   });
 });
 </code></pre>
@@ -138,7 +143,7 @@ exports.config = {
         You should see a Chrome browser window open up and navigate to the
         todo list in the AngularJS page, then close itself (this should be very
         fast!). The test output should be
-        <code>1 test, 2 assertions, 0 failures</code>. Congratulations, you've
+        <code>1 test, 3 assertions, 0 failures</code>. Congratulations, you've
         run your first Protractor test!
       </p>
     </div>

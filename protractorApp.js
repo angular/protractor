@@ -407,7 +407,8 @@ angular.module('protractorApp').config(function($routeProvider) {
         controller: 'MarkdownCtrl'
       }).
       when('/plugins', {
-        templateUrl: 'partials/plugins.html'
+        templateUrl: 'partials/plugins.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/control-flow', {
         templateUrl: 'partials/control-flow.html',

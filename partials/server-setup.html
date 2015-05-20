@@ -40,7 +40,7 @@
 <ul>
 <li><code ng-non-bindable>seleniumAddress</code> -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.</li>
 </ul>
-<p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code> and <code ng-non-bindable>seleniumArgs</code> will be ignored (it will also override the sauce options listed below).</p>
+<p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
 <h2 id="remote-selenium-server" class="anchored"><div><a href="#{{path}}#remote-selenium-server">&#x1f517;</a>Remote Selenium Server</div></h2>
 <p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="http://www.saucelabs.com">Sauce Labs</a>.</p>
 <p>In your config file, set these options:</p>
