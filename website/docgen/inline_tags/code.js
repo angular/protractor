@@ -2,8 +2,6 @@ var htmlSpecialCharMap = {
   "&": "&amp;",
   "<": "&lt;",
   ">": "&gt;",
-  '"': '&quot;',
-  "'": '&#39;',
   "/": '&#x2F;'
 };
 
@@ -12,7 +10,7 @@ module.exports = function codeTagDef() {
     name: 'code',
     handler: function(doc, tag, content) {
       return '<code ng-non-bindable>' +
-          content.replace(/[&<>"'\/]/g, function (s) { 
+          content.replace(/[&<>\/]/g, function (s) {
             return htmlSpecialCharMap[s];
           }) + '</code>';
     },
