@@ -70,7 +70,7 @@ exports.config = {
   },
 
   // Spec patterns are relative to the configuration file location passed
-  // to proractor (in this example conf.js).
+  // to protractor (in this example conf.js).
   // They may include glob patterns.
   specs: ['example-spec.js'],
 
