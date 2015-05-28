@@ -186,7 +186,7 @@ Enable this plugin in your config file:
         chromeA11YDevTools: {
           treatWarningsAsFailures: true
         },
-        path: 'node_modules/protractor.plugins/accessibility'
+        path: 'node_modules/protractor/plugins/accessibility'
       }]
     }
 ```
@@ -264,7 +264,7 @@ can be configured to fail a test if either is detected.  There is also an
 optional exclude parameter which accepts both regex and strings.  Any log
 matching the exclude parameter will not fail the test or be logged to the
 console.
- 
+
 ```js
 exports.config = {
   plugins: [{
