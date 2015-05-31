@@ -52,7 +52,7 @@ mochaOpts: {
 }
 ```
 
-For a full example, see Protractor’s own test: [/spec/mocha](../spec/mocha).
+For a full example, see Protractor’s own test: [/spec/mocha/lib_spec.js](/spec/mocha/lib_spec.js).
 
 
 Using Cucumber
@@ -77,7 +77,7 @@ cucumberOpts: {
 }
 ```
 
-For a full example, see Protractor’s own test: [/spec/cucumber](../spec/cucumber).
+For a full example, see Protractor’s own test: [/spec/cucumber/lib.feature](/spec/cucumber/lib.feature).
 
 
 Using a Custom Framework

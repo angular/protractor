@@ -103,9 +103,9 @@ gulp.task('markdown', function() {
       .pipe(replace(/"(?:\/docs\/)?([\w\-]+)\.md/g, '"#/$1'))
       // Fix png urls.
       .pipe(replace(/"(?:\/docs\/)?([\w\-]+\.png)"/g, '"img/$1"'))
-      // Fix urls to reference js files.
+      // Fix urls to reference js & feature files.
       .pipe(replace(
-          /"(?:\/([\-\.\w\/]+)\/)?(\w+\.js(?:#\w*)?)"/g,
+          /"(?:\/([\-\.\w\/]+)\/)?(\w+\.(js|feature)(?:#\w*)?)"/g,
           function(match, path, file) {
             path = path || 'docs';
             return '"https://github.com/angular/protractor/blob/master/' +
