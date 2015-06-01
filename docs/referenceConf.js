@@ -113,6 +113,10 @@ exports.config = {
     // like SauceLabs as the name of the job running this test
     name: 'Unnamed Job',
 
+    // User defined name for the capability that will display in the results log
+    // Default is 'Chrome #1', 'Firefox #2', etc.
+    logName: 'Chrome - French Canadian',
+
     // Number of times to run this set of capabilities (in parallel, unless
     // limited by maxSessions). Default is 1.
     count: 1,
