@@ -61,6 +61,7 @@ describe('Navigation', function() {
       expect(menu.dropdown('Reference').itemNames()).toEqual([
         'Configuration File Reference',
         'Protractor API',
+        'Protractor Syntax vs WebDriverJS Syntax',
         'Browser Support',
         'Plugins',
         'Timeouts',
