@@ -61,9 +61,21 @@ by.css('.foo').evaluate('bar')
 ```
 would return whatever `{{bar}}` is in the scope of the element with class 'foo'.
 
-You can also execute arbitrary JavaScript in the browser with
+You can also execute arbitrary JavaScript in the browser with:
 ```javascript
-browser.executeScript('your script as a string')
+browser.executeScript('your script as a string');
+```
+
+You can also pass a regular JavaScript function into `executeScript()`, for example:
+
+```javascript
+function getAngularVersion() {
+  return window.angular.version.full;
+}
+
+browser.executeScript(getAngularVersion).then(function (version) {
+  console.log(version);
+});
 ```
 
 How can I get hold of the browser's console?
