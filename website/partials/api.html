@@ -82,6 +82,12 @@
         <h4 ng-if="currentItem.alias != currentItem.displayName"
             class="text-muted">{{currentItem.name}}</h4>
       </h3>
+      <p ng-if="currentItem.sourceLink.indexOf('protractor') == -1"
+          class="api-webdriver">
+        This page is written using pure WebDriverJS syntax, instead of
+        Protractor syntax.  See <a href="#/webdriver-vs-protractor">
+        Protractor Syntax vs WebDriverJS Syntax</a> for details.
+      </p>
       <p ng-bind-html="trust(currentItem.description)"></p>
 
       <div ng-if="currentItem.example">
