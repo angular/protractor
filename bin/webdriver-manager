@@ -133,6 +133,7 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   var filePath = path.join(outputDir, fileName);
   var file = fs.createWriteStream(filePath);
   var ignoreSSL = argv.ignore_ssl;
+  var contentLength = 0;
 
   if (ignoreSSL) {
     console.log('Ignoring SSL certificate');
@@ -150,22 +151,31 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
           fs.unlink(filePath);
           console.error('Error: Got code ' + response.statusCode + ' from ' + fileUrl);
         }
+        contentLength = response.headers['content-length'];
       })
       .on('error', function(error) {
-        fs.unlink(filePath);
         console.error('Error: Got error ' + error + ' from ' + fileUrl);
+        fs.unlink(filePath);
       })
-      .on('data', function(data) {
-        file.write(data);
-      })
-      .on('end', function() {
-        file.end(function() {
-          console.log(fileName + ' downloaded to ' + filePath);
-          if (callback) {
-            callback(filePath);
-          }
-        });
-      });
+      .pipe(file);
+
+  file.on('close', function() {
+    fs.stat(filePath, function(err, stats) {
+      if (err) {
+        console.error('Error: Got error ' + error + ' from ' + fileUrl);
+      }
+      if (stats.size != contentLength) {
+        console.error('Error: corrupt download for ' + fileName +
+            '. Please re-run webdriver-manager update');
+        fs.unlink(filePath);
+        return;
+      }
+      console.log(fileName + ' downloaded to ' + filePath);
+      if (callback) {
+        callback(filePath);
+      }
+    });
+  });
 };
 
 /**
