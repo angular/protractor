@@ -57,6 +57,7 @@ myPackage.factory(require('./inline_tags/code'))
  * add-toc: Generates the table of contents.
  */
 myPackage.processor(require('./processors/tag-fixer'));
+myPackage.processor(require('./processors/these-children'));
 myPackage.processor(require('./processors/filter-jsdoc'));
 myPackage.processor(require('./processors/set-file-name'));
 myPackage.processor(require('./processors/transfer-see'));
