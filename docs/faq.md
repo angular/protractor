@@ -57,7 +57,7 @@ In general, the design of WebDriver tests is to interact with the page as a user
 
 You can use the `evaluate` function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.
 ```javascript
-by.css('.foo').evaluate('bar')
+element(by.css('.foo')).evaluate('bar')
 ```
 would return whatever `{{bar}}` is in the scope of the element with class 'foo'.
 
