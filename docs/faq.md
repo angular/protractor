@@ -128,8 +128,28 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 };
 ```
 
-[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
+Jasmine 2.1 counterparts:
+```javascript
+var originalAddExpectationResult = jasmine.Spec.prototype.addExpectationResult;
+jasmine.Spec.prototype.addExpectationResult = function() {
+  if (!arguments[0]) {
+    // take screenshot
+    // this.description and arguments[1].message can be useful to constructing the filename.
+  }
+  return originalAddExpectationResult.apply(this, arguments);
+};
 
+// takes screenshot on each failed spec (including timeout)
+jasmine.getEnv().addReporter(new function() {
+  this.specDone = function(result) {
+    if (result.failedExpectations.length >0) {
+      // take screenshot
+    }
+  };
+});
+```
+
+[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
 
 How do I produce an XML report of my test results?
 --------------------------------------------------
