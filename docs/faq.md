@@ -115,10 +115,23 @@ jasmine.getEnv().addReporter(new function() {
   };
 });
 ```
-Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
-* For failures of individual expectations, you can override jasmine's addMatcherResult function as such:
 
 ```javascript
+// Note: this is using Jasmine 2.1 reporter syntax.
+jasmine.getEnv().addReporter(new function() {
+  this.specDone = function(result) {
+    if (result.failedExpectations.length >0) {
+      // take screenshot
+    }
+  };
+});
+```
+
+Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
+* For failures of individual expectations, you can override jasmine's addMatcherResult/addExpectationResult function as such:
+
+```javascript
+// Jasmine 1.3.
 var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
 jasmine.Spec.prototype.addMatcherResult = function() {
   if (!arguments[0].passed()) {
@@ -128,8 +141,19 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 };
 ```
 
-[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
+```javascript
+// Jasmine 2.1
+var originalAddExpectationResult = jasmine.Spec.prototype.addExpectationResult;
+jasmine.Spec.prototype.addExpectationResult = function() {
+  if (!arguments[0]) {
+    // take screenshot
+    // this.description and arguments[1].message can be useful to constructing the filename.
+  }
+  return originalAddExpectationResult.apply(this, arguments);
+};
+```
 
+[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
 
 How do I produce an XML report of my test results?
 --------------------------------------------------
