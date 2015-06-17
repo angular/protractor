@@ -188,6 +188,38 @@ describe('ElementFinder', function() {
     ).toEqual('Anon');
 
   });
+
+  describe('control flow issue', function() {
+    beforeEach(function() {
+      browser.get('index.html#/form');
+    });
+
+    fit('should not fail when multiple actions are called', function() {
+      var count = element(by.binding('username'));
+
+      browser.ignoreSynchronization = true;
+
+      var t = count.getText();
+
+      protractor.promise.controlFlow().execute(function() {
+        var p = t.then(function(a) {
+          console.log(a);
+        });
+        return p;
+      }, 'custom flow.execute');
+
+      count.getAttribute('value').then(function(text) {
+        // expect(text).toBeGreaterThan(-1);
+      });
+
+      count.getAttribute('value').then(function(text) {
+        // expect(text).toBeGreaterThan(1);
+      });
+
+      browser.ignoreSynchronization = false;
+
+    });
+  });
 });
 
 describe('ElementArrayFinder', function() {
