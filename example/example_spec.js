@@ -15,7 +15,7 @@ describe('angularjs homepage', function() {
     beforeEach(function() {
       browser.get('http://www.angularjs.org');
 
-      todoList = element.all(by.repeater('todo in todos'));
+      todoList = element.all(by.repeater('todo in todoList.todos'));
     });
 
     it('should list todos', function() {
@@ -24,7 +24,7 @@ describe('angularjs homepage', function() {
     });
 
     it('should add a todo', function() {
-      var addTodo = element(by.model('todoText'));
+      var addTodo = element(by.model('todoList.todoText'));
       var addButton = element(by.css('[value="add"]'));
 
       addTodo.sendKeys('write a protractor test');
