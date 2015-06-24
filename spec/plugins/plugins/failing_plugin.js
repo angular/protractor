@@ -1,29 +1,17 @@
 var q = require('q');
 
-var failingResult = function(message) {
-  return {
-    failedCount: 1,
-    specResults: [{
-      description: 'plugin test which fails',
-      assertions: [{
-        passed: false,
-        errorMsg: message,
-      }],
-      duration: 4
-    }]
-  };
-};
-
 module.exports = {
   setup: function() {
+    var self = this;
     return q.delay(100).then(function() {
-      return failingResult('from setup');
+      self.addFailure('from setup');
     });
   },
 
   teardown: function() {
+    var self = this;
     return q.delay(100).then(function() {
-      return failingResult('from teardown');
+      self.addFailure('from teardown');
     });
   },
 
@@ -31,9 +19,10 @@ module.exports = {
     // This function should cause no failures.
   },
 
-  postTest: function(config, passed) {
+  postTest: function(passed) {
+    var self = this;
     return q.delay(100).then(function() {
-      return failingResult('from postTest ' + (passed ? 'passing' : 'failing'));
+      self.addFailure('from postTest ' + (passed ? 'passing' : 'failing'));
     });
   }
 };

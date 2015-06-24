@@ -203,12 +203,12 @@ TimelinePlugin.prototype.outputResults = function(done) {
 };
 
 /**
- * @param {Object} config The configuration file for the ngHint plugin.
+ * @see docs/plugins.md
  */
-TimelinePlugin.prototype.setup = function(config) {
+TimelinePlugin.prototype.setup = function() {
   var self = this;
   var deferred = q.defer();
-  self.outdir = path.resolve(process.cwd(), config.outdir);
+  self.outdir = path.resolve(process.cwd(), this.config.outdir);
   var counter = 0;
 
   // Override executor so that we get information about commands starting
@@ -256,9 +256,9 @@ TimelinePlugin.prototype.setup = function(config) {
 };
 
 /**
- * @param {Object} config The configuration file for the ngHint plugin.
+ * @see docs/plugins.md
  */
-TimelinePlugin.prototype.teardown = function(config) {
+TimelinePlugin.prototype.teardown = function() {
   var self = this;
   var deferred = q.defer();
   // This will be needed later for grabbing data from Sauce Labs.
@@ -281,9 +281,9 @@ TimelinePlugin.prototype.teardown = function(config) {
 };
 
 /**
- * @param {Object} config The configuration file for the ngHint plugin.
+ * @see docs/plugins.md
  */
-TimelinePlugin.prototype.postResults = function(config) {
+TimelinePlugin.prototype.postResults = function() {
   var self = this;
   var deferred = q.defer();
   // We can't get Chrome or IE logs from Sauce Labs via the webdriver logs API
@@ -291,13 +291,13 @@ TimelinePlugin.prototype.postResults = function(config) {
   // TODO - if the feature request at
   // https://support.saucelabs.com/entries/60070884-Enable-grabbing-server-logs-from-the-wire-protocol
   // gets implemented, remove this hack.
-  if (config.sauceUser && config.sauceKey) {
+  if (this.config.sauceUser && this.config.sauceKey) {
     // WARNING, HACK: we have a timeout to deal with the fact that there's a
     // delay before Sauce Labs updates logs.
     setTimeout(function() {
       var sauceServer = new SauceLabs({
-        username: config.sauceUser,
-        password: config.sauceKey
+        username: this.config.sauceUser,
+        password: this.config.sauceKey
       });
 
       sauceServer.showJob(self.sessionId, function(err, job) {
@@ -336,9 +336,5 @@ TimelinePlugin.prototype.postResults = function(config) {
 
 // Export
 
-var timelinePlugin = new TimelinePlugin();
-
-exports.setup = timelinePlugin.setup.bind(timelinePlugin);
-exports.teardown = timelinePlugin.teardown.bind(timelinePlugin);
-exports.postResults = timelinePlugin.postResults.bind(timelinePlugin);
-exports.TimelinePlugin = TimelinePlugin;
+module.exports = new TimelinePlugin();
+module.exports.TimelinePlugin = TimelinePlugin;
