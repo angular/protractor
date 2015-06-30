@@ -87,7 +87,7 @@ browser.manage().logs().get('browser').then(function(browserLog) {
 });
 ```
 
-This will output logs from the browser console. Note that logs below the set logging level will be ignored. WebDriver does not currently support changing the logging level for browser logs.
+This will output logs from the browser console. Note that logs below the set logging level will be ignored. The default level is warnings and above. To change, add a `loggingPrefs` object to your capabilities, as described [in the DesiredCapabilities docs](https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities#loggingpreferences-json-object).
 
 See an example ([spec.js](https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js)) of using this API to fail tests if the console has errors.
 
