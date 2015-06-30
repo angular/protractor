@@ -98,7 +98,7 @@ gulp.task('markdown', function() {
       // Parse markdown.
       .pipe(markdown())
       // Fix in-page hash paths.
-      .pipe(replace(/"#([^ ]*?)"/g, '#/{{path}}#$1'))
+      .pipe(replace(/"#([^ ]*?)"/g, '#{{path}}#$1'))
       // Fix md urls.
       .pipe(replace(/"(?:\/docs\/)?([\w\-]+)\.md/g, '"#/$1'))
       // Fix png urls.
