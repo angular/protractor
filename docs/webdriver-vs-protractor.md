@@ -27,3 +27,31 @@ tests.
 
 If you need the vanilla WebDriver `browser` object, you can access it via
 `browser.driver`
+
+Chaining WebDriver Actions
+--------------------------
+
+In vanilla WebDriverJS, you might write:
+```js
+el.click();
+el.sendKeys('123');
+```
+In protractor, you could write:
+```js
+el.click().sendKeys('123');
+```
+
+Jasmine Integration
+-------------------
+
+Protractor uses [`jasminewd`](https://github.com/angular/jasminewd), which
+wraps around jasmine's `expect` so that you can write:
+```js
+expect(el.getText()).toBe('Hello, World!')
+```
+Instead of:
+```js
+el.getText().then(function(text) {
+  expect(text).toBe('Hello, World!');
+});
+```
