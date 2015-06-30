@@ -98,7 +98,8 @@
       });
 
       self.setViewProperties(list);
-      var items = self.addTitleItems(list);
+      self.addExtends(list);
+      var items = self.organizeItems(list);
 
       $scope.items = items;
       $scope.version = data.version;
@@ -113,7 +114,6 @@
         });
       }
 
-      self.addExtends(list);
     });
   };
 
@@ -122,7 +122,7 @@
    * @param list
    */
   ApiCtrl.prototype.setViewProperties = function(list) {
-    var itemsByName = {};
+    var itemsByName = this.itemsByName = {};
 
     var getTitle = function(item) {
       if (item.alias) {
@@ -189,31 +189,64 @@
   };
 
   /**
-   * Add the title rows to the list.
-   * @param list
-   * @return {Array}
+   * Organize items according to class & inheritance, note every item's depth,
+   * and add file name items to the list.
+   *
+   * @param list The list of items
+   * @return {Array} A modified, reorganized list
    */
-  ApiCtrl.prototype.addTitleItems = function(list) {
-    var itemsPlusTitles = [],
-        prevFileName = null;
+  ApiCtrl.prototype.organizeItems = function(list) {
+    var newList = [];
+    var self = this;
 
-    list.forEach(function(item) {
-      if (prevFileName !== item.fileName) {
-        prevFileName = item.fileName;
-        itemsPlusTitles.push({
-          displayName: item.fileName,
-          isTitle: true,
-          type: 'title'
+    var addItemToList = function(item, depth) {
+      if (item.inList) {
+        console.log(item.name);
+        return;
+      }
+      item.treeClasses = 'depth-' + depth;
+      if (item.extension) {
+        item.treeClasses += ' extension';
+        depth--; // For the children
+      }
+      item.inList = true;
+      newList.push(item);
+      if (item.children) {
+        item.children.forEach(function(child) {
+          addItemToList(child, depth + 1);
         });
       }
+      if (item.extends) {
+        console.log(item.base.name);
+        var parent = self.itemsByName[item.base.name];
+        if (parent != null) {
+          addItemToList(parent, depth + 1);
+        }
+      }
+    };
+    
+    var prevFileName;
+    list.forEach(function(item) {
+      if ((item.type !== 'child') && !item.extension) {
+        if (prevFileName !== item.fileName) {
+          prevFileName = item.fileName;
+          newList.push({
+            displayName: item.fileName,
+            isTitle: true,
+            type: 'title',
+            treeClasses: 'depth-0'
+          });
+        }
 
-      itemsPlusTitles.push(item);
+        addItemToList(item, 0);
+      }
     });
 
-    return itemsPlusTitles;
+    return newList;
   };
 
   ApiCtrl.prototype.addExtends = function(list) {
+    var self = this;
     list.forEach(function(item) {
       if (!item.extends) {
         return;
@@ -230,6 +263,10 @@
           return item.name && item.name.match(nameExpr);
         })
       };
+
+      if (self.itemsByName[parentName]) {
+        self.itemsByName[parentName].extension = true;
+      }
     });
   };
 
