@@ -45,12 +45,13 @@ var addLinkToLinkAnnotation = function(str, doc) {
   var oldStr = null;
   while (str != oldStr) {
     oldStr = str;
-    var matches = /{\s*@link\s+([^]+?)\s*}/.exec(str);
+    var matches = /{\s*@link[plain]*\s+([^]+?)\s*}/.exec(str);
     if (matches) {
       var str = str.replace(
-          new RegExp('{\\s*@link\\s+' +
+          new RegExp('{\\s*@link[plain]*\\s+' +
               matches[1].replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\s*}'),
-          toMarkdownLinkFormat(matches[1], doc)
+              toMarkdownLinkFormat(matches[1], doc,
+                matches[0].indexOf('linkplain') == -1)
       );
     }
   }
@@ -75,7 +76,7 @@ var escape = function(str) {
  * @param {!Object} doc Current document.
  * @return {string} A link for the type.
  */
-var toMarkdownLinkFormat = function(link, doc) {
+var toMarkdownLinkFormat = function(link, doc, code) {
   var type, desc;
 
   // Split type and description
@@ -86,6 +87,10 @@ var toMarkdownLinkFormat = function(link, doc) {
     desc = link.substr(i).trim();
     type = link.substr(0, i).trim();
   }
+  if (code) {
+    desc = '{@code ' + desc + '}'
+  }
+  desc = desc.replace(new RegExp('\n', 'g'), ' ');
 
   if (!type.match(/^https?:\/\//)) {
     // Remove extra '()' at the end of types
@@ -99,7 +104,7 @@ var toMarkdownLinkFormat = function(link, doc) {
     }
 
     // Replace '#' in the middle of types with '.'
-    type = type.replace(new RegExp('#', 'g'), '.');
+    type = type.replace(new RegExp('#', 'g'), '.prototype.');
 
     // Only create a link if it's in the API
     if (!typeTable[type]) {
