@@ -32,16 +32,17 @@
         <span ng-repeat="item in items | filter:searchTerm"
             ng-switch="item.type">
             <div ng-switch-when="title"
-                class="title"
+                class="title {{item.treeClasses}}"
                 ng-bind="item.displayName">
             </div>
             <span ng-switch-when="child">
               <a href="#/api?view={{item.name}}"
-                  class="child"
+                  class="child {{item.treeClasses}}"
                   ng-bind="item.displayName"></a>
             </span>
             <div ng-switch-default class="parent">
               <a href="#/api?view={{item.name}}"
+                  class="{{item.treeClasses}}"
                   ng-bind="item.title"></a>
             </div>
         </span>
@@ -56,16 +57,17 @@
               title="{{item.name}}"
               ng-switch="item.type">
             <span ng-switch-when="title"
-                class="title"
+                class="title {{item.treeClasses}}"
                 ng-bind="item.displayName">
             </span>
             <a ng-switch-when="child"
                 href="#/api?view={{item.name}}"
-                class="child"
+                class="child {{item.treeClasses}}"
                 ng-bind="item.displayName">
             </a>
             <a ng-switch-default
                 href="#/api?view={{item.name}}"
+                class="{{item.treeClasses}}"
                 ng-bind="item.title"></a>
           </li>
         </ul>
