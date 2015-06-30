@@ -27,3 +27,26 @@ tests.
 
 If you need the vanilla WebDriver `browser` object, you can access it via
 `browser.driver`
+
+Using ElementFinders
+--------------------
+
+In Protractor, you use the `element` function to find and interact with elements
+through an `ElementFinder` object. This extends a WebDriver `WebElement` by
+adding chaining and utilities for dealing with lists. See
+[locators#actions](/docs/locators) for details.
+
+Jasmine Integration
+-------------------
+
+Protractor uses [`jasminewd`](https://github.com/angular/jasminewd), which
+wraps around jasmine's `expect` so that you can write:
+```js
+expect(el.getText()).toBe('Hello, World!')
+```
+Instead of:
+```js
+el.getText().then(function(text) {
+  expect(text).toBe('Hello, World!');
+});
+```
