@@ -146,3 +146,13 @@ elm.click().then(function() { /* passing case */}, function(err) { /* error hand
 Why is browser.debugger(); not pausing the test?
 -----------------------------------------------
 The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.
+
+I get an error: Page reload detected during async script. What does this mean?
+------------------------------------------------------------------------------
+This means that there was a navigation or reload event while a command was pending
+on the browser. Usually, this is because a click action or navigation resulted
+in a page load. Protractor is trying to wait for Angular to become stable,
+but it's interrupted by the reload.
+
+You may need to insert a `browser.wait` condition to make sure the load
+is complete before continuing.
