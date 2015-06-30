@@ -143,6 +143,17 @@ WebDriver throws errors when commands cannot be completed - e.g. not being able 
 elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 ```
 
+How can I test file uploads?
+----------------------------
+Via Webdriver, you can just send the absolute file path to the input with type=file. [See this example](http://stackoverflow.com/questions/21305298/how-to-upload-file-in-angularjs-e2e-protractor-testing/21314337#21314337).
+
+If you need to test file upload on a remote server (such as Sauce Labs), [you need to set a remote file detector](https://saucelabs.com/resources/articles/selenium-file-upload). You can do this via `browser.setFileDetector()`, and you'll need access to the `selenium-webdriver` node module.
+
+```js
+var remote = require('selenium-webdriver/remote');
+browser.setFileDetector(new remote.FileDetector());
+```
+
 Why is browser.debugger(); not pausing the test?
 -----------------------------------------------
 The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.
