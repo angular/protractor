@@ -134,7 +134,7 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
-You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you'll need to be sure to use version 1.0.0.
+You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Make sure that you are using the correct version of jasmine-reporters for your version of Jasmine.
 
 How can I catch errors such as ElementNotFound?
 -----------------------------------------------
