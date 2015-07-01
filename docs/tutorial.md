@@ -8,7 +8,7 @@ Prerequisites
 
 Protractor is a [Node.js](http://nodejs.org/) program. To run, you will need to have Node.js installed. You will download Protractor package using [npm](https://www.npmjs.org/), which comes with Node.js. Check the version of Node.js you have by running `node --version`. It should be greater than v0.10.0.
 
-By default, Protractor uses the [Jasmine](http://jasmine.github.io/1.3/introduction.html) test framework for its testing interface. This tutorial assumes some familiarity with Jasmine.
+By default, Protractor uses the [Jasmine](http://jasmine.github.io/) test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.3.
 
 This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have the [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed to run the standalone Selenium Server. Check this by running `java -version` from the command line.
 
@@ -60,12 +60,13 @@ Now create the configuration file. Copy the following into conf.js:
 ```js
 // conf.js
 exports.config = {
+  framework: 'jasmine2',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js']
 }
 ```
 
-This configuration tells Protractor where your test files (`specs`) are, and where to talk to your Selenium Server (`seleniumAddress`). It will use the defaults for all other configuration. Chrome is the default browser.
+This configuration tells Protractor where your test files (`specs`) are, and where to talk to your Selenium Server (`seleniumAddress`). It specifies that we will be using Jasmine version 2 for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.
 
 Now run the test with
 
@@ -156,6 +157,7 @@ Now that we've written some basic tests, let's take a look at the configuration 
 ```js
 // conf.js
 exports.config = {
+  framework: 'jasmine2',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   capabilities: {
@@ -171,6 +173,7 @@ You can also run tests on more than one browser at once. Change conf.js to:
 ```js
 // conf.js
 exports.config = {
+  framework: 'jasmine2',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   multiCapabilities: [{
