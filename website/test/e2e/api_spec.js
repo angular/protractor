@@ -133,4 +133,11 @@ describe('Api', function() {
     expect(browser.getCurrentUrl()).
         toMatch(/api\?view=webdriver.WebDriver.prototype.executeAsyncScript/);
   });
+
+  it('should sort the menu to put webdriver docs next to the relevant ' +
+      'protractor objects', function() {
+        expect(apiPage.getAdultNames().then(function(names) {
+          return names[names.indexOf('browser') + 1];
+        })).toBe('webdriver.WebDriver');
+  });
 });

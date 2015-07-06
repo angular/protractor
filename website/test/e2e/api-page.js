@@ -67,6 +67,18 @@ var ApiPage = function() {
   this.clickOnExtendsType = function(name) {
     $('[ng-if="currentItem.extends"]').element(by.linkText(name)).click();
   };
+
+  /**
+   * Gets the text of elements of the menu that aren't children of another
+   * element or titles (e.g. 'protractor' and 'by' but not 'getText')
+   */
+  this.getAdultNames = function() {
+    return element.all(by.repeater('item in items')).filter(function(elem) {
+      return elem.$$('[ng-switch-default]').count().then(function(count) {
+        return count == 1;
+      });
+    }).getText();
+  };
 };
 
 /** @type {ApiPage} */
