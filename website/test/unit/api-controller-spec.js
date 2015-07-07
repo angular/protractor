@@ -87,9 +87,9 @@ describe('ApiCtrl', function() {
     ]});
 
     // Expect alias to be the title.
-    expect(scope.items[1].title).toBe('bar');
+    expect(scope.items[0].title).toBe('bar');
     // Expect the name to be the title.
-    expect(scope.items[2].title).toBe('foo2');
+    expect(scope.items[1].title).toBe('foo2');
   });
   
   it('should use parent alias to generate title', function() {
@@ -100,7 +100,7 @@ describe('ApiCtrl', function() {
     ]});
 
     // Expect the title to be parent + name.
-    expect(scope.items[2].title).toBe('parent.fn');
+    expect(scope.items[1].title).toBe('parent.fn');
   });
 
   it('should assign type to each item', function() {
@@ -199,7 +199,7 @@ describe('ApiCtrl', function() {
       ]});
       
       // Then ensure the extending item has the functions of the parent.
-      var item = scope.items[3];
+      var item = scope.items[0];
       expect(item.title).toBe('name2');
       expect(item.base.name).toBe('name1');
       expect(item.base.items.length).toBe(1);
