@@ -178,6 +178,12 @@ function runChromeDevTools(context) {
                 code: result.rule.code,
                 list: trimText(text)
               };
+            },
+            function(reason){
+              return {
+                code: result.rule.code,
+                list: reason
+              };
             })
           );
         });
