@@ -82,7 +82,7 @@ el.getText().then(function(text) {
 });
 ```
 
-Any action available in WebDriverJS on a WebElement is available on an ElementFinder. [See a full list](#/api?view=ElementFinder).
+Any action available in WebDriverJS on a WebElement is available on an ElementFinder. [See a full list](http://angular.github.io/protractor/#/api?view=webdriver.WebElement).
 
 
 Finding Multiple Elements
