@@ -6,6 +6,9 @@
 <ul><li ng-repeat="baz in days | filter:'T'">
   <span>{{baz.initial}}</span>
 </li></ul>
+<ul><li ng-repeat="baz in tDays = (days | filter:'T')">
+  <span>{{baz.initial}}</span>
+</li></ul>
 <ul><li data-ng-repeat="day in days">
   <span>{{day.initial}}</span>
 </li></ul>

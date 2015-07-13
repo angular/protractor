@@ -184,6 +184,10 @@ describe('locators', function() {
       var partialRowMatch = element(
           by.repeater('baz in days').row(0));
       expect(partialRowMatch.getText()).toEqual('T');
+
+      var partialRowMatch = element(
+          by.repeater('baz in tDays').row(0));
+      expect(partialRowMatch.getText()).toEqual('T');
     });
 
     it('should return all rows when unmodified', function() {
