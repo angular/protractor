@@ -184,10 +184,6 @@ describe('locators', function() {
       var partialRowMatch = element(
           by.repeater('baz in days').row(0));
       expect(partialRowMatch.getText()).toEqual('T');
-
-      var partialRowMatch = element(
-          by.repeater('baz in tDays').row(0));
-      expect(partialRowMatch.getText()).toEqual('T');
     });
 
     it('should return all rows when unmodified', function() {
@@ -281,6 +277,16 @@ describe('locators', function() {
     it('should have by.exactRepeater working', function() {
       expect(element(by.exactRepeater('day in d')).isPresent()).toBe(false);
       expect(element(by.exactRepeater('day in days')).isPresent()).toBe(true);
+
+      // Full ng-repeat: baz in tDays = (days | filter:'T')
+      var repeaterWithEqualSign = element(
+          by.exactRepeater('baz in tDays').row(0));
+      expect(repeaterWithEqualSign.getText()).toEqual('T');
+
+      // Full ng-repeat: baz in days | filter:'T'
+      var repeaterWithPipe = element(
+          by.exactRepeater('baz in days').row(0));
+      expect(repeaterWithPipe.getText()).toEqual('T');
     });
 
     describe('repeaters using ng-repeat-start and ng-repeat-end', function() {
