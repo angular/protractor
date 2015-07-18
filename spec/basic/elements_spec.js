@@ -28,6 +28,19 @@ describe('ElementFinder', function() {
     expect(name.getText()).toEqual('Jane');
   });
 
+  it('should wait to grab the WebElement until a method is called, using setValue()', function() {
+    // These should throw no error before a page is loaded.
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    browser.get('index.html#/form');
+
+    expect(name.getText()).toEqual('Anon');
+
+    usernameInput.setValue('Jane');
+    expect(name.getText()).toEqual('Jane');
+  });
+
   it('should chain element actions', function() {
     browser.get('index.html#/form');
 
@@ -38,6 +51,41 @@ describe('ElementFinder', function() {
 
     usernameInput.clear().sendKeys('Jane');
     expect(name.getText()).toEqual('Jane');
+  });
+
+  it('should allow element.setValue() to clear-and-set the value of an input field, and optionally tab to the next element', function() {
+    browser.get('index.html#/form');
+
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    expect(name.getText()).toEqual('Anon');
+
+    // Set value and tab to the next field
+    usernameInput.setValue('Jane', true);
+    expect(name.getText()).toEqual('Jane');
+    //browser.sleep(20000);
+    expect(browser.driver.switchTo().activeElement().getAttribute('ng-model')).not.toEqual('username');
+
+    // This time, set the value and don't tab to the next field
+    usernameInput.setValue('Brett');
+    expect(name.getText()).toEqual('Brett');
+    expect(browser.driver.switchTo().activeElement().getAttribute('ng-model')).toEqual('username');
+  });
+
+  it('should allow element.setValue() to clear-and-set the value of an input field, and optionally tab to the next element', function() {
+    browser.get('index.html#/form');
+
+    var aboutbox = element(by.model('aboutbox'));
+
+    aboutbox.setValue('Long comment');
+    expect(aboutbox.getValue()).toEqual('Long comment');
+    expect(browser.driver.switchTo().activeElement().getAttribute('ng-model')).toEqual('aboutbox');
+
+    // Now change the value and tab-out
+    aboutbox.setValue('An even longer comment', true);
+    expect(aboutbox.getValue()).toEqual('An even longer comment');
+    expect(browser.driver.switchTo().activeElement().getAttribute('ng-model')).not.toEqual('aboutbox');
   });
 
   it('chained call should wait to grab the WebElement until a method is called',
@@ -367,6 +415,16 @@ describe('ElementArrayFinder', function() {
     expect(colorList.get(2).getAttribute('value')).toEqual('red');
   });
 
+  it('should get an element from an array using getValue()', function() {
+    var colorList = element.all(by.model('color'));
+
+    browser.get('index.html#/form');
+
+    expect(colorList.get(0).getValue()).toEqual('blue');
+    expect(colorList.get(1).getValue()).toEqual('green');
+    expect(colorList.get(2).getValue()).toEqual('red');
+  });
+
   it('should get an element from an array using negative indices', function() {
     var colorList = element.all(by.model('color'));
 
@@ -377,11 +435,22 @@ describe('ElementArrayFinder', function() {
     expect(colorList.get(-1).getAttribute('value')).toEqual('red');
   });
 
+  it('should get an element from an array using negative indices using getValue()', function() {
+    var colorList = element.all(by.model('color'));
+
+    browser.get('index.html#/form');
+
+    expect(colorList.get(-3).getValue()).toEqual('blue');
+    expect(colorList.get(-2).getValue()).toEqual('green');
+    expect(colorList.get(-1).getValue()).toEqual('red');
+  });
+
   it('should get the first element from an array', function() {
     var colorList = element.all(by.model('color'));
     browser.get('index.html#/form');
 
     expect(colorList.first().getAttribute('value')).toEqual('blue');
+    expect(colorList.first().getValue()).toEqual('blue');
   });
 
   it('should get the last element from an array', function() {
@@ -389,6 +458,7 @@ describe('ElementArrayFinder', function() {
     browser.get('index.html#/form');
 
     expect(colorList.last().getAttribute('value')).toEqual('red');
+    expect(colorList.last().getValue()).toEqual('red');
   });
 
   it('should perform an action on each element in an array', function() {
