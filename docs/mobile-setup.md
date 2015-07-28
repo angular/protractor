@@ -154,6 +154,11 @@ info: socket.io started
 
 *   Configure protractor:
 
+additional dependencies:
+```shell
+npm install --save-dev wd wd-bridge
+```
+
 iPhone:
 ```javascript
 exports.config = {
