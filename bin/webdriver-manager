@@ -77,6 +77,20 @@ var binaries = {
         }
       }
     }
+  },
+  ie32: {
+    name: 'IEDriver',
+    isDefault: false,
+    prefix: 'IEDriverServer',
+    filename: 'IEDriverServer_' + versions.iedriver + '.zip',
+    cdn: 'https://selenium-release.storage.googleapis.com/',
+    url: function() {
+      var urlPrefix = this.cdn +
+          shortVersion(versions.iedriver) + '/IEDriverServer';
+      if (os.type() == 'Windows_NT') {
+        return urlPrefix + '_Win32_' + versions.iedriver + '.zip';
+      }
+    }
   }
 };
 
@@ -92,7 +106,9 @@ var cli = optimist.
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
     default('ignore_ssl', false).
     describe('proxy', 'Proxy to use for the install or update command').
-    describe('alternate_cdn', 'Alternate CDN to the binaries');
+    describe('alternate_cdn', 'Alternate CDN to the binaries').
+    describe('ie32', 'Use 32-bit IE driver regardless of current architecture').boolean('ie32').
+    default('ie32', false);
 
 for (bin in binaries) {
   cli.describe(bin, 'Install or update ' + binaries[bin].name).
@@ -312,7 +328,7 @@ switch (argv._[0]) {
         });
     }
     if (argv.ie) {
-       downloadIfNew(binaries.ie, argv.out_dir, existingFiles,
+       downloadIfNew(argv.ie32 ? binaries.ie32 : binaries.ie, argv.out_dir, existingFiles,
         function(filename) {
           var zip = new AdmZip(filename);
           // Expected contents of the zip:
