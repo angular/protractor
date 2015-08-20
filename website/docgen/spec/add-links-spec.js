@@ -173,9 +173,9 @@ describe('add-links', function() {
 
     // Then ensure a link was added to the type.
     expect(docs[1].description).
-        toBe('A promise that [webdriver.WebElement](webdriver.WebElement)s');
+        toBe('A promise that [{@code webdriver.WebElement}](webdriver.WebElement)s');
     expect(docs[1].returns.description).
-        toBe('A promise located [webdriver.WebElement](webdriver.WebElement)s.');
+        toBe('A promise located [{@code webdriver.WebElement}](webdriver.WebElement)s.');
   });
 
   it('should handle {@link type desc} links', function() {
@@ -217,9 +217,9 @@ describe('add-links', function() {
 
     // Then ensure a link was added to the type.
     expect(docs[1].description).
-        toBe('A promise that [Web Elements](webdriver.WebElement)');
+        toBe('A promise that [{@code Web Elements}](webdriver.WebElement)');
     expect(docs[1].returns.description).
-        toBe('A promise located Web Elements.');
+        toBe('A promise located {@code Web Elements}.');
   });
 
   it('should handle "#" in @link links', function() {
@@ -261,9 +261,9 @@ describe('add-links', function() {
 
     // Then ensure a link was added to the type.
     expect(docs[1].description).
-        toBe('A promise that [Web Drivers](webdriver.WebDriver)');
+        toBe('A promise that [{@code Web Drivers}](webdriver.WebDriver)');
     expect(docs[1].returns.description).
-        toBe('A promise located [Web Elements](webdriver.WebElement).');
+        toBe('A promise located {@code Web Elements}.');
   });
 
   it('should remove extraneous chatacters from @link links', function() {
@@ -288,7 +288,7 @@ describe('add-links', function() {
             canHaveType: true
           },
           tagName: 'return',
-          description: 'A promise located {@link webdriver.WebElement    Web Elements }.',
+          description: 'A promise located {@linkplain webdriver.WebElement     Web Elements }.',
           startingLine: 119,
           typeExpression: 'webdriver.WebElement',
           type: {
@@ -305,7 +305,7 @@ describe('add-links', function() {
 
     // Then ensure a link was added to the type.
     expect(docs[1].description).
-        toBe('A promise that [webdriver.WebElement()](webdriver.WebElement)');
+        toBe('A promise that [{@code webdriver.WebElement()}](webdriver.WebElement)');
     expect(docs[1].returns.description).
         toBe('A promise located [Web Elements](webdriver.WebElement).');
 

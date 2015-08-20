@@ -25,6 +25,9 @@ var passingTests = [
   'node lib/cli.js spec/plugins/jasmine2PostTestConf.js',
   'node lib/cli.js spec/plugins/mochaPostTestConf.js',
   'node lib/cli.js spec/plugins/cucumberPostTestConf.js',
+  'node lib/cli.js spec/plugins/browserGetSyncedConf.js',
+  'node lib/cli.js spec/plugins/browserGetUnsyncedConf.js',
+  'node lib/cli.js spec/plugins/waitForAngularConf.js',
   'node lib/cli.js spec/interactionConf.js',
   'node lib/cli.js spec/directConnectConf.js',
   'node lib/cli.js spec/restartBrowserBetweenTestsConf.js',
@@ -114,6 +117,16 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/pluginsFailingConf.j
       {message: 'from postTest passing'},
       {message: 'from postTest failing'},
       {message: 'from teardown'}
+    ]);
+
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'The following tasks were pending[\\s\\S]*\\$http: \/slowcall'},
+      {message: 'The following tasks were pending[\\s\\S]*' + 
+                '\\$timeout: function \\(\\) {[\\s\\S]*' + 
+                  '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' + 
+                '*}'}
     ]);
 
 // Check ngHint plugin

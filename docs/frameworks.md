@@ -7,7 +7,7 @@ Protractor supports four behavior driven development (BDD) test frameworks: Jasm
 Using Jasmine
 -------------
 
-Currently, Jasmine Versions 1.3 and 2.0 are supported. Jasmine 1.3 is the default test framework and is available for use when you install Protractor. However, we're in the process of upgrading to Jasmine 2.0, and will deprecate support for 1.3 in the future. For more information about Jasmine, see the [Jasmine GitHub site](http://jasmine.github.io/). For more information regarding how to upgrade to Jasmine 2.0 from 1.3, see the [Jasmine upgrade guide](http://angular.github.io/protractor/#/jasmine-upgrade).
+Currently, Jasmine Versions 1.3 and 2.0 are supported. Jasmine 1.3 is the default test framework and is available for use when you install Protractor. However, we're in the process of upgrading to Jasmine 2.0, and will deprecate support for 1.3 in the future. For more information about Jasmine, see the [Jasmine GitHub site](http://jasmine.github.io/). For more information regarding how to upgrade to Jasmine 2.0 from 1.3, see the [Jasmine upgrade guide](/docs/jasmine-upgrade.md).
 
 
 Using Mocha
@@ -52,7 +52,7 @@ mochaOpts: {
 }
 ```
 
-For a full example, see Protractor’s own test: [/spec/mocha](../spec/mocha).
+For a full example, see Protractor’s own test: [/spec/mocha/lib_spec.js](/spec/mocha/lib_spec.js).
 
 
 Using Cucumber
@@ -77,7 +77,7 @@ cucumberOpts: {
 }
 ```
 
-For a full example, see Protractor’s own test: [/spec/cucumber](../spec/cucumber).
+For a full example, see Protractor’s own test: [/spec/cucumber/lib.feature](/spec/cucumber/lib.feature).
 
 
 Using a Custom Framework

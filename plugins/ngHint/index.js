@@ -57,10 +57,10 @@ var q = require('q'),
 /**
  * Configures the plugin to grab the output of ngHint
  *
- * @param {Object} config The configuration file for the ngHint plugin
+ * @see docs/plugins.md
  * @public
  */
-function setup(config) {
+function setup() {
   // Intercept ngHint output
   browser.addMockModule('protractorNgHintCaptureModule_', function() {
     angular.module('protractorNgHintCaptureModule_', []);
@@ -146,12 +146,13 @@ function isMessageToIgnore(message) {
  * Checks the information which has been stored by the ngHint plugin and
  * generates passed/failed tests and/or console output
  *
- * @param {Object} config The configuration file for the ngHint plugin
+ * @see docs/plugins.md
  * @return {q.Promise} A promise which resolves to the results of any passed or
  *    failed tests
  * @public
  */
-function teardown(config) {
+function teardown() {
+  var self = this;
   // Get logged data
   return browser.executeScript_(function() {
     return localStorage.getItem('ngHintLog_protractor') || '{}';
@@ -165,58 +166,30 @@ function teardown(config) {
     // Check log
     var testOut = {failedCount: 0, specResults: []};
     for (url in ngHintLog) {
-      if (!isExcluded(url, config)) {
+      if (!isExcluded(url, self.config)) {
         for (var i = 0; i < modulesUsed.length; i++) {
-          // Add new test to output
-          var assertions = [];
-          testOut.specResults.push({
-            description: 'Angular Hint Test: ' + modulesUsed[i] + ' (' + url +
-                ')',
-            assertions: assertions,
-            duration: 1
-          });
+          var resultInfo = {specName: 'Angular Hint Test: ' + modulesUsed[i] +
+              ' (' + url + ')'};
+          var passed = true;
 
           // Fill in the test details
           var messages = ngHintLog[url][modulesUsed[i]];
           if (messages) {
             for (var message in messages) {
               if (!isMessageToIgnore(message)) {
-                assertions.push({
-                  passed: false,
-                  errorMsg: messages[message] + ' -- ' + message,
-                  stackTrace: ''
-                });
+                (self.config.asTests !== false ? self.addFailure :
+                    self.addWarning)(messages[message] + ' -- ' + message,
+                    resultInfo);
+                passed = false;
               }
             }
           }
 
-          if (assertions.length == 0) {
-            // Pass
-            assertions.push({
-              passed: true,
-              errorMsg: '',
-              stackTrace: ''
-            });
-          } else {
-            // Fail
-            testOut.failedCount++;
+          if (passed) {
+            self.addSuccess(resultInfo);
           }
         }
       }
-    }
-
-    // Return
-    if (config.asTests == false) {
-      for (var i = 0; i < testOut.specResults.length; i++) {
-        for (var j = 0; j < testOut.specResults[i].assertions.length; j++) {
-          var assertion = testOut.specResults[i].assertions[j];
-          if (!assertion.passed) {
-            console.log(assertion.errorMsg);
-          }
-        }
-      }
-    } else if ((testOut.failedCount > 0) || (testOut.specResults.length > 0)) {
-      return testOut;
     }
   });
 }

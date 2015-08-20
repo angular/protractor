@@ -57,13 +57,25 @@ In general, the design of WebDriver tests is to interact with the page as a user
 
 You can use the `evaluate` function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.
 ```javascript
-by.css('.foo').evaluate('bar')
+element(by.css('.foo')).evaluate('bar')
 ```
 would return whatever `{{bar}}` is in the scope of the element with class 'foo'.
 
-You can also execute arbitrary JavaScript in the browser with
+You can also execute arbitrary JavaScript in the browser with:
 ```javascript
-browser.executeScript('your script as a string')
+browser.executeScript('your script as a string');
+```
+
+You can also pass a regular JavaScript function into `executeScript()`, for example:
+
+```javascript
+function getAngularVersion() {
+  return window.angular.version.full;
+}
+
+browser.executeScript(getAngularVersion).then(function (version) {
+  console.log(version);
+});
 ```
 
 How can I get hold of the browser's console?
@@ -75,7 +87,7 @@ browser.manage().logs().get('browser').then(function(browserLog) {
 });
 ```
 
-This will output logs from the browser console. Note that logs below the set logging level will be ignored. WebDriver does not currently support changing the logging level for browser logs.
+This will output logs from the browser console. Note that logs below the set logging level will be ignored. The default level is warnings and above. To change, add a `loggingPrefs` object to your capabilities, as described [in the DesiredCapabilities docs](https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities#loggingpreferences-json-object).
 
 See an example ([spec.js](https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js)) of using this API to fail tests if the console has errors.
 
@@ -103,10 +115,23 @@ jasmine.getEnv().addReporter(new function() {
   };
 });
 ```
-Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
-* For failures of individual expectations, you can override jasmine's addMatcherResult function as such:
 
 ```javascript
+// Note: this is using Jasmine 2.1 reporter syntax.
+jasmine.getEnv().addReporter(new function() {
+  this.specDone = function(result) {
+    if (result.failedExpectations.length >0) {
+      // take screenshot
+    }
+  };
+});
+```
+
+Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
+* For failures of individual expectations, you can override jasmine's addMatcherResult/addExpectationResult function as such:
+
+```javascript
+// Jasmine 1.3.
 var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
 jasmine.Spec.prototype.addMatcherResult = function() {
   if (!arguments[0].passed()) {
@@ -116,13 +141,24 @@ jasmine.Spec.prototype.addMatcherResult = function() {
 };
 ```
 
-[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
+```javascript
+// Jasmine 2.1
+var originalAddExpectationResult = jasmine.Spec.prototype.addExpectationResult;
+jasmine.Spec.prototype.addExpectationResult = function() {
+  if (!arguments[0]) {
+    // take screenshot
+    // this.description and arguments[1].message can be useful to constructing the filename.
+  }
+  return originalAddExpectationResult.apply(this, arguments);
+};
+```
 
+[See an example of taking screenshot on spec failures](https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js).
 
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
-You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you'll need to be sure to use version 1.0.0.
+You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Make sure that you are using the correct version of jasmine-reporters for your version of Jasmine.
 
 How can I catch errors such as ElementNotFound?
 -----------------------------------------------
@@ -131,6 +167,27 @@ WebDriver throws errors when commands cannot be completed - e.g. not being able 
 elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 ```
 
+How can I test file uploads?
+----------------------------
+Via Webdriver, you can just send the absolute file path to the input with type=file. [See this example](http://stackoverflow.com/questions/21305298/how-to-upload-file-in-angularjs-e2e-protractor-testing/21314337#21314337).
+
+If you need to test file upload on a remote server (such as Sauce Labs), [you need to set a remote file detector](https://saucelabs.com/resources/articles/selenium-file-upload). You can do this via `browser.setFileDetector()`, and you'll need access to the `selenium-webdriver` node module.
+
+```js
+var remote = require('selenium-webdriver/remote');
+browser.setFileDetector(new remote.FileDetector());
+```
+
 Why is browser.debugger(); not pausing the test?
 -----------------------------------------------
 The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.
+
+I get an error: Page reload detected during async script. What does this mean?
+------------------------------------------------------------------------------
+This means that there was a navigation or reload event while a command was pending
+on the browser. Usually, this is because a click action or navigation resulted
+in a page load. Protractor is trying to wait for Angular to become stable,
+but it's interrupted by the reload.
+
+You may need to insert a `browser.wait` condition to make sure the load
+is complete before continuing.

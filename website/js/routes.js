@@ -9,6 +9,10 @@ angular.module('protractorApp').config(function($routeProvider) {
         controller: 'ApiCtrl',
         reloadOnSearch: false
       }).
+      when('/webdriver-vs-protractor', {
+        templateUrl: 'partials/webdriver-vs-protractor.html',
+        controller: 'MarkdownCtrl'
+      }).
       when('/api-overview', {
         templateUrl: 'partials/api-overview.html',
         controller: 'MarkdownCtrl'
@@ -22,7 +26,8 @@ angular.module('protractorApp').config(function($routeProvider) {
         controller: 'MarkdownCtrl'
       }).
       when('/plugins', {
-        templateUrl: 'partials/plugins.html'
+        templateUrl: 'partials/plugins.html',
+        controller: 'MarkdownCtrl'
       }).
       when('/control-flow', {
         templateUrl: 'partials/control-flow.html',

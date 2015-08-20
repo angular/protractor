@@ -2,7 +2,10 @@
 //
 // This file shows all of the configuration options that may be passed
 // to Protractor.
-
+//
+// Because this file shows all of the options, if used in practice some
+// will be overridden or ignored. If you're looking for a seed configuration
+// file, see example/conf.js
 
 exports.config = {
   // ---------------------------------------------------------------------------
@@ -51,6 +54,9 @@ exports.config = {
   // The tests will be run remotely using Sauce Labs.
   sauceUser: null,
   sauceKey: null,
+  // Use sauceAgent if you need customize agent for https connection to
+  // saucelabs.com (i.e. your computer behind corporate proxy)
+  sauceAgent: null,
   // Use sauceSeleniumAddress if you need to customize the URL Protractor
   // uses to connect to sauce labs (for example, if you are tunneling selenium
   // traffic through a sauce connect tunnel). Default is
@@ -106,6 +112,10 @@ exports.config = {
     // protractor or the browser, but instead pass directly to third parties
     // like SauceLabs as the name of the job running this test
     name: 'Unnamed Job',
+
+    // User defined name for the capability that will display in the results log
+    // Defaults to the browser name
+    logName: 'Chrome - English',
 
     // Number of times to run this set of capabilities (in parallel, unless
     // limited by maxSessions). Default is 1.
@@ -254,10 +264,10 @@ exports.config = {
   // See github.com/angular/protractor/blob/master/lib/frameworks/README.md
   // to comply with the interface details of your custom implementation.
   //
-  // Jasmine is fully supported as a test and assertion framework.
-  // Mocha and Cucumber have limited beta support. You will need to include your
+  // Jasmine and Jasmine2 are fully supported as test and assertion frameworks.
+  // Mocha and Cucumber have limited support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
-  framework: 'jasmine',
+  framework: 'jasmine2',
 
   // Options to be passed to minijasminenode.
   //

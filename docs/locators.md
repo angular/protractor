@@ -31,7 +31,7 @@ by.model('name')
 by.binding('bindingname')
 ```
 
-For a list of Protractor-specific locators, see the [Protractor API: ProtractorBy](#/api?view=ProtractorBy).
+For a list of Protractor-specific locators, see the [Protractor API: ProtractorBy](http://angular.github.io/protractor/#/api?view=ProtractorBy).
 
 The locators are passed to the `element` function, as below:
 
@@ -82,7 +82,7 @@ el.getText().then(function(text) {
 });
 ```
 
-Any action available in WebDriverJS on a WebElement is available on an ElementFinder. [See a full list](#/api?view=ElementFinder).
+Any action available in WebDriverJS on a WebElement is available on an ElementFinder. [See a full list](http://angular.github.io/protractor/#/api?view=webdriver.WebElement).
 
 
 Finding Multiple Elements

@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var marked = require('marked');
 
 /**
  * Add the description property to the doc. The description is all the text that
@@ -6,7 +7,7 @@ var _ = require('lodash');
  * @param {!Object} doc Current doc.
  */
 var addDescription = function(doc) {
-  doc.description = (doc.description || '').replace(/\n$/, '');
+  doc.description = marked((doc.description || '').replace(/\n$/, ''));
 };
 
 /**

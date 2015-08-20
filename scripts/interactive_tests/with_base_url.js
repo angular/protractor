@@ -1,9 +1,12 @@
+var env = require('../../spec/environment.js');
 var InteractiveTest = require('./interactive_test_util').InteractiveTest;
-var port = 6969;
+var port = env.interactiveTestPort;
 var test = new InteractiveTest(
-    'node lib/cli.js --baseUrl http://localhost:8081 --elementExplorer true', 
-    port);
+    'node lib/cli.js --baseUrl http://localhost:' + env.webServerDefaultPort + 
+    ' --elementExplorer true', port);
 
 // Check we automatically go to to baseUrl.
-test.addCommandExpectation('browser.driver.getCurrentUrl()', 'http://localhost:8081/#/form');
+test.addCommandExpectation(
+    'browser.driver.getCurrentUrl()', 
+    'http://localhost:' + env.webServerDefaultPort + '/#/form');
 test.run();
