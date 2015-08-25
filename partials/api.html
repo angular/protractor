@@ -33,15 +33,18 @@
             ng-switch="item.type">
             <div ng-switch-when="title"
                 class="title"
+                ng-class="item.treeClasses"
                 ng-bind="item.displayName">
             </div>
             <span ng-switch-when="child">
               <a href="#/api?view={{item.name}}"
                   class="child"
+                  ng-class="item.treeClasses"
                   ng-bind="item.displayName"></a>
             </span>
             <div ng-switch-default class="parent">
               <a href="#/api?view={{item.name}}"
+                  ng-class="item.treeClasses"
                   ng-bind="item.title"></a>
             </div>
         </span>
@@ -57,15 +60,18 @@
               ng-switch="item.type">
             <span ng-switch-when="title"
                 class="title"
+                ng-class="item.treeClasses"
                 ng-bind="item.displayName">
             </span>
             <a ng-switch-when="child"
                 href="#/api?view={{item.name}}"
                 class="child"
+                ng-class="item.treeClasses"
                 ng-bind="item.displayName">
             </a>
             <a ng-switch-default
                 href="#/api?view={{item.name}}"
+                ng-class="item.treeClasses"
                 ng-bind="item.title"></a>
           </li>
         </ul>
@@ -82,6 +88,12 @@
         <h4 ng-if="currentItem.alias != currentItem.displayName"
             class="text-muted">{{currentItem.name}}</h4>
       </h3>
+      <p ng-if="currentItem.sourceLink.indexOf('protractor') == -1"
+          class="api-webdriver">
+        This page is written using pure WebDriverJS syntax, instead of
+        Protractor syntax.  See <a href="#/webdriver-vs-protractor">
+        Protractor Syntax vs WebDriverJS Syntax</a> for details.
+      </p>
       <p ng-bind-html="trust(currentItem.description)"></p>
 
       <div ng-if="currentItem.example">

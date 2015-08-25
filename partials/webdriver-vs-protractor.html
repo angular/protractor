@@ -1,0 +1,60 @@
+<h1 id="protractor-syntax-vs-webdriverjs-syntax">Protractor Syntax vs WebDriverJS Syntax</h1>
+<p>In vanilla <a href="https://code.google.com/p/selenium/wiki/WebDriverJs">WebDriverJS</a>
+code, you might start your tests with </p>
+<pre><code class="lang-js">var webdriver = require(&#39;selenium-webdriver&#39;);
+var browser = new webdriver.Builder().usingServer().withCapabilities(c).build();
+</code></pre>
+<p>In Protractor, you are provided with global <code ng-non-bindable>protractor</code> and <code ng-non-bindable>browser</code> objects,
+which more or less match the <code ng-non-bindable>webdriver</code> and <code ng-non-bindable>browser</code> objects, respectively.
+So if you are already familiar with writing WebDriver code, the most basic way
+to start writing Protractor code is just to replace <code ng-non-bindable>webdriver</code> with
+<code ng-non-bindable>protractor</code>.</p>
+<p>However, Protractor also provides some syntactic sugar to help you write your
+tests.</p>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>WebDriver Syntax</th>
+<th>Protractor Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code ng-non-bindable>webdriver.By</code></td>
+<td><code ng-non-bindable>by</code></td>
+</tr>
+<tr>
+<td><code ng-non-bindable>browser.findElement(...)</code></td>
+<td><code ng-non-bindable>element(...)</code></td>
+</tr>
+<tr>
+<td><code ng-non-bindable>browser.findElements(...)</code></td>
+<td><code ng-non-bindable>element.all(...)</code></td>
+</tr>
+<tr>
+<td><code ng-non-bindable>browser.findElement(webdriver.By.css(...))</code></td>
+<td><code ng-non-bindable>$(...)</code></td>
+</tr>
+<tr>
+<td><code ng-non-bindable>browser.findElements(webdriver.By.css(...))</code></td>
+<td><code ng-non-bindable>$$(...)</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you need the vanilla WebDriver <code ng-non-bindable>browser</code> object, you can access it via
+<code ng-non-bindable>browser.driver</code></p>
+<h2 id="using-elementfinders" class="anchored"><div><a href="#{{path}}#using-elementfinders">&#x1f517;</a>Using ElementFinders</div></h2>
+<p>In Protractor, you use the <code ng-non-bindable>element</code> function to find and interact with elements
+through an <code ng-non-bindable>ElementFinder</code> object. This extends a WebDriver <code ng-non-bindable>WebElement</code> by
+adding chaining and utilities for dealing with lists. See
+<a href="/docs/locators">locators#actions</a> for details.</p>
+<h2 id="jasmine-integration" class="anchored"><div><a href="#{{path}}#jasmine-integration">&#x1f517;</a>Jasmine Integration</div></h2>
+<p>Protractor uses <a href="https://github.com/angular/jasminewd"><code ng-non-bindable>jasminewd</code></a>, which
+wraps around jasmine&#39;s <code ng-non-bindable>expect</code> so that you can write:</p>
+<pre><code class="lang-js">expect(el.getText()).toBe(&#39;Hello, World!&#39;)
+</code></pre>
+<p>Instead of:</p>
+<pre><code class="lang-js">el.getText().then(function(text) {
+  expect(text).toBe(&#39;Hello, World!&#39;);
+});
+</code></pre>

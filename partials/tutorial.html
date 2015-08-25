@@ -2,7 +2,7 @@
 <p>This is a simple tutorial that shows you how to set up Protractor and start running tests.</p>
 <h2 id="prerequisites" class="anchored"><div><a href="#{{path}}#prerequisites">&#x1f517;</a>Prerequisites</div></h2>
 <p>Protractor is a <a href="http://nodejs.org/">Node.js</a> program. To run, you will need to have Node.js installed. You will download Protractor package using <a href="https://www.npmjs.org/">npm</a>, which comes with Node.js. Check the version of Node.js you have by running <code ng-non-bindable>node --version</code>. It should be greater than v0.10.0.</p>
-<p>By default, Protractor uses the <a href="http://jasmine.github.io/1.3/introduction.html">Jasmine</a> test framework for its testing interface. This tutorial assumes some familiarity with Jasmine.</p>
+<p>By default, Protractor uses the <a href="http://jasmine.github.io/">Jasmine</a> test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.3.</p>
 <p>This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit (JDK)</a> installed to run the standalone Selenium Server. Check this by running <code ng-non-bindable>java -version</code> from the command line.</p>
 <h2 id="setup" class="anchored"><div><a href="#{{path}}#setup">&#x1f517;</a>Setup</div></h2>
 <p>Use npm to install Protractor globally with:</p>
@@ -31,11 +31,12 @@ describe(&#39;Protractor Demo App&#39;, function() {
 <p>Now create the configuration file. Copy the following into conf.js:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
+  framework: &#39;jasmine2&#39;,
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
   specs: [&#39;spec.js&#39;]
 }
 </code></pre>
-<p>This configuration tells Protractor where your test files (<code ng-non-bindable>specs</code>) are, and where to talk to your Selenium Server (<code ng-non-bindable>seleniumAddress</code>). It will use the defaults for all other configuration. Chrome is the default browser.</p>
+<p>This configuration tells Protractor where your test files (<code ng-non-bindable>specs</code>) are, and where to talk to your Selenium Server (<code ng-non-bindable>seleniumAddress</code>). It specifies that we will be using Jasmine version 2 for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.</p>
 <p>Now run the test with</p>
 <pre><code ng-non-bindable>protractor conf.js
 </code></pre><p>You should see a Chrome browser window open up and navigate to the Calculator, then close itself (this should be very fast!). The test output should be <code ng-non-bindable>1 tests, 1 assertion, 0 failures</code>. Congratulations, you&#39;ve run your first Protractor test!</p>
@@ -104,6 +105,7 @@ describe(&#39;Protractor Demo App&#39;, function() {
 <p>Now that we&#39;ve written some basic tests, let&#39;s take a look at the configuration file. The configuration file lets you change things like which browsers are used and how to connect to the Selenium Server. Let&#39;s change the browser. Change conf.js to the following:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
+  framework: &#39;jasmine2&#39;,
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
   specs: [&#39;spec.js&#39;],
   capabilities: {
@@ -115,6 +117,7 @@ exports.config = {
 <p>You can also run tests on more than one browser at once. Change conf.js to:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
+  framework: &#39;jasmine2&#39;,
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
   specs: [&#39;spec.js&#39;],
   multiCapabilities: [{

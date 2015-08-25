@@ -31,11 +31,20 @@ empty <code ng-non-bindable>getText</code> values. Instead, try <code ng-non-bin
 <h2 id="how-can-i-interact-directly-with-the-javascript-running-in-my-app-" class="anchored"><div><a href="#{{path}}#how-can-i-interact-directly-with-the-javascript-running-in-my-app-">&#x1f517;</a>How can I interact directly with the JavaScript running in my app?</div></h2>
 <p>In general, the design of WebDriver tests is to interact with the page as a user would, so it gets a little tricky if you want to interact with the JavaScript directly. You should avoid it unless you have a good reason. However, there are ways of doing it.</p>
 <p>You can use the <code ng-non-bindable>evaluate</code> function on a WebElement to get the value of an Angular expression in the scope of that element. e.g.</p>
-<pre><code class="lang-javascript">by.css(&#39;.foo&#39;).evaluate(&#39;bar&#39;)
+<pre><code class="lang-javascript">element(by.css(&#39;.foo&#39;)).evaluate(&#39;bar&#39;)
 </code></pre>
 <p>would return whatever <code ng-non-bindable>{{bar}}</code> is in the scope of the element with class &#39;foo&#39;.</p>
-<p>You can also execute arbitrary JavaScript in the browser with</p>
-<pre><code class="lang-javascript">browser.executeScript(&#39;your script as a string&#39;)
+<p>You can also execute arbitrary JavaScript in the browser with:</p>
+<pre><code class="lang-javascript">browser.executeScript(&#39;your script as a string&#39;);
+</code></pre>
+<p>You can also pass a regular JavaScript function into <code ng-non-bindable>executeScript()</code>, for example:</p>
+<pre><code class="lang-javascript">function getAngularVersion() {
+  return window.angular.version.full;
+}
+
+browser.executeScript(getAngularVersion).then(function (version) {
+  console.log(version);
+});
 </code></pre>
 <h2 id="how-can-i-get-hold-of-the-browser-s-console-" class="anchored"><div><a href="#{{path}}#how-can-i-get-hold-of-the-browser-s-console-">&#x1f517;</a>How can I get hold of the browser&#39;s console?</div></h2>
 <p>In your test:</p>
@@ -43,7 +52,7 @@ empty <code ng-non-bindable>getText</code> values. Instead, try <code ng-non-bin
   console.log(&#39;log: &#39; + require(&#39;util&#39;).inspect(browserLog));
 });
 </code></pre>
-<p>This will output logs from the browser console. Note that logs below the set logging level will be ignored. WebDriver does not currently support changing the logging level for browser logs.</p>
+<p>This will output logs from the browser console. Note that logs below the set logging level will be ignored. The default level is warnings and above. To change, add a <code ng-non-bindable>loggingPrefs</code> object to your capabilities, as described <a href="https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities#loggingpreferences-json-object">in the DesiredCapabilities docs</a>.</p>
 <p>See an example (<a href="https://github.com/juliemr/protractor-demo/blob/master/howtos/browserlog/spec.js">spec.js</a>) of using this API to fail tests if the console has errors.</p>
 <h2 id="how-can-i-get-screenshots-of-failures-" class="anchored"><div><a href="#{{path}}#how-can-i-get-screenshots-of-failures-">&#x1f517;</a>How can I get screenshots of failures?</div></h2>
 <p>First, this is how you can take a screenshot:</p>
@@ -66,11 +75,21 @@ jasmine.getEnv().addReporter(new function() {
   };
 });
 </code></pre>
+<pre><code class="lang-javascript">// Note: this is using Jasmine 2.1 reporter syntax.
+jasmine.getEnv().addReporter(new function() {
+  this.specDone = function(result) {
+    if (result.failedExpectations.length &gt;0) {
+      // take screenshot
+    }
+  };
+});
+</code></pre>
 <p>Note, you can also choose to take a screenshot in <code ng-non-bindable>afterEach</code>. However, because Jasmine does not execute <code ng-non-bindable>afterEach</code> for timeouts, those would not produce screenshots</p>
 <ul>
-<li>For failures of individual expectations, you can override jasmine&#39;s addMatcherResult function as such:</li>
+<li>For failures of individual expectations, you can override jasmine&#39;s addMatcherResult/addExpectationResult function as such:</li>
 </ul>
-<pre><code class="lang-javascript">var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
+<pre><code class="lang-javascript">// Jasmine 1.3.
+var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
 jasmine.Spec.prototype.addMatcherResult = function() {
   if (!arguments[0].passed()) {
     //take screenshot
@@ -78,12 +97,35 @@ jasmine.Spec.prototype.addMatcherResult = function() {
   return originalAddMatcherResult.apply(this, arguments);
 };
 </code></pre>
+<pre><code class="lang-javascript">// Jasmine 2.1
+var originalAddExpectationResult = jasmine.Spec.prototype.addExpectationResult;
+jasmine.Spec.prototype.addExpectationResult = function() {
+  if (!arguments[0]) {
+    // take screenshot
+    // this.description and arguments[1].message can be useful to constructing the filename.
+  }
+  return originalAddExpectationResult.apply(this, arguments);
+};
+</code></pre>
 <p><a href="https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js">See an example of taking screenshot on spec failures</a>.</p>
 <h2 id="how-do-i-produce-an-xml-report-of-my-test-results-" class="anchored"><div><a href="#{{path}}#how-do-i-produce-an-xml-report-of-my-test-results-">&#x1f517;</a>How do I produce an XML report of my test results?</div></h2>
-<p>You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this <a href="https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js">example (junitOutputConf.js)</a>. Note that the latest version of jasmine-reporters is for Jasmine 2.0, which is not yet supported by Protractor, so you&#39;ll need to be sure to use version 1.0.0.</p>
+<p>You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this <a href="https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js">example (junitOutputConf.js)</a>. Make sure that you are using the correct version of jasmine-reporters for your version of Jasmine.</p>
 <h2 id="how-can-i-catch-errors-such-as-elementnotfound-" class="anchored"><div><a href="#{{path}}#how-can-i-catch-errors-such-as-elementnotfound-">&#x1f517;</a>How can I catch errors such as ElementNotFound?</div></h2>
 <p>WebDriver throws errors when commands cannot be completed - e.g. not being able to click on an element which is obscured by another element. If you need to retry these actions, try using <a href="https://github.com/juliemr/webdriverjs-retry">webdriverjs-retry</a>. If you would just like to catch the error, do so like this</p>
 <pre><code class="lang-javascript">elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 </code></pre>
+<h2 id="how-can-i-test-file-uploads-" class="anchored"><div><a href="#{{path}}#how-can-i-test-file-uploads-">&#x1f517;</a>How can I test file uploads?</div></h2>
+<p>Via Webdriver, you can just send the absolute file path to the input with type=file. <a href="http://stackoverflow.com/questions/21305298/how-to-upload-file-in-angularjs-e2e-protractor-testing/21314337#21314337">See this example</a>.</p>
+<p>If you need to test file upload on a remote server (such as Sauce Labs), <a href="https://saucelabs.com/resources/articles/selenium-file-upload">you need to set a remote file detector</a>. You can do this via <code ng-non-bindable>browser.setFileDetector()</code>, and you&#39;ll need access to the <code ng-non-bindable>selenium-webdriver</code> node module.</p>
+<pre><code class="lang-js">var remote = require(&#39;selenium-webdriver/remote&#39;);
+browser.setFileDetector(new remote.FileDetector());
+</code></pre>
 <h2 id="why-is-browser-debugger-not-pausing-the-test-" class="anchored"><div><a href="#{{path}}#why-is-browser-debugger-not-pausing-the-test-">&#x1f517;</a>Why is browser.debugger(); not pausing the test?</div></h2>
 <p>The most likely reason is that you are not running the test in debug mode. To do this you run: <code ng-non-bindable>protractor debug</code> followed by the path to your protractor configuration file.</p>
+<h2 id="i-get-an-error-page-reload-detected-during-async-script-what-does-this-mean-" class="anchored"><div><a href="#{{path}}#i-get-an-error-page-reload-detected-during-async-script-what-does-this-mean-">&#x1f517;</a>I get an error: Page reload detected during async script. What does this mean?</div></h2>
+<p>This means that there was a navigation or reload event while a command was pending
+on the browser. Usually, this is because a click action or navigation resulted
+in a page load. Protractor is trying to wait for Angular to become stable,
+but it&#39;s interrupted by the reload.</p>
+<p>You may need to insert a <code ng-non-bindable>browser.wait</code> condition to make sure the load
+is complete before continuing.</p>
