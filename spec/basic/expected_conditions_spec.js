@@ -5,13 +5,13 @@ describe('expected conditions', function() {
     browser.get('index.html#/form');
   });
 
-  it('should have alertIsPresent', function() {
+  fit('should have alertIsPresent', function() {
     var alertIsPresent = EC.alertIsPresent();
     expect(alertIsPresent.call()).toBe(false);
 
     var alertButton = $('#alertbutton');
     alertButton.click();
-    expect(alertIsPresent.call()).toBe(true);
+    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000); 
 
     browser.switchTo().alert().accept();
   });
