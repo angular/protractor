@@ -1,3 +1,100 @@
+# 2.2.0
+
+## Breaking Changes
+
+- If you use the plugin API, it has changed a lot.  See
+  [`docs/plugins.md`](docs/plugins.md) for details.  The good news is that it
+  is being taken out of beta, so it should be more stable in the future.
+
+## Dependency Version Upgrades
+
+- ([786ab05](https://github.com/angular/protractor/commit/786ab0541bff9b561b35dbbf0ffc1e9d4a788d10)) 
+  chore(dependencies): update request to 2.57
+
+  Closes #2205
+
+## Features
+
+- ([f2a11a7](https://github.com/angular/protractor/commit/f2a11a7369319edac0f1221a1c6ab0f9a2cc73eb)) 
+  feat(plugins): Changed and expanded the plugin API
+
+  * Changed the plugin API so that it is more uniform (see docs/plugins.md)
+  * Updated existing plugins to the new API
+  * Added the `onPageLoad` and `onPageSync` entry points for plugins for modifying `browser.get`
+  * Added the `waitForPromise` and `waitForCondition` entry points for plugins for modifying
+  `waitForAngular`
+  * Added tests
+
+  This closes #2126 and helps out @andresdominguez
+
+- ([aded26b](https://github.com/angular/protractor/commit/aded26bc9ee6172d6f64361207f6a8b04da09b0d)) 
+  feat(webdriver-manager): update download logic with streaming
+
+  Also adds a content length check to make sure the downloaded binaries are the correct size. This
+  seems to fix up some unreliable download issues that we were previously having.
+
+- ([7aeebd6](https://github.com/angular/protractor/commit/7aeebd6543d89b7d8b9474bc45651b88c5c2d396)) 
+  feat(plugins): reporting loaded plugins
+
+- ([6c10378](https://github.com/angular/protractor/commit/6c10378b9a4e7cae9ba491a63ae11f942c833100)) 
+  feat(protractor): expose pending $http and $timeout on a timeout
+
+  Now when a test times out while waiting for Angular to be stable, pending
+  $timeout and $http tasks will be reported to the console.
+
+## Bug Fixes
+
+- ([c30afdd](https://github.com/angular/protractor/commit/c30afddb80b6138fc5f648f70f2891067d8eeef4)) 
+  fix(test): fixed tests under npm test
+
+- ([3508335](https://github.com/angular/protractor/commit/3508335199fee5dad74c66d9ee19b8bf448c2e62)) 
+  fix(element): ElementArrayFinder.count was slow
+
+  The bug fix for #1903
+  (https://github.com/angular/protractor/commit/2a765c76e121de13ff86a279fe3f21cb15c17783) was
+  causing ElementArrayFinder.prototype.count to be slow because of the extranous checks that must be
+  performed. However, the checks could be delayed into the isPresent check, which will mitigate this
+  issue
+
+  fixes(#2359)
+
+- ([b147033](https://github.com/angular/protractor/commit/b14703319c0d6bb6a69b76d0fd3732e2ea1fbebc)) 
+  fix(by.exactRepeater): should split by "="
+
+  Closes #2335
+
+- ([4c9886b](https://github.com/angular/protractor/commit/4c9886b410ea4d82098af322044a37908a112138)) 
+  fix(Chrome Accessibility Plugin) No error context
+
+  If your tests fail because of StaleElementReferenceError then there is no context about where this
+  is coming from. By having the failure be handled inside of the plugin then grunt can fail
+  gracefully. Additionally, this provides context about where the error originated from.
+
+  Fixes #2331
+
+- ([d15ccdc](https://github.com/angular/protractor/commit/d15ccdcf82bda29c803c3a5642896f16d7e4f938)) 
+  fix(phantomJS): Reset URL cannot be a data url for PhantomJS
+
+  When trying to use the lates version of Angular with PhantomJS we get a message complaining about
+  "Detected a page unload event". This was fixed in earlier versions of Angular, see issue #85, but
+  reappeared now. The problem is that using data urls to reset the page causes this issue, so we
+  have to do as we do with Safari and use "about:blank" instead
+
+- ([e6369ac](https://github.com/angular/protractor/commit/e6369ac973d58a17415ab1211050af26236c6105)) 
+  docs(tutorial): use Jasmine v2 in the tutorial
+
+- ([e60dc0f](https://github.com/angular/protractor/commit/e60dc0ff4fc4a6d22e877d4182605913fae5d5cb)) 
+  fix(browser.refresh): use timeout in milliseconds
+
+  When invoked without arguments browser.refresh used a 10-millisecond timeout, wrongly documented
+  as seconds. It now delegates timeout handling to browser.get, which defaults to 
+  DEFAULT_GET_PAGE_TIMEOUT (10 seconds).
+
+- ([0262268](https://github.com/angular/protractor/commit/0262268fa43b9eefac815d986740efa07bb15818)) 
+  fix(cucumber): fix beforeFeature event handler call guard
+
+  Fixes the run failures reported in https://github.com/cucumber/cucumber-js/issues/342.
+
 # 2.1.0
 
 ## Dependency Version Upgrades
