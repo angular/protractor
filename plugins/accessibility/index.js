@@ -42,7 +42,7 @@ var q = require('q'),
  *
  */
 
-var AUDIT_FILE = path.join(__dirname, '../../node_modules/accessibility-developer-tools/dist/js/axs_testing.js');
+var AUDIT_FILE = require.resolve('accessibility-developer-tools/dist/js/axs_testing.js');
 var TENON_URL = 'http://www.tenon.io/api/';
 
 /**
