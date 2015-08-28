@@ -79,7 +79,7 @@ var binaries = {
     }
   },
   ie32: {
-    name: 'IEDriver',
+    name: 'IEDriver-32bit',
     isDefault: false,
     prefix: 'IEDriverServer',
     filename: 'IEDriverServer_' + versions.iedriver + '.zip',
@@ -106,9 +106,7 @@ var cli = optimist.
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
     default('ignore_ssl', false).
     describe('proxy', 'Proxy to use for the install or update command').
-    describe('alternate_cdn', 'Alternate CDN to the binaries').
-    describe('ie32', 'Use 32-bit IE driver regardless of current architecture').boolean('ie32').
-    default('ie32', false);
+    describe('alternate_cdn', 'Alternate CDN to the binaries');
 
 for (bin in binaries) {
   cli.describe(bin, 'Install or update ' + binaries[bin].name).
