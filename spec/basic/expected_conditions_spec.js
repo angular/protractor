@@ -5,7 +5,7 @@ describe('expected conditions', function() {
     browser.get('index.html#/form');
   });
 
-  fit('should have alertIsPresent', function() {
+  it('should have alertIsPresent', function() {
     var alertIsPresent = EC.alertIsPresent();
     expect(alertIsPresent.call()).toBe(false);
 
