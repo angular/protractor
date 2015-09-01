@@ -77,6 +77,20 @@ var binaries = {
         }
       }
     }
+  },
+  ie32: {
+    name: 'IEDriver-32bit',
+    isDefault: false,
+    prefix: 'IEDriverServer',
+    filename: 'IEDriverServer_' + versions.iedriver + '.zip',
+    cdn: 'https://selenium-release.storage.googleapis.com/',
+    url: function() {
+      var urlPrefix = this.cdn +
+          shortVersion(versions.iedriver) + '/IEDriverServer';
+      if (os.type() == 'Windows_NT') {
+        return urlPrefix + '_Win32_' + versions.iedriver + '.zip';
+      }
+    }
   }
 };
 
@@ -262,7 +276,7 @@ switch (argv._[0]) {
       args.push('-Dwebdriver.chrome.driver=' +
           path.join(argv.out_dir, executableName('chromedriver')));
     }
-    if (binaries.ie.exists) {
+    if (binaries.ie.exists || binaries.ie32.exists) {
        args.push('-Dwebdriver.ie.driver=' +
           path.join(argv.out_dir, executableName('IEDriverServer')));
     }
@@ -313,6 +327,15 @@ switch (argv._[0]) {
     }
     if (argv.ie) {
        downloadIfNew(binaries.ie, argv.out_dir, existingFiles,
+        function(filename) {
+          var zip = new AdmZip(filename);
+          // Expected contents of the zip:
+          //   IEDriverServer.exe
+          zip.extractAllTo(argv.out_dir, true);
+        });
+    }
+    if (argv.ie32) {
+       downloadIfNew(binaries.ie32, argv.out_dir, existingFiles,
         function(filename) {
           var zip = new AdmZip(filename);
           // Expected contents of the zip:
