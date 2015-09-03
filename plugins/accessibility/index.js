@@ -148,7 +148,14 @@ function runTenonIO(context) {
 function runChromeDevTools(context) {
 
   var data = fs.readFileSync(AUDIT_FILE, 'utf-8');
-  data = data + ' return axs.Audit.run();';
+  data += 'var configuration = new axs.AuditConfiguration();';
+
+  if (typeof context.config.chromeA11YDevTools.showUnsupportedRulesWarning !== 'undefined' &&
+      !context.config.chromeA11YDevTools.showUnsupportedRulesWarning) {
+    data += 'configuration.showUnsupportedRulesWarning = false;';
+  }
+
+  data = data + ' return axs.Audit.run(configuration);';
 
   var elementPromises = [],
       elementStringLength = 200;
