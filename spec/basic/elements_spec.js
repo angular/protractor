@@ -346,7 +346,7 @@ describe('ElementArrayFinder', function() {
     expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
 
-  it('should return not present when an element disappears within an array', 
+  it('should return not present when an element disappears within an array',
       function() {
     browser.get('index.html#/form');
     element.all(by.model('color')).then(function(elements) {
@@ -389,6 +389,17 @@ describe('ElementArrayFinder', function() {
     browser.get('index.html#/form');
 
     expect(colorList.last().getAttribute('value')).toEqual('red');
+  });
+
+  it('should search for the same element when element was removed', function() {
+    var colorList = element.all(by.model('color'));
+    var lastColor = colorList.last();
+    browser.get('index.html#/form');
+    browser.executeScript(function(color) {
+      angular.element(color).remove();
+    }, lastColor.getWebElement());
+
+    expect(lastColor.isPresent()).toBe(false);
   });
 
   it('should perform an action on each element in an array', function() {
