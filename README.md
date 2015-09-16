@@ -42,6 +42,9 @@ Clone the github repository:
     git clone https://github.com/angular/protractor.git
     cd protractor
     npm install
+    cd website
+    npm install
+    cd ..
 
 Start up a selenium server. By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`.
 
