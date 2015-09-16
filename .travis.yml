@@ -3,6 +3,7 @@ sudo: false
 node_js:
   - "0.10"
   - "0.12"
+  - "4.1"
 
 env:
   global:
@@ -20,6 +21,8 @@ matrix:
   exclude:
     - env: JOB=smoke
       node_js: "0.12"
+    - env: JOB=smoke
+      node_js: "4.1"
 
 
 before_script:
