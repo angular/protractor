@@ -10,7 +10,7 @@ Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagge
 
 Any questions posted to Protractor's Github Issues will be closed with this note:
 
-Please direct general support questions like this one to an appropriate support channel, https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions
+Please direct general support questions like this one to an appropriate support channel, see https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions
 
 Thank you!
 
