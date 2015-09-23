@@ -191,3 +191,8 @@ but it's interrupted by the reload.
 
 You may need to insert a `browser.wait` condition to make sure the load
 is complete before continuing.
+
+I still have a question
+-----------------------
+
+Please see our [Contributing Guidelines](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions) for questions and issues.
