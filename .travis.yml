@@ -20,6 +20,8 @@ matrix:
   exclude:
     - env: JOB=smoke
       node_js: "0.12"
+    - env: JOB=smoke
+      node_js: "4.1"
 
 
 before_script:
