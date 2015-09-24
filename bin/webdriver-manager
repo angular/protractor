@@ -100,7 +100,7 @@ var cli = optimist.
         '  update: install or update selected binaries\n' +
         '  start: start up the selenium server\n' +
         '  status: list the current available drivers').
-    describe('out_dir', 'Location to output/expect binaries, can be modified with WEBDRIVER_MANAGER_SELENIUM_DIR evn variable').
+    describe('out_dir', 'Location to output/expect binaries, can be modified with WEBDRIVER_MANAGER_SELENIUM_DIR env variable').
     default('out_dir', SELENIUM_DIR).
     describe('seleniumPort', 'Optional port for the selenium standalone server').
     describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
