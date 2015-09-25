@@ -40,14 +40,15 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '7',
-    'selenium-version': '2.47.1'
+    'selenium-version': '2.44.0' // Use an old version because Safari has
+                                 // issues loading pages after 2.44.
   }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '8',
-    'selenium-version': '2.47.1'
+    'selenium-version': '2.44.0'
   }, {
     'browserName': 'internet explorer',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
