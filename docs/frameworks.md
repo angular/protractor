@@ -43,7 +43,7 @@ expect(myElement.getText()).to.eventually.equal('some text');
 
 Finally, set the 'framework' property to 'mocha', either by adding `framework: 'mocha'` to the config file or by adding `--framework=mocha` to the command line.
 
-Options for Mocha such as 'reporter' and 'slow' can be given in the [config file](../spec/mochaConf.js) with mochaOpts:
+Options for Mocha such as 'reporter' and 'slow' can be given in the [config file](/spec/mochaConf.js) with mochaOpts:
 
 ```js
 mochaOpts: {
@@ -67,7 +67,7 @@ If you would  like to use the Cucumber test framework, download the dependencies
 npm install -g cucumber
 ```
 
-Set the 'framework' property to cucumber, either by adding `framework: 'cucumber'` to the [config file](../spec/cucumberConf.js) or by adding `--framework=cucumber` to the command line.
+Set the 'framework' property to cucumber, either by adding `framework: 'cucumber'` to the [config file](/spec/cucumberConf.js) or by adding `--framework=cucumber` to the command line.
 
 Options for Cucumber such as 'format' can be given in the config file with cucumberOpts:
 
@@ -83,6 +83,4 @@ For a full example, see Protractor’s own test: [/spec/cucumber/lib.feature](/s
 Using a Custom Framework
 ------------------------
 
-Check section [Framework Adapters for Protractor](../lib/frameworks/README.md) specifically [Custom Frameworks](../lib/frameworks/README.md#custom-frameworks)
-
-
+Check section [Framework Adapters for Protractor](https://github.com/angular/protractor/blob/master/lib/frameworks/README.md) specifically [Custom Frameworks](https://github.com/angular/protractor/blob/master/lib/frameworks/README.md#custom-frameworks)
