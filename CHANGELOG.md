@@ -38,9 +38,12 @@ _This release contains updates which fix some issues with dependencies that had 
 - ([ff88e96](https://github.com/angular/protractor/commit/ff88e969d55585cc4267d75c12c0cafc78a01895)) 
   feat(cucumber): Allow cucumber tests containing line numbers
 
-  example: specs: [
+  example:
+  ```js
+  specs: [
      'cucumber/lib.feature:7'
    ]
+  ```
 
 ## Bug Fixes
 
