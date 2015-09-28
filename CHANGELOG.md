@@ -1,3 +1,61 @@
+# 2.3.0
+
+_This release contains updates which fix some issues with dependencies that had gotten stale. However, it does not yet contain an update to the selenium-webdriver dependency, because of potential breaking changes. That update will be done in a separate Protractor@2.4.0 release. See [issue 2245](https://github.com/angular/protractor/issues/2245)._
+
+## Dependency Version Upgrades
+
+- ([cfd8d00](https://github.com/angular/protractor/commit/cfd8d000c2aa1686c4a90164baf4e04976ee0587)) 
+  feat(webdriver): update webdriver and chromedriver to latest version
+
+  Updating Selenium standalone from 2.45.0 to 2.47.0 Updating ChromeDriver from 2.15 to 2.19 
+  Selenium Changelog:
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md 
+  ChromeDriver Changelog: http://chromedriver.storage.googleapis.com/2.19/notes.txt
+
+- ([802b20f](https://github.com/angular/protractor/commit/802b20f153f2c201d8b37378bf8feb93f649a95f)) 
+  chore(selenium): update selenium from 2.47.0 to 2.47.1
+
+- ([7a7aca8](https://github.com/angular/protractor/commit/7a7aca8a264ae07cbbb90e7e7469533a52276488)) 
+  chore(jasmine): bump jasmine version from 2.3.1 to 2.3.2
+
+- ([eab828e](https://github.com/angular/protractor/commit/eab828e12c671cbf5cdf9b09df050cc59f0dd862)) 
+  chore(travis): test against node 4
+
+  Test against node 4 on Travis, and remove support for node 0.10.
+
+- ([96def81](https://github.com/angular/protractor/commit/96def81dc7d364e789fc290e97aee0f898648a10)) 
+  chore(saucelabs): updated saucelabs dependency to 1.0.1 to support proxy
+
+## Features
+
+- ([c989a7e](https://github.com/angular/protractor/commit/c989a7eeed5a0a55d2fbd37dc7278a7967889852)) 
+  feat(webdriver-manager): add --ie32 commandline option
+
+  The new option allows to download the 32-bit version of the IE driver on a 64-bit system, as the
+  64-bit version has been broken for over a year now (the sendKeys() function works very slowly on
+  it).
+
+- ([ff88e96](https://github.com/angular/protractor/commit/ff88e969d55585cc4267d75c12c0cafc78a01895)) 
+  feat(cucumber): Allow cucumber tests containing line numbers
+
+  example: specs: [
+     'cucumber/lib.feature:7'
+   ]
+
+## Bug Fixes
+
+- ([1487e5a](https://github.com/angular/protractor/commit/1487e5abf69bc1540226502aacadc8b3b42b0092)) 
+  fix(protractor.wrapDriver): allow browser instances to work even if they were not set up through
+  the runner
+
+  Fixes #2456
+
+- ([2ff7a07](https://github.com/angular/protractor/commit/2ff7a0771b6695dc49566ed81548b3fe2cebf11c)) 
+  fix(Chrome Accessibility Plugin): resolving the location of AUDIT_FILE
+
+- ([f9b0a92](https://github.com/angular/protractor/commit/f9b0a92079b55384d4560fef9400bb473672ce9c)) 
+  fix(debugger): Fix potential debugger lockups
+
 # 2.2.0
 
 ## Breaking Changes
