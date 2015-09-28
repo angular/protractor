@@ -140,7 +140,7 @@ info: socket.io started
 </ul>
 </li>
 <li>Run the following: <code ng-non-bindable>appium-doctor</code> and <code ng-non-bindable>authorize_ios</code> (sudo if necessary)</li>
-<li>You need XCode &gt;= 4.6.3, 5.1.1 recommended. Note, iOS8 (XCode 6) does not work off the shelf (see <a href="https://github.com/appium/appium/pull/3517">https://github.com/appium/appium/pull/3517</a>)</li>
+<li>You need XCode &gt;= 4.6.3, 5.1.1 recommended. Note, iOS8 (XCode 6) did not work off the shelf (see <a href="https://github.com/appium/appium/pull/3517">https://github.com/appium/appium/pull/3517</a>) but this was resolved <a href="https://github.com/appium/appium/pull/3517#issuecomment-58940157">soon after Oct 13, 2014</a></li>
 </ul>
 <h6 id="running-tests">Running Tests</h6>
 <ul>
@@ -161,6 +161,9 @@ info: socket.io started
 <ul>
 <li>Configure protractor:</li>
 </ul>
+<p>additional dependencies:</p>
+<pre><code class="lang-shell">npm install --save-dev wd wd-bridge
+</code></pre>
 <p>iPhone:</p>
 <pre><code class="lang-javascript">exports.config = {
   seleniumAddress: &#39;http://localhost:4723/wd/hub&#39;,
