@@ -311,6 +311,7 @@ exports.config = {
     tags: '@dev',
     // How to format features (default: progress)
     format: 'summary'
+    // Other options include `coffee`, `noSnippets`, and `dryRun`
   },
 
   // See docs/plugins.md
