@@ -133,7 +133,7 @@ Setting Up Protractor with Appium - iOS/Safari
 *   Install Appium using node ```npm install -g appium```. Make sure you don't install as sudo or else Appium will complain.
    * You can do this either if you installed node without sudo, or you can chown the global node_modules lib and bin directories.
 *  Run the following: `appium-doctor` and `authorize_ios` (sudo if necessary)
-*  You need XCode >= 4.6.3, 5.1.1 recommended. Note, iOS8 (XCode 6) does not work off the shelf (see https://github.com/appium/appium/pull/3517)
+*  You need XCode >= 4.6.3, 5.1.1 recommended. Note, iOS8 (XCode 6) did not work off the shelf (see https://github.com/appium/appium/pull/3517) but this was resolved [soon after Oct 13, 2014](https://github.com/appium/appium/pull/3517#issuecomment-58940157)
 
 ###### Running Tests
 *   Ensure app is running if testing local app (Skip if testing public website):
@@ -153,6 +153,11 @@ info: socket.io started
 *Note: Appium listens to port 4723 instead of 4444.*
 
 *   Configure protractor:
+
+additional dependencies:
+```shell
+npm install --save-dev wd wd-bridge
+```
 
 iPhone:
 ```javascript

@@ -1,8 +1,8 @@
 language: node_js
 sudo: false
 node_js:
-  - "0.10"
   - "0.12"
+  - "4"
 
 env:
   global:
@@ -23,6 +23,7 @@ matrix:
 
 
 before_script:
+  - npm run pretest
   - mkdir -p $LOGS_DIR
   - ./scripts/sauce_connect_setup.sh
   - ./scripts/wait_for_browser_provider.sh

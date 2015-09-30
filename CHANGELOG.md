@@ -1,3 +1,161 @@
+# 2.3.0
+
+_This release contains updates which fix some issues with dependencies that had gotten stale. However, it does not yet contain an update to the selenium-webdriver dependency, because of potential breaking changes. That update will be done in a separate Protractor@2.4.0 release. See [issue 2245](https://github.com/angular/protractor/issues/2245)._
+
+## Dependency Version Upgrades
+
+- ([cfd8d00](https://github.com/angular/protractor/commit/cfd8d000c2aa1686c4a90164baf4e04976ee0587)) 
+  feat(webdriver): update webdriver and chromedriver to latest version
+
+  Updating Selenium standalone from 2.45.0 to 2.47.0 Updating ChromeDriver from 2.15 to 2.19 
+  Selenium Changelog:
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md 
+  ChromeDriver Changelog: http://chromedriver.storage.googleapis.com/2.19/notes.txt
+
+- ([802b20f](https://github.com/angular/protractor/commit/802b20f153f2c201d8b37378bf8feb93f649a95f)) 
+  chore(selenium): update selenium from 2.47.0 to 2.47.1
+
+- ([7a7aca8](https://github.com/angular/protractor/commit/7a7aca8a264ae07cbbb90e7e7469533a52276488)) 
+  chore(jasmine): bump jasmine version from 2.3.1 to 2.3.2
+
+- ([eab828e](https://github.com/angular/protractor/commit/eab828e12c671cbf5cdf9b09df050cc59f0dd862)) 
+  chore(travis): test against node 4
+
+  Test against node 4 on Travis, and remove support for node 0.10.
+
+- ([96def81](https://github.com/angular/protractor/commit/96def81dc7d364e789fc290e97aee0f898648a10)) 
+  chore(saucelabs): updated saucelabs dependency to 1.0.1 to support proxy
+
+## Features
+
+- ([c989a7e](https://github.com/angular/protractor/commit/c989a7eeed5a0a55d2fbd37dc7278a7967889852)) 
+  feat(webdriver-manager): add --ie32 commandline option
+
+  The new option allows to download the 32-bit version of the IE driver on a 64-bit system, as the
+  64-bit version has been broken for over a year now (the sendKeys() function works very slowly on
+  it).
+
+- ([ff88e96](https://github.com/angular/protractor/commit/ff88e969d55585cc4267d75c12c0cafc78a01895)) 
+  feat(cucumber): Allow cucumber tests containing line numbers
+
+  example:
+  ```js
+  specs: [
+     'cucumber/lib.feature:7'
+   ]
+  ```
+
+## Bug Fixes
+
+- ([1487e5a](https://github.com/angular/protractor/commit/1487e5abf69bc1540226502aacadc8b3b42b0092)) 
+  fix(protractor.wrapDriver): allow browser instances to work even if they were not set up through
+  the runner
+
+  Fixes #2456
+
+- ([2ff7a07](https://github.com/angular/protractor/commit/2ff7a0771b6695dc49566ed81548b3fe2cebf11c)) 
+  fix(Chrome Accessibility Plugin): resolving the location of AUDIT_FILE
+
+- ([f9b0a92](https://github.com/angular/protractor/commit/f9b0a92079b55384d4560fef9400bb473672ce9c)) 
+  fix(debugger): Fix potential debugger lockups
+
+# 2.2.0
+
+## Breaking Changes
+
+- If you use the plugin API, it has changed a lot.  See
+  [`docs/plugins.md`](docs/plugins.md) for details.  The good news is that it
+  is being taken out of beta, so it should be more stable in the future.
+
+## Dependency Version Upgrades
+
+- ([786ab05](https://github.com/angular/protractor/commit/786ab0541bff9b561b35dbbf0ffc1e9d4a788d10)) 
+  chore(dependencies): update request to 2.57
+
+  Closes #2205
+
+## Features
+
+- ([f2a11a7](https://github.com/angular/protractor/commit/f2a11a7369319edac0f1221a1c6ab0f9a2cc73eb)) 
+  feat(plugins): Changed and expanded the plugin API
+
+  * Changed the plugin API so that it is more uniform (see docs/plugins.md)
+  * Updated existing plugins to the new API
+  * Added the `onPageLoad` and `onPageSync` entry points for plugins for modifying `browser.get`
+  * Added the `waitForPromise` and `waitForCondition` entry points for plugins for modifying
+  `waitForAngular`
+  * Added tests
+
+  This closes #2126 and helps out @andresdominguez
+
+- ([aded26b](https://github.com/angular/protractor/commit/aded26bc9ee6172d6f64361207f6a8b04da09b0d)) 
+  feat(webdriver-manager): update download logic with streaming
+
+  Also adds a content length check to make sure the downloaded binaries are the correct size. This
+  seems to fix up some unreliable download issues that we were previously having.
+
+- ([7aeebd6](https://github.com/angular/protractor/commit/7aeebd6543d89b7d8b9474bc45651b88c5c2d396)) 
+  feat(plugins): reporting loaded plugins
+
+- ([6c10378](https://github.com/angular/protractor/commit/6c10378b9a4e7cae9ba491a63ae11f942c833100)) 
+  feat(protractor): expose pending $http and $timeout on a timeout
+
+  Now when a test times out while waiting for Angular to be stable, pending
+  $timeout and $http tasks will be reported to the console.
+
+## Bug Fixes
+
+- ([c30afdd](https://github.com/angular/protractor/commit/c30afddb80b6138fc5f648f70f2891067d8eeef4)) 
+  fix(test): fixed tests under npm test
+
+- ([3508335](https://github.com/angular/protractor/commit/3508335199fee5dad74c66d9ee19b8bf448c2e62)) 
+  fix(element): ElementArrayFinder.count was slow
+
+  The bug fix for #1903
+  (https://github.com/angular/protractor/commit/2a765c76e121de13ff86a279fe3f21cb15c17783) was
+  causing ElementArrayFinder.prototype.count to be slow because of the extranous checks that must be
+  performed. However, the checks could be delayed into the isPresent check, which will mitigate this
+  issue
+
+  fixes(#2359)
+
+- ([b147033](https://github.com/angular/protractor/commit/b14703319c0d6bb6a69b76d0fd3732e2ea1fbebc)) 
+  fix(by.exactRepeater): should split by "="
+
+  Closes #2335
+
+- ([4c9886b](https://github.com/angular/protractor/commit/4c9886b410ea4d82098af322044a37908a112138)) 
+  fix(Chrome Accessibility Plugin) No error context
+
+  If your tests fail because of StaleElementReferenceError then there is no context about where this
+  is coming from. By having the failure be handled inside of the plugin then grunt can fail
+  gracefully. Additionally, this provides context about where the error originated from.
+
+  Fixes #2331
+
+- ([d15ccdc](https://github.com/angular/protractor/commit/d15ccdcf82bda29c803c3a5642896f16d7e4f938)) 
+  fix(phantomJS): Reset URL cannot be a data url for PhantomJS
+
+  When trying to use the lates version of Angular with PhantomJS we get a message complaining about
+  "Detected a page unload event". This was fixed in earlier versions of Angular, see issue #85, but
+  reappeared now. The problem is that using data urls to reset the page causes this issue, so we
+  have to do as we do with Safari and use "about:blank" instead
+
+- ([e6369ac](https://github.com/angular/protractor/commit/e6369ac973d58a17415ab1211050af26236c6105)) 
+  docs(tutorial): use Jasmine v2 in the tutorial
+
+- ([e60dc0f](https://github.com/angular/protractor/commit/e60dc0ff4fc4a6d22e877d4182605913fae5d5cb)) 
+  fix(browser.refresh): use timeout in milliseconds
+
+  When invoked without arguments browser.refresh used a 10-millisecond timeout, wrongly documented
+  as seconds. It now delegates timeout handling to browser.get, which defaults to 
+  DEFAULT_GET_PAGE_TIMEOUT (10 seconds).
+
+- ([0262268](https://github.com/angular/protractor/commit/0262268fa43b9eefac815d986740efa07bb15818)) 
+  fix(cucumber): fix beforeFeature event handler call guard
+
+  Fixes the run failures reported in https://github.com/cucumber/cucumber-js/issues/342.
+
 # 2.1.0
 
 ## Dependency Version Upgrades

@@ -6,13 +6,13 @@ Questions
 
 Please first read through the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
-Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/protractor) or [Google Group discussion list](https://groups.google.com/forum/?fromgroups#!forum/angular).
+Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/protractor), [Google Group discussion list](https://groups.google.com/forum/?fromgroups#!forum/angular), or [Gitter](https://gitter.im/angular/protractor).
 
 Any questions posted to Protractor's Github Issues will be closed with this note:
 
-`
-Please read the [contributing guidelines](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions); these types of questions are ill-suited for GitHub. Thanks!
-`
+Please direct general support questions like this one to an appropriate support channel, see https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions
+
+Thank you!
 
 
 Issues
@@ -23,7 +23,7 @@ Before submitting an issue, please search the issue archive to help reduce dupli
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
 When submitting an issue, please include context from your test and
-your application. If there's an error, please include the error text. Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
+your application. Include a reproducible case that we can actually run, if possible. If there's an error, please include the error text. Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
 
 Please format code and markup in your issue using [github markdown](https://help.github.com/articles/github-flavored-markdown).
 

@@ -17,8 +17,8 @@
     "minijasminenode": "1.1.1",
     "jasminewd": "1.1.0",
     "jasminewd2": "0.0.5",
-    "jasmine": "2.3.1",
-    "saucelabs": "~0.1.0",
+    "jasmine": "2.3.2",
+    "saucelabs": "~1.0.1",
     "glob": "~3.2",
     "adm-zip": "0.4.4",
     "optimist": "~0.6.0",
@@ -30,13 +30,12 @@
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
-    "chai": "~1.8.1",
-    "chai-as-promised": "~4.1.0",
+    "chai": "~3.3.0",
+    "chai-as-promised": "~5.1.0",
     "jshint": "2.5.0",
-    "mocha": "1.21.4",
-    "cucumber": "~0.4.9",
+    "mocha": "2.3.3",
+    "cucumber": "~0.6.0",
     "express": "~3.3.4",
-    "lodash": "~2.4.1",
     "rimraf": "~2.2.6"
   },
   "repository": {
@@ -54,5 +53,5 @@
     "start": "node testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "2.1.0"
+  "version": "2.3.0"
 }

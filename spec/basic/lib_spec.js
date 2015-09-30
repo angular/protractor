@@ -108,6 +108,11 @@ describe('protractor library', function() {
         toEqual('repeater');
   });
 
+  it('should allow self-wrapped webdriver instances', function() {
+    var driver = protractor.wrapDriver(browser.driver);
+    driver.get('https://angularjs.org/');
+  });
+
   describe('helper functions', function() {
     it('should get the absolute URL', function() {
       browser.get('index.html');
