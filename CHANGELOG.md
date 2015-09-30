@@ -1,3 +1,33 @@
+# 2.4.0
+
+_This release contains only a version update to `selenium-webdriver`, webdriver javascript bindings, and associated bug fixes._
+
+## Dependency Version Upgrades
+- ([9a202ab](https://github.com/angular/protractor/commit/9a202ab5573f24c9919639f1b75fd9cd2b383383)) 
+  chore(dependencies): update selenium-webdriver to 2.47.0
+
+  Along with it, update `jasminewd2` to avoid situations where the control flow gets locked up and
+  hangs.
+
+  *Potential Breaking Change*:
+
+  This is passing all existing Protractor tests, but there is a possibility that the changes to the
+  control flow will cause some test flows to hang. If this causes issues, such as tests hanging or commands executing out of order, please revisit your use of functions affecting the control flow, such as `flow.execute`.
+
+  See the selenium-webdriver changelog at https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+
+
+## Bug Fixes
+- ([f034e01](https://github.com/angular/protractor/commit/f034e010156a85cf1826b95eb7f41f50ef5a1791)) 
+  fix(synchronizing): use the same control flow when ignoring sync
+
+  Previously, the order of frames and tasks on the control flow was different depending on
+  `browser.ignoreSynchronization`. This fixes the inconsistency by creating an empty task when
+  ignoreSynchronization is true.
+
+  Practically, this fixes the polling spec failing after the update to selenium-webdriver@2.47.0.
+
+
 # 2.3.0
 
 _This release contains updates which fix some issues with dependencies that had gotten stale. However, it does not yet contain an update to the selenium-webdriver dependency, because of potential breaking changes. That update will be done in a separate Protractor@2.4.0 release. See [issue 2245](https://github.com/angular/protractor/issues/2245)._
