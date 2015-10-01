@@ -62,5 +62,17 @@ describe('the config parser', function() {
       expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
       expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
+
+    it('should allow for line numbers in file paths', function() {
+      spyOn(process, 'cwd').and.returnValue(__dirname + '/');
+      var toAdd = {
+        specs: ['data/fakespecA.js:32', 'data/fakespecB.js']
+      };
+      var config = new ConfigParser().addConfig(toAdd).getConfig();
+      var specs = ConfigParser.resolveFilePatterns(config.specs);
+      expect(specs.length).toEqual(2);
+      expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js:32'))).not.toEqual(-1);
+      expect(specs[1]).toMatch(/unit\/data\/fakespecB.js$/);
+    });
   });
 });
