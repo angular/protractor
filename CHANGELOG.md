@@ -1,3 +1,32 @@
+# 2.5.0
+_This release contains a hotfix for windows path issues and early support for Angular2 apps_
+
+
+## Features
+- ([c5d37c2](https://github.com/angular/protractor/commit/c5d37c2abebf9aa9dd3324df93ac447529eea53b)) 
+  feat(lib): add useAllAngularAppRoots option
+
+  This allows waiting for all angular applications on the page, for angular2 apps only.
+
+- ([f246880](https://github.com/angular/protractor/commit/f24688030a63c9de4ce759ac9c6fab79ef773ed5)) 
+  feat(lib): add support for waiting for angular2
+
+  Use Angular2's testability API, if present, when waiting for stability or loading a page.
+
+  Closes #2396
+
+## Bug Fixes
+
+- ([d6aebba](https://github.com/angular/protractor/commit/d6aebbad6e9b191fef141472887637ee4318438e)) 
+  fix(config): Fixes absolute path parsing in windows
+
+  This allows absolute paths absolute paths in to be properly parsed in windows. This should
+  maintain the line-number feature introduced in ff88e without breakage.
+
+- ([04e5bfb](https://github.com/angular/protractor/commit/04e5bfbfcade0cbbef58213bc7b227b5db753d57)) 
+  chore(runner): make plugins optional param for createBrowser
+
+
 # 2.4.0
 
 _This release contains only a version update to `selenium-webdriver`, webdriver javascript bindings, and associated bug fixes._
