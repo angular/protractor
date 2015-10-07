@@ -6,7 +6,7 @@ var env = require('./environment.js');
 // As Angular2 is in rapid development, the test application that ships with
 // the Protractor repository does not yet contain an Angular2 section. This
 // configuration assumes that you are serving the examples from the
-// angular/angular repository at localhost:8000. 
+// angular/angular repository at localhost:8000.
 // See https://github.com/angular/angular/blob/master/DEVELOPER.md for
 // setup instructions.
 //
@@ -25,5 +25,13 @@ exports.config = {
 
   baseUrl: 'http://localhost:8000',
 
-  rootElement: 'async-app'
+  // Special option for Angular2, to test against all Angular2 applications
+  // on the page. This means that Protractor will wait for every app to be
+  // stable before each action, and search within all apps when finding
+  // elements.
+  useAllAngular2AppRoots: true
+
+  // Alternatively, you could specify one root element application, to test
+  // against only that one:
+  // rootElement: 'async-app'
 };
