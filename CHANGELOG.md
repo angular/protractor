@@ -1,3 +1,11 @@
+# 2.5.1
+_This release is a hotfix for node 0.10 support_
+
+- ([039ffa7](https://github.com/angular/protractor/commit/039ffa7bfa291084263ae3fa944bbf21394ce9a3)) 
+  fix(configParser): Remove path.parse so protractor works with node < v0.12
+
+  Closes #2588
+
 # 2.5.0
 _This release contains a hotfix for windows path issues and early support for Angular2 apps_
 
