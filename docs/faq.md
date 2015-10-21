@@ -193,13 +193,19 @@ You may need to insert a `browser.wait` condition to make sure the load
 is complete before continuing.
 
 How do I switch off an option in the CLI?
-------------------------------------------------------------------------------
+-----------------------------------------
 i.e. `webdriver-manager update --chrome=false` does not work. 
 This has to do with the way `optimist` parses command line args. In order to pass a false value, do one of the following:
 
 1) `webdriver-manager update --chrome=0`
 
 2) `webdriver-manager update --no-chrome` (see https://github.com/substack/node-optimist#negate-fields)
+
+Why does Protractor fail when I decorate $timeout?
+--------------------------------------------------
+Protractor tracks outstanding $timeouts by default, and reports them in the error message if Protractor fails to synchronize with Angular in time.
+
+However, in order to do this Protractor needs to decorate $timeout. This means if your app decorates $timeout, you must turn off this behavior for Protractor. To do so pass in the 'untrackOutstandingTimeouts' flag. 
 
 I still have a question
 -----------------------
