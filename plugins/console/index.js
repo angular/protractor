@@ -5,13 +5,14 @@ var q = require('q');
  * It can be configured to fail a test if either is detected.  There is also an
  * optional exclude parameter which accepts both regex and strings.  Any log
  * matching the exclude parameter will not fail the test or be logged to the
- * console.
+ * console. A false setting to logWarnings also overrides the failOnWarning setting.
  *
  *    exports.config = {
  *      plugins: [{
  *        path: 'node_modules/protractor/plugins/console',
  *        failOnWarning: {Boolean}                (Default - false),
- *        failOnError: {Boolean}                  (Default - true)
+ *        failOnError: {Boolean}                  (Default - true),
+ *        logWarnings: {Boolean}                  (Default - true),
  *        exclude: {Array of strings and regex}   (Default - [])
  *      }]
  *    };
@@ -76,14 +77,18 @@ ConsolePlugin.parseLog = function(context) {
       context.config.failOnWarning;
   var failOnError = (context.config.failOnError === undefined) ? true :
       context.config.failOnError;
+  var logWarnings = (context.config.logWarnings === undefined) ? true :
+      context.config.logWarnings;
   ConsolePlugin.exclude = context.config.exclude || [];
 
   return ConsolePlugin.getBrowserLog().then(function(log) {
-
-    var warnings = log.filter(function(node) {
-      return (node.level || {}).name === 'WARNING' &&
-          ConsolePlugin.includeLog(node.message);
-    });
+    var warnings = [];
+    if (logWarnings) {
+      warnings = log.filter(function(node) {
+        return (node.level || {}).name === 'WARNING' &&
+            ConsolePlugin.includeLog(node.message);
+      });
+    }
 
     var errors = log.filter(function(node) {
       return (node.level || {}).name === 'SEVERE' &&
