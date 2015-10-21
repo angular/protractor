@@ -130,6 +130,14 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutCo
                 '*}'}
     ]);
 
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
+                            '--untrackOutstandingTimeouts true')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'The following tasks were pending[\\s\\S]*\\$http: \/slowcall'},
+      {message: '^((?!The following tasks were pending).)*$'}
+    ]);
+
 // Check ngHint plugin
 
 executor.addCommandlineTest(

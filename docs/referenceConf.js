@@ -250,6 +250,13 @@ exports.config = {
   // CAUTION: This will cause your tests to slow down drastically.
   restartBrowserBetweenTests: false,
 
+  // Protractor will track outstanding $timeouts by default, and report them in 
+  // the error message if Protractor fails to synchronize with Angular in time. 
+  // In order to do this Protractor needs to decorate $timeout. 
+  // CAUTION: If your app decorates $timeout, you must turn on this flag. This 
+  // is false by default.
+  untrackOutstandingTimeouts: false,
+
   // ---------------------------------------------------------------------------
   // ----- The test framework --------------------------------------------------
   // ---------------------------------------------------------------------------
