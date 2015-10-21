@@ -408,14 +408,15 @@ This plugin checks the browser log after each test for warnings and errors.  It
 can be configured to fail a test if either is detected.  There is also an
 optional exclude parameter which accepts both regex and strings.  Any log
 matching the exclude parameter will not fail the test or be logged to the
-console.
+console. A false setting to logWarnings also overrides the failOnWarning setting.
 
 ```js
 exports.config = {
   plugins: [{
     path: 'node_modules/protractor/plugins/console',
     failOnWarning: {Boolean}                (Default - false),
-    failOnError: {Boolean}                  (Default - true)
+    failOnError: {Boolean}                  (Default - true),
+    logWarnings: {Boolean}                  (Default - true),
     exclude: {Array of strings and regex}   (Default - [])
   }]
 };
