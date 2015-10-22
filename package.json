@@ -34,7 +34,7 @@
     "chai-as-promised": "~5.1.0",
     "jshint": "2.5.0",
     "mocha": "2.3.3",
-    "cucumber": "~0.6.0",
+    "cucumber": "~0.8.0",
     "express": "~3.3.4",
     "rimraf": "~2.2.6"
   },
