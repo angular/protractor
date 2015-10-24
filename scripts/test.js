@@ -16,6 +16,7 @@ var passingTests = [
   'node lib/cli.js spec/mochaConf.js',
   'node lib/cli.js spec/cucumberConf.js',
   'node lib/cli.js spec/withLoginConf.js',
+  'node lib/cli.js spec/shardingSuitesConf.js',
   'node lib/cli.js spec/suitesConf.js --suite okmany',
   'node lib/cli.js spec/suitesConf.js --suite okspec',
   'node lib/cli.js spec/suitesConf.js --suite okmany,okspec',
