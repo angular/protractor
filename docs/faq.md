@@ -192,6 +192,15 @@ but it's interrupted by the reload.
 You may need to insert a `browser.wait` condition to make sure the load
 is complete before continuing.
 
+How do I switch off an option in the CLI?
+------------------------------------------------------------------------------
+i.e. `webdriver-manager update --chrome=false` does not work. 
+This has to do with the way `optimist` parses command line args. In order to pass a false value, do one of the following:
+
+1) `webdriver-manager update --chrome=0`
+
+2) `webdriver-manager update --no-chrome` (see https://github.com/substack/node-optimist#negate-fields)
+
 I still have a question
 -----------------------
 
