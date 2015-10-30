@@ -110,7 +110,7 @@ describe('protractor library', function() {
 
   it('should allow self-wrapped webdriver instances', function() {
     var driver = protractor.wrapDriver(browser.driver);
-    driver.get('https://angularjs.org/');
+    driver.get('index.html');
   });
 
   describe('helper functions', function() {
