@@ -13,7 +13,7 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.57.0",
-    "selenium-webdriver": "2.47.0",
+    "selenium-webdriver": "2.48.2",
     "jasminewd2": "0.0.6",
     "jasmine": "2.3.2",
     "saucelabs": "~1.0.1",

@@ -1,9 +1,8 @@
 language: node_js
 sudo: false
 node_js:
-  - "0.10"
-  - "0.12"
   - "4"
+  - "5"
 
 env:
   global:
@@ -20,9 +19,7 @@ matrix:
     - env: "JOB=smoke"
   exclude:
     - env: JOB=smoke
-      node_js: "0.12"
-    - env: JOB=smoke
-      node_js: "0.10"
+      node_js: "5"
 
 
 before_script:
