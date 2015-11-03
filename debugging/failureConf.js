@@ -15,7 +15,7 @@ exports.config = {
 
   baseUrl: env.baseUrl,
 
-  // ----- Options to be passed to minijasminenode.
+  // ----- Options to be passed to jasmine.
   jasmineNodeOpts: {
     showColors: true
   }
