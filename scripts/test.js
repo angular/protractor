@@ -21,8 +21,7 @@ var passingTests = [
   'node lib/cli.js spec/suitesConf.js --suite okmany,okspec',
   'node lib/cli.js spec/plugins/smokeConf.js',
   'node lib/cli.js spec/plugins/multiPluginConf.js',
-  'node lib/cli.js spec/plugins/jasmine1PostTestConf.js',
-  'node lib/cli.js spec/plugins/jasmine2PostTestConf.js',
+  'node lib/cli.js spec/plugins/jasminePostTestConf.js',
   'node lib/cli.js spec/plugins/mochaPostTestConf.js',
   'node lib/cli.js spec/plugins/cucumberPostTestConf.js',
   'node lib/cli.js spec/plugins/browserGetSyncedConf.js',
@@ -34,21 +33,17 @@ var passingTests = [
   'node lib/cli.js spec/getCapabilitiesConf.js',
   'node lib/cli.js spec/controlLockConf.js',
   'node lib/cli.js spec/customFramework.js',
-  'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json',
   'node scripts/interactive_tests/interactive_test.js',
-  'node scripts/interactive_tests/with_base_url.js'
+  'node scripts/interactive_tests/with_base_url.js',
+  // Unit tests
+  'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json',
+  // Plugins
+  'node lib/cli.js plugins/timeline/spec/conf.js',
+  'node lib/cli.js plugins/ngHint/spec/successConfig.js',
+  'node lib/cli.js plugins/accessibility/spec/successConfig.js',
+  'node lib/cli.js plugins/console/spec/consolePassConfig.js',
+  'node lib/cli.js plugins/console/spec/consolePassLogWarnings.js'
 ];
-
-// Plugins
-passingTests.push('node node_modules/minijasminenode/bin/minijn ' +
-    'plugins/timeline/spec/unit.js');
-passingTests.push(
-    'node lib/cli.js plugins/timeline/spec/conf.js',
-    'node lib/cli.js plugins/ngHint/spec/successConfig.js',
-    'node lib/cli.js plugins/accessibility/spec/successConfig.js',
-    'node lib/cli.js plugins/console/spec/consolePassConfig.js',
-    'node lib/cli.js plugins/console/spec/consolePassLogWarnings.js'
-);
 
 var executor = new Executor();
 

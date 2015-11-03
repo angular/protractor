@@ -14,8 +14,6 @@
   "dependencies": {
     "request": "~2.57.0",
     "selenium-webdriver": "2.47.0",
-    "minijasminenode": "1.1.1",
-    "jasminewd": "1.1.0",
     "jasminewd2": "0.0.6",
     "jasmine": "2.3.2",
     "saucelabs": "~1.0.1",

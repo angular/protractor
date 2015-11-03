@@ -17,9 +17,6 @@ exports.config = {
 
   // ----- Options to be passed to minijasminenode.
   jasmineNodeOpts: {
-    onComplete: null,
-    isVerbose: false,
-    showColors: true,
-    includeStackTrace: true
+    showColors: true
   }
 };

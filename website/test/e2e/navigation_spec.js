@@ -67,7 +67,7 @@ describe('Navigation', function() {
         'Timeouts',
         'The WebDriver Control Flow',
         'How It Works',
-        'Upgrading to Jasmine 2.0',
+        'Upgrading to Jasmine 2.x',
         'Mobile Setup',
         'FAQ'
       ]);
@@ -181,8 +181,8 @@ describe('Navigation', function() {
       expect($('h1').getText()).toBe('How It Works');
     });
 
-    it('should go to Upgrading to Jasmine 2.0', function() {
-      menu.dropdown('Reference').item('Upgrading to Jasmine 2.0');
+    it('should go to Upgrading to Jasmine 2.x', function() {
+      menu.dropdown('Reference').item('Upgrading to Jasmine 2.x');
 
       expect($('h1').getText()).toBe('Upgrading from Jasmine 1.3 to 2.x');
     });

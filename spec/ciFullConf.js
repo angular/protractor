@@ -5,7 +5,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   // Spec patterns are relative to this directory.
   specs: [
@@ -38,7 +38,6 @@ exports.config = {
   baseUrl: env.baseUrl,
 
   jasmineNodeOpts: {
-    isVerbose: true,
     showTiming: true,
     defaultTimeoutInterval: 90000
   },

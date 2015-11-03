@@ -22,10 +22,7 @@ exports.config = {
   baseUrl: 'http://localhost:8080',
 
   jasmineNodeOpts: {
-    onComplete: null,
-    isVerbose: false,
     showColors: true,
-    includeStackTrace: true,
     defaultTimeoutInterval: 10000
   }
 };

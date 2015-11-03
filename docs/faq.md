@@ -106,17 +106,6 @@ The method to take a screenshot automatically on failure would depend on the typ
 * For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as below:
 
 ```javascript
-// Note: this is using Jasmine 1.3 reporter syntax.
-jasmine.getEnv().addReporter(new function() {
-  this.reportSpecResults = function(spec) {
-    if (!spec.results().passed()) {
-      //take screenshot
-    }
-  };
-});
-```
-
-```javascript
 // Note: this is using Jasmine 2.1 reporter syntax.
 jasmine.getEnv().addReporter(new function() {
   this.specDone = function(result) {
@@ -129,17 +118,6 @@ jasmine.getEnv().addReporter(new function() {
 
 Note, you can also choose to take a screenshot in `afterEach`. However, because Jasmine does not execute `afterEach` for timeouts, those would not produce screenshots
 * For failures of individual expectations, you can override jasmine's addMatcherResult/addExpectationResult function as such:
-
-```javascript
-// Jasmine 1.3.
-var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
-jasmine.Spec.prototype.addMatcherResult = function() {
-  if (!arguments[0].passed()) {
-    //take screenshot
-  }
-  return originalAddMatcherResult.apply(this, arguments);
-};
-```
 
 ```javascript
 // Jasmine 2.1
