@@ -1,13 +1,13 @@
 Choosing a Framework
 ====================
 
-Protractor supports four behavior driven development (BDD) test frameworks: Jasmine 1.3, Jasmine 2.0, Mocha, and Cucumber. These frameworks are based on JavaScript and Node.js and provide the syntax, scaffolding, and reporting tools you will use to write and manage your tests.
+Protractor supports three behavior driven development (BDD) test frameworks: Jasmine, Mocha, and Cucumber. These frameworks are based on JavaScript and Node.js and provide the syntax, scaffolding, and reporting tools you will use to write and manage your tests.
 
 
 Using Jasmine
 -------------
 
-Currently, Jasmine Versions 1.3 and 2.0 are supported. Jasmine 1.3 is the default test framework and is available for use when you install Protractor. However, we're in the process of upgrading to Jasmine 2.0, and will deprecate support for 1.3 in the future. For more information about Jasmine, see the [Jasmine GitHub site](http://jasmine.github.io/). For more information regarding how to upgrade to Jasmine 2.0 from 1.3, see the [Jasmine upgrade guide](/docs/jasmine-upgrade.md).
+Currently, Jasmine Version 2.x is supported and the default test framework when you install Protractor. For more information about Jasmine, see the [Jasmine GitHub site](http://jasmine.github.io/). For more information regarding how to upgrade to Jasmine 2.x from 1.3, see the [Jasmine upgrade guide](/docs/jasmine-upgrade.md).
 
 
 Using Mocha

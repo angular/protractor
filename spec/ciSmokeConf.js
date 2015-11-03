@@ -6,7 +6,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   specs: [
     'basic/locators_spec.js',
@@ -74,7 +74,6 @@ exports.config = {
   getPageTimeout: 30000,
 
   jasmineNodeOpts: {
-    isVerbose: true,
     showTiming: true,
     defaultTimeoutInterval: 90000
   },
