@@ -55,21 +55,33 @@ To connect to a running instance of a standalone Selenium Server, set this optio
 
  - `seleniumAddress` -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.
 
-Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `bstackUser`, `bstackKey`, `sauceUser` and `sauceKey` will be ignored.
 
 
 Remote Selenium Server
 ----------------------
 
-To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [Sauce Labs](http://www.saucelabs.com).
+To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) and [Sauce Labs](http://www.saucelabs.com).
+
+**Using BrowserStack as remote Selenium Server**
+
+In your config file, set these options:
+ - `bstackUser` -  The username for your BrowserStack account.
+ - `bstackKey` -  The key for your BrowserStack account.
+
+Please note that if you set `bstackUser` and `bstackKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+
+You can optionally set the [`name` property](referenceConf.js#L121) in a capability in order to give the jobs a name on the server.  Otherwise they will just be allotted a random hash.
+
+**Using Sauce Labs as remote Selenium Server**
 
 In your config file, set these options:
  - `sauceUser` -  The username for your Sauce Labs account.
  - `sauceKey` -  The key for your Sauce Labs account.
 
-Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort` and `seleniumArgs` will be ignored.
+Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `bstackUser` and `bstackKey` will be ignored.
 
-You can optionally set the [`name` property](referenceConf.js#L113) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
+You can optionally set the [`name` property](referenceConf.js#L121) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
 
 
 Connecting Directly to Browser Drivers
