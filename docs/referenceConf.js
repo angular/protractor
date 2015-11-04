@@ -311,5 +311,12 @@ exports.config = {
     tags: '@dev',
     // How to format features (default: progress)
     format: 'summary'
-  }
+  },
+
+  // See docs/plugins.md
+  plugins: [],
+
+  // Turn off source map support.  Stops protractor from registering global
+  // variable `source-map-support`.  Defaults to `false`
+  skipSourceMapSupport: false
 };
