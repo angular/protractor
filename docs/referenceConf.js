@@ -14,13 +14,14 @@ exports.config = {
   //
   // Protractor needs to know how to connect to Drivers for the browsers
   // it is testing on. This is usually done through a Selenium Server.
-  // There are four options - specify one of the following:
+  // There are five options - specify one of the following:
   //
   // 1. seleniumServerJar - to start a standalone Selenium Server locally.
   // 2. seleniumAddress - to connect to a Selenium Server which is already
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
-  // 4. directConnect - to connect directly to the browser Drivers.
+  // 4. bstackUser/bstackKey - to use remote Selenium Servers via BrowserStack.
+  // 5. directConnect - to connect directly to the browser Drivers.
   //    This option is only available for Firefox and Chrome.
 
   // ---- 1. To start a standalone Selenium Server locally ---------------------
@@ -63,7 +64,13 @@ exports.config = {
   // ondemand.saucelabs.com:80/wd/hub
   sauceSeleniumAddress: null,
 
-  // ---- 4. To connect directly to Drivers ------------------------------------
+  // ---- 4. To use remote browsers via BrowserStack ---------------------------
+  // If bstackUser and bstackKey are specified, seleniumServerJar will be ignored.
+  // The tests will be run remotely using BrowserStack.
+  bstackUser: null,
+  bstackKey: null,
+
+  // ---- 5. To connect directly to Drivers ------------------------------------
   // Boolean. If true, Protractor will connect directly to the browser Drivers
   // at the locations specified by chromeDriver and firefoxPath. Only Chrome
   // and Firefox are supported for direct connect.
@@ -110,7 +117,7 @@ exports.config = {
 
     // Name of the process executing this capability.  Not used directly by
     // protractor or the browser, but instead pass directly to third parties
-    // like SauceLabs as the name of the job running this test
+    // like BrowserStack and SauceLabs as the name of the job running this test
     name: 'Unnamed Job',
 
     // User defined name for the capability that will display in the results log
@@ -139,6 +146,11 @@ exports.config = {
 
     // Optional: override global seleniumAddress on this capability only.
     seleniumAddress: null
+
+    // Optional: Additional third-party specific capabilities can be
+    // specified here.
+    // For a list of BrowserStack specific capabilities, visit 
+    // https://www.browserstack.com/automate/capabilities
   },
 
   // If you would like to run more than one instance of WebDriver on the same
