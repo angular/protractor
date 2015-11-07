@@ -14,7 +14,6 @@ var expect = chai.expect;
 
 function spawnCucumberTests(configFile) {
   return q.promise(function(resolve, reject) {
-      console.log('launching cucumner')
     
       var output = '';
       var test_process;

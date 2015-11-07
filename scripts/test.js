@@ -15,6 +15,7 @@ var passingTests = [
   'node lib/cli.js spec/onPreparePromiseFileConf.js',
   'node lib/cli.js spec/mochaConf.js',
   'node lib/cli.js spec/cucumberConf.js',
+  'node node_modules/mocha/bin/mocha spec/cucumber_report_spec.js',
   'node lib/cli.js spec/withLoginConf.js',
   'node lib/cli.js spec/suitesConf.js --suite okmany',
   'node lib/cli.js spec/suitesConf.js --suite okspec',
