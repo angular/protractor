@@ -37,12 +37,6 @@ var passingTests = [
   'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
   'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json',
-  // Plugins
-  'node lib/cli.js plugins/timeline/spec/conf.js',
-  'node lib/cli.js plugins/ngHint/spec/successConfig.js',
-  'node lib/cli.js plugins/accessibility/spec/successConfig.js',
-  'node lib/cli.js plugins/console/spec/consolePassConfig.js',
-  'node lib/cli.js plugins/console/spec/consolePassLogWarnings.js'
 ];
 
 var executor = new Executor();
@@ -132,74 +126,5 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutCo
       {message: 'The following tasks were pending[\\s\\S]*\\$http: \/slowcall'},
       {message: '^((?!The following tasks were pending).)*$'}
     ]);
-
-// Check ngHint plugin
-
-executor.addCommandlineTest(
-    'node lib/cli.js plugins/ngHint/spec/failureConfig.js')
-    .expectExitCode(1)
-    .expectErrors([{
-      message: 'warning -- ngHint plugin cannot be run as ngHint code was ' +
-          'never included into the page'
-    }, {
-      message: 'warning -- ngHint is included on the page, but is not active ' +
-          'because there is no `ng-hint` attribute present'
-    }, {
-      message: 'warning -- Module "xApp" was created but never loaded.'
-    }]);
-
-// Check accessibility plugin
-
-executor.addCommandlineTest(
-    'node lib/cli.js plugins/accessibility/spec/failureConfig.js')
-    .expectExitCode(1)
-    .expectErrors([{
-      message: '3 elements failed:'
-    },
-    {
-      message: '1 element failed:'
-    }]);
-
-// Check console plugin
-
-executor.addCommandlineTest(
-  'node lib/cli.js plugins/console/spec/consoleFailConfig.js')
-  .expectExitCode(1)
-  .expectErrors([
-    {message: 'This is a test warning'},
-    {message: 'This is a test error'},
-    {message: 'This should be filtered out by string'},
-    {message: 'This should be filtered out by regex'}
-  ]);
-
-executor.addCommandlineTest(
-  'node lib/cli.js plugins/console/spec/consoleFailErrorConfig.js')
-  .expectExitCode(1)
-  .expectErrors([
-    {message: 'This is a test error'},
-    {message: 'This should be filtered out by string'},
-    {message: 'This should be filtered out by regex'}
-  ]);
-
-executor.addCommandlineTest(
-  'node lib/cli.js plugins/console/spec/consoleFailWarningConfig.js')
-  .expectExitCode(1)
-  .expectErrors([
-    {message: 'This is a test warning'}
-  ]);
-
-executor.addCommandlineTest(
-  'node lib/cli.js plugins/console/spec/consoleFailFilterConfig.js')
-  .expectExitCode(1)
-  .expectErrors([
-    {message: 'This is a test error'}
-  ]);
-
-executor.addCommandlineTest(
-  'node lib/cli.js plugins/console/spec/consoleFailLogWarnings.js')
-  .expectExitCode(1)
-  .expectErrors([
-    {message: 'This is a test warning'}
-  ]);
 
 executor.execute();

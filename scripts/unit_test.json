@@ -2,7 +2,6 @@
   "spec_dir": "",
   "spec_files": [
     "spec/unit/*.js",
-    "website/docgen/spec/*.js",
-    "plugins/timeline/spec/unit.js"
+    "website/docgen/spec/*.js"
   ]
 }
