@@ -7,7 +7,6 @@ website/docgen/build/
 
 chromedriver.log
 libpeerconnection.log
-changes.sh
 xmloutput*
 npm-debug.log
 
