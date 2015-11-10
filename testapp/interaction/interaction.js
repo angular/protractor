@@ -10,7 +10,7 @@ function InteractionCtrl($scope, $interval, $http) {
   };
 
   var loadMessages = function() {
-    $http.get('/chat?q=chatMessages').
+    $http.get('chat?q=chatMessages').
       success(function(data) {
         $scope.messages = data ? data : [];
       }).
@@ -28,7 +28,7 @@ function InteractionCtrl($scope, $interval, $http) {
       key: 'newChatMessage',
       value: msg
     };
-    $http.post('/chat', data);
+    $http.post('chat', data);
   };
 
   $scope.clearMessages = function() {
@@ -37,7 +37,7 @@ function InteractionCtrl($scope, $interval, $http) {
     var data = {
       key: 'clearChatMessages'
     };
-    $http.post('/chat', data);
+    $http.post('chat', data);
   };
 
   $interval(function() {

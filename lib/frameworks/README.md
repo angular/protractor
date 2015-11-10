@@ -53,7 +53,7 @@ to use your own framework via the config file:
 
 ```js
 exports.config = {
-  // set to "custom" instead of jasmine/jasmine2/mocha/cucumber.
+  // set to "custom" instead of jasmine/mocha/cucumber.
   framework: 'custom',
   // path relative to the current config file
   frameworkPath: './frameworks/my_custom_jasmine.js',

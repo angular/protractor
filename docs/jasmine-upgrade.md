@@ -9,8 +9,8 @@ Specify that you want to use jasmine2.x:
 
 ```javascript
 exports.config = {
-  // Specify you want to use jasmine 2.x as you would with mocha and cucumber.
-  framework: 'jasmine2'
+  // Specify you want to use jasmine 2.x as you would with mocha and cucumber. Note, 'jasmine' by default will use the latest jasmine framework.
+  framework: 'jasmine'
 };
 
 ```

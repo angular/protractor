@@ -13,9 +13,7 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.57.0",
-    "selenium-webdriver": "2.47.0",
-    "minijasminenode": "1.1.1",
-    "jasminewd": "1.1.0",
+    "selenium-webdriver": "2.48.2",
     "jasminewd2": "0.0.6",
     "jasmine": "2.3.2",
     "saucelabs": "~1.0.1",
@@ -24,7 +22,7 @@
     "optimist": "~0.6.0",
     "q": "1.0.0",
     "lodash": "~2.4.1",
-    "source-map-support": "~0.2.6",
+    "source-map-support": "~0.3.2",
     "html-entities": "~1.1.1",
     "accessibility-developer-tools": "~2.6.0"
   },

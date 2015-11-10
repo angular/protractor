@@ -20,7 +20,7 @@
     "karma-jasmine": "^0.1.5",
     "lodash": "^2.4.1",
     "marked": "^0.3.3",
-    "minijasminenode": "^1.1.1"
+    "jasmine": "2.3.2"
   },
   "scripts": {
     "prepublish": "./node_modules/bower/bin/bower install",

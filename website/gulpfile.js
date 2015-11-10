@@ -125,6 +125,22 @@ gulp.task('markdown', function() {
       .pipe(gulp.dest('./build/partials'));
 });
 
+// Make version of testapp for github page
+gulp.task('testapp', function() {
+  var stream = gulp.src('../testapp/**/*').
+      pipe(gulp.dest('build/testapp'));
+  gulp.src('testapp/*').
+      pipe(gulp.dest('build/testapp'));
+  var angular_version = require('../testapp/lib/angular_version.js');
+  gulp.src('../testapp/lib/angular_v' + angular_version + '/**/*').
+      pipe(gulp.dest('build/testapp/lib/angular'));
+  return stream;
+});
+
+gulp.task('cleanup_testapp', ['testapp'], function() {
+  del('build/testapp/lib/angular_v*');
+});
+
 // Start a server and watch for changes.
 gulp.task('liveReload', [
   'default',
@@ -133,6 +149,8 @@ gulp.task('liveReload', [
 ]);
 
 gulp.task('default', [
+  'testapp',
+  'cleanup_testapp',
   'dgeni',
   'less',
   'markdown',

@@ -114,7 +114,7 @@ describe('Api', function() {
 
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
-      'getProcessedConfig', 'forkNewDriverInstance', 
+      'getProcessedConfig', 'forkNewDriverInstance', 'useAllAngular2AppRoots',
       'waitForAngular', 'findElement', 'findElements', 'isElementPresent',
       'addMockModule', 'clearMockModules', 'removeMockModule',
       'getRegisteredMockModules', 'get', 'refresh', 'navigate', 'setLocation',

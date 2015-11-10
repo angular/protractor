@@ -262,7 +262,7 @@ exports.config = {
   // ---------------------------------------------------------------------------
 
   // Test framework to use. This may be one of:
-  //  jasmine, jasmine2, cucumber, mocha or custom.
+  // jasmine, cucumber, mocha or custom.
   //
   // When the framework is set to "custom" you'll need to additionally
   // set frameworkPath with the path relative to the config file or absolute
@@ -271,26 +271,12 @@ exports.config = {
   // See github.com/angular/protractor/blob/master/lib/frameworks/README.md
   // to comply with the interface details of your custom implementation.
   //
-  // Jasmine and Jasmine2 are fully supported as test and assertion frameworks.
+  // Jasmine is fully supported as test and assertion frameworks.
   // Mocha and Cucumber have limited support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
-  // Options to be passed to minijasminenode.
-  //
-  // See the full list at https://github.com/juliemr/minijasminenode/tree/jasmine1
-  jasmineNodeOpts: {
-    // If true, display spec names.
-    isVerbose: false,
-    // If true, print colors to the terminal.
-    showColors: true,
-    // If true, include stack traces in failures.
-    includeStackTrace: true,
-    // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 30000
-  },
-
-  // Options to be passed to jasmine2.
+  // Options to be passed to jasmine.
   //
   // See https://github.com/jasmine/jasmine-npm/blob/master/lib/jasmine.js
   // for the exact options available.
@@ -325,5 +311,13 @@ exports.config = {
     tags: '@dev',
     // How to format features (default: progress)
     format: 'summary'
-  }
+    // Other options include `coffee`, `noSnippets`, and `dryRun`
+  },
+
+  // See docs/plugins.md
+  plugins: [],
+
+  // Turns off source map support.  Stops protractor from registering global
+  // variable `source-map-support`.  Defaults to `false`
+  skipSourceMapSupport: false
 };

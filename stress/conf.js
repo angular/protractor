@@ -61,10 +61,5 @@ exports.config = {
     'platform': 'Windows 7'
   }],
 
-  baseUrl: env.baseUrl,
-
-  jasmineNodeOpts: {
-    isVerbose: true,
-    showTiming: true
-  }
+  baseUrl: env.baseUrl
 };

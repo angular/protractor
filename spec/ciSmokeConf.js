@@ -6,7 +6,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   specs: [
     'basic/locators_spec.js',
@@ -24,7 +24,7 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '44',
-    'selenium-version': '2.47.1',
+    'selenium-version': '2.48.2',
     'chromedriver-version': '2.19',
     'platform': 'OS X 10.9'
   }, {
@@ -33,7 +33,7 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '39',
-    'selenium-version': '2.47.1'
+    'selenium-version': '2.48.2'
   }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -55,7 +55,7 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '11',
-    'selenium-version': '2.47.1',
+    'selenium-version': '2.48.2',
     'platform': 'Windows 7'
   }, {
     'browserName': 'internet explorer',
@@ -63,7 +63,7 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '10',
-    'selenium-version': '2.47.1',
+    'selenium-version': '2.48.2',
     'platform': 'Windows 7'
   }],
 
@@ -74,7 +74,6 @@ exports.config = {
   getPageTimeout: 30000,
 
   jasmineNodeOpts: {
-    isVerbose: true,
     showTiming: true,
     defaultTimeoutInterval: 90000
   },
