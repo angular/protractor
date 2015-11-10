@@ -9,9 +9,11 @@ Each file details the adapter for one test framework. Each file must export a `r
 /**
  * @param {Runner} runner The Protractor runner instance.
  * @param {Array.<string>} specs A list of absolute filenames.
+ * @param {function(string): string} resolvePath resolves a path relative to the
+ *     config file
  * @return {q.Promise} Promise resolved with the test results
  */
-exports.run = function(runner, specs)
+exports.run = function(runner, specs, resolvePath)
 ```
 
 Requirements
