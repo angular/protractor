@@ -279,7 +279,7 @@ exports.config = {
   // ---------------------------------------------------------------------------
 
   // Test framework to use. This may be one of:
-  // jasmine, cucumber, mocha or custom.
+  // jasmine, mocha or custom.
   //
   // When the framework is set to "custom" you'll need to additionally
   // set frameworkPath with the path relative to the config file or absolute
@@ -289,7 +289,7 @@ exports.config = {
   // to comply with the interface details of your custom implementation.
   //
   // Jasmine is fully supported as test and assertion frameworks.
-  // Mocha and Cucumber have limited support. You will need to include your
+  // Mocha has limited support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
   framework: 'jasmine',
 
@@ -319,7 +319,7 @@ exports.config = {
     reporter: 'list'
   },
 
-  // Options to be passed to Cucumber.
+  // Options to be passed to Cucumber (when set up as a custom framework).
   cucumberOpts: {
     // Require files before executing the features.
     require: 'cucumber/stepDefinitions.js',
