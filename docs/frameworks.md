@@ -1,7 +1,7 @@
 Choosing a Framework
 ====================
 
-Protractor supports three behavior driven development (BDD) test frameworks: Jasmine, Mocha, and Cucumber. These frameworks are based on JavaScript and Node.js and provide the syntax, scaffolding, and reporting tools you will use to write and manage your tests.
+Protractor supports two behavior driven development (BDD) test frameworks out of the box: Jasmine and Mocha. These frameworks are based on JavaScript and Node.js and provide the syntax, scaffolding, and reporting tools you will use to write and manage your tests.
 
 
 Using Jasmine
@@ -58,27 +58,34 @@ For a full example, see Protractor’s own test: [/spec/mocha/lib_spec.js](/spec
 Using Cucumber
 --------------
 
-_Note: Limited support for Cucumber is available as of January 2015. Support for Cucumber in Protractor is maintained by the community, so bug fixes may be slow. For more information, see the [Cucumber GitHub site](https://github.com/cucumber/cucumber-js)._
+_Note: Cucumber is no longer included by default as of version `3.0`. You can integrate Cucumber with Protractor with the `custom` framework option. For more information, see the [Protractor Cucumber Framework site](https://github.com/mattfritz/protractor-cucumber-framework) or the [Cucumber GitHub site](https://github.com/cucumber/cucumber-js)._
 
 
 If you would  like to use the Cucumber test framework, download the dependencies with npm. Cucumber should be installed in the same place as Protractor - so if protractor was installed globally, install Cucumber with -g.
 
 ```
 npm install -g cucumber
+npm install --save-dev protractor-cucumber-framework
 ```
 
-Set the 'framework' property to cucumber, either by adding `framework: 'cucumber'` to the [config file](../spec/cucumberConf.js) or by adding `--framework=cucumber` to the command line.
+Set the 'framework' property to custom by adding `framework: 'custom'` and `frameworkPath: 'protractor-cucumber-framework'` to the [config file](../spec/cucumberConf.js)
 
 Options for Cucumber such as 'format' can be given in the config file with cucumberOpts:
 
 ```js
-cucumberOpts: {
-  format: "summary"
-}
+exports.config = {
+  // set to "custom" instead of cucumber.
+  framework: 'custom',
+
+  // path relative to the current config file
+  frameworkPath: 'protractor-cucumber-framework'
+
+  // relevant cucumber command line options
+  cucumberOpts: {
+    format: "summary"
+  }
+};
 ```
-
-For a full example, see Protractor’s own test: [/spec/cucumber/lib.feature](/spec/cucumber/lib.feature).
-
 
 Using a Custom Framework
 ------------------------

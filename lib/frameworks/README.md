@@ -29,7 +29,7 @@ Requirements
 
  - `runner.getConfig().onComplete` must be called when tests are finished.
 
- - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults` 
+ - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults`
  object of the following structure:
  ```
    specResults = [{
@@ -37,7 +37,7 @@ Requirements
      assertions: [{
        passed: boolean,
        errorMsg: string,
-       stackTrace: string 
+       stackTrace: string
      }],
      duration: integer
    }]
@@ -46,14 +46,14 @@ Requirements
 Custom Frameworks
 -----------------
 
-If you have created/adapted a custom framework and want it added to 
-Protractor core please send a PR so it can evaluated for addition as an 
+If you have created/adapted a custom framework and want it added to
+Protractor core please send a PR so it can evaluated for addition as an
 official supported framework. In the meantime you can instruct Protractor
 to use your own framework via the config file:
 
 ```js
 exports.config = {
-  // set to "custom" instead of jasmine/mocha/cucumber.
+  // set to "custom" instead of jasmine/mocha
   framework: 'custom',
   // path relative to the current config file
   frameworkPath: './frameworks/my_custom_jasmine.js',
