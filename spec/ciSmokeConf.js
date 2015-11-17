@@ -23,7 +23,7 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '44',
+    'version': '45',
     'selenium-version': '2.48.2',
     'chromedriver-version': '2.19',
     'platform': 'OS X 10.9'
@@ -32,14 +32,14 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '39',
+    'version': '41',
     'selenium-version': '2.48.2'
   }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '7',
+    'version': '8',
     'selenium-version': '2.44.0' // Use an old version because Safari has
                                  // issues loading pages after 2.44.
   }, {
@@ -47,7 +47,7 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '8',
+    'version': '9',
     'selenium-version': '2.44.0'
   }, {
     'browserName': 'internet explorer',
