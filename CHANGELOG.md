@@ -1,3 +1,83 @@
+# 3.0.0
+
+_We're releasing version 3.0 with some breaking changes. In summary - Jasmine 1.3 is removed, only Jasmine 2 is now supported, old Node.JS support is dropped, and plugins now need to be explicitly required. Full details below._
+
+## Dependency Version Upgrades
+
+- ([18e1f71](https://github.com/angular/protractor/commit/18e1f71a4dd868709f4e259e05a8a196921e22be)) 
+  chore(webdriver): upgrade Protractor to webdriver 2.48.2
+
+- ([1f44a6e](https://github.com/angular/protractor/commit/1f44a6ef3f7ae8680a03a3cc7a7c06f75a8c7d4c)) 
+  chore(deps): bump chromedriver and iedriver versions IEDriver from 2.47.0 to 2.48.0
+
+  ChromeDriver from 2.19 to 2.20. Changelog: 
+  http://chromedriver.storage.googleapis.com/2.20/notes.txt
+
+## Features
+
+- ([97e6703](https://github.com/angular/protractor/commit/97e6703eb0e7a5dffc1017d0a44f0dfeeb91f327)) 
+  feat(protractor): Add protractor.prototype.restart
+
+- ([2007f06](https://github.com/angular/protractor/commit/2007f06078b6569a2cfd9f361f17d765c07bc7f8)) 
+  feat(protractor): add flag to stop protractor from tracking $timeout
+
+- ([a40a4ba](https://github.com/angular/protractor/commit/a40a4ba2a509bc762f1f5937454fdbf074405f07)) 
+  feat(ElementArrayFinder#get): Implemented ability to pass promise as index to
+  ElementArrayFinder#get
+
+- ([a54c0e0](https://github.com/angular/protractor/commit/a54c0e0d72b9d7d1d8364ade5046e5007ff53906)) 
+  feat(plugins): Add config option to disable logging of warnings in console plugin
+
+  Running tests in multiple browsers ends up printing out a lot of useless warnings I'm already
+  aware of. To make skimming through logs in the case of an actual failure easier, I want to be able
+  to disable the logging of warnings in the console plugin.
+
+- ([7015010](https://github.com/angular/protractor/commit/7015010188dfb70c1e49e4f2eae19d5ba1126b34)) 
+  feat(driver providers): Add BrowserStack support.
+
+  Also added BrowserStack to CI
+
+## Bug Fixes
+
+- ([7cba4ec](https://github.com/angular/protractor/commit/7cba4ecf0f3915dfec33dbc04decd42857744b37)) 
+  fix(ng-repeat): properly detect the end of an ng-repeat-start block
+
+  Discovered while investigating issue #2365
+
+## Breaking Changes
+
+- ([2bde92b](https://github.com/angular/protractor/commit/2bde92b3e745e09ad3876932b2d187365e9aaa31)) 
+  chore(jasmine): remove jasmine 1.3
+
+  and update docs. Also, use jasmine 2 for running all Protractor's unit tests.
+
+  BREAKING CHANGE: Now, both jasmine and jasmine2 frameworks use jasmine 2.3. Users still using 
+  jasmine version <2 will have to upgrade.
+
+- ([18e1f71](https://github.com/angular/protractor/commit/18e1f71a4dd868709f4e259e05a8a196921e22be)) 
+  chore(webdriver): upgrade Protractor to webdriver 2.48.2
+
+  BREAKING CHANGE: 1) Users will no longer be able to use node versions <4. 2) There is significant
+  changes to the control flow, and tests may need to be
+    modified to be compliant with the new control flow. See
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+
+- ([ac1e21e](https://github.com/angular/protractor/commit/ac1e21e7e09a773de981bf9e70b0fcd489d17a83)) 
+  chore(plugins): Split first party plugins into seperate repos
+
+  BREAKING CHANGE:
+
+  The Accessibility, NgHint, Timeline, and Console plugins are now located in their own separate
+  node modules. You will need to explicitly require each module you use. See https://github.com/angular/protractor/blob/master/docs/plugins.md#first-party-plugins for info for each module.
+
+- ([ddb8584](https://github.com/angular/protractor/commit/ddb8584a59343284904676ef6d8db5c1c996b900)) 
+  chore(cucumber): Remove cucumber from internal implementation
+
+  BREAKING CHANGE:
+
+  Cucumber has been community maintianed for a while, and in order to allow it to move faster, it is no longer part of the core Protractor library. It is now published on npm under `protractor-cucumber-framework` and will require setting `frameworkPath` in your configuration file. See https://github.com/angular/protractor/blob/master/docs/frameworks.md#using-cucumber for full instructions on use now.
+
+
 # 2.5.1
 _This release is a hotfix for node 0.10 support_
 
