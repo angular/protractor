@@ -75,7 +75,7 @@ _We're releasing version 3.0 with some breaking changes. In summary - Jasmine 1.
 
   BREAKING CHANGE:
 
-  Cucumber has been community maintianed for a while, and in order to allow it to move faster, it is no longer part of the core Protractor library. It is now published on npm under `protractor-cucumber-framework` and will require setting `frameworkPath` in your configuration file. See https://github.com/angular/protractor/blob/master/docs/frameworks.md#using-cucumber for full instructions on use now.
+  Cucumber has been community maintained for a while, and in order to allow it to move faster, it is no longer part of the core Protractor library. It is now published on npm under `protractor-cucumber-framework` and will require setting `frameworkPath` in your configuration file. See https://github.com/angular/protractor/blob/master/docs/frameworks.md#using-cucumber for full instructions on use now.
 
 
 # 2.5.1
