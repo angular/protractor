@@ -136,7 +136,16 @@ jasmine.Spec.prototype.addExpectationResult = function() {
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
-You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Make sure that you are using the correct version of jasmine-reporters for your version of Jasmine.
+You can use the npm package jasmine-reporters@^2.0.0 and add a JUnit XML Reporter in the `onPrepare` block. This would look something like:
+
+```
+var jasmineReporters = require('jasmine-reporters');
+jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
+    consolidateAll: true,
+    savePath: 'testresults',
+    filePrefix: 'reportXMLoutput'
+}));
+```
 
 How can I catch errors such as ElementNotFound?
 -----------------------------------------------
