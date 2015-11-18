@@ -40,16 +40,25 @@
 <ul>
 <li><code ng-non-bindable>seleniumAddress</code> -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.</li>
 </ul>
-<p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
+<p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>browserstackUser</code>, <code ng-non-bindable>browserstackKey</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
 <h2 id="remote-selenium-server" class="anchored"><div><a href="#{{path}}#remote-selenium-server">&#x1f517;</a>Remote Selenium Server</div></h2>
-<p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="http://www.saucelabs.com">Sauce Labs</a>.</p>
+<p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="https://www.browserstack.com">BrowserStack</a> and <a href="http://www.saucelabs.com">Sauce Labs</a>.</p>
+<p><strong>Using BrowserStack as remote Selenium Server</strong></p>
+<p>In your config file, set these options:</p>
+<ul>
+<li><code ng-non-bindable>browserstackUser</code> -  The username for your BrowserStack account.</li>
+<li><code ng-non-bindable>browserstackKey</code> -  The key for your BrowserStack account.</li>
+</ul>
+<p>Please note that if you set <code ng-non-bindable>browserstackUser</code> and <code ng-non-bindable>browserstackKey</code>, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
+<p>You can optionally set the <a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js#L121"><code ng-non-bindable>name</code> property</a> in a capability in order to give the jobs a name on the server.  Otherwise they will just be allotted a random hash.</p>
+<p><strong>Using Sauce Labs as remote Selenium Server</strong></p>
 <p>In your config file, set these options:</p>
 <ul>
 <li><code ng-non-bindable>sauceUser</code> -  The username for your Sauce Labs account.</li>
 <li><code ng-non-bindable>sauceKey</code> -  The key for your Sauce Labs account.</li>
 </ul>
-<p>Please note that if you set <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code>, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code> and <code ng-non-bindable>seleniumArgs</code> will be ignored.</p>
-<p>You can optionally set the <a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js#L113"><code ng-non-bindable>name</code> property</a> in a capability in order to give the jobs a name on the server.  Otherwise they will just be called <code ng-non-bindable>Unnamed Job</code>.</p>
+<p>Please note that if you set <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code>, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>browserstackUser</code> and <code ng-non-bindable>browserstackKey</code> will be ignored.</p>
+<p>You can optionally set the <a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js#L121"><code ng-non-bindable>name</code> property</a> in a capability in order to give the jobs a name on the server.  Otherwise they will just be called <code ng-non-bindable>Unnamed Job</code>.</p>
 <h2 id="connecting-directly-to-browser-drivers" class="anchored"><div><a href="#{{path}}#connecting-directly-to-browser-drivers">&#x1f517;</a>Connecting Directly to Browser Drivers</div></h2>
 <p>Protractor can test directly against Chrome and Firefox without using a Selenium Server. To use this, in your config file set <code ng-non-bindable>directConnect: true</code>.</p>
 <ul>

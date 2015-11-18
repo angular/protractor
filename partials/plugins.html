@@ -8,13 +8,8 @@ without a major version bump.</p>
 <ul>
 <li><a href="#/plugins#using-plugins">Using Plugins</a></li>
 <li><a href="#/plugins#writing-plugins">Writing Plugins</a></li>
-<li>Default Plugins<ul>
-<li><a href="#/plugins#accessibility-plugin">Accessibility Plugin</a></li>
-<li><a href="#/plugins#nghint-plugin">ngHint Plugin</a></li>
-<li><a href="#/plugins#timeline-plugin">Timeline Plugin</a></li>
-<li><a href="#/plugins#console-plugin-chrome-only">Console Plugin</a></li>
-</ul>
-</li>
+<li><a href="#/plugins#first-party-plugins">First Party Plugins</a></li>
+<li><a href="#/plugins#community-plugins">Community Plugins</a></li>
 </ul>
 <h2 id="using-plugins" class="anchored"><div><a href="#{{path}}#using-plugins">&#x1f517;</a>Using Plugins</div></h2>
 <p>Plugins are enabled via your config file.</p>
@@ -261,140 +256,44 @@ exports.addWarning(message, options);
 </code></pre>
 <p>If you specify any of these properties in your plugin file, they will be
 overwritten.</p>
-<h2 id="accessibility-plugin" class="anchored"><div><a href="#{{path}}#accessibility-plugin">&#x1f517;</a>Accessibility Plugin</div></h2>
-<p>Protractor comes with support for two accessibility testing options:</p>
+<h2 id="first-party-plugins" class="anchored"><div><a href="#{{path}}#first-party-plugins">&#x1f517;</a>First Party Plugins</div></h2>
 <ul>
-<li>Accessibility Developer Tools</li>
-<li>Tenon.io</li>
+<li><p>Accessibility Plugin</p>
+<p>The accessibility plugin runs a set of accessibility audits on your webapp.
+It is published at the npm module [<code ng-non-bindable>protractor-accessibility-plugin</code>]
+(<a href="https://www.npmjs.com/package/protractor-accessibility-plugin">https://www.npmjs.com/package/protractor-accessibility-plugin</a>) and stored at
+the github repo [angular/protractor-accessibility-plugin]
+(<a href="https://github.com/angular/protractor-accessibility-plugin">https://github.com/angular/protractor-accessibility-plugin</a>).</p>
+</li>
+<li><p>Timeline Plugin</p>
+<p>The timeline plugin gathers test timeline information from various sources and
+presents the output visually.  This improves understanding of where latency
+issues are in tests.  It is published at the npm module
+[<code ng-non-bindable>protractor-timeline-plugin</code>]
+(<a href="https://www.npmjs.com/package/protractor-timeline-plugin">https://www.npmjs.com/package/protractor-timeline-plugin</a>) and stored at the
+github repo [angular/protractor-timeline-plugin]
+(<a href="https://github.com/angular/protractor-timeline-plugin">https://github.com/angular/protractor-timeline-plugin</a>).</p>
+</li>
+<li><p>ngHint Plugin</p>
+<p>The ngHint plugin uses <a href="https://github.com/angular/angular-hint">Angular Hint</a>
+to generate run-time hinting and then turns these hints into Protractor tests.
+It is published at the npm module [<code ng-non-bindable>protractor-ng-hint-plugin</code>]
+(<a href="https://www.npmjs.com/package/protractor-ng-hint-plugin">https://www.npmjs.com/package/protractor-ng-hint-plugin</a>) and stored at the
+github repo [angular/protractor-ng-hint-plugin]
+(<a href="https://github.com/angular/protractor-ng-hint-plugin">https://github.com/angular/protractor-ng-hint-plugin</a>).</p>
+</li>
+<li><p>Console Plugin (Chrome Only)</p>
+<p>The console plugin checks the browser log after each test for warnings and
+errors.  It is published at the npm module [<code ng-non-bindable>protractor-console-plugin</code>]
+(<a href="https://www.npmjs.com/package/protractor-console-plugin">https://www.npmjs.com/package/protractor-console-plugin</a>) and stored at the
+github repo [angular/protractor-console-plugin]
+(<a href="https://github.com/angular/protractor-console-plugin">https://github.com/angular/protractor-console-plugin</a>).</p>
+</li>
 </ul>
-<p>Protractor will run each set of audits (depending on your configuration) on your existing end-to-end
-tests to ensure your site is free of obvious errors. In this kind of testing, there is no concept of
-&quot;warnings&quot;–only pass or fail. In your configuration, you can decide whether warnings should
-pass or fail your build.</p>
-<p>To understand how each of these tools can be used, see this support matrix:</p>
-<table class="table table-striped">
-<thead>
-<tr>
-<th>Testing Library</th>
-<th>Pricing</th>
-<th>API Key</th>
-<th>External Request</th>
-<th>No. of Tests</th>
-<th>Info</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Chrome Accessibility Developer Tools</td>
-<td>Free</td>
-<td>No</td>
-<td>No</td>
-<td>14</td>
-<td><a href="https://github.com/GoogleChrome/accessibility-developer-tools">Github</a></td>
-</tr>
-<tr>
-<td>Tenon.io</td>
-<td>Free limited accounts, paid subscriptions</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>63</td>
-<td><a href="http://tenon.io/">Tenon.io</a></td>
-</tr>
-</tbody>
-</table>
-<p>Protractor now supports the <a href="https://github.com/GoogleChrome/accessibility-developer-tools">Accessibility Developer Tools</a>, the same audit library used by the <a href="https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en">Chrome browser extension</a>. Protractor
-<a href="https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules">runs an audit</a>
-locally by injecting the Dev Tools script into WebDriver pages, and it can diagnose issues including
-missing labels, incorrect ARIA attributes and color contrast. This is a great starting point if
-you can&#39;t send source code over the wire through an API.</p>
-<p><a href="http://www.tenon.io">Tenon.io</a> has a more robust set of tests to help you find
-accessibility issues, but it requires <a href="http://tenon.io/register.php">registering</a> for an API key
-and making an external request for each test, which may not work for everyone. Some people use
-Tenon with introspection services like ngrok or localtunnel to securely
-test local web servers. Protractor takes the <a href="http://tenon.io/documentation/understanding-request-parameters.php">options you provide</a> in the plugin configuration and sends them
-with the page source to the Tenon API. One limitation of this approach is that all scripts must be reachable from the page source as a string, for example, by using a CDN.
-For projects with an MIT license, Tenon is free but with a limited
-daily API limit. Paid subscriptions are available for enterprise and commercial projects.</p>
-<p>Enable this plugin in your config file:</p>
-<pre><code class="lang-js">  // Chrome Accessibility Dev Tools only:
-  exports.config = {
-      ...
-      plugins: [{
-        chromeA11YDevTools: {
-          treatWarningsAsFailures: true
-        },
-        path: &#39;node_modules/protractor/plugins/accessibility&#39;
-      }]
-    }
-</code></pre>
-<pre><code class="lang-js">  // Tenon.io only:
-  exports.config = {
-      ...
-      plugins: [{
-        tenonIO: {
-          options: {
-            // See http://tenon.io/documentation/understanding-request-parameters.php
-            // options.src will be added by the test.
-          },
-          printAll: false, // whether the plugin should log API response
-        },
-        chromeA11YDevTools: true,
-        path: &#39;node_modules/protractor/plugins/accessibility&#39;
-      }]
-    }
-</code></pre>
-<h2 id="nghint-plugin" class="anchored"><div><a href="#{{path}}#nghint-plugin">&#x1f517;</a>ngHint Plugin</div></h2>
-<p>ngHint adds run-time hinting to AngularJS projects. This plugin bubbles those hints up to the
-command line so they can be used in automated testing.</p>
-<p>You enable this plugin in your config file:</p>
-<pre><code class="lang-js">exports.config = {
-  plugins: [{
-    path: &#39;node_modules/protractor/plugins/ngHint&#39;,
-
-    asTests: {Boolean},
-    excludeURLs: {(String|RegExp)[]}
-  }]
-};
-</code></pre>
-<p><code ng-non-bindable>asTests</code> specifies if the plugin should generate passed/failed test results
-based on the ngHint output or instead log the results to the console.
-Defaults to true.</p>
-<p><code ng-non-bindable>excludeURLs</code> specifies a list of URLs for which ngHint results should be
-ignored. Defaults to []</p>
-<h2 id="timeline-plugin" class="anchored"><div><a href="#{{path}}#timeline-plugin">&#x1f517;</a>Timeline Plugin</div></h2>
-<p>This plugin gathers test timeline information from the protractor test process, the selenium
-client logs (if available), and sauce labs (if available), and presents the output visually.
-This improves understanding of where latency issues are in tests.</p>
-<p>To enable the Timeline plugin, set it up in your config file:</p>
-<pre><code class="lang-js">exports.config = {
-  plugins: [{
-   path: &#39;node_modules/protractor/plugins/timeline/index.js&#39;,
-
-    // Output json and html will go in this folder.
-   outdir: &#39;timelines&#39;,
-
-    // Optional - if sauceUser and sauceKey are specified, logs from
-   // SauceLabs will also be parsed after test invocation.
-     sauceUser: &#39;Jane&#39;,
-     sauceKey: &#39;abcdefg&#39;
-   }],
-  // other configuration settings
-};
-</code></pre>
-<h2 id="console-plugin-chrome-only-" class="anchored"><div><a href="#{{path}}#console-plugin-chrome-only-">&#x1f517;</a>Console Plugin (Chrome only)</div></h2>
-<p>This plugin checks the browser log after each test for warnings and errors.  It
-can be configured to fail a test if either is detected.  There is also an
-optional exclude parameter which accepts both regex and strings.  Any log
-matching the exclude parameter will not fail the test or be logged to the
-console.</p>
-<pre><code class="lang-js">exports.config = {
-  plugins: [{
-    path: &#39;node_modules/protractor/plugins/console&#39;,
-    failOnWarning: {Boolean}                (Default - false),
-    failOnError: {Boolean}                  (Default - true)
-    exclude: {Array of strings and regex}   (Default - [])
-  }]
-};
-</code></pre>
-<p>Note that this plugin&#39;s behavior is undefined on browsers other than Chrome.
-Firefox users have reported flaky results.</p>
+<h2 id="community-plugins" class="anchored"><div><a href="#{{path}}#community-plugins">&#x1f517;</a>Community Plugins</div></h2>
+<p>This list is here for reference and the plugins included are not developed or
+mantained by protractor&#39;s team by any means. If you find any issues with this
+plugins please report them to the corresponding plugin developer.</p>
+<ul>
+<li><a href="https://github.com/alfonso-presa/protractor-testability-plugin">Protractor testability plugin</a>: this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.</li>
+</ul>

@@ -1,7 +1,7 @@
 <h1 id="the-webdriver-control-flow">The WebDriver Control Flow</h1>
 <p>The <a href="https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#understanding_the_api">WebDriverJS API</a> is based on <a href="https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#promises">promises</a>,
 which are managed by a <a href="https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#control-flows">control flow</a>
-and adapted for <a href="http://jasmine.github.io/1.3/introduction.html">Jasmine</a>.
+and adapted for <a href="http://jasmine.github.io/2.3/introduction.html">Jasmine</a>.
 A short summary about how Protractor interacts with the control flow is presented below.</p>
 <h2 id="promises-and-the-control-flow" class="anchored"><div><a href="#{{path}}#promises-and-the-control-flow">&#x1f517;</a>Promises and the Control Flow</div></h2>
 <p>WebDriverJS (and thus, Protractor) APIs are entirely asynchronous. All functions
@@ -28,8 +28,7 @@ back. The value of <code ng-non-bindable>name.getText()</code> at point A is an 
 object.</p>
 <h2 id="protractor-adaptations" class="anchored"><div><a href="#{{path}}#protractor-adaptations">&#x1f517;</a>Protractor Adaptations</div></h2>
 <p>Protractor adapts Jasmine so that each spec automatically waits until the
-control flow is empty before exiting. This means you don&#39;t need to worry
-about calling runs() and waitsFor() blocks. </p>
+control flow is empty before exiting.</p>
 <p>Jasmine expectations are also adapted to understand promises. That&#39;s why this
 line works - the code actually adds an expectation task to the control flow,
 which will run after the other tasks:</p>

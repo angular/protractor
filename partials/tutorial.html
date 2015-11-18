@@ -31,12 +31,12 @@ describe(&#39;Protractor Demo App&#39;, function() {
 <p>Now create the configuration file. Copy the following into conf.js:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
-  framework: &#39;jasmine2&#39;,
+  framework: &#39;jasmine&#39;,
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
   specs: [&#39;spec.js&#39;]
 }
 </code></pre>
-<p>This configuration tells Protractor where your test files (<code ng-non-bindable>specs</code>) are, and where to talk to your Selenium Server (<code ng-non-bindable>seleniumAddress</code>). It specifies that we will be using Jasmine version 2 for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.</p>
+<p>This configuration tells Protractor where your test files (<code ng-non-bindable>specs</code>) are, and where to talk to your Selenium Server (<code ng-non-bindable>seleniumAddress</code>). It specifies that we will be using Jasmine for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.</p>
 <p>Now run the test with</p>
 <pre><code ng-non-bindable>protractor conf.js
 </code></pre><p>You should see a Chrome browser window open up and navigate to the Calculator, then close itself (this should be very fast!). The test output should be <code ng-non-bindable>1 tests, 1 assertion, 0 failures</code>. Congratulations, you&#39;ve run your first Protractor test!</p>
@@ -105,7 +105,7 @@ describe(&#39;Protractor Demo App&#39;, function() {
 <p>Now that we&#39;ve written some basic tests, let&#39;s take a look at the configuration file. The configuration file lets you change things like which browsers are used and how to connect to the Selenium Server. Let&#39;s change the browser. Change conf.js to the following:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
-  framework: &#39;jasmine2&#39;,
+  framework: &#39;jasmine&#39;,
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
   specs: [&#39;spec.js&#39;],
   capabilities: {
@@ -117,7 +117,7 @@ exports.config = {
 <p>You can also run tests on more than one browser at once. Change conf.js to:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
-  framework: &#39;jasmine2&#39;,
+  framework: &#39;jasmine&#39;,
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
   specs: [&#39;spec.js&#39;],
   multiCapabilities: [{
