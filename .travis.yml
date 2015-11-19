@@ -12,6 +12,7 @@ env:
     - BROWSER_STACK_ACCESS_KEY=BWCd4SynLzdDcv8xtzsB
     - LOGS_DIR=/tmp/protractor-build/logs
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
+    - CXX=g++-4.8
   matrix:
     - JOB=full
     - JOB=smoke
@@ -27,6 +28,15 @@ matrix:
     - env: JOB=bstack
       node_js: "5"
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+before_install:
+  - g++-4.8 --version
 
 before_script:
   - npm run pretest
