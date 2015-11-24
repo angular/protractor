@@ -3,6 +3,12 @@ Protractor [![Build Status](https://travis-ci.org/angular/protractor.png?branch=
 
 [Protractor](http://angular.github.io/protractor) is an end-to-end test framework for [AngularJS](http://angularjs.org/) applications. Protractor is a [Node.js](http://nodejs.org/) program built on top of [WebDriverJS](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs). Protractor runs tests against your application running in a real browser, interacting with it as a user would. 
 
+Compatibility
+-------------
+
+Protractor 3 is compatible with nodejs v4 and newer.
+
+When using nodejs v0.12, use protractor 2 (`npm install -g protractor@2`).
 
 Getting Started
 ---------------
