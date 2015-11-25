@@ -34,7 +34,7 @@ Using ElementFinders
 In Protractor, you use the `element` function to find and interact with elements
 through an `ElementFinder` object. This extends a WebDriver `WebElement` by
 adding chaining and utilities for dealing with lists. See
-[locators#actions](/docs/locators) for details.
+[locators#actions](/docs/locators.md#actions) for details.
 
 Jasmine Integration
 -------------------
