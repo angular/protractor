@@ -99,6 +99,9 @@ exports.config = {
     smoke: 'spec/smoketests/*.js',
     full: 'spec/*.js'
   },
+  // If you would like protractor to use a specific suite by default instead of
+  // all suites, you can put that in the config file as well.
+  suite: null,
 
   // ---------------------------------------------------------------------------
   // ----- How to set up browsers ----------------------------------------------
