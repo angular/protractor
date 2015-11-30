@@ -117,7 +117,7 @@ export class ConfigParser {
 
     if (patterns) {
       for (let fileName of patterns) {
-        let matches = glob.sync(fileName, {cwd});
+        let matches = glob.hasMagic(fileName) ? glob.sync(fileName, {cwd}) : [fileName];
         if (!matches.length && !opt_omitWarnings) {
           logger.warn('pattern ' + fileName + ' did not match any files.');
         }

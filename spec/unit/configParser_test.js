@@ -129,5 +129,15 @@ describe('the config parser', function() {
       expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
       expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
+
+    it('should not try to expand non-glob patterns', function() {
+      var toAdd = {
+        specs: 'data/fakespecA.js:5'
+      };
+      var config = new ConfigParser().addConfig(toAdd).getConfig();
+      var specs = ConfigParser.resolveFilePatterns(config.specs);
+      expect(specs.length).toEqual(1);
+      expect(specs[0].indexOf(path.normalize('data/fakespecA.js:5'))).not.toEqual(-1);
+    });
   });
 });
