@@ -17,7 +17,7 @@
     "jasminewd2": "0.0.6",
     "jasmine": "2.3.2",
     "saucelabs": "~1.0.1",
-    "glob": "~3.2",
+    "glob": "~5.0",
     "adm-zip": "0.4.4",
     "optimist": "~0.6.0",
     "q": "1.0.0",
