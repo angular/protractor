@@ -13,10 +13,8 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "request": "~2.57.0",
-    "selenium-webdriver": "2.45.1",
-    "minijasminenode": "1.1.1",
-    "jasminewd": "1.1.0",
-    "jasminewd2": "0.0.5",
+    "selenium-webdriver": "2.48.2",
+    "jasminewd2": "0.0.6",
     "jasmine": "2.3.2",
     "saucelabs": "~1.0.1",
     "glob": "~3.2",
@@ -24,9 +22,7 @@
     "optimist": "~0.6.0",
     "q": "1.0.0",
     "lodash": "~2.4.1",
-    "source-map-support": "~0.2.6",
-    "html-entities": "~1.1.1",
-    "accessibility-developer-tools": "~2.6.0"
+    "source-map-support": "~0.3.2"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
@@ -34,7 +30,6 @@
     "chai-as-promised": "~5.1.0",
     "jshint": "2.5.0",
     "mocha": "2.3.3",
-    "cucumber": "~0.6.0",
     "express": "~3.3.4",
     "rimraf": "~2.2.6"
   },
@@ -53,5 +48,5 @@
     "start": "node testapp/scripts/web-server.js"
   },
   "license": "MIT",
-  "version": "2.3.0"
+  "version": "3.0.0"
 }

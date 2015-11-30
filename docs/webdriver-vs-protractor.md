@@ -39,7 +39,7 @@ adding chaining and utilities for dealing with lists. See
 Jasmine Integration
 -------------------
 
-Protractor uses [`jasminewd`](https://github.com/angular/jasminewd), which
+Protractor uses [`jasminewd2`](https://github.com/angular/jasminewd), which
 wraps around jasmine's `expect` so that you can write:
 ```js
 expect(el.getText()).toBe('Hello, World!')

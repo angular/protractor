@@ -106,18 +106,7 @@ The method to take a screenshot automatically on failure would depend on the typ
 * For failures of entire specs (such as timeout or an expectation within the spec failed), you can add a reporter as below:
 
 ```javascript
-// Note: this is using Jasmine 1.3 reporter syntax.
-jasmine.getEnv().addReporter(new function() {
-  this.reportSpecResults = function(spec) {
-    if (!spec.results().passed()) {
-      //take screenshot
-    }
-  };
-});
-```
-
-```javascript
-// Note: this is using Jasmine 2.1 reporter syntax.
+// Note: this is using Jasmine 2 reporter syntax.
 jasmine.getEnv().addReporter(new function() {
   this.specDone = function(result) {
     if (result.failedExpectations.length >0) {
@@ -131,18 +120,7 @@ Note, you can also choose to take a screenshot in `afterEach`. However, because 
 * For failures of individual expectations, you can override jasmine's addMatcherResult/addExpectationResult function as such:
 
 ```javascript
-// Jasmine 1.3.
-var originalAddMatcherResult = jasmine.Spec.prototype.addMatcherResult;
-jasmine.Spec.prototype.addMatcherResult = function() {
-  if (!arguments[0].passed()) {
-    //take screenshot
-  }
-  return originalAddMatcherResult.apply(this, arguments);
-};
-```
-
-```javascript
-// Jasmine 2.1
+// Jasmine 2
 var originalAddExpectationResult = jasmine.Spec.prototype.addExpectationResult;
 jasmine.Spec.prototype.addExpectationResult = function() {
   if (!arguments[0]) {
@@ -158,7 +136,16 @@ jasmine.Spec.prototype.addExpectationResult = function() {
 How do I produce an XML report of my test results?
 --------------------------------------------------
 
-You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this [example (junitOutputConf.js)](https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js). Make sure that you are using the correct version of jasmine-reporters for your version of Jasmine.
+You can use the npm package jasmine-reporters@^2.0.0 and add a JUnit XML Reporter in the `onPrepare` block. This would look something like:
+
+```
+var jasmineReporters = require('jasmine-reporters');
+jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
+    consolidateAll: true,
+    savePath: 'testresults',
+    filePrefix: 'reportXMLoutput'
+}));
+```
 
 How can I catch errors such as ElementNotFound?
 -----------------------------------------------
@@ -191,6 +178,21 @@ but it's interrupted by the reload.
 
 You may need to insert a `browser.wait` condition to make sure the load
 is complete before continuing.
+
+How do I switch off an option in the CLI?
+-----------------------------------------
+i.e. `webdriver-manager update --chrome=false` does not work. 
+This has to do with the way `optimist` parses command line args. In order to pass a false value, do one of the following:
+
+1) `webdriver-manager update --chrome=0`
+
+2) `webdriver-manager update --no-chrome` (see https://github.com/substack/node-optimist#negate-fields)
+
+Why does Protractor fail when I decorate $timeout?
+--------------------------------------------------
+Protractor tracks outstanding $timeouts by default, and reports them in the error message if Protractor fails to synchronize with Angular in time.
+
+However, in order to do this Protractor needs to decorate $timeout. This means if your app decorates $timeout, you must turn off this behavior for Protractor. To do so pass in the 'untrackOutstandingTimeouts' flag. 
 
 I still have a question
 -----------------------

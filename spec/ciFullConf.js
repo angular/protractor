@@ -5,7 +5,7 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   // Spec patterns are relative to this directory.
   specs: [
@@ -22,8 +22,8 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '45',
-    'selenium-version': '2.47.1',
+    'version': '46',
+    'selenium-version': '2.48.2',
     'chromedriver-version': '2.19',
     'platform': 'OS X 10.9'
   }, {
@@ -31,14 +31,13 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '40',
-    'selenium-version': '2.47.1'
+    'version': '42',
+    'selenium-version': '2.48.2'
   }],
 
   baseUrl: env.baseUrl,
 
   jasmineNodeOpts: {
-    isVerbose: true,
     showTiming: true,
     defaultTimeoutInterval: 90000
   },

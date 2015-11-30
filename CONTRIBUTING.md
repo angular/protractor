@@ -16,14 +16,15 @@ Thank you!
 
 
 Issues
-------
+======
 
 If you have a bug or feature request, please file an issue.
 Before submitting an issue, please search the issue archive to help reduce duplicates, and read the
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
-When submitting an issue, please include context from your test and
-your application. Include a reproducible case that we can actually run, if possible. If there's an error, please include the error text. Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
+Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
+
+When submitting an issue, please include a reproducible case that we can actually run. Protractor has a test Angular application available at `http://www.protractortest.org/testapp` which you can use for the reproducible test case. If there's an error, please include the error text.
 
 Please format code and markup in your issue using [github markdown](https://help.github.com/articles/github-flavored-markdown).
 

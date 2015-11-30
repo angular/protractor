@@ -5,7 +5,7 @@
     "bower": "^1.3.9",
     "del": "^0.1.1",
     "dgeni": "^0.4.1",
-    "dgeni-packages": "^0.10.19",
+    "dgeni-packages": "^0.11.1",
     "esprima": "1.1.0",
     "gulp": "^3.8.7",
     "gulp-concat": "^2.3.4",
@@ -15,12 +15,12 @@
     "gulp-minify-css": "^0.3.7",
     "gulp-rename": "^1.2.0",
     "gulp-replace": "^0.4.0",
+    "jasmine": "2.3.2",
     "karma": "^0.12.21",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
     "lodash": "^2.4.1",
-    "marked": "^0.3.3",
-    "minijasminenode": "^1.1.1"
+    "marked": "^0.3.3"
   },
   "scripts": {
     "prepublish": "./node_modules/bower/bin/bower install",
