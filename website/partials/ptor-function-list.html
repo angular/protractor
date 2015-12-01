@@ -14,7 +14,7 @@
             ng-bind="item.displayName">
         </a>
       </td>
-      <td ng-bind="item.shortDescription"></td>
+      <td ng-bind-html="trust(item.shortDescription)"></td>
     </tr>
     </tbody>
   </table>

@@ -14,13 +14,14 @@ exports.config = {
   //
   // Protractor needs to know how to connect to Drivers for the browsers
   // it is testing on. This is usually done through a Selenium Server.
-  // There are four options - specify one of the following:
+  // There are five options - specify one of the following:
   //
   // 1. seleniumServerJar - to start a standalone Selenium Server locally.
   // 2. seleniumAddress - to connect to a Selenium Server which is already
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
-  // 4. directConnect - to connect directly to the browser Drivers.
+  // 4. browserstackUser/browserstackKey - to use remote Selenium Servers via BrowserStack.
+  // 5. directConnect - to connect directly to the browser Drivers.
   //    This option is only available for Firefox and Chrome.
 
   // ---- 1. To start a standalone Selenium Server locally ---------------------
@@ -63,7 +64,13 @@ exports.config = {
   // ondemand.saucelabs.com:80/wd/hub
   sauceSeleniumAddress: null,
 
-  // ---- 4. To connect directly to Drivers ------------------------------------
+  // ---- 4. To use remote browsers via BrowserStack ---------------------------
+  // If browserstackUser and browserstackKey are specified, seleniumServerJar will be ignored.
+  // The tests will be run remotely using BrowserStack.
+  browserstackUser: null,
+  browserstackKey: null,
+
+  // ---- 5. To connect directly to Drivers ------------------------------------
   // Boolean. If true, Protractor will connect directly to the browser Drivers
   // at the locations specified by chromeDriver and firefoxPath. Only Chrome
   // and Firefox are supported for direct connect.
@@ -110,7 +117,7 @@ exports.config = {
 
     // Name of the process executing this capability.  Not used directly by
     // protractor or the browser, but instead pass directly to third parties
-    // like SauceLabs as the name of the job running this test
+    // like BrowserStack and SauceLabs as the name of the job running this test
     name: 'Unnamed Job',
 
     // User defined name for the capability that will display in the results log
@@ -139,6 +146,11 @@ exports.config = {
 
     // Optional: override global seleniumAddress on this capability only.
     seleniumAddress: null
+
+    // Optional: Additional third-party specific capabilities can be
+    // specified here.
+    // For a list of BrowserStack specific capabilities, visit 
+    // https://www.browserstack.com/automate/capabilities
   },
 
   // If you would like to run more than one instance of WebDriver on the same
@@ -197,6 +209,11 @@ exports.config = {
   // capability.
   // You can specify a file containing code to run by setting onPrepare to
   // the filename string.
+  // onPrepare can optionally return a promise, which Protractor will wait for
+  // before continuing execution. This can be used if the preparation involves
+  // any asynchronous calls, e.g. interacting with the browser. Otherwise
+  // Protractor cannot guarantee order of execution and may start the tests
+  // before preparation finishes.
   onPrepare: function() {
     // At this point, global variable 'protractor' object will be set up, and
     // globals from the test framework will be available. For example, if you
@@ -206,7 +223,7 @@ exports.config = {
     //
     // If you need access back to the current configuration object,
     // use a pattern like the following:
-    //     browser.getProcessedConfig().then(function(config) {
+    //     return browser.getProcessedConfig().then(function(config) {
     //       // config.capabilities is the CURRENT capability being run, if
     //       // you are using multiCapabilities.
     //       console.log('Executing capability', config.capabilities);
@@ -234,7 +251,7 @@ exports.config = {
   // and can be accessed from your test as browser.params. It is an arbitrary
   // object and can contain anything you may need in your test.
   // This can be changed via the command line as:
-  //   --params.login.user 'Joe'
+  //   --params.login.user "Joe"
   params: {
     login: {
       user: 'Jane',
@@ -250,12 +267,19 @@ exports.config = {
   // CAUTION: This will cause your tests to slow down drastically.
   restartBrowserBetweenTests: false,
 
+  // Protractor will track outstanding $timeouts by default, and report them in 
+  // the error message if Protractor fails to synchronize with Angular in time. 
+  // In order to do this Protractor needs to decorate $timeout. 
+  // CAUTION: If your app decorates $timeout, you must turn on this flag. This 
+  // is false by default.
+  untrackOutstandingTimeouts: false,
+
   // ---------------------------------------------------------------------------
   // ----- The test framework --------------------------------------------------
   // ---------------------------------------------------------------------------
 
   // Test framework to use. This may be one of:
-  //  jasmine, jasmine2, cucumber, mocha or custom.
+  // jasmine, mocha or custom.
   //
   // When the framework is set to "custom" you'll need to additionally
   // set frameworkPath with the path relative to the config file or absolute
@@ -264,26 +288,12 @@ exports.config = {
   // See github.com/angular/protractor/blob/master/lib/frameworks/README.md
   // to comply with the interface details of your custom implementation.
   //
-  // Jasmine and Jasmine2 are fully supported as test and assertion frameworks.
-  // Mocha and Cucumber have limited support. You will need to include your
+  // Jasmine is fully supported as test and assertion frameworks.
+  // Mocha has limited support. You will need to include your
   // own assertion framework (such as Chai) if working with Mocha.
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
-  // Options to be passed to minijasminenode.
-  //
-  // See the full list at https://github.com/juliemr/minijasminenode/tree/jasmine1
-  jasmineNodeOpts: {
-    // If true, display spec names.
-    isVerbose: false,
-    // If true, print colors to the terminal.
-    showColors: true,
-    // If true, include stack traces in failures.
-    includeStackTrace: true,
-    // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 30000
-  },
-
-  // Options to be passed to jasmine2.
+  // Options to be passed to jasmine.
   //
   // See https://github.com/jasmine/jasmine-npm/blob/master/lib/jasmine.js
   // for the exact options available.
@@ -309,7 +319,7 @@ exports.config = {
     reporter: 'list'
   },
 
-  // Options to be passed to Cucumber.
+  // Options to be passed to Cucumber (when set up as a custom framework).
   cucumberOpts: {
     // Require files before executing the features.
     require: 'cucumber/stepDefinitions.js',
@@ -318,5 +328,13 @@ exports.config = {
     tags: '@dev',
     // How to format features (default: progress)
     format: 'summary'
-  }
+    // Other options include `coffee`, `noSnippets`, and `dryRun`
+  },
+
+  // See docs/plugins.md
+  plugins: [],
+
+  // Turns off source map support.  Stops protractor from registering global
+  // variable `source-map-support`.  Defaults to `false`
+  skipSourceMapSupport: false
 };

@@ -6,24 +6,25 @@ Questions
 
 Please first read through the [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
-Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/protractor) or [Google Group discussion list](https://groups.google.com/forum/?fromgroups#!forum/angular).
+Please ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/protractor), [Google Group discussion list](https://groups.google.com/forum/?fromgroups#!forum/angular), or [Gitter](https://gitter.im/angular/protractor).
 
 Any questions posted to Protractor's Github Issues will be closed with this note:
 
-`
-Please read the [contributing guidelines](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions); these types of questions are ill-suited for GitHub. Thanks!
-`
+Please direct general support questions like this one to an appropriate support channel, see https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#questions
+
+Thank you!
 
 
 Issues
-------
+======
 
 If you have a bug or feature request, please file an issue.
 Before submitting an issue, please search the issue archive to help reduce duplicates, and read the
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
-When submitting an issue, please include context from your test and
-your application. If there's an error, please include the error text. Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
+Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
+
+When submitting an issue, please include a reproducible case that we can actually run. Protractor has a test Angular application available at `http://www.protractortest.org/testapp` which you can use for the reproducible test case. If there's an error, please include the error text.
 
 Please format code and markup in your issue using [github markdown](https://help.github.com/articles/github-flavored-markdown).
 

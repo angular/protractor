@@ -1,3 +1,211 @@
+# 3.0.0
+
+_We're releasing version 3.0 with some breaking changes. In summary - Jasmine 1.3 is removed, only Jasmine 2 is now supported, old Node.JS support is dropped, and plugins now need to be explicitly required. Full details below._
+
+## Dependency Version Upgrades
+
+- ([18e1f71](https://github.com/angular/protractor/commit/18e1f71a4dd868709f4e259e05a8a196921e22be)) 
+  chore(webdriver): upgrade Protractor to webdriver 2.48.2
+
+- ([1f44a6e](https://github.com/angular/protractor/commit/1f44a6ef3f7ae8680a03a3cc7a7c06f75a8c7d4c)) 
+  chore(deps): bump chromedriver and iedriver versions IEDriver from 2.47.0 to 2.48.0
+
+  ChromeDriver from 2.19 to 2.20. Changelog: 
+  http://chromedriver.storage.googleapis.com/2.20/notes.txt
+
+## Features
+
+- ([97e6703](https://github.com/angular/protractor/commit/97e6703eb0e7a5dffc1017d0a44f0dfeeb91f327)) 
+  feat(protractor): Add protractor.prototype.restart
+
+- ([2007f06](https://github.com/angular/protractor/commit/2007f06078b6569a2cfd9f361f17d765c07bc7f8)) 
+  feat(protractor): add flag to stop protractor from tracking $timeout
+
+- ([a40a4ba](https://github.com/angular/protractor/commit/a40a4ba2a509bc762f1f5937454fdbf074405f07)) 
+  feat(ElementArrayFinder#get): Implemented ability to pass promise as index to
+  ElementArrayFinder#get
+
+- ([a54c0e0](https://github.com/angular/protractor/commit/a54c0e0d72b9d7d1d8364ade5046e5007ff53906)) 
+  feat(plugins): Add config option to disable logging of warnings in console plugin
+
+  Running tests in multiple browsers ends up printing out a lot of useless warnings I'm already
+  aware of. To make skimming through logs in the case of an actual failure easier, I want to be able
+  to disable the logging of warnings in the console plugin.
+
+- ([7015010](https://github.com/angular/protractor/commit/7015010188dfb70c1e49e4f2eae19d5ba1126b34)) 
+  feat(driver providers): Add BrowserStack support.
+
+  Also added BrowserStack to CI
+
+## Bug Fixes
+
+- ([7cba4ec](https://github.com/angular/protractor/commit/7cba4ecf0f3915dfec33dbc04decd42857744b37)) 
+  fix(ng-repeat): properly detect the end of an ng-repeat-start block
+
+  Discovered while investigating issue #2365
+
+## Breaking Changes
+
+- ([2bde92b](https://github.com/angular/protractor/commit/2bde92b3e745e09ad3876932b2d187365e9aaa31)) 
+  chore(jasmine): remove jasmine 1.3
+
+  and update docs. Also, use jasmine 2 for running all Protractor's unit tests.
+
+  BREAKING CHANGE: Now, both jasmine and jasmine2 frameworks use jasmine 2.3. Users still using 
+  jasmine version <2 will have to upgrade.
+
+- ([18e1f71](https://github.com/angular/protractor/commit/18e1f71a4dd868709f4e259e05a8a196921e22be)) 
+  chore(webdriver): upgrade Protractor to webdriver 2.48.2
+
+  BREAKING CHANGE: 1) Users will no longer be able to use node versions <4. 2) There is significant
+  changes to the control flow, and tests may need to be
+    modified to be compliant with the new control flow. See
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+
+- ([ac1e21e](https://github.com/angular/protractor/commit/ac1e21e7e09a773de981bf9e70b0fcd489d17a83)) 
+  chore(plugins): Split first party plugins into seperate repos
+
+  BREAKING CHANGE:
+
+  The Accessibility, NgHint, Timeline, and Console plugins are now located in their own separate
+  node modules. You will need to explicitly require each module you use. See https://github.com/angular/protractor/blob/master/docs/plugins.md#first-party-plugins for info for each module.
+
+- ([ddb8584](https://github.com/angular/protractor/commit/ddb8584a59343284904676ef6d8db5c1c996b900)) 
+  chore(cucumber): Remove cucumber from internal implementation
+
+  BREAKING CHANGE:
+
+  Cucumber has been community maintained for a while, and in order to allow it to move faster, it is no longer part of the core Protractor library. It is now published on npm under `protractor-cucumber-framework` and will require setting `frameworkPath` in your configuration file. See https://github.com/angular/protractor/blob/master/docs/frameworks.md#using-cucumber for full instructions on use now.
+
+
+# 2.5.1
+_This release is a hotfix for node 0.10 support_
+
+- ([039ffa7](https://github.com/angular/protractor/commit/039ffa7bfa291084263ae3fa944bbf21394ce9a3)) 
+  fix(configParser): Remove path.parse so protractor works with node < v0.12
+
+  Closes #2588
+
+# 2.5.0
+_This release contains a hotfix for windows path issues and early support for Angular2 apps_
+
+
+## Features
+- ([c5d37c2](https://github.com/angular/protractor/commit/c5d37c2abebf9aa9dd3324df93ac447529eea53b)) 
+  feat(lib): add useAllAngularAppRoots option
+
+  This allows waiting for all angular applications on the page, for angular2 apps only.
+
+- ([f246880](https://github.com/angular/protractor/commit/f24688030a63c9de4ce759ac9c6fab79ef773ed5)) 
+  feat(lib): add support for waiting for angular2
+
+  Use Angular2's testability API, if present, when waiting for stability or loading a page.
+
+  Closes #2396
+
+## Bug Fixes
+
+- ([d6aebba](https://github.com/angular/protractor/commit/d6aebbad6e9b191fef141472887637ee4318438e)) 
+  fix(config): Fixes absolute path parsing in windows
+
+  This allows absolute paths absolute paths in to be properly parsed in windows. This should
+  maintain the line-number feature introduced in ff88e without breakage.
+
+- ([04e5bfb](https://github.com/angular/protractor/commit/04e5bfbfcade0cbbef58213bc7b227b5db753d57)) 
+  chore(runner): make plugins optional param for createBrowser
+
+
+# 2.4.0
+
+_This release contains only a version update to `selenium-webdriver`, webdriver javascript bindings, and associated bug fixes._
+
+## Dependency Version Upgrades
+- ([9a202ab](https://github.com/angular/protractor/commit/9a202ab5573f24c9919639f1b75fd9cd2b383383)) 
+  chore(dependencies): update selenium-webdriver to 2.47.0
+
+  Along with it, update `jasminewd2` to avoid situations where the control flow gets locked up and
+  hangs.
+
+  *Potential Breaking Change*:
+
+  This is passing all existing Protractor tests, but there is a possibility that the changes to the
+  control flow will cause some test flows to hang. If this causes issues, such as tests hanging or commands executing out of order, please revisit your use of functions affecting the control flow, such as `flow.execute`.
+
+  See the selenium-webdriver changelog at https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md
+
+
+## Bug Fixes
+- ([f034e01](https://github.com/angular/protractor/commit/f034e010156a85cf1826b95eb7f41f50ef5a1791)) 
+  fix(synchronizing): use the same control flow when ignoring sync
+
+  Previously, the order of frames and tasks on the control flow was different depending on
+  `browser.ignoreSynchronization`. This fixes the inconsistency by creating an empty task when
+  ignoreSynchronization is true.
+
+  Practically, this fixes the polling spec failing after the update to selenium-webdriver@2.47.0.
+
+
+# 2.3.0
+
+_This release contains updates which fix some issues with dependencies that had gotten stale. However, it does not yet contain an update to the selenium-webdriver dependency, because of potential breaking changes. That update will be done in a separate Protractor@2.4.0 release. See [issue 2245](https://github.com/angular/protractor/issues/2245)._
+
+## Dependency Version Upgrades
+
+- ([cfd8d00](https://github.com/angular/protractor/commit/cfd8d000c2aa1686c4a90164baf4e04976ee0587)) 
+  feat(webdriver): update webdriver and chromedriver to latest version
+
+  Updating Selenium standalone from 2.45.0 to 2.47.0 Updating ChromeDriver from 2.15 to 2.19 
+  Selenium Changelog:
+  https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md 
+  ChromeDriver Changelog: http://chromedriver.storage.googleapis.com/2.19/notes.txt
+
+- ([802b20f](https://github.com/angular/protractor/commit/802b20f153f2c201d8b37378bf8feb93f649a95f)) 
+  chore(selenium): update selenium from 2.47.0 to 2.47.1
+
+- ([7a7aca8](https://github.com/angular/protractor/commit/7a7aca8a264ae07cbbb90e7e7469533a52276488)) 
+  chore(jasmine): bump jasmine version from 2.3.1 to 2.3.2
+
+- ([eab828e](https://github.com/angular/protractor/commit/eab828e12c671cbf5cdf9b09df050cc59f0dd862)) 
+  chore(travis): test against node 4
+
+  Test against node 4 on Travis, and remove support for node 0.10.
+
+- ([96def81](https://github.com/angular/protractor/commit/96def81dc7d364e789fc290e97aee0f898648a10)) 
+  chore(saucelabs): updated saucelabs dependency to 1.0.1 to support proxy
+
+## Features
+
+- ([c989a7e](https://github.com/angular/protractor/commit/c989a7eeed5a0a55d2fbd37dc7278a7967889852)) 
+  feat(webdriver-manager): add --ie32 commandline option
+
+  The new option allows to download the 32-bit version of the IE driver on a 64-bit system, as the
+  64-bit version has been broken for over a year now (the sendKeys() function works very slowly on
+  it).
+
+- ([ff88e96](https://github.com/angular/protractor/commit/ff88e969d55585cc4267d75c12c0cafc78a01895)) 
+  feat(cucumber): Allow cucumber tests containing line numbers
+
+  example:
+  ```js
+  specs: [
+     'cucumber/lib.feature:7'
+   ]
+  ```
+
+## Bug Fixes
+
+- ([1487e5a](https://github.com/angular/protractor/commit/1487e5abf69bc1540226502aacadc8b3b42b0092)) 
+  fix(protractor.wrapDriver): allow browser instances to work even if they were not set up through
+  the runner
+
+  Fixes #2456
+
+- ([2ff7a07](https://github.com/angular/protractor/commit/2ff7a0771b6695dc49566ed81548b3fe2cebf11c)) 
+  fix(Chrome Accessibility Plugin): resolving the location of AUDIT_FILE
+
+- ([f9b0a92](https://github.com/angular/protractor/commit/f9b0a92079b55384d4560fef9400bb473672ce9c)) 
+  fix(debugger): Fix potential debugger lockups
+
 # 2.2.0
 
 ## Breaking Changes
