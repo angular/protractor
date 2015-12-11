@@ -17,5 +17,6 @@
   "sub": true,
   "undef": true,
   "quotmark": "single",
-  "evil": true
+  "evil": true,
+  "curly": true
 }
