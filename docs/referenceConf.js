@@ -336,5 +336,9 @@ exports.config = {
 
   // Turns off source map support.  Stops protractor from registering global
   // variable `source-map-support`.  Defaults to `false`
-  skipSourceMapSupport: false
+  skipSourceMapSupport: false,
+
+  // Turns off WebDriver's environment variables overrides to ignore any
+  // environment variable and to only use the configuration in this file.
+  environmentOverrides: false
 };
