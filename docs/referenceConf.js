@@ -340,5 +340,6 @@ exports.config = {
 
   // Turns off WebDriver's environment variables overrides to ignore any
   // environment variable and to only use the configuration in this file.
-  environmentOverrides: false
+  // Defaults to `true`
+  environmentOverrides: true
 };
