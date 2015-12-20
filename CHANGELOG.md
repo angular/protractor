@@ -725,7 +725,7 @@ _Why is this change version 2.0? Protractor is following semver, and there's som
 
   Enables adding `getMultiCapabilities: function(){}` to your configuration file. The function
   returns either multiCapabilities or a promise of a multiCapabilities that is resolved after
-  `afterLaunch` and before driver set up. If this is specified, both capabilities and
+  `beforeLaunch` and before driver set up. If this is specified, both capabilities and
   multiCapabilities will be ignored.
 
   Also allows specifying `seleniumAddress` in the capabilities/multiCapabilities object, which will
