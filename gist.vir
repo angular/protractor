@@ -1,0 +1,1 @@
++ ~$$('[md-virtual-repeat="item in ctrl.dynamicItems"]');
