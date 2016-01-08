@@ -21,6 +21,10 @@ var angularDir = path.join(testAppDir, 'lib/angular_v' + argv.ngversion);
 
 var main = function() {
   var port = argv.port;
+  testApp.use('/lib/angular', express.static(angularDir));
+  testApp.use(express.static(testAppDir));
+  testApp.use(express.json());
+  testApp.use(testMiddleware);
   testApp.listen(port);
   util.puts(["Starting express web server in", testAppDir ,"on port", port].
       join(" "));
@@ -69,12 +73,5 @@ var testMiddleware = function(req, res, next) {
     return next();
   }
 };
-
-testApp.configure(function() {
-  testApp.use('/lib/angular', express.static(angularDir));
-  testApp.use(express.static(testAppDir));
-  testApp.use(express.json());
-  testApp.use(testMiddleware);
-});
 
 main();
