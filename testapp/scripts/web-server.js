@@ -34,25 +34,25 @@ var main = function() {
 var storage = {};
 var testMiddleware = function(req, res, next) {
   if (req.path == '/fastcall') {
-    res.send(200, 'done');
+    res.status(200).send('done');
   } else if (req.path == '/slowcall') {
     setTimeout(function() {
-      res.send(200, 'finally done');
+      res.status(200).send('finally done');
     }, 5000);
   } else if (req.path == '/fastTemplateUrl') {
-    res.send(200, 'fast template contents');
+    res.status(200).send('fast template contents');
   } else if (req.path == '/slowTemplateUrl') {
     setTimeout(function() {
-      res.send(200, 'slow template contents');
+      res.status(200).send('slow template contents');
     }, 5000);
   } else if (req.path == '/chat') {
     if (req.method === 'GET') {
       var value;
       if (req.query.q) {
         value = storage[req.query.q];
-        res.send(200, value);
+        res.status(200).send(value);
       } else {
-        res.send(400, 'must specify query');
+        res.status(400).send('must specify query');
       }
     } else if (req.method === 'POST') {
       if (req.body.key == 'newChatMessage') {
@@ -60,15 +60,15 @@ var testMiddleware = function(req, res, next) {
           storage['chatMessages'] = [];
         }
         storage['chatMessages'].push(req.body.value);
-        res.send(200);
+        res.sendStatus(200);
       } else if (req.body.key == 'clearChatMessages') {
         storage['chatMessages'] = [];
-        res.send(200);
+        res.sendStatus(200);
       } else {
-        res.send(400, 'Unknown command');
+        res.status(400).send('Unknown command');
       }
     } else {
-      res.send(400, 'only accepts GET/POST');
+      res.status(400).send('only accepts GET/POST');
     }
   } else {
     return next();
