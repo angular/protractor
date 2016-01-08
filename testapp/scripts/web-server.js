@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var express = require('express');
+var bodyParser = require('body-parser')
 var optimist = require('optimist');
 var util = require('util');
 var path = require('path');
@@ -23,7 +24,7 @@ var main = function() {
   var port = argv.port;
   testApp.use('/lib/angular', express.static(angularDir));
   testApp.use(express.static(testAppDir));
-  testApp.use(express.json());
+  testApp.use(bodyParser.json());
   testApp.use(testMiddleware);
   testApp.listen(port);
   util.puts(["Starting express web server in", testAppDir ,"on port", port].
