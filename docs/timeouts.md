@@ -39,6 +39,21 @@ Protractor only works with Angular applications, so it waits for the `angular` v
 
  - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
+_*How to disable waiting for Angular*_
+
+If you need to navigate to a page which does not use Angular, you can turn off waiting for Angular by setting
+`browser.ignoreSynchronization = true`. For example:
+
+```js
+browser.get('page-containing-angular');
+navigateToVanillaPage.click();
+browser.ignoreSynchronization = true;
+otherButton.click();
+navigateToAngularPage.click();
+browser.ignoreSynchronization = false;
+```
+
+
 
 Timeouts from WebDriver
 -----------------------
