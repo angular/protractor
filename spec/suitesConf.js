@@ -14,5 +14,5 @@ exports.config = {
 
   capabilities: env.capabilities,
 
-  baseUrl: env.baseUrl
+  baseUrl: env.baseUrl + '/ng1/'
 };

@@ -16,7 +16,7 @@ exports.config = {
     shardTestFiles: true
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 90000

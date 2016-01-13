@@ -17,7 +17,7 @@ exports.config = {
     'browserName': 'firefox'
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   params: {
     login: {

@@ -67,7 +67,7 @@ exports.config = {
     'platform': 'Windows 7'
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   // Up the timeouts for the slower browsers (IE, Safari).
   allScriptsTimeout: 30000,

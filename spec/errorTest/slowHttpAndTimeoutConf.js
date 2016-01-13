@@ -13,7 +13,7 @@ exports.config = {
     'browserName': 'chrome'
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   allScriptsTimeout: 1000
 };

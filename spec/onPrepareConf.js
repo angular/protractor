@@ -14,7 +14,7 @@ exports.config = {
 
   capabilities: env.capabilities,
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   onPrepare: function() {
     browser.params.password = '12345';

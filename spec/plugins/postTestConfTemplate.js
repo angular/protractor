@@ -12,7 +12,7 @@ module.exports = function(framework) {
 
     capabilities: env.capabilities,
 
-    baseUrl: env.baseUrl,
+    baseUrl: env.baseUrl + '/ng1/',
 
     plugins: [{
       path: 'plugins/post_test_plugin.js'

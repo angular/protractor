@@ -1,47 +1,29 @@
-/* app css stylesheet */
-
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+body {
+  font-family: Helvetica, Arial, san-sarif;
+  font-size: 2em;
 }
 
-.menu:before {
-  content: "[";
+h1 {
+  text-align: center;
 }
 
-.menu:after {
-  content: "]";
-}
-
-.menu > li {
-  display: inline;
-}
-
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
-}
-
-.menu > li:nth-child(1):before {
-  content: "";
+ol {
+  position: relative;
   padding: 0;
 }
 
-.ng-scope {
-  background-color: rgba(0,0,0,.05);
+li {
+  width: 40%;
+  padding: 5%;
+  display: block;
 }
 
-.ng-binding {
-  border: 1px solid rgba(50, 200, 50, .8);
+li.left {
+  text-align: right;
 }
 
-#chat-box {
-  width: 300px;
-  height: 200px;
-  padding: 25px;
-  border: 2px solid;
-  margin: 25px;
-  overflow: scroll;
-}
+li.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+} 

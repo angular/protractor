@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'firefox'
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   specs: ['directConnect/*_spec.js'],
 

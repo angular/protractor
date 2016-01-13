@@ -13,7 +13,7 @@ exports.config = {
 
   capabilities: env.capabilities,
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   // Selector for the element housing the angular app.
   rootElement: 'div#nested-ng-app'

@@ -136,15 +136,15 @@ gulp.task('testapp', function() {
   var stream = gulp.src('../testapp/**/*').
       pipe(gulp.dest('build/testapp'));
   gulp.src('testapp/*').
-      pipe(gulp.dest('build/testapp'));
-  var angular_version = require('../testapp/lib/angular_version.js');
-  gulp.src('../testapp/lib/angular_v' + angular_version + '/**/*').
-      pipe(gulp.dest('build/testapp/lib/angular'));
+      pipe(gulp.dest('build/testapp/ng1'));
+  var angular_version = require('../testapp/ng1/lib/angular_version.js');
+  gulp.src('../testapp/ng1/lib/angular_v' + angular_version + '/**/*').
+      pipe(gulp.dest('build/testapp/ng1/lib/angular'));
   return stream;
 });
 
 gulp.task('cleanup_testapp', ['testapp'], function() {
-  del('build/testapp/lib/angular_v*');
+  del('build/testapp/ng1/lib/angular_v*');
 });
 
 // Start a server and watch for changes.

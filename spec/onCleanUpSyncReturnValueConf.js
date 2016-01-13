@@ -12,7 +12,7 @@ exports.config = {
 
   capabilities: env.capabilities,
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   onCleanUp: function(exitCode) {
     return exitCode;

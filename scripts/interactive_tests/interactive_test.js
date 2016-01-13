@@ -13,9 +13,9 @@ test.addCommandExpectation('y', 'function (param) {return param;}');
 
 // Check promises complete.
 test.addCommandExpectation('browser.driver.getCurrentUrl()', 'data:,');
-test.addCommandExpectation('browser.get("http://localhost:' + env.webServerDefaultPort + '")');
+test.addCommandExpectation('browser.get("http://localhost:' + env.webServerDefaultPort + '/ng1")');
 test.addCommandExpectation('browser.getCurrentUrl()', 
-    'http://localhost:' + env.webServerDefaultPort + '/#/form'); 
+    'http://localhost:' + env.webServerDefaultPort + '/ng1/#/form'); 
 
 // Check promises are resolved before being returned.
 test.addCommandExpectation('var greetings = element(by.binding("greeting"))');

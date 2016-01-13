@@ -32,29 +32,29 @@ describe('navigation', function() {
   it('should navigate back and forward properly', function() {
     browser.get('index.html#/repeater');
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/repeater');
+      toEqual(env.baseUrl+'/ng1/index.html#/repeater');
 
     browser.navigate().back();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/form');
+      toEqual(env.baseUrl+'/ng1/index.html#/form');
 
     browser.navigate().forward();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl+'/index.html#/repeater');
+      toEqual(env.baseUrl+'/ng1/index.html#/repeater');
   });
   */
 
   it('should navigate back and forward properly from link', function() {
     element(by.linkText('repeater')).click();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl + '/index.html#/repeater');
+      toEqual(env.baseUrl + '/ng1/index.html#/repeater');
 
     browser.navigate().back();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl + '/index.html#/form');
+      toEqual(env.baseUrl + '/ng1/index.html#/form');
 
     browser.navigate().forward();
     expect(browser.getCurrentUrl()).
-      toEqual(env.baseUrl + '/index.html#/repeater');
+      toEqual(env.baseUrl + '/ng1/index.html#/repeater');
   });
 });

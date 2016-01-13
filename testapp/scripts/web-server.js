@@ -9,7 +9,7 @@ var env = require('../../spec/environment.js');
 var testApp = express();
 var DEFAULT_PORT = process.env.HTTP_PORT || env.webServerDefaultPort;
 var testAppDir = path.resolve(__dirname, '..');
-var defaultAngular = require(path.join(testAppDir, 'lib/angular_version.js'));
+var defaultAngular = require(path.join(testAppDir, 'ng1/lib/angular_version.js'));
 
 var argv = optimist.describe('port', 'port').
     default('port', DEFAULT_PORT).
@@ -17,7 +17,7 @@ var argv = optimist.describe('port', 'port').
     default('ngversion', defaultAngular).
     argv;
 
-var angularDir = path.join(testAppDir, 'lib/angular_v' + argv.ngversion);
+var angularDir = path.join(testAppDir, 'ng1/lib/angular_v' + argv.ngversion);
 
 var main = function() {
   var port = argv.port;
@@ -28,19 +28,19 @@ var main = function() {
 
 var storage = {};
 var testMiddleware = function(req, res, next) {
-  if (req.path == '/fastcall') {
+  if (/ng[1-2]\/fastcall/.test(req.path)) {
     res.send(200, 'done');
-  } else if (req.path == '/slowcall') {
+  } else if (/ng[1-2]\/slowcall/.test(req.path)) {
     setTimeout(function() {
       res.send(200, 'finally done');
     }, 5000);
-  } else if (req.path == '/fastTemplateUrl') {
+  } else if (/ng[1-2]\/fastTemplateUrl/.test(req.path)) {
     res.send(200, 'fast template contents');
-  } else if (req.path == '/slowTemplateUrl') {
+  } else if (/ng[1-2]\/slowTemplateUrl/.test(req.path)) {
     setTimeout(function() {
       res.send(200, 'slow template contents');
     }, 5000);
-  } else if (req.path == '/chat') {
+  } else if (/ng[1-2]\/chat/.test(req.path)) {
     if (req.method === 'GET') {
       var value;
       if (req.query.q) {
@@ -71,7 +71,7 @@ var testMiddleware = function(req, res, next) {
 };
 
 testApp.configure(function() {
-  testApp.use('/lib/angular', express.static(angularDir));
+  testApp.use('/ng1/lib/angular', express.static(angularDir));
   testApp.use(express.static(testAppDir));
   testApp.use(express.json());
   testApp.use(testMiddleware);

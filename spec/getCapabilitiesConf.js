@@ -21,6 +21,6 @@ exports.config = {
     return deferred.promise;
   },
 
-  baseUrl: env.baseUrl
+  baseUrl: env.baseUrl + '/ng1/'
 };
 

@@ -35,7 +35,7 @@ exports.config = {
     'selenium-version': '2.48.2'
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   jasmineNodeOpts: {
     showTiming: true,

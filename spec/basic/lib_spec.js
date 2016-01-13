@@ -110,7 +110,7 @@ describe('protractor library', function() {
 
   it('should allow self-wrapped webdriver instances', function() {
     var driver = protractor.wrapDriver(browser.driver);
-    var url = browser.baseUrl + '/index.html';
+    var url = require('url').resolve(browser.baseUrl, 'index.html');
     driver.get(url);
   });
 

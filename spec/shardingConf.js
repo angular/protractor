@@ -34,7 +34,7 @@ exports.config = {
     specs: 'basic/action*'
   }],
 
-  baseUrl: env.baseUrl,
+  baseUrl: env.baseUrl + '/ng1/',
 
   params: {
     login: {
