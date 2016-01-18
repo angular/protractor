@@ -105,6 +105,69 @@ protractor.conf.test.js
       contacts-spec.js
 ```
 
+# Locator strategies
+
+### NEVER use xpath
+
+**Why?**
+* It's the slowest and most brittle locator strategy of all
+* Markup is very easily subject to change and therefore xpath locators require
+  a lot of maintenance
+* xpath expressions are unreadable and very hard to debug
+
+```javascript
+var elem = element(by.xpath('/*/p[2]/b[2]/following-sibling::node()' +
+ '[count(.|/*/p[2]/b[2]/following-sibling::br[1]/preceding-sibling::node())' +
+ '=' +
+ ' count((/*/p[2]/b[2]/following-sibling::br[1]/preceding-sibling::node()))' +
+ ']'));
+```
+
+### Prefer protractor locator strategies when possible
+
+* Prefer protractor-specific locators such as `by.model` and `by.binding`.
+
+```html
+<ul class="red">
+  <li>{{color.name}}</li>
+  <li>{{color.shade}}</li>
+  <li>{{color.code}}</li>
+</ul>
+
+<div class="details">
+  <div class="personal">
+    <input ng-model="person.name">
+  </div>
+</div>
+```
+
+```js
+// avoid
+var nameElement = element.all(by.css('.red li')).get(0);
+var personName = element(by.css('.details .personal input'));
+
+// recommended
+var nameElement = element(by.binding('color.name'));
+var personName = element(by.model('person.name'));
+```
+
+**Why**
+* These locators are usually specific, short, and easy to read.
+* It is easier to write your locator
+* The code is less likely to change than other markup
+
+### Prefer by.id and by.css when no Protractor locators are available
+
+**Why?**
+* Both are very performant and readable locators
+* Access elements easier
+
+*** Avoid text locators for text that changes frequently
+
+Why?
+* Text for buttons, links, and labels tends to   change over time
+* Your tests should not break when you make minor text changes
+
 # Page objects
 
 Page Objects help you write cleaner tests by encapsulating information about
@@ -315,41 +378,6 @@ describe('protractor website', function() {
 
 * Why? When you have a large team and multiple e2e tests people tend to write
   their own custom locators for the same directives.
-
-# Locators
-
-### Favor protractor locator strategies when possible
-
-* Prefer protractor-specific locators such as `by.model` and `by.binding`.
-* These locators are usually specific, short, and easy to read.
-
-```html
-<ul class="red">
-  <li>{{color.name}}</li>
-  <li>{{color.shade}}</li>
-  <li>{{color.code}}</li>
-</ul>
-
-<div class="details">
-  <div class="personal">
-    <input ng-model="person.name">
-  </div>
-</div>
-```
-
-```js
-// avoid
-var nameElement = element.all(by.css('.red li')).get(0);
-var personName = element(by.css('.details .personal input'));
-
-// recommended
-var nameElement = element(by.binding('color.name'));
-var personName = element(by.model('person.name'));
-```
-
-* Why? It is easier to write your locator
-* Why? The code is less likely to change than other markup
-
 
 ### Avoid text locators for text that changes frequently
 
