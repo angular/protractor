@@ -151,7 +151,7 @@ var nameElement = element(by.binding('color.name'));
 var personName = element(by.model('person.name'));
 ```
 
-**Why**
+**Why?**
 * These locators are usually specific, short, and easy to read.
 * It is easier to write your locator
 * The code is less likely to change than other markup
@@ -164,7 +164,7 @@ var personName = element(by.model('person.name'));
 
 *** Avoid text locators for text that changes frequently
 
-Why?
+**Why?**
 * Text for buttons, links, and labels tends to   change over time
 * Your tests should not break when you make minor text changes
 
@@ -174,6 +174,62 @@ Page Objects help you write cleaner tests by encapsulating information about
 the elements on your application page. A page object can be reused across
 multiple tests, and if the template of your application changes, you only need
 to update the page object.
+
+### Use Page Objects to interact with page under test
+
+**Why?**
+* Encapsulate information about the elements on the page under test
+* They can be reused across multiple tests
+* Decouple the test logic from implementation details
+
+```javascript
+/* avoid */
+
+/* question-spec.js */
+describe('Question page', function() {
+  it('should answer any question', function() {
+    var question = element(by.model('question.text'));
+    var answer = element(by.binding('answer'));
+    var button = element(by.css('.question-button'));
+
+    question.sendKeys('What is the purpose of life?');
+    button.click();
+    expect(answer.getText()).toEqual("Chocolate!");
+  });
+});
+```
+
+```javascript
+/* recommended */
+
+/* question-spec.js */
+var QuestionPage = require('./question-page');
+
+describe('Question page', function() {
+  var question = new QuestionPage();
+
+  it('should ask any question', function() {
+    question.ask('What is the purpose of meaning?');
+    expect(question.answer.getText()).toEqual('Chocolate');
+  });
+});
+
+/* recommended */
+
+/* question-page.js */
+var QuestionPage = function() {
+  this.question = element(by.model('question.text'));
+  this.answer = element(by.binding('answer'));
+  this.button = element(by.className('question-button'));
+
+  this.ask = function(question) {
+    this.question.sendKeys(question);
+    this.button.click();
+  };
+};
+
+module.exports = QuestionPage;
+```
 
 ### Declare one page object per file
 
@@ -214,9 +270,9 @@ module.exports = UserPropertiesPage;
   test, or helper module.
 
 ```js
-var UserPage = require('./user-properties.page');
-var MenuPage = require('./menu.page');
-var FooterPage = require('./footer.page');
+var UserPage = require('./user-properties-page');
+var MenuPage = require('./menu-page');
+var FooterPage = require('./footer-page');
 
 describe('User properties page', function() {
     ...
@@ -231,9 +287,9 @@ describe('User properties page', function() {
 * Use upper case for the constructor name; lowercase for the instance name.
 
 ```js
-var UserPropertiesPage = require('./user-properties.page');
-var MenuPage = require('./menu.page');
-var FooterPage = require('./footer.page');
+var UserPropertiesPage = require('./user-properties-page');
+var MenuPage = require('./menu-page');
+var FooterPage = require('./footer-page');
 
 describe('User properties page', function() {
   var userProperties = new UserPropertiesPage();
