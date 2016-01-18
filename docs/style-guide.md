@@ -1,7 +1,7 @@
 Style Guide
 ===========
 
-This style guide was originally created by  
+This style guide was originally created by
 [Carmen Popoviciu](https://github.com/CarmenPopoviciu) and 
 [Andres Dominguez](https://github.com/andresdominguez). It is based on Carmen's 
 Protractor 
@@ -10,7 +10,7 @@ Google's Protractor style guide.
 
 ## Video
 
-Carmen and Andres gave a talk about this styleguide at
+Carmen and Andres gave a talk about this style guide at 
 [AngularConnect](http://angularconnect.com/) in London. Here's the video in 
 case you want to watch it.
 
