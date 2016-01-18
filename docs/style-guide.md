@@ -1,6 +1,110 @@
 Style Guide
 ===========
 
+### Don't e2e test what’s been unit tested
+
+**Why?**
+* Unit tests are much faster than e2e tests
+* Avoid duplicate tests
+
+### Use one configuration file
+
+**Why?**
+* Use your build tool to set up different configurations
+* Avoid duplicate configuration code
+
+```shell
+# Avoid
+
+protractor.conf.local.js
+protractor.conf.dev.js
+protractor.conf.test.js
+```
+
+```javascript
+ /* Recommended */
+
+ /* protractor.conf.js */
+ exclude: [],
+ multiCapabilities: [{
+   browserName: 'chrome',
+   shardTestFiles: true,
+   maxInstances: 3
+ }],
+ allScriptsTimeout: 11000,
+ getPageTimeout: 10000,
+ jasmineNodeOpts: {
+   isVerbose: false,
+   showColors: true,
+   includeStackTrace: false,
+   defaultTimeoutInterval: 40000
+ }
+```
+
+# Project structure
+
+### Group your e2e tests in a structure that makes sense to the structure of your project
+
+**Why?**
+* Finding your e2e related files should be intuitive and easy
+* Makes the folder structure more readable
+* Clearly separates e2e tests from unit tests
+
+```
+/* avoid */
+|-- project-folder
+  |-- app
+    |-- css
+    |-- img
+    |-- partials
+        home.html
+        profile.html
+        contacts.html
+    |-- js
+      |-- controllers
+      |-- directives
+      |-- services
+      app.js
+      ...
+    index.html
+  |-- test
+    |-- unit
+    |-- e2e
+        home-page.js
+        home-spec.js
+        profile-page.js
+        profile-spec.js
+        contacts-page.js
+        contacts-spec.js
+
+/* recommended */
+|-- project-folder
+  |-- app
+    |-- css
+    |-- img
+    |-- partials
+        home.html
+        profile.html
+        contacts.html
+    |-- js
+      |-- controllers
+      |-- directives
+      |-- services
+      app.js
+      ...
+    index.html
+  |-- test
+    |-- unit
+    |-- e2e
+      |-- page-objects
+          home-page.js
+          profile-page.js
+          contacts-page.js
+      home-spec.js
+      profile-spec.js
+      contacts-spec.js
+```
+
 # Page objects
 
 Page Objects help you write cleaner tests by encapsulating information about
@@ -10,11 +114,13 @@ to update the page object.
 
 ### Declare one page object per file
 
+**Why?**
 * Each page object should be defined in its own file.
 * Why? Keeps code clean and makes things easy to find.
 
 ### Use a single module.exports at the end of the page object file
 
+**Why?**
 * Each page object should declare a single class. You only need to export one
   class.
 
@@ -192,7 +298,7 @@ module.exports = MenuPage;
 ```js
 var Menu = require('./menu');
 
-describe('protractor webstie', function() {
+describe('protractor website', function() {
 
   var menu = new Menu();
 
@@ -210,7 +316,7 @@ describe('protractor webstie', function() {
 * Why? When you have a large team and multiple e2e tests people tend to write
   their own custom locators for the same directives.
 
-## Locators
+# Locators
 
 ### Favor protractor locator strategies when possible
 
