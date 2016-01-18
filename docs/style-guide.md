@@ -1,6 +1,24 @@
 Style Guide
 ===========
 
+This style guide was originally created by  
+[Carmen Popoviciu](https://github.com/CarmenPopoviciu) and 
+[Andres Dominguez](https://github.com/andresdominguez). It is based on Carmen's 
+Protractor 
+[style guide](https://github.com/CarmenPopoviciu/protractor-styleguide) and 
+Google's Protractor style guide.
+
+## Video
+
+Carmen and Andres gave a talk about this styleguide at
+[AngularConnect](http://angularconnect.com/) in London. Here's the video in 
+case you want to watch it.
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=-lTGnYwnEuM" 
+  target="_blank"><img src="http://img.youtube.com/vi/-lTGnYwnEuM/0.jpg" 
+  alt="Protractor styleguide @AngularConnect" width="240" height="180" 
+  border="10"/></a>
+
 ### Don't e2e test what’s been unit tested
 
 **Why?**
