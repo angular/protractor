@@ -4,9 +4,9 @@ Style Guide
 # Page objects
 
 Page Objects help you write cleaner tests by encapsulating information about
-the elements on your application page. A Page Object can be reused across
+the elements on your application page. A page object can be reused across
 multiple tests, and if the template of your application changes, you only need
-to update the Page Object.
+to update the page object.
 
 ### Declare one page object per file
 
@@ -37,7 +37,7 @@ var UserPropertiesPage = function() {};
 module.exports = UserPropertiesPage;
 ```
 
-* Why? One Page Object per file means there's only one class to export.
+* Why? One page object per file means there's only one class to export.
 
 ### Require all the modules at the top
 
@@ -102,7 +102,7 @@ var UserPropertiesPage = function() {
 };
 ```
 
-* Why? The user of the Page Object should have quick access to the available
+* Why? The user of the page object should have quick access to the available
   elements on a page
 
 
@@ -131,18 +131,18 @@ var UserPropertiesPage = function() {
 };
 ```
 
-* Why? Most elements are already exposed by the Page Object and can be used
+* Why? Most elements are already exposed by the page object and can be used
   directly in the test.
 * Why? Doing otherwise will not have any added value
 
 ### Avoid using expect() in page objects
 
-* Don't make any assertions in your Page Objects.
+* Don't make any assertions in your page objects.
 * Why? It is the responsibility of the test to do all the assertions.
 * Why? A reader of the test should be able to understand the behavior of the
   application by looking at the test only
 
-### Add Page Object wrappers for directives, dialogs, and common elements
+### Add page object wrappers for directives, dialogs, and common elements
 
 * Some directives render complex HTML or they change frequently. Avoid code
   duplication by writing wrappers to interact with complex directives.
