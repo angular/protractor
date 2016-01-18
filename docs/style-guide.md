@@ -279,7 +279,8 @@ describe('User properties page', function() {
 });
 ```
 
-* Why? The module dependencies should be clear and easy to find.
+**Why?**
+* The module dependencies should be clear and easy to find.
 
 ### Instantiate all page objects at the beginning of the test suite
 
@@ -300,8 +301,9 @@ describe('User properties page', function() {
 });
 ```
 
-* Why? Separates dependencies from the test code.
-* Why? Makes the dependencies available to all specs of the suite.
+**Why?**
+* Separates dependencies from the test code.
+* Makes the dependencies available to all specs of the suite.
 
 
 ### Declare all the page object public elements in the constructor
@@ -327,7 +329,8 @@ var UserPropertiesPage = function() {
 };
 ```
 
-* Why? The user of the page object should have quick access to the available
+**Why?**
+* The user of the page object should have quick access to the available
   elements on a page
 
 
@@ -356,15 +359,18 @@ var UserPropertiesPage = function() {
 };
 ```
 
-* Why? Most elements are already exposed by the page object and can be used
+**Why?**
+* Most elements are already exposed by the page object and can be used
   directly in the test.
-* Why? Doing otherwise will not have any added value
+* Doing otherwise will not have any added value
 
 ### Avoid using expect() in page objects
 
 * Don't make any assertions in your page objects.
-* Why? It is the responsibility of the test to do all the assertions.
-* Why? A reader of the test should be able to understand the behavior of the
+
+**Why?**
+* It is the responsibility of the test to do all the assertions.
+* A reader of the test should be able to understand the behavior of the
   application by looking at the test only
 
 ### Add page object wrappers for directives, dialogs, and common elements
@@ -432,25 +438,20 @@ describe('protractor website', function() {
 });
 ```
 
-* Why? When you have a large team and multiple e2e tests people tend to write
+**Why?**
+* When you have a large team and multiple e2e tests people tend to write
   their own custom locators for the same directives.
 
 ### Avoid text locators for text that changes frequently
 
 * Try to avoid text-based locators such as `by.linkText`, `by.buttonText`,
   `by.cssContainingText`.
-* Why? Text for buttons, links, and labels tends to change over time. Minor text
+
+**Why?**
+* Text for buttons, links, and labels tends to change over time. Minor text
   changes in your application should not break your tests.
 
-
 # Tests
-
-### Use Jasmine 2
-
-* Use the latest version of Jasmine
-
-* Why? You can use `beforeAll` and `afterAll`.
-* Why? You can filter tests by name.
 
 ### Make your tests independent at least at the file level
 
