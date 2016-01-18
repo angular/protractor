@@ -19,6 +19,16 @@ case you want to watch it.
   alt="Protractor styleguide @AngularConnect" width="240" height="180" 
   border="10"/></a>
 
+## Table of contents
+
+* [Generic rules](#generic-rules)
+* [Project structure](#project-structure)
+* [Locator strategies](#locator-strategies)
+* [Page objects](#page-objects)
+* [Test suites](#test-suites)
+
+# Generic rules
+
 ### Don't e2e test what’s been unit tested
 
 **Why?**
@@ -469,7 +479,7 @@ describe('protractor website', function() {
 * Text for buttons, links, and labels tends to change over time. Minor text
   changes in your application should not break your tests.
 
-# Tests
+# Test suites
 
 ### Make your tests independent at least at the file level
 
@@ -482,8 +492,6 @@ describe('protractor website', function() {
 
 * Avoid using if statements and for loops. When you add logic your test may
   pass without testing anything, or may run very slowly.
-
-# Test suites
 
 ### Don't mock unless you need to
 
@@ -498,7 +506,7 @@ close to the 'real deal' as possible.
 * Using the real application with all the dependencies gives you high confidence
 * Helps you spot some corner cases you might have overlooked
 
-Use Jasmine2
+### Use Jasmine2
 
 **Why?**
 * Jasmine is well documented
