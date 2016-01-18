@@ -1,5 +1,5 @@
-Style Guide
-===========
+Protractor style guide
+======================
 
 This style guide was originally created by
 [Carmen Popoviciu](https://github.com/CarmenPopoviciu) and 
