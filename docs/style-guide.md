@@ -66,13 +66,6 @@ close to the 'real deal' as possible.
 * It is supported by Protractor out of the box
 * You can use `beforeAll` and `afterAll`
 
-### Make your tests independent at file level
-
-**Why?**
-* You can run tests in parallel with sharding
-* The execution order is not guaranteed
-* You can run suites in isolation
-
 ### Make your tests independent from each other
 
 This rule holds true unless the operations performed to initialize the state of 
@@ -150,7 +143,9 @@ describe('when the user Teddy B is created', function(){
 ```
 
 **Why?**
-* You can run each single test in isolation
+* You can run tests in parallel with sharding
+* The execution order is not guaranteed
+* You can run suites in isolation
 * You can debug your tests (ddescribe/fdescribe/xdescribe/iit/fit/xit)
 
 ### Navigate to the page under test before each test
