@@ -21,13 +21,12 @@ case you want to watch it.
 
 ## Table of contents
 
-* [Generic rules](#generic-rules)
+* [Test suites](#test-suites)
 * [Project structure](#project-structure)
 * [Locator strategies](#locator-strategies)
 * [Page objects](#page-objects)
-* [Test suites](#test-suites)
 
-# Generic rules
+# Test suites
 
 ### Don't e2e test what’s been unit tested
 
@@ -35,39 +34,137 @@ case you want to watch it.
 * Unit tests are much faster than e2e tests
 * Avoid duplicate tests
 
-### Use one configuration file
+### Make your tests independent at least at the file level
+
+* Protractor can run your tests in parallel when you enable sharding. The files
+  are executed across different browsers as they become available.
+* Make your tests independent at the file level because the order in which
+  they run is not guaranteed and it's easier to run a test in isolation.
+
+### Do not add logic to your test
+
+* Avoid using if statements and for loops. When you add logic your test may
+  pass without testing anything, or may run very slowly.
+
+### Don't mock unless you need to
+
+This rule is a bit controversial, in the sense that opinions are very divided 
+when it comes to what the best practice is. Some developers argue that e2e 
+tests should use mocks for everything in order to avoid external network calls 
+and have a second set of integration tests to test the APIs and database. Other 
+developers argue that e2e tests should operate on the entire system and be as 
+close to the 'real deal' as possible.
 
 **Why?**
-* Use your build tool to set up different configurations
-* Avoid duplicate configuration code
+* Using the real application with all the dependencies gives you high confidence
+* Helps you spot some corner cases you might have overlooked
 
-```shell
-# Avoid
+### Use Jasmine2
 
-protractor.conf.local.js
-protractor.conf.dev.js
-protractor.conf.test.js
+**Why?**
+* Jasmine is well documented
+* It is supported by Protractor out of the box
+* You can use `beforeAll` and `afterAll`
+
+### Make your tests independent at file level
+
+**Why?**
+* You can run tests in parallel with sharding
+* The execution order is not guaranteed
+* You can run suites in isolation
+
+### Make your tests independent from each other
+
+This rule holds true unless the operations performed to initialize the state of 
+the tests are too expensive. For example, if your e2e tests would require that 
+you create a new user before each spec is executed, you might end up with too 
+high test run times. However, this does not mean you should make tests directly 
+depend on one another. So, instead of creating a user in one of your tests and 
+expect that record to be there for all other subsequent tests, you could harvest 
+the power of jasmine's beforeAll (since Jasmine 2.1) to create the user.
+
+```javascript
+/* avoid */
+
+it('should create user', function() {
+   browser.get('#/user-list');
+   userList.newButton.click();
+
+   userProperties.name.sendKeys('Teddy B');
+   userProperties.saveButton.click();
+
+   browser.get('#/user-list');
+   userList.search('Teddy B');
+   expect(userList.getNames()).toEqual(['Teddy B']);
+});
+
+it('should update user', function() {
+   browser.get('#/user-list');
+   userList.clickOn('Teddy B');
+
+   userProperties.name.clear().sendKeys('Teddy C');
+   userProperties.saveButton.click();
+
+   browser.get('#/user-list');
+   userList.search('Teddy C');
+   expect(userList.getNames()).toEqual(['Teddy C']);
+});
 ```
 
 ```javascript
- /* Recommended */
+/* recommended */
 
- /* protractor.conf.js */
- exclude: [],
- multiCapabilities: [{
-   browserName: 'chrome',
-   shardTestFiles: true,
-   maxInstances: 3
- }],
- allScriptsTimeout: 11000,
- getPageTimeout: 10000,
- jasmineNodeOpts: {
-   isVerbose: false,
-   showColors: true,
-   includeStackTrace: false,
-   defaultTimeoutInterval: 40000
- }
+describe('when the user Teddy B is created', function(){
+
+  beforeAll(function() { 
+    browser.get('#/user-list'); 
+    userList.newButton.click(); 
+    
+    userProperties.name.sendKeys('Teddy B'); 
+    userProperties.saveButton.click(); 
+    browser.get('#/user-list'); 
+  });
+
+  it('should exist', function() { 
+    userList.search('Teddy B'); 
+    expect(userList.getNames()).toEqual(['Teddy B']); 
+    userList.clear(); 
+  });
+
+  describe('and gets updated to Teddy C', function() {
+    beforeAll(function() { 
+      userList.clickOn('Teddy B'); 
+      userProperties.name.clear().sendKeys('Teddy C'); 
+      userProperties.saveButton.click(); 
+      
+      browser.get('#/user-list'); 
+    }); 
+    
+    it('should be Teddy C', function() { 
+      userList.search('Teddy C'); 
+      expect(userList.getNames()).toEqual(['Teddy C']); 
+      userList.clear(); 
+    }); 
+  });
+});
 ```
+
+**Why?**
+
+* You can run each single test in isolation
+* You can debug your tests (ddescribe/fdescribe/xdescribe/iit/fit/xit)
+
+### Navigate to the page under test before each test
+
+**Why?**
+* Assures you that the page under test is in a clean state
+
+### Have a suite that navigates through the major routes of the app
+
+**Why?**
+* Makes sure the major parts of the application are correctly connected
+* Users usually don’t navigate by manually entering urls 
+* Gives confidence about permissions
 
 # Project structure
 
@@ -80,6 +177,7 @@ protractor.conf.test.js
 
 ```
 /* avoid */
+
 |-- project-folder
   |-- app
     |-- css
@@ -106,6 +204,7 @@ protractor.conf.test.js
         contacts-spec.js
 
 /* recommended */
+
 |-- project-folder
   |-- app
     |-- css
@@ -144,6 +243,8 @@ protractor.conf.test.js
 * xpath expressions are unreadable and very hard to debug
 
 ```javascript
+/* avoid */
+
 var elem = element(by.xpath('/*/p[2]/b[2]/following-sibling::node()' +
  '[count(.|/*/p[2]/b[2]/following-sibling::br[1]/preceding-sibling::node())' +
  '=' +
@@ -170,11 +271,13 @@ var elem = element(by.xpath('/*/p[2]/b[2]/following-sibling::node()' +
 ```
 
 ```js
-// avoid
+/* avoid */
+
 var nameElement = element.all(by.css('.red li')).get(0);
 var personName = element(by.css('.details .personal input'));
 
-// recommended
+/* recommended */
+
 var nameElement = element(by.binding('color.name'));
 var personName = element(by.model('person.name'));
 ```
@@ -189,12 +292,6 @@ var personName = element(by.model('person.name'));
 **Why?**
 * Both are very performant and readable locators
 * Access elements easier
-
-*** Avoid text locators for text that changes frequently
-
-**Why?**
-* Text for buttons, links, and labels tends to   change over time
-* Your tests should not break when you make minor text changes
 
 # Page objects
 
@@ -272,7 +369,7 @@ module.exports = QuestionPage;
   class.
 
 ```js
-// avoid
+/* avoid */
 
 var UserProfilePage = function() {};
 var UserSettingsPage = function() {};
@@ -282,7 +379,7 @@ module.exports = UserSettingsPage;
 ```
 
 ```javascript
-// recommended
+/* recommended */
 
 /** @constructor */
 var UserPropertiesPage = function() {};
@@ -476,137 +573,5 @@ describe('protractor website', function() {
   `by.cssContainingText`.
 
 **Why?**
-* Text for buttons, links, and labels tends to change over time. Minor text
-  changes in your application should not break your tests.
-
-# Test suites
-
-### Make your tests independent at least at the file level
-
-* Protractor can run your tests in parallel when you enable sharding. The files
-  are executed across different browsers as they become available.
-* Make your tests independent at the file level because the order in which
-  they run is not guaranteed and it's easier to run a test in isolation.
-
-### Do not add logic to your test
-
-* Avoid using if statements and for loops. When you add logic your test may
-  pass without testing anything, or may run very slowly.
-
-### Don't mock unless you need to
-
-This rule is a bit controversial, in the sense that opinions are very divided 
-when it comes to what the best practice is. Some developers argue that e2e 
-tests should use mocks for everything in order to avoid external network calls 
-and have a second set of integration tests to test the APIs and database. Other 
-developers argue that e2e tests should operate on the entire system and be as 
-close to the 'real deal' as possible.
-
-**Why?**
-* Using the real application with all the dependencies gives you high confidence
-* Helps you spot some corner cases you might have overlooked
-
-### Use Jasmine2
-
-**Why?**
-* Jasmine is well documented
-* It is supported by Protractor out of the box
-* You can use `beforeAll` and `afterAll`
-
-### Make your tests independent at file level
-
-**Why?**
-* You can run tests in parallel with sharding
-* The execution order is not guaranteed
-* You can run suites in isolation
-
-### Make your tests independent from each other
-
-This rule holds true unless the operations performed to initialize the state of 
-the tests are too expensive. For example, if your e2e tests would require that 
-you create a new user before each spec is executed, you might end up with too 
-high test run times. However, this does not mean you should make tests directly 
-depend on one another. So, instead of creating a user in one of your tests and 
-expect that record to be there for all other subsequent tests, you could harvest 
-the power of jasmine's beforeAll (since Jasmine 2.1) to create the user.
-
-```javascript
-/* avoid */
-it('should create user', function() {
-   browser.get('#/user-list');
-   userList.newButton.click();
-
-   userProperties.name.sendKeys('Teddy B');
-   userProperties.saveButton.click();
-
-   browser.get('#/user-list');
-   userList.search('Teddy B');
-   expect(userList.getNames()).toEqual(['Teddy B']);
-});
-
-it('should update user', function() {
-   browser.get('#/user-list');
-   userList.clickOn('Teddy B');
-
-   userProperties.name.clear().sendKeys('Teddy C');
-   userProperties.saveButton.click();
-
-   browser.get('#/user-list');
-   userList.search('Teddy C');
-   expect(userList.getNames()).toEqual(['Teddy C']);
-});
-```
-
-```javascript
-/* recommended */
-describe('when the user Teddy B is created', function(){
-
-  beforeAll(function() { 
-    browser.get('#/user-list'); 
-    userList.newButton.click(); 
-    
-    userProperties.name.sendKeys('Teddy B'); 
-    userProperties.saveButton.click(); 
-    browser.get('#/user-list'); 
-  });
-
-  it('should exist', function() { 
-    userList.search('Teddy B'); 
-    expect(userList.getNames()).toEqual(['Teddy B']); 
-    userList.clear(); 
-  });
-
-  describe('and gets updated to Teddy C', function() {
-    beforeAll(function() { 
-      userList.clickOn('Teddy B'); 
-      userProperties.name.clear().sendKeys('Teddy C'); 
-      userProperties.saveButton.click(); 
-      
-      browser.get('#/user-list'); 
-    }); 
-    
-    it('should be Teddy C', function() { 
-      userList.search('Teddy C'); 
-      expect(userList.getNames()).toEqual(['Teddy C']); 
-      userList.clear(); 
-    }); 
-  });
-});
-```
-
-**Why?**
-
-* You can run each single test in isolation
-* You can debug your tests (ddescribe/fdescribe/xdescribe/iit/fit/xit)
-
-### Navigate to the page under test before each test
-
-**Why?**
-* Assures you that the page under test is in a clean state
-
-### Have a suite that navigates through the major routes of the app
-
-**Why?**
-* Makes sure the major parts of the application are correctly connected
-* Users usually don’t navigate by manually entering urls 
-* Gives confidence about permissions
+* Text for buttons, links, and labels tends to change over time
+* Your tests should not break when you make minor text changes
