@@ -150,7 +150,6 @@ describe('when the user Teddy B is created', function(){
 ```
 
 **Why?**
-
 * You can run each single test in isolation
 * You can debug your tests (ddescribe/fdescribe/xdescribe/iit/fit/xit)
 
