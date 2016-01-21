@@ -287,6 +287,15 @@ var personName = element(by.model('person.name'));
 * Both are very performant and readable locators
 * Access elements easier
 
+### Avoid text locators for text that changes frequently
+
+* Try to avoid text-based locators such as `by.linkText`, `by.buttonText`,
+  `by.cssContainingText`.
+
+**Why?**
+* Text for buttons, links, and labels tends to change over time
+* Your tests should not break when you make minor text changes
+
 # Page objects
 
 Page Objects help you write cleaner tests by encapsulating information about
@@ -560,12 +569,3 @@ describe('protractor website', function() {
 **Why?**
 * When you have a large team and multiple e2e tests people tend to write
   their own custom locators for the same directives.
-
-### Avoid text locators for text that changes frequently
-
-* Try to avoid text-based locators such as `by.linkText`, `by.buttonText`,
-  `by.cssContainingText`.
-
-**Why?**
-* Text for buttons, links, and labels tends to change over time
-* Your tests should not break when you make minor text changes
