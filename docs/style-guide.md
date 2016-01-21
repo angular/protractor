@@ -22,9 +22,9 @@ case you want to watch it.
 ## Table of contents
 
 * [Test suites](#test-suites)
-* [Project structure](#project-structure)
 * [Locator strategies](#locator-strategies)
 * [Page objects](#page-objects)
+* [Project structure](#project-structure)
 
 # Test suites
 
@@ -159,72 +159,6 @@ describe('when the user Teddy B is created', function(){
 * Makes sure the major parts of the application are correctly connected
 * Users usually don’t navigate by manually entering urls 
 * Gives confidence about permissions
-
-# Project structure
-
-### Group your e2e tests in a structure that makes sense to the structure of your project
-
-**Why?**
-* Finding your e2e related files should be intuitive and easy
-* Makes the folder structure more readable
-* Clearly separates e2e tests from unit tests
-
-```
-/* avoid */
-
-|-- project-folder
-  |-- app
-    |-- css
-    |-- img
-    |-- partials
-        home.html
-        profile.html
-        contacts.html
-    |-- js
-      |-- controllers
-      |-- directives
-      |-- services
-      app.js
-      ...
-    index.html
-  |-- test
-    |-- unit
-    |-- e2e
-        home-page.js
-        home-spec.js
-        profile-page.js
-        profile-spec.js
-        contacts-page.js
-        contacts-spec.js
-
-/* recommended */
-
-|-- project-folder
-  |-- app
-    |-- css
-    |-- img
-    |-- partials
-        home.html
-        profile.html
-        contacts.html
-    |-- js
-      |-- controllers
-      |-- directives
-      |-- services
-      app.js
-      ...
-    index.html
-  |-- test
-    |-- unit
-    |-- e2e
-      |-- page-objects
-          home-page.js
-          profile-page.js
-          contacts-page.js
-      home-spec.js
-      profile-spec.js
-      contacts-spec.js
-```
 
 # Locator strategies
 
@@ -569,3 +503,69 @@ describe('protractor website', function() {
 **Why?**
 * When you have a large team and multiple e2e tests people tend to write
   their own custom locators for the same directives.
+
+# Project structure
+
+### Group your e2e tests in a structure that makes sense to the structure of your project
+
+**Why?**
+* Finding your e2e related files should be intuitive and easy
+* Makes the folder structure more readable
+* Clearly separates e2e tests from unit tests
+
+```
+/* avoid */
+
+|-- project-folder
+  |-- app
+    |-- css
+    |-- img
+    |-- partials
+        home.html
+        profile.html
+        contacts.html
+    |-- js
+      |-- controllers
+      |-- directives
+      |-- services
+      app.js
+      ...
+    index.html
+  |-- test
+    |-- unit
+    |-- e2e
+        home-page.js
+        home-spec.js
+        profile-page.js
+        profile-spec.js
+        contacts-page.js
+        contacts-spec.js
+
+/* recommended */
+
+|-- project-folder
+  |-- app
+    |-- css
+    |-- img
+    |-- partials
+        home.html
+        profile.html
+        contacts.html
+    |-- js
+      |-- controllers
+      |-- directives
+      |-- services
+      app.js
+      ...
+    index.html
+  |-- test
+    |-- unit
+    |-- e2e
+      |-- page-objects
+          home-page.js
+          profile-page.js
+          contacts-page.js
+      home-spec.js
+      profile-spec.js
+      contacts-spec.js
+```
