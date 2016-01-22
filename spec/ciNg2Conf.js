@@ -1,6 +1,6 @@
 exports.config = require('./angular2Conf.js').config;
 
-exports.config.sauceUser =  process.env.SAUCE_USERNAME;
+exports.config.sauceUser = process.env.SAUCE_USERNAME;
 exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 exports.config.seleniumAddress = undefined;
 

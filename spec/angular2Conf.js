@@ -10,8 +10,6 @@ var env = require('./environment.js');
 // See https://github.com/angular/angular/blob/master/DEVELOPER.md for
 // setup instructions.
 //
-// TODO: when Angular2 is beta, include a test application in the
-// Protractor repository.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
 

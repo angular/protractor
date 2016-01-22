@@ -13,7 +13,7 @@ export class AsyncComponent {
   val3: number = 0;
   val4: number = 0;
   timeoutId = null;
-  multiTimeoutId = null;
+  chainedTimeoutId = null;
   intervalId = null;
 
   increment(): void { this.val1++; };
@@ -26,17 +26,17 @@ export class AsyncComponent {
     }, 2000);
   };
 
-  multiDelayedIncrements(i: number): void {
-    this.cancelMultiDelayedIncrements();
+  chainedDelayedIncrements(i: number): void {
+    this.cancelChainedDelayedIncrements();
 
     var self = this;
     function helper(_i) {
       if (_i <= 0) {
-        self.multiTimeoutId = null;
+        self.chainedTimeoutId = null;
         return;
       }
 
-      self.multiTimeoutId = TimerWrapper.setTimeout(() => {
+      self.chainedTimeoutId = TimerWrapper.setTimeout(() => {
         self.val3++;
         helper(_i - 1);
       }, 500);
@@ -56,10 +56,10 @@ export class AsyncComponent {
     }
   };
 
-  cancelMultiDelayedIncrements(): void {
-    if (this.multiTimeoutId != null) {
-      TimerWrapper.clearTimeout(this.multiTimeoutId);
-      this.multiTimeoutId = null;
+  cancelChainedDelayedIncrements(): void {
+    if (this.chainedTimeoutId != null) {
+      TimerWrapper.clearTimeout(this.chainedTimeoutId);
+      this.chainedTimeoutId = null;
     }
   };
 
