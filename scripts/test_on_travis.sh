@@ -5,6 +5,9 @@ if [ $JOB = "smoke" ]; then
   node bin/protractor spec/ciSmokeConf.js
 elif [ $JOB = "full" ]; then
   node bin/protractor spec/ciFullConf.js
+  if [ $? = "0" ]; then
+    node bin/protractor spec/ciNg2Conf.js
+  fi
 elif [ $JOB = "bstack" ]; then
   node bin/protractor spec/ciBStackConf.js
 else

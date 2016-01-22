@@ -1,5 +1,5 @@
 describe('async angular2 application', function() {
-  var URL = 'examples/src/async/index.html';
+  var URL = '/ng2/#/async';
 
   beforeEach(function() {
     browser.get(URL);
@@ -53,5 +53,23 @@ describe('async angular2 application', function() {
     timeout.$('.action').click();
 
     expect(timeout.$('.val').getText()).toEqual('10');
+  });
+
+  it('should wait for a series of periodic increments', function() {
+    var timeout = $('#periodicIncrement');
+    timeout.$('.action').click();
+
+    // Waits for the val to count to 1 and 2.
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '1'), 3000);
+    expect(timeout.$('.val').getText()).toEqual('1');
+    browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '2'), 3000);
+    expect(timeout.$('.val').getText()).toEqual('2');
+
+    // After canceling, wait to make sure the text has not changed.
+    timeout.$('.cancel').click();
+    var text = timeout.$('.val').getText();
+    browser.driver.sleep(3000);
+    expect(timeout.$('.val').getText()).toEqual(text);
   });
 });
