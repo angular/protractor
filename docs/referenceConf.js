@@ -38,6 +38,10 @@ exports.config = {
   // seleniumArgs: ['-browserTimeout=60']
   // Ignored if seleniumServerJar is null.
   seleniumArgs: [],
+  // If you set this option to true, the started server will listen on 127.0.0.1.
+  // If it's set to false or not set at all it will listen to the ip address in your
+  // local network (e.g. 192.168.0.10).
+  seleniumUseLoopback: false,
   // ChromeDriver location is used to help find the chromedriver binary.
   // This will be passed to the Selenium jar as the system property
   // webdriver.chrome.driver. If null, Selenium will

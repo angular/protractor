@@ -49,6 +49,9 @@ To start the standalone Selenium Server from within your test script, set these 
 
  - `seleniumArgs` -  Array of command line options to pass to the server. For a full list, start the server with the `-help` flag.
 
+ - `seleniumUseLoopback` - Listen on 127.0.0.1 if set to true. If not specified or set to false,
+ use your ip address in your current local network (e.g. 192.168.0.10).
+
 **Connecting to a Running Server**
 
 To connect to a running instance of a standalone Selenium Server, set this option:
