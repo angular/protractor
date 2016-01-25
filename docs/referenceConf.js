@@ -59,6 +59,10 @@ exports.config = {
   // browser session. The selenium session is maintained after the test has
   // completed. Ignored if seleniumAddress is null.
   seleniumSessionId: null,
+  // The address of a proxy server to use for the connection to the
+  // Selenium Server. If not specified no proxy is configured. Looks like
+  // webDriverProxy: 'http://localhost:3128'
+  webDriverProxy: null,
 
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
