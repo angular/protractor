@@ -55,26 +55,29 @@ describe('async angular2 application', function() {
     expect(timeout.$('.val').getText()).toEqual('10');
   });
 
-  it('should wait for a series of periodic increments', function() {
-    var timeout = $('#periodicIncrement');
+  describe('long async spec', function() {
+    var originalTimeout;
+    beforeEach(function() {
+      originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+    });
 
-    // Waits for the val to count to 1 and 2.
-    var EC = protractor.ExpectedConditions;
-    timeout.$('.action').click();
-    browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '1'), 3000);
-    timeout.$('.cancel').click();
+    it('should wait for a series of periodic increments', function() {
+      var timeout = $('#periodicIncrement');
 
-    var text = timeout.$('.val').getText();
-    browser.driver.sleep(3000);
-    expect(timeout.$('.val').getText()).toEqual(text);
+      // Waits for the val to count 2.
+      var EC = protractor.ExpectedConditions;
+      timeout.$('.action').click();
+      browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '1'), 4000);
+      timeout.$('.cancel').click();
 
-    timeout.$('.action').click();
-    browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '3'), 6000);
-    timeout.$('.cancel').click();
+      var text = timeout.$('.val').getText();
+      browser.driver.sleep(3000);
+      expect(timeout.$('.val').getText()).toEqual(text);
+    });
 
-    text = timeout.$('.val').getText();
-    browser.driver.sleep(3000);
-    expect(timeout.$('.val').getText()).toEqual(text);
-
+    afterEach(function() {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    });
   });
 });
