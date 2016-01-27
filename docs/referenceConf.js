@@ -55,6 +55,10 @@ exports.config = {
   // connect to an already running instance of Selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
+  // The selenium session id allows Protractor to attach to an existing selenium
+  // browser session. The selenium session is maintained after the test has
+  // completed. Ignored if seleniumAddress is null.
+  seleniumSessionId: null,
 
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.

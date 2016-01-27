@@ -32,6 +32,7 @@ var passingTests = [
   'node lib/cli.js spec/controlLockConf.js',
   'node lib/cli.js spec/customFramework.js',
   'node lib/cli.js spec/angular2Conf.js',
+  'node scripts/attachSession.js',
   'node scripts/interactive_tests/interactive_test.js',
   'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
