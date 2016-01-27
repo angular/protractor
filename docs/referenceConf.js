@@ -30,18 +30,20 @@ exports.config = {
   // Server is found, this will default to
   // node_modules/protractor/selenium/selenium-server...
   seleniumServerJar: null,
-  // The port to start the Selenium Server on, or null if the server should
-  // find its own unused port. Ignored if seleniumServerJar is null.
-  seleniumPort: null,
-  // Additional command line options to pass to selenium. For example,
-  // if you need to change the browser timeout, use
-  // seleniumArgs: ['-browserTimeout=60']
-  // Ignored if seleniumServerJar is null.
-  seleniumArgs: [],
   // Can be an object which will be passed to the SeleniumServer class as args.
+  // See a full list of options at
+  // https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/remote/index.js
   // If you specify `args` or `port` in this object, it will overwrite the values
-  // set via `seleniumPort` and `seleniumArgs`.
-  localSeleniumStandaloneOpts: null,
+  // set via the deprecated config values `seleniumPort` and `seleniumArgs`.
+  localSeleniumStandaloneOpts: {
+    // The port to start the Selenium Server on, or null if the server should
+    // find its own unused port.
+    port: null,
+    // Additional command line options to pass to selenium. For example,
+    // if you need to change the browser timeout, use
+    // seleniumArgs: ['-browserTimeout=60']
+    args: []
+  },
   // ChromeDriver location is used to help find the chromedriver binary.
   // This will be passed to the Selenium jar as the system property
   // webdriver.chrome.driver. If null, Selenium will
