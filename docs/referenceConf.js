@@ -49,6 +49,10 @@ exports.config = {
   // connect to an already running instance of Selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
+  // The address of a proxy server to use for the connection to the
+  // Selenium Server. If not specified no proxy is configured. Looks like
+  // webDriverProxy: 'http://localhost:3128'
+  webDriverProxy: null,
 
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
