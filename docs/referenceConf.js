@@ -248,6 +248,8 @@ exports.config = {
   },
 
   // A callback function called once tests are finished.
+  // onComplete can optionally return a promise, which Protractor will wait for
+  // before shutting down webdriver.
   onComplete: function() {
     // At this point, tests will be done but global objects will still be
     // available.
