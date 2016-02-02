@@ -1,4 +1,4 @@
-var ConfigParser = require('../../lib/configParser');
+var ConfigParser = require('../../built/configParser').default;
 var path = require('path');
 
 describe('the config parser', function() {

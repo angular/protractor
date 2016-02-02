@@ -1,4 +1,4 @@
-var Runner = require('../../lib/runner');
+var Runner = require('../../built/runner');
 var q = require('q');
 
 describe('the Protractor runner', function() {

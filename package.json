@@ -12,30 +12,34 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "request": "~2.67.0",
-    "selenium-webdriver": "2.48.2",
+    "adm-zip": "0.4.7",
+    "glob": "~6.0",
     "jasminewd2": "0.0.8",
     "jasmine": "2.4.1",
-    "saucelabs": "~1.0.1",
-    "glob": "~6.0",
-    "adm-zip": "0.4.7",
     "optimist": "~0.6.0",
     "q": "1.4.1",
+    "request": "~2.67.0",
+    "saucelabs": "~1.0.1",
+    "selenium-webdriver": "2.48.2",
     "source-map-support": "~0.4.0"
   },
   "devDependencies": {
-    "expect.js": "~0.3.1",
+    "body-parser": "1.14.2",
     "chai": "~3.4.1",
     "chai-as-promised": "~5.2.0",
-    "gulp": "^3.9.1",
-    "jshint": "2.9.1",
-    "mocha": "2.3.4",
+    "clang-format": "^1.0.34",
+    "expect.js": "~0.3.1",
     "express": "~4.13.3",
-    "body-parser": "1.14.2",
+    "gulp": "^3.9.1",
+    "gulp-clang-format": "^1.0.23",
+    "jshint": "2.9.1",
+    "lodash": "^2.4.1",
+    "marked": "^0.3.3",
+    "mocha": "2.3.4",
     "rimraf": "~2.5.0",
     "run-sequence": "^1.1.5",
-    "lodash": "^2.4.1",
-    "marked": "^0.3.3"
+    "typescript": "~1.8.0",
+    "typings": "~0.6.6"
   },
   "repository": {
     "type": "git",
@@ -49,8 +53,10 @@
   "scripts": {
     "prepublish": "gulp prepublish",
     "pretest": "gulp pretest",
+    "start": "node testapp/scripts/web-server.js",
     "test": "node scripts/test.js",
-    "start": "node testapp/scripts/web-server.js"
+    "tsc": "./node_modules/typescript/bin/tsc",
+    "tsc:w": "./node_modules/typescript/bin/tsc -w"
   },
   "license": "MIT",
   "version": "3.1.1"

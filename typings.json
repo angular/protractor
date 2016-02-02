@@ -1,0 +1,8 @@
+{
+  "ambientDependencies": {
+    "Q": "github:DefinitelyTyped/DefinitelyTyped/q/Q.d.ts#717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#c2939250ec2d1ecdc82fce62afb9354dd14909ea",
+    "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#c2939250ec2d1ecdc82fce62afb9354dd14909ea",
+    "minimatch": "github:DefinitelyTyped/DefinitelyTyped/minimatch/minimatch.d.ts#c2939250ec2d1ecdc82fce62afb9354dd14909ea"
+  }
+}

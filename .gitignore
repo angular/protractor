@@ -2,6 +2,7 @@ built/
 node_modules/
 selenium/
 testapp/inbrowsertest/
+typings/
 website/bower_components/
 website/build/
 website/docgen/build/

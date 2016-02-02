@@ -1,3 +1,5 @@
+import {Config} from './configParser';
+
 /**
  * Utility functions for command line output logging from Protractor.
  * May be used in different processes, since the launcher spawns
@@ -7,37 +9,30 @@
  * should go through this file so that it can be customized.
  */
 
-var troubleshoot = false;
+let troubleshoot: boolean = false;
 
-var set = function(config) {
+export function set(config: Config): void {
   troubleshoot = config.troubleshoot;
-};
+}
 
-var print = function(msg) {
+export function print(msg: string): void {
   process.stdout.write(msg);
-};
+}
 
-var puts = function() {
-  console.log.apply(console, arguments);
-};
+export function puts(...args: Array<any>): void {
+  console.log.apply(console, args);
+}
 
-var debug = function(msg) {
+export function debug(msg: string): void {
   if (troubleshoot) {
-    puts('DEBUG - ' + msg);
+    console.log('DEBUG - ' + msg);
   }
-};
+}
 
-var warn = function(msg) {
+export function warn(msg: string): void {
   puts('WARNING - ' + msg);
-};
+}
 
-var error = function(msg) {
+export function error(msg: string): void {
   puts('ERROR - ' + msg);
-};
-
-exports.set = set;
-exports.print = print;
-exports.puts = puts;
-exports.debug = debug;
-exports.warn = warn;
-exports.error = error;
+}
