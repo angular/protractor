@@ -572,3 +572,25 @@ describe('shortcut css notation', function() {
     expect(withoutShortcutCount).toEqual(withShortcutCount);
   });
 });
+
+describe('shortcut xpath notation', function() {
+  beforeEach(function() {
+    browser.get('index.html#/form');
+  });
+
+  it('should grab by xpath', function() {
+    expect($x('//span[@id="shower"]').getText()).
+        toEqual(element(by.xpath('//span[@id="shower"]')).getText());
+    expect($$x('//input').count()).toEqual(element.all(by.xpath('//input')).count());
+  });
+
+  it('should chain $$x with $x', function() {
+    var withoutShortcutCount =
+        element(by.css('select')).all(by.css('option')).then(function(options) {
+          return options.length;
+        });
+    var withShortcutCount = $x('//select').$$x('.//option').count();
+
+    expect(withoutShortcutCount).toEqual(withShortcutCount);
+  });
+});
