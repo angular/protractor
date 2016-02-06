@@ -61,6 +61,7 @@ describe('Navigation', function() {
       expect(menu.dropdown('Reference').itemNames()).toEqual([
         'Configuration File Reference',
         'Protractor API',
+        'Style Guide',
         'Protractor Syntax vs WebDriverJS Syntax',
         'Browser Support',
         'Plugins',
@@ -149,6 +150,12 @@ describe('Navigation', function() {
       menu.dropdown('Reference').item('Protractor API');
 
       expect($('#title').getText()).toMatch('Protractor API');
+    });
+
+    it('should go to Style Guide', function() {
+      menu.dropdown('Reference').item('Style Guide');
+
+      expect($('h1').getText()).toBe('Protractor style guide');
     });
 
     it('should go to Timeouts', function() {

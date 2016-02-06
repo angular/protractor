@@ -57,7 +57,9 @@ var ApiPage = function() {
    *     resolved with the function names.
    */
   this.getChildFunctionNames = function() {
-    return $('[ptor-function-list="currentItem.children"]').$$('a').getText();
+    return $('[ptor-function-list="currentItem.children"]')
+        .$$('a.child')
+        .getText();
   };
 
   /**
