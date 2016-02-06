@@ -30,14 +30,20 @@ exports.config = {
   // Server is found, this will default to
   // node_modules/protractor/selenium/selenium-server...
   seleniumServerJar: null,
-  // The port to start the Selenium Server on, or null if the server should
-  // find its own unused port. Ignored if seleniumServerJar is null.
-  seleniumPort: null,
-  // Additional command line options to pass to selenium. For example,
-  // if you need to change the browser timeout, use
-  // seleniumArgs: ['-browserTimeout=60']
-  // Ignored if seleniumServerJar is null.
-  seleniumArgs: [],
+  // Can be an object which will be passed to the SeleniumServer class as args.
+  // See a full list of options at
+  // https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/remote/index.js
+  // If you specify `args` or `port` in this object, it will overwrite the values
+  // set via the deprecated config values `seleniumPort` and `seleniumArgs`.
+  localSeleniumStandaloneOpts: {
+    // The port to start the Selenium Server on, or null if the server should
+    // find its own unused port.
+    port: null,
+    // Additional command line options to pass to selenium. For example,
+    // if you need to change the browser timeout, use
+    // seleniumArgs: ['-browserTimeout=60']
+    args: []
+  },
   // ChromeDriver location is used to help find the chromedriver binary.
   // This will be passed to the Selenium jar as the system property
   // webdriver.chrome.driver. If null, Selenium will
@@ -49,6 +55,14 @@ exports.config = {
   // connect to an already running instance of Selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
   seleniumAddress: null,
+  // The selenium session id allows Protractor to attach to an existing selenium
+  // browser session. The selenium session is maintained after the test has
+  // completed. Ignored if seleniumAddress is null.
+  seleniumSessionId: null,
+  // The address of a proxy server to use for the connection to the
+  // Selenium Server. If not specified no proxy is configured. Looks like
+  // webDriverProxy: 'http://localhost:3128'
+  webDriverProxy: null,
 
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
@@ -234,6 +248,8 @@ exports.config = {
   },
 
   // A callback function called once tests are finished.
+  // onComplete can optionally return a promise, which Protractor will wait for
+  // before shutting down webdriver.
   onComplete: function() {
     // At this point, tests will be done but global objects will still be
     // available.
@@ -344,6 +360,6 @@ exports.config = {
 
   // Turns off WebDriver's environment variables overrides to ignore any
   // environment variable and to only use the configuration in this file.
-  // Defaults to `true`
-  environmentOverrides: true
+  // Defaults to `false`
+  disableEnvironmentOverrides: false
 };

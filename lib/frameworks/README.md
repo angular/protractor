@@ -28,6 +28,8 @@ Requirements
  - `runner.runTestPreparer` must be called before any tests are run.
 
  - `runner.getConfig().onComplete` must be called when tests are finished.
+   It might return a promise, in which case `exports.run`'s promise should not
+   resolve until after `onComplete`'s promise resolves.
 
  - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults`
  object of the following structure:

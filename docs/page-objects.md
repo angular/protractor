@@ -91,6 +91,6 @@ From the command line, you can then easily switch between running one or the oth
 
     protractor protractor.conf.js --suite homepage
 
-Additionaly, you can run specific suites of tests with the command:
+Additionally, you can run specific suites of tests with the command:
 
     protractor protractor.conf.js --suite homepage,search
