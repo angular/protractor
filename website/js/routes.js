@@ -9,6 +9,10 @@ angular.module('protractorApp').config(function($routeProvider) {
         controller: 'ApiCtrl',
         reloadOnSearch: false
       }).
+      when('/style-guide', {
+        templateUrl: 'partials/style-guide.html',
+        controller: 'MarkdownCtrl'
+      }).
       when('/webdriver-vs-protractor', {
         templateUrl: 'partials/webdriver-vs-protractor.html',
         controller: 'MarkdownCtrl'
