@@ -23,8 +23,8 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
     'version': '47',
-    'selenium-version': '2.48.2',
-    'chromedriver-version': '2.19',
+    'selenium-version': '2.51.0',
+    'chromedriver-version': '2.20',
     'platform': 'OS X 10.9'
   }, {
     'browserName': 'firefox',
