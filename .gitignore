@@ -1,3 +1,4 @@
+built/
 node_modules/
 selenium/
 testapp/inbrowsertest/
