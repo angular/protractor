@@ -1,3 +1,71 @@
+# 3.1.0
+
+## Dependency Version Upgrades
+
+- ([f699718](https://github.com/angular/protractor/commit/f699718e951c07f18c2e3e5414f92b9a33f7b19c)) 
+  updates(selenium): update chromedriver and selenium-standalone
+
+  Selenium-standalone update to 2.51.0. Update chromedriver to 2.21.
+
+  Chromedriver changelog: http://chromedriver.storage.googleapis.com/2.20/notes.txt Selenium
+  changelog: https://github.com/SeleniumHQ/selenium/blob/master/dotnet/CHANGELOG
+
+- ([5930d14](https://github.com/angular/protractor/commit/5930d1444aef2f053c132eb437d07f9b000d7803)) 
+  chore(deps): update various npm dependencies to latest stable releases
+
+## Features
+
+- ([3f3805f](https://github.com/angular/protractor/commit/3f3805f9496fb130ae01b3e3278ee1ea7684d8e7)) 
+  feat(attachSession): attach protractor to existing webdriver session
+
+  Attaching an existing selenium browser session to protractor rather than always creating new one.
+  The session can be passed into the config file as a string via the sessionId.
+
+- ([b693256](https://github.com/angular/protractor/commit/b6932560d66730203e0e7b0c65c80a44ad4747de)) 
+  feat(webdriver): allow configuration of all SeleniumServer arguments
+
+  You can now pass a complete object of configuration for the SeleniumServer class. This allows
+  enabling loopback on the selenium server.
+
+- ([148f020](https://github.com/angular/protractor/commit/148f020bf4bbd71e17326581a2f7ed6f4ff55832)) 
+  feat(protractor): Add support to allow Protractor to test an Angular application which has
+  debugging info disabled
+
+  Currently Angular application which for performance reasons, have debug information turn off
+  cannot be tested. This PR allows users to add the Angular debug logging flag to the Protractor
+  run.
+
+- ([aa5ceb5](https://github.com/angular/protractor/commit/aa5ceb576f0283b6591faaa95e342ef3c603c717)) 
+  feat(webdriver): add support for selenium webdriver proxy
+
+- ([b110ed9](https://github.com/angular/protractor/commit/b110ed92442eb8b14768c512a890bb3ceb0e4973)) 
+  feat(debugger): allow multiple browser.pause()
+
+  After this change, you can put multiple browser.pause() in the code. Each browser.pause() is like
+  a traditional breakpoint.
+
+  To detach from the debugger, press ^D (CTRL+D). This will continue code execution until it hits
+  the next browser.pause() or code finishes running.
+
+  This PR also fixes a number of small formatting issues.
+
+- ([fb10c5c](https://github.com/angular/protractor/commit/fb10c5caffb895e909ad91d629e2192c74c8e064)) 
+  feat(webdriver): Allow users to use webdriver's disableEnvironmentOverrides
+
+  Fixes #2300
+
+- ([fa0c692](https://github.com/angular/protractor/commit/fa0c692414fa98721dff80202ef95e9b3ccadebb)) 
+  feat(config): allow onComplete to return a promise
+
+  Closes #1944
+
+## Bug Fixes
+
+- ([f533341](https://github.com/angular/protractor/commit/f533341085921409d16d577e38ba1745c37a17b7)) 
+  bug(driverProvider): fix driver path generation for *nix platforms
+
+  Makes error messages better
+
 # 3.0.0
 
 _We're releasing version 3.0 with some breaking changes. In summary - Jasmine 1.3 is removed, only Jasmine 2 is now supported, old Node.JS support is dropped, and plugins now need to be explicitly required. Full details below._
