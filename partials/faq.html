@@ -91,8 +91,14 @@ jasmine.Spec.prototype.addExpectationResult = function() {
 </code></pre>
 <p><a href="https://github.com/juliemr/protractor-demo/blob/master/howtos/screenshot/screenshotReporter.js">See an example of taking screenshot on spec failures</a>.</p>
 <h2 id="how-do-i-produce-an-xml-report-of-my-test-results-" class="anchored"><div><a href="#{{path}}#how-do-i-produce-an-xml-report-of-my-test-results-">&#x1f517;</a>How do I produce an XML report of my test results?</div></h2>
-<p>You can use the npm package jasmine-reporters@1.0.0 and add a JUnit XML Reporter. Check out this <a href="https://github.com/angular/protractor/blob/master/spec/junitOutputConf.js">example (junitOutputConf.js)</a>. Make sure that you are using the correct version of jasmine-reporters for your version of Jasmine.</p>
-<h2 id="how-can-i-catch-errors-such-as-elementnotfound-" class="anchored"><div><a href="#{{path}}#how-can-i-catch-errors-such-as-elementnotfound-">&#x1f517;</a>How can I catch errors such as ElementNotFound?</div></h2>
+<p>You can use the npm package jasmine-reporters@^2.0.0 and add a JUnit XML Reporter in the <code ng-non-bindable>onPrepare</code> block. This would look something like:</p>
+<pre><code ng-non-bindable>var jasmineReporters = require(&#39;jasmine-reporters&#39;);
+jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
+    consolidateAll: true,
+    savePath: &#39;testresults&#39;,
+    filePrefix: &#39;reportXMLoutput&#39;
+}));
+</code></pre><h2 id="how-can-i-catch-errors-such-as-elementnotfound-" class="anchored"><div><a href="#{{path}}#how-can-i-catch-errors-such-as-elementnotfound-">&#x1f517;</a>How can I catch errors such as ElementNotFound?</div></h2>
 <p>WebDriver throws errors when commands cannot be completed - e.g. not being able to click on an element which is obscured by another element. If you need to retry these actions, try using <a href="https://github.com/juliemr/webdriverjs-retry">webdriverjs-retry</a>. If you would just like to catch the error, do so like this</p>
 <pre><code class="lang-javascript">elm.click().then(function() { /* passing case */}, function(err) { /* error handling here */})
 </code></pre>

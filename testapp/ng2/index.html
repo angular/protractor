@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Set the base href -->
+    <script>document.write('<base href="' + document.location + '" />');</script>
+
+    <title>Test App</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- IE required polyfills, in this exact order -->
+    <script src="lib/es6-shim/es6-shim.min.js"></script>
+    <script src="lib/systemjs/dist/system-polyfills.js"></script>
+
+    <script src="lib/angular2.0.0-beta.0/bundles/angular2-polyfills.js"></script>
+    <script src="lib/systemjs/dist/system.js"></script>
+    <script src="lib/typescript/lib/typescript.js"></script>
+    <script src="lib/rxjs/bundles/Rx.js"></script>
+    <script src="lib/angular2.0.0-beta.0/bundles/angular2.dev.js"></script>
+
+    <!-- Add the router library -->
+    <script src="lib/angular2.0.0-beta.0/bundles/router.js"></script>
+
+    <script>
+      System.config({
+        transpiler: 'typescript',
+        typescriptOptions: { emitDecoratorMetadata: true },
+        packages: {'app': {defaultExtension: 'ts'}}
+      });
+      System.import('app/boot')
+            .then(null, console.error.bind(console));
+    </script>
+  </head>
+
+  <body>
+    <my-app>loading...</my-app>
+  </body>
+
+</html>
+
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

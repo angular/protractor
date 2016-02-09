@@ -1,0 +1,530 @@
+<h1 id="protractor-style-guide">Protractor style guide</h1>
+<p>This style guide was originally created by
+<a href="https://github.com/CarmenPopoviciu">Carmen Popoviciu</a> and 
+<a href="https://github.com/andresdominguez">Andres Dominguez</a>. It is based on Carmen&#39;s 
+Protractor 
+<a href="https://github.com/CarmenPopoviciu/protractor-styleguide">style guide</a> and 
+Google&#39;s Protractor style guide.</p>
+<h2 id="video" class="anchored"><div><a href="#{{path}}#video">&#x1f517;</a>Video</div></h2>
+<p>Carmen and Andres gave a talk about this style guide at 
+<a href="http://angularconnect.com/">AngularConnect</a> in London. Here&#39;s the video in 
+case you want to watch it.</p>
+<p><a href="http://www.youtube.com/watch?feature=player_embedded&v=-lTGnYwnEuM" 
+  target="_blank"><img src="http://img.youtube.com/vi/-lTGnYwnEuM/0.jpg" 
+  alt="Protractor styleguide @AngularConnect" width="240" height="180" 
+  border="10"/></a></p>
+<h2 id="table-of-contents" class="anchored"><div><a href="#{{path}}#table-of-contents">&#x1f517;</a>Table of contents</div></h2>
+<ul>
+<li><a href=#{{path}}#test-suites>Test suites</a></li>
+<li><a href=#{{path}}#locator-strategies>Locator strategies</a></li>
+<li><a href=#{{path}}#page-objects>Page objects</a></li>
+<li><a href=#{{path}}#project-structure>Project structure</a></li>
+</ul>
+<h1 id="test-suites">Test suites</h1>
+<h3 id="don-t-e2e-test-what-s-been-unit-tested">Don&#39;t e2e test what’s been unit tested</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Unit tests are much faster than e2e tests</li>
+<li>Avoid duplicate tests</li>
+</ul>
+<h3 id="make-your-tests-independent-at-least-at-the-file-level">Make your tests independent at least at the file level</h3>
+<ul>
+<li>Protractor can run your tests in parallel when you enable sharding. The files
+are executed across different browsers as they become available.</li>
+<li>Make your tests independent at the file level because the order in which
+they run is not guaranteed and it&#39;s easier to run a test in isolation.</li>
+</ul>
+<h3 id="do-not-add-logic-to-your-test">Do not add logic to your test</h3>
+<ul>
+<li>Avoid using if statements and for loops. When you add logic your test may
+pass without testing anything, or may run very slowly.</li>
+</ul>
+<h3 id="don-t-mock-unless-you-need-to">Don&#39;t mock unless you need to</h3>
+<p>This rule is a bit controversial, in the sense that opinions are very divided 
+when it comes to what the best practice is. Some developers argue that e2e 
+tests should use mocks for everything in order to avoid external network calls 
+and have a second set of integration tests to test the APIs and database. Other 
+developers argue that e2e tests should operate on the entire system and be as 
+close to the &#39;real deal&#39; as possible.</p>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Using the real application with all the dependencies gives you high confidence</li>
+<li>Helps you spot some corner cases you might have overlooked</li>
+</ul>
+<h3 id="use-jasmine2">Use Jasmine2</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Jasmine is well documented</li>
+<li>It is supported by Protractor out of the box</li>
+<li>You can use <code ng-non-bindable>beforeAll</code> and <code ng-non-bindable>afterAll</code></li>
+</ul>
+<h3 id="make-your-tests-independent-from-each-other">Make your tests independent from each other</h3>
+<p>This rule holds true unless the operations performed to initialize the state of 
+the tests are too expensive. For example, if your e2e tests would require that 
+you create a new user before each spec is executed, you might end up with too 
+high test run times. However, this does not mean you should make tests directly 
+depend on one another. So, instead of creating a user in one of your tests and 
+expect that record to be there for all other subsequent tests, you could harvest 
+the power of jasmine&#39;s beforeAll (since Jasmine 2.1) to create the user.</p>
+<pre><code class="lang-javascript">/* avoid */
+
+it(&#39;should create user&#39;, function() {
+   browser.get(&#39;#/user-list&#39;);
+   userList.newButton.click();
+
+   userProperties.name.sendKeys(&#39;Teddy B&#39;);
+   userProperties.saveButton.click();
+
+   browser.get(&#39;#/user-list&#39;);
+   userList.search(&#39;Teddy B&#39;);
+   expect(userList.getNames()).toEqual([&#39;Teddy B&#39;]);
+});
+
+it(&#39;should update user&#39;, function() {
+   browser.get(&#39;#/user-list&#39;);
+   userList.clickOn(&#39;Teddy B&#39;);
+
+   userProperties.name.clear().sendKeys(&#39;Teddy C&#39;);
+   userProperties.saveButton.click();
+
+   browser.get(&#39;#/user-list&#39;);
+   userList.search(&#39;Teddy C&#39;);
+   expect(userList.getNames()).toEqual([&#39;Teddy C&#39;]);
+});
+</code></pre>
+<pre><code class="lang-javascript">/* recommended */
+
+describe(&#39;when the user Teddy B is created&#39;, function(){
+
+  beforeAll(function() { 
+    browser.get(&#39;#/user-list&#39;); 
+    userList.newButton.click(); 
+
+    userProperties.name.sendKeys(&#39;Teddy B&#39;); 
+    userProperties.saveButton.click(); 
+    browser.get(&#39;#/user-list&#39;); 
+  });
+
+  it(&#39;should exist&#39;, function() { 
+    userList.search(&#39;Teddy B&#39;); 
+    expect(userList.getNames()).toEqual([&#39;Teddy B&#39;]); 
+    userList.clear(); 
+  });
+
+  describe(&#39;and gets updated to Teddy C&#39;, function() {
+    beforeAll(function() { 
+      userList.clickOn(&#39;Teddy B&#39;); 
+      userProperties.name.clear().sendKeys(&#39;Teddy C&#39;); 
+      userProperties.saveButton.click(); 
+
+      browser.get(&#39;#/user-list&#39;); 
+    }); 
+
+    it(&#39;should be Teddy C&#39;, function() { 
+      userList.search(&#39;Teddy C&#39;); 
+      expect(userList.getNames()).toEqual([&#39;Teddy C&#39;]); 
+      userList.clear(); 
+    }); 
+  });
+});
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>You can run tests in parallel with sharding</li>
+<li>The execution order is not guaranteed</li>
+<li>You can run suites in isolation</li>
+<li>You can debug your tests (ddescribe/fdescribe/xdescribe/iit/fit/xit)</li>
+</ul>
+<h3 id="navigate-to-the-page-under-test-before-each-test">Navigate to the page under test before each test</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Assures you that the page under test is in a clean state</li>
+</ul>
+<h3 id="have-a-suite-that-navigates-through-the-major-routes-of-the-app">Have a suite that navigates through the major routes of the app</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Makes sure the major parts of the application are correctly connected</li>
+<li>Users usually don’t navigate by manually entering urls </li>
+<li>Gives confidence about permissions</li>
+</ul>
+<h1 id="locator-strategies">Locator strategies</h1>
+<h3 id="never-use-xpath">NEVER use xpath</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>It&#39;s the slowest and most brittle locator strategy of all</li>
+<li>Markup is very easily subject to change and therefore xpath locators require
+a lot of maintenance</li>
+<li>xpath expressions are unreadable and very hard to debug</li>
+</ul>
+<pre><code class="lang-javascript">/* avoid */
+
+var elem = element(by.xpath(&#39;/*/p[2]/b[2]/following-sibling::node()&#39; +
+ &#39;[count(.|/*/p[2]/b[2]/following-sibling::br[1]/preceding-sibling::node())&#39; +
+ &#39;=&#39; +
+ &#39; count((/*/p[2]/b[2]/following-sibling::br[1]/preceding-sibling::node()))&#39; +
+ &#39;]&#39;));
+</code></pre>
+<h3 id="prefer-protractor-locator-strategies-when-possible">Prefer protractor locator strategies when possible</h3>
+<ul>
+<li>Prefer protractor-specific locators such as <code ng-non-bindable>by.model</code> and <code ng-non-bindable>by.binding</code>.</li>
+</ul>
+<pre><code class="lang-html">&lt;ul class=&quot;red&quot;&gt;
+  &lt;li&gt;{{color.name}}&lt;/li&gt;
+  &lt;li&gt;{{color.shade}}&lt;/li&gt;
+  &lt;li&gt;{{color.code}}&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;details&quot;&gt;
+  &lt;div class=&quot;personal&quot;&gt;
+    &lt;input ng-model=&quot;person.name&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="lang-js">/* avoid */
+
+var nameElement = element.all(by.css(&#39;.red li&#39;)).get(0);
+var personName = element(by.css(&#39;.details .personal input&#39;));
+
+/* recommended */
+
+var nameElement = element(by.binding(&#39;color.name&#39;));
+var personName = element(by.model(&#39;person.name&#39;));
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>These locators are usually specific, short, and easy to read.</li>
+<li>It is easier to write your locator</li>
+<li>The code is less likely to change than other markup</li>
+</ul>
+<h3 id="prefer-by-id-and-by-css-when-no-protractor-locators-are-available">Prefer by.id and by.css when no Protractor locators are available</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Both are very performant and readable locators</li>
+<li>Access elements easier</li>
+</ul>
+<h3 id="avoid-text-locators-for-text-that-changes-frequently">Avoid text locators for text that changes frequently</h3>
+<ul>
+<li>Try to avoid text-based locators such as <code ng-non-bindable>by.linkText</code>, <code ng-non-bindable>by.buttonText</code>,
+<code ng-non-bindable>by.cssContainingText</code>.</li>
+</ul>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Text for buttons, links, and labels tends to change over time</li>
+<li>Your tests should not break when you make minor text changes</li>
+</ul>
+<h1 id="page-objects">Page objects</h1>
+<p>Page Objects help you write cleaner tests by encapsulating information about
+the elements on your application page. A page object can be reused across
+multiple tests, and if the template of your application changes, you only need
+to update the page object.</p>
+<h3 id="use-page-objects-to-interact-with-page-under-test">Use Page Objects to interact with page under test</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Encapsulate information about the elements on the page under test</li>
+<li>They can be reused across multiple tests</li>
+<li>Decouple the test logic from implementation details</li>
+</ul>
+<pre><code class="lang-javascript">/* avoid */
+
+/* question-spec.js */
+describe(&#39;Question page&#39;, function() {
+  it(&#39;should answer any question&#39;, function() {
+    var question = element(by.model(&#39;question.text&#39;));
+    var answer = element(by.binding(&#39;answer&#39;));
+    var button = element(by.css(&#39;.question-button&#39;));
+
+    question.sendKeys(&#39;What is the purpose of life?&#39;);
+    button.click();
+    expect(answer.getText()).toEqual(&quot;Chocolate!&quot;);
+  });
+});
+</code></pre>
+<pre><code class="lang-javascript">/* recommended */
+
+/* question-spec.js */
+var QuestionPage = require(&#39;./question-page&#39;);
+
+describe(&#39;Question page&#39;, function() {
+  var question = new QuestionPage();
+
+  it(&#39;should ask any question&#39;, function() {
+    question.ask(&#39;What is the purpose of meaning?&#39;);
+    expect(question.answer.getText()).toEqual(&#39;Chocolate&#39;);
+  });
+});
+
+/* recommended */
+
+/* question-page.js */
+var QuestionPage = function() {
+  this.question = element(by.model(&#39;question.text&#39;));
+  this.answer = element(by.binding(&#39;answer&#39;));
+  this.button = element(by.className(&#39;question-button&#39;));
+
+  this.ask = function(question) {
+    this.question.sendKeys(question);
+    this.button.click();
+  };
+};
+
+module.exports = QuestionPage;
+</code></pre>
+<h3 id="declare-one-page-object-per-file">Declare one page object per file</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Each page object should be defined in its own file.</li>
+<li>Why? Keeps code clean and makes things easy to find.</li>
+</ul>
+<h3 id="use-a-single-module-exports-at-the-end-of-the-page-object-file">Use a single module.exports at the end of the page object file</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Each page object should declare a single class. You only need to export one
+class.</li>
+</ul>
+<pre><code class="lang-js">/* avoid */
+
+var UserProfilePage = function() {};
+var UserSettingsPage = function() {};
+
+module.exports = UserPropertiesPage;
+module.exports = UserSettingsPage;
+</code></pre>
+<pre><code class="lang-javascript">/* recommended */
+
+/** @constructor */
+var UserPropertiesPage = function() {};
+
+module.exports = UserPropertiesPage;
+</code></pre>
+<ul>
+<li>Why? One page object per file means there&#39;s only one class to export.</li>
+</ul>
+<h3 id="require-all-the-modules-at-the-top">Require all the modules at the top</h3>
+<ul>
+<li>You should declare all the required modules at the top of your page object,
+test, or helper module.</li>
+</ul>
+<pre><code class="lang-js">var UserPage = require(&#39;./user-properties-page&#39;);
+var MenuPage = require(&#39;./menu-page&#39;);
+var FooterPage = require(&#39;./footer-page&#39;);
+
+describe(&#39;User properties page&#39;, function() {
+    ...
+});
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>The module dependencies should be clear and easy to find.</li>
+</ul>
+<h3 id="instantiate-all-page-objects-at-the-beginning-of-the-test-suite">Instantiate all page objects at the beginning of the test suite</h3>
+<ul>
+<li>Create new instances of the page object at the top of your top-level describe.</li>
+<li>Use upper case for the constructor name; lowercase for the instance name.</li>
+</ul>
+<pre><code class="lang-js">var UserPropertiesPage = require(&#39;./user-properties-page&#39;);
+var MenuPage = require(&#39;./menu-page&#39;);
+var FooterPage = require(&#39;./footer-page&#39;);
+
+describe(&#39;User properties page&#39;, function() {
+  var userProperties = new UserPropertiesPage();
+  var menu = new MenuPage();
+  var footer = new FooterPage();
+
+  // specs
+});
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Separates dependencies from the test code.</li>
+<li>Makes the dependencies available to all specs of the suite.</li>
+</ul>
+<h3 id="declare-all-the-page-object-public-elements-in-the-constructor">Declare all the page object public elements in the constructor</h3>
+<ul>
+<li>All the elements that will be visible to the test should be declared in the
+constructor.</li>
+</ul>
+<pre><code class="lang-html">&lt;form&gt;
+  Name: &lt;input type=&quot;text&quot; ng-model=&quot;ctrl.user.name&quot;&gt;
+  E-mail: &lt;input type=&quot;text&quot; ng-model=&quot;ctrl.user.email&quot;&gt;
+  &lt;button id=&quot;save-button&quot;&gt;Save&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<pre><code class="lang-javascript">/** @constructor */
+var UserPropertiesPage = function() {
+  // List all public elements here.
+  this.name = element(by.model(&#39;ctrl.user.name&#39;));
+  this.email = element(by.model(&#39;ctrl.user.email&#39;));
+  this.saveButton = $(&#39;#save-button&#39;);
+};
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>The user of the page object should have quick access to the available
+elements on a page</li>
+</ul>
+<h3 id="declare-page-object-functions-for-operations-that-require-more-than-one-step">Declare page object functions for operations that require more than one step</h3>
+<pre><code class="lang-javascript">/**
+ * Page object for the user properties view.
+ * @constructor
+ */
+var UserPropertiesPage = function() {
+  this.newPhoneButton = $(&#39;button.new-phone&#39;);
+
+  /**
+   * Encapsulate complex operations in a function.
+   * @param {string} phone Phone number.
+   * @param {string} contactType Phone type (work, home, etc.).
+   */
+  this.addContactPhone = function(phone, contactType) {
+    this.newPhoneButton.click();
+    $$(&#39;#phone-list .phone-row&#39;).first().then(function(row) {
+      row.element(by.model(&#39;item.phoneNumber&#39;)).sendKeys(phone);
+      row.element(by.model(&#39;item.contactType&#39;)).sendKeys(contactType);
+    });
+  };
+};
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Most elements are already exposed by the page object and can be used
+directly in the test.</li>
+<li>Doing otherwise will not have any added value</li>
+</ul>
+<h3 id="avoid-using-expect-in-page-objects">Avoid using expect() in page objects</h3>
+<ul>
+<li>Don&#39;t make any assertions in your page objects.</li>
+</ul>
+<p><strong>Why?</strong></p>
+<ul>
+<li>It is the responsibility of the test to do all the assertions.</li>
+<li>A reader of the test should be able to understand the behavior of the
+application by looking at the test only</li>
+</ul>
+<h3 id="add-page-object-wrappers-for-directives-dialogs-and-common-elements">Add page object wrappers for directives, dialogs, and common elements</h3>
+<ul>
+<li>Some directives render complex HTML or they change frequently. Avoid code
+duplication by writing wrappers to interact with complex directives.</li>
+<li>Dialogs or modals are frequently used across multiple views.</li>
+<li>When the directive changes you only need to change the wrapper once.</li>
+</ul>
+<p>For example, the Protractor website has navigation bar with multiple dropdown
+menus. Each menu has multiple options. A page object for the menu would look
+like this:</p>
+<pre><code class="lang-js">/**
+ * Page object for Protractor website menu.
+ * @constructor
+ */
+var MenuPage = function() {
+  this.dropdown = function(dropdownName) {
+    /**
+     * Dropdown api. Used to click on an element under a dropdown.
+     * @param {string} dropdownName
+     * @return {{option: Function}}
+     */
+    var openDropdown = function() {
+      element(by.css(&#39;.navbar-nav&#39;))
+          .element(by.linkText(dropdownName))
+          .click();
+    };
+
+    return {
+      /**
+       * Get an option element under a dropdown.
+       * @param {string} optionName
+       * @return {ElementFinder}
+       */
+      option: function(optionName) {
+        openDropdown();
+        return element(by.css(&#39;.dropdown.open&#39;))
+            .element(by.linkText(optionName));
+      }
+    }
+  };
+};
+
+module.exports = MenuPage;
+</code></pre>
+<pre><code class="lang-js">var Menu = require(&#39;./menu&#39;);
+
+describe(&#39;protractor website&#39;, function() {
+
+  var menu = new Menu();
+
+  it(&#39;should navigate to API view&#39;, function() {
+    browser.get(&#39;http://www.protractortest.org/#/&#39;);
+
+    menu.dropdown(&#39;Reference&#39;).option(&#39;Protractor API&#39;).click();
+
+    expect(browser.getCurrentUrl())
+        .toBe(&#39;http://www.protractortest.org/#/api&#39;);
+  });
+});
+</code></pre>
+<p><strong>Why?</strong></p>
+<ul>
+<li>When you have a large team and multiple e2e tests people tend to write
+their own custom locators for the same directives.</li>
+</ul>
+<h1 id="project-structure">Project structure</h1>
+<h3 id="group-your-e2e-tests-in-a-structure-that-makes-sense-to-the-structure-of-your-project">Group your e2e tests in a structure that makes sense to the structure of your project</h3>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Finding your e2e related files should be intuitive and easy</li>
+<li>Makes the folder structure more readable</li>
+<li>Clearly separates e2e tests from unit tests</li>
+</ul>
+<pre><code ng-non-bindable>/* avoid */
+
+|-- project-folder
+  |-- app
+    |-- css
+    |-- img
+    |-- partials
+        home.html
+        profile.html
+        contacts.html
+    |-- js
+      |-- controllers
+      |-- directives
+      |-- services
+      app.js
+      ...
+    index.html
+  |-- test
+    |-- unit
+    |-- e2e
+        home-page.js
+        home-spec.js
+        profile-page.js
+        profile-spec.js
+        contacts-page.js
+        contacts-spec.js
+
+/* recommended */
+
+|-- project-folder
+  |-- app
+    |-- css
+    |-- img
+    |-- partials
+        home.html
+        profile.html
+        contacts.html
+    |-- js
+      |-- controllers
+      |-- directives
+      |-- services
+      app.js
+      ...
+    index.html
+  |-- test
+    |-- unit
+    |-- e2e
+      |-- page-objects
+          home-page.js
+          profile-page.js
+          contacts-page.js
+      home-spec.js
+      profile-spec.js
+      contacts-spec.js
+</code></pre>
