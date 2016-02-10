@@ -39,6 +39,22 @@ describe('the config parser', function() {
     expect(config.onPrepare).toEqual(path.normalize(process.cwd() + '/baz/qux.js'));
   });
 
+  describe('getSpecs()', function() {
+    it('should return all the specs from "config.suites" if no other sources are provided', function() {
+      var config = {
+        specs: [],
+        suites: {
+          foo: 'foo.spec.js',
+          bar: 'bar.spec.js'
+        }
+      };
+
+      var specs = new ConfigParser.getSpecs(config);
+
+      expect(specs).toEqual(['bar.spec.js', 'foo.spec.js']);
+    });
+  });
+
   describe('resolving globs', function() {
     it('should resolve relative to the cwd', function() {
       spyOn(process, 'cwd').and.returnValue(__dirname + '/');
