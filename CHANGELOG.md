@@ -1,3 +1,15 @@
+# 3.1.1
+
+# Bug Fixes
+
+- ([4db52f2](https://github.com/angular/protractor/commit/4db52f2a21171ebbc6fed0ca3df760553afc264a)) 
+  test(config): add test for config files using only per-capability specs
+
+  To prevent bugs like #2925 in the future.
+
+- ([edfb52f](https://github.com/angular/protractor/commit/edfb52fadccf10c34d885c37e990dea0efbb0081)) 
+  fix(configParser): use all the suites if no other spec sources are provided
+
 # 3.1.0
 
 ## Dependency Version Upgrades
