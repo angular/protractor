@@ -27,13 +27,11 @@
     "expect.js": "~0.3.1",
     "chai": "~3.4.1",
     "chai-as-promised": "~5.2.0",
-    "gulp": "^3.9.1",
     "jshint": "2.9.1",
     "mocha": "2.3.4",
     "express": "~4.13.3",
     "body-parser": "1.14.2",
     "rimraf": "~2.5.0",
-    "run-sequence": "^1.1.5",
     "lodash": "^2.4.1",
     "marked": "^0.3.3"
   },
@@ -47,8 +45,7 @@
   },
   "main": "lib/protractor.js",
   "scripts": {
-    "prepublish": "gulp prepublish",
-    "pretest": "gulp pretest",
+    "pretest": "./scripts/pretest.sh",
     "test": "node scripts/test.js",
     "start": "node testapp/scripts/web-server.js"
   },

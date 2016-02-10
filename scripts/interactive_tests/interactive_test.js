@@ -1,7 +1,7 @@
 var env = require('../../spec/environment.js');
 var InteractiveTest = require('./interactive_test_util').InteractiveTest;
 var port = env.interactiveTestPort;
-var test = new InteractiveTest('node built/cli.js --elementExplorer true', port);
+var test = new InteractiveTest('node lib/cli.js --elementExplorer true', port);
 
 // Check state persists.
 test.addCommandExpectation('var x = 3');
