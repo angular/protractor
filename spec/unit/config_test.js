@@ -51,7 +51,7 @@ describe('the config parser', function() {
 
       var specs = new ConfigParser.getSpecs(config);
 
-      expect(specs).toEqual(['bar.spec.js', 'foo.spec.js']);
+      expect(specs).toEqual(['foo.spec.js', 'bar.spec.js']);
     });
   });
 
