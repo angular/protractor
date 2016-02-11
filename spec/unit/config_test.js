@@ -49,7 +49,7 @@ describe('the config parser', function() {
         }
       };
 
-      var specs = new ConfigParser.getSpecs(config);
+      var specs = ConfigParser.getSpecs(config);
 
       expect(specs).toEqual(['bar.spec.js', 'foo.spec.js']);
     });
