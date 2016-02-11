@@ -6,7 +6,7 @@ This is a simple tutorial that shows you how to set up Protractor and start runn
 Prerequisites
 -------------
 
-Protractor is a [Node.js](http://nodejs.org/) program. To run, you will need to have Node.js installed. You will download Protractor package using [npm](https://www.npmjs.org/), which comes with Node.js. Check the version of Node.js you have by running `node --version`. It should be greater than v0.10.0.
+Protractor is a [Node.js](http://nodejs.org/) program. To run, you will need to have Node.js installed. You will download Protractor package using [npm](https://www.npmjs.org/), which comes with Node.js. Check the version of Node.js you have by running `node --version`. Then, check the [compatibility notes] (https://github.com/angular/protractor#compatibility) in the Protractor README to make sure your version of Node.js is compatible with Protractor. 
 
 By default, Protractor uses the [Jasmine](http://jasmine.github.io/) test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.3.
 
