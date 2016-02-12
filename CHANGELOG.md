@@ -19,7 +19,7 @@
 
   Selenium-standalone update to 2.51.0. Update chromedriver to 2.21.
 
-  Chromedriver changelog: http://chromedriver.storage.googleapis.com/2.20/notes.txt Selenium
+  Chromedriver changelog: http://chromedriver.storage.googleapis.com/2.21/notes.txt Selenium
   changelog: https://github.com/SeleniumHQ/selenium/blob/master/dotnet/CHANGELOG
 
 - ([5930d14](https://github.com/angular/protractor/commit/5930d1444aef2f053c132eb437d07f9b000d7803)) 
