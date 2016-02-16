@@ -224,6 +224,23 @@ exports.waitForCondition = function() {};
  * @type {string}
  */
 exports.name = '';
+
+
+/**
+ * Used to turn off default checks for angular stability
+ *
+ * Normally Protractor waits for all $timeout and $http calls to be processed
+ * before executing the next command.  This can be disabled using
+ * browser.ignoreSynchronization, but that will also disable any
+ * <Plugin>.waitForPromise or <Plugin>.waitForCondition checks.  If you want to
+ * disable synchronization with angular, but leave in tact any custom plugin
+ * synchronization, this is the option for you.
+ *
+ * This is used by users who want to replace Protractor's synchronization code
+ * with their own.
+ *
+ * @type {boolean}
+ */
 ```
 
 Each of these exported properties are optional.
