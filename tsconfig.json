@@ -6,7 +6,7 @@
     "sourceMap": false,
     "declaration": true,
     "removeComments": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "outDir": "built/"
   },
   "exclude": [

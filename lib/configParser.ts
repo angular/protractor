@@ -19,6 +19,7 @@ try {
 export interface Config {
   specs: Array<string>;
   multiCapabilities: Array<any>;
+  capabilities?: any;
   rootElement: string;
   allScriptsTimeout: number;
   getPageTimeout: number;
@@ -35,6 +36,8 @@ export interface Config {
   suite?: string;
   suites?: any;
   troubleshoot?: boolean;
+  exclude?: Array<string>| string;
+  maxSessions?: number;
 }
 
 export default class ConfigParser {

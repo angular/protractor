@@ -1,4 +1,4 @@
-var TaskScheduler = require('../../built/taskScheduler.js');
+var TaskScheduler = require('../../built/taskScheduler').default;
 var ConfigParser = require('../../built/configParser').default;
 
 describe('the task scheduler', function() {
