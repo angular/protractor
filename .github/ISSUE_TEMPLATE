@@ -1,0 +1,31 @@
+Hi there!
+
+Thanks for submitting an issue to Protractor.
+
+To help us help you better, please do the following before submitting an issue:
+
+1. Review the questions section of [CONTRIBUTING.md](https://github.com/angular/protractor/blob/master/CONTRIBUTING.md#contributing)
+2. Make sure you are not asking a usage or debugging question. If you are, use [StackOverflow](http://stackoverflow.com/questions/tagged/protractor), [Google Group discussion list](https://groups.google.com/forum/?fromgroups#!forum/angular), or [Gitter](https://gitter.im/angular/protractor) to get help.
+3. Fill in the information that corresponds to your type of issue below
+4. Delete this intro and any unrelated text :smile: (if you do not we'll assume you haven't read these instructions and automatically close the issue)
+
+
+Bug report
+---
+
+- Node Version: ``
+- Protractor Version: ``
+- Browser(s): ``
+- Operating System and Version ``
+- Your protractor configuration file
+- A relevant example test
+- Output from running the test
+- Steps to reproduce the bug
+- The URL you are running your tests against (if relevant)
+
+
+Feature Request
+---
+
+- Reasons for adopting new feature
+- Is this a breaking change? (How will this affect existing functionality)
