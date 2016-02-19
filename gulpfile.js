@@ -7,6 +7,7 @@ var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
 
 var runSpawn = function(done, task, opt_arg) {
+  opt_arg = typeof opt_arg !== 'undefined' ? opt_arg : [];
   var child = spawn(task, opt_arg, {stdio: 'inherit'});
   child.on('close', function() {
     done();
@@ -39,7 +40,7 @@ gulp.task('typings', function(done) {
 });
 
 gulp.task('tsc', function(done) {
-  runSpawn(done, 'node_modules/typescript/bin/tsc');
+  runSpawn(done, './node_modules/typescript/bin/tsc');
 });
 
 gulp.task('prepublish', function(done) {

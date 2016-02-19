@@ -63,7 +63,7 @@ export default class TaskScheduler {
             (path) => { return capabilitiesSpecExcludes.indexOf(path) < 0; });
       }
 
-      let specLists: Array<string> = [];
+      let specLists: Array<Array<string>> = [];
       // If we shard, we return an array of one element arrays, each containing
       // the spec file. If we don't shard, we return an one element array
       // containing an array of all the spec files

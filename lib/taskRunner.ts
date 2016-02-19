@@ -72,7 +72,6 @@ export default class TaskRunner extends EventEmitter {
       childProcess
           .on('message',
               (m: any) => {
-                console.log(m);
                 switch (m.event) {
                   case 'testPass':
                     Logger.print('.');
