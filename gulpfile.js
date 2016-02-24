@@ -9,8 +9,19 @@ var spawn = require('child_process').spawn;
 var runSpawn = function(done, task, opt_arg) {
   opt_arg = typeof opt_arg !== 'undefined' ? opt_arg : [];
   var child = spawn(task, opt_arg, {stdio: 'inherit'});
+  var running = false;
   child.on('close', function() {
-    done();
+    if (!running) {
+      running = true;
+      done();
+    }
+  });
+  child.on('error', function() {
+    if (!running) {
+      console.error('gulp encountered a child error');
+      running = true;
+      done();
+    }
   });
 };
 
@@ -20,11 +31,11 @@ gulp.task('built:copy', function() {
 });
 
 gulp.task('webdriver:update', function(done) {
-  runSpawn(done, 'bin/webdriver-manager', ['update']);
+  runSpawn(done, 'node', ['bin/webdriver-manager', 'update']);
 });
 
-gulp.task('jslint', function(done) {
-  runSpawn(done, './node_modules/.bin/jshint', ['lib','spec', 'scripts']);
+gulp.task('jshint', function(done) {
+  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', 'lib', 'spec', 'scripts']);
 });
 
 gulp.task('clang', function() {
@@ -36,18 +47,18 @@ gulp.task('clang', function() {
 });
 
 gulp.task('typings', function(done) {
-  runSpawn(done, 'node_modules/.bin/typings', ['install']);
+  runSpawn(done, 'node', ['node_modules/typings/dist/bin/typings.js', 'install']);
 });
 
 gulp.task('tsc', function(done) {
-  runSpawn(done, './node_modules/typescript/bin/tsc');
+  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence(['typings', 'jslint', 'clang'],'tsc', 'built:copy', done);
+  runSequence(['typings', 'jshint', 'clang'],'tsc', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jslint', 'clang'], 'tsc', 'built:copy', done);
+    ['webdriver:update', 'typings', 'jshint', 'clang'], 'tsc', 'built:copy', done);
 });

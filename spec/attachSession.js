@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+var env = require('./environment');
 
 exports.config = {
   seleniumAddress: env.seleniumAddress,
@@ -11,7 +11,7 @@ exports.config = {
 
   capabilities: env.capabilities,
 
-  baseUrl: 'http://localhost:8081',
+  baseUrl: env.baseUrl,
 
   // Special option for Angular2, to test against all Angular2 applications
   // on the page. This means that Protractor will wait for every app to be

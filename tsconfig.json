@@ -15,6 +15,7 @@
     "testapp",
     "typings/browser",
     "typings/browser.d.ts",
-    "typings/main"
+    "typings/main",
+    "website"
   ]
 }

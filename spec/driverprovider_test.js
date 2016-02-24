@@ -13,6 +13,7 @@
 
 var argv = require('optimist').argv;
 var q = require('q');
+var env = require('./environment');
 
 var testDriverProvider = function(driverProvider) {
   return driverProvider.setupEnv().then(function() {
@@ -64,7 +65,7 @@ testDriverProvider(require('../lib/driverProviders/direct')(firefoxConfig)).
     });
 
 var hostedConfig = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: env.seleniumAddress,
   capabilities: {
     browserName: 'firefox'
   }
@@ -77,7 +78,7 @@ testDriverProvider(require('../lib/driverProviders/hosted')(hostedConfig)).
     });
 
 var hostedPromisedConfig = {
-  seleniumAddress: q.when('http://localhost:4444/wd/hub'),
+  seleniumAddress: q.when(env.seleniumAddress),
   capabilities: {
     browserName: 'firefox'
   }
