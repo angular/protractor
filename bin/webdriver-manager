@@ -176,7 +176,7 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   file.on('close', function() {
     fs.stat(filePath, function(err, stats) {
       if (err) {
-        console.error('Error: Got error ' + error + ' from ' + fileUrl);
+        console.error('Error: Got error ' + err + ' from ' + fileUrl);
       }
       if (stats.size != contentLength) {
         console.error('Error: corrupt download for ' + fileName +
