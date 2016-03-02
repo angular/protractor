@@ -33,12 +33,12 @@
     "gulp": "^3.9.1",
     "gulp-clang-format": "^1.0.23",
     "jshint": "2.9.1",
-    "lodash": "^2.4.1",
+    "lodash": "^4.5.1",
     "marked": "^0.3.3",
     "mocha": "2.3.4",
     "rimraf": "~2.5.0",
     "run-sequence": "^1.1.5",
-    "typescript": "~1.8.0",
+    "typescript": "1.8.2",
     "typings": "~0.6.6"
   },
   "repository": {

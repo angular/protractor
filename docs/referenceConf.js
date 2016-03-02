@@ -97,6 +97,14 @@ exports.config = {
   // ----- What tests to run ---------------------------------------------------
   // ---------------------------------------------------------------------------
 
+  // Use default globals: 'protractor', 'brower', '$', '$$', 'element', 'by'.
+  // These also exist as properties of the protractor namespace:
+  // 'protractor.browser', 'protractor.$', 'protractor.$$', 'protractor.element',
+  // 'protractor.by', and 'protractor.By'.
+  // When no globals is set to true, the only available global variable will be
+  // 'protractor'.
+  noGlobals: false,
+
   // Spec patterns are relative to the location of this config.
   specs: [
     'spec/*_spec.js'

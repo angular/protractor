@@ -31,6 +31,7 @@ export interface Config {
   mochaOpts: {ui: string; reporter: string;};
   chromeDriver?: string;
   configDir: string;
+  noGlobals: boolean;
   plugins: Array<any>;
   skipSourceMapSupport: boolean;
   suite?: string;
@@ -56,6 +57,7 @@ export default class ConfigParser {
       seleniumArgs: [],
       mochaOpts: {ui: 'bdd', reporter: 'list'},
       configDir: './',
+      noGlobals: false,
       plugins: [],
       skipSourceMapSupport: false,
     };
