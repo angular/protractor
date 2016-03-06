@@ -21,7 +21,8 @@
     "request": "~2.67.0",
     "saucelabs": "~1.0.1",
     "selenium-webdriver": "2.48.2",
-    "source-map-support": "~0.4.0"
+    "source-map-support": "~0.4.0",
+    "testingbot-api": "~1.0.1"
   },
   "devDependencies": {
     "body-parser": "1.14.2",
