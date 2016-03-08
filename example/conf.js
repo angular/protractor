@@ -10,7 +10,7 @@ exports.config = {
   // Framework to use. Jasmine is recommended.
   framework: 'jasmine',
 
-  // Spec patterns are relative to the current working directly when
+  // Spec patterns are relative to the current working directory when
   // protractor is called.
   specs: ['example_spec.js'],
 
