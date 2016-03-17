@@ -1,6 +1,40 @@
+# 3.2
+
+## Features
+- ([cae175c](https://github.com/angular/protractor/commit/cae175cbe632828172e9a7065aacfe67dd51d8dd))
+  feat(plugins) Calculate skipAngularStability dynamically.
+
+  This allows plugins to turn Protractor's default synchronization on and off as needed.
+
+- ([7372267](https://github.com/angular/protractor/commit/7372267f23cc8586409f9ef914ab801c78992ccd))
+  feat(webdriver): add support for custom versions for selenium, chrome driver, and ie driver
+
+- ([1cbbe4f](https://github.com/angular/protractor/commit/1cbbe4fef5c5f2bc0923fd54c53afad71a44af6c))
+  feat(config): no globals option
+
+- ([9608201](https://github.com/angular/protractor/commit/960820120cf7df08cff8cfe15a5a9f08612c9773))
+  feat(typescript): adding typescript to protractor
+
+  Converting a 3 files over to typescript.
+
+  Adding an `npm prepublish` step that will use gulp to download the typings, transpile the files
+  with tscto the built/ directory and copy the rest of the javascript files from lib/ to the built/
+  folder.
+
+  Also adding scripts to package.json for `npm run tsc` and `npm run tsc:w` for transpiling help.
+
+- ([a4a7209](https://github.com/angular/protractor/commit/a4a72095d2f95227f1ba293ae047beab28eb761d)) 
+  feat(plugins): skipAngularStability
+
+## Bug Fixes
+- ([a2c7a4b](https://github.com/angular/protractor/commit/a2c7a4bf1fb2a3a509040ae8ec7737cc002b764e)) 
+  fix(config): Do not sort spec keys
+
+  Fixes #2928
+
 # 3.1.1
 
-# Bug Fixes
+## Bug Fixes
 
 - ([4db52f2](https://github.com/angular/protractor/commit/4db52f2a21171ebbc6fed0ca3df760553afc264a)) 
   test(config): add test for config files using only per-capability specs
