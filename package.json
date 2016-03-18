@@ -49,7 +49,7 @@
     "protractor": "bin/protractor",
     "webdriver-manager": "bin/webdriver-manager"
   },
-  "main": "lib/protractor.js",
+  "main": "built/protractor.js",
   "scripts": {
     "prepublish": "gulp prepublish",
     "pretest": "gulp pretest",
