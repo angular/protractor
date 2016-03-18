@@ -33,6 +33,12 @@ _This release is a hotfix for modules that require protractor_
 - ([a4a7209](https://github.com/angular/protractor/commit/a4a72095d2f95227f1ba293ae047beab28eb761d)) 
   feat(plugins): skipAngularStability
 
+## Dependency Upgrades
+- ([29627f4](https://github.com/angular/protractor/commit/29627f42bb7404f66e3a76ba3cbd85256b408fb6))
+  chore(selenium) - upgrade to selenium webdriver v 2.52.0
+
+  See the full changelog at https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md#v2520
+
 ## Bug Fixes
 - ([a2c7a4b](https://github.com/angular/protractor/commit/a2c7a4bf1fb2a3a509040ae8ec7737cc002b764e)) 
   fix(config): Do not sort spec keys

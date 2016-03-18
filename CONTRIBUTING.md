@@ -58,7 +58,7 @@ In summary, this style is
     <BLANK LINE>
     <body>
 
-Where `<type>` is one of [feat, fix, docs, style, refactor, test, chore] and
+Where `<type>` is one of [feat, fix, docs, refactor, test, chore, deps] and
 `<scope>` is a quick descriptor of the location of the change, such as cli, clientSideScripts, element.
 
 Testing your changes
