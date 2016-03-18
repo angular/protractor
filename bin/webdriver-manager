@@ -203,6 +203,7 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   var options = {
     url: fileUrl,
     strictSSL: !ignoreSSL,
+    rejectUnauthorized: !ignoreSSL,
     proxy: resolveProxy(fileUrl)
   };
 
