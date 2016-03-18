@@ -1,4 +1,11 @@
-# 3.2
+# 3.2.1
+_This release is a hotfix for modules that require protractor_
+
+## Bug Fix
+- ([6e02934](https://github.com/angular/protractor/commit/6e029341a67cd985bf727285dec2ef10aafe7b6a))
+  fix(package): Update module main in package.json to use built.
+
+# 3.2.0
 
 ## Features
 - ([cae175c](https://github.com/angular/protractor/commit/cae175cbe632828172e9a7065aacfe67dd51d8dd))
