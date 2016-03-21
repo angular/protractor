@@ -173,15 +173,40 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
   fs.mkdirSync(argv.out_dir);
 }
 
-var resolveProxy = function(fileUrl) {
-  var protocol = url.parse(fileUrl).protocol;
-  if (argv.proxy) {
-    return argv.proxy;
-  } else if (protocol === 'https:') {
-    return process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
-  } else if (protocol === 'http:') {
-    return process.env.HTTP_PROXY || process.env.http_proxy;
-  }
+var resolveProxy = function (fileUrl) {
+    var parsedUrl = url.parse(fileUrl);
+    var protocol = parsedUrl.protocol;
+    var hostname = parsedUrl.hostname;
+
+    if (argv.proxy) {
+        // if a proxy was explicitly specified, then it must be used
+        return argv.proxy;
+    } else {
+        // NO_PROXY environment variable
+        var noProxy = process.env.NO_PROXY || process.env.no_proxy || "";
+        noProxy = noProxy.replace(/\s/g, ''); // remove spaces
+
+        // array of hostnames/domain names listed in the NO_PROXY environment variable
+        var noProxyTokens = noProxy.split(",");
+        // avoid the non-empty array with an empty string (i.e., if not defined or empty: no tokens to check for)
+        if (noProxyTokens[0] === "") {
+            noProxyTokens = [];
+        }
+
+        // check if the fileUrl hostname part does not end with one of the NO_PROXY environment variable's hostnames/domain names
+        for(var noProxyIndex = 0; noProxyIndex < noProxyTokens.length; ++noProxyIndex) {
+            var noProxyToken = noProxyTokens[noProxyIndex];
+            if (hostname.indexOf(noProxyToken, hostname.length - noProxyToken.length) !== -1) {
+                return null; // no proxy should be used!
+            }
+        }
+
+        if (protocol === 'https:') {
+            return process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
+        } else if (protocol === 'http:') {
+            return process.env.HTTP_PROXY || process.env.http_proxy;
+        }
+    }
 };
 
 /**
