@@ -1,3 +1,18 @@
+# 3.2.2
+_This release is a hotfix for webdriver-manager iedriver_
+
+## Bug Fix
+- ([c6a3b5e](https://github.com/angular/protractor/commit/c6a3b5eab09d95f9d2170e4aface5559cd6b0132))
+  fix(webdriver) - fix file type for internet explorer driver file
+
+- ([d3bd170](https://github.com/angular/protractor/commit/d3bd1702040cde5b9d0a3c1578d0d8e16597224c))
+  fix(bootstrap): enable debug info before setting defer label
+
+  Note that in most cases, this should not have surfaced as an issue because the base test mock
+  modules will also try to turn on debug info.
+
+  Closes #3009
+  
 # 3.2.1
 _This release is a hotfix for modules that require protractor_
 
