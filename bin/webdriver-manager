@@ -432,7 +432,7 @@ switch (argv._[0]) {
           //   IEDriverServer.exe
           zip.extractAllTo(argv.out_dir, true);
           var filePath = path.join(argv.out_dir, binaries.ie.prefix +
-              binaries.ie.getVersion());
+              binaries.ie.getVersion() + '.exe');
           fs.renameSync(path.join(argv.out_dir, 'IEDriverServer.exe'), filePath);
         });
     }
