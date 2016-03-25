@@ -72,6 +72,8 @@ exports.config = {
   // Use sauceAgent if you need customize agent for https connection to
   // saucelabs.com (i.e. your computer behind corporate proxy)
   sauceAgent: null,
+  // Use sauceBuild if you want to group test capabilites by a build ID
+  sauceBuild: null,
   // Use sauceSeleniumAddress if you need to customize the URL Protractor
   // uses to connect to sauce labs (for example, if you are tunneling selenium
   // traffic through a sauce connect tunnel). Default is
