@@ -19,10 +19,10 @@
     "jasminewd2": "0.0.9",
     "optimist": "~0.6.0",
     "q": "1.4.1",
-    "request": "~2.67.0",
     "saucelabs": "~1.0.1",
     "selenium-webdriver": "2.53.2",
-    "source-map-support": "~0.4.0"
+    "source-map-support": "~0.4.0",
+    "webdriver-manager": "^10.0.1"
   },
   "devDependencies": {
     "body-parser": "1.14.2",
