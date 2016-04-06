@@ -186,6 +186,16 @@ describe('ElementFinder', function() {
     ).toEqual('Anon');
 
   });
+
+  it('should check equality correctly', function() {
+    browser.get('index.html#/form');
+
+    var usernameInput = element(by.model('username'));
+    var name = element(by.binding('username'));
+
+    expect(usernameInput.equals(usernameInput)).toEqual(true);
+    expect(usernameInput.equals(name)).toEqual(false);
+  });
 });
 
 describe('ElementArrayFinder', function() {
