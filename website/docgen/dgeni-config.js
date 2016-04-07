@@ -75,8 +75,8 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
     {include: 'built/protractor.js'},
     {include: 'built/locators.js'},
     {include: 'built/expectedConditions.js'},
-    {include: 'built/selenium-webdriver/locators.js'},
-    {include: 'built/selenium-webdriver/webdriver.js'}
+    {include: 'lib/selenium-webdriver/locators.js'},
+    {include: 'lib/selenium-webdriver/webdriver.js'}
     // TODO: add in key & promise
     // {include: 'node_modules/selenium-webdriver/lib/webdriver/key.js'},
     // {include: 'node_modules/selenium-webdriver/lib/webdriver/promise.js'}
