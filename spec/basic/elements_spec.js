@@ -111,6 +111,13 @@ describe('ElementFinder', function() {
       });
   });
 
+  it('isPresent() should be friendly with out of bounds error', function () {
+    browser.get('index.html#/form');
+    var elementsNotPresent = element.all(by.id('notPresentElementID'));
+    expect(elementsNotPresent.first().isPresent()).toBe(false);
+    expect(elementsNotPresent.last().isPresent()).toBe(false);
+  });
+
   it('isPresent() should not raise error on chained finders', function() {
     browser.get('index.html#/form');
     var elmFinder = $('.nopenopenope').element(by.binding('greet'));
