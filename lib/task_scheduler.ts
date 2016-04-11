@@ -1,5 +1,4 @@
-import ConfigParser, {Config} from './configParser';
-
+import {ConfigParser, Config} from './config_parser';
 
 export interface Task {
   capabilities: any;
@@ -23,7 +22,7 @@ export class TaskQueue {
   }
 }
 
-export default class TaskScheduler {
+export class TaskScheduler {
   taskQueues: Array<TaskQueue>;
   rotationIndex: number;
 
