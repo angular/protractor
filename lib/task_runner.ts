@@ -1,11 +1,10 @@
 import {fork} from 'child_process';
-import {EventEmitter} from 'events';
-import {defer, Promise} from 'q';
-import {inherits} from 'util';
+import * as events from 'events';
+import * as q from 'q';
 
-import ConfigParser, {Config} from './configParser';
+import {ConfigParser, Config} from './config_parser';
 import * as Logger from './logger';
-import TaskLogger from './taskLogger';
+import {TaskLogger} from './task_logger';
 
 export interface RunResults {
   taskId: number;
@@ -16,7 +15,7 @@ export interface RunResults {
   specResults: Array<any>;
 }
 
-export default class TaskRunner extends EventEmitter {
+export class TaskRunner extends events.EventEmitter {
   /**
    * A runner for running a specified task (capabilities + specs).
    * The TaskRunner can either run the task from the current process (via
@@ -42,7 +41,7 @@ export default class TaskRunner extends EventEmitter {
    *     result of the run:
    *       taskId, specs, capabilities, failedCount, exitCode, specResults
    */
-  public run(): Promise<any> {
+  public run(): q.Promise<any> {
     let runResults: RunResults = {
       taskId: this.task.taskId,
       specs: this.task.specs,
@@ -54,7 +53,7 @@ export default class TaskRunner extends EventEmitter {
     };
 
     if (this.runInFork) {
-      let deferred = defer();
+      let deferred = q.defer();
 
       let childProcess = fork(
           __dirname + '/runnerCli.js', process.argv.slice(2),

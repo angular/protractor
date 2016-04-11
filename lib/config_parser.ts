@@ -1,5 +1,5 @@
-import {resolve, dirname} from 'path';
-import {sync} from 'glob';
+import * as path from 'path';
+import * as glob from 'glob';
 import * as Logger from './logger';
 
 // Coffee is required here to enable config files written in coffee-script.
@@ -41,7 +41,7 @@ export interface Config {
   maxSessions?: number;
 }
 
-export default class ConfigParser {
+export class ConfigParser {
   private config_: Config;
   constructor() {
     // Default configuration.
@@ -82,12 +82,12 @@ export default class ConfigParser {
 
     if (patterns) {
       for (let fileName of patterns) {
-        let matches = sync(fileName, {cwd});
+        let matches = glob.sync(fileName, {cwd});
         if (!matches.length && !opt_omitWarnings) {
           Logger.warn('pattern ' + fileName + ' did not match any files.');
         }
         for (let match of matches) {
-          let resolvedPath = resolve(cwd, match);
+          let resolvedPath = path.resolve(cwd, match);
           resolvedFiles.push(resolvedPath);
         }
       }
@@ -139,7 +139,7 @@ export default class ConfigParser {
           if (additionalConfig[name] &&
               typeof additionalConfig[name] === 'string') {
             additionalConfig[name] =
-                resolve(relativeTo, additionalConfig[name]);
+                path.resolve(relativeTo, additionalConfig[name]);
           }
         });
 
@@ -157,14 +157,14 @@ export default class ConfigParser {
       if (!filename) {
         return this;
       }
-      let filePath = resolve(process.cwd(), filename);
+      let filePath = path.resolve(process.cwd(), filename);
       let fileConfig = require(filePath).config;
       if (!fileConfig) {
         Logger.error(
             'configuration file ' + filename + ' did not export a config ' +
             'object');
       }
-      fileConfig.configDir = dirname(filePath);
+      fileConfig.configDir = path.dirname(filePath);
       this.addConfig_(fileConfig, fileConfig.configDir);
     } catch (e) {
       Logger.error('failed loading configuration file ' + filename);
