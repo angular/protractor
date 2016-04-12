@@ -63,7 +63,7 @@ describe('async angular2 application', function() {
     });
 
     it('should wait for a series of periodic increments', function() {
-      var timeout = $('#periodicIncrement');
+      var timeout = $('#periodicIncrement_unzoned');
 
       // Waits for the val to count 2.
       var EC = protractor.ExpectedConditions;

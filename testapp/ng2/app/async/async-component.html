@@ -22,3 +22,10 @@
   <button class='cancel' *ngIf="intervalId != null"
     (click)="cancelPeriodicIncrement()">Cancel</button>
 </div>
+<div id='periodicIncrement_unzoned'>
+  <span class='val'>{{val5}}</span>
+  <button class='action'
+    (click)="periodicIncrement_unzoned()">Periodic Increment (outside NgZone)</button>
+  <button class='cancel' *ngIf="intervalId_unzoned != null"
+    (click)="cancelPeriodicIncrement_unzoned()">Cancel</button>
+</div>
