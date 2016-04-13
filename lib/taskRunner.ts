@@ -3,7 +3,7 @@ import {EventEmitter} from 'events';
 import {defer, Promise} from 'q';
 import {inherits} from 'util';
 
-import ConfigParser, {Config} from './configParser';
+import {ConfigParser, Config} from './configParser';
 import * as Logger from './logger';
 import TaskLogger from './taskLogger';
 
