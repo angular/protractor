@@ -65,14 +65,14 @@ describe('async angular2 application', function() {
     it('should wait for a series of periodic increments', function() {
       var timeout = $('#periodicIncrement');
 
-      // Waits for the val to count 2.
-      var EC = protractor.ExpectedConditions;
       timeout.$('.action').click();
-      browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '1'), 4000);
+      browser.ignoreSynchronization = true;
+      browser.sleep(4000);
       timeout.$('.cancel').click();
+      browser.ignoreSynchronization = false;
 
       var text = timeout.$('.val').getText();
-      browser.driver.sleep(3000);
+      browser.sleep(4000);
       expect(timeout.$('.val').getText()).toEqual(text);
     });
 
