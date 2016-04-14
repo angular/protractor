@@ -1,21 +1,28 @@
-import * as Logger from './logger';
-
-export class ProtractorError extends Error {
-  msg: string;
-  code: number;
-  constructor(msg: string, code: number) {
-    super(msg);
-    this.msg = msg;
-    this.code = code;
-    Logger.error('error code: ' + this.code + ' - ' + this.msg);
-  }
-}
+import {Logger} from './logger2';
 
 const CONFIG_ERROR_CODE = 105;
+
+export class ProtractorError {
+  error: Error;
+  description: string;
+  code: number;
+  stack: string;
+  constructor(logger: Logger, description: string, code: number) {
+    this.error = new Error();
+    this.description = description;
+    this.code = code;
+    logger.error('error code: ' + this.code);
+    logger.error('description: ' + this.description);
+    this.stack = this.error.stack;
+  }
+}
 
 /**
  * Configuration file error
  */
 export class ConfigError extends ProtractorError {
-  constructor(msg: string) { super(msg, CONFIG_ERROR_CODE); }
+  static CODE = CONFIG_ERROR_CODE;
+  constructor(logger: Logger, description: string) {
+    super(logger, description, ConfigError.CODE);
+  }
 }

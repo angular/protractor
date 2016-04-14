@@ -56,8 +56,9 @@ export default class TaskLogger {
         (capabilities.browserName) ? capabilities.browserName : '';
     tag += (capabilities.version) ? (' ' + capabilities.version) : '';
     tag += (capabilities.platform) ? (' ' + capabilities.platform) : '';
-    tag += (capabilities.logName && capabilities.count < 2) ? '' : ' #' +
-            this.task.taskId;
+    tag += (capabilities.logName && capabilities.count < 2) ?
+        '' :
+        ' #' + this.task.taskId;
     tag += '] ';
 
     data = data.toString();
