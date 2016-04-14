@@ -4,6 +4,7 @@
  */
 import * as q from 'q';
 import {Config, ConfigParser} from './configParser';
+import {ErrorHandler} from './exitCodes';
 import {Logger} from './logger2';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
@@ -175,6 +176,14 @@ let initFn = function(configFile: string, additionalConfig: Config) {
       .then(() => {
         // 4) Run tests.
         let scheduler = new TaskScheduler(config);
+
+        process.on('uncaughtException', (e: Error) => {
+          let errorCode = ErrorHandler.parseError(e);
+          if (errorCode) {
+            logger.error(e.stack);
+            process.exit(errorCode);
+          }
+        });
 
         process.on('exit', (code: number) => {
           if (code) {

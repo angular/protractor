@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
@@ -39,9 +40,9 @@ export class Direct extends DriverProvider {
         logger.info('Using FirefoxDriver directly...');
         break;
       default:
-        throw new Error(
-            'browserName (' + this.config_.capabilities.browserName +
-            ') is not supported with directConnect.');
+        throw new BrowserError(
+            logger, 'browserName ' + this.config_.capabilities.browserName +
+                ' is not supported with directConnect.');
     }
     return q.fcall(function() {});
   }
@@ -69,7 +70,8 @@ export class Direct extends DriverProvider {
             this.config_.chromeDriver || defaultChromeDriverPath;
 
         if (!fs.existsSync(chromeDriverFile)) {
-          throw new Error('Could not find chromedriver at ' + chromeDriverFile);
+          throw new BrowserError(
+              logger, 'Could not find chromedriver at ' + chromeDriverFile);
         }
 
         let service = new chrome.ServiceBuilder(chromeDriverFile).build();
@@ -83,9 +85,9 @@ export class Direct extends DriverProvider {
         driver = new firefox.Driver(this.config_.capabilities);
         break;
       default:
-        throw new Error(
-            'browserName ' + this.config_.capabilities.browserName +
-            'is not supported with directConnect.');
+        throw new BrowserError(
+            logger, 'browserName ' + this.config_.capabilities.browserName +
+                ' is not supported with directConnect.');
     }
     this.drivers_.push(driver);
     return driver;
