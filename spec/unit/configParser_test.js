@@ -1,7 +1,25 @@
-var ConfigParser = require('../../built/configParser').default;
+var ConfigParser = require('../../built/configParser').ConfigParser;
+var ConfigError = require('../../built/exitCodes').ConfigError;
 var path = require('path');
 
 describe('the config parser', function() {
+  it('should throw an error if the file is not found', function() {
+    var config = new ConfigParser();
+    try {
+      config.addFileConfig('foobar.js');
+    } catch (err) {
+      expect(err.code).toEqual(ConfigError.CODE);
+    }
+  });
+
+  it('should throw an error if the file does not have export config', function() {
+    var config = new ConfigParser();
+    try {
+      config.addFileConfig(path.resolve('./spec/environment.js'));
+    } catch (err) {
+      expect(err.code).toEqual(ConfigError.CODE);
+    }
+  });
 
   it('should have a default config', function() {
     var config = new ConfigParser().getConfig();

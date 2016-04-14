@@ -1,4 +1,4 @@
-import ConfigParser, {Config} from './configParser';
+import {ConfigParser, Config} from './configParser';
 
 
 export interface Task {
@@ -45,7 +45,7 @@ export default class TaskScheduler {
         ConfigParser
             .resolveFilePatterns(
                 ConfigParser.getSpecs(config), false, config.configDir)
-            .filter((path) => { return excludes.indexOf(path) < 0; });
+            .filter((path: string) => { return excludes.indexOf(path) < 0; });
 
     let taskQueues: Array<TaskQueue> = [];
     config.multiCapabilities.forEach((capabilities) => {
