@@ -48,7 +48,7 @@ gulp.task('clang', function() {
 });
 
 gulp.task('typings', function(done) {
-  runSpawn(done, 'node', ['node_modules/typings/dist/bin/typings.js', 'install']);
+  runSpawn(done, 'node', ['node_modules/typings/dist/typings.js', 'install']);
 });
 
 gulp.task('tsc', function(done) {

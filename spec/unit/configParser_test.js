@@ -1,24 +1,57 @@
 var ConfigParser = require('../../built/configParser').ConfigParser;
 var ConfigError = require('../../built/exitCodes').ConfigError;
+var Logger = require('../../built/logger2').Logger;
+var WriteTo = require('../../built/logger2').WriteTo;
 var path = require('path');
 
 describe('the config parser', function() {
-  it('should throw an error if the file is not found', function() {
-    var config = new ConfigParser();
-    try {
-      config.addFileConfig('foobar.js');
-    } catch (err) {
-      expect(err.code).toEqual(ConfigError.CODE);
-    }
-  });
+  describe('exceptions', function() {
 
-  it('should throw an error if the file does not have export config', function() {
-    var config = new ConfigParser();
-    try {
-      config.addFileConfig(path.resolve('./spec/environment.js'));
-    } catch (err) {
-      expect(err.code).toEqual(ConfigError.CODE);
-    }
+    beforeEach(function() {
+      Logger.writeTo = WriteTo.NONE;
+    });
+
+    afterEach(function() {
+      Logger.writeTo = WriteTo.CONSOLE;
+    });
+
+    it('should throw an error if the file is not found', function() {
+      var config = new ConfigParser();
+      var errorFound = false;
+      try {
+        config.addFileConfig('foobar.js');
+      } catch (err) {
+        errorFound = true;
+        expect(err.code).toEqual(ConfigError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
+
+    it('should throw an error if the file does not have export config', function() {
+      var config = new ConfigParser();
+      var errorFound = false;
+      try {
+        config.addFileConfig(path.resolve('./spec/environment.js'));
+      } catch (err) {
+        errorFound = true;
+        expect(err.code).toEqual(ConfigError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
+
+    it('should throw an error when the spec file does not resolve', function() {
+      var errorFound = false;
+      try {
+        var config = {
+          suite:'foo.js,bar.js'
+        };
+        ConfigParser.getSpecs(config);
+      } catch (err) {
+        errorFound = true;
+        expect(err.code).toEqual(ConfigError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
   });
 
   it('should have a default config', function() {
