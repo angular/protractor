@@ -43,6 +43,20 @@ export interface Config {
   troubleshoot?: boolean;
   exclude?: Array<string>|string;
   maxSessions?: number;
+  seleniumAddress?: string;
+  webDriverProxy?: string;
+  disableEnvironmentOverrides?: boolean;
+  browserstackUser?: string;
+  browserstackKey?: string;
+  firefoxPath?: string;
+  seleniumServerJar?: string;
+  seleniumPort?: number;
+  localSeleniumStandaloneOpts?: {args?: any; port?: any;};
+  sauceAgent?: string;
+  sauceBuild?: string;
+  sauceKey?: string;
+  sauceSeleniumAddress?: string;
+  sauceUser?: string;
 }
 
 export class ConfigParser {
