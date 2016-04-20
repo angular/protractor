@@ -10,6 +10,14 @@ declare namespace webdriver {
   class Session {
     getId: Function;
   }
-}
 
-declare class executors { static createExecutor: Function; }
+  class Promise {
+    then: Function;
+  }
+
+  class WebElement {
+    getDriver: Function;
+    isEnabled: Function;
+    findElements: Function;
+  }
+}
