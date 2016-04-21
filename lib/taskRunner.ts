@@ -4,6 +4,7 @@ import * as q from 'q';
 
 import {ConfigParser, Config} from './configParser';
 import * as Logger from './logger';
+import {Runner} from './runner';
 import {TaskLogger} from './taskLogger';
 
 export interface RunResults {
@@ -15,19 +16,19 @@ export interface RunResults {
   specResults: Array<any>;
 }
 
+/**
+ * A runner for running a specified task (capabilities + specs).
+ * The TaskRunner can either run the task from the current process (via
+ * './runner.js') or from a new process (via './runnerCli.js').
+ *
+ * @constructor
+ * @param {string} configFile Path of test configuration.
+ * @param {object} additionalConfig Additional configuration.
+ * @param {object} task Task to run.
+ * @param {boolean} runInFork Whether to run test in a forked process.
+ * @constructor
+ */
 export class TaskRunner extends EventEmitter {
-  /**
-   * A runner for running a specified task (capabilities + specs).
-   * The TaskRunner can either run the task from the current process (via
-   * './runner.js') or from a new process (via './runnerCli.js').
-   *
-   * @constructor
-   * @param {string} configFile Path of test configuration.
-   * @param {object} additionalConfig Additional configuration.
-   * @param {object} task Task to run.
-   * @param {boolean} runInFork Whether to run test in a forked process.
-   * @constructor
-   */
   constructor(
       private configFile: string, private additionalConfig: Config,
       private task: any, private runInFork: boolean) {
@@ -116,7 +117,6 @@ export class TaskRunner extends EventEmitter {
       config.capabilities = this.task.capabilities;
       config.specs = this.task.specs;
 
-      let Runner = require('./runner');
       let runner = new Runner(config);
 
       runner.on('testsDone', (results: RunResults) => {

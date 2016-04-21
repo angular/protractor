@@ -57,6 +57,23 @@ export interface Config {
   sauceKey?: string;
   sauceSeleniumAddress?: string;
   sauceUser?: string;
+  v8Debug?: any;
+  nodeDebug?: boolean;
+  directConnect?: boolean;
+  mockSelenium?: boolean;
+  baseUrl?: string;
+  untrackOutstandingTimeouts?: any;
+  debuggerServerPort?: number;
+  useAllAngular2AppRoots?: boolean;
+  frameworkPath?: string;
+  restartBrowserBetweenTests?: boolean;
+  onPrepare?: any;
+  beforeLaunch?: any;
+  getMultiCapabilities?: any;
+  elementExplorer?: any;
+  afterLaunch?: any;
+  debug?: boolean;
+  resultJsonOutputFile?: any;
 }
 
 export class ConfigParser {
