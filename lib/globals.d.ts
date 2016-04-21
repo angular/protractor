@@ -7,7 +7,9 @@ declare namespace webdriver {
     static attachToSession: Function;
   }
 
-  class Session { getId: Function; }
+  class Session {
+    getId: Function;
+  }
 }
 
 declare class executors { static createExecutor: Function; }

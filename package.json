@@ -40,7 +40,7 @@
     "rimraf": "~2.5.0",
     "run-sequence": "^1.1.5",
     "typescript": "1.8.2",
-    "typings": "^0.7.12"
+    "typings": "^0.8.1"
   },
   "repository": {
     "type": "git",
