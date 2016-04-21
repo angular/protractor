@@ -34,7 +34,8 @@ var webdriver = require('selenium-webdriver');
  * // You can customize the conditions with EC.and, EC.or, and EC.not.
  * // Here's a condition to wait for url to change, $('abc') element to contain
  * // text 'bar', and button becomes clickable.
- * var condition = EC.and(urlChanged, EC.textToBePresentInElement($('abc'), 'bar'), isClickable);
+ * var condition = EC.and(urlChanged, EC.textToBePresentInElement($('abc'),
+ * 'bar'), isClickable);
  * browser.get(URL);
  * browser.wait(condition, 5000); //wait for condition to be true.
  * button.click();
@@ -42,7 +43,6 @@ var webdriver = require('selenium-webdriver');
  * @constructor
  */
 export class ExpectedConditions {
-
   /**
    * Negates the result of a promise.
    *
@@ -58,9 +58,8 @@ export class ExpectedConditions {
    */
   not(expectedCondition: Function): Function {
     return (): Function => {
-      return expectedCondition().then((bool: boolean): boolean => {
-        return !bool;
-      });
+      return expectedCondition().then(
+          (bool: boolean): boolean => { return !bool; });
     };
   }
 
@@ -108,9 +107,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical and.
    */
-  and(...args: Function[]): Function {
-    return this.logicalChain_(true, args);
-  }
+  and(...args: Function[]): Function { return this.logicalChain_(true, args); }
 
   /**
    * Chain a number of expected conditions using logical_or, short circuiting
@@ -128,9 +125,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical or.
    */
-  or(...args: Function[]): Function {
-    return this.logicalChain_(false, args);
-  }
+  or(...args: Function[]): Function { return this.logicalChain_(false, args); }
 
   /**
    * Expect an alert to be present.
@@ -145,15 +140,15 @@ export class ExpectedConditions {
    */
   alertIsPresent(): Function {
     return () => {
-      return browser.switchTo().alert().then((): boolean => {
-        return true;
-      }, (err: any) => {
-        if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
-          return false;
-        } else {
-          throw err;
-        }
-      });
+      return browser.switchTo().alert().then(
+          (): boolean => { return true; },
+          (err: any) => {
+            if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
+              return false;
+            } else {
+              throw err;
+            }
+          });
     };
   }
 
@@ -218,10 +213,10 @@ export class ExpectedConditions {
    */
   textToBePresentInElementValue(elementFinder: any, text: string): Function {
     var hasText = () => {
-      return elementFinder.getAttribute('value')
-          .then((actualText: string): boolean => {
-        return actualText.indexOf(text) > -1;
-      });
+      return elementFinder.getAttribute('value').then(
+          (actualText: string): boolean => {
+            return actualText.indexOf(text) > -1;
+          });
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -263,9 +258,8 @@ export class ExpectedConditions {
    */
   titleIs(title: string): Function {
     return () => {
-      return browser.getTitle().then((actualTitle: string): boolean => {
-        return actualTitle === title;
-      });
+      return browser.getTitle().then(
+          (actualTitle: string): boolean => { return actualTitle === title; });
     };
   }
 
@@ -324,8 +318,8 @@ export class ExpectedConditions {
    */
   visibilityOf(elementFinder: any): Function {
     return this.and(
-      this.presenceOf(elementFinder),
-      elementFinder.isDisplayed.bind(elementFinder));
+        this.presenceOf(elementFinder),
+        elementFinder.isDisplayed.bind(elementFinder));
   }
 
   /**
@@ -346,7 +340,7 @@ export class ExpectedConditions {
     return this.not(this.visibilityOf(elementFinder));
   }
 
-/**
+  /**
  * An expectation for checking the selection is selected.
  *
  * @example
@@ -361,7 +355,7 @@ export class ExpectedConditions {
  */
   elementToBeSelected(elementFinder: any): Function {
     return this.and(
-      this.presenceOf(elementFinder),
-      elementFinder.isSelected.bind(elementFinder));
+        this.presenceOf(elementFinder),
+        elementFinder.isSelected.bind(elementFinder));
   }
 }
