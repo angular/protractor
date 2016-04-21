@@ -125,7 +125,8 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeout
     .expectExitCode(1)
     .expectErrors([
       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-      {message: 'While waiting for element with locator - Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
+      {message: 'While waiting for element with locator - ' +
+                'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
     ]);
 
 executor.execute();
