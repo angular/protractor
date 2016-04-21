@@ -33,11 +33,11 @@ export class Runner extends EventEmitter {
     this.config_ = config;
     if (config.v8Debug) {
       // Call this private function instead of sending SIGUSR1 because Windows.
-      process['_debugProcess'](process.pid);
+      (<any>process)['_debugProcess'](process.pid);
     }
 
     if (config.nodeDebug) {
-      process['_debugProcess'](process.pid);
+      (<any>process)['_debugProcess'](process.pid);
       let flow = webdriver.promise.controlFlow();
 
       flow.execute(() => {
