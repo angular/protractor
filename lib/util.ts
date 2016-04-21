@@ -36,7 +36,7 @@ export function filterStackTrace(text: string): string {
  * @return {q.Promise} A promise that will resolve when filenameOrFn completes.
  */
 export function runFilenameOrFn_(
-    configDir: string, filenameOrFn: any, args: Array<any>): Promise<any> {
+    configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
   return Promise((resolvePromise) => {
     if (filenameOrFn &&
         !(typeof filenameOrFn === 'string' ||
