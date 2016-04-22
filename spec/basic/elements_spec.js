@@ -203,6 +203,22 @@ describe('ElementFinder', function() {
     expect(usernameInput.equals(usernameInput)).toEqual(true);
     expect(usernameInput.equals(name)).toEqual(false);
   });
+
+  it('should find ids starting with a number', function() {
+    browser.get('index.html#/form');
+    // id attributes starting with a number are legal in HTML5
+    // See: https://www.w3.org/TR/html5/dom.html#the-id-attribute
+    // However, in CSS the first digit must be escaped.
+    // See: https://www.w3.org/TR/CSS21/syndata.html#characters
+
+    // CSS escape: \31z234 or \31 z234
+    expect(element(by.id('1z234')).isPresent()).toBe(true);
+    
+    // The space is required when the second character is a valid hex digit
+    // CSS escape: \31 234
+    expect(element(by.id('1234')).isPresent()).toBe(true);
+  });
+  
 });
 
 describe('ElementArrayFinder', function() {
