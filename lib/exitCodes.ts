@@ -44,7 +44,9 @@ export class BrowserError extends ProtractorError {
   static DEFAULT_MSG = 'browser error';
   static CODE = BROWSER_ERROR_CODE;
   static ERR_MSGS =
-      ['ECONNREFUSED connect ECONNREFUSED', 'Sauce Labs Authentication Error'];
+      ['ECONNREFUSED connect ECONNREFUSED',
+       'Sauce Labs Authentication Error',
+       'Invalid username or password'];
   constructor(logger: Logger, opt_msg?: string) {
     super(logger, opt_msg || BrowserError.DEFAULT_MSG, BrowserError.CODE);
   }

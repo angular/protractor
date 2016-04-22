@@ -17,10 +17,18 @@ var checkLogs = function(output, messages) {
  *Below are exit failure tests*
  ******************************/
 
-// assert authentication error for sauce labs
+// // assert authentication error for sauce labs
+// runProtractor = spawn('node',
+//     ['bin/protractor', 'spec/errorTest/sauceLabsAuthentication.js']);
+// output = runProtractor.stdout.toString();
+// messages = ['WebDriverError: Sauce Labs Authentication Error.',
+//     'Process exited with error code 135'];
+// checkLogs(output, messages);
+
+
 runProtractor = spawn('node',
-    ['bin/protractor', 'spec/errorTest/sauceLabNotAvailable.js']);
+    ['bin/protractor', 'spec/errorTest/browserStackAuthentication.js']);
 output = runProtractor.stdout.toString();
-messages = ['WebDriverError: Sauce Labs Authentication Error.',
+messages = ['WebDriverError: Invalid username or password',
     'Process exited with error code 135'];
 checkLogs(output, messages);

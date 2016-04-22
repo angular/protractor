@@ -2,7 +2,7 @@ var env = require('../environment.js');
 
 exports.config = {
   sauceUser: 'foobar',
-  sauceKey: process.env.SAUCE_ACCESS_KEY,
+  sauceKey: 'foobar',
 
   framework: 'jasmine',
 

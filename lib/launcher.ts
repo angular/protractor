@@ -182,6 +182,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
           if (errorCode) {
             logger.error(e.stack);
             process.exit(errorCode);
+          } else {
+            logger.error(e.stack);
           }
         });
 
