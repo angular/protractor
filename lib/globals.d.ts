@@ -25,6 +25,7 @@ declare var DartObject: any;
 
 declare namespace webdriver {
   class WebDriver {
+    findElements: Function;
     getSession: Function;
     quit: Function;
     static attachToSession: Function;
@@ -44,5 +45,9 @@ declare namespace webdriver {
     getDriver: Function;
     isEnabled: Function;
     findElements: Function;
+  }
+
+  interface Locator {
+    toString(): string;
   }
 }
