@@ -3,10 +3,11 @@
  * It is responsible for setting up the account object, tearing
  * it down, and setting up the driver correctly.
  */
-import * as request from 'request';
+import * as https from 'https';
 import * as q from 'q';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
@@ -30,29 +31,41 @@ export class BrowserStack extends DriverProvider {
         logger.info(
             'BrowserStack results available at ' +
             'https://www.browserstack.com/automate');
-        request(
-            {
-              url: 'https://www.browserstack.com/automate/sessions/' +
-                  session.getId() + '.json',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' +
-                    new Buffer(
-                        this.config_.browserstackUser + ':' +
-                        this.config_.browserstackKey)
-                        .toString('base64')
-              },
-              method: 'PUT',
-              form: {'status': jobStatus}
-            },
-            (error: Error) => {
-              if (error) {
-                throw new Error(
-                    'Error updating BrowserStack pass/fail status: ' +
-                    util.inspect(error));
-              }
-            });
-        deferred.resolve();
+        let headers: Object = {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' +
+              new Buffer(
+                  this.config_.browserstackUser + ':' +
+                  this.config_.browserstackKey)
+                  .toString('base64')
+        };
+        let options = {
+          hostname: 'www.browserstack.com',
+          port: 443,
+          path: '/automate/sessions/' + session.getId() + '.json',
+          method: 'PUT',
+          headers: headers
+        };
+        https
+            .request(
+                options,
+                (res) => {
+                  let responseStr = '';
+                  res.on('data', (data: Buffer) => {
+                    responseStr += data.toString();
+                  });
+                  res.on('end', () => {
+                    logger.info(responseStr);
+                    deferred.resolve();
+                  });
+                  res.on('error', (e: Error) => {
+                    throw new BrowserError(
+                        logger,
+                        'Error updating BrowserStack pass/fail status: ' +
+                            util.inspect(e));
+                  });
+                })
+            .write('{\'status\': ' + jobStatus + '}');
       });
       return deferred.promise;
     });
