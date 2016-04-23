@@ -212,10 +212,13 @@ describe('ElementFinder', function() {
     // See: https://www.w3.org/TR/CSS21/syndata.html#characters
 
     // CSS escape: \31z234 or \31 z234
+    expect(element(by.css('#\\31 z234')).isPresent()).toBe(true);
+    expect(element(by.css('#\\31z234')).isPresent()).toBe(true);
     expect(element(by.id('1z234')).isPresent()).toBe(true);
-    
+
     // The space is required when the second character is a valid hex digit
     // CSS escape: \31 234
+    expect(element(by.css('#\\31 234')).isPresent()).toBe(true);
     expect(element(by.id('1234')).isPresent()).toBe(true);
   });
   
