@@ -1,12 +1,5 @@
 var _ = require('lodash');
 
-var templateMapping = {
-  protractor: _.template('https://github.com/angular/protractor/blob/' +
-      '<%= linksHash %>/lib/<%= fileName %>.js#L<%= startingLine %>'),
-  webdriver: _.template('https://github.com/SeleniumHQ/selenium/blob/master/' +
-      'javascript/webdriver/<%= fileName %>.js#L<%= startingLine %>')
-};
-
 /**
  * A lookup table with all the types in the parsed files.
  * @type {Object.<string, Array.<Object>>}
@@ -23,13 +16,16 @@ var linksHash = require('../../../package.json').version;
  * @param {!Object} doc Current document.
  */
 var addLinkToSourceCode = function(doc) {
-  var template = doc.fileInfo.filePath.indexOf('selenium-webdriver') !== -1 ?
-      templateMapping.webdriver : templateMapping.protractor;
+  // Heuristic for the custom docs in the lib/selenium-webdriver/ folder.
+  if (doc.name && doc.name.startsWith('webdriver')) {
+    return;
+  }
+  var template = _.template('https://github.com/angular/protractor/blob/' +
+      '<%= linksHash %>/lib/<%= fileName %>.js');
 
   doc.sourceLink = template({
     linksHash: linksHash,
-    fileName: doc.fileName,
-    startingLine: doc.startingLine
+    fileName: doc.fileName
   });
 };
 

@@ -1,7 +1,7 @@
 <div>
 
   <div class="row">
-    <h3 id="title">Protractor API <small>{{::version}}</small></h3>
+    <h3 ng-click="currentItem=null" id="title">Protractor API <small>{{::version}}</small></h3>
   </div>
 
   <!-- Search -->
@@ -78,8 +78,22 @@
       </div>
     </div>
 
+    <div ng-if="!currentItem" class="col-sm-9">
+      <h3 class="api-title">
+        Protractor API Docs
+      </h3>
+      <p>
+        Welcome to the Protractor API documentation. The menu lists all classes and methods
+        exposed by Protractor.
+      </p>
+      <p>
+        Note that Protractor is a wrapper around
+        <a href="http://seleniumhq.github.io/selenium/docs/api/javascript/index.html">selenium-webdriver</a>,
+        the Webdriver bindings for Node.js. See that documentation for advanced usage.
+      </p>
+    </div>
 
-    <div class="col-sm-9">
+    <div ng-if="currentItem" class="col-sm-9">
       <h3 class="api-title">
         {{currentItem.title}}
         <small ng-if="currentItem.sourceLink">
@@ -88,12 +102,6 @@
         <h4 ng-if="currentItem.alias != currentItem.displayName"
             class="text-muted">{{currentItem.name}}</h4>
       </h3>
-      <p ng-if="currentItem.sourceLink.indexOf('protractor') == -1"
-          class="api-webdriver">
-        This page is written using pure WebDriverJS syntax, instead of
-        Protractor syntax.  See <a href="#/webdriver-vs-protractor">
-        Protractor Syntax vs WebDriverJS Syntax</a> for details.
-      </p>
       <p ng-bind-html="trust(currentItem.description)"></p>
 
       <div ng-if="currentItem.example">

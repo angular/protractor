@@ -77,9 +77,6 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
     {include: 'built/expectedConditions.js'},
     {include: 'lib/selenium-webdriver/locators.js'},
     {include: 'lib/selenium-webdriver/webdriver.js'}
-    // TODO: add in key & promise
-    // {include: 'node_modules/selenium-webdriver/lib/webdriver/key.js'},
-    // {include: 'node_modules/selenium-webdriver/lib/webdriver/promise.js'}
   ];
 
   // Add a folder to search for our own templates to use when rendering docs
