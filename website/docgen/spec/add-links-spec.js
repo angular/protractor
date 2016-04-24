@@ -22,18 +22,7 @@ describe('add-links', function() {
     addLinks([doc]);
     expect(doc.sourceLink).toBe('https://github.com/angular/protractor/' +
         'blob/' + require('../../../package.json').version + '/lib/' +
-        'protractor.js#L123');
-  });
-
-  it('should add webdriver link', function() {
-    var doc = {
-      fileName: 'webdriver',
-      fileInfo: { filePath: 'selenium-webdriver' },
-      startingLine: 123
-    };
-    addLinks([doc]);
-    expect(doc.sourceLink).toBe('https://github.com/SeleniumHQ/selenium/' +
-        'blob/master/javascript/webdriver/webdriver.js#L123');
+        'protractor.js');
   });
 
   it('should add links to types', function() {
