@@ -26,6 +26,9 @@ export interface Locator extends webdriver.Locator {
  * @extends {webdriver.By}
  */
 export class ProtractorBy extends WebdriverBy {
+  // Explicit index signature to fix TS warining.
+  [key: string]: any;
+
   /**
    * Add a locator to this instance of ProtractorBy. This locator can then be
    * used with element(by.locatorName(args)).

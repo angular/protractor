@@ -2,6 +2,7 @@ let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
 
 import {Logger} from './logger2';
+import {Protractor} from './protractor';
 
 let logger = new Logger('element');
 
@@ -69,8 +70,8 @@ export class ElementArrayFinder {
   getWebElements: Function;
 
   constructor(
-      private ptor_: any, getWebElements: Function, private locator_: any,
-      public actionResults_: webdriver.Promise = null) {
+      private ptor_: Protractor, getWebElements?: Function,
+      private locator_?: any, public actionResults_: webdriver.Promise = null) {
     this.getWebElements = getWebElements || null;
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
