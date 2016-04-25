@@ -241,6 +241,7 @@ exports.name = '';
  *
  * @type {boolean}
  */
+exports.skipAngularStability
 ```
 
 Each of these exported properties are optional.
@@ -302,6 +303,42 @@ exports.addWarning(message, options);
 
 If you specify any of these properties in your plugin file, they will be
 overwritten.
+
+### Writing Plugins in TypeScript
+
+The simplest way to write plugins in TypeScript is to mirror the javascript
+syntax:
+
+```typescript
+export function onPageLoad(): void {
+  this.addSuccess({specName: 'Hello, World!'});
+};
+```
+
+However, if you want your code more heavily typed, you can write your plugin as
+an extension of the `ProtractorPlugin` class:
+
+```typescript
+import {ProtractorPlugin} from 'protractor/built/plugins';
+
+export class MyPlugin extends ProtractorPlugin {
+  onPageLoad() {
+    this.addSuccess({specName: 'Hello, World!'});
+  };
+};
+```
+
+Then, in a separate file, export an instance of that class using an assignment
+export:
+
+```typescript
+import MyPlugin from './MyPlugin';
+
+export = new MyPlugin();
+```
+
+This instance is what you should point to in your config file.
+
 
 First Party Plugins
 -------------------

@@ -5,9 +5,10 @@ import * as helper from './util';
 import {Config} from './configParser';
 import {Logger} from './logger2';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
+import {Plugins} from './plugins';
 
 var protractor = require('./protractor'),
-    webdriver = require('selenium-webdriver'), Plugins = require('./plugins');
+    webdriver = require('selenium-webdriver');
 
 let logger = new Logger('runner');
 /*
