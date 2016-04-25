@@ -60,5 +60,5 @@
     "tsc:w": "./node_modules/typescript/bin/tsc -w"
   },
   "license": "MIT",
-  "version": "3.2.2"
+  "version": "3.3.0"
 }

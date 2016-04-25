@@ -1,3 +1,52 @@
+# 3.3.0
+_The [Protractor Website](http://www.protractortest.org) API docs have been streamlined. We've also, internally, moved to using TypeScript and building down to JS! Also, the logger has been improved._
+
+## Bug Fixes
+- ([6f22d5a](https://github.com/angular/protractor/commit/6f22d5ade48f0d97990cbe69d956da122f2f8358)) 
+  fix(bootstrap): fix bootstrap for older versions of angular
+
+  Trying to use the debug label for window.name fails for versions of angular older than 1.2.24. See
+  #3115
+
+- ([bd78dfc](https://github.com/angular/protractor/commit/bd78dfc79b1435d124c994482df6879066079a4d)) 
+  fix(protractor): isPresent() should work with out of bounds errors (#3108)
+
+- ([88dd568](https://github.com/angular/protractor/commit/88dd568c5295234a5211a23e12666e199606e437)) 
+  fix(NoSuchElementError): add 'new' keyword to instantiate class
+
+  The class NoSuchElementError is called without the new keyword in the
+  `ElementArrayFinder.prototype.count` causing a `Class constructors cannot be invoked without
+  'new'`
+
+  closes #3079
+
+## Features
+- ([afdd9d7](https://github.com/angular/protractor/commit/afdd9d730c198dc97e91bb275c036a754c15140e)) 
+  feat(logger): improve logging methods (#3131)
+
+- ([5fa94db](https://github.com/angular/protractor/commit/5fa94db5a9a4787f480389d382eef7e636b45f81)) 
+  feat(exitCodes): adding exit codes for configuration file errors (#3128)
+
+- ([76861fd](https://github.com/angular/protractor/commit/76861fdc4c57c2aaa984e05e46ff9789ce750260)) 
+  feat(element): equals
+
+  Easier to use version of webdriver.WebElement.equals
+
+- ([582411b](https://github.com/angular/protractor/commit/582411b7ad6c0f9176b231dc51dc328b98affbdf)) 
+  feat(driverProvider/sauce) Add build id as a configurable option
+
+## Dependency Upgrades
+- ([b4d1664](https://github.com/angular/protractor/commit/b4d1664141b609c5e5790108e3003fe777c248ca)) 
+  deps(jasminewd2): bump jasminewd2 to 0.0.9
+
+- ([b6f1a63](https://github.com/angular/protractor/commit/b6f1a63da77ec88a3f487e5a099df8febe3742aa)) 
+  feat(protractor): Shows locator used when a timeout occurs
+
+- ([de4b33e](https://github.com/angular/protractor/commit/de4b33eaab1546d0ef3a746cfd222e80f0ec28a1)) 
+  feat(webdriver): Added NO_PROXY environment variable support to webdriver-manager
+
+  closes #3046
+
 # 3.2.2
 _This release is a hotfix for webdriver-manager iedriver_
 
