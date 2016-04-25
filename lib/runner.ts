@@ -117,7 +117,6 @@ export class Runner extends EventEmitter {
    */
   exit_ = function(exitCode: number):
       any {
-        console.log('ran the default exit');
         return helper
             .runFilenameOrFn_(
                 this.config_.configDir, this.config_.onCleanUp, [exitCode])

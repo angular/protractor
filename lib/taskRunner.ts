@@ -3,7 +3,6 @@ import {EventEmitter} from 'events';
 import * as q from 'q';
 
 import {ConfigParser, Config} from './configParser';
-import * as Logger from './logger';
 import {Runner} from './runner';
 import {TaskLogger} from './taskLogger';
 
@@ -74,10 +73,10 @@ export class TaskRunner extends EventEmitter {
               (m: any) => {
                 switch (m.event) {
                   case 'testPass':
-                    Logger.print('.');
+                    process.stdout.write('.');
                     break;
                   case 'testFail':
-                    Logger.print('F');
+                    process.stdout.write('F');
                     break;
                   case 'testsDone':
                     runResults.failedCount = m.results.failedCount;

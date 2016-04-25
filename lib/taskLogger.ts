@@ -1,5 +1,7 @@
 import * as os from 'os';
-import * as Logger from './logger';
+import {Logger} from './logger2';
+
+let logger = new Logger('testLogger');
 
 export class TaskLogger {
   private buffer: string = '';
@@ -35,9 +37,9 @@ export class TaskLogger {
   public flush(): void {
     if (this.buffer) {
       // Flush buffer if nonempty
-      Logger.print(os.EOL + '------------------------------------' + os.EOL);
-      Logger.print(this.buffer);
-      Logger.print(os.EOL);
+      logger.info(os.EOL + '------------------------------------' + os.EOL);
+      logger.info(this.buffer);
+      logger.info(os.EOL);
       this.buffer = '';
     }
   }
