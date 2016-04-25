@@ -1,0 +1,67 @@
+Framework Adapters for Protractor
+=================================
+
+Protractor can work with any test framework that is adapted here.
+
+Each file details the adapter for one test framework. Each file must export a `run` function with the interface:
+
+```js
+/**
+ * @param {Runner} runner The Protractor runner instance.
+ * @param {Array.<string>} specs A list of absolute filenames.
+ * @return {q.Promise} Promise resolved with the test results
+ */
+exports.run = function(runner, specs)
+```
+
+Requirements
+------------
+
+ - `runner.emit` must be called with `testPass` and `testFail` messages.  These
+   messages must be passed a `testInfo` object, with a `name` and `category`
+   property.  The `category` property could be the name of the `describe` block
+   in jasmine/mocha, the `Feature` in cucumber, or the class name in something
+   like jUnit.  The `name` property could be the name of an `it` block in
+   jasmine/mocha, the `Scenario` in cucumber, or the method name in something
+   like jUnit.
+
+ - `runner.runTestPreparer` must be called before any tests are run.
+
+ - `runner.getConfig().onComplete` must be called when tests are finished.
+   It might return a promise, in which case `exports.run`'s promise should not
+   resolve until after `onComplete`'s promise resolves.
+
+ - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults`
+ object of the following structure:
+ ```
+   specResults = [{
+     description: string,
+     assertions: [{
+       passed: boolean,
+       errorMsg: string,
+       stackTrace: string
+     }],
+     duration: integer
+   }]
+ ```
+
+Custom Frameworks
+-----------------
+
+If you have created/adapted a custom framework and want it added to
+Protractor core please send a PR so it can evaluated for addition as an
+official supported framework. In the meantime you can instruct Protractor
+to use your own framework via the config file:
+
+```js
+exports.config = {
+  // set to "custom" instead of jasmine/mocha
+  framework: 'custom',
+  // path relative to the current config file
+  frameworkPath: './frameworks/my_custom_jasmine.js',
+};
+```
+
+More on this at [referenceConf](../../docs/referenceConf.js) "The test framework" section.
+
+**Disclaimer**: current framework interface can change without a major version bump.

@@ -201,6 +201,24 @@ exports.waitForCondition = function() {};
  * @type {string}
  */
 exports.name = &#39;&#39;;
+
+
+/**
+ * Used to turn off default checks for angular stability
+ *
+ * Normally Protractor waits for all $timeout and $http calls to be processed
+ * before executing the next command.  This can be disabled using
+ * browser.ignoreSynchronization, but that will also disable any
+ * &lt;Plugin&gt;.waitForPromise or &lt;Plugin&gt;.waitForCondition checks.  If you want to
+ * disable synchronization with angular, but leave in tact any custom plugin
+ * synchronization, this is the option for you.
+ *
+ * This is used by users who want to replace Protractor&#39;s synchronization code
+ * with their own.
+ *
+ * @type {boolean}
+ */
+exports.skipAngularStability
 </code></pre>
 <p>Each of these exported properties are optional.</p>
 <h3 id="provided-properties-and-functions">Provided properties and functions</h3>
@@ -256,6 +274,30 @@ exports.addWarning(message, options);
 </code></pre>
 <p>If you specify any of these properties in your plugin file, they will be
 overwritten.</p>
+<h3 id="writing-plugins-in-typescript">Writing Plugins in TypeScript</h3>
+<p>The simplest way to write plugins in TypeScript is to mirror the javascript
+syntax:</p>
+<pre><code class="lang-typescript">export function onPageLoad(): void {
+  this.addSuccess({specName: &#39;Hello, World!&#39;});
+};
+</code></pre>
+<p>However, if you want your code more heavily typed, you can write your plugin as
+an extension of the <code ng-non-bindable>ProtractorPlugin</code> class:</p>
+<pre><code class="lang-typescript">import {ProtractorPlugin} from &#39;protractor/built/plugins&#39;;
+
+export class MyPlugin extends ProtractorPlugin {
+  onPageLoad() {
+    this.addSuccess({specName: &#39;Hello, World!&#39;});
+  };
+};
+</code></pre>
+<p>Then, in a separate file, export an instance of that class using an assignment
+export:</p>
+<pre><code class="lang-typescript">import MyPlugin from &#39;./MyPlugin&#39;;
+
+export = new MyPlugin();
+</code></pre>
+<p>This instance is what you should point to in your config file.</p>
 <h2 id="first-party-plugins" class="anchored"><div><a href="#{{path}}#first-party-plugins">&#x1f517;</a>First Party Plugins</div></h2>
 <ul>
 <li><p>Accessibility Plugin</p>

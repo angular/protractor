@@ -24,12 +24,7 @@ angular.module('protractorApp', ['ngRoute']);
 
     $scope.items = [];
     $scope.isMenuVisible = false;
-    var defaultItem = {
-      title: 'Protractor API Docs',
-      description: 'Welcome to the Protractor API docs page. These pages ' +
-      'contain the Protractor reference materials.'
-    };
-    $scope.currentItem = defaultItem;
+    $scope.currentItem = null;
 
     // Watch for location changes to show the correct item.
     $scope.$on('$locationChangeSuccess', function() {
@@ -247,13 +242,15 @@ angular.module('protractorApp', ['ngRoute']);
     return newList;
   };
 
+  // TODO: This is a hack for getting the 'Inherited from Webdriver...' stuff.
+  // Instead, move our extra docs to colocate with our fns, remove the selenium-webdriver
+  // folder, and remove this.
   ApiCtrl.prototype.addExtends = function(list) {
     var self = this;
     list.forEach(function(item) {
       if (!item.extends) {
         return;
       }
-
       // Remove braces from {type}.
       var parentName = item.extends.replace(/[{}]/g, '');
       var nameExpr = new RegExp(parentName + '\\.prototype');
@@ -265,7 +262,6 @@ angular.module('protractorApp', ['ngRoute']);
           return item.name && item.name.match(nameExpr);
         })
       };
-
       if (self.itemsByName[parentName]) {
         self.itemsByName[parentName].extension = true;
       }
