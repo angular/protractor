@@ -81,7 +81,7 @@ export class DriverProvider {
    *     is down.
    */
   teardownEnv(): q.Promise<q.Promise<webdriver.WebDriver>[]> {
-    return q.all<any>(
-        this.drivers_.map(() => { return this.quitDriver.bind(this); }));
+    return q.all<any>(this.drivers_.map(
+        (driver: webdriver.WebDriver) => { return this.quitDriver(driver); }));
   }
 }
