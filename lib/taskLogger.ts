@@ -1,7 +1,7 @@
-import {EOL} from 'os';
+import * as os from 'os';
 import * as Logger from './logger';
 
-export default class TaskLogger {
+export class TaskLogger {
   private buffer: string = '';
   private insertTag: boolean = true;
 
@@ -22,9 +22,9 @@ export default class TaskLogger {
    * @private
    */
   private logHeader_(): void {
-    let output = 'PID: ' + this.pid + EOL;
+    let output = 'PID: ' + this.pid + os.EOL;
     if (this.task.specs.length === 1) {
-      output += 'Specs: ' + this.task.specs.toString() + EOL + EOL;
+      output += 'Specs: ' + this.task.specs.toString() + os.EOL + os.EOL;
     }
     this.log(output);
   }
@@ -35,9 +35,9 @@ export default class TaskLogger {
   public flush(): void {
     if (this.buffer) {
       // Flush buffer if nonempty
-      Logger.print(EOL + '------------------------------------' + EOL);
+      Logger.print(os.EOL + '------------------------------------' + os.EOL);
       Logger.print(this.buffer);
-      Logger.print(EOL);
+      Logger.print(os.EOL);
       this.buffer = '';
     }
   }
@@ -56,8 +56,9 @@ export default class TaskLogger {
         (capabilities.browserName) ? capabilities.browserName : '';
     tag += (capabilities.version) ? (' ' + capabilities.version) : '';
     tag += (capabilities.platform) ? (' ' + capabilities.platform) : '';
-    tag += (capabilities.logName && capabilities.count < 2) ? '' : ' #' +
-            this.task.taskId;
+    tag += (capabilities.logName && capabilities.count < 2) ?
+        '' :
+        ' #' + this.task.taskId;
     tag += '] ';
 
     data = data.toString();

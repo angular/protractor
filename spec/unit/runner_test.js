@@ -1,4 +1,4 @@
-var Runner = require('../../built/runner');
+var Runner = require('../../built/runner').Runner;
 var q = require('q');
 
 describe('the Protractor runner', function() {
@@ -19,10 +19,10 @@ describe('the Protractor runner', function() {
       framework: 'debugprint'
     };
     var exitCode;
-    Runner.prototype.exit_ = function(exit) {
+    var runner = new Runner(config);
+    runner.exit_ = function(exit) {
       exitCode = exit;
     };
-    var runner = new Runner(config);
 
     runner.run().then(function() {
       expect(exitCode).toEqual(0);
