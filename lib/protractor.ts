@@ -4,12 +4,12 @@ import * as url from 'url';
 import * as net from 'net';
 import * as helper from './util';
 import {Logger} from './logger2';
+import {ProtractorBy} from './locators';
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
 export {ElementFinder, ElementArrayFinder};
 let Plugins = require('./plugins');
 
 let clientSideScripts = require('./clientsidescripts');
-let ProtractorBy = require('./locators').ProtractorBy;
 
 // Import expected conditions in a namespace so we can export it with the
 // name 'ExpectedConditions'.

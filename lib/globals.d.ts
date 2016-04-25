@@ -56,14 +56,9 @@ declare namespace webdriver {
     wait: Function;
     schedule: Function;
     controlFlow: Function;
-    findElements: Function;
     static attachToSession: Function;
     // This index type allows looking up methods by name so we can do mixins.
     [key: string]: any;
-  }
-
-  class Locator {
-    isPresent: Function;
   }
 
   class Session {
@@ -94,5 +89,6 @@ declare namespace webdriver {
 
   interface Locator {
     toString(): string;
+    isPresent?: Function;
   }
 }
