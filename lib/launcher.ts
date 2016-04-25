@@ -4,7 +4,7 @@
  */
 import * as q from 'q';
 import {Config, ConfigParser} from './configParser';
-import {ErrorHandler} from './exitCodes';
+import {ConfigError, ErrorHandler} from './exitCodes';
 import {Logger} from './logger2';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
@@ -188,6 +188,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         });
 
         process.on('exit', (code: number) => {
+          console.log(code);
           if (code) {
             logger.error('Process exited with error code ' + code);
           } else if (scheduler.numTasksOutstanding() > 0) {
@@ -223,9 +224,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
             1) {  // Start new processes only if there are >1 tasks.
           forkProcess = true;
           if (config.debug) {
-            throw new Error(
-                'Cannot run in debug mode with ' +
-                'multiCapabilities, count > 1, or sharding');
+            throw new ConfigError(logger,
+                'Cannot run in debug mode with multiCapabilities, count > 1, or sharding');
           }
         }
 

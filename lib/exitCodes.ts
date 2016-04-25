@@ -34,6 +34,7 @@ export class ConfigError extends ProtractorError {
   static CODE = CONFIG_ERROR_CODE;
   constructor(logger: Logger, opt_msg?: string) {
     super(logger, opt_msg || ConfigError.DEFAULT_MSG, ConfigError.CODE);
+    process.exit(ConfigError.CODE);
   }
 }
 
@@ -49,6 +50,7 @@ export class BrowserError extends ProtractorError {
   ];
   constructor(logger: Logger, opt_msg?: string) {
     super(logger, opt_msg || BrowserError.DEFAULT_MSG, BrowserError.CODE);
+    process.exit(BrowserError.CODE);
   }
 }
 
