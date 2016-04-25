@@ -7,7 +7,7 @@ import {Logger} from './logger2';
 import {ProtractorBy} from './locators';
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
 export {ElementFinder, ElementArrayFinder};
-let Plugins = require('./plugins');
+import {Plugins} from './plugins';
 
 let clientSideScripts = require('./clientsidescripts');
 
@@ -31,7 +31,6 @@ let logger = new Logger('protractor');
 /*
  * Mix in other webdriver functionality to be accessible via protractor.
  */
-// TODO: verify this iterates over all the webdriver methods with TypeScript.
 for (var foo in webdriver) {
   exports[foo] = webdriver[foo];
 }
@@ -185,8 +184,7 @@ export class Protractor {
    *
    * @type {Plugins} Object containing plugin funtions from config.
    */
-  // TODO (heathkit): Make this Plugins when that module is tsified.
-  private plugins_: any;
+  private plugins_: Plugins;
 
   /**
    * The reset URL to use between page loads.
