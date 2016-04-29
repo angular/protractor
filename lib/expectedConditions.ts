@@ -1,7 +1,3 @@
-var webdriver = require('selenium-webdriver');
-
-/* globals browser */
-
 /**
  * Represents a library of canned expected conditions that are useful for
  * protractor, especially when dealing with non-angular apps.
@@ -42,7 +38,7 @@ var webdriver = require('selenium-webdriver');
  *
  * @constructor
  */
-export class ExpectedConditions {
+export class EC {
   /**
    * Negates the result of a promise.
    *
@@ -143,6 +139,7 @@ export class ExpectedConditions {
       return browser.switchTo().alert().then(
           (): boolean => { return true; },
           (err: any) => {
+            let webdriver = require('selenium-webdriver');
             if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
               return false;
             } else {

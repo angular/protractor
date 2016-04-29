@@ -6,14 +6,11 @@ import * as helper from './util';
 import {Logger} from './logger2';
 import {ProtractorBy} from './locators';
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
-export {ElementFinder, ElementArrayFinder};
+export {ElementArrayFinder, ElementFinder};
 import {Plugins} from './plugins';
+import {EC} from './expectedConditions';
 
 let clientSideScripts = require('./clientsidescripts');
-
-// Import expected conditions in a namespace so we can export it with the
-// name 'ExpectedConditions'.
-import * as EC from './expectedConditions';
 
 let webdriver = require('selenium-webdriver');
 let Command = require('selenium-webdriver/lib/command').Command;
@@ -43,7 +40,7 @@ export let By = new ProtractorBy();
 /**
  * @type {ExpectedConditions}
  */
-export let ExpectedConditions = new EC.ExpectedConditions();
+export let ExpectedConditions: EC = new EC();
 
 /**
  * Mix a function from one object onto another. The function will still be

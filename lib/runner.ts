@@ -6,10 +6,10 @@ import {Config} from './configParser';
 import {Logger} from './logger2';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {Plugins} from './plugins';
+import {Protractor} from './protractor';
+import {DriverProvider} from './driverProviders';
 
-var protractor = require('./protractor'),
-    webdriver = require('selenium-webdriver');
-
+let webdriver = require('selenium-webdriver');
 let logger = new Logger('runner');
 /*
  * Runner is responsible for starting the execution of a test run and triggering
@@ -26,7 +26,7 @@ let logger = new Logger('runner');
 export class Runner extends EventEmitter {
   config_: Config;
   preparer_: any;
-  driverprovider_: any;
+  driverprovider_: DriverProvider;
   o: any;
 
   constructor(config: Config) {
@@ -148,7 +148,7 @@ export class Runner extends EventEmitter {
    * Sets up convenience globals for test specs
    * @private
    */
-  setupGlobals_(browser_: any) {
+  setupGlobals_(browser_: Protractor) {
     // Keep $, $$, element, and by/By under the global protractor namespace
     protractor.browser = browser_;
     protractor.$ = browser_.$;
@@ -249,8 +249,9 @@ export class Runner extends EventEmitter {
    * @private
    */
   shutdown_(): q.Promise<any> {
-    return q.all(this.driverprovider_.getExistingDrivers().map(
-        this.driverprovider_.quitDriver.bind(this.driverprovider_)));
+    return q.all(this.driverprovider_.getExistingDrivers().map((webdriver) => {
+      return this.driverprovider_.quitDriver(webdriver);
+    }));
   }
 
   /**

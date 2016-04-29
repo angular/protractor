@@ -22,7 +22,7 @@ export class DriverProvider {
    * @public
    * @return array of webdriver instances
    */
-  getExistingDrivers() {
+  getExistingDrivers(): webdriver.WebDriver[] {
     return this.drivers_.slice();  // Create a shallow copy
   }
 
@@ -71,6 +71,22 @@ export class DriverProvider {
     }
     return deferred.promise;
   }
+
+  /**
+   * Default update job method.
+   * @return a promise
+   */
+  updateJob(update: any): q.Promise<any> {
+    return q.fcall(function() {});
+  };
+
+  /**
+   * Default setup environment method.
+   * @return a promise
+   */
+  setupEnv(): q.Promise<any> {
+    return q.fcall(function() {});
+  };
 
   /**
    * Teardown and destroy the environment and do any associated cleanup.
