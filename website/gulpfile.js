@@ -5,8 +5,7 @@ var Dgeni = require('dgeni');
 var gulp = require('gulp');
 var less = require('gulp-less');
 var markdown = require('gulp-markdown');
-var minifyCSS = require('gulp-minify-css');
-var path = require('path');
+var cleanCSS = require('gulp-clean-css');
 var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 
@@ -65,7 +64,7 @@ gulp.task('js', function() {
 gulp.task('less', function() {
   gulp.src(paths.less)
       .pipe(less())
-      .pipe(minifyCSS())
+      .pipe(cleanCSS())
       .pipe(gulp.dest(paths.outputDir + '/css'));
 });
 

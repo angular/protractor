@@ -43,7 +43,7 @@
           if (shouldPaint) {
             element.html(prettyHtml);
           }
-        }
+        };
       }
     };
   });
