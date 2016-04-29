@@ -39,6 +39,10 @@ gulp.task('jshint', function(done) {
       'spec', 'scripts', '--exclude=lib/selenium-webdriver/**/*.js']);
 });
 
+gulp.task('start webdriver', function(done) {
+  runSpawn(done,'npm start');
+});
+
 gulp.task('clang', function() {
   return gulp.src(['lib/**/*.ts'])
       .pipe(gulpFormat.checkFormat('file', clangFormat))
@@ -61,7 +65,8 @@ gulp.task('prepublish', function(done) {
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'clang'], 'tsc', 'built:copy', done);
+    ['webdriver:update', 'typings', 'jshint', 'clang','start webdriver'],
+     'tsc', 'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);
