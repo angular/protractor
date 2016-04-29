@@ -21,7 +21,7 @@ var addLinkToSourceCode = function(doc) {
     return;
   }
   var template = _.template('https://github.com/angular/protractor/blob/' +
-      '<%= linksHash %>/lib/<%= fileName %>.js');
+      '<%= linksHash %>/lib/<%= fileName %>.ts');
 
   doc.sourceLink = template({
     linksHash: linksHash,

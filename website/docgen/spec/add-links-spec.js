@@ -22,7 +22,7 @@ describe('add-links', function() {
     addLinks([doc]);
     expect(doc.sourceLink).toBe('https://github.com/angular/protractor/' +
         'blob/' + require('../../../package.json').version + '/lib/' +
-        'protractor.js');
+        'protractor.ts');
   });
 
   it('should add links to types', function() {
@@ -255,7 +255,7 @@ describe('add-links', function() {
         toBe('A promise located {@code Web Elements}.');
   });
 
-  it('should remove extraneous chatacters from @link links', function() {
+  it('should remove extraneous characters from @link links', function() {
     // Given a doc with a @link annotation.
     var docs = [
       {
