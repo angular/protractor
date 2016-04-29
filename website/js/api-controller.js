@@ -132,12 +132,12 @@
       // Add short description.
       if (item.description) {
         // Find the correct portion of the description
-        
+
         // The following parsing is OK most of the time
         var sentenceEnd = item.description.search(/\.\s|\.$/) + 1 || Infinity;
         var paragraphEnd = item.description.indexOf('</p>') + 4;
         if (paragraphEnd == 3) {
-          paragraphEnd = Infinity
+          paragraphEnd = Infinity;
         }
         var shortDescription = item.description.substring(0, Math.min(
             item.description.length, sentenceEnd, paragraphEnd)).trim();
@@ -217,7 +217,7 @@
         }
       }
     };
-    
+
     var prevFileName;
     list.forEach(function(item) {
       if ((item.type !== 'child') && !item.extension) {
