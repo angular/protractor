@@ -45,14 +45,10 @@ Clone the github repository:
     npm install
     cd ..
 
-Start up a selenium server. By default, the tests expect the selenium server to be running at `http://localhost:4444/wd/hub`. A selenium server can be started with `webdriver-manager`.
-
-    bin/webdriver-manager start
-
-Protractor's test suite runs against the included test application. Start that up with
-
-    npm start
-
-Then run the tests with
+###Running tests
 
     npm test
+
+This task will execute all the required steps to run the tests on your local environment.
+The selenium server by default will be running at `http://localhost:4444/wd/hub`. 
+

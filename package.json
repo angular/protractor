@@ -54,6 +54,7 @@
   "scripts": {
     "prepublish": "gulp prepublish",
     "pretest": "gulp pretest",
+    "prestart": "webdriver-manager start > /dev/null 2>&1 &",
     "start": "node testapp/scripts/web-server.js",
     "test": "node scripts/test.js",
     "tsc": "./node_modules/typescript/bin/tsc",
