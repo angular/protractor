@@ -6,11 +6,16 @@ import {Config} from './configParser';
 import {Logger} from './logger2';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {Plugins} from './plugins';
-import {Protractor} from './protractor';
+import {Browser, ElementHelper, wrapDriver} from './browser';
+import * as browserFn from './browser';
+
+import {ProtractorBy} from './locators';
 import {DriverProvider} from './driverProviders';
+import {protractor} from './ptor';
 
 let webdriver = require('selenium-webdriver');
 let logger = new Logger('runner');
+
 /*
  * Runner is responsible for starting the execution of a test run and triggering
  * setup, teardown, managing config, etc through its various dependencies.
@@ -148,13 +153,16 @@ export class Runner extends EventEmitter {
    * Sets up convenience globals for test specs
    * @private
    */
-  setupGlobals_(browser_: Protractor) {
+  setupGlobals_(browser_: Browser) {
     // Keep $, $$, element, and by/By under the global protractor namespace
+    console.log(browser_);
+    console.log(protractor);
+
     protractor.browser = browser_;
     protractor.$ = browser_.$;
     protractor.$$ = browser_.$$;
     protractor.element = browser_.element;
-    protractor.by = protractor.By;
+    protractor.by = protractor.By = browserFn.By;
 
     if (!this.config_.noGlobals) {
       // Export protractor to the global namespace to be used in tests.
@@ -190,7 +198,7 @@ export class Runner extends EventEmitter {
     var config = this.config_;
     var driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = protractor.wrapDriver(
+    var browser_ = wrapDriver(
         driver, config.baseUrl, config.rootElement,
         config.untrackOutstandingTimeouts);
 
@@ -249,9 +257,8 @@ export class Runner extends EventEmitter {
    * @private
    */
   shutdown_(): q.Promise<any> {
-    return q.all(this.driverprovider_.getExistingDrivers().map((webdriver) => {
-      return this.driverprovider_.quitDriver(webdriver);
-    }));
+    return q.all(this.driverprovider_.getExistingDrivers().map(
+        (webdriver) => { return this.driverprovider_.quitDriver(webdriver); }));
   }
 
   /**

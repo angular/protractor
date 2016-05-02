@@ -1,3 +1,5 @@
+import {protractor} from './ptor';
+
 /**
  * Represents a library of canned expected conditions that are useful for
  * protractor, especially when dealing with non-angular apps.
@@ -136,7 +138,7 @@ export class EC {
    */
   alertIsPresent(): Function {
     return () => {
-      return browser.switchTo().alert().then(
+      return protractor.browser.driver.switchTo().alert().then(
           (): boolean => { return true; },
           (err: any) => {
             let webdriver = require('selenium-webdriver');
@@ -234,9 +236,10 @@ export class EC {
    */
   titleContains(title: string): Function {
     return () => {
-      return browser.getTitle().then((actualTitle: string): boolean => {
-        return actualTitle.indexOf(title) > -1;
-      });
+      return protractor.browser.driver.getTitle().then(
+          (actualTitle: string): boolean => {
+            return actualTitle.indexOf(title) > -1;
+          });
     };
   }
 
@@ -255,7 +258,7 @@ export class EC {
    */
   titleIs(title: string): Function {
     return () => {
-      return browser.getTitle().then(
+      return protractor.browser.driver.getTitle().then(
           (actualTitle: string): boolean => { return actualTitle === title; });
     };
   }

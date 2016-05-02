@@ -2,7 +2,7 @@ let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
 
 import {Logger} from './logger2';
-import {Protractor} from './protractor';
+import {Browser} from './browser';
 
 let logger = new Logger('element');
 
@@ -56,7 +56,7 @@ let WEB_ELEMENT_FUNCTIONS = [
  * });
  *
  * @constructor
- * @param {Protractor} ptor A protractor instance.
+ * @param {Browser} browser A browser instance.
  * @param {function(): Array.<webdriver.WebElement>} getWebElements A function
  *    that returns a list of the underlying Web Elements.
  * @param {webdriver.Locator} locator The most relevant locator. It is only
@@ -70,7 +70,7 @@ export class ElementArrayFinder {
   getWebElements: Function;
 
   constructor(
-      private ptor_: Protractor, getWebElements?: Function,
+      private browser_: Browser, getWebElements?: Function,
       private locator_?: any, public actionResults_: webdriver.Promise = null) {
     this.getWebElements = getWebElements || null;
 
@@ -96,7 +96,7 @@ export class ElementArrayFinder {
     // modified. (Locator can be modified by the user, but that should
     // rarely/never happen and it doesn't affect functionalities).
     return new ElementArrayFinder(
-        this.ptor_, this.getWebElements, this.locator_, this.actionResults_);
+        this.browser_, this.getWebElements, this.locator_, this.actionResults_);
   }
 
   /**
@@ -132,7 +132,7 @@ export class ElementArrayFinder {
    * @return {ElementArrayFinder}
    */
   all(locator: any): ElementArrayFinder {
-    let ptor = this.ptor_;
+    let ptor = this.browser_;
     let getWebElements = () => {
       if (this.getWebElements === null) {
         // This is the first time we are looking for an element
@@ -172,7 +172,7 @@ export class ElementArrayFinder {
             });
       }
     };
-    return new ElementArrayFinder(this.ptor_, getWebElements, locator);
+    return new ElementArrayFinder(this.browser_, getWebElements, locator);
   }
 
   /**
@@ -210,7 +210,7 @@ export class ElementArrayFinder {
         let list =
             parentWebElements.map((parentWebElement: any, index: number) => {
               let elementFinder = ElementFinder.fromWebElement_(
-                  this.ptor_, parentWebElement, this.locator_);
+                  this.browser_, parentWebElement, this.locator_);
 
               return filterFn(elementFinder, index);
             });
@@ -222,7 +222,7 @@ export class ElementArrayFinder {
         });
       });
     };
-    return new ElementArrayFinder(this.ptor_, getWebElements, this.locator_);
+    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_);
   }
 
   /**
@@ -268,7 +268,7 @@ export class ElementArrayFinder {
             return [parentWebElements[i]];
           });
     };
-    return new ElementArrayFinder(this.ptor_, getWebElements, this.locator_)
+    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_)
         .toElementFinder_();
   }
 
@@ -329,7 +329,7 @@ export class ElementArrayFinder {
    * @private
    */
   toElementFinder_(): ElementFinder {
-    return new ElementFinder(this.ptor_, this);
+    return new ElementFinder(this.browser_, this);
   }
 
   /**
@@ -399,7 +399,7 @@ export class ElementArrayFinder {
                               throw e;
                             });
     return new ElementArrayFinder(
-        this.ptor_, this.getWebElements, this.locator_, actionResults);
+        this.browser_, this.getWebElements, this.locator_, actionResults);
   }
 
   /**
@@ -412,7 +412,7 @@ export class ElementArrayFinder {
     return this.getWebElements().then((arr: webdriver.WebElement[]) => {
       return arr.map((webElem: webdriver.WebElement) => {
         return ElementFinder.fromWebElement_(
-            this.ptor_, webElem, this.locator_);
+            this.browser_, webElem, this.locator_);
       });
     });
   }
@@ -648,7 +648,7 @@ export class ElementArrayFinder {
  *
  * @constructor
  * @extends {webdriver.WebElement}
- * @param {Protractor} ptor
+ * @param {Browser} browser
  * @param {ElementArrayFinder} elementArrayFinder The ElementArrayFinder
  *     that this is branched from.
  * @return {ElementFinder}
@@ -658,7 +658,8 @@ export class ElementFinder {
   elementArrayFinder_: ElementArrayFinder;
   then: Function = null;
 
-  constructor(private ptor_: any, elementArrayFinder: ElementArrayFinder) {
+  constructor(
+      private browser_: Browser, elementArrayFinder: ElementArrayFinder) {
     if (!elementArrayFinder) {
       throw new Error('BUG: elementArrayFinder cannot be empty');
     }
@@ -711,7 +712,7 @@ export class ElementFinder {
     // Store a copy of the underlying elementArrayFinder, but with the more
     // restrictive getWebElements (which checks that there is only 1 element).
     this.elementArrayFinder_ = new ElementArrayFinder(
-        this.ptor_, getWebElements, elementArrayFinder.locator(),
+        this.browser_, getWebElements, elementArrayFinder.locator(),
         elementArrayFinder.actionResults_);
 
     WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
@@ -738,7 +739,7 @@ export class ElementFinder {
   clone(): ElementFinder {
     // A shallow copy is all we need since the underlying fields can never be
     // modified
-    return new ElementFinder(this.ptor_, this.parentElementArrayFinder);
+    return new ElementFinder(this.browser_, this.parentElementArrayFinder);
   }
 
   /**
@@ -771,7 +772,7 @@ export class ElementFinder {
         (parentWebElements: webdriver.WebElement[]) => {
           return parentWebElements[0];
         });
-    return new webdriver.WebElementPromise(this.ptor_.driver, id);
+    return new webdriver.WebElementPromise(this.browser_.driver, id);
   }
 
   /**
