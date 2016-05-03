@@ -16,7 +16,6 @@ export interface Locator extends webdriver.Locator {
   row?: (index: number) => Locator;
   column?: (index: string) => Locator;
 }
-;
 
 /**
  * The Protractor Locators. These provide ways of finding elements in

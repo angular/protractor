@@ -151,7 +151,7 @@ describe('ElementFinder', function() {
 
   it('should propagate exceptions', function() {
     browser.get('index.html#/form');
-    var successful = protractor.promise.defer();
+    var successful = browser.promise.defer();
 
     var invalidElement = element(by.binding('INVALID'));
     invalidElement.getText().then(function(value) {
@@ -164,7 +164,7 @@ describe('ElementFinder', function() {
 
   it('should be returned from a helper without infinite loops', function() {
     browser.get('index.html#/form');
-    var helperPromise = protractor.promise.when(true).then(function() {
+    var helperPromise = browser.promise.when(true).then(function() {
       return element(by.binding('greeting'));
     });
 
@@ -384,7 +384,7 @@ describe('ElementArrayFinder', function() {
 
   it('should get an element from an array by promise index', function() {
     var colorList = element.all(by.model('color'));
-    var index = protractor.promise.fulfilled(1);
+    var index = browser.promise.fulfilled(1);
 
     browser.get('index.html#/form');
 

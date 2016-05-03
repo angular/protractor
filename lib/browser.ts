@@ -13,6 +13,9 @@ import {EC} from './expectedConditions';
 let clientSideScripts = require('./clientsidescripts');
 
 let webdriver = require('selenium-webdriver');
+let webdriverPromise = require('selenium-webdriver/lib/promise');
+let webdriverActionSequence = require('selenium-webdriver/lib/actions');
+let webdriverInput = require('selenium-webdriver/lib/input');
 let Command = require('selenium-webdriver/lib/command').Command;
 let CommandName = require('selenium-webdriver/lib/command').Name;
 
@@ -98,6 +101,11 @@ function buildElementHelper(browser: Browser): ElementHelper {
  *     stop tracking outstanding $timeouts.
  */
 export class Browser {
+  ExpectedConditions: EC = new EC();
+  promise = webdriverPromise;
+  ActionSequence = webdriverActionSequence.ActionSequence;
+  Key = webdriverInput.Key;
+
   /**
    * The wrapped webdriver instance. Use this to interact with pages that do
    * not contain Angular (such as a log-in screen).
@@ -118,14 +126,14 @@ export class Browser {
    *
    * @type {function(string): ElementFinder}
    */
-  $: Function;
+  $ = function(search: string): ElementFinder { return null; };
 
   /**
    * Shorthand function for finding arrays of elements by css.
    *
    * @type {function(string): ElementArrayFinder}
    */
-  $$: Function;
+  $$ = function(search: string): ElementArrayFinder { return null; };
 
   /**
    * All get methods will be resolved against this base URL. Relative URLs are =
@@ -324,7 +332,7 @@ export class Browser {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
-   * @return {!webdriver.promise.Promise.<T>} A promise that will resolve to the
+   * @return {!webdriverPromise.Promise.<T>} A promise that will resolve to the
    *    scripts return value.
    * @template T
    */
@@ -350,7 +358,7 @@ export class Browser {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description for debugging purposes.
    * @param {...*} var_args The arguments to pass to the script.
-   * @return {!webdriver.promise.Promise.<T>} A promise that will resolve to the
+   * @return {!webdriverPromise.Promise.<T>} A promise that will resolve to the
    *    scripts return value.
    * @template T
    */
@@ -375,7 +383,7 @@ export class Browser {
    *
    * @param {string=} opt_description An optional description to be added
    *     to webdriver logs.
-   * @return {!webdriver.promise.Promise} A promise that will resolve to the
+   * @return {!webdriverPromise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
   waitForAngular(opt_description?: string): webdriver.Promise {
@@ -388,7 +396,7 @@ export class Browser {
 
     let runWaitForAngularScript: () => webdriver.Promise = () => {
       if (this.plugins_.skipAngularStability()) {
-        return webdriver.promise.fulfilled();
+        return webdriverPromise.fulfilled();
       } else if (this.rootEl) {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAngular,
@@ -453,7 +461,7 @@ export class Browser {
                       'Protractor.waitForAngular() - getting pending timeouts' +
                           description);
                 } else {
-                  pendingTimeoutsPromise = webdriver.promise.fulfilled({});
+                  pendingTimeoutsPromise = webdriverPromise.fulfilled({});
                 }
                 var pendingHttpsPromise = this.executeScript_(
                     clientSideScripts.getPendingHttpRequests,
@@ -461,7 +469,7 @@ export class Browser {
                         description,
                     this.rootEl);
 
-                return webdriver.promise
+                return webdriverPromise
                     .all([pendingTimeoutsPromise, pendingHttpsPromise])
                     .then(
                         (arr: any[]) => {
@@ -504,7 +512,7 @@ export class Browser {
   /**
    * Waits for Angular to finish rendering before searching for elements.
    * @see webdriver.WebDriver.findElements
-   * @return {!webdriver.promise.Promise} A promise that will be resolved to an
+   * @return {!webdriverPromise.Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
   findElements(locator: webdriver.Locator): webdriver.Promise {
@@ -514,7 +522,7 @@ export class Browser {
   /**
    * Tests if an element is present on the page.
    * @see webdriver.WebDriver.isElementPresent
-   * @return {!webdriver.promise.Promise} A promise that will resolve to whether
+   * @return {!webdriverPromise.Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
   isElementPresent(locatorOrElement: webdriver.Locator|
@@ -681,7 +689,7 @@ export class Browser {
           () => { return this.plugins_.onPageLoad(); });
     }
 
-    var deferred = webdriver.promise.defer();
+    var deferred = webdriverPromise.defer();
 
     this.driver.get(this.resetUrl).then(null, deferred.reject);
     this.executeScript_(
@@ -833,7 +841,7 @@ export class Browser {
    *     .toBe('http://angular.github.io/protractor/#/api');
    *
    * @param {string} url In page URL using the same syntax as $location.url()
-   * @return {!webdriver.promise.Promise} A promise that will resolve once
+   * @return {!webdriverPromise.Promise} A promise that will resolve once
    *    page has been changed.
    */
   setLocation(url: string): webdriver.Promise {
@@ -888,7 +896,7 @@ export class Browser {
   debugger() {
     // jshint debug: true
     this.driver.executeScript(clientSideScripts.installInBrowser);
-    webdriver.promise.controlFlow().execute(
+    webdriverPromise.controlFlow().execute(
         () => { debugger; }, 'add breakpoint to control flow');
   };
 
@@ -904,10 +912,10 @@ export class Browser {
    */
   private validatePortAvailability_(port: number): webdriver.Promise {
     if (this.debuggerValidated_) {
-      return webdriver.promise.fulfilled(false);
+      return webdriverPromise.fulfilled(false);
     }
 
-    let doneDeferred = webdriver.promise.defer();
+    let doneDeferred = webdriverPromise.defer();
 
     // Resolve doneDeferred if port is available.
     let tester = net.connect({port: port}, () => {
@@ -950,13 +958,13 @@ export class Browser {
       debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
     // Patch in a function to help us visualize what's going on in the control
     // flow.
-    webdriver.promise.ControlFlow.prototype.getControlFlowText = function() {
+    webdriverPromise.ControlFlow.prototype.getControlFlowText = function() {
       let controlFlowText = this.getSchedule(/* opt_includeStackTraces */ true);
       // This filters the entire control flow text, not just the stack trace, so
       // unless we maintain a good (i.e. non-generic) set of keywords in
       // STACK_SUBSTRINGS_TO_FILTER, we run the risk of filtering out non stack
       // trace. The alternative though, which is to reimplement
-      // webdriver.promise.ControlFlow.prototype.getSchedule() here is much
+      // webdriverPromise.ControlFlow.prototype.getSchedule() here is much
       // hackier, and involves messing with the control flow's internals /
       // private
       // variables.
@@ -964,7 +972,7 @@ export class Browser {
     };
 
     let vm_ = require('vm');
-    let flow = webdriver.promise.controlFlow();
+    let flow = webdriverPromise.controlFlow();
 
     var context: Object = {require: require};
     global.list = (locator: webdriver.Locator) => {
@@ -984,7 +992,7 @@ export class Browser {
     var sandbox = vm_.createContext(context);
 
     var browserUnderDebug = this;
-    var debuggerReadyPromise = webdriver.promise.defer();
+    var debuggerReadyPromise = webdriverPromise.defer();
     flow.execute(function() {
       process['debugPort'] = opt_debugPort || process['debugPort'];
       browserUnderDebug.validatePortAvailability_(process['debugPort'])
@@ -1058,8 +1066,8 @@ export class Browser {
           // Run code through vm so that we can maintain a local scope which is
           // isolated from the rest of the execution.
           var res = vm_.runInContext(code, sandbox);
-          if (!webdriver.promise.isPromise(res)) {
-            res = webdriver.promise.fulfilled(res);
+          if (!webdriverPromise.isPromise(res)) {
+            res = webdriverPromise.fulfilled(res);
           }
 
           return res.then((res: any) => {
@@ -1081,7 +1089,7 @@ export class Browser {
       // Result is a JSON representation of the autocomplete response.
       complete: function(line: string) {
         var execFn_ = () => {
-          var deferred = webdriver.promise.defer();
+          var deferred = webdriverPromise.defer();
           this.replServer_.complete(line, (err: any, res: any) => {
             if (err) {
               deferred.reject(err);
@@ -1183,6 +1191,14 @@ export class Browser {
       }
     };
     this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
+  }
+
+
+  wrapDriver(
+      webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,
+      untrackOutstandingTimeouts?: boolean) {
+    return new Browser(
+        webdriver, baseUrl, rootElement, untrackOutstandingTimeouts);
   }
 }
 

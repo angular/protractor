@@ -22,8 +22,8 @@ describe('protractor library', function() {
 
   it('should export other webdriver classes onto the global protractor',
       function() {
-        expect(protractor.ActionSequence).toBeDefined();
-        expect(protractor.Key.RETURN).toEqual('\uE006');
+        expect(protractor.browser.ActionSequence).toBeDefined();
+        expect(protractor.browser.Key.RETURN).toEqual('\uE006');
       });
 
   it('should export custom parameters to the protractor instance', function() {
@@ -109,7 +109,7 @@ describe('protractor library', function() {
   });
 
   it('should allow self-wrapped webdriver instances', function() {
-    var driver = protractor.wrapDriver(browser.driver);
+    var driver = protractor.browser.wrapDriver(browser.driver);
     var url = require('url').resolve(browser.baseUrl, 'index.html');
     driver.get(url);
   });

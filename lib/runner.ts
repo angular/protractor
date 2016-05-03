@@ -14,6 +14,7 @@ import {DriverProvider} from './driverProviders';
 import {protractor} from './ptor';
 
 let webdriver = require('selenium-webdriver');
+let promise = require('selenium-webdriver/lib/promise');
 let logger = new Logger('runner');
 
 /*
@@ -44,7 +45,7 @@ export class Runner extends EventEmitter {
 
     if (config.nodeDebug) {
       (<any>process)['_debugProcess'](process.pid);
-      let flow = webdriver.promise.controlFlow();
+      let flow = promise.controlFlow();
 
       flow.execute(() => {
         let nodedebug =
@@ -154,10 +155,8 @@ export class Runner extends EventEmitter {
    * @private
    */
   setupGlobals_(browser_: Browser) {
+    console.log('setting up globals');
     // Keep $, $$, element, and by/By under the global protractor namespace
-    console.log(browser_);
-    console.log(protractor);
-
     protractor.browser = browser_;
     protractor.$ = browser_.$;
     protractor.$$ = browser_.$$;
