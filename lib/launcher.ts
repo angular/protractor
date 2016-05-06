@@ -127,7 +127,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                 q.when(config.getMultiCapabilities(), (multiCapabilities) => {
                    config.multiCapabilities = multiCapabilities;
                    config.capabilities = null;
-                 }).then((resolve) => {});
+                 }).then(resolve);
               } else {
                 resolve();
               }
