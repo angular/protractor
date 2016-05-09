@@ -74,7 +74,7 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
     {include: 'built/element.ts'},
     {include: 'built/protractor.ts'},
     {include: 'built/locators.ts'},
-    {include: 'built/expectedConditions.js'},
+    {include: 'built/expectedConditions.ts'},
     {include: 'lib/selenium-webdriver/locators.js'},
     {include: 'lib/selenium-webdriver/webdriver.js'}
   ];
