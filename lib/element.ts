@@ -438,7 +438,7 @@ export class ElementArrayFinder {
    * @param {function(Array.<ElementFinder>)} fn
    * @param {function(Error)} errorFn
    *
-   * @type {webdriver.promise.Promise} a promise which will resolve to
+   * @return {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
   then(fn: Function, errorFn: Function): webdriver.Promise {
@@ -470,6 +470,10 @@ export class ElementArrayFinder {
    * });
    *
    * @param {function(ElementFinder)} fn Input function
+   *
+   * @return {!webdriver.promise.Promise} A promise that will resolve when the
+   *     function has been called on all the ElementFinders. The promise will
+   *     resolve to null.
    */
   each(fn: Function): webdriver.Promise {
     return this.map(fn).then((): any => { return null; });
