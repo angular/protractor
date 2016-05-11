@@ -1,7 +1,7 @@
 import * as os from 'os';
 import {Logger} from './logger2';
 
-let logger = new Logger('testLogger');
+let logger = new Logger('taskLogger');
 
 export class TaskLogger {
   private buffer: string = '';

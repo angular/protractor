@@ -1,6 +1,4 @@
-var webdriver = require('selenium-webdriver');
-
-/* globals browser */
+import {protractor} from './ptor';
 
 /**
  * Represents a library of canned expected conditions that are useful for
@@ -42,7 +40,7 @@ var webdriver = require('selenium-webdriver');
  *
  * @constructor
  */
-export class ExpectedConditions {
+export class EC {
   /**
    * Negates the result of a promise.
    *
@@ -140,9 +138,10 @@ export class ExpectedConditions {
    */
   alertIsPresent(): Function {
     return () => {
-      return browser.switchTo().alert().then(
+      return protractor.browser.driver.switchTo().alert().then(
           (): boolean => { return true; },
           (err: any) => {
+            let webdriver = require('selenium-webdriver');
             if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
               return false;
             } else {
@@ -237,9 +236,10 @@ export class ExpectedConditions {
    */
   titleContains(title: string): Function {
     return () => {
-      return browser.getTitle().then((actualTitle: string): boolean => {
-        return actualTitle.indexOf(title) > -1;
-      });
+      return protractor.browser.driver.getTitle().then(
+          (actualTitle: string): boolean => {
+            return actualTitle.indexOf(title) > -1;
+          });
     };
   }
 
@@ -258,7 +258,7 @@ export class ExpectedConditions {
    */
   titleIs(title: string): Function {
     return () => {
-      return browser.getTitle().then(
+      return protractor.browser.driver.getTitle().then(
           (actualTitle: string): boolean => { return actualTitle === title; });
     };
   }

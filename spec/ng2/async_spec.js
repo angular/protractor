@@ -66,7 +66,7 @@ describe('async angular2 application', function() {
       var timeout = $('#periodicIncrement_unzoned');
 
       // Waits for the val to count 2.
-      var EC = protractor.ExpectedConditions;
+      var EC = protractor.browser.ExpectedConditions;
       timeout.$('.action').click();
       browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '1'), 4000);
       timeout.$('.cancel').click();

@@ -1,18 +1,3 @@
-// Typescript transpiling will give a warning about 'global'. This work around
-// is to allow protractor to set global variables. Warning message as follows:
-//
-// lib/globals.d.ts(2,19): error TS2300: Duplicate identifier 'global'.
-// typings/main/ambient/node/index.d.ts(33,13): error TS2300: Duplicate
-// identifier 'global'.
-declare var browser: any;
-declare var protractor: any;
-declare var $: any;
-declare var $$: any;
-declare var element: any;
-declare var by: any;
-declare var By: any;
-declare var DartObject: any;
-
 // Used for Protractor mock module loader.
 declare namespace angular {
   var module: Function;
@@ -51,10 +36,14 @@ declare namespace webdriver {
     quit: Function;
     executeScript: Function;
     getCapabilities: Function;
+    getCurrentUrl: Function;
+    getPageSource: Function;
+    getTitle: Function;
     navigate: Function;
     get: Function;
     wait: Function;
     schedule: Function;
+    switchTo: Function;
     controlFlow: Function;
     static attachToSession: Function;
     // This index type allows looking up methods by name so we can do mixins.
