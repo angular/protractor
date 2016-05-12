@@ -73,6 +73,22 @@ export class DriverProvider {
   }
 
   /**
+   * Default update job method.
+   * @return a promise
+   */
+  updateJob(update: any): q.Promise<any> {
+    return q.fcall(function() {});
+  };
+
+  /**
+   * Default setup environment method.
+   * @return a promise
+   */
+  setupEnv(): q.Promise<any> {
+    return q.fcall(function() {});
+  };
+
+  /**
    * Teardown and destroy the environment and do any associated cleanup.
    * Shuts down the drivers.
    *

@@ -8,6 +8,7 @@ import {ProtractorBy} from './locators';
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
 export {ElementFinder, ElementArrayFinder};
 import {Plugins} from './plugins';
+import {protractor} from './ptor';
 
 let clientSideScripts = require('./clientsidescripts');
 
@@ -16,8 +17,6 @@ let clientSideScripts = require('./clientsidescripts');
 import * as EC from './expectedConditions';
 
 let webdriver = require('selenium-webdriver');
-let Command = require('selenium-webdriver/lib/command').Command;
-let CommandName = require('selenium-webdriver/lib/command').Name;
 
 // jshint browser: true
 /* global angular */
@@ -76,14 +75,14 @@ export interface ElementHelper extends Function {
  * @param {Protractor} ptor
  * @return {function(webdriver.Locator): ElementFinder}
  */
-function buildElementHelper(ptor: Protractor): ElementHelper {
+function buildElementHelper(browser: Browser): ElementHelper {
   let element: ElementHelper = function(locator: webdriver.Locator) {
-    return new ElementArrayFinder(ptor).all(locator).toElementFinder_();
+    return new ElementArrayFinder(browser).all(locator).toElementFinder_();
   };
 
   element.all =
       function(locator: webdriver.Locator) {
-    return new ElementArrayFinder(ptor).all(locator);
+    return new ElementArrayFinder(browser).all(locator);
   }
 
   return element;
@@ -100,7 +99,9 @@ function buildElementHelper(ptor: Protractor): ElementHelper {
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
-export class Protractor {
+export class Browser {
+  ExpectedConditions = new EC.ExpectedConditions();
+
   /**
    * The wrapped webdriver instance. Use this to interact with pages that do
    * not contain Angular (such as a log-in screen).
@@ -121,14 +122,14 @@ export class Protractor {
    *
    * @type {function(string): ElementFinder}
    */
-  $: Function;
+  $: (query: string) => ElementFinder;
 
   /**
    * Shorthand function for finding arrays of elements by css.
    *
    * @type {function(string): ElementArrayFinder}
    */
-  $$: Function;
+  $$: (query: string) => ElementArrayFinder;
 
   /**
    * All get methods will be resolved against this base URL. Relative URLs are =
@@ -184,7 +185,7 @@ export class Protractor {
    *
    * @type {Plugins} Object containing plugin funtions from config.
    */
-  private plugins_: Plugins;
+  plugins_: Plugins;
 
   /**
    * The reset URL to use between page loads.
@@ -198,7 +199,7 @@ export class Protractor {
    * error message if Protractor fails to synchronize with Angular in time.
    * @private {boolean}
    */
-  private trackOutstandingTimeouts_: boolean;
+  trackOutstandingTimeouts_: boolean;
 
   /**
    * If set, will be the universal timeout applied to all tests run by
@@ -213,16 +214,16 @@ export class Protractor {
    * @type {Array<{name: string, script: function|string, args:
    * Array.<string>}>}
    */
-  private mockModules_: any[];
+  mockModules_: any[];
 
   /**
    * If specified, start a debugger server at specified port instead of repl
    * when running element explorer.
    * @private {number}
    */
-  private debuggerServerPort_: number;
+  debuggerServerPort_: number;
 
-  private debuggerValidated_: boolean;
+  debuggerValidated_: boolean;
 
   // This index type allows looking up methods by name so we can do mixins.
   [key: string]: any;
@@ -339,7 +340,7 @@ export class Protractor {
     }
 
     return this.driver.schedule(
-        new Command(CommandName.EXECUTE_SCRIPT)
+        new protractor.Command(protractor.CommandName.EXECUTE_SCRIPT)
             .setParameter('script', script)
             .setParameter('args', scriptArgs),
         description);
@@ -364,7 +365,7 @@ export class Protractor {
       script = 'return (' + script + ').apply(null, arguments);';
     }
     return this.driver.schedule(
-        new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
+        new protractor.Command(protractor.CommandName.EXECUTE_ASYNC_SCRIPT)
             .setParameter('script', script)
             .setParameter('args', scriptArgs),
         description);
@@ -972,7 +973,7 @@ export class Protractor {
     var context: Object = {require: require};
     global.list = (locator: webdriver.Locator) => {
       /* globals browser */
-      return browser.findElements(locator).then(
+      return protractor.browser.findElements(locator).then(
           (arr: webdriver.WebElement[]) => {
             var found: string[] = [];
             for (var i = 0; i < arr.length; ++i) {
@@ -1200,7 +1201,7 @@ export class Protractor {
  */
 export let wrapDriver =
     (webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,
-     untrackOutstandingTimeouts?: boolean) => {
-      return new Protractor(
+     untrackOutstandingTimeouts?: boolean): Browser => {
+      return new Browser(
           webdriver, baseUrl, rootElement, untrackOutstandingTimeouts);
     };
