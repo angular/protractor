@@ -11,7 +11,7 @@ var webdriver = require('selenium-webdriver');
  * mix these conditions with any other conditions that you write.
  *
  * See ExpectedCondition Class in Selenium WebDriver codebase.
- * http://seleniumhq.github.io/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html.
+ * http://seleniumhq.github.io/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html
  *
  *
  * @example
