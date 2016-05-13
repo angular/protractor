@@ -11,8 +11,8 @@ let webdriver = require('selenium-webdriver');
  * multiple conditions using `and`, `or`, and/or `not`. You may also
  * mix these conditions with any other conditions that you write.
  *
- * See https://selenium.googlecode.com/git/docs/api/java/org/openqa ...
- *     /selenium/support/ui/ExpectedConditions.html
+ * See ExpectedCondition Class in Selenium WebDriver codebase.
+ * http://seleniumhq.github.io/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html
  *
  *
  * @example
