@@ -1,4 +1,5 @@
-var webdriver = require('selenium-webdriver');
+import {protractor} from './ptor';
+let webdriver = require('selenium-webdriver');
 
 /* globals browser */
 
@@ -140,7 +141,7 @@ export class ExpectedConditions {
    */
   alertIsPresent(): Function {
     return () => {
-      return browser.switchTo().alert().then(
+      return protractor.browser.driver.switchTo().alert().then(
           (): boolean => { return true; },
           (err: any) => {
             if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
@@ -237,9 +238,10 @@ export class ExpectedConditions {
    */
   titleContains(title: string): Function {
     return () => {
-      return browser.getTitle().then((actualTitle: string): boolean => {
-        return actualTitle.indexOf(title) > -1;
-      });
+      return protractor.browser.driver.getTitle().then(
+          (actualTitle: string): boolean => {
+            return actualTitle.indexOf(title) > -1;
+          });
     };
   }
 
@@ -258,7 +260,7 @@ export class ExpectedConditions {
    */
   titleIs(title: string): Function {
     return () => {
-      return browser.getTitle().then(
+      return protractor.browser.driver.getTitle().then(
           (actualTitle: string): boolean => { return actualTitle === title; });
     };
   }
