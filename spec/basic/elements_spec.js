@@ -155,7 +155,7 @@ describe('ElementFinder', function() {
 
     var invalidElement = element(by.binding('INVALID'));
     invalidElement.getText().then(function(value) {
-      successful.fulfill(true);
+      success.fulfill(true);
     }, function(err) {
       successful.fulfill(false);
     });
