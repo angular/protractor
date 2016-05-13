@@ -9,6 +9,7 @@ testapp/
 website/
 
 .gitattributes
+.github
 .gitignore
 .jshintrc
 .npmignore
