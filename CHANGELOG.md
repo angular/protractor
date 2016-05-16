@@ -5,8 +5,7 @@ _The [Protractor Website](http://www.protractortest.org) API docs have been stre
 - ([6f22d5a](https://github.com/angular/protractor/commit/6f22d5ade48f0d97990cbe69d956da122f2f8358)) 
   fix(bootstrap): fix bootstrap for older versions of angular
 
-  Trying to use the debug label for window.name fails for versions of angular older than 1.2.24. See
-  #3115
+  Trying to use the debug label for window.name fails for versions of angular older than 1.2.24. See [#3115](https://github.com/angular/protractor/issues/3115)
 
 - ([bd78dfc](https://github.com/angular/protractor/commit/bd78dfc79b1435d124c994482df6879066079a4d)) 
   fix(protractor): isPresent() should work with out of bounds errors (#3108)
