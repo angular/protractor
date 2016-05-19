@@ -42,7 +42,7 @@ Loosely, follow the [Angular contribution rules](https://github.com/angular/angu
 Protractor specific rules
 -------------------------
 
- * JavaScript style should generally follow the [Google JS style guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml).
+ * JavaScript style should generally follow the [Google JS style guide](https://google.github.io/styleguide/javascriptguide.xml).
  * Wrap code at 80 chars.
  * Document public methods with jsdoc.
  * Be consistent with the code around you!

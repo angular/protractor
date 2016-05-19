@@ -2,7 +2,7 @@ let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
 
 import {Logger} from './logger2';
-import {Protractor} from './protractor';
+import {Browser} from './browser';
 
 let logger = new Logger('element');
 
@@ -56,7 +56,7 @@ let WEB_ELEMENT_FUNCTIONS = [
  * });
  *
  * @constructor
- * @param {Protractor} ptor A protractor instance.
+ * @param {Browser} browser A protractor instance.
  * @param {function(): Array.<webdriver.WebElement>} getWebElements A function
  *    that returns a list of the underlying Web Elements.
  * @param {webdriver.Locator} locator The most relevant locator. It is only
@@ -70,7 +70,7 @@ export class ElementArrayFinder {
   getWebElements: Function;
 
   constructor(
-      private ptor_: Protractor, getWebElements?: Function,
+      private browser_: Browser, getWebElements?: Function,
       private locator_?: any, public actionResults_: webdriver.Promise = null) {
     this.getWebElements = getWebElements || null;
 
@@ -96,7 +96,7 @@ export class ElementArrayFinder {
     // modified. (Locator can be modified by the user, but that should
     // rarely/never happen and it doesn't affect functionalities).
     return new ElementArrayFinder(
-        this.ptor_, this.getWebElements, this.locator_, this.actionResults_);
+        this.browser_, this.getWebElements, this.locator_, this.actionResults_);
   }
 
   /**
@@ -132,7 +132,7 @@ export class ElementArrayFinder {
    * @return {ElementArrayFinder}
    */
   all(locator: any): ElementArrayFinder {
-    let ptor = this.ptor_;
+    let ptor = this.browser_;
     let getWebElements = () => {
       if (this.getWebElements === null) {
         // This is the first time we are looking for an element
@@ -172,7 +172,7 @@ export class ElementArrayFinder {
             });
       }
     };
-    return new ElementArrayFinder(this.ptor_, getWebElements, locator);
+    return new ElementArrayFinder(this.browser_, getWebElements, locator);
   }
 
   /**
@@ -210,7 +210,7 @@ export class ElementArrayFinder {
         let list =
             parentWebElements.map((parentWebElement: any, index: number) => {
               let elementFinder = ElementFinder.fromWebElement_(
-                  this.ptor_, parentWebElement, this.locator_);
+                  this.browser_, parentWebElement, this.locator_);
 
               return filterFn(elementFinder, index);
             });
@@ -222,7 +222,7 @@ export class ElementArrayFinder {
         });
       });
     };
-    return new ElementArrayFinder(this.ptor_, getWebElements, this.locator_);
+    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_);
   }
 
   /**
@@ -268,7 +268,7 @@ export class ElementArrayFinder {
             return [parentWebElements[i]];
           });
     };
-    return new ElementArrayFinder(this.ptor_, getWebElements, this.locator_)
+    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_)
         .toElementFinder_();
   }
 
@@ -329,7 +329,7 @@ export class ElementArrayFinder {
    * @private
    */
   toElementFinder_(): ElementFinder {
-    return new ElementFinder(this.ptor_, this);
+    return new ElementFinder(this.browser_, this);
   }
 
   /**
@@ -399,7 +399,7 @@ export class ElementArrayFinder {
                               throw e;
                             });
     return new ElementArrayFinder(
-        this.ptor_, this.getWebElements, this.locator_, actionResults);
+        this.browser_, this.getWebElements, this.locator_, actionResults);
   }
 
   /**
@@ -412,7 +412,7 @@ export class ElementArrayFinder {
     return this.getWebElements().then((arr: webdriver.WebElement[]) => {
       return arr.map((webElem: webdriver.WebElement) => {
         return ElementFinder.fromWebElement_(
-            this.ptor_, webElem, this.locator_);
+            this.browser_, webElem, this.locator_);
       });
     });
   }
@@ -438,7 +438,7 @@ export class ElementArrayFinder {
    * @param {function(Array.<ElementFinder>)} fn
    * @param {function(Error)} errorFn
    *
-   * @type {webdriver.promise.Promise} a promise which will resolve to
+   * @return {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
   then(fn: Function, errorFn: Function): webdriver.Promise {
@@ -470,6 +470,10 @@ export class ElementArrayFinder {
    * });
    *
    * @param {function(ElementFinder)} fn Input function
+   *
+   * @return {!webdriver.promise.Promise} A promise that will resolve when the
+   *     function has been called on all the ElementFinders. The promise will
+   *     resolve to null.
    */
   each(fn: Function): webdriver.Promise {
     return this.map(fn).then((): any => { return null; });

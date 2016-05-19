@@ -6,10 +6,15 @@ import {Config} from './configParser';
 import {Logger} from './logger2';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {Plugins} from './plugins';
+import {Browser} from './browser';
+import * as browserFn from './browser';
 
-var protractor = require('./protractor'),
-    webdriver = require('selenium-webdriver');
+import {ProtractorBy} from './locators';
+import {DriverProvider} from './driverProviders';
+import {protractor} from './ptor';
 
+var webdriver = require('selenium-webdriver');
+let promsie = require('selenium-webdriver/lib/promise');
 let logger = new Logger('runner');
 /*
  * Runner is responsible for starting the execution of a test run and triggering
@@ -26,7 +31,7 @@ let logger = new Logger('runner');
 export class Runner extends EventEmitter {
   config_: Config;
   preparer_: any;
-  driverprovider_: any;
+  driverprovider_: DriverProvider;
   o: any;
 
   constructor(config: Config) {
@@ -148,13 +153,16 @@ export class Runner extends EventEmitter {
    * Sets up convenience globals for test specs
    * @private
    */
-  setupGlobals_(browser_: any) {
+  setupGlobals_(browser_: Browser) {
     // Keep $, $$, element, and by/By under the global protractor namespace
     protractor.browser = browser_;
     protractor.$ = browser_.$;
     protractor.$$ = browser_.$$;
     protractor.element = browser_.element;
-    protractor.by = protractor.By;
+    protractor.by = protractor.By = browserFn.By;
+
+    // TODO: fix imports
+    protractor.wrapDriver = browserFn.wrapDriver;
 
     if (!this.config_.noGlobals) {
       // Export protractor to the global namespace to be used in tests.
@@ -164,6 +172,7 @@ export class Runner extends EventEmitter {
       global.element = browser_.element;
       global.by = global.By = protractor.By;
     }
+
     global.protractor = protractor;
 
     if (!this.config_.skipSourceMapSupport) {
@@ -190,7 +199,7 @@ export class Runner extends EventEmitter {
     var config = this.config_;
     var driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = protractor.wrapDriver(
+    var browser_ = browserFn.wrapDriver(
         driver, config.baseUrl, config.rootElement,
         config.untrackOutstandingTimeouts);
 
@@ -250,7 +259,7 @@ export class Runner extends EventEmitter {
    */
   shutdown_(): q.Promise<any> {
     return q.all(this.driverprovider_.getExistingDrivers().map(
-        this.driverprovider_.quitDriver.bind(this.driverprovider_)));
+        (webdriver) => { return this.driverprovider_.quitDriver(webdriver); }));
   }
 
   /**
