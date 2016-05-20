@@ -185,6 +185,23 @@ export class ProtractorBy extends WebdriverBy {
   };
 
   /**
+   * Find an element by ng-event expression.
+   * @param {string} event ng-event expression.
+   */
+  ngEvent(anEvent: string, value: string): Locator {
+        return {
+            findElementsOverride: function(driver, using, rootSelector) {
+                return driver.findElements(webdriver.By.js(
+                    clientSideScripts.findByNgevent, anEvent, value,
+                    using, rootSelector));
+            },
+            toString: function toString() {
+                return 'by.ngEvent("' + anEvent + '").value("' + value + '")';
+            }
+        };
+    };
+    
+  /**
    * Find a button by text.
    *
    * @view
