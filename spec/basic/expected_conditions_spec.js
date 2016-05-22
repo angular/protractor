@@ -66,6 +66,18 @@ describe('expected conditions', function() {
     expect(EC.titleIs('My AngularJS App').call()).toBe(true);
   });
 
+  it('should have urlContains', function() {
+      var baseUrlFromSpec = browser.baseUrl;
+      expect(EC.urlContains('/form').call()).toBe(true);
+      expect(EC.urlContains(baseUrlFromSpec+ 'index.html#/form').call()).toBe(true);
+  });
+
+  it('should have urlIs', function() {
+      var baseUrlFromSpec = browser.baseUrl;
+      expect(EC.urlIs('http://localhost:8081').call()).toBe(false);
+      expect(EC.urlIs(baseUrlFromSpec+'index.html#/form').call()).toBe(true);
+  });
+  
   it('should have elementToBeClickable', function() {
     var invalidIsClickable = EC.elementToBeClickable($('#INVALID'));
     var buttonIsClickable = EC.elementToBeClickable($('#disabledButton'));
