@@ -1,6 +1,10 @@
-import {resolve, dirname} from 'path';
-import {sync} from 'glob';
-import * as Logger from './logger';
+import * as path from 'path';
+import * as glob from 'glob';
+
+import {Logger} from './logger2';
+import {ConfigError} from './exitCodes';
+
+let logger = new Logger('configParser');
 
 // Coffee is required here to enable config files written in coffee-script.
 try {
@@ -31,16 +35,48 @@ export interface Config {
   mochaOpts: {ui: string; reporter: string;};
   chromeDriver?: string;
   configDir: string;
+  noGlobals: boolean;
   plugins: Array<any>;
   skipSourceMapSupport: boolean;
   suite?: string;
   suites?: any;
   troubleshoot?: boolean;
-  exclude?: Array<string>| string;
+  exclude?: Array<string>|string;
   maxSessions?: number;
+  seleniumAddress?: string;
+  webDriverProxy?: string;
+  disableEnvironmentOverrides?: boolean;
+  browserstackUser?: string;
+  browserstackKey?: string;
+  firefoxPath?: string;
+  seleniumServerJar?: string;
+  seleniumPort?: number;
+  localSeleniumStandaloneOpts?: {args?: any; port?: any;};
+  sauceAgent?: string;
+  sauceBuild?: string;
+  sauceKey?: string;
+  sauceSeleniumAddress?: string;
+  sauceUser?: string;
+  v8Debug?: any;
+  nodeDebug?: boolean;
+  directConnect?: boolean;
+  mockSelenium?: boolean;
+  baseUrl?: string;
+  untrackOutstandingTimeouts?: any;
+  debuggerServerPort?: number;
+  useAllAngular2AppRoots?: boolean;
+  frameworkPath?: string;
+  restartBrowserBetweenTests?: boolean;
+  onPrepare?: any;
+  beforeLaunch?: any;
+  getMultiCapabilities?: any;
+  elementExplorer?: any;
+  afterLaunch?: any;
+  debug?: boolean;
+  resultJsonOutputFile?: any;
 }
 
-export default class ConfigParser {
+export class ConfigParser {
   private config_: Config;
   constructor() {
     // Default configuration.
@@ -56,6 +92,7 @@ export default class ConfigParser {
       seleniumArgs: [],
       mochaOpts: {ui: 'bdd', reporter: 'list'},
       configDir: './',
+      noGlobals: false,
       plugins: [],
       skipSourceMapSupport: false,
     };
@@ -71,7 +108,7 @@ export default class ConfigParser {
    * @return {Array} The resolved file paths.
    */
   public static resolveFilePatterns(
-      patterns: Array<string>| string, opt_omitWarnings?: boolean,
+      patterns: Array<string>|string, opt_omitWarnings?: boolean,
       opt_relativeTo?: string): Array<string> {
     let resolvedFiles: Array<string> = [];
     let cwd = opt_relativeTo || process.cwd();
@@ -80,12 +117,13 @@ export default class ConfigParser {
 
     if (patterns) {
       for (let fileName of patterns) {
-        let matches = sync(fileName, {cwd});
+        let matches =
+            glob.hasMagic(fileName) ? glob.sync(fileName, {cwd}) : [fileName];
         if (!matches.length && !opt_omitWarnings) {
-          Logger.warn('pattern ' + fileName + ' did not match any files.');
+          logger.warn('pattern ' + fileName + ' did not match any files.');
         }
         for (let match of matches) {
-          let resolvedPath = resolve(cwd, match);
+          let resolvedPath = path.resolve(cwd, match);
           resolvedFiles.push(resolvedPath);
         }
       }
@@ -102,9 +140,9 @@ export default class ConfigParser {
     let specs: Array<string> = [];
     if (config.suite) {
       config.suite.split(',').forEach((suite) => {
-        let suiteList = config.suites[suite];
+        let suiteList = config.suites ? config.suites[suite] : null;
         if (suiteList == null) {
-          throw new Error('Unknown test suite: ' + suite);
+          throw new ConfigError(logger, 'Unknown test suite: ' + suite);
         }
         union(specs, makeArray(suiteList));
       });
@@ -137,7 +175,7 @@ export default class ConfigParser {
           if (additionalConfig[name] &&
               typeof additionalConfig[name] === 'string') {
             additionalConfig[name] =
-                resolve(relativeTo, additionalConfig[name]);
+                path.resolve(relativeTo, additionalConfig[name]);
           }
         });
 
@@ -151,23 +189,24 @@ export default class ConfigParser {
    * @param {String} filename
    */
   public addFileConfig(filename: string): ConfigParser {
-    try {
-      if (!filename) {
-        return this;
-      }
-      let filePath = resolve(process.cwd(), filename);
-      let fileConfig = require(filePath).config;
-      if (!fileConfig) {
-        Logger.error(
-            'configuration file ' + filename + ' did not export a config ' +
-            'object');
-      }
-      fileConfig.configDir = dirname(filePath);
-      this.addConfig_(fileConfig, fileConfig.configDir);
-    } catch (e) {
-      Logger.error('failed loading configuration file ' + filename);
-      throw e;
+    if (!filename) {
+      return this;
     }
+    let filePath = path.resolve(process.cwd(), filename);
+    let fileConfig: any;
+    try {
+      fileConfig = require(filePath).config;
+    } catch (e) {
+      throw new ConfigError(
+          logger, 'failed loading configuration file ' + filename);
+    }
+    if (!fileConfig) {
+      throw new ConfigError(
+          logger,
+          'configuration file ' + filename + ' did not export a config object');
+    }
+    fileConfig.configDir = path.dirname(filePath);
+    this.addConfig_(fileConfig, fileConfig.configDir);
     return this;
   }
 
@@ -206,7 +245,6 @@ let merge_ = function(into: any, from: any): any {
         !(into[key] instanceof Function)) {
       merge_(into[key], from[key]);
     } else {
-      // console.log(from[key].toString());
       into[key] = from[key];
     }
   }

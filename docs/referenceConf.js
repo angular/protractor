@@ -73,6 +73,8 @@ exports.config = {
   // Use sauceAgent if you need customize agent for https connection to
   // saucelabs.com (i.e. your computer behind corporate proxy)
   sauceAgent: null,
+  // Use sauceBuild if you want to group test capabilites by a build ID
+  sauceBuild: null,
   // Use sauceSeleniumAddress if you need to customize the URL Protractor
   // uses to connect to sauce labs (for example, if you are tunneling selenium
   // traffic through a sauce connect tunnel). Default is
@@ -103,6 +105,14 @@ exports.config = {
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
   // ---------------------------------------------------------------------------
+
+  // Use default globals: 'protractor', 'browser', '$', '$$', 'element', 'by'.
+  // These also exist as properties of the protractor namespace:
+  // 'protractor.browser', 'protractor.$', 'protractor.$$', 'protractor.element',
+  // 'protractor.by', and 'protractor.By'.
+  // When no globals is set to true, the only available global variable will be
+  // 'protractor'.
+  noGlobals: false,
 
   // Spec patterns are relative to the location of this config.
   specs: [

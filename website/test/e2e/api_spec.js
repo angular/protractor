@@ -105,7 +105,7 @@ describe('Api', function() {
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
       'then', 'clone', 'locator', 'getWebElement', 'all', 'element', '$$',
-      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations']);
+      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations', 'equals']);
   });
 
   it('should show browser functions', function() {
@@ -127,13 +127,13 @@ describe('Api', function() {
     apiPage.clickOnMenuItem('browser');
 
     // When you click on the 'executeAsyncScript' item of the extends table.
-    apiPage.clickOnExtendsType('executeAsyncScript');
+    apiPage.clickOnExtendsType('sleep');
 
     // Then ensure the type is shown.
     expect(apiPage.title.getText()).
-        toBe('webdriver.WebDriver.executeAsyncScript View code');
+        toBe('webdriver.WebDriver.sleep');
     expect(browser.getCurrentUrl()).
-        toMatch(/api\?view=webdriver.WebDriver.prototype.executeAsyncScript/);
+        toMatch(/api\?view=webdriver.WebDriver.prototype.sleep/);
   });
 
   it('should sort the menu to put webdriver docs next to the relevant ' +

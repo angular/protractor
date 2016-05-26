@@ -1,6 +1,117 @@
+# 3.3.0
+_The [Protractor Website](http://www.protractortest.org) API docs have been streamlined. We've also, internally, moved to using TypeScript and building down to JS! Also, the logger has been improved._
+
+## Bug Fixes
+- ([6f22d5a](https://github.com/angular/protractor/commit/6f22d5ade48f0d97990cbe69d956da122f2f8358)) 
+  fix(bootstrap): fix bootstrap for older versions of angular
+
+  Trying to use the debug label for window.name fails for versions of angular older than 1.2.24. See
+  #3115
+
+- ([bd78dfc](https://github.com/angular/protractor/commit/bd78dfc79b1435d124c994482df6879066079a4d)) 
+  fix(protractor): isPresent() should work with out of bounds errors (#3108)
+
+- ([88dd568](https://github.com/angular/protractor/commit/88dd568c5295234a5211a23e12666e199606e437)) 
+  fix(NoSuchElementError): add 'new' keyword to instantiate class
+
+  The class NoSuchElementError is called without the new keyword in the
+  `ElementArrayFinder.prototype.count` causing a `Class constructors cannot be invoked without
+  'new'`
+
+  closes #3079
+
+## Features
+- ([afdd9d7](https://github.com/angular/protractor/commit/afdd9d730c198dc97e91bb275c036a754c15140e)) 
+  feat(logger): improve logging methods (#3131)
+
+- ([5fa94db](https://github.com/angular/protractor/commit/5fa94db5a9a4787f480389d382eef7e636b45f81)) 
+  feat(exitCodes): adding exit codes for configuration file errors (#3128)
+
+- ([76861fd](https://github.com/angular/protractor/commit/76861fdc4c57c2aaa984e05e46ff9789ce750260)) 
+  feat(element): equals
+
+  Easier to use version of webdriver.WebElement.equals
+
+- ([582411b](https://github.com/angular/protractor/commit/582411b7ad6c0f9176b231dc51dc328b98affbdf)) 
+  feat(driverProvider/sauce) Add build id as a configurable option
+
+## Dependency Upgrades
+- ([b4d1664](https://github.com/angular/protractor/commit/b4d1664141b609c5e5790108e3003fe777c248ca)) 
+  deps(jasminewd2): bump jasminewd2 to 0.0.9
+
+- ([b6f1a63](https://github.com/angular/protractor/commit/b6f1a63da77ec88a3f487e5a099df8febe3742aa)) 
+  feat(protractor): Shows locator used when a timeout occurs
+
+- ([de4b33e](https://github.com/angular/protractor/commit/de4b33eaab1546d0ef3a746cfd222e80f0ec28a1)) 
+  feat(webdriver): Added NO_PROXY environment variable support to webdriver-manager
+
+  closes #3046
+
+# 3.2.2
+_This release is a hotfix for webdriver-manager iedriver_
+
+## Bug Fix
+- ([c6a3b5e](https://github.com/angular/protractor/commit/c6a3b5eab09d95f9d2170e4aface5559cd6b0132))
+  fix(webdriver) - fix file type for internet explorer driver file
+
+- ([d3bd170](https://github.com/angular/protractor/commit/d3bd1702040cde5b9d0a3c1578d0d8e16597224c))
+  fix(bootstrap): enable debug info before setting defer label
+
+  Note that in most cases, this should not have surfaced as an issue because the base test mock
+  modules will also try to turn on debug info.
+
+  Closes #3009
+  
+# 3.2.1
+_This release is a hotfix for modules that require protractor_
+
+## Bug Fix
+- ([6e02934](https://github.com/angular/protractor/commit/6e029341a67cd985bf727285dec2ef10aafe7b6a))
+  fix(package): Update module main in package.json to use built.
+
+# 3.2.0
+
+## Features
+- ([cae175c](https://github.com/angular/protractor/commit/cae175cbe632828172e9a7065aacfe67dd51d8dd))
+  feat(plugins) Calculate skipAngularStability dynamically.
+
+  This allows plugins to turn Protractor's default synchronization on and off as needed.
+
+- ([7372267](https://github.com/angular/protractor/commit/7372267f23cc8586409f9ef914ab801c78992ccd))
+  feat(webdriver): add support for custom versions for selenium, chrome driver, and ie driver
+
+- ([1cbbe4f](https://github.com/angular/protractor/commit/1cbbe4fef5c5f2bc0923fd54c53afad71a44af6c))
+  feat(config): no globals option
+
+- ([9608201](https://github.com/angular/protractor/commit/960820120cf7df08cff8cfe15a5a9f08612c9773))
+  feat(typescript): adding typescript to protractor
+
+  Converting a 3 files over to typescript.
+
+  Adding an `npm prepublish` step that will use gulp to download the typings, transpile the files
+  with tscto the built/ directory and copy the rest of the javascript files from lib/ to the built/
+  folder.
+
+  Also adding scripts to package.json for `npm run tsc` and `npm run tsc:w` for transpiling help.
+
+- ([a4a7209](https://github.com/angular/protractor/commit/a4a72095d2f95227f1ba293ae047beab28eb761d)) 
+  feat(plugins): skipAngularStability
+
+## Dependency Upgrades
+- ([29627f4](https://github.com/angular/protractor/commit/29627f42bb7404f66e3a76ba3cbd85256b408fb6))
+  chore(selenium) - upgrade to selenium webdriver v 2.52.0
+
+  See the full changelog at https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md#v2520
+
+## Bug Fixes
+- ([a2c7a4b](https://github.com/angular/protractor/commit/a2c7a4bf1fb2a3a509040ae8ec7737cc002b764e)) 
+  fix(config): Do not sort spec keys
+
+  Fixes #2928
+
 # 3.1.1
 
-# Bug Fixes
+## Bug Fixes
 
 - ([4db52f2](https://github.com/angular/protractor/commit/4db52f2a21171ebbc6fed0ca3df760553afc264a)) 
   test(config): add test for config files using only per-capability specs

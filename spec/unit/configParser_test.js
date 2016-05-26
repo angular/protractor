@@ -1,7 +1,58 @@
-var ConfigParser = require('../../built/configParser').default;
+var ConfigParser = require('../../built/configParser').ConfigParser;
+var ConfigError = require('../../built/exitCodes').ConfigError;
+var Logger = require('../../built/logger2').Logger;
+var WriteTo = require('../../built/logger2').WriteTo;
 var path = require('path');
 
 describe('the config parser', function() {
+  describe('exceptions', function() {
+
+    beforeEach(function() {
+      Logger.writeTo = WriteTo.NONE;
+    });
+
+    afterEach(function() {
+      Logger.writeTo = WriteTo.CONSOLE;
+    });
+
+    it('should throw an error if the file is not found', function() {
+      var config = new ConfigParser();
+      var errorFound = false;
+      try {
+        config.addFileConfig('foobar.js');
+      } catch (err) {
+        errorFound = true;
+        expect(err.code).toEqual(ConfigError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
+
+    it('should throw an error if the file does not have export config', function() {
+      var config = new ConfigParser();
+      var errorFound = false;
+      try {
+        config.addFileConfig(path.resolve('./spec/environment.js'));
+      } catch (err) {
+        errorFound = true;
+        expect(err.code).toEqual(ConfigError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
+
+    it('should throw an error when the spec file does not resolve', function() {
+      var errorFound = false;
+      try {
+        var config = {
+          suite:'foo.js,bar.js'
+        };
+        ConfigParser.getSpecs(config);
+      } catch (err) {
+        errorFound = true;
+        expect(err.code).toEqual(ConfigError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
+  });
 
   it('should have a default config', function() {
     var config = new ConfigParser().getConfig();
@@ -77,6 +128,16 @@ describe('the config parser', function() {
       expect(specs.length).toEqual(2);
       expect(specs[0].indexOf(path.normalize('unit/data/fakespecA.js'))).not.toEqual(-1);
       expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
+    });
+
+    it('should not try to expand non-glob patterns', function() {
+      var toAdd = {
+        specs: 'data/fakespecA.js:5'
+      };
+      var config = new ConfigParser().addConfig(toAdd).getConfig();
+      var specs = ConfigParser.resolveFilePatterns(config.specs);
+      expect(specs.length).toEqual(1);
+      expect(specs[0].indexOf(path.normalize('data/fakespecA.js:5'))).not.toEqual(-1);
     });
   });
 });

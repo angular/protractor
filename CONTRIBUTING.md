@@ -42,7 +42,7 @@ Loosely, follow the [Angular contribution rules](https://github.com/angular/angu
 Protractor specific rules
 -------------------------
 
- * JavaScript style should generally follow the [Google JS style guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml).
+ * JavaScript style should generally follow the [Google JS style guide](https://google.github.io/styleguide/javascriptguide.xml).
  * Wrap code at 80 chars.
  * Document public methods with jsdoc.
  * Be consistent with the code around you!
@@ -58,7 +58,7 @@ In summary, this style is
     <BLANK LINE>
     <body>
 
-Where `<type>` is one of [feat, fix, docs, style, refactor, test, chore] and
+Where `<type>` is one of [feat, fix, docs, refactor, test, chore, deps] and
 `<scope>` is a quick descriptor of the location of the change, such as cli, clientSideScripts, element.
 
 Testing your changes

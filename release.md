@@ -26,7 +26,7 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
      git log 0.0.J..HEAD --format="- ([%h](https://github.com/angular/protractor/commit/%H)) %n%w(100,2,2)%B" > /tmp/changes.txt
      ```
 
-   - Create a new section in CHANGELOG.md and copy in features, bug fixes, and breaking changes. No need to note chores or stylistic changes - the changelog should be primarily useful to someone using Protractor, not developing on it.
+   - Create a new section in CHANGELOG.md and copy in features (`feat`), big dependency version updates (`deps`), bug fixes (`fix`), and breaking changes. No need to note chores or stylistic changes - the changelog should be primarily useful to someone using Protractor, not developing on it.
 
    - Breaking changes should be in their own section and include before/after examples of how to fix code that needs to change.
 

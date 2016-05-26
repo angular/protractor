@@ -31,6 +31,7 @@ var passingTests = [
   'node built/cli.js spec/getCapabilitiesConf.js',
   'node built/cli.js spec/controlLockConf.js',
   'node built/cli.js spec/customFramework.js',
+  'node built/cli.js spec/noGlobalsConf.js',
   'node built/cli.js spec/angular2Conf.js',
   'node scripts/attachSession.js',
   'node scripts/interactive_tests/interactive_test.js',
@@ -124,7 +125,14 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeout
     .expectExitCode(1)
     .expectErrors([
       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-      {message: '^((?!The following tasks were pending).)*$'}
+      {message: 'While waiting for element with locator - ' +
+                'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
+    ]);
+
+executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'Timed out waiting for Protractor to synchronize with the page'},
     ]);
 
 executor.execute();

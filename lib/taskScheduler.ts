@@ -1,5 +1,4 @@
-import ConfigParser, {Config} from './configParser';
-
+import {ConfigParser, Config} from './configParser';
 
 export interface Task {
   capabilities: any;
@@ -23,7 +22,7 @@ export class TaskQueue {
   }
 }
 
-export default class TaskScheduler {
+export class TaskScheduler {
   taskQueues: Array<TaskQueue>;
   rotationIndex: number;
 
@@ -45,7 +44,7 @@ export default class TaskScheduler {
         ConfigParser
             .resolveFilePatterns(
                 ConfigParser.getSpecs(config), false, config.configDir)
-            .filter((path) => { return excludes.indexOf(path) < 0; });
+            .filter((path: string) => { return excludes.indexOf(path) < 0; });
 
     let taskQueues: Array<TaskQueue> = [];
     config.multiCapabilities.forEach((capabilities) => {

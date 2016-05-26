@@ -35,7 +35,8 @@ gulp.task('webdriver:update', function(done) {
 });
 
 gulp.task('jshint', function(done) {
-  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', 'lib', 'spec', 'scripts']);
+  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', 'lib',
+      'spec', 'scripts', '--exclude=lib/selenium-webdriver/**/*.js']);
 });
 
 gulp.task('clang', function() {
@@ -47,7 +48,7 @@ gulp.task('clang', function() {
 });
 
 gulp.task('typings', function(done) {
-  runSpawn(done, 'node', ['node_modules/typings/dist/bin/typings.js', 'install']);
+  runSpawn(done, 'node', ['node_modules/typings/dist/bin.js', 'install']);
 });
 
 gulp.task('tsc', function(done) {
@@ -62,3 +63,5 @@ gulp.task('pretest', function(done) {
   runSequence(
     ['webdriver:update', 'typings', 'jshint', 'clang'], 'tsc', 'built:copy', done);
 });
+
+gulp.task('default',['prepublish']);

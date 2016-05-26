@@ -25,71 +25,97 @@ var shortVersion = function(version) {
   return version.slice(0, version.lastIndexOf('.'));
 }
 
+var seleniumPrefix = 'selenium-server-standalone-',
+    seleniumVersion = versions.selenium,
+    chromePrefix = 'chromedriver_',
+    chromeVersion = versions.chromedriver,
+    iePrefix = 'IEDriverServer_',
+    ie32 = 'Win32_',
+    ie64 = 'x64_',
+    ieVersion = versions.iedriver;
+
 var binaries = {
   standalone: {
     name: 'selenium standalone',
     isDefault: true,
-    prefix: 'selenium-server-standalone',
-    filename: 'selenium-server-standalone-' + versions.selenium + '.jar',
+    osType: 'ANY',
+    prefix: 'selenium-server-standalone-',
+    defaultVersion: versions.selenium,
+    version: versions.selenium,
+    getVersion: function() {
+      return this.version;
+    },
+    suffix: function() {
+      return '.jar';
+    },
+    filename: function() {
+      return this.prefix + this.getVersion() + this.suffix();
+    },
     cdn: 'https://selenium-release.storage.googleapis.com/',
     url: function() {
-      return this.cdn +
-          shortVersion(versions.selenium) + '/' +
-          'selenium-server-standalone-' + versions.selenium + '.jar';
+      return this.cdn + shortVersion(this.getVersion()) + '/' +
+          this.prefix + this.getVersion() + this.suffix();
     }
   },
   chrome: {
     name: 'chromedriver',
     isDefault: true,
+    osType: 'ANY',
     prefix: 'chromedriver_',
-    filename: 'chromedriver_' + versions.chromedriver + '.zip',
-    cdn: 'https://chromedriver.storage.googleapis.com/',
-    url: function() {
-      var urlPrefix = this.cdn +
-          versions.chromedriver + '/chromedriver_';
+    defaultVersion: versions.chromedriver,
+    version: versions.chromedriver,
+    getVersion: function() {
+      return this.version;
+    },
+    suffix: function() {
       if (os.type() == 'Darwin') {
-        return urlPrefix + 'mac32.zip';
+        return 'mac32.zip';
       } else if (os.type() == 'Linux') {
         if (os.arch() == 'x64') {
-          return urlPrefix + 'linux64.zip';
+          return 'linux64.zip';
         } else {
-          return urlPrefix + 'linux32.zip';
+          return 'linux32.zip';
         }
       } else if (os.type() == 'Windows_NT') {
-        return urlPrefix + 'win32.zip';
+        return 'win32.zip';
       }
+    },
+    filename: function() {
+      return this.prefix + this.getVersion() + this.suffix();
+    },
+    cdn: 'https://chromedriver.storage.googleapis.com/',
+    url: function() {
+      return this.cdn + this.getVersion() + '/' + this.prefix + this.suffix();
     }
   },
   ie: {
     name: 'IEDriver',
     isDefault: false,
+    osType: 'Windows_NT',
     prefix: 'IEDriverServer',
-    filename: 'IEDriverServer_' + versions.iedriver + '.zip',
-    cdn: 'https://selenium-release.storage.googleapis.com/',
-    url: function() {
-      var urlPrefix = this.cdn +
-          shortVersion(versions.iedriver) + '/IEDriverServer';
+    selectIe32: false,
+    defaultVersion: versions.iedriver,
+    version: versions.iedriver,
+    getVersion: function() {
       if (os.type() == 'Windows_NT') {
-        if (os.arch() == 'x64') {
-          return urlPrefix + '_x64_' + versions.iedriver + '.zip';
+        if (this.selectIe32 || os.arch() != 'x64') {
+          return '_Win32_' + this.version;
         } else {
-          return urlPrefix + '_Win32_' + versions.iedriver + '.zip';
+          return '_x64_' + this.version;
         }
       }
-    }
-  },
-  ie32: {
-    name: 'IEDriver-32bit',
-    isDefault: false,
-    prefix: 'IEDriverServer',
-    filename: 'IEDriverServer_' + versions.iedriver + '.zip',
+      return '';
+    },
+    suffix: function() {
+      return '.zip';
+    },
+    filename: function() {
+      return this.prefix + this.getVersion() + this.suffix();
+    },
     cdn: 'https://selenium-release.storage.googleapis.com/',
     url: function() {
-      var urlPrefix = this.cdn +
-          shortVersion(versions.iedriver) + '/IEDriverServer';
-      if (os.type() == 'Windows_NT') {
-        return urlPrefix + '_Win32_' + versions.iedriver + '.zip';
-      }
+      return this.cdn + shortVersion(this.version) + '/' +
+          this.prefix + this.getVersion() + this.suffix();
     }
   }
 };
@@ -99,19 +125,40 @@ var cli = optimist.
         'Commands:\n' +
         '  update: install or update selected binaries\n' +
         '  start: start up the selenium server\n' +
-        '  status: list the current available drivers').
+        '  status: list the current available drivers\n' +
+        '  clean: removes all downloaded driver files from the out_dir').
     describe('out_dir', 'Location to output/expect ').
     default('out_dir', SELENIUM_DIR).
     describe('seleniumPort', 'Optional port for the selenium standalone server').
-    describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
-    default('ignore_ssl', false).
-    describe('proxy', 'Proxy to use for the install or update command').
-    describe('alternate_cdn', 'Alternate CDN to the binaries');
+    string('seleniumPort').
+    describe('versions.standalone', 'Optional selenium standalone server version').
+    default('versions.standalone', versions.selenium).
+    string('versions.standalone').
+    describe('versions.chrome', 'Optional chrome driver version').
+    default('versions.chrome', versions.chromedriver).
+    string('versions.chrome');
+if (os.type() == 'Windows_NT') {
+  cli.describe('versions.ie', 'Optional internet explorer version').
+    default('versions.ie', versions.iedriver).
+    string('versions.ie');
+}
+cli.describe('ignore_ssl', 'Ignore SSL certificates').boolean('ignore_ssl').
+  default('ignore_ssl', false).
+  describe('proxy', 'Proxy to use for the install or update command').
+  describe('alternate_cdn', 'Alternate CDN to the binaries');
 
-for (bin in binaries) {
-  cli.describe(bin, 'Install or update ' + binaries[bin].name).
-  boolean(bin).
-  default(bin, binaries[bin].isDefault);
+for (var bin in binaries) {
+  if (binaries[bin].osType === 'ANY' || binaries[bin].osType == os.type()) {
+    cli.describe(bin, 'Install or update ' + binaries[bin].name).
+      boolean(bin).
+      default(bin, binaries[bin].isDefault);
+  }
+
+}
+if (os.type() == 'Windows_NT') {
+  cli.describe('ie32', 'Install or update IEDriver 32-bit (overrides ie option)').
+    boolean('ie32').
+    default('ie32', false);
 }
 
 var argv = cli.
@@ -126,15 +173,40 @@ if (!fs.existsSync(argv.out_dir) || !fs.statSync(argv.out_dir).isDirectory()) {
   fs.mkdirSync(argv.out_dir);
 }
 
-var resolveProxy = function(fileUrl) {
-  var protocol = url.parse(fileUrl).protocol;
-  if (argv.proxy) {
-    return argv.proxy;
-  } else if (protocol === 'https:') {
-    return process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
-  } else if (protocol === 'http:') {
-    return process.env.HTTP_PROXY || process.env.http_proxy;
-  }
+var resolveProxy = function (fileUrl) {
+    var parsedUrl = url.parse(fileUrl);
+    var protocol = parsedUrl.protocol;
+    var hostname = parsedUrl.hostname;
+
+    if (argv.proxy) {
+        // if a proxy was explicitly specified, then it must be used
+        return argv.proxy;
+    } else {
+        // NO_PROXY environment variable
+        var noProxy = process.env.NO_PROXY || process.env.no_proxy || "";
+        noProxy = noProxy.replace(/\s/g, ''); // remove spaces
+
+        // array of hostnames/domain names listed in the NO_PROXY environment variable
+        var noProxyTokens = noProxy.split(",");
+        // avoid the non-empty array with an empty string (i.e., if not defined or empty: no tokens to check for)
+        if (noProxyTokens[0] === "") {
+            noProxyTokens = [];
+        }
+
+        // check if the fileUrl hostname part does not end with one of the NO_PROXY environment variable's hostnames/domain names
+        for(var noProxyIndex = 0; noProxyIndex < noProxyTokens.length; ++noProxyIndex) {
+            var noProxyToken = noProxyTokens[noProxyIndex];
+            if (hostname.indexOf(noProxyToken, hostname.length - noProxyToken.length) !== -1) {
+                return null; // no proxy should be used!
+            }
+        }
+
+        if (protocol === 'https:') {
+            return process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
+        } else if (protocol === 'http:') {
+            return process.env.HTTP_PROXY || process.env.http_proxy;
+        }
+    }
 };
 
 /**
@@ -156,6 +228,7 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   var options = {
     url: fileUrl,
     strictSSL: !ignoreSSL,
+    rejectUnauthorized: !ignoreSSL,
     proxy: resolveProxy(fileUrl)
   };
 
@@ -176,7 +249,8 @@ var httpGetFile = function(fileUrl, fileName, outputDir, callback) {
   file.on('close', function() {
     fs.stat(filePath, function(err, stats) {
       if (err) {
-        console.error('Error: Got error ' + error + ' from ' + fileUrl);
+        console.error('Error: Got error ' + err + ' from ' + fileUrl);
+        return;
       }
       if (stats.size != contentLength) {
         console.error('Error: corrupt download for ' + fileName +
@@ -210,19 +284,14 @@ var spawnCommand = function(command, args) {
  */
 var downloadIfNew = function(bin, outputDir, existingFiles, opt_callback) {
   if (!bin.exists) {
-    // Remove anything else that matches the exclusive prefix.
-    existingFiles.forEach(function(file) {
-      if (file.indexOf(bin.prefix) != -1) {
-        fs.unlinkSync(path.join(outputDir, file));
-      }
-    });
-    console.log('Updating ' + bin.name);
+    console.log('Updating ' + bin.name + ' to version ' + bin.version);
     var url = bin.url();
     if (!url) {
-      console.error(bin.name + ' is not available for your system.');
+      console.error(bin.name + ' v' + bin.version +
+          ' is not available for your system.');
       return;
     }
-    httpGetFile(url, bin.filename, outputDir, function(downloaded) {
+    httpGetFile(url, bin.filename(), outputDir, function(downloaded) {
       if (opt_callback) {
         opt_callback(downloaded);
       }
@@ -247,12 +316,24 @@ var executableName = function(file) {
 // Setup before any command.
 var existingFiles = fs.readdirSync(argv.out_dir);
 
+// update versions
+if (argv.versions) {
+  for (binary in argv.versions) {
+    if (binaries[binary]) {
+      binaries[binary].version = argv.versions[binary];
+    }
+  }
+}
+
+// update the ie32 flag
+binaries.ie.selectIe32 = argv.ie32;
+
 for (name in binaries) {
   bin = binaries[name];
   bin.cdn = argv.alternate_cdn || bin.cdn;
-  var exists = fs.existsSync(path.join(argv.out_dir, bin.filename));
+  var exists = fs.existsSync(path.join(argv.out_dir, bin.filename()));
   var outOfDateExists = existingFiles.some(function(file) {
-    return file.indexOf(bin.prefix) !== -1 && file !== bin.filename;
+    return file.indexOf(bin.prefix !== -1 && file !== bin.filename());
   });
   bin.exists = exists;
   bin.outOfDateExists = outOfDateExists;
@@ -265,17 +346,20 @@ switch (argv._[0]) {
           'webdriver-manager update --standalone');
       process.exit(1);
     }
-    var args = ['-jar', path.join(argv.out_dir, binaries.standalone.filename)];
+
+    var args = ['-jar', path.join(argv.out_dir, binaries.standalone.filename())];
     if (argv.seleniumPort) {
       args.push('-port', argv.seleniumPort);
     }
     if (binaries.chrome.exists) {
       args.push('-Dwebdriver.chrome.driver=' +
-          path.join(argv.out_dir, executableName('chromedriver')));
+          path.join(argv.out_dir, executableName(
+            binaries.chrome.prefix + binaries.chrome.getVersion())));
     }
-    if (binaries.ie.exists || binaries.ie32.exists) {
+    if (binaries.ie.exists) {
        args.push('-Dwebdriver.ie.driver=' +
-          path.join(argv.out_dir, executableName('IEDriverServer')));
+          path.join(argv.out_dir, executableName(
+            binaries.ie.prefix + binaries.ie.getVersion())));
     }
     var seleniumProcess = spawnCommand('java', args);
     console.log('seleniumProcess.pid: ' + seleniumProcess.pid);
@@ -294,14 +378,49 @@ switch (argv._[0]) {
     });
     break;
   case 'status':
-    for (name in binaries) {
+    for (var name in binaries) {
       bin = binaries[name];
-      if (bin.exists) {
-        console.log(bin.name + ' is up to date');
-      } else if (bin.outOfDateExists) {
-        console.log('**' + bin.name + ' needs to be updated');
-      } else {
-        console.log(bin.name + ' is not present')
+      if (bin.osType == 'ANY' || os.type() == bin.osType) {
+        var versionsDl = [];
+        var binaryExists = false;
+        for (var existPos in existingFiles) {
+          var existFile = existingFiles[existPos];
+          if (existFile.endsWith('.zip')) {
+            continue;
+          }
+          if (existFile.includes(bin.prefix)) {
+            binaryExists = true;
+            versionsDl.push(existFile
+                .replace(bin.prefix,'').replace(bin.suffix(),''));
+          }
+        }
+
+        if (!binaryExists) {
+          console.log(bin.name + ' is not present');
+        }
+        else {
+          var versionLog = bin.name + ' versions available: ';
+          if (versions.length === 1) {
+            versionLog = versionLog.replace('versions', 'version');
+          }
+          for (var versionPos in versionsDl) {
+            var version = versionsDl[versionPos];
+            if (version.endsWith('.exe')) {
+              version = version.replace('.exe', '');
+            }
+            if (version.startsWith('_')) {
+              version = version.substring(1, version.length);
+            }
+            versionLog += version;
+            if (version == bin.defaultVersion) {
+              versionLog += ' [default]'
+            }
+            if (versionPos != versionsDl.length - 1) {
+              versionLog += ', ';
+            }
+          }
+          console.log(versionLog);
+        }
       }
     }
     break;
@@ -318,28 +437,40 @@ switch (argv._[0]) {
           //   windows: chromedriver.exe
           zip.extractAllTo(argv.out_dir, true);
           if (os.type() != 'Windows_NT') {
-            fs.chmodSync(path.join(argv.out_dir, 'chromedriver'), 0755);
+            var filePath = path.join(argv.out_dir, binaries.chrome.prefix +
+                binaries.chrome.getVersion());
+            fs.renameSync(path.join(argv.out_dir, 'chromedriver'), filePath);
+            fs.chmodSync(filePath, 0755);
+          }
+          else {
+            var filePath = path.join(argv.out_dir, binaries.chrome.prefix +
+                binaries.chrome.getVersion() + '.exe');
+            fs.renameSync(path.join(argv.out_dir, 'chromedriver.exe'), filePath);
           }
         });
     }
-    if (argv.ie) {
-       downloadIfNew(binaries.ie, argv.out_dir, existingFiles,
+    if (argv.ie || argv.ie32) {
+      downloadIfNew(binaries.ie, argv.out_dir, existingFiles,
         function(filename) {
           var zip = new AdmZip(filename);
           // Expected contents of the zip:
           //   IEDriverServer.exe
           zip.extractAllTo(argv.out_dir, true);
+          var filePath = path.join(argv.out_dir, binaries.ie.prefix +
+              binaries.ie.getVersion() + '.exe');
+          fs.renameSync(path.join(argv.out_dir, 'IEDriverServer.exe'), filePath);
         });
     }
-    if (argv.ie32) {
-       downloadIfNew(binaries.ie32, argv.out_dir, existingFiles,
-        function(filename) {
-          var zip = new AdmZip(filename);
-          // Expected contents of the zip:
-          //   IEDriverServer.exe
-          zip.extractAllTo(argv.out_dir, true);
-        });
-    }
+    break;
+  case 'clean':
+    existingFiles.forEach(function(file) {
+      for (var binPos in binaries) {
+        var bin = binaries[binPos];
+        if (file.indexOf(bin.prefix) != -1) {
+          fs.unlinkSync(path.join(argv.out_dir, file));
+        }
+      }
+    });
     break;
   default:
     console.error('Invalid command');
