@@ -26,10 +26,42 @@ export class BrowserStack extends DriverProvider {
     let deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
       let deferred = q.defer();
       driver.getSession().then((session: webdriver.Session) => {
+        var options = {
+          url: 'https://www.browserstack.com/automate/sessions/' +
+              session.getId() + '.json',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' +
+                new Buffer(
+                  this.config_.browserstackUser + ':' +
+                  this.config_.browserstackKey)
+                  .toString('base64')
+              },
+              method: 'GET',
+        };
+        function callback(error, response, body) {
+          if (!error && response.statusCode == 200) {
+            var info = JSON.parse(body);
+            if (info && info.automation_session && info.automation_session.browser_url){
+              logger.info(
+              'BrowserStack results available at ' +
+              info.automation_session.browser_url);
+            }
+            else {
+              logger.info(
+                'BrowserStack results available at ' +
+                'https://www.browserstack.com/automate');
+            }
+          }
+          else {
+            logger.info(
+              'BrowserStack results available at ' +
+              'https://www.browserstack.com/automate');
+          }
+        }
+        request(options, callback);
+
         var jobStatus = update.passed ? 'completed' : 'error';
-        logger.info(
-            'BrowserStack results available at ' +
-            'https://www.browserstack.com/automate');
         request(
             {
               url: 'https://www.browserstack.com/automate/sessions/' +
