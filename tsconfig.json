@@ -12,10 +12,6 @@
   "exclude": [
     "built",
     "node_modules",
-    "testapp",
-    "typings/browser",
-    "typings/browser.d.ts",
-    "typings/main",
-    "website"
+    "typings/globals"
   ]
 }
