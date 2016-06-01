@@ -1,11 +1,13 @@
 {
-  "ambientDependencies": {
+  "globalDependencies": {
     "chalk": "registry:dt/chalk#0.4.0+20160317120654",
     "form-data": "registry:dt/form-data#0.0.0+20160316155526",
     "glob": "registry:dt/glob#5.0.10+20160317120654",
     "minimatch": "registry:dt/minimatch#2.0.8+20160317120654",
-    "node": "registry:dt/node#4.0.0+20160412142033",
     "optimist": "registry:dt/optimist#0.0.0+20160316171810",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160412134438",
+    "minimist": "registry:dt/minimist#1.1.3+20160317120654",
+    "node": "registry:dt/node#4.0.0+20160423143914",
     "q": "registry:dt/q#0.0.0+20160417152954",
     "request": "registry:dt/request#0.0.0+20160316155526"
   }
