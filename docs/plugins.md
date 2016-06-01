@@ -38,8 +38,6 @@ exports.config = {
 };
 ```
 
-Protractor's default [Plugins](/docs/plugins.md#first-party-plugins) have 
-evolved as a separate repository. 
 An example of using the 'ngHint' plugin is shown below.
 
 ```javascript
