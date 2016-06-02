@@ -7,8 +7,6 @@ execution to gather more data and potentially modify the test output.
 The Protractor API and available plugins are *BETA* and may change
 without a major version bump.
 
-The `plugins` folder contains default plugins for Protractor.
-
 ##In this document:
 * [Using Plugins](/docs/plugins.md#using-plugins)
 * [Writing Plugins](/docs/plugins.md#writing-plugins)
@@ -40,8 +38,7 @@ exports.config = {
 };
 ```
 
-Protractor contains built in plugins in the 'plugins' folder. An example of
-using the 'ngHint' plugin is shown below.
+An example of using the 'ngHint' plugin is shown below.
 
 ```javascript
   plugins: [{
