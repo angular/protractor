@@ -23,7 +23,7 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
  - Update CHANGELOG.md.
    - You can get a list of changes in the correct format by running
      ```
-     git log 0.0.J..HEAD --format="- ([%h](https://github.com/angular/protractor/commit/%H)) %n%w(100,2,2)%B" > /tmp/changes.txt
+     git log 0.0.J..HEAD --format="- ([%h](https://github.com/angular/protractor/commit/%H)) %n%w(100,2,2)%B" | sed 's/^\(\s*\)\#\(.*\)$/\1\\#\2/' > /tmp/changes.txt
      ```
 
    - Create a new section in CHANGELOG.md and copy in features (`feat`), big dependency version updates (`deps`), bug fixes (`fix`), and breaking changes. No need to note chores or stylistic changes - the changelog should be primarily useful to someone using Protractor, not developing on it.
