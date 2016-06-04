@@ -21,7 +21,8 @@ exports.config = {
   //    running.
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
   // 4. browserstackUser/browserstackKey - to use remote Selenium Servers via BrowserStack.
-  // 5. directConnect - to connect directly to the browser Drivers.
+  // 5. testingbotKey/testingbotSecret - to use remote Selenium Servers via TestingBot.
+  // 6. directConnect - to connect directly to the browser Drivers.
   //    This option is only available for Firefox and Chrome.
 
   // ---- 1. To start a standalone Selenium Server locally ---------------------
@@ -86,7 +87,13 @@ exports.config = {
   browserstackUser: null,
   browserstackKey: null,
 
-  // ---- 5. To connect directly to Drivers ------------------------------------
+  // ---- 5. To use remote browsers via TestingBot ---------------------------
+  // If testingbotKey and testingbotSecret are specified, seleniumServerJar will be ignored.
+  // The tests will be run remotely using TestingBot.
+  testingbotKey: null,
+  testingbotSecret: null,
+
+  // ---- 6. To connect directly to Drivers ------------------------------------
   // Boolean. If true, Protractor will connect directly to the browser Drivers
   // at the locations specified by chromeDriver and firefoxPath. Only Chrome
   // and Firefox are supported for direct connect.
@@ -144,7 +151,7 @@ exports.config = {
 
     // Name of the process executing this capability.  Not used directly by
     // protractor or the browser, but instead pass directly to third parties
-    // like BrowserStack and SauceLabs as the name of the job running this test
+    // like BrowserStack, SauceLabs and TestingBot as the name of the job running this test
     name: 'Unnamed Job',
 
     // User defined name for the capability that will display in the results log
@@ -178,6 +185,7 @@ exports.config = {
     // specified here.
     // For a list of BrowserStack specific capabilities, visit 
     // https://www.browserstack.com/automate/capabilities
+    // or for TestingBot: https://testingbot.com/support/other/test-options
   },
 
   // If you would like to run more than one instance of WebDriver on the same

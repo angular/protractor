@@ -55,13 +55,13 @@ To connect to a running instance of a standalone Selenium Server, set this optio
 
  - `seleniumAddress` -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.
 
-Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser`, `browserstackKey`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser`, `browserstackKey`, `testingbotKey`, `testingbotSecret`, `sauceUser` and `sauceKey` will be ignored.
 
 
 Remote Selenium Server
 ----------------------
 
-To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) and [Sauce Labs](http://www.saucelabs.com).
+To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com), [TestingBot](https://testingbot.com) and [Sauce Labs](http://www.saucelabs.com).
 
 **Using BrowserStack as remote Selenium Server**
 
@@ -82,6 +82,16 @@ In your config file, set these options:
 Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` and `browserstackKey` will be ignored.
 
 You can optionally set the [`name` property](referenceConf.js#L121) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
+
+**Using TestingBot as remote Selenium Server**
+
+In your config file, set these options:
+ - `testingbotKey` -  The key for your TestingBot account.
+ - `testingbotSecret` -  The secret for your TestingBot account.
+
+Please note that if you set `testingbotKey` and `testingbotSecret`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` and `browserstackKey`, `sauceUser` and `sauceKey` will be ignored.
+
+You can optionally set the [`name` property](referenceConf.js#L121) in a capability in order to give the jobs a name on the server.  Otherwise they will just be allotted a random hash.
 
 
 Connecting Directly to Browser Drivers
