@@ -15,6 +15,9 @@ import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
 
+let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
+let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
 let remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
@@ -35,8 +38,8 @@ export class Local extends DriverProvider {
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
       this.config_.seleniumServerJar = path.resolve(
-          __dirname, '../../selenium/selenium-server-standalone-' +
-              require('../../config.json').webdriverVersions.selenium + '.jar');
+        SeleniumConfig.getSeleniumDir(),
+        new SeleniumStandAlone().executableFilename());
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
       throw new Error(
@@ -50,8 +53,8 @@ export class Local extends DriverProvider {
             'Attempting to find the chromedriver binary in the default ' +
             'location used by webdriver-manager');
         this.config_.chromeDriver = path.resolve(
-            __dirname, '../../selenium/chromedriver_' +
-                require('../../config.json').webdriverVersions.chromedriver);
+          SeleniumConfig.getSeleniumDir(),
+          new SeleniumChrome().executableFilename());
       }
 
       // Check if file exists, if not try .exe or fail accordingly
