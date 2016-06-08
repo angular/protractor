@@ -15,6 +15,10 @@ import {Logger} from '../logger2';
 let webdriver = require('selenium-webdriver'),
     chrome = require('selenium-webdriver/chrome'),
     firefox = require('selenium-webdriver/firefox');
+let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
+let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
+
 
 let logger = new Logger('direct');
 export class Direct extends DriverProvider {
@@ -54,8 +58,8 @@ export class Direct extends DriverProvider {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         let defaultChromeDriverPath = path.resolve(
-            __dirname, '../../selenium/chromedriver_' +
-                require('../../config.json').webdriverVersions.chromedriver);
+          SeleniumConfig.getSeleniumDir(),
+          new SeleniumChrome().executableFilename());
 
         if (process.platform.indexOf('win') === 0) {
           defaultChromeDriverPath += '.exe';

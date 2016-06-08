@@ -23,7 +23,7 @@
     "saucelabs": "~1.0.1",
     "selenium-webdriver": "2.53.2",
     "source-map-support": "~0.4.0",
-    "webdriver-manager": "^10.0.1"
+    "webdriver-manager": "^10.0.4"
   },
   "devDependencies": {
     "body-parser": "1.14.2",
