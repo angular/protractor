@@ -1,40 +1,58 @@
 import {Logger} from './logger2';
 
 const CONFIG_ERROR_CODE = 105;
-const BROWSER_ERROR_CODE = 135;
+const BROWSER_CONNECT_ERROR_CODE = 135;
+const KITCHEN_SINK_CODE = 199;
 
 export class ProtractorError extends Error {
   static ERR_MSGS: string[];
-  static DEFAULT_MSG = 'protractor encountered an error';
+  static CODE = KITCHEN_SINK_CODE;
 
-  error: Error;
-  description: string;
+  message: string; // a one liner, if more than one line is sent, it will be cut off
+  stack: string;   // has the message with the stack trace
   code: number;
-  stack: string;
-  constructor(logger: Logger, description: string, code: number) {
-    super();
-    this.error = new Error();
+
+  /**
+   * Captures the stack trace to this.stack from the Error.captureStackTrace.
+   * this allows us to capture the error of this error object. Note:
+   * called with Error set to any to quiet typescript warnings.
+   */
+  captureStackTrace() {
+    (Error as any).captureStackTrace(this, this.constructor);
+  }
+
+  constructor(logger: Logger, message: string, code: number) {
+    super(message);
+    this.message = message;
     this.code = code;
-    this.description = description;
-    this.stack = this.error.stack;
+    this.captureStackTrace();
     this.logError(logger);
+
+    process.exit(this.code);
   }
 
   logError(logger: Logger) {
-    logger.error('error code: ' + this.code);
-    logger.error('description: ' + this.description);
-    logger.error(this.stack);
+    ProtractorError.log(logger, this.code, this.message, this.stack);
+  }
+
+  static log(logger: Logger, code: number, message: string, stack: string) {
+    let messages = message.split('\n');
+    if (messages.length > 1) {
+      message = messages[0];
+    }
+    logger.error('Error code: ' + code);
+    logger.error('Error message: ' + message);
+    logger.error(stack);
   }
 }
+
 /**
  * Configuration file error
  */
 export class ConfigError extends ProtractorError {
-  static DEFAULT_MSG = 'configuration error';
   static CODE = CONFIG_ERROR_CODE;
-  constructor(logger: Logger, opt_msg?: string) {
-    super(logger, opt_msg || ConfigError.DEFAULT_MSG, ConfigError.CODE);
-    process.exit(ConfigError.CODE);
+  constructor(logger: Logger, message: string) {
+    super(logger, message, ConfigError.CODE);
   }
 }
 
@@ -42,15 +60,13 @@ export class ConfigError extends ProtractorError {
  * Browser errors including getting a driver session, direct connect, etc.
  */
 export class BrowserError extends ProtractorError {
-  static DEFAULT_MSG = 'browser error';
-  static CODE = BROWSER_ERROR_CODE;
+  static CODE = BROWSER_CONNECT_ERROR_CODE;
   static ERR_MSGS = [
     'ECONNREFUSED connect ECONNREFUSED', 'Sauce Labs Authentication Error',
     'Invalid username or password'
   ];
-  constructor(logger: Logger, opt_msg?: string) {
-    super(logger, opt_msg || BrowserError.DEFAULT_MSG, BrowserError.CODE);
-    process.exit(BrowserError.CODE);
+  constructor(logger: Logger, message: string) {
+    super(logger, message, BrowserError.CODE);
   }
 }
 

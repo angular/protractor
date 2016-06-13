@@ -2,7 +2,11 @@ import {Browser, ElementHelper} from './browser';
 import {ProtractorBy} from './locators';
 import {ElementFinder, ElementArrayFinder} from './element';
 import * as EC from './expectedConditions';
-import {Promise} from './selenium-webdriver/promise';
+
+let SeleniumWebdriverActions = require('selenium-webdriver/lib/actions');
+let SeleniumWebdriverInput = require('selenium-webdriver/lib/input');
+let SeleniumWebdriverPromise = require('selenium-webdriver/lib/promise');
+let SeleniumWebdriverCommand = require('selenium-webdriver/lib/command');
 
 export namespace protractor {
   export let browser: Browser;
@@ -20,21 +24,21 @@ export namespace protractor {
   export let wrapDriver: Function;
   export let ExpectedConditions = new EC.ExpectedConditions();
   export let promise = {
-    controlFlow: require('selenium-webdriver/lib/promise').controlFlow,
-    createFlow: require('selenium-webdriver/lib/promise').createFlow,
-    defer: require('selenium-webdriver/lib/promise').defer,
-    delayed: require('selenium-webdriver/lib/promise').delayed,
-    filter: require('selenium-webdriver/lib/promise').filter,
-    fulfilled: require('selenium-webdriver/lib/promise').fulfilled,
-    fullyResolved: require('selenium-webdriver/lib/promise').fullyResolved,
-    isPromise: require('selenium-webdriver/lib/promise').isPromise,
-    rejected: require('selenium-webdriver/lib/promise').rejected,
-    thenFinally: require('selenium-webdriver/lib/promise').thenFinally,
-    when: require('selenium-webdriver/lib/promise').when
+    controlFlow: SeleniumWebdriverPromise.controlFlow,
+    createFlow: SeleniumWebdriverPromise.createFlow,
+    defer: SeleniumWebdriverPromise.defer,
+    delayed: SeleniumWebdriverPromise.delayed,
+    filter: SeleniumWebdriverPromise.filter,
+    fulfilled: SeleniumWebdriverPromise.fulfilled,
+    fullyResolved: SeleniumWebdriverPromise.fullyResolved,
+    isPromise: SeleniumWebdriverPromise.isPromise,
+    rejected: SeleniumWebdriverPromise.rejected,
+    thenFinally: SeleniumWebdriverPromise.thenFinally,
+    when: SeleniumWebdriverPromise.when
   };
-  export let ActionSequence = require('selenium-webdriver/lib/actions').ActionSequence;
-  export let Key = require('selenium-webdriver/lib/input').Key;
+  export let ActionSequence = SeleniumWebdriverActions.ActionSequence;
+  export let Key = SeleniumWebdriverInput.Key;
 
-  export let Command = require('selenium-webdriver/lib/command').Command;
-  export let CommandName = require('selenium-webdriver/lib/command').Name;
+  export let Command = SeleniumWebdriverCommand.Command;
+  export let CommandName = SeleniumWebdriverCommand.Name;
 }

@@ -4,7 +4,7 @@
  */
 import * as q from 'q';
 import {Config, ConfigParser} from './configParser';
-import {ConfigError, ErrorHandler} from './exitCodes';
+import {ProtractorError, ConfigError, ErrorHandler} from './exitCodes';
 import {Logger} from './logger2';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
@@ -180,15 +180,16 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         process.on('uncaughtException', (e: Error) => {
           let errorCode = ErrorHandler.parseError(e);
           if (errorCode) {
-            logger.error(e.stack);
+            let protractorError = e as ProtractorError;
+            ProtractorError.log(logger, errorCode, protractorError.message, protractorError.stack);
             process.exit(errorCode);
           } else {
-            logger.error(e.stack);
+            logger.error('"process.on(\'uncaughtException\'" error, see launcher');
+            process.exit(ProtractorError.CODE);
           }
         });
 
         process.on('exit', (code: number) => {
-          console.log(code);
           if (code) {
             logger.error('Process exited with error code ' + code);
           } else if (scheduler.numTasksOutstanding() > 0) {
@@ -254,7 +255,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                       ' instance(s) of WebDriver still running');
                 })
                 .catch((err: Error) => {
-                  logger.error('Error:', err.stack || err.message || err);
+                  logger.error('Error:', (err as any).stack || err.message || err);
                   cleanUpAndExit(RUNNERS_FAILED_EXIT_CODE);
                 });
           }
