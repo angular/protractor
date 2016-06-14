@@ -285,7 +285,7 @@ export class Browser {
    *
    * @return {q.Promise} A promise which resolves to the capabilities object.
    */
-  getProcessedConfig: Function = null;
+  getProcessedConfig: () => webdriver.Promise;
 
   /**
    * Fork another instance of protractor for use in interactive tests.
@@ -296,14 +296,14 @@ export class Browser {
    * @param {boolean} opt_copyMockModules Whether to apply same mock modules on creation
    * @return {Protractor} a protractor instance.
    */
-  forkNewDriverInstance: Function = null;
+  forkNewDriverInstance: (opt_useSameUrl?: boolean, opt_copyMockModules?: boolean) => Browser;
 
   /**
    * Restart the browser instance.
    *
    * Set by the runner.
    */
-  restart: Function = null;
+  restart: () => void;
 
   /**
    * Instead of using a single root element, search through all angular apps
