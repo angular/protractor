@@ -7,6 +7,7 @@ const KITCHEN_SINK_CODE = 199;
 export class ProtractorError extends Error {
   static ERR_MSGS: string[];
   static CODE = KITCHEN_SINK_CODE;
+  static SUPRESS_EXIT_CODE = false;
 
   message: string; // a one liner, if more than one line is sent, it will be cut off
   stack: string;   // has the message with the stack trace
@@ -28,7 +29,9 @@ export class ProtractorError extends Error {
     this.captureStackTrace();
     this.logError(logger);
 
-    process.exit(this.code);
+    if (!ProtractorError.SUPRESS_EXIT_CODE) {
+      process.exit(this.code);
+    }
   }
 
   logError(logger: Logger) {
