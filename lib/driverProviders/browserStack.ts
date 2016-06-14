@@ -7,6 +7,7 @@ import * as request from 'request';
 import * as q from 'q';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
@@ -22,42 +23,46 @@ export class BrowserStack extends DriverProvider {
    * @param {Object} update
    * @return {q.promise} A promise that will resolve when the update is complete.
    */
-  updateJob(update: any): q.Promise<any> {
-    let deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
-      let deferred = q.defer();
-      driver.getSession().then((session: webdriver.Session) => {
-        var jobStatus = update.passed ? 'completed' : 'error';
-        logger.info(
-            'BrowserStack results available at ' +
-            'https://www.browserstack.com/automate');
-        request(
-            {
-              url: 'https://www.browserstack.com/automate/sessions/' +
-                  session.getId() + '.json',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' +
-                    new Buffer(
-                        this.config_.browserstackUser + ':' +
-                        this.config_.browserstackKey)
-                        .toString('base64')
-              },
-              method: 'PUT',
-              form: {'status': jobStatus}
-            },
-            (error: Error) => {
-              if (error) {
-                throw new Error(
-                    'Error updating BrowserStack pass/fail status: ' +
-                    util.inspect(error));
-              }
-            });
-        deferred.resolve();
-      });
-      return deferred.promise;
-    });
-    return q.all(deferredArray);
-  }
+   updateJob(update: any): q.Promise<any> {
+   let deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
+     let deferred = q.defer();
+     driver.getSession().then((session: webdriver.Session) => {
+       var jobStatus = update.passed ? 'completed' : 'error';
+       logger.info(
+           'BrowserStack results available at ' +
+           'https://www.browserstack.com/automate');
+       request(
+           {
+             url: 'https://www.browserstack.com/automate/sessions/' +
+                 session.getId() + '.json',
+             headers: {
+               'Content-Type': 'application/json',
+               'Authorization': 'Basic ' +
+                   new Buffer(
+                       this.config_.browserstackUser + ':' +
+                       this.config_.browserstackKey)
+                       .toString('base64')
+             },
+             method: 'PUT',
+             form: {'status': jobStatus}
+           },
+           (error: Error) => {
+             if (error) {
+               throw new BrowserError(
+                   logger,
+                   'Error updating BrowserStack pass/fail status: ' +
+                       util.inspect(error));
+             }
+           });
+       deferred.resolve();
+     });
+     return deferred.promise;
+   });
+   return q.all(deferredArray);
+ }
+
+
+
 
   /**
    * Configure and launch (if applicable) the object's environment.

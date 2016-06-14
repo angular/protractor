@@ -11,6 +11,7 @@ import * as path from 'path';
 import * as q from 'q';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
@@ -42,10 +43,10 @@ export class Local extends DriverProvider {
         new SeleniumStandAlone().executableFilename());
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
-      throw new Error(
-          'No selenium server jar found at the specified ' +
-          'location (' + this.config_.seleniumServerJar +
-          '). Check that the version number is up to date.');
+      throw new BrowserError(
+          logger, 'No selenium server jar found at the specified ' +
+              'location (' + this.config_.seleniumServerJar +
+              '). Check that the version number is up to date.');
     }
     if (this.config_.capabilities.browserName === 'chrome') {
       if (!this.config_.chromeDriver) {
@@ -62,7 +63,8 @@ export class Local extends DriverProvider {
         if (fs.existsSync(this.config_.chromeDriver + '.exe')) {
           this.config_.chromeDriver += '.exe';
         } else {
-          throw new Error(
+          throw new BrowserError(
+              logger,
               'Could not find chromedriver at ' + this.config_.chromeDriver);
         }
       }
