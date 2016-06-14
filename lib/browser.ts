@@ -270,7 +270,7 @@ export class Browser {
       // PhantomJS produces a "Detected a page unload event" if we use data urls
       var browserName = caps.get('browserName');
       if (browserName === 'internet explorer' || browserName === 'safari' ||
-          browserName === 'phantomjs') {
+          browserName === 'phantomjs' || browserName === 'MicrosoftEdge') {
         this.resetUrl = 'about:blank';
       }
     });
