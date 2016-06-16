@@ -395,8 +395,9 @@ export class ElementArrayFinder {
                               return webdriver.promise.all(arr.map(actionFn));
                             })
                             .then(null, (e: Error) => {
-                              e.stack = e.stack + '\n' + callerError.stack;
-                              throw e;
+                              let noSuchErr = (e as any);
+                              noSuchErr.stack = noSuchErr.stack + (callerError as any).stack;
+                              throw noSuchErr;
                             });
     return new ElementArrayFinder(
         this.browser_, this.getWebElements, this.locator_, actionResults);

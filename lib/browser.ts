@@ -4,8 +4,6 @@ import * as url from 'url';
 import * as util from 'util';
 
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
-// Import expected conditions in a namespace so we can export it with the
-// name 'ExpectedConditions'.
 import * as EC from './expectedConditions';
 import {ProtractorBy} from './locators';
 import {Logger} from './logger2';
@@ -483,9 +481,13 @@ export class Browser {
                             errMsg += '. \nThe following tasks were pending:\n';
                             errMsg += pendingTasks.join('\n');
                           }
-                          throw errMsg;
+                          err.message = errMsg;
+                          throw err;
                         },
-                        () => { throw errMsg; });
+                        () => {
+                          err.message = errMsg;
+                          throw err;
+                        });
               } else {
                 throw err;
               }
