@@ -6,17 +6,16 @@ let clientSideScripts: any = require('./clientsidescripts');
  * webdriver's By is an enum of locator functions, so we must set it to
  * a prototype before inheriting from it.
  */
-export class WebdriverBy {};
+export class WebdriverBy {}
 WebdriverBy.prototype = webdriver.By;
 
-export interface Locator extends webdriver.Locator {
+export interface Locator {
   findElementsOverride?:
       (driver: webdriver.WebDriver, using: webdriver.WebElement,
        rootSelector: string) => webdriver.WebElement;
   row?: (index: number) => Locator;
   column?: (index: string) => Locator;
 }
-;
 
 /**
  * The Protractor Locators. These provide ways of finding elements in
@@ -26,8 +25,18 @@ export interface Locator extends webdriver.Locator {
  * @extends {webdriver.By}
  */
 export class ProtractorBy extends WebdriverBy {
-  // Explicit index signature to fix TS warining.
   [key: string]: any;
+
+  className: (className: string) => Locator = webdriver.By.className;
+  css: (css: string) => Locator = webdriver.By.css;
+  id: (id: string) => Locator = webdriver.By.id;
+  linkText: (linkText: string) => Locator = webdriver.By.linkText;
+  js: (js: string) => Locator = webdriver.By.js;
+  name: (name: string) => Locator = webdriver.By.name;
+  partialLinkText:
+      (partialText: string) => Locator = webdriver.By.partialLinkText;
+  tagName: (tagName: string) => Locator = webdriver.By.tagName;
+  xpath: (xpath: string) => Locator = webdriver.By.xpath;
 
   /**
    * Add a locator to this instance of ProtractorBy. This locator can then be
@@ -377,7 +386,6 @@ export class ProtractorBy extends WebdriverBy {
   exactRepeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(true, repeatDescriptor);
   }
-
 
   /**
    * Find elements by CSS which contain a certain string.
