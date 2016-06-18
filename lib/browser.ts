@@ -172,7 +172,7 @@ export class Browser {
    *
    * @type {q.Promise} Done when the new browser is ready for use
    */
-  ready: webdriver.Promise;
+  ready: webdriver.promise.Promise;
 
   /*
    * Set by the runner.
@@ -283,7 +283,7 @@ export class Browser {
    *
    * @return {q.Promise} A promise which resolves to the capabilities object.
    */
-  getProcessedConfig: () => webdriver.Promise;
+  getProcessedConfig: () => webdriver.promise.Promise;
 
   /**
    * Fork another instance of protractor for use in interactive tests.
@@ -329,7 +329,7 @@ export class Browser {
    */
   private executeScript_(
       script: string|Function, description: string,
-      ...scriptArgs: any[]): webdriver.Promise {
+      ...scriptArgs: any[]): webdriver.promise.Promise {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
@@ -355,7 +355,7 @@ export class Browser {
    */
   private executeAsyncScript_(
       script: string|Function, description: string,
-      ...scriptArgs: any[]): webdriver.Promise {
+      ...scriptArgs: any[]): webdriver.promise.Promise {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
@@ -377,7 +377,7 @@ export class Browser {
    * @return {!webdriver.promise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
-  waitForAngular(opt_description?: string): webdriver.Promise {
+  waitForAngular(opt_description?: string): webdriver.promise.Promise {
     let description = opt_description ? ' - ' + opt_description : '';
     if (this.ignoreSynchronization) {
       return this.driver.controlFlow().execute(() => {
@@ -385,7 +385,7 @@ export class Browser {
       }, 'Ignore Synchronization Protractor.waitForAngular()');
     }
 
-    let runWaitForAngularScript: () => webdriver.Promise = () => {
+    let runWaitForAngularScript: () => webdriver.promise.Promise = () => {
       if (this.plugins_.skipAngularStability()) {
         return webdriver.promise.fulfilled();
       } else if (this.rootEl) {
@@ -445,7 +445,7 @@ export class Browser {
                   errMsg +=
                       '\nWhile waiting for element with locator' + description;
                 }
-                let pendingTimeoutsPromise: webdriver.Promise;
+                let pendingTimeoutsPromise: webdriver.promise.Promise;
                 if (this.trackOutstandingTimeouts_) {
                   pendingTimeoutsPromise = this.executeScript_(
                       'return window.NG_PENDING_TIMEOUTS',
@@ -510,7 +510,7 @@ export class Browser {
    * @return {!webdriver.promise.Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
-  findElements(locator: Locator): webdriver.Promise {
+  findElements(locator: Locator): webdriver.promise.Promise {
     return this.element.all(locator).getWebElements();
   }
 
@@ -521,7 +521,7 @@ export class Browser {
    *     the element is present on the page.
    */
   isElementPresent(locatorOrElement: webdriver.Locator|
-                   webdriver.WebElement): webdriver.Promise {
+                   webdriver.WebElement): webdriver.promise.Promise {
     let element = (locatorOrElement.isPresent) ? locatorOrElement :
                                                  this.element(locatorOrElement);
     return element.isPresent();
@@ -839,7 +839,7 @@ export class Browser {
    * @return {!webdriver.promise.Promise} A promise that will resolve once
    *    page has been changed.
    */
-  setLocation(url: string): webdriver.Promise {
+  setLocation(url: string): webdriver.promise.Promise {
     this.waitForAngular();
     return this
         .executeScript_(
@@ -861,7 +861,7 @@ export class Browser {
    * expect(browser.getLocationAbsUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
    */
-  getLocationAbsUrl(): webdriver.Promise {
+  getLocationAbsUrl(): webdriver.promise.Promise {
     this.waitForAngular();
     return this.executeScript_(
         clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()',
@@ -905,7 +905,7 @@ export class Browser {
    *     is done. The promise will resolve to a boolean which represents whether
    *     this is the first time that the debugger is called.
    */
-  private validatePortAvailability_(port: number): webdriver.Promise {
+  private validatePortAvailability_(port: number): webdriver.promise.Promise {
     if (this.debuggerValidated_) {
       return webdriver.promise.fulfilled(false);
     }
