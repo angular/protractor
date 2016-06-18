@@ -5,7 +5,7 @@ import * as util from 'util';
 
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
 import * as EC from './expectedConditions';
-import {ProtractorBy} from './locators';
+import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger2';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
@@ -50,8 +50,8 @@ function mixin(to: any, from: any, fnName: string, setupFn?: Function) {
 };
 
 export interface ElementHelper extends Function {
-  (locator: webdriver.Locator): ElementFinder;
-  all?: (locator: webdriver.Locator) => ElementArrayFinder;
+  (locator: Locator): ElementFinder;
+  all?: (locator: Locator) => ElementArrayFinder;
 }
 
 /**
@@ -62,14 +62,14 @@ export interface ElementHelper extends Function {
  * @return {function(webdriver.Locator): ElementFinder}
  */
 function buildElementHelper(browser: Browser): ElementHelper {
-  let element: ElementHelper = function(locator: webdriver.Locator) {
+  let element: ElementHelper = (locator: Locator) => {
     return new ElementArrayFinder(browser).all(locator).toElementFinder_();
   };
 
   element.all =
-      function(locator: webdriver.Locator) {
-    return new ElementArrayFinder(browser).all(locator);
-  }
+      (locator: Locator) => {
+        return new ElementArrayFinder(browser).all(locator);
+      }
 
   return element;
 };
@@ -294,7 +294,8 @@ export class Browser {
    * @param {boolean} opt_copyMockModules Whether to apply same mock modules on creation
    * @return {Protractor} a protractor instance.
    */
-  forkNewDriverInstance: (opt_useSameUrl?: boolean, opt_copyMockModules?: boolean) => Browser;
+  forkNewDriverInstance:
+      (opt_useSameUrl?: boolean, opt_copyMockModules?: boolean) => Browser;
 
   /**
    * Restart the browser instance.
@@ -499,7 +500,7 @@ export class Browser {
    * @see webdriver.WebDriver.findElement
    * @return {!webdriver.WebElement}
    */
-  findElement(locator: webdriver.Locator): webdriver.WebElement {
+  findElement(locator: Locator): webdriver.WebElement {
     return this.element(locator).getWebElement();
   }
 
@@ -509,7 +510,7 @@ export class Browser {
    * @return {!webdriver.promise.Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
-  findElements(locator: webdriver.Locator): webdriver.Promise {
+  findElements(locator: Locator): webdriver.Promise {
     return this.element.all(locator).getWebElements();
   }
 
@@ -969,7 +970,7 @@ export class Browser {
     let flow = webdriver.promise.controlFlow();
 
     let context: Object = {require: require};
-    global.list = (locator: webdriver.Locator) => {
+    global.list = (locator: Locator) => {
       /* globals browser */
       return protractor.browser.findElements(locator).then(
           (arr: webdriver.WebElement[]) => {
