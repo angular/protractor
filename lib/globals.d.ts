@@ -60,9 +60,11 @@ declare namespace webdriver {
     getCapabilities: Function;
   }
 
-  class Promise {
-    controlFlow: Function;
-    then: Function;
+  namespace promise {
+    interface Promise {
+      controlFlow: Function,
+      then: Function
+    }
   }
 
   class Capabilities {
