@@ -35,6 +35,9 @@ declare interface String { startsWith: Function; }
 
 declare namespace webdriver {
   var error: any;
+
+  class ActionSequence {}
+
   class WebDriver {
     findElements: Function;
     getSession: Function;
@@ -61,12 +64,15 @@ declare namespace webdriver {
   }
 
   namespace promise {
-    interface Promise {
-      controlFlow: Function,
-      then: Function
-    }
+  interface Promise {
+    controlFlow: Function;
+    then: Function;
+  }
   }
 
+  namespace util {
+  interface Condition {}
+  }
   class Capabilities {
     get: Function;
   }

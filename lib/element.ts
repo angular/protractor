@@ -14,6 +14,32 @@ let WEB_ELEMENT_FUNCTIONS = [
   'serialize', 'takeScreenshot'
 ];
 
+// Explicitly define webdriver.WebElement.
+export class WebdriverWebElement {
+  getDriver: () => webdriver.WebDriver;
+  getId: () => webdriver.promise.Promise;
+  getRawId: () => webdriver.promise.Promise;
+  serialize: () => webdriver.promise.Promise;
+  findElement: (subLocator: Locator) => webdriver.promise.Promise;
+  click: () => webdriver.promise.Promise;
+  sendKeys: (...args: (string|webdriver.promise.Promise)[]) =>
+      webdriver.promise.Promise;
+  getTagName: () => webdriver.promise.Promise;
+  getCssValue: (cssStyleProperty: string) => webdriver.promise.Promise;
+  getAttribute: (attributeName: string) => webdriver.promise.Promise;
+  getText: () => webdriver.promise.Promise;
+  getSize: () => webdriver.promise.Promise;
+  getLocation: () => webdriver.promise.Promise;
+  isEnabled: () => webdriver.promise.Promise;
+  isSelected: () => webdriver.promise.Promise;
+  submit: () => webdriver.promise.Promise;
+  clear: () => webdriver.promise.Promise;
+  isDisplayed: () => webdriver.promise.Promise;
+  takeScreenshot: (opt_scroll?: boolean) => webdriver.promise.Promise;
+  getOuterHtml: () => webdriver.promise.Promise;
+  getInnerHtml: () => webdriver.promise.Promise;
+}
+
 /**
  * ElementArrayFinder is used for operations on an array of elements (as opposed
  * to a single element).
@@ -67,13 +93,14 @@ let WEB_ELEMENT_FUNCTIONS = [
  *    action result, or null if no action has been called.
  * @return {ElementArrayFinder}
  */
-export class ElementArrayFinder {
+export class ElementArrayFinder extends WebdriverWebElement {
   getWebElements: Function;
 
   constructor(
       private browser_: Browser, getWebElements?: Function,
       private locator_?: any,
       public actionResults_: webdriver.promise.Promise = null) {
+    super();
     this.getWebElements = getWebElements || null;
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
@@ -379,7 +406,7 @@ export class ElementArrayFinder {
    *
    * @return {webdriver.Locator}
    */
-  locator(): any { return this.locator_; }
+  locator(): Locator { return this.locator_; }
 
   /**
    * Apply an action function to every element in the ElementArrayFinder,
@@ -661,12 +688,14 @@ export class ElementArrayFinder {
  *     that this is branched from.
  * @return {ElementFinder}
  */
-export class ElementFinder {
+export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
-  then: Function = null;
+  then: (fn: Function, errorFn: Function) => webdriver.promise.Promise = null;
 
-  constructor(private browser_: Browser, elementArrayFinder: ElementArrayFinder) {
+  constructor(
+      private browser_: Browser, elementArrayFinder: ElementArrayFinder) {
+    super();
     if (!elementArrayFinder) {
       throw new Error('BUG: elementArrayFinder cannot be empty');
     }
@@ -680,6 +709,7 @@ export class ElementFinder {
        *
        * @param {function(webdriver.promise.Promise)} fn Function which takes
        *     the value of the underlying actionResult.
+       * @param {function(Error)} errorFn
        *
        * @return {webdriver.promise.Promise} Promise which contains the results of
        *     evaluating fn.
@@ -731,10 +761,12 @@ export class ElementFinder {
     });
   }
 
-  static fromWebElement_(ptor: any, webElem: any, locator: any): ElementFinder {
+  static fromWebElement_(
+      browser: Browser, webElem: webdriver.WebElement,
+      locator: Locator): ElementFinder {
     let getWebElements =
         () => { return webdriver.promise.fulfilled([webElem]); };
-    return new ElementArrayFinder(ptor, getWebElements, locator)
+    return new ElementArrayFinder(browser, getWebElements, locator)
         .toElementFinder_();
   }
 
@@ -802,7 +834,7 @@ export class ElementFinder {
    * @param {webdriver.Locator} subLocator
    * @return {ElementArrayFinder}
    */
-  all(subLocator: any): ElementArrayFinder {
+  all(subLocator: Locator): ElementArrayFinder {
     return this.elementArrayFinder_.all(subLocator);
   }
 
@@ -833,7 +865,7 @@ export class ElementFinder {
    * @param {webdriver.Locator} subLocator
    * @return {ElementFinder}
    */
-  element(subLocator: any): ElementFinder {
+  element(subLocator: Locator): ElementFinder {
     return this.all(subLocator).toElementFinder_();
   }
 
