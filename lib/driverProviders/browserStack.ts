@@ -27,10 +27,6 @@ export class BrowserStack extends DriverProvider {
     let deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
       let deferred = q.defer();
       driver.getSession().then((session: webdriver.Session) => {
-        var jobStatus = update.passed ? 'completed' : 'error';
-        logger.info(
-            'BrowserStack results available at ' +
-            'https://www.browserstack.com/automate');
         let headers: Object = {
             'Content-Type': 'application/json',
             'Authorization': 'Basic ' +
@@ -40,6 +36,35 @@ export class BrowserStack extends DriverProvider {
                     .toString('base64')
         };
         let options = {
+          hostname: 'www.browserstack.com',
+          port: 443,
+          path: '/automate/sessions/' + session.getId() + '.json',
+          method: 'GET',
+          headers: headers
+        };
+
+        var req = https.request(options, (res) => {
+          res.on('data', (data: Buffer) => {
+            var info = JSON.parse(data.toString());
+            if (info && info.automation_session && info.automation_session.browser_url){
+              logger.info(
+                'BrowserStack results available at ' +
+                info.automation_session.browser_url);
+            } else {
+              logger.info(
+                'BrowserStack results available at ' +
+                'https://www.browserstack.com/automate');
+            }
+          });
+        });
+        req.end();
+        req.on('error', (e: Error) => {
+          logger.info(
+            'BrowserStack results available at ' +
+            'https://www.browserstack.com/automate');
+        });
+        var jobStatus = update.passed ? 'completed' : 'error';
+        options = {
           hostname: 'www.browserstack.com',
           port: 443,
           path: '/automate/sessions/' + session.getId() + '.json',
