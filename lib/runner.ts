@@ -1,17 +1,16 @@
+import {EventEmitter} from 'events';
 import * as q from 'q';
 import * as util from 'util';
-import {EventEmitter} from 'events';
-import * as helper from './util';
-import {Config} from './configParser';
-import {Logger} from './logger2';
-import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
-import {Plugins} from './plugins';
-import {Browser} from './browser';
-import * as browserFn from './browser';
 
-import {ProtractorBy} from './locators';
+import {Browser} from './browser';
+import {Config} from './configParser';
+import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {DriverProvider} from './driverProviders';
+import {ProtractorBy} from './locators';
+import {Logger} from './logger2';
+import {Plugins} from './plugins';
 import {protractor} from './ptor';
+import * as helper from './util';
 
 var webdriver = require('selenium-webdriver');
 let promsie = require('selenium-webdriver/lib/promise');
@@ -159,10 +158,9 @@ export class Runner extends EventEmitter {
     protractor.$ = browser_.$;
     protractor.$$ = browser_.$$;
     protractor.element = browser_.element;
-    protractor.by = protractor.By = browserFn.By;
-
-    // TODO: fix imports
-    protractor.wrapDriver = browserFn.wrapDriver;
+    protractor.by = protractor.By = Browser.By;
+    protractor.wrapDriver = Browser.wrapDriver;
+    protractor.ExpectedConditions = Browser.ExpectedConditions;
 
     if (!this.config_.noGlobals) {
       // Export protractor to the global namespace to be used in tests.
@@ -171,6 +169,7 @@ export class Runner extends EventEmitter {
       global.$$ = browser_.$$;
       global.element = browser_.element;
       global.by = global.By = protractor.By;
+      global.ExpectedConditions = protractor.ExpectedConditions;
     }
 
     global.protractor = protractor;
@@ -199,7 +198,7 @@ export class Runner extends EventEmitter {
     var config = this.config_;
     var driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = browserFn.wrapDriver(
+    var browser_ = Browser.wrapDriver(
         driver, config.baseUrl, config.rootElement,
         config.untrackOutstandingTimeouts);
 

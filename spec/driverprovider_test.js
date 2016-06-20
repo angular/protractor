@@ -15,6 +15,11 @@ var argv = require('optimist').argv;
 var q = require('q');
 var env = require('./environment');
 
+var Direct = require('../built/driverProviders/direct').Direct;
+var Hosted = require('../built/driverProviders/hosted').Hosted;
+var Local = require('../built/driverProviders/local').Local;
+var Sauce = require('../built/driverProviders/sauce').Sauce;
+
 var testDriverProvider = function(driverProvider) {
   return driverProvider.setupEnv().then(function() {
     var driver = driverProvider.getNewDriver();
@@ -45,7 +50,7 @@ var chromeConfig = {
     browserName: 'chrome'
   }
 };
-testDriverProvider(require('../built/driverProviders/direct')(chromeConfig)).
+testDriverProvider(new Direct(chromeConfig)).
     then(function() {
       console.log('direct.dp with chrome working!');
     }, function(err) {
@@ -57,7 +62,7 @@ var firefoxConfig = {
     browserName: 'firefox'
   }
 };
-testDriverProvider(require('../built/driverProviders/direct')(firefoxConfig)).
+testDriverProvider(new Direct(firefoxConfig)).
     then(function() {
       console.log('direct.dp with firefox working!');
     }, function(err) {
@@ -70,7 +75,7 @@ var hostedConfig = {
     browserName: 'firefox'
   }
 };
-testDriverProvider(require('../built/driverProviders/hosted')(hostedConfig)).
+testDriverProvider(new Hosted(hostedConfig)).
     then(function() {
       console.log('hosted.dp working!');
     }, function(err) {
@@ -83,7 +88,7 @@ var hostedPromisedConfig = {
     browserName: 'firefox'
   }
 };
-testDriverProvider(require('../built/driverProviders/hosted')(hostedPromisedConfig)).
+testDriverProvider(new Hosted(hostedPromisedConfig)).
     then(function() {
       console.log('hosted.dp with promises working!');
     }, function(err) {
@@ -96,7 +101,7 @@ var localConfig = {
     browserName: 'chrome'
   }
 };
-testDriverProvider(require('../built/driverProviders/local')(localConfig)).
+testDriverProvider(new Local(localConfig)).
     then(function() {
       console.log('local.dp working!');
     }, function(err) {
@@ -112,7 +117,7 @@ if (argv.sauceUser && argv.sauceKey) {
       browserName: 'chrome'
     }
   };
-  testDriverProvider(require('../built/driverProviders/sauce')(sauceConfig)).
+  testDriverProvider(new Sauce(sauceConfig)).
       then(function() {
         console.log('sauce.dp working!');
       }, function(err) {

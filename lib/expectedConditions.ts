@@ -266,6 +266,49 @@ export class ExpectedConditions {
   }
 
   /**
+   * An expectation for checking that the URL contains a case-sensitive
+   * substring.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the URL to contain 'foo'.
+   * browser.wait(EC.urlContains('foo'), 5000);
+   *
+   * @param {!string} url The fragment of URL expected
+   *
+   * @return {!function} An expected condition that returns a promise
+   *     representing whether the URL contains the string.
+   */
+  urlContains(url: string): Function {
+    return () => {
+      return protractor.browser.driver.getCurrentUrl().then(
+          (actualUrl: string): boolean => {
+            return actualUrl.indexOf(url) > -1;
+          });
+    };
+  }
+
+  /**
+   * An expectation for checking the URL of a page.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the URL to be 'foo'.
+   * browser.wait(EC.urlIs('foo'), 5000);
+   *
+   * @param {!string} url The expected URL, which must be an exact match.
+   *
+   * @return {!function} An expected condition that returns a promise
+   *     representing whether the url equals the string.
+   */
+  urlIs(url: string): Function {
+    return () => {
+      return protractor.browser.driver.getCurrentUrl().then(
+          (actualUrl: string): boolean => { return actualUrl === url; });
+    };
+  }
+  
+  /**
    * An expectation for checking that an element is present on the DOM
    * of a page. This does not necessarily mean that the element is visible.
    * This is the opposite of 'stalenessOf'.

@@ -4,6 +4,7 @@
  */
 import * as q from 'q';
 import {Config, ConfigParser} from './configParser';
+import {ProtractorError, ConfigError, ErrorHandler} from './exitCodes';
 import {Logger} from './logger2';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
@@ -127,7 +128,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                 q.when(config.getMultiCapabilities(), (multiCapabilities) => {
                    config.multiCapabilities = multiCapabilities;
                    config.capabilities = null;
-                 }).then(resolve);
+                 }).then(() => resolve());
               } else {
                 resolve();
               }
@@ -176,6 +177,18 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         // 4) Run tests.
         let scheduler = new TaskScheduler(config);
 
+        process.on('uncaughtException', (e: Error) => {
+          let errorCode = ErrorHandler.parseError(e);
+          if (errorCode) {
+            let protractorError = e as ProtractorError;
+            ProtractorError.log(logger, errorCode, protractorError.message, protractorError.stack);
+            process.exit(errorCode);
+          } else {
+            logger.error('"process.on(\'uncaughtException\'" error, see launcher');
+            process.exit(ProtractorError.CODE);
+          }
+        });
+
         process.on('exit', (code: number) => {
           if (code) {
             logger.error('Process exited with error code ' + code);
@@ -212,9 +225,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
             1) {  // Start new processes only if there are >1 tasks.
           forkProcess = true;
           if (config.debug) {
-            throw new Error(
-                'Cannot run in debug mode with ' +
-                'multiCapabilities, count > 1, or sharding');
+            throw new ConfigError(logger,
+                'Cannot run in debug mode with multiCapabilities, count > 1, or sharding');
           }
         }
 
@@ -243,7 +255,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                       ' instance(s) of WebDriver still running');
                 })
                 .catch((err: Error) => {
-                  logger.error('Error:', err.stack || err.message || err);
+                  logger.error('Error:', (err as any).stack || err.message || err);
                   cleanUpAndExit(RUNNERS_FAILED_EXIT_CODE);
                 });
           }

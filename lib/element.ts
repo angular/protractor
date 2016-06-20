@@ -3,6 +3,7 @@ let clientSideScripts = require('./clientsidescripts');
 
 import {Logger} from './logger2';
 import {Browser} from './browser';
+import {Locator} from './locators';
 
 let logger = new Logger('element');
 
@@ -131,7 +132,7 @@ export class ElementArrayFinder {
    * @param {webdriver.Locator} subLocator
    * @return {ElementArrayFinder}
    */
-  all(locator: any): ElementArrayFinder {
+  all(locator: Locator): ElementArrayFinder {
     let ptor = this.browser_;
     let getWebElements = () => {
       if (this.getWebElements === null) {
@@ -395,8 +396,10 @@ export class ElementArrayFinder {
                               return webdriver.promise.all(arr.map(actionFn));
                             })
                             .then(null, (e: Error) => {
-                              e.stack = e.stack + '\n' + callerError.stack;
-                              throw e;
+                              let noSuchErr = (e as any);
+                              noSuchErr.stack =
+                                  noSuchErr.stack + (callerError as any).stack;
+                              throw noSuchErr;
                             });
     return new ElementArrayFinder(
         this.browser_, this.getWebElements, this.locator_, actionResults);

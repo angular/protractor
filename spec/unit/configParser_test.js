@@ -1,5 +1,6 @@
 var ConfigParser = require('../../built/configParser').ConfigParser;
 var ConfigError = require('../../built/exitCodes').ConfigError;
+var ProtractorError = require('../../built/exitCodes').ProtractorError;
 var Logger = require('../../built/logger2').Logger;
 var WriteTo = require('../../built/logger2').WriteTo;
 var path = require('path');
@@ -7,11 +8,13 @@ var path = require('path');
 describe('the config parser', function() {
   describe('exceptions', function() {
 
-    beforeEach(function() {
+    beforeAll(function() {
+      ProtractorError.SUPRESS_EXIT_CODE = true;
       Logger.writeTo = WriteTo.NONE;
     });
 
-    afterEach(function() {
+    afterAll(function() {
+      ProtractorError.SUPRESS_EXIT_CODE = false;
       Logger.writeTo = WriteTo.CONSOLE;
     });
 

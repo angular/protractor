@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
@@ -15,6 +16,10 @@ import {Logger} from '../logger2';
 let webdriver = require('selenium-webdriver'),
     chrome = require('selenium-webdriver/chrome'),
     firefox = require('selenium-webdriver/firefox');
+let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
+let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
+
 
 let logger = new Logger('direct');
 export class Direct extends DriverProvider {
@@ -35,9 +40,9 @@ export class Direct extends DriverProvider {
         logger.info('Using FirefoxDriver directly...');
         break;
       default:
-        throw new Error(
-            'browserName (' + this.config_.capabilities.browserName +
-            ') is not supported with directConnect.');
+        throw new BrowserError(
+            logger, 'browserName ' + this.config_.capabilities.browserName +
+                ' is not supported with directConnect.');
     }
     return q.fcall(function() {});
   }
@@ -54,8 +59,8 @@ export class Direct extends DriverProvider {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         let defaultChromeDriverPath = path.resolve(
-            __dirname, '../../selenium/chromedriver_' +
-                require('../../config.json').webdriverVersions.chromedriver);
+          SeleniumConfig.getSeleniumDir(),
+          new SeleniumChrome().executableFilename());
 
         if (process.platform.indexOf('win') === 0) {
           defaultChromeDriverPath += '.exe';
@@ -65,7 +70,8 @@ export class Direct extends DriverProvider {
             this.config_.chromeDriver || defaultChromeDriverPath;
 
         if (!fs.existsSync(chromeDriverFile)) {
-          throw new Error('Could not find chromedriver at ' + chromeDriverFile);
+          throw new BrowserError(
+              logger, 'Could not find chromedriver at ' + chromeDriverFile);
         }
 
         let service = new chrome.ServiceBuilder(chromeDriverFile).build();
@@ -79,9 +85,9 @@ export class Direct extends DriverProvider {
         driver = new firefox.Driver(this.config_.capabilities);
         break;
       default:
-        throw new Error(
-            'browserName ' + this.config_.capabilities.browserName +
-            'is not supported with directConnect.');
+        throw new BrowserError(
+            logger, 'browserName ' + this.config_.capabilities.browserName +
+                ' is not supported with directConnect.');
     }
     this.drivers_.push(driver);
     return driver;

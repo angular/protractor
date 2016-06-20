@@ -11,10 +11,14 @@ import * as path from 'path';
 import * as q from 'q';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
 
+let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
+let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
 let remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
@@ -35,14 +39,14 @@ export class Local extends DriverProvider {
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
       this.config_.seleniumServerJar = path.resolve(
-          __dirname, '../../selenium/selenium-server-standalone-' +
-              require('../../config.json').webdriverVersions.selenium + '.jar');
+        SeleniumConfig.getSeleniumDir(),
+        new SeleniumStandAlone().executableFilename());
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
-      throw new Error(
-          'No selenium server jar found at the specified ' +
-          'location (' + this.config_.seleniumServerJar +
-          '). Check that the version number is up to date.');
+      throw new BrowserError(
+          logger, 'No selenium server jar found at the specified ' +
+              'location (' + this.config_.seleniumServerJar +
+              '). Check that the version number is up to date.');
     }
     if (this.config_.capabilities.browserName === 'chrome') {
       if (!this.config_.chromeDriver) {
@@ -50,8 +54,8 @@ export class Local extends DriverProvider {
             'Attempting to find the chromedriver binary in the default ' +
             'location used by webdriver-manager');
         this.config_.chromeDriver = path.resolve(
-            __dirname, '../../selenium/chromedriver_' +
-                require('../../config.json').webdriverVersions.chromedriver);
+          SeleniumConfig.getSeleniumDir(),
+          new SeleniumChrome().executableFilename());
       }
 
       // Check if file exists, if not try .exe or fail accordingly
@@ -59,7 +63,8 @@ export class Local extends DriverProvider {
         if (fs.existsSync(this.config_.chromeDriver + '.exe')) {
           this.config_.chromeDriver += '.exe';
         } else {
-          throw new Error(
+          throw new BrowserError(
+              logger,
               'Could not find chromedriver at ' + this.config_.chromeDriver);
         }
       }

@@ -13,17 +13,19 @@ ol {
 }
 
 li {
-  width: 40%;
-  padding: 5%;
+  width: 25%;
+  padding: 4%;
   display: block;
-}
-
-li.left {
-  text-align: right;
-}
-
-li.right {
+  text-align: center;
   position: absolute;
   top: 0;
+  margin: auto;
+}
+
+li.left, li.mid {
+  left: 0;
+} 
+
+li.right, li.mid {
   right: 0;
 } 

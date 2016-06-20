@@ -2,7 +2,6 @@ import {Browser, ElementHelper} from './browser';
 import {ProtractorBy} from './locators';
 import {ElementFinder, ElementArrayFinder} from './element';
 import * as EC from './expectedConditions';
-import {Promise} from './selenium-webdriver/promise';
 
 export namespace protractor {
   export let browser: Browser;
@@ -18,7 +17,7 @@ export namespace protractor {
 
   // TODO: Might need to fix imports
   export let wrapDriver: Function;
-  export let ExpectedConditions = new EC.ExpectedConditions();
+  export let ExpectedConditions: EC.ExpectedConditions;
   export let promise = {
     controlFlow: require('selenium-webdriver/lib/promise').controlFlow,
     createFlow: require('selenium-webdriver/lib/promise').createFlow,

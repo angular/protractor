@@ -3,10 +3,11 @@
  * It is responsible for setting up the account object, tearing
  * it down, and setting up the driver correctly.
  */
-import * as request from 'request';
+import * as https from 'https';
 import * as q from 'q';
 import * as util from 'util';
 
+import {BrowserError} from '../exitCodes';
 import {Config} from '../configParser';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
@@ -26,65 +27,45 @@ export class BrowserStack extends DriverProvider {
     let deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
       let deferred = q.defer();
       driver.getSession().then((session: webdriver.Session) => {
-        var options = {
-          url: 'https://www.browserstack.com/automate/sessions/' +
-              session.getId() + '.json',
-          headers: {
+        var jobStatus = update.passed ? 'completed' : 'error';
+        logger.info(
+            'BrowserStack results available at ' +
+            'https://www.browserstack.com/automate');
+        let headers: Object = {
             'Content-Type': 'application/json',
             'Authorization': 'Basic ' +
                 new Buffer(
-                  this.config_.browserstackUser + ':' +
-                  this.config_.browserstackKey)
-                  .toString('base64')
-              },
-              method: 'GET',
+                    this.config_.browserstackUser + ':' +
+                    this.config_.browserstackKey)
+                    .toString('base64')
         };
-        function callback(error, response, body) {
-          if (!error && response.statusCode == 200) {
-            var info = JSON.parse(body);
-            if (info && info.automation_session && info.automation_session.browser_url){
-              logger.info(
-              'BrowserStack results available at ' +
-              info.automation_session.browser_url);
-            }
-            else {
-              logger.info(
-                'BrowserStack results available at ' +
-                'https://www.browserstack.com/automate');
-            }
-          }
-          else {
-            logger.info(
-              'BrowserStack results available at ' +
-              'https://www.browserstack.com/automate');
-          }
-        }
-        request(options, callback);
-
-        var jobStatus = update.passed ? 'completed' : 'error';
-        request(
-            {
-              url: 'https://www.browserstack.com/automate/sessions/' +
-                  session.getId() + '.json',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' +
-                    new Buffer(
-                        this.config_.browserstackUser + ':' +
-                        this.config_.browserstackKey)
-                        .toString('base64')
-              },
-              method: 'PUT',
-              form: {'status': jobStatus}
-            },
-            (error: Error) => {
-              if (error) {
-                throw new Error(
-                    'Error updating BrowserStack pass/fail status: ' +
-                    util.inspect(error));
-              }
-            });
-        deferred.resolve();
+        let options = {
+          hostname: 'www.browserstack.com',
+          port: 443,
+          path: '/automate/sessions/' + session.getId() + '.json',
+          method: 'PUT',
+          headers: headers
+        };
+        https
+            .request(
+                options,
+                (res) => {
+                  let responseStr = '';
+                  res.on('data', (data: Buffer) => {
+                    responseStr += data.toString();
+                  });
+                  res.on('end', () => {
+                    logger.info(responseStr);
+                    deferred.resolve();
+                  });
+                  res.on('error', (e: Error) => {
+                    throw new BrowserError(
+                        logger,
+                        'Error updating BrowserStack pass/fail status: ' +
+                            util.inspect(e));
+                  });
+                })
+            .write('{\'status\': ' + jobStatus + '}');
       });
       return deferred.promise;
     });

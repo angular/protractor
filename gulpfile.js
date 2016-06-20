@@ -5,6 +5,9 @@ var clangFormat = require('clang-format');
 var gulpFormat = require('gulp-clang-format');
 var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
+var fs = require('fs');
+var path = require('path');
+var glob = require('glob');
 
 var runSpawn = function(done, task, opt_arg) {
   opt_arg = typeof opt_arg !== 'undefined' ? opt_arg : [];
@@ -56,12 +59,53 @@ gulp.task('tsc', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence(['typings', 'jshint', 'clang'],'tsc', 'built:copy', done);
+  runSequence(['typings', 'jshint', 'clang'], 'tsc', 'types', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'clang'], 'tsc', 'built:copy', done);
+    ['webdriver:update', 'typings', 'jshint', 'clang'], 'tsc', 'types',
+    'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);
+
+gulp.task('types', function(done) {
+  var folder = 'built';
+  var files = ['ptor', 'browser', 'locators'];
+  var outputFile = path.resolve(folder, 'index.d.ts');
+  var contents = '';
+  files.forEach(file => {
+    contents += parseTypingsFile(folder, file);
+  });
+
+  // add module declaration
+  contents += 'declare module "protractor" {\n';
+  contents += '  export = protractor\n';
+  contents += '}\n';
+
+  // remove files with d.ts
+  glob.sync(folder + '/**/*.d.ts').forEach(file => {
+    fs.unlinkSync(path.resolve(file));
+  });
+
+  // write contents to 'built/index.d.ts'
+  fs.writeFileSync(outputFile, contents);
+  done();
+});
+
+var parseTypingsFile = function(folder, file) {
+  var fileContents = fs.readFileSync(path.resolve(folder, file + '.d.ts')).toString();
+  var lines = fileContents.split('\n');
+  var contents = '';
+  for (var linePos in lines) {
+    var line = lines[linePos];
+    if (!line.startsWith('import')) {
+      if (line.indexOf('export') !== -1) {
+        line = line.replace('export', '').trim();
+      }
+      contents += line + '\n';
+    }
+  }
+  return contents;
+}
