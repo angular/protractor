@@ -1,5 +1,6 @@
-import {protractor} from './ptor';
 import {ElementFinder} from './element';
+import {protractor} from './ptor';
+
 let webdriver = require('selenium-webdriver');
 
 /* globals browser */
@@ -44,7 +45,7 @@ let webdriver = require('selenium-webdriver');
  *
  * @constructor
  */
-export class ExpectedConditions {
+export class ExpectedConditions_ {
   /**
    * Negates the result of a promise.
    *
@@ -189,7 +190,8 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element.
    */
-  textToBePresentInElement(elementFinder: ElementFinder, text: string): Function {
+  textToBePresentInElement(elementFinder: ElementFinder, text: string):
+      Function {
     var hasText = () => {
       return elementFinder.getText().then((actualText: string): boolean => {
         return actualText.indexOf(text) > -1;
@@ -213,7 +215,8 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element's value.
    */
-  textToBePresentInElementValue(elementFinder: ElementFinder, text: string): Function {
+  textToBePresentInElementValue(elementFinder: ElementFinder, text: string):
+      Function {
     var hasText = () => {
       return elementFinder.getAttribute('value').then(
           (actualText: string): boolean => {

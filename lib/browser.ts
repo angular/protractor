@@ -4,7 +4,7 @@ import * as url from 'url';
 import * as util from 'util';
 
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
-import * as EC from './expectedConditions';
+import {ExpectedConditions_} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger2';
 import {Plugins} from './plugins';
@@ -28,6 +28,22 @@ let logger = new Logger('protractor');
  */
 for (let foo in webdriver) {
   exports[foo] = webdriver[foo];
+}
+
+// Explicitly define webdriver.WebDriver.
+export class Webdriver {
+  actions: () => webdriver.ActionSequence = webdriver.WebDriver.actions;
+  wait:
+      (condition: webdriver.promise.Promise|webdriver.util.Condition|Function,
+       opt_timeout?: number,
+       opt_message?:
+           string) => webdriver.promise.Promise = webdriver.WebDriver.wait;
+  sleep: (ms: number) => webdriver.promise.Promise = webdriver.WebDriver.sleep;
+  getCurrentUrl:
+      () => webdriver.promise.Promise = webdriver.WebDriver.getCurrentUrl;
+  getTitle: () => webdriver.promise.Promise = webdriver.WebDriver.getTitle;
+  takeScreenshot:
+      () => webdriver.promise.Promise = webdriver.WebDriver.takeScreenshot;
 }
 
 /**
@@ -85,7 +101,7 @@ function buildElementHelper(browser: Browser): ElementHelper {
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
-export class Browser {
+export class Browser extends Webdriver {
   /**
    * @type {ProtractorBy}
    */
@@ -94,7 +110,7 @@ export class Browser {
   /**
    * @type {ExpectedConditions}
    */
-  static ExpectedConditions = new EC.ExpectedConditions();
+  static ExpectedConditions = new ExpectedConditions_();
 
   /**
    * The wrapped webdriver instance. Use this to interact with pages that do
@@ -225,6 +241,7 @@ export class Browser {
   constructor(
       webdriverInstance: webdriver.WebDriver, opt_baseUrl?: string,
       opt_rootElement?: string, opt_untrackOutstandingTimeouts?: boolean) {
+    super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
     // include functions which are overridden by protractor below.
@@ -281,7 +298,7 @@ export class Browser {
    *
    * Set by the runner.
    *
-   * @return {q.Promise} A promise which resolves to the capabilities object.
+   * @return {webdriver.promise.Promise} A promise which resolves to the capabilities object.
    */
   getProcessedConfig: () => webdriver.promise.Promise;
 

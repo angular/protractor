@@ -2,13 +2,21 @@ import * as util from 'util';
 let webdriver: any = require('selenium-webdriver');
 let clientSideScripts: any = require('./clientsidescripts');
 
-/**
- * webdriver's By is an enum of locator functions, so we must set it to
- * a prototype before inheriting from it.
- */
-export class WebdriverBy {}
-WebdriverBy.prototype = webdriver.By;
+// Explicitly define webdriver.By.
+export class WebdriverBy {
+  className: (className: string) => Locator = webdriver.By.className;
+  css: (css: string) => Locator = webdriver.By.css;
+  id: (id: string) => Locator = webdriver.By.id;
+  linkText: (linkText: string) => Locator = webdriver.By.linkText;
+  js: (js: string) => Locator = webdriver.By.js;
+  name: (name: string) => Locator = webdriver.By.name;
+  partialLinkText:
+      (partialText: string) => Locator = webdriver.By.partialLinkText;
+  tagName: (tagName: string) => Locator = webdriver.By.tagName;
+  xpath: (xpath: string) => Locator = webdriver.By.xpath;
+}
 
+// Interface for webdriver.Locator.
 export interface Locator {
   findElementsOverride?:
       (driver: webdriver.WebDriver, using: webdriver.WebElement,
@@ -26,17 +34,6 @@ export interface Locator {
  */
 export class ProtractorBy extends WebdriverBy {
   [key: string]: any;
-
-  className: (className: string) => Locator = webdriver.By.className;
-  css: (css: string) => Locator = webdriver.By.css;
-  id: (id: string) => Locator = webdriver.By.id;
-  linkText: (linkText: string) => Locator = webdriver.By.linkText;
-  js: (js: string) => Locator = webdriver.By.js;
-  name: (name: string) => Locator = webdriver.By.name;
-  partialLinkText:
-      (partialText: string) => Locator = webdriver.By.partialLinkText;
-  tagName: (tagName: string) => Locator = webdriver.By.tagName;
-  xpath: (xpath: string) => Locator = webdriver.By.xpath;
 
   /**
    * Add a locator to this instance of ProtractorBy. This locator can then be
