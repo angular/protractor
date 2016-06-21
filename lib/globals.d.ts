@@ -22,7 +22,6 @@ declare namespace NodeJS {
     By: any;
     ExpectedConditions: any;
     DartObject: any;
-    ActionSequence: any;
     Command: any;
     CommandName: any;
     // Helper function added by the debugger in protractor.ps
