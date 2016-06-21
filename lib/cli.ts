@@ -89,25 +89,6 @@ if (argv.version) {
   process.exit(0);
 }
 
-// WebDriver capabilities properties require dot notation, but optimist parses
-// that into an object. Re-flatten it.
-function flattenObject(obj: any, prefix?: string, out?: any): any {
-  prefix = prefix || '';
-  out = out || {};
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      typeof obj[prop] === 'object' ?
-          flattenObject(obj[prop], prefix + prop + '.', out) :
-          out[prefix + prop] = obj[prop];
-    }
-  }
-  return out;
-};
-
-if (argv.capabilities) {
-  argv.capabilities = flattenObject(argv.capabilities);
-}
-
 /**
  * Helper to resolve comma separated lists of file pattern strings relative to
  * the cwd.
