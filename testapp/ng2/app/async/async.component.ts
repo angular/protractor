@@ -1,9 +1,8 @@
-import {bootstrap} from 'angular2/bootstrap';
-import {Component, NgZone} from 'angular2/core';
-import {NgIf} from 'angular2/common';
+import { Component, NgZone } from '@angular/core';
+import { NgIf } from '@angular/common';
 
 @Component({
-  templateUrl: 'app/async/async-component.html',
+  templateUrl: 'app/async/async.component.html',
   directives: [NgIf]
 })
 export class AsyncComponent {
