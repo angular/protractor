@@ -14,6 +14,7 @@
     "node_modules",
     "testapp",
     "website",
-    "typings/globals"
+    "typings/globals",
+    "scripts"
   ]
 }
