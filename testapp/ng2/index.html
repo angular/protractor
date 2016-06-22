@@ -7,27 +7,21 @@
     <title>Test App</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="styles.css">
-    <!-- IE required polyfills, in this exact order -->
-    <script src="lib/es6-shim/es6-shim.min.js"></script>
-    <script src="lib/systemjs/dist/system-polyfills.js"></script>
-
-    <script src="lib/angular2.0.0-beta.0/bundles/angular2-polyfills.js"></script>
-    <script src="lib/systemjs/dist/system.js"></script>
-    <script src="lib/typescript/lib/typescript.js"></script>
-    <script src="lib/rxjs/bundles/Rx.js"></script>
-    <script src="lib/angular2.0.0-beta.0/bundles/angular2.dev.js"></script>
-
-    <!-- Add the router library -->
-    <script src="lib/angular2.0.0-beta.0/bundles/router.js"></script>
-
+    <!-- 1. Load libraries -->
+     <!-- Polyfill(s) for older browsers -->
+    <script src="../node_modules/core-js/client/shim.min.js"></script>
+    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="../node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="../node_modules/zone.js/dist/zone.js"></script>
     <script>
-      System.config({
-        transpiler: 'typescript',
-        typescriptOptions: { emitDecoratorMetadata: true },
-        packages: {'app': {defaultExtension: 'ts'}}
+      System.import('system-config.js').then(function() {
+        System.import('app/main');
+      }).catch(function(err) {
+        console.log('error while importing');
+        console.log(err);
+        console.log(err.stack);
       });
-      System.import('app/boot')
-            .then(null, console.error.bind(console));
     </script>
   </head>
 
