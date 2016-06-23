@@ -72,7 +72,7 @@ gulp.task('default',['prepublish']);
 
 gulp.task('types', function(done) {
   var folder = 'built';
-  var files = ['ptor', 'browser', 'locators'];
+  var files = ['ptor', 'browser', 'element', 'locators', 'expectedConditions'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
   files.forEach(file => {
@@ -104,8 +104,29 @@ var parseTypingsFile = function(folder, file) {
       if (line.indexOf('export') !== -1) {
         line = line.replace('export', '').trim();
       }
+
+      // Remove webdriver types and plugins for now
+      line = removeTypes(line,'webdriver.ActionSequence');
+      line = removeTypes(line,'webdriver.promise.Promise');
+      line = removeTypes(line,'webdriver.util.Condition');
+      line = removeTypes(line,'webdriver.WebDriver');
+      line = removeTypes(line,'webdriver.Locator');
+      line = removeTypes(line,'webdriver.WebElement');
+      line = removeTypes(line,'Plugins');
       contents += line + '\n';
     }
+
   }
   return contents;
+}
+
+var removeTypes = function(line, webdriverType) {
+  var tempLine = line.trim();
+  if (tempLine.startsWith('/**') || tempLine.startsWith('*')) {
+    return line;
+  }
+  if (line.indexOf(webdriverType) !== -1) {
+    return line.replace(new RegExp(webdriverType,'g'), 'any');
+  }
+  return line;
 }

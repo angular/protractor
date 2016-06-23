@@ -40,6 +40,8 @@ var passingTests = [
   'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
+  // Typings tests
+  'node scripts/typings_tests/test_typings.js'
 ];
 
 var executor = new Executor();

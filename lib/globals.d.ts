@@ -22,7 +22,6 @@ declare namespace NodeJS {
     By: any;
     ExpectedConditions: any;
     DartObject: any;
-    ActionSequence: any;
     Command: any;
     CommandName: any;
     // Helper function added by the debugger in protractor.ps
@@ -35,6 +34,9 @@ declare interface String { startsWith: Function; }
 
 declare namespace webdriver {
   var error: any;
+
+  class ActionSequence {}
+
   class WebDriver {
     findElements: Function;
     getSession: Function;
@@ -60,11 +62,16 @@ declare namespace webdriver {
     getCapabilities: Function;
   }
 
-  class Promise {
+  namespace promise {
+  interface Promise {
     controlFlow: Function;
     then: Function;
   }
+  }
 
+  namespace util {
+  interface Condition {}
+  }
   class Capabilities {
     get: Function;
   }

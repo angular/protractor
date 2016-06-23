@@ -1,4 +1,6 @@
+import {ElementFinder} from './element';
 import {protractor} from './ptor';
+
 let webdriver = require('selenium-webdriver');
 
 /* globals browser */
@@ -43,7 +45,7 @@ let webdriver = require('selenium-webdriver');
  *
  * @constructor
  */
-export class ExpectedConditions {
+export class ExpectedConditions_ {
   /**
    * Negates the result of a promise.
    *
@@ -167,7 +169,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the element is clickable.
    */
-  elementToBeClickable(elementFinder: any): Function {
+  elementToBeClickable(elementFinder: ElementFinder): Function {
     return this.and(
         this.visibilityOf(elementFinder),
         elementFinder.isEnabled.bind(elementFinder));
@@ -188,7 +190,8 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element.
    */
-  textToBePresentInElement(elementFinder: any, text: string): Function {
+  textToBePresentInElement(elementFinder: ElementFinder, text: string):
+      Function {
     var hasText = () => {
       return elementFinder.getText().then((actualText: string): boolean => {
         return actualText.indexOf(text) > -1;
@@ -212,7 +215,8 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element's value.
    */
-  textToBePresentInElementValue(elementFinder: any, text: string): Function {
+  textToBePresentInElementValue(elementFinder: ElementFinder, text: string):
+      Function {
     var hasText = () => {
       return elementFinder.getAttribute('value').then(
           (actualText: string): boolean => {
@@ -307,7 +311,7 @@ export class ExpectedConditions {
           (actualUrl: string): boolean => { return actualUrl === url; });
     };
   }
-  
+
   /**
    * An expectation for checking that an element is present on the DOM
    * of a page. This does not necessarily mean that the element is visible.
@@ -323,7 +327,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the element is present.
    */
-  presenceOf(elementFinder: any): Function {
+  presenceOf(elementFinder: ElementFinder): Function {
     return elementFinder.isPresent.bind(elementFinder);
   };
 
@@ -341,7 +345,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the element is stale.
    */
-  stalenessOf(elementFinder: any): Function {
+  stalenessOf(elementFinder: ElementFinder): Function {
     return this.not(this.presenceOf(elementFinder));
   }
 
@@ -361,7 +365,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the element is visible.
    */
-  visibilityOf(elementFinder: any): Function {
+  visibilityOf(elementFinder: ElementFinder): Function {
     return this.and(
         this.presenceOf(elementFinder),
         elementFinder.isDisplayed.bind(elementFinder));
@@ -381,7 +385,7 @@ export class ExpectedConditions {
    * @return {!function} An expected condition that returns a promise
    *     representing whether the element is invisible.
    */
-  invisibilityOf(elementFinder: any): Function {
+  invisibilityOf(elementFinder: ElementFinder): Function {
     return this.not(this.visibilityOf(elementFinder));
   }
 
@@ -398,7 +402,7 @@ export class ExpectedConditions {
  * @return {!function} An expected condition that returns a promise
  *     representing whether the element is selected.
  */
-  elementToBeSelected(elementFinder: any): Function {
+  elementToBeSelected(elementFinder: ElementFinder): Function {
     return this.and(
         this.presenceOf(elementFinder),
         elementFinder.isSelected.bind(elementFinder));
