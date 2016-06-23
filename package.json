@@ -57,7 +57,7 @@
     "pretest": "gulp pretest",
     "start": "node testapp/scripts/web-server.js",
     "test": "node scripts/test.js",
-    "testapp": "cd testapp && npm install",
+    "install_testapp": "cd testapp && npm install",
     "tsc": "./node_modules/typescript/bin/tsc",
     "tsc:w": "./node_modules/typescript/bin/tsc -w"
   },
