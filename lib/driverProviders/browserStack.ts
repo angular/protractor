@@ -43,7 +43,7 @@ export class BrowserStack extends DriverProvider {
           headers: headers
         };
 
-        var req = https.request(options, (res) => {
+        let req = https.request(options, (res) => {
           res.on('data', (data: Buffer) => {
             var info = JSON.parse(data.toString());
             if (info && info.automation_session && info.automation_session.browser_url){
@@ -63,14 +63,8 @@ export class BrowserStack extends DriverProvider {
             'BrowserStack results available at ' +
             'https://www.browserstack.com/automate');
         });
-        var jobStatus = update.passed ? 'completed' : 'error';
-        options = {
-          hostname: 'www.browserstack.com',
-          port: 443,
-          path: '/automate/sessions/' + session.getId() + '.json',
-          method: 'PUT',
-          headers: headers
-        };
+        let jobStatus = update.passed ? 'completed' : 'error';
+        options.method  = 'PUT';
         https
             .request(
                 options,
