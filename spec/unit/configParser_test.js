@@ -26,6 +26,7 @@ describe('the config parser', function() {
       } catch (err) {
         errorFound = true;
         expect(err.code).toEqual(ConfigError.CODE);
+        expect(err.stack).toMatch('Cannot find module');
       }
       expect(errorFound).toBe(true);
     });
@@ -38,6 +39,7 @@ describe('the config parser', function() {
       } catch (err) {
         errorFound = true;
         expect(err.code).toEqual(ConfigError.CODE);
+        expect(err.stack).toMatch('did not export a config object');
       }
       expect(errorFound).toBe(true);
     });
@@ -52,6 +54,7 @@ describe('the config parser', function() {
       } catch (err) {
         errorFound = true;
         expect(err.code).toEqual(ConfigError.CODE);
+        expect(err.stack).toMatch('Unknown test suite: foo.js');
       }
       expect(errorFound).toBe(true);
     });

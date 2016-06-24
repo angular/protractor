@@ -198,7 +198,7 @@ export class ConfigParser {
       fileConfig = require(filePath).config;
     } catch (e) {
       throw new ConfigError(
-          logger, 'failed loading configuration file ' + filename);
+          logger, 'failed loading configuration file ' + filename, e);
     }
     if (!fileConfig) {
       throw new ConfigError(

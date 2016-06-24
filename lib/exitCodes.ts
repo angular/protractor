@@ -22,11 +22,17 @@ export class ProtractorError extends Error {
     (Error as any).captureStackTrace(this, this.constructor);
   }
 
-  constructor(logger: Logger, message: string, code: number) {
+  constructor(logger: Logger, message: string, code: number, error?: Error) {
     super(message);
     this.message = message;
     this.code = code;
     this.captureStackTrace();
+
+    // replacing the stack trace with the thrown error stack trace.
+    if (error) {
+      let protractorError = error as ProtractorError;
+      this.stack = protractorError.stack;
+    }
     this.logError(logger);
 
     if (!ProtractorError.SUPRESS_EXIT_CODE) {
@@ -54,8 +60,8 @@ export class ProtractorError extends Error {
  */
 export class ConfigError extends ProtractorError {
   static CODE = CONFIG_ERROR_CODE;
-  constructor(logger: Logger, message: string) {
-    super(logger, message, ConfigError.CODE);
+  constructor(logger: Logger, message: string, error?: Error) {
+    super(logger, message, ConfigError.CODE, error);
   }
 }
 
