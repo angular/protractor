@@ -1,5 +1,6 @@
 /// <reference path="../../built/index.d.ts" />
-import {browser} from 'protractor';
+import {Browser} from 'protractor';
+let browser: Browser;
 browser.getProcessedConfig(0);
 browser.getProcessedConfig('1');
 browser.getProcessedConfig(true);

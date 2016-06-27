@@ -1,5 +1,7 @@
 /// <reference path="../../built/index.d.ts" />
-import {by, By} from 'protractor';
+import {ProtractorBy} from 'protractor';
+let by: ProtractorBy;
+let By: ProtractorBy;
 by.addLocator(0, () => {});
 by.addLocator(() => {}, () => {});
 by.addLocator('', () => {}, () => {});

@@ -1,5 +1,9 @@
 /// <reference path="../../built/index.d.ts" />
-import {element, by, $, $$} from 'protractor';
+import {ElementArrayFinder, ElementFinder, ElementHelper, ProtractorBy} from 'protractor';
+let element: ElementHelper;
+let by: ProtractorBy;
+let $: (search: string) => ElementFinder;
+let $$: (search: string) => ElementArrayFinder;
 element.all(by.css('')).clone('clone');
 element.all(by.css('')).clone(1);
 element.all(by.css('')).clone(false);
