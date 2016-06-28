@@ -49,7 +49,9 @@ export function runFilenameOrFn_(
     }
     if (typeof filenameOrFn === 'function') {
       let results = when(filenameOrFn.apply(null, args), null, (err) => {
-        err.stack = exports.filterStackTrace(err.stack);
+        if (err.stack) {
+          err.stack = exports.filterStackTrace(err.stack);
+        }
         throw err;
       });
       resolvePromise(results);
