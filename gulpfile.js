@@ -72,12 +72,14 @@ gulp.task('default',['prepublish']);
 
 gulp.task('types', function(done) {
   var folder = 'built';
-  var files = ['ptor', 'browser', 'element', 'locators', 'expectedConditions'];
+  var files = ['browser', 'element', 'locators', 'expectedConditions'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
+  contents += 'declare namespace protractor {\n';
   files.forEach(file => {
     contents += parseTypingsFile(folder, file);
   });
+  contents += '}\n';
 
   // add module declaration
   contents += 'declare module "protractor" {\n';
@@ -104,6 +106,9 @@ var parseTypingsFile = function(folder, file) {
       if (line.indexOf('export') !== -1) {
         line = line.replace('export', '').trim();
       }
+      if (line.indexOf('declare') !== -1) {
+        line = line.replace('declare', '').trim();
+      }
 
       // Remove webdriver types and plugins for now
       line = removeTypes(line,'webdriver.ActionSequence');
@@ -115,7 +120,6 @@ var parseTypingsFile = function(folder, file) {
       line = removeTypes(line,'Plugins');
       contents += line + '\n';
     }
-
   }
   return contents;
 }

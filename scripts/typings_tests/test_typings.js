@@ -75,10 +75,10 @@ var testPassing = function(file) {
 
 
 // The tests:
-testFailures('test_fail_elements.ts', 3, 478);
-testFailures('test_fail_browser.ts', 3, 93);
-testFailures('test_fail_expected_conditions.ts', 3, 24);
-testFailures('test_fail_by.ts', 3, 207);
+testFailures('test_fail_browser.ts', 4, 94);
+testFailures('test_fail_by.ts', 5, 209);
+testFailures('test_fail_elements.ts', 7, 482);
+testFailures('test_fail_expected_conditions.ts', 4, 25);
 testPassing('test_pass.ts');
 
 // Test evaluation and exiting:
