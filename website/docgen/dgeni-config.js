@@ -71,8 +71,8 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
   readFilesProcessor.basePath = path.resolve(__dirname, '../..');
 
   readFilesProcessor.sourceFiles = [
+    {include: 'built/browser.js'},
     {include: 'built/element.js'},
-    {include: 'built/protractor.js'},
     {include: 'built/locators.js'},
     {include: 'built/expectedConditions.js'},
     {include: 'lib/selenium-webdriver/locators.js'},
