@@ -1,6 +1,6 @@
 /// <reference path="../../built/index.d.ts" />
-import {ExpectedConditions_} from 'protractor';
-let ExpectedConditions: ExpectedConditions_;
+import {ProtractorExpectedConditions} from 'protractor';
+let ExpectedConditions: ProtractorExpectedConditions;
 ExpectedConditions.not(0);
 ExpectedConditions.not('1');
 ExpectedConditions.not(true);

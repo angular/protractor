@@ -1,6 +1,6 @@
 import {Browser, ElementHelper} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
-import {ExpectedConditions_} from './expectedConditions';
+import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';
 
 let webdriver = require('selenium-webdriver');
@@ -17,7 +17,7 @@ export let element: ElementHelper;
 export let By: ProtractorBy;
 export let by: ProtractorBy;
 export let wrapDriver: Function;
-export let ExpectedConditions: ExpectedConditions_;
+export let ExpectedConditions: ProtractorExpectedConditions;
 
 // Define selenium webdriver imports.
 export let promise = {
