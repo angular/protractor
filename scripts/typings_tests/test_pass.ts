@@ -1,12 +1,12 @@
 /// <reference path="../../built/index.d.ts" />
-import {Browser, ElementArrayFinder, ElementFinder, ElementHelper, ExpectedConditions_, ProtractorBy} from 'protractor';
+import {Browser, ElementArrayFinder, ElementFinder, ElementHelper, Expected_Conditions, ProtractorBy} from 'protractor';
 let browser: Browser;
 let by: ProtractorBy;
 let By: ProtractorBy;
 let element: ElementHelper;
 let $: (search: string) => ElementFinder;
 let $$: (search: string) => ElementArrayFinder;
-let ExpectedConditions: ExpectedConditions_;
+let ExpectedConditions: Expected_Conditions;
 element.all(by.css('')).clone();
 element.all(by.css('')).then(() => {}, () => {});  // this is not appearing on the website
 element.all(by.css('')).filter(() => {});

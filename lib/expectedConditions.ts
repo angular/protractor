@@ -43,9 +43,10 @@ let webdriver = require('selenium-webdriver');
  * browser.wait(condition, 5000); //wait for condition to be true.
  * button.click();
  *
+ * @alias ExpectedConditions
  * @constructor
  */
-export class ExpectedConditions_ {
+export class Expected_Conditions {
   /**
    * Negates the result of a promise.
    *
@@ -55,6 +56,7 @@ export class ExpectedConditions_ {
    * // Waits for title to become something besides 'foo'.
    * browser.wait(titleIsNotFoo, 5000);
    *
+   * @alias ExpectedConditions.not
    * @param {!function} expectedCondition
    *
    * @return {!function} An expected condition that returns the negated value.
@@ -105,6 +107,7 @@ export class ExpectedConditions_ {
    * // Waits for title to contain 'Foo', but is not 'FooBar'
    * browser.wait(EC.and(titleContainsFoo, titleIsNotFooBar), 5000);
    *
+   * @alias ExpectedConditions.and
    * @param {Array.<Function>} fns An array of expected conditions to 'and' together.
    *
    * @return {!function} An expected condition that returns a promise which
@@ -116,6 +119,7 @@ export class ExpectedConditions_ {
    * Chain a number of expected conditions using logical_or, short circuiting
    * at the first expected condition that evaluates to true.
    *
+   * @alias ExpectedConditions.or
    * @example
    * var EC = protractor.ExpectedConditions;
    * var titleContainsFoo = EC.titleContains('Foo');
@@ -138,6 +142,7 @@ export class ExpectedConditions_ {
    * // Waits for an alert pops up.
    * browser.wait(EC.alertIsPresent(), 5000);
    *
+   * @alias ExpectedConditions.alertIsPresent
    * @return {!function} An expected condition that returns a promise
    *     representing whether an alert is present.
    */
@@ -164,6 +169,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'abc' to be clickable.
    * browser.wait(EC.elementToBeClickable($('#abc')), 5000);
    *
+   * @alias ExpectedConditions.elementToBeClickable
    * @param {!ElementFinder} elementFinder The element to check
    *
    * @return {!function} An expected condition that returns a promise
@@ -184,6 +190,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'abc' to contain the text 'foo'.
    * browser.wait(EC.textToBePresentInElement($('#abc'), 'foo'), 5000);
    *
+   * @alias ExpectedConditions.textToBePresentInElement
    * @param {!ElementFinder} elementFinder The element to check
    * @param {!string} text The text to verify against
    *
@@ -209,6 +216,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'myInput' to contain the input 'foo'.
    * browser.wait(EC.textToBePresentInElementValue($('#myInput'), 'foo'), 5000);
    *
+   * @alias ExpectedConditions.textToBePresentInElement
    * @param {!ElementFinder} elementFinder The element to check
    * @param {!string} text The text to verify against
    *
@@ -235,6 +243,7 @@ export class ExpectedConditions_ {
    * // Waits for the title to contain 'foo'.
    * browser.wait(EC.titleContains('foo'), 5000);
    *
+   * @alias ExpectedConditions.titleContains
    * @param {!string} title The fragment of title expected
    *
    * @return {!function} An expected condition that returns a promise
@@ -257,6 +266,7 @@ export class ExpectedConditions_ {
    * // Waits for the title to be 'foo'.
    * browser.wait(EC.titleIs('foo'), 5000);
    *
+   * @alias ExpectedConditions.titleIs
    * @param {!string} title The expected title, which must be an exact match.
    *
    * @return {!function} An expected condition that returns a promise
@@ -278,6 +288,7 @@ export class ExpectedConditions_ {
    * // Waits for the URL to contain 'foo'.
    * browser.wait(EC.urlContains('foo'), 5000);
    *
+   * @alias ExpectedConditions.urlContains
    * @param {!string} url The fragment of URL expected
    *
    * @return {!function} An expected condition that returns a promise
@@ -300,6 +311,7 @@ export class ExpectedConditions_ {
    * // Waits for the URL to be 'foo'.
    * browser.wait(EC.urlIs('foo'), 5000);
    *
+   * @alias ExpectedConditions.urlIs
    * @param {!string} url The expected URL, which must be an exact match.
    *
    * @return {!function} An expected condition that returns a promise
@@ -322,6 +334,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'abc' to be present on the dom.
    * browser.wait(EC.presenceOf($('#abc')), 5000);
    *
+   * @alias ExpectedConditions.presenceOf
    * @param {!ElementFinder} elementFinder The element to check
    *
    * @return {!function} An expected condition that returns a promise
@@ -340,6 +353,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'abc' to be no longer present on the dom.
    * browser.wait(EC.stalenessOf($('#abc')), 5000);
    *
+   * @alias ExpectedConditions.stalenessOf
    * @param {!ElementFinder} elementFinder The element to check
    *
    * @return {!function} An expected condition that returns a promise
@@ -360,6 +374,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'abc' to be visible on the dom.
    * browser.wait(EC.visibilityOf($('#abc')), 5000);
    *
+   * @alias ExpectedConditions.visibilityOf
    * @param {!ElementFinder} elementFinder The element to check
    *
    * @return {!function} An expected condition that returns a promise
@@ -380,6 +395,7 @@ export class ExpectedConditions_ {
    * // Waits for the element with id 'abc' to be no longer visible on the dom.
    * browser.wait(EC.invisibilityOf($('#abc')), 5000);
    *
+   * @alias ExpectedConditions.invisibilityOf
    * @param {!ElementFinder} elementFinder The element to check
    *
    * @return {!function} An expected condition that returns a promise
@@ -397,6 +413,7 @@ export class ExpectedConditions_ {
  * // Waits for the element with id 'myCheckbox' to be selected.
  * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
  *
+ * @alias ExpectedConditions.elementToBeSelected
  * @param {!ElementFinder} elementFinder The element to check
  *
  * @return {!function} An expected condition that returns a promise
