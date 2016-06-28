@@ -119,7 +119,7 @@ export class ProtractorBy extends WebdriverBy {
    * var deprecatedSyntax = element(by.binding('{{person.name}}'));
    *
    * @param {string} bindingDescriptor
-   * @return {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
    */
   binding(bindingDescriptor: string): Locator {
     return {
@@ -151,7 +151,7 @@ export class ProtractorBy extends WebdriverBy {
    * expect(element(by.exactBinding('phone')).isPresent()).toBe(false);
    *
    * @param {string} bindingDescriptor
-   * @return {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
    */
   exactBinding(bindingDescriptor: string): Locator {
     return {
@@ -200,7 +200,7 @@ export class ProtractorBy extends WebdriverBy {
    * element(by.buttonText('Save'));
    *
    * @param {string} searchText
-   * @return {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
    */
   buttonText(searchText: string): Locator {
     return {
@@ -225,7 +225,7 @@ export class ProtractorBy extends WebdriverBy {
    * element(by.partialButtonText('Save'));
    *
    * @param {string} searchText
-   * @return {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
    */
   partialButtonText(searchText: string): Locator {
     return {
@@ -358,7 +358,7 @@ export class ProtractorBy extends WebdriverBy {
    * var divs = element.all(by.repeater('book in library'));
    *
    * @param {string} repeatDescriptor
-   * @return {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
    */
   repeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(false, repeatDescriptor);
@@ -378,7 +378,7 @@ export class ProtractorBy extends WebdriverBy {
    * expect(element(by.exactRepeater('car in cars')).isPresent()).toBe(true);
    *
    * @param {string} repeatDescriptor
-   * @return {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
    */
   exactRepeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(true, repeatDescriptor);

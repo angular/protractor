@@ -57,7 +57,7 @@ export class ExpectedConditions_ {
    *
    * @param {!function} expectedCondition
    *
-   * @return {!function} An expected condition that returns the negated value.
+   * @returns {!function} An expected condition that returns the negated value.
    */
   not(expectedCondition: Function): Function {
     return (): Function => {
@@ -74,7 +74,7 @@ export class ExpectedConditions_ {
    * @param {boolean} defaultRet
    * @param {Array.<Function>} fns An array of expected conditions to chain.
    *
-   * @return {!function} An expected condition that returns a promise which
+   * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical chain.
    */
   logicalChain_(defaultRet: boolean, fns: Array<Function>): Function {
@@ -107,7 +107,7 @@ export class ExpectedConditions_ {
    *
    * @param {Array.<Function>} fns An array of expected conditions to 'and' together.
    *
-   * @return {!function} An expected condition that returns a promise which
+   * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical and.
    */
   and(...args: Function[]): Function { return this.logicalChain_(true, args); }
@@ -125,7 +125,7 @@ export class ExpectedConditions_ {
    *
    * @param {Array.<Function>} fns An array of expected conditions to 'or' together.
    *
-   * @return {!function} An expected condition that returns a promise which
+   * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical or.
    */
   or(...args: Function[]): Function { return this.logicalChain_(false, args); }
@@ -138,7 +138,7 @@ export class ExpectedConditions_ {
    * // Waits for an alert pops up.
    * browser.wait(EC.alertIsPresent(), 5000);
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether an alert is present.
    */
   alertIsPresent(): Function {
@@ -166,7 +166,7 @@ export class ExpectedConditions_ {
    *
    * @param {!ElementFinder} elementFinder The element to check
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is clickable.
    */
   elementToBeClickable(elementFinder: ElementFinder): Function {
@@ -187,7 +187,7 @@ export class ExpectedConditions_ {
    * @param {!ElementFinder} elementFinder The element to check
    * @param {!string} text The text to verify against
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element.
    */
   textToBePresentInElement(elementFinder: ElementFinder, text: string):
@@ -212,7 +212,7 @@ export class ExpectedConditions_ {
    * @param {!ElementFinder} elementFinder The element to check
    * @param {!string} text The text to verify against
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element's value.
    */
   textToBePresentInElementValue(elementFinder: ElementFinder, text: string):
@@ -237,7 +237,7 @@ export class ExpectedConditions_ {
    *
    * @param {!string} title The fragment of title expected
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the title contains the string.
    */
   titleContains(title: string): Function {
@@ -259,7 +259,7 @@ export class ExpectedConditions_ {
    *
    * @param {!string} title The expected title, which must be an exact match.
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the title equals the string.
    */
   titleIs(title: string): Function {
@@ -280,7 +280,7 @@ export class ExpectedConditions_ {
    *
    * @param {!string} url The fragment of URL expected
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the URL contains the string.
    */
   urlContains(url: string): Function {
@@ -302,7 +302,7 @@ export class ExpectedConditions_ {
    *
    * @param {!string} url The expected URL, which must be an exact match.
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the url equals the string.
    */
   urlIs(url: string): Function {
@@ -324,7 +324,7 @@ export class ExpectedConditions_ {
    *
    * @param {!ElementFinder} elementFinder The element to check
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is present.
    */
   presenceOf(elementFinder: ElementFinder): Function {
@@ -342,7 +342,7 @@ export class ExpectedConditions_ {
    *
    * @param {!ElementFinder} elementFinder The element to check
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is stale.
    */
   stalenessOf(elementFinder: ElementFinder): Function {
@@ -362,7 +362,7 @@ export class ExpectedConditions_ {
    *
    * @param {!ElementFinder} elementFinder The element to check
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is visible.
    */
   visibilityOf(elementFinder: ElementFinder): Function {
@@ -382,7 +382,7 @@ export class ExpectedConditions_ {
    *
    * @param {!ElementFinder} elementFinder The element to check
    *
-   * @return {!function} An expected condition that returns a promise
+   * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is invisible.
    */
   invisibilityOf(elementFinder: ElementFinder): Function {
@@ -399,7 +399,7 @@ export class ExpectedConditions_ {
  *
  * @param {!ElementFinder} elementFinder The element to check
  *
- * @return {!function} An expected condition that returns a promise
+ * @returns {!function} An expected condition that returns a promise
  *     representing whether the element is selected.
  */
   elementToBeSelected(elementFinder: ElementFinder): Function {

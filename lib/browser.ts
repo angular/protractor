@@ -75,7 +75,7 @@ export interface ElementHelper extends Function {
  *
  * @private
  * @param {Protractor} ptor
- * @return {function(webdriver.Locator): ElementFinder}
+ * @returns {function(webdriver.Locator): ElementFinder}
  */
 function buildElementHelper(browser: Browser): ElementHelper {
   let element: ElementHelper = (locator: Locator) => {
@@ -298,7 +298,7 @@ export class Browser extends Webdriver {
    *
    * Set by the runner.
    *
-   * @return {webdriver.promise.Promise} A promise which resolves to the capabilities object.
+   * @returns {webdriver.promise.Promise} A promise which resolves to the capabilities object.
    */
   getProcessedConfig: () => webdriver.promise.Promise;
 
@@ -309,7 +309,7 @@ export class Browser extends Webdriver {
    *
    * @param {boolean} opt_useSameUrl Whether to navigate to current url on creation
    * @param {boolean} opt_copyMockModules Whether to apply same mock modules on creation
-   * @return {Protractor} a protractor instance.
+   * @returns {Protractor} a protractor instance.
    */
   forkNewDriverInstance:
       (opt_useSameUrl?: boolean, opt_copyMockModules?: boolean) => Browser;
@@ -340,7 +340,7 @@ export class Browser extends Webdriver {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
-   * @return {!webdriver.promise.Promise.<T>} A promise that will resolve to the
+   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to the
    *    scripts return value.
    * @template T
    */
@@ -366,7 +366,7 @@ export class Browser extends Webdriver {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description for debugging purposes.
    * @param {...*} var_args The arguments to pass to the script.
-   * @return {!webdriver.promise.Promise.<T>} A promise that will resolve to the
+   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to the
    *    scripts return value.
    * @template T
    */
@@ -391,7 +391,7 @@ export class Browser extends Webdriver {
    *
    * @param {string=} opt_description An optional description to be added
    *     to webdriver logs.
-   * @return {!webdriver.promise.Promise} A promise that will resolve to the
+   * @returns {!webdriver.promise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
   waitForAngular(opt_description?: string): webdriver.promise.Promise {
@@ -515,7 +515,8 @@ export class Browser extends Webdriver {
   /**
    * Waits for Angular to finish rendering before searching for elements.
    * @see webdriver.WebDriver.findElement
-   * @return {!webdriver.WebElement}
+   * @returns {!webdriver.promise.Promise} A promise that will be resolved to
+   *      the located {@link webdriver.WebElement}.
    */
   findElement(locator: Locator): webdriver.WebElement {
     return this.element(locator).getWebElement();
@@ -524,7 +525,7 @@ export class Browser extends Webdriver {
   /**
    * Waits for Angular to finish rendering before searching for elements.
    * @see webdriver.WebDriver.findElements
-   * @return {!webdriver.promise.Promise} A promise that will be resolved to an
+   * @returns {!webdriver.promise.Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
   findElements(locator: Locator): webdriver.promise.Promise {
@@ -534,7 +535,7 @@ export class Browser extends Webdriver {
   /**
    * Tests if an element is present on the page.
    * @see webdriver.WebDriver.isElementPresent
-   * @return {!webdriver.promise.Promise} A promise that will resolve to whether
+   * @returns {!webdriver.promise.Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
   isElementPresent(locatorOrElement: webdriver.Locator|
@@ -594,7 +595,7 @@ export class Browser extends Webdriver {
   /**
    * Get a list of the current mock modules.
    *
-   * @return {Array.<!string|Function>}
+   * @returns {Array.<!string|Function>} The list of mock modules.
    */
   getRegisteredMockModules(): Array<string|Function> {
     return this.mockModules_.map((module) => { return module.script; });
@@ -853,7 +854,7 @@ export class Browser extends Webdriver {
    *     .toBe('http://angular.github.io/protractor/#/api');
    *
    * @param {string} url In page URL using the same syntax as $location.url()
-   * @return {!webdriver.promise.Promise} A promise that will resolve once
+   * @returns {!webdriver.promise.Promise} A promise that will resolve once
    *    page has been changed.
    */
   setLocation(url: string): webdriver.promise.Promise {
@@ -877,6 +878,7 @@ export class Browser extends Webdriver {
    * browser.get('http://angular.github.io/protractor/#/api');
    * expect(browser.getLocationAbsUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
+   * @returns {string} The current absolute url from AngularJS.
    */
   getLocationAbsUrl(): webdriver.promise.Promise {
     this.waitForAngular();
@@ -918,7 +920,7 @@ export class Browser extends Webdriver {
    * already be bound to the debugger, so it will not be available, but that is
    * okay.
    *
-   * @return {Promise<boolean>} A promise that becomes ready when the validation
+   * @returns {Promise<boolean>} A promise that becomes ready when the validation
    *     is done. The promise will resolve to a boolean which represents whether
    *     this is the first time that the debugger is called.
    */
@@ -1206,13 +1208,13 @@ export class Browser extends Webdriver {
   }
 
   /**
-   * Create a new instance of Protractor by wrapping a webdriver instance.
+   * Create a new instance of Browser by wrapping a webdriver instance.
    *
    * @param {webdriver.WebDriver} webdriver The configured webdriver instance.
    * @param {string=} opt_baseUrl A URL to prepend to relative gets.
-   * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
+   * @param {boolean=} opt_untrackOutstandingTimeouts Whether Browser should
    *     stop tracking outstanding $timeouts.
-   * @return {Protractor}
+   * @returns {Browser} a new Browser instance
    */
   static wrapDriver(
       webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,

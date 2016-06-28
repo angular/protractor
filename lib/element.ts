@@ -91,7 +91,7 @@ export class WebdriverWebElement {
  * @param {Array.<webdriver.promise.Promise>} opt_actionResults An array
  *    of promises which will be retrieved with then. Resolves to the latest
  *    action result, or null if no action has been called.
- * @return {ElementArrayFinder}
+ * @returns {ElementArrayFinder}
  */
 export class ElementArrayFinder extends WebdriverWebElement {
   getWebElements: Function;
@@ -118,7 +118,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   /**
    * Create a shallow copy of ElementArrayFinder.
    *
-   * @return {!ElementArrayFinder} A shallow copy of this.
+   * @returns {!ElementArrayFinder} A shallow copy of this.
    */
   clone(): ElementArrayFinder {
     // A shallow copy is all we need since the underlying fields can never be
@@ -158,7 +158,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * expect(nonexistent.getText()).toEqual([''])
    *
    * @param {webdriver.Locator} subLocator
-   * @return {ElementArrayFinder}
+   * @returns {ElementArrayFinder}
    */
   all(locator: Locator): ElementArrayFinder {
     let ptor = this.browser_;
@@ -230,7 +230,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @param {function(ElementFinder, number): webdriver.WebElement.Promise} filterFn
    *     Filter function that will test if an element should be returned.
    *     filterFn can either return a boolean or a promise that resolves to a boolean
-   * @return {!ElementArrayFinder} A ElementArrayFinder that represents an array
+   * @returns {!ElementArrayFinder} A ElementArrayFinder that represents an array
    *     of element that satisfy the filter function.
    */
   filter(filterFn: Function): ElementArrayFinder {
@@ -273,7 +273,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * expect(list.get(1).getText()).toBe('Second');
    *
    * @param {number|webdriver.promise.Promise} index Element index.
-   * @return {ElementFinder} finder representing element at the given index.
+   * @returns {ElementFinder} finder representing element at the given index.
    */
   get(index: number): ElementFinder {
     let getWebElements = () => {
@@ -317,7 +317,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * let first = element.all(by.css('.items li')).first();
    * expect(first.getText()).toBe('First');
    *
-   * @return {ElementFinder} finder representing the first matching element
+   * @returns {ElementFinder} finder representing the first matching element
    */
   first(): ElementFinder { return this.get(0); };
 
@@ -337,7 +337,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * let last = element.all(by.css('.items li')).last();
    * expect(last.getText()).toBe('Third');
    *
-   * @return {ElementFinder} finder representing the last matching element
+   * @returns {ElementFinder} finder representing the last matching element
    */
   last(): ElementFinder { return this.get(-1); }
 
@@ -354,7 +354,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * Returns an ElementFinder representation of ElementArrayFinder. It ensures
    * that the ElementArrayFinder resolves to one and only one underlying element.
    *
-   * @return {ElementFinder} An ElementFinder representation
+   * @returns {ElementFinder} An ElementFinder representation
    * @private
    */
   toElementFinder_(): ElementFinder {
@@ -376,7 +376,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * let list = element.all(by.css('.items li'));
    * expect(list.count()).toBe(3);
    *
-   * @return {!webdriver.promise.Promise} A promise which resolves to the
+   * @returns {!webdriver.promise.Promise} A promise which resolves to the
    *     number of elements matching the locator.
    */
   count(): webdriver.promise.Promise {
@@ -404,7 +404,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * // returns by.css('#ID1')
    * $$('#ID1').filter(filterFn).get(0).click().locator()
    *
-   * @return {webdriver.Locator}
+   * @returns {webdriver.Locator}
    */
   locator(): Locator { return this.locator_; }
 
@@ -414,7 +414,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @param {function(ElementFinder)} actionFn
    *
-   * @return {ElementArrayFinder}
+   * @returns {ElementArrayFinder}
    * @private
    */
   applyAction_(actionFn: Function): ElementArrayFinder {
@@ -436,7 +436,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   /**
    * Represents the ElementArrayFinder as an array of ElementFinders.
    *
-   * @return {Array.<ElementFinder>} Return a promise, which resolves to a list
+   * @returns {Array.<ElementFinder>} Return a promise, which resolves to a list
    *     of ElementFinders specified by the locator.
    */
   asElementFinders_(): webdriver.promise.Promise {
@@ -469,7 +469,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @param {function(Array.<ElementFinder>)} fn
    * @param {function(Error)} errorFn
    *
-   * @return {!webdriver.promise.Promise} A promise which will resolve to
+   * @returns {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
   then(fn: Function, errorFn: Function): webdriver.promise.Promise {
@@ -502,7 +502,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @param {function(ElementFinder)} fn Input function
    *
-   * @return {!webdriver.promise.Promise} A promise that will resolve when the
+   * @returns {!webdriver.promise.Promise} A promise that will resolve when the
    *     function has been called on all the ElementFinders. The promise will
    *     resolve to null.
    */
@@ -539,7 +539,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @param {function(ElementFinder, number)} mapFn Map function that
    *     will be applied to each element.
-   * @return {!webdriver.promise.Promise} A promise that resolves to an array
+   * @returns {!webdriver.promise.Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
   map(mapFn: Function): webdriver.promise.Promise {
@@ -581,7 +581,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @param {function(number, ElementFinder, number, Array.<ElementFinder>)}
    *     reduceFn Reduce function that reduces every element into a single value.
    * @param {*} initialValue Initial value of the accumulator.
-   * @return {!webdriver.promise.Promise} A promise that resolves to the final
+   * @returns {!webdriver.promise.Promise} A promise that resolves to the final
    *     value of the accumulator.
    */
   reduce(reduceFn: Function, initialValue: any): webdriver.promise.Promise {
@@ -609,7 +609,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @param {string} expression
    *
-   * @return {ElementArrayFinder} which resolves to the
+   * @returns {ElementArrayFinder} which resolves to the
    *     evaluated expression for each underlying element.
    *     The result will be resolved as in
    *     {@link webdriver.WebDriver.executeScript}. In summary - primitives will
@@ -632,7 +632,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * // Turns off ng-animate animations for all elements in the <body>
    * element(by.css('body')).allowAnimations(false);
    *
-   * @return {ElementArrayFinder} which resolves to whether animation is allowed.
+   * @returns {ElementArrayFinder} which resolves to whether animation is allowed.
    */
   allowAnimations(value: boolean): ElementArrayFinder {
     let allowAnimationsTestFn = (webElem: webdriver.WebElement) => {
@@ -686,7 +686,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
  * @param {Browser} browser_
  * @param {ElementArrayFinder} elementArrayFinder The ElementArrayFinder
  *     that this is branched from.
- * @return {ElementFinder}
+ * @returns {ElementFinder}
  */
 export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
@@ -711,7 +711,7 @@ export class ElementFinder extends WebdriverWebElement {
        *     the value of the underlying actionResult.
        * @param {function(Error)} errorFn
        *
-       * @return {webdriver.promise.Promise} Promise which contains the results of
+       * @returns {webdriver.promise.Promise} Promise which contains the results of
        *     evaluating fn.
        */
       this.then = (fn: Function, errorFn: Function) => {
@@ -773,7 +773,7 @@ export class ElementFinder extends WebdriverWebElement {
   /**
    * Create a shallow copy of ElementFinder.
    *
-   * @return {!ElementFinder} A shallow copy of this.
+   * @returns {!ElementFinder} A shallow copy of this.
    */
   clone(): ElementFinder {
     // A shallow copy is all we need since the underlying fields can never be
@@ -784,7 +784,7 @@ export class ElementFinder extends WebdriverWebElement {
   /**
    * @see ElementArrayFinder.prototype.locator
    *
-   * @return {webdriver.Locator}
+   * @returns {webdriver.Locator}
    */
   locator(): any { return this.elementArrayFinder_.locator(); }
 
@@ -804,7 +804,7 @@ export class ElementFinder extends WebdriverWebElement {
    * browser.driver.findElement(by.css('.parent'));
    * browser.findElement(by.css('.parent'));
    *
-   * @return {webdriver.WebElement}
+   * @returns {webdriver.WebElement}
    */
   getWebElement(): any {
     let id = this.elementArrayFinder_.getWebElements().then(
@@ -832,7 +832,7 @@ export class ElementFinder extends WebdriverWebElement {
    * let items = element(by.css('.parent')).all(by.tagName('li'))
    *
    * @param {webdriver.Locator} subLocator
-   * @return {ElementArrayFinder}
+   * @returns {ElementArrayFinder}
    */
   all(subLocator: Locator): ElementArrayFinder {
     return this.elementArrayFinder_.all(subLocator);
@@ -863,7 +863,7 @@ export class ElementFinder extends WebdriverWebElement {
    * expect(triple.getText()).toBe('555-123-4567');
    *
    * @param {webdriver.Locator} subLocator
-   * @return {ElementFinder}
+   * @returns {ElementFinder}
    */
   element(subLocator: Locator): ElementFinder {
     return this.all(subLocator).toElementFinder_();
@@ -887,7 +887,7 @@ export class ElementFinder extends WebdriverWebElement {
    * let items = element(by.css('.parent')).$$('li')
    *
    * @param {string} selector a css selector
-   * @return {ElementArrayFinder}
+   * @returns {ElementArrayFinder}
    */
   $$(selector: string): ElementArrayFinder {
     return this.all(webdriver.By.css(selector));
@@ -918,7 +918,7 @@ export class ElementFinder extends WebdriverWebElement {
    * expect(triple.getText()).toBe('555-123-4567');
    *
    * @param {string} selector A css selector
-   * @return {ElementFinder}
+   * @returns {ElementFinder}
    */
   $(selector: string): ElementFinder {
     return this.element(webdriver.By.css(selector));
@@ -937,7 +937,7 @@ export class ElementFinder extends WebdriverWebElement {
    * // Element not present.
    * expect(element(by.binding('notPresent')).isPresent()).toBe(false);
    *
-   * @return {ElementFinder} which resolves to whether
+   * @returns {ElementFinder} which resolves to whether
    *     the element is present on the page.
    */
   isPresent(): ElementFinder {
@@ -977,7 +977,7 @@ export class ElementFinder extends WebdriverWebElement {
    * @see ElementFinder.isPresent
    *
    * @param {webdriver.Locator} subLocator Locator for element to look for.
-   * @return {ElementFinder} which resolves to whether
+   * @returns {ElementFinder} which resolves to whether
    *     the subelement is present on the page.
    */
   isElementPresent(subLocator: any): ElementFinder {
@@ -1002,7 +1002,7 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * @param {string} expression
    *
-   * @return {ElementFinder} which resolves to the evaluated expression.
+   * @returns {ElementFinder} which resolves to the evaluated expression.
    */
   evaluate(expression: string): ElementFinder {
     return this.elementArrayFinder_.evaluate(expression).toElementFinder_();
@@ -1012,7 +1012,7 @@ export class ElementFinder extends WebdriverWebElement {
    * @see ElementArrayFinder.prototype.allowAnimations.
    * @param {string} value
    *
-   * @return {ElementFinder} which resolves to whether animation is allowed.
+   * @returns {ElementFinder} which resolves to whether animation is allowed.
    */
   allowAnimations(value: boolean): ElementFinder {
     return this.elementArrayFinder_.allowAnimations(value).toElementFinder_();
@@ -1023,7 +1023,7 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * @param {!ElementFinder|!webdriver.WebElement} The element to compare to.
    *
-   * @return {!webdriver.promise.Promise.<boolean>} A promise that will be
+   * @returns {!webdriver.promise.Promise.<boolean>} A promise that will be
    *     resolved to whether the two WebElements are equal.
    */
   equals(element: any): webdriver.promise.Promise {
@@ -1050,7 +1050,7 @@ export class ElementFinder extends WebdriverWebElement {
  * expect(item.getText()).toBe('Second');
  *
  * @param {string} selector A css selector
- * @return {ElementFinder} which identifies the located
+ * @returns {ElementFinder} which identifies the located
  *     {@link webdriver.WebElement}
  */
 export let build$ = (element: any, by: any) => {
@@ -1079,7 +1079,7 @@ export let build$ = (element: any, by: any) => {
  * expect(list.get(1).getText()).toBe('Second');
  *
  * @param {string} selector a css selector
- * @return {ElementArrayFinder} which identifies the
+ * @returns {ElementArrayFinder} which identifies the
  *     array of the located {@link webdriver.WebElement}s.
  */
 export let build$$ = (element: any, by: any) => {
