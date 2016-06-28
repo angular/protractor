@@ -4,7 +4,7 @@ import * as url from 'url';
 import * as util from 'util';
 
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
-import {ExpectedConditions_} from './expectedConditions';
+import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger2';
 import {Plugins} from './plugins';
@@ -110,7 +110,7 @@ export class Browser extends Webdriver {
   /**
    * @type {ExpectedConditions}
    */
-  static ExpectedConditions = new ExpectedConditions_();
+  static ExpectedConditions = new ProtractorExpectedConditions();
 
   /**
    * The wrapped webdriver instance. Use this to interact with pages that do
