@@ -75,16 +75,9 @@ gulp.task('types', function(done) {
   var files = ['browser', 'element', 'locators', 'expectedConditions'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
-  contents += 'declare namespace protractor {\n';
   files.forEach(file => {
     contents += parseTypingsFile(folder, file);
   });
-  contents += '}\n';
-
-  // add module declaration
-  contents += 'declare module "protractor" {\n';
-  contents += '  export = protractor\n';
-  contents += '}\n';
 
   // remove files with d.ts
   glob.sync(folder + '/**/*.d.ts').forEach(file => {
@@ -103,9 +96,6 @@ var parseTypingsFile = function(folder, file) {
   for (var linePos in lines) {
     var line = lines[linePos];
     if (!line.startsWith('import')) {
-      if (line.indexOf('export') !== -1) {
-        line = line.replace('export', '').trim();
-      }
       if (line.indexOf('declare') !== -1) {
         line = line.replace('declare', '').trim();
       }

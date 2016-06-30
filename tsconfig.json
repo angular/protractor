@@ -15,6 +15,7 @@
     "testapp",
     "website",
     "typings/globals",
-    "scripts"
+    "scripts",
+    "globals.ts"
   ]
 }
