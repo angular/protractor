@@ -7,7 +7,7 @@ elif [ $JOB = "full" ]; then
   node bin/protractor spec/ciFullConf.js
   if [ $? = "0" ]; then
     node bin/protractor spec/ciNg2Conf.js
-  else 
+  else
   	exit 1
   fi
 elif [ $JOB = "bstack" ]; then
