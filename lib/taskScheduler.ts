@@ -1,4 +1,5 @@
-import {ConfigParser, Config} from './configParser';
+import {Config} from './config';
+import {ConfigParser} from './configParser';
 
 export interface Task {
   capabilities: any;

@@ -3,7 +3,8 @@
  * input configuration and launching test runners.
  */
 import * as q from 'q';
-import {Config, ConfigParser} from './configParser';
+import {Config} from './config';
+import {ConfigParser} from './configParser';
 import {ProtractorError, ConfigError, ErrorHandler} from './exitCodes';
 import {Logger} from './logger2';
 import {Runner} from './runner';
