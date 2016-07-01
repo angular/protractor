@@ -1,8 +1,9 @@
-import * as angular from 'angular2/src/upgrade/angular_js';
 import {myApp} from './myApp'
 import {ng2} from './ng2'
 import {ng1} from './ng1'
 import {adapter} from './upgrader';
+
+declare var angular;
 
 var ng1module = angular.module('hybridApp', []);
 
