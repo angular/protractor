@@ -63,7 +63,7 @@ declare namespace webdriver {
   }
 
   namespace promise {
-  interface Promise {
+  interface Promise<T> {
     controlFlow: Function;
     then: Function;
   }
