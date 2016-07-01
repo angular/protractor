@@ -72,8 +72,8 @@ gulp.task('webdriver:update', function(done) {
 gulp.task('jshint', function(done) {
   runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', '-c',
       '.jshintrc', 'lib', 'spec', 'scripts',
-      '--exclude=lib/selenium-webdriver/**/*.js,spec/dependencyTest/*.js,' +
-      'spec/install/**/*.js']);
+      '--exclude=lib/selenium-webdriver/**/*.js,lib/webdriver-js-extender/**/*.js,' +
+      'spec/dependencyTest/*.js,spec/install/**/*.js']);
 });
 
 gulp.task('format:enforce', function() {

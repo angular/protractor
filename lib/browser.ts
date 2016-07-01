@@ -1,6 +1,7 @@
 import {BPClient} from 'blocking-proxy';
 import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
+import {extend as extendWD, ExtendedWebDriver} from 'webdriver-js-extender';
 
 import {DebugHelper} from './debugger';
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
@@ -35,7 +36,7 @@ for (let foo in require('selenium-webdriver')) {
 
 // Explicitly define webdriver.WebDriver
 // TODO: extend WebDriver from selenium-webdriver typings
-export class Webdriver {
+export class AbstractWebDriver {
   actions: () => ActionSequence;
   call:
       (fn: (...var_args: any[]) => any, opt_scope?: any,
@@ -62,6 +63,11 @@ export class Webdriver {
   wait:
       (condition: wdpromise.Promise<any>|until.Condition<any>|Function, opt_timeout?: number,
        opt_message?: string) => wdpromise.Promise<any>;
+}
+
+export class AbstractExtendedWebDriver extends AbstractWebDriver {
+  getNetworkConnection: () => wdpromise.Promise<number>;
+  setNetworkConnection: (type: number) => wdpromise.Promise<void>;
 }
 
 /**
@@ -116,7 +122,7 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
 /**
  * @alias browser
  * @constructor
- * @extends {webdriver.WebDriver}
+ * @extends {webdriver_extensions.ExtendedWebDriver}
  * @param {webdriver.WebDriver} webdriver
  * @param {string=} opt_baseUrl A base URL to run get requests against.
  * @param {string=} opt_rootElement  Selector element that has an ng-app in
@@ -124,7 +130,7 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
-export class ProtractorBrowser extends Webdriver {
+export class ProtractorBrowser extends AbstractExtendedWebDriver {
   /**
    * @type {ProtractorBy}
    */
@@ -139,9 +145,9 @@ export class ProtractorBrowser extends Webdriver {
    * The wrapped webdriver instance. Use this to interact with pages that do
    * not contain Angular (such as a log-in screen).
    *
-   * @type {webdriver.WebDriver}
+   * @type {webdriver_extensions.ExtendedWebDriver}
    */
-  driver: WebDriver;
+  driver: ExtendedWebDriver;
 
   /**
    * The client used to control the BlockingProxy. If unset, BlockingProxy is
@@ -303,19 +309,27 @@ export class ProtractorBrowser extends Webdriver {
     // wait for Angular to sync up before performing the action. This does not
     // include functions which are overridden by protractor below.
     let methodsToSync = ['getCurrentUrl', 'getPageSource', 'getTitle'];
+    let extendWDInstance: ExtendedWebDriver;
+    try {
+      extendWDInstance = extendWD(webdriverInstance);
+    } catch (e) {
+      // Probably not a driver that can be extended (e.g. gotten using
+      // `directConnect: true` in the config)
+      extendWDInstance = webdriverInstance as ExtendedWebDriver;
+    }
 
     // Mix all other driver functionality into Protractor.
     Object.getOwnPropertyNames(WebDriver.prototype).forEach(method => {
-      if (!this[method] && typeof(webdriverInstance as any)[method] === 'function') {
+      if (!this[method] && typeof(extendWDInstance as any)[method] === 'function') {
         if (methodsToSync.indexOf(method) !== -1) {
-          ptorMixin(this, webdriverInstance, method, this.waitForAngular.bind(this));
+          ptorMixin(this, extendWDInstance, method, this.waitForAngular.bind(this));
         } else {
-          ptorMixin(this, webdriverInstance, method);
+          ptorMixin(this, extendWDInstance, method);
         }
       }
     });
 
-    this.driver = webdriverInstance;
+    this.driver = extendWDInstance;
     if (opt_blockingProxyUrl) {
       logger.info('Starting BP client for ' + opt_blockingProxyUrl);
       this.bpClient = new BPClient(opt_blockingProxyUrl);
