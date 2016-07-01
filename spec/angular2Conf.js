@@ -27,9 +27,14 @@ exports.config = {
   // on the page. This means that Protractor will wait for every app to be
   // stable before each action, and search within all apps when finding
   // elements.
-  useAllAngular2AppRoots: true
+  useAllAngular2AppRoots: true,
 
   // Alternatively, you could specify one root element application, to test
   // against only that one:
   // rootElement: 'async-app'
+  allScriptsTimeout: 120000,
+  getPageTimeout: 120000,
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 120000
+  }
 };

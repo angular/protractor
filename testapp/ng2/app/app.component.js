@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './home/home.component', './async/async.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', 'angular2/router', './home/home.component', '.
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, home_component_1, async_component_1;
-    var AppRouter;
+    var core_1, router_1;
+    var AppComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -19,33 +19,23 @@ System.register(['angular2/core', 'angular2/router', './home/home.component', '.
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            },
-            function (home_component_1_1) {
-                home_component_1 = home_component_1_1;
-            },
-            function (async_component_1_1) {
-                async_component_1 = async_component_1_1;
             }],
         execute: function() {
-            AppRouter = (function () {
-                function AppRouter() {
+            AppComponent = (function () {
+                function AppComponent() {
                 }
-                AppRouter = __decorate([
+                AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        templateUrl: 'app/app-router.html',
+                        templateUrl: 'app/app.component.html',
                         directives: [router_1.ROUTER_DIRECTIVES]
-                    }),
-                    router_1.RouteConfig([
-                        { path: '/', name: 'Home', component: home_component_1.HomeComponent },
-                        { path: '/async', name: 'Async', component: async_component_1.AsyncComponent },
-                    ]), 
+                    }), 
                     __metadata('design:paramtypes', [])
-                ], AppRouter);
-                return AppRouter;
+                ], AppComponent);
+                return AppComponent;
             }());
-            exports_1("AppRouter", AppRouter);
+            exports_1("AppComponent", AppComponent);
         }
     }
 });
-//# sourceMappingURL=app.router.js.map
+//# sourceMappingURL=app.component.js.map
