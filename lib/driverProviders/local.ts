@@ -11,14 +11,17 @@ import * as path from 'path';
 import * as q from 'q';
 import * as util from 'util';
 
-import {BrowserError} from '../exitCodes';
+
 import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
+import {BrowserError} from '../exitCodes';
 import {Logger} from '../logger2';
 
 let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
+let SeleniumChrome =
+    require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone =
+    require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
 let remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
@@ -39,8 +42,8 @@ export class Local extends DriverProvider {
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
       this.config_.seleniumServerJar = path.resolve(
-        SeleniumConfig.getSeleniumDir(),
-        new SeleniumStandAlone().executableFilename());
+          SeleniumConfig.getSeleniumDir(),
+          new SeleniumStandAlone().executableFilename());
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
       throw new BrowserError(
@@ -54,8 +57,8 @@ export class Local extends DriverProvider {
             'Attempting to find the chromedriver binary in the default ' +
             'location used by webdriver-manager');
         this.config_.chromeDriver = path.resolve(
-          SeleniumConfig.getSeleniumDir(),
-          new SeleniumChrome().executableFilename());
+            SeleniumConfig.getSeleniumDir(),
+            new SeleniumChrome().executableFilename());
       }
 
       // Check if file exists, if not try .exe or fail accordingly

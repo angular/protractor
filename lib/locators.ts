@@ -93,11 +93,14 @@ export class ProtractorBy extends WebdriverBy {
   };
 
   /**
-   * Find an element by text binding. Does a partial match, so any elements bound
+   * Find an element by text binding. Does a partial match, so any elements
+   * bound
    * to variables containing the input string will be returned.
    *
-   * Note: For AngularJS version 1.2, the interpolation brackets, (usually {{}}),
-   * are optionally allowed in the binding description string. For Angular version
+   * Note: For AngularJS version 1.2, the interpolation brackets, (usually
+   * {{}}),
+   * are optionally allowed in the binding description string. For Angular
+   * version
    * 1.3+, they are not allowed, and no elements will be found if they are used.
    *
    * @view
@@ -119,7 +122,8 @@ export class ProtractorBy extends WebdriverBy {
    * var deprecatedSyntax = element(by.binding('{{person.name}}'));
    *
    * @param {string} bindingDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString:
+   * Function|string}}
    */
   binding(bindingDescriptor: string): Locator {
     return {
@@ -151,7 +155,8 @@ export class ProtractorBy extends WebdriverBy {
    * expect(element(by.exactBinding('phone')).isPresent()).toBe(false);
    *
    * @param {string} bindingDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString:
+   * Function|string}}
    */
   exactBinding(bindingDescriptor: string): Locator {
     return {
@@ -200,7 +205,8 @@ export class ProtractorBy extends WebdriverBy {
    * element(by.buttonText('Save'));
    *
    * @param {string} searchText
-   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString:
+   * Function|string}}
    */
   buttonText(searchText: string): Locator {
     return {
@@ -225,7 +231,8 @@ export class ProtractorBy extends WebdriverBy {
    * element(by.partialButtonText('Save'));
    *
    * @param {string} searchText
-   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString:
+   * Function|string}}
    */
   partialButtonText(searchText: string): Locator {
     return {
@@ -336,11 +343,13 @@ export class ProtractorBy extends WebdriverBy {
    *     by.repeater('cat in pets').column('cat.age'));
    *
    * // Returns a promise that resolves to an array of WebElements containing
-   * // all top level elements repeated by the repeater. For 2 pets rows resolves
+   * // all top level elements repeated by the repeater. For 2 pets rows
+   * resolves
    * // to an array of 2 elements.
    * var rows = element.all(by.repeater('cat in pets'));
    *
-   * // Returns a promise that resolves to an array of WebElements containing all
+   * // Returns a promise that resolves to an array of WebElements containing
+   * all
    * // the elements with a binding to the book's name.
    * var divs = element.all(by.repeater('book in library').column('book.name'));
    *
@@ -358,7 +367,8 @@ export class ProtractorBy extends WebdriverBy {
    * var divs = element.all(by.repeater('book in library'));
    *
    * @param {string} repeatDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString:
+   * Function|string}}
    */
   repeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(false, repeatDescriptor);
@@ -372,13 +382,16 @@ export class ProtractorBy extends WebdriverBy {
    * <li ng-repeat="car in cars | orderBy:year"></li>
    *
    * @example
-   * expect(element(by.exactRepeater('person in peopleWithRedHair')).isPresent())
+   * expect(element(by.exactRepeater('person in
+   * peopleWithRedHair')).isPresent())
    *     .toBe(true);
-   * expect(element(by.exactRepeater('person in people')).isPresent()).toBe(false);
+   * expect(element(by.exactRepeater('person in
+   * people')).isPresent()).toBe(false);
    * expect(element(by.exactRepeater('car in cars')).isPresent()).toBe(true);
    *
    * @param {string} repeatDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString: Function|string}}
+   * @returns {{findElementsOverride: findElementsOverride, toString:
+   * Function|string}}
    */
   exactRepeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(true, repeatDescriptor);

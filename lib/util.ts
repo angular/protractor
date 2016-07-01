@@ -1,5 +1,5 @@
-import {Promise, when} from 'q';
 import {resolve} from 'path';
+import {Promise, when} from 'q';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
   'node_modules/jasmine/', 'node_modules/selenium-webdriver', 'at Module.',

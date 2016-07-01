@@ -42,12 +42,18 @@ gulp.task('jshint', function(done) {
       'spec', 'scripts', '--exclude=lib/selenium-webdriver/**/*.js']);
 });
 
-gulp.task('clang', function() {
-  return gulp.src(['lib/**/*.ts'])
-      .pipe(gulpFormat.checkFormat('file', clangFormat))
-      .on('warning', function(e) {
-    console.log(e);
-  });
+gulp.task('format:enforce', () => {
+  const format = require('gulp-clang-format');
+  const clangFormat = require('clang-format');
+  return gulp.src(['lib/**/*.ts']).pipe(
+    format.checkFormat('file', clangFormat, {verbose: true, fail: true}));
+});
+
+gulp.task('format', () => {
+  const format = require('gulp-clang-format');
+  const clangFormat = require('clang-format');
+  return gulp.src(['lib/**/*.ts'], { base: '.' }).pipe(
+    format.format('file', clangFormat)).pipe(gulp.dest('.'));
 });
 
 gulp.task('typings', function(done) {
@@ -59,12 +65,12 @@ gulp.task('tsc', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence(['typings', 'jshint', 'clang'], 'tsc', 'types', 'built:copy', done);
+  runSequence(['typings', 'jshint', 'format'], 'tsc', 'types', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'clang'], 'tsc', 'types',
+    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'types',
     'built:copy', done);
 });
 

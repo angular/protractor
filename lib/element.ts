@@ -130,7 +130,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
   /**
    * Calls to ElementArrayFinder may be chained to find an array of elements
-   * using the current elements in this ElementArrayFinder as the starting point.
+   * using the current elements in this ElementArrayFinder as the starting
+   * point.
    * This function returns a new ElementArrayFinder which would contain the
    * children elements found (and could also be empty).
    *
@@ -154,7 +155,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * expect(foo.getText()).toEqual(['1a', '2a'])
    * let baz = element.all(by.css('.parent')).all(by.css('.baz'))
    * expect(baz.getText()).toEqual(['1b'])
-   * let nonexistent = element.all(by.css('.parent')).all(by.css('.NONEXISTENT'))
+   * let nonexistent =
+   * element.all(by.css('.parent')).all(by.css('.NONEXISTENT'))
    * expect(nonexistent.getText()).toEqual([''])
    *
    * @param {webdriver.Locator} subLocator
@@ -205,8 +207,10 @@ export class ElementArrayFinder extends WebdriverWebElement {
   }
 
   /**
-   * Apply a filter function to each element within the ElementArrayFinder. Returns
-   * a new ElementArrayFinder with all elements that pass the filter function. The
+   * Apply a filter function to each element within the ElementArrayFinder.
+   * Returns
+   * a new ElementArrayFinder with all elements that pass the filter function.
+   * The
    * filter function receives the ElementFinder as the first argument
    * and the index as a second arg.
    * This does not actually retrieve the underlying list of elements, so it can
@@ -227,10 +231,13 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *   });
    * }).first().click();
    *
-   * @param {function(ElementFinder, number): webdriver.WebElement.Promise} filterFn
+   * @param {function(ElementFinder, number): webdriver.WebElement.Promise}
+   * filterFn
    *     Filter function that will test if an element should be returned.
-   *     filterFn can either return a boolean or a promise that resolves to a boolean
-   * @returns {!ElementArrayFinder} A ElementArrayFinder that represents an array
+   *     filterFn can either return a boolean or a promise that resolves to a
+   * boolean
+   * @returns {!ElementArrayFinder} A ElementArrayFinder that represents an
+   * array
    *     of element that satisfy the filter function.
    */
   filter(filterFn: Function): ElementArrayFinder {
@@ -255,7 +262,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
   }
 
   /**
-   * Get an element within the ElementArrayFinder by index. The index starts at 0.
+   * Get an element within the ElementArrayFinder by index. The index starts at
+   * 0.
    * Negative indices are wrapped (i.e. -i means ith element from last)
    * This does not actually retrieve the underlying element.
    *
@@ -352,7 +360,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
   /**
    * Returns an ElementFinder representation of ElementArrayFinder. It ensures
-   * that the ElementArrayFinder resolves to one and only one underlying element.
+   * that the ElementArrayFinder resolves to one and only one underlying
+   * element.
    *
    * @returns {ElementFinder} An ElementFinder representation
    * @private
@@ -410,7 +419,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
   /**
    * Apply an action function to every element in the ElementArrayFinder,
-   * and return a new ElementArrayFinder that contains the results of the actions.
+   * and return a new ElementArrayFinder that contains the results of the
+   * actions.
    *
    * @param {function(ElementFinder)} actionFn
    *
@@ -579,7 +589,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * expect(value).toEqual('First Second Third ');
    *
    * @param {function(number, ElementFinder, number, Array.<ElementFinder>)}
-   *     reduceFn Reduce function that reduces every element into a single value.
+   *     reduceFn Reduce function that reduces every element into a single
+   * value.
    * @param {*} initialValue Initial value of the accumulator.
    * @returns {!webdriver.promise.Promise} A promise that resolves to the final
    *     value of the accumulator.
@@ -633,7 +644,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * // Turns off ng-animate animations for all elements in the <body>
    * element(by.css('body')).allowAnimations(false);
    *
-   * @returns {ElementArrayFinder} which resolves to whether animation is allowed.
+   * @returns {ElementArrayFinder} which resolves to whether animation is
+   * allowed.
    */
   allowAnimations(value: boolean): ElementArrayFinder {
     let allowAnimationsTestFn = (webElem: webdriver.WebElement) => {
@@ -713,7 +725,8 @@ export class ElementFinder extends WebdriverWebElement {
        *     the value of the underlying actionResult.
        * @param {function(Error)} errorFn
        *
-       * @returns {webdriver.promise.Promise} Promise which contains the results of
+       * @returns {webdriver.promise.Promise} Promise which contains the results
+       * of
        *     evaluating fn.
        */
       this.then = (fn: Function, errorFn: Function) => {

@@ -70,7 +70,7 @@ declare namespace webdriver {
   }
 
   namespace util {
-  interface Condition {}
+    interface Condition {}
   }
   class Capabilities {
     get: Function;
