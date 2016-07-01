@@ -2,6 +2,8 @@ import {EventEmitter} from 'events';
 import * as q from 'q';
 import {promise as wdpromise, Session} from 'selenium-webdriver';
 import * as util from 'util';
+// TODO(sjelin): patch() will no longer be needed with `selenium-webdriver` 3.x
+import {patch} from 'webdriver-js-extender';
 
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
@@ -98,6 +100,13 @@ export class Runner extends EventEmitter {
    * 5) try to find the seleniumServerJar in protractor/selenium
    */
   loadDriverProvider_(config: Config) {
+    // `webdriver-js-extender` needs to overwrite `DeferredExecutor` and some
+    // associated functions so that it can define custom commands.  In version
+    // 3.x of `selenium-webdriver`, this will no longer be necessary and will
+    // have to be removed.
+    patch(
+        require('selenium-webdriver/lib/command'), require('selenium-webdriver/executors'),
+        require('selenium-webdriver/http'));
     this.config_ = config;
     if (this.config_.directConnect) {
       this.driverprovider_ = new Direct(this.config_);
