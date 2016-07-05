@@ -45,12 +45,23 @@ If you need to navigate to a page which does not use Angular, you can turn off w
 `browser.ignoreSynchronization = true`. For example:
 
 ```js
+var runNonAngular = function(fn) {
+    var flow = protractor.promise.controlFlow();
+    flow.execute(function () {
+        browser.ignoreSynchronization = true;
+    });
+    flow.execute(fn);
+    flow.execute(function () {
+        browser.ignoreSynchronization = false;
+    });
+} 
+
 browser.get('page-containing-angular');
 navigateToVanillaPage.click();
-browser.ignoreSynchronization = true;
-otherButton.click();
-navigateToAngularPage.click();
-browser.ignoreSynchronization = false;
+runNonAngular(function () {
+    otherButton.click();
+    navigateToAngularPage.click();
+});
 ```
 
 
