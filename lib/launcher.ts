@@ -3,9 +3,10 @@
  * input configuration and launching test runners.
  */
 import * as q from 'q';
+
 import {Config} from './config';
 import {ConfigParser} from './configParser';
-import {ProtractorError, ConfigError, ErrorHandler} from './exitCodes';
+import {ConfigError, ErrorHandler, ProtractorError} from './exitCodes';
 import {Logger} from './logger2';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
@@ -182,10 +183,13 @@ let initFn = function(configFile: string, additionalConfig: Config) {
           let errorCode = ErrorHandler.parseError(e);
           if (errorCode) {
             let protractorError = e as ProtractorError;
-            ProtractorError.log(logger, errorCode, protractorError.message, protractorError.stack);
+            ProtractorError.log(
+                logger, errorCode, protractorError.message,
+                protractorError.stack);
             process.exit(errorCode);
           } else {
-            logger.error('"process.on(\'uncaughtException\'" error, see launcher');
+            logger.error(
+                '"process.on(\'uncaughtException\'" error, see launcher');
             process.exit(ProtractorError.CODE);
           }
         });
@@ -226,7 +230,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
             1) {  // Start new processes only if there are >1 tasks.
           forkProcess = true;
           if (config.debug) {
-            throw new ConfigError(logger,
+            throw new ConfigError(
+                logger,
                 'Cannot run in debug mode with multiCapabilities, count > 1, or sharding');
           }
         }
@@ -256,7 +261,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                       ' instance(s) of WebDriver still running');
                 })
                 .catch((err: Error) => {
-                  logger.error('Error:', (err as any).stack || err.message || err);
+                  logger.error(
+                      'Error:', (err as any).stack || err.message || err);
                   cleanUpAndExit(RUNNERS_FAILED_EXIT_CODE);
                 });
           }

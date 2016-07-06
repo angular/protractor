@@ -108,7 +108,8 @@ export class ProtractorExpectedConditions {
    * browser.wait(EC.and(titleContainsFoo, titleIsNotFooBar), 5000);
    *
    * @alias ExpectedConditions.and
-   * @param {Array.<Function>} fns An array of expected conditions to 'and' together.
+   * @param {Array.<Function>} fns An array of expected conditions to 'and'
+   * together.
    *
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical and.
@@ -127,7 +128,8 @@ export class ProtractorExpectedConditions {
    * // Waits for title to contain either 'Foo' or 'Bar'
    * browser.wait(EC.or(titleContainsFoo, titleContainsBar), 5000);
    *
-   * @param {Array.<Function>} fns An array of expected conditions to 'or' together.
+   * @param {Array.<Function>} fns An array of expected conditions to 'or'
+   * together.
    *
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical or.
@@ -366,7 +368,8 @@ export class ProtractorExpectedConditions {
   /**
    * An expectation for checking that an element is present on the DOM of a
    * page and visible. Visibility means that the element is not only displayed
-   * but also has a height and width that is greater than 0. This is the opposite
+   * but also has a height and width that is greater than 0. This is the
+   * opposite
    * of 'invisibilityOf'.
    *
    * @example

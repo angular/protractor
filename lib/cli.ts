@@ -1,6 +1,6 @@
-import * as path from 'path';
 import * as fs from 'fs';
 import * as optimist from 'optimist';
+import * as path from 'path';
 
 /**
  * The command line interface for interacting with the Protractor runner.

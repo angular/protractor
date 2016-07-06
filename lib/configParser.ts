@@ -1,9 +1,9 @@
-import * as path from 'path';
 import * as glob from 'glob';
+import * as path from 'path';
 
-import {Logger} from './logger2';
 import {ConfigError} from './exitCodes';
 import {Config} from './config';
+import {Logger} from './logger2';
 
 let logger = new Logger('configParser');
 

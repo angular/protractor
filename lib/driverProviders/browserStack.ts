@@ -7,9 +7,9 @@ import * as https from 'https';
 import * as q from 'q';
 import * as util from 'util';
 
-import {BrowserError} from '../exitCodes';
 import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
+import {BrowserError} from '../exitCodes';
 import {Logger} from '../logger2';
 
 let logger = new Logger('browserstack');
@@ -28,12 +28,12 @@ export class BrowserStack extends DriverProvider {
       let deferred = q.defer();
       driver.getSession().then((session: webdriver.Session) => {
         let headers: Object = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' +
-                new Buffer(
-                    this.config_.browserstackUser + ':' +
-                    this.config_.browserstackKey)
-                    .toString('base64')
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' +
+              new Buffer(
+                  this.config_.browserstackUser + ':' +
+                  this.config_.browserstackKey)
+                  .toString('base64')
         };
         let options = {
           hostname: 'www.browserstack.com',
@@ -46,25 +46,26 @@ export class BrowserStack extends DriverProvider {
         let req = https.request(options, (res) => {
           res.on('data', (data: Buffer) => {
             var info = JSON.parse(data.toString());
-            if (info && info.automation_session && info.automation_session.browser_url){
+            if (info && info.automation_session &&
+                info.automation_session.browser_url) {
               logger.info(
-                'BrowserStack results available at ' +
-                info.automation_session.browser_url);
+                  'BrowserStack results available at ' +
+                  info.automation_session.browser_url);
             } else {
               logger.info(
-                'BrowserStack results available at ' +
-                'https://www.browserstack.com/automate');
+                  'BrowserStack results available at ' +
+                  'https://www.browserstack.com/automate');
             }
           });
         });
         req.end();
         req.on('error', (e: Error) => {
           logger.info(
-            'BrowserStack results available at ' +
-            'https://www.browserstack.com/automate');
+              'BrowserStack results available at ' +
+              'https://www.browserstack.com/automate');
         });
         let jobStatus = update.passed ? 'completed' : 'error';
-        options.method  = 'PUT';
+        options.method = 'PUT';
         https
             .request(
                 options,

@@ -9,8 +9,9 @@ export class ProtractorError extends Error {
   static CODE = KITCHEN_SINK_CODE;
   static SUPRESS_EXIT_CODE = false;
 
-  message: string; // a one liner, if more than one line is sent, it will be cut off
-  stack: string;   // has the message with the stack trace
+  message:
+      string;  // a one liner, if more than one line is sent, it will be cut off
+  stack: string;  // has the message with the stack trace
   code: number;
 
   /**

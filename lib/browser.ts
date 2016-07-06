@@ -301,7 +301,8 @@ export class Browser extends Webdriver {
    *
    * Set by the runner.
    *
-   * @returns {webdriver.promise.Promise} A promise which resolves to the capabilities object.
+   * @returns {webdriver.promise.Promise} A promise which resolves to the
+   * capabilities object.
    */
   getProcessedConfig: () => webdriver.promise.Promise<any>;
 
@@ -310,8 +311,10 @@ export class Browser extends Webdriver {
    *
    * Set by the runner.
    *
-   * @param {boolean} opt_useSameUrl Whether to navigate to current url on creation
-   * @param {boolean} opt_copyMockModules Whether to apply same mock modules on creation
+   * @param {boolean} opt_useSameUrl Whether to navigate to current url on
+   * creation
+   * @param {boolean} opt_copyMockModules Whether to apply same mock modules on
+   * creation
    * @returns {Protractor} a protractor instance.
    */
   forkNewDriverInstance:
@@ -343,7 +346,8 @@ export class Browser extends Webdriver {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
-   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to the
+   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
+   * the
    *    scripts return value.
    * @template T
    */
@@ -369,7 +373,8 @@ export class Browser extends Webdriver {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description for debugging purposes.
    * @param {...*} var_args The arguments to pass to the script.
-   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to the
+   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
+   * the
    *    scripts return value.
    * @template T
    */
@@ -923,7 +928,8 @@ export class Browser extends Webdriver {
    * already be bound to the debugger, so it will not be available, but that is
    * okay.
    *
-   * @returns {Promise<boolean>} A promise that becomes ready when the validation
+   * @returns {Promise<boolean>} A promise that becomes ready when the
+   * validation
    *     is done. The promise will resolve to a boolean which represents whether
    *     this is the first time that the debugger is called.
    */
