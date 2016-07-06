@@ -1,11 +1,14 @@
 System.config({
   map: {
-    'rxjs': '/node_modules/rxjs',
-    '@angular': '/node_modules/@angular'
+    '@angular': '/node_modules/@angular',
+    'rxjs': '/node_modules/rxjs'
   },
   packages: {
     'app': {
       main: 'main.js',
+      defaultExtension: 'js'
+    },
+    'rxjs': {
       defaultExtension: 'js'
     },
     '@angular/core': {
@@ -28,11 +31,8 @@ System.config({
       main: 'index.js',
       defaultExtension: 'js'
     },
-    '@angular/router': {
+    '@angular/upgrade': {
       main: 'index.js',
-      defaultExtension: 'js'
-    },
-    'rxjs': {
       defaultExtension: 'js'
     }
   }

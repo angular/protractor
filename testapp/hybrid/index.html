@@ -8,29 +8,24 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="styles.css">
     <!-- IE required polyfills, in this exact order -->
-    <script src="../ng1/lib/angular/angular.min.js"></script>
-    <script src="../ng1/lib/angular/angular-animate.min.js"></script>
-    <script src="../ng1/lib/angular/angular-route.min.js"></script>
+    <script src="/ng1/lib/angular/angular.min.js"></script>
+    <script src="/ng1/lib/angular/angular-animate.min.js"></script>
+    <script src="/ng1/lib/angular/angular-route.min.js"></script>
 
-    <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="../node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="../node_modules/systemjs/dist/system.js"></script>
-    <script src="../node_modules/typescript/lib/typescript.js"></script>
-    <script src="../node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
-
-    <!-- Add the router library -->
-    <script src="../node_modules/angular2/bundles/upgrade.js"></script>
+    <script src="/node_modules/core-js/client/shim.min.js"></script>
+    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/node_modules/zone.js/dist/zone.js"></script>
 
     <script>
-      System.config({
-        transpiler: 'typescript',
-        typescriptOptions: { emitDecoratorMetadata: true },
-        packages: {'app': {defaultExtension: 'ts'}}
+      System.import('systemjs.config.js').then(function () {
+        System.import('app/main');
+      }).catch(function(err) {
+        console.log('error while importing:');
+        console.log(err);
+        console.log(err.stack);
       });
-      System.import('app/main')
-            .then(null, console.error.bind(console));
     </script>
   </head>
 

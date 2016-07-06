@@ -1,5 +1,4 @@
-import {Component} from 'angular2/core';
-import {TimerWrapper} from 'angular2/src/facade/async';
+import {Component} from '@angular/core';
 import {ng1} from './ng1'
 import {adapter} from './upgrader';
 

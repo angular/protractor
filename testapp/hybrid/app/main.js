@@ -1,13 +1,10 @@
-System.register(['angular2/src/upgrade/angular_js', './myApp', './ng2', './ng1', './upgrader'], function(exports_1, context_1) {
+System.register(['./myApp', './ng2', './ng1', './upgrader'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var angular, myApp_1, ng2_1, ng1_1, upgrader_1;
+    var myApp_1, ng2_1, ng1_1, upgrader_1;
     var ng1module;
     return {
         setters:[
-            function (angular_1) {
-                angular = angular_1;
-            },
             function (myApp_1_1) {
                 myApp_1 = myApp_1_1;
             },
