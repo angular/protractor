@@ -91,6 +91,12 @@ gulp.task('types', function(done) {
 
 var parseTypingsFile = function(folder, file) {
   var fileContents = fs.readFileSync(path.resolve(folder, file + '.d.ts')).toString();
+  // Remove new lines inside types
+  fileContents = fileContents.replace(
+    /webdriver.promise.Promise<\{[a-zA-Z:,; \n]+\}>/g, (type) => {
+        return type.replace(/\n/g, '');
+    }
+  );
   var lines = fileContents.split('\n');
   var contents = '';
   for (var linePos in lines) {
@@ -102,7 +108,7 @@ var parseTypingsFile = function(folder, file) {
 
       // Remove webdriver types and plugins for now
       line = removeTypes(line,'webdriver.ActionSequence');
-      line = removeTypes(line,'webdriver.promise.Promise');
+      line = removeTypes(line,'webdriver.promise.Promise<[a-zA-Z{},:; ]+>');
       line = removeTypes(line,'webdriver.util.Condition');
       line = removeTypes(line,'webdriver.WebDriver');
       line = removeTypes(line,'webdriver.Locator');
@@ -119,8 +125,5 @@ var removeTypes = function(line, webdriverType) {
   if (tempLine.startsWith('/**') || tempLine.startsWith('*')) {
     return line;
   }
-  if (line.indexOf(webdriverType) !== -1) {
-    return line.replace(new RegExp(webdriverType,'g'), 'any');
-  }
-  return line;
+  return line.replace(new RegExp(webdriverType,'g'), 'any');
 }
