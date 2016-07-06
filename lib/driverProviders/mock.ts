@@ -5,7 +5,7 @@
  */
 import * as q from 'q';
 import * as util from 'util';
-import {Config} from '../configParser';
+import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 
 let webdriver = require('selenium-webdriver');

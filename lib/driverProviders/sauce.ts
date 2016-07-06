@@ -7,7 +7,7 @@
 import * as q from 'q';
 import * as util from 'util';
 
-import {Config} from '../configParser';
+import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
 
@@ -58,9 +58,9 @@ export class Sauce extends DriverProvider {
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent
     });
-    this.config_.capabilities.username = this.config_.sauceUser;
-    this.config_.capabilities.accessKey = this.config_.sauceKey;
-    this.config_.capabilities.build = this.config_.sauceBuild;
+    this.config_.capabilities['username'] = this.config_.sauceUser;
+    this.config_.capabilities['accessKey'] = this.config_.sauceKey;
+    this.config_.capabilities['build'] = this.config_.sauceBuild;
     let auth =
         'http://' + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
     this.config_.seleniumAddress =

@@ -2,7 +2,8 @@ import * as child_process from 'child_process';
 import {EventEmitter} from 'events';
 import * as q from 'q';
 
-import {ConfigParser, Config} from './configParser';
+import {Config} from './config';
+import {ConfigParser} from './configParser';
 import {Runner} from './runner';
 import {TaskLogger} from './taskLogger';
 

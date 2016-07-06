@@ -3,7 +3,7 @@ import * as q from 'q';
 import * as util from 'util';
 
 import {Browser} from './browser';
-import {Config} from './configParser';
+import {Config} from './config';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {DriverProvider} from './driverProviders';
 import {ProtractorBy} from './locators';

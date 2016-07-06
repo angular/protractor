@@ -9,7 +9,7 @@ import * as path from 'path';
 import * as util from 'util';
 
 import {BrowserError} from '../exitCodes';
-import {Config} from '../configParser';
+import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
 
@@ -80,7 +80,7 @@ export class Direct extends DriverProvider {
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
-          this.config_.capabilities.firefox_binary = this.config_.firefoxPath;
+          this.config_.capabilities['firefox_binary'] = this.config_.firefoxPath;
         }
         driver = new firefox.Driver(this.config_.capabilities);
         break;

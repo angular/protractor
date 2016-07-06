@@ -1,4 +1,4 @@
-import {Config} from './configParser';
+import {Config} from './config';
 
 /**
  * Utility functions for command line output logging from Protractor.

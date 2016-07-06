@@ -4,7 +4,7 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
-import {Config} from '../configParser';
+import {Config} from '../config';
 let webdriver = require('selenium-webdriver');
 
 export class DriverProvider {

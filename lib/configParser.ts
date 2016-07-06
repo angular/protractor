@@ -3,6 +3,7 @@ import * as glob from 'glob';
 
 import {Logger} from './logger2';
 import {ConfigError} from './exitCodes';
+import {Config} from './config';
 
 let logger = new Logger('configParser');
 
@@ -18,62 +19,6 @@ try {
   require('LiveScript');
 } catch (e) {
   // Intentionally blank - ignore if LiveScript is not available.
-}
-
-export interface Config {
-  specs: Array<string>;
-  multiCapabilities: Array<any>;
-  capabilities?: any;
-  rootElement: string;
-  allScriptsTimeout: number;
-  getPageTimeout: number;
-  params: any;
-  framework: string;
-  jasmineNodeOpts: {showColors: boolean; defaultTimeoutInterval: number;};
-  seleniumArgs: Array<any>;
-  seleniumSessionId?: string;
-  mochaOpts: {ui: string; reporter: string;};
-  chromeDriver?: string;
-  configDir: string;
-  noGlobals: boolean;
-  plugins: Array<any>;
-  skipSourceMapSupport: boolean;
-  suite?: string;
-  suites?: any;
-  troubleshoot?: boolean;
-  exclude?: Array<string>|string;
-  maxSessions?: number;
-  seleniumAddress?: string;
-  webDriverProxy?: string;
-  disableEnvironmentOverrides?: boolean;
-  browserstackUser?: string;
-  browserstackKey?: string;
-  firefoxPath?: string;
-  seleniumServerJar?: string;
-  seleniumPort?: number;
-  localSeleniumStandaloneOpts?: {args?: any; port?: any;};
-  sauceAgent?: string;
-  sauceBuild?: string;
-  sauceKey?: string;
-  sauceSeleniumAddress?: string;
-  sauceUser?: string;
-  v8Debug?: any;
-  nodeDebug?: boolean;
-  directConnect?: boolean;
-  mockSelenium?: boolean;
-  baseUrl?: string;
-  untrackOutstandingTimeouts?: any;
-  debuggerServerPort?: number;
-  useAllAngular2AppRoots?: boolean;
-  frameworkPath?: string;
-  restartBrowserBetweenTests?: boolean;
-  onPrepare?: any;
-  beforeLaunch?: any;
-  getMultiCapabilities?: any;
-  elementExplorer?: any;
-  afterLaunch?: any;
-  debug?: boolean;
-  resultJsonOutputFile?: any;
 }
 
 export class ConfigParser {

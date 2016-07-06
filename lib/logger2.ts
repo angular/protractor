@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {Config} from './configParser';
+import {Config} from './config';
 
 // Will use chalk if chalk is available to add color to console logging
 let chalk: any;
