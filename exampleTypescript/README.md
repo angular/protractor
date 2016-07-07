@@ -35,7 +35,9 @@ exampleTypescript/
 
 ## Getting started
 
-Install the node_modules and ambient typings:
+This package.json references the local protractor directory with `"protractor": "file: ../"`. For the type declarations to work, from the protractor directory run an `npm install` to generate the declarations file.
+
+Next, install the exampleTypescript node_modules and ambient typings with:
 
 ```
 npm install
@@ -81,4 +83,3 @@ After transpiling your code to javascript, you'll run Protractor like before: `p
 * [TypescriptLang.org tsconfig.json](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 * [Typescript gitter](https://gitter.im/Microsoft/TypeScript)
 * [Typescript stackoverflow](http://stackoverflow.com/questions/tagged/typescript)
-
