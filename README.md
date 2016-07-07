@@ -51,7 +51,13 @@ Start up a selenium server. By default, the tests expect the selenium server to 
     webdriver-manager update
     webdriver-manager start
 
-Protractor's test suite runs against the included test application. Start that up with
+Protractor's test suite runs against the included test application.
+
+Install the test application dependencies with:
+
+    npm run install_testapp
+
+Start that up with
 
     npm start
 
