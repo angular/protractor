@@ -1,0 +1,6 @@
+{
+  "globalDependencies": {
+    "jasmine": "registry:dt/jasmine#2.2.0+20160412134438",
+    "node": "registry:dt/node#4.0.0+20160423143914"
+  }
+}

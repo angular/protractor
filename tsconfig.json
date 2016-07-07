@@ -16,6 +16,7 @@
     "website",
     "typings/globals",
     "scripts",
-    "globals.ts"
+    "globals.ts",
+    "exampleTypescript"
   ]
 }
