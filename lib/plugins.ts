@@ -1,5 +1,5 @@
 var webdriver = require('selenium-webdriver');
-import {Logger} from './logger2';
+import {Logger} from './logger';
 import * as q from 'q';
 import {ConfigParser} from './configParser';
 

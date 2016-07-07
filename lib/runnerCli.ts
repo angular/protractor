@@ -4,7 +4,7 @@
  */
 
 import {ConfigParser} from './configParser';
-import {Logger} from './logger2';
+import {Logger} from './logger';
 import {Runner} from './runner';
 
 let logger = new Logger('runnerCli');

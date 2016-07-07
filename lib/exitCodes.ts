@@ -1,4 +1,4 @@
-import {Logger} from './logger2';
+import {Logger} from './logger';
 
 const CONFIG_ERROR_CODE = 105;
 const BROWSER_CONNECT_ERROR_CODE = 135;

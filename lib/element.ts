@@ -1,7 +1,7 @@
 let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
 
-import {Logger} from './logger2';
+import {Logger} from './logger';
 import {Browser} from './browser';
 import {Locator} from './locators';
 

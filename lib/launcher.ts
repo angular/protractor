@@ -7,7 +7,7 @@ import * as q from 'q';
 import {Config} from './config';
 import {ConfigParser} from './configParser';
 import {ConfigError, ErrorHandler, ProtractorError} from './exitCodes';
-import {Logger} from './logger2';
+import {Logger} from './logger';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
 import {TaskScheduler} from './taskScheduler';

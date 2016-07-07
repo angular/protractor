@@ -1,9 +1,9 @@
 var fs = require('fs'),
     os = require('os'),
     path = require('path');
-var LogLevel = require('../../built/logger2').LogLevel,
-    Logger = require('../../built/logger2').Logger,
-    WriteTo = require('../../built/logger2').WriteTo;
+var LogLevel = require('../../built/logger').LogLevel,
+    Logger = require('../../built/logger').Logger,
+    WriteTo = require('../../built/logger').WriteTo;
 
 describe('the logger', function() {
   var logFile = path.resolve(os.tmpdir(), 'logger_test.log');

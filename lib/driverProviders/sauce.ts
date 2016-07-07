@@ -8,7 +8,7 @@ import * as q from 'q';
 import * as util from 'util';
 
 import {Config} from '../config';
-import {Logger} from '../logger2';
+import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 

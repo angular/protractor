@@ -1,5 +1,5 @@
 import * as os from 'os';
-import {Logger} from './logger2';
+import {Logger} from './logger';
 
 let logger = new Logger('testLogger');
 

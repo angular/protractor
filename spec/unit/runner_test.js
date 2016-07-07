@@ -1,7 +1,16 @@
 var Runner = require('../../built/runner').Runner;
 var q = require('q');
+var Logger = require('../../built/logger').Logger,
+    WriteTo = require('../../built/logger').WriteTo;
 
 describe('the Protractor runner', function() {
+  beforeAll(function() {
+    Logger.writeTo = WriteTo.NONE;
+  });
+
+  afterAll(function() {
+    Logger.writeTo = WriteTo.CONSOLE;
+  });
   it('should export its config', function() {
     var config = {
       foo: 'bar'

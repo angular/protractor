@@ -7,7 +7,7 @@ import {Config} from './config';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {DriverProvider} from './driverProviders';
 import {ProtractorBy} from './locators';
-import {Logger} from './logger2';
+import {Logger} from './logger';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
 import * as helper from './util';
