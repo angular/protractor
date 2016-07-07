@@ -1,4 +1,4 @@
-/// <reference path="../../built/index.d.ts" />
+/// <reference path="../../built/ambient.d.ts" />
 import {ProtractorExpectedConditions} from 'protractor';
 let ExpectedConditions: ProtractorExpectedConditions;
 ExpectedConditions.not(0);

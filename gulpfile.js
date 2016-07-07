@@ -65,7 +65,7 @@ gulp.task('tsc', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence(['typings', 'jshint', 'format'], 'tsc', 'types', 'built:copy', done);
+  runSequence(['typings', 'jshint', 'format'], 'tsc', 'types', 'ambient', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
@@ -133,3 +133,16 @@ var removeTypes = function(line, webdriverType) {
   }
   return line.replace(new RegExp(webdriverType,'g'), 'any');
 }
+
+gulp.task('ambient', function(done) {
+  var fileContents = fs.readFileSync(path.resolve('built/index.d.ts')).toString();
+  var contents = '';
+  contents += 'declare namespace protractor {\n';
+  contents += fileContents + '\n';
+  contents += '}\n';
+  contents += 'declare module "protractor" {\n';
+  contents += '  export = protractor; \n';
+  contents += '}\n';
+  fs.writeFileSync(path.resolve('built/ambient.d.ts'), contents);
+  done();
+});

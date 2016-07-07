@@ -1,4 +1,4 @@
-/// <reference path="../../built/index.d.ts" />
+/// <reference path="../../built/ambient.d.ts" />
 import {ProtractorBy} from 'protractor';
 let by: ProtractorBy;
 let By: ProtractorBy;
