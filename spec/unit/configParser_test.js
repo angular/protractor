@@ -1,8 +1,8 @@
 var ConfigParser = require('../../built/configParser').ConfigParser;
 var ConfigError = require('../../built/exitCodes').ConfigError;
 var ProtractorError = require('../../built/exitCodes').ProtractorError;
-var Logger = require('../../built/logger2').Logger;
-var WriteTo = require('../../built/logger2').WriteTo;
+var Logger = require('../../built/logger').Logger;
+var WriteTo = require('../../built/logger').WriteTo;
 var path = require('path');
 
 describe('the config parser', function() {

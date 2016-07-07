@@ -3,7 +3,7 @@ import * as path from 'path';
 
 import {Config} from './config';
 import {ConfigError} from './exitCodes';
-import {Logger} from './logger2';
+import {Logger} from './logger';
 
 let logger = new Logger('configParser');
 

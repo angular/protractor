@@ -472,6 +472,7 @@ export interface Config {
      * for the exact options available.
      */
     jasmineNodeOpts?: {
+      [key: string]: any;
       /**
        * If true, print colors to the terminal.
        */
@@ -500,12 +501,13 @@ export interface Config {
      *
      * See the full list at http://mochajs.org/
      */
-    mochaOpts?: {ui?: string; reporter?: string;};
+    mochaOpts?: {[key: string]: any; ui?: string; reporter?: string;};
 
     /**
      * Options to be passed to Cucumber (when set up as a custom framework).
      */
     cucumberOpts?: {
+      [key: string]: any;
       /**
        * Require files before executing the features.
        */

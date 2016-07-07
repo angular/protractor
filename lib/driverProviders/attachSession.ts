@@ -6,7 +6,7 @@
 import * as q from 'q';
 
 import {Config} from '../config';
-import {Logger} from '../logger2';
+import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 

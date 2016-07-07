@@ -6,7 +6,7 @@ import * as util from 'util';
 import {ElementArrayFinder, ElementFinder, build$, build$$} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
-import {Logger} from './logger2';
+import {Logger} from './logger';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
 import * as helper from './util';
