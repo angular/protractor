@@ -595,8 +595,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise that resolves to the final
    *     value of the accumulator.
    */
-  reduce(reduceFn: Function, initialValue: any): webdriver.promise.Promise<any>
-      {
+  reduce(reduceFn: Function, initialValue: any):
+      webdriver.promise.Promise<any> {
     let valuePromise = webdriver.promise.fulfilled(initialValue);
     return this.asElementFinders_().then((arr: ElementFinder[]) => {
       return arr.reduce(
@@ -704,8 +704,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
 export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
-  then: (fn: Function, errorFn: Function) => webdriver.promise.Promise<any> =
-      null;
+  then:
+      (fn: Function,
+       errorFn: Function) => webdriver.promise.Promise<any> = null;
 
   constructor(
       private browser_: Browser, elementArrayFinder: ElementArrayFinder) {
