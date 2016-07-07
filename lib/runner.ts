@@ -13,7 +13,6 @@ import {protractor} from './ptor';
 import * as helper from './util';
 
 var webdriver = require('selenium-webdriver');
-let promsie = require('selenium-webdriver/lib/promise');
 let logger = new Logger('runner');
 /*
  * Runner is responsible for starting the execution of a test run and triggering
