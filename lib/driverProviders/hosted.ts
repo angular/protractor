@@ -7,8 +7,9 @@ import * as q from 'q';
 import * as util from 'util';
 
 import {Config} from '../config';
-import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
+
+import {DriverProvider} from './driverProvider';
 
 let logger = new Logger('hosted');
 export class Hosted extends DriverProvider {

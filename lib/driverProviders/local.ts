@@ -11,11 +11,11 @@ import * as path from 'path';
 import * as q from 'q';
 import * as util from 'util';
 
-
 import {Config} from '../config';
-import {DriverProvider} from './driverProvider';
 import {BrowserError} from '../exitCodes';
 import {Logger} from '../logger2';
+
+import {DriverProvider} from './driverProvider';
 
 let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
 let SeleniumChrome =

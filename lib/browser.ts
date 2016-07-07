@@ -34,8 +34,8 @@ for (let foo in webdriver) {
 export class Webdriver {
   actions: () => webdriver.ActionSequence = webdriver.WebDriver.actions;
   wait:
-      (condition: webdriver.promise.Promise<any> | webdriver.util.Condition |
-          Function,
+      (condition: webdriver.promise.Promise<any>|webdriver.util.Condition|
+       Function,
        opt_timeout?: number,
        opt_message?:
            string) => webdriver.promise.Promise<any> = webdriver.WebDriver.wait;

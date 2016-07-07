@@ -6,8 +6,9 @@
 import * as q from 'q';
 
 import {Config} from '../config';
-import {DriverProvider} from './driverProvider';
 import {Logger} from '../logger2';
+
+import {DriverProvider} from './driverProvider';
 
 let webdriver = require('selenium-webdriver');
 let executors = require('selenium-webdriver/executors');

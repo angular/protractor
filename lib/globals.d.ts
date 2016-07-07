@@ -63,10 +63,10 @@ declare namespace webdriver {
   }
 
   namespace promise {
-  interface Promise<T> {
-    controlFlow: Function;
-    then: Function;
-  }
+    interface Promise<T> {
+      controlFlow: Function;
+      then: Function;
+    }
   }
 
   namespace util {

@@ -9,9 +9,10 @@ import * as q from 'q';
 import * as util from 'util';
 
 import {Config} from '../config';
-import {DriverProvider} from './driverProvider';
 import {BrowserError} from '../exitCodes';
 import {Logger} from '../logger2';
+
+import {DriverProvider} from './driverProvider';
 
 let webdriver = require('selenium-webdriver'),
     chrome = require('selenium-webdriver/chrome'),
@@ -82,7 +83,8 @@ export class Direct extends DriverProvider {
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
-          this.config_.capabilities['firefox_binary'] = this.config_.firefoxPath;
+          this.config_.capabilities['firefox_binary'] =
+              this.config_.firefoxPath;
         }
         driver = new firefox.Driver(this.config_.capabilities);
         break;
