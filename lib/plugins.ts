@@ -1,7 +1,9 @@
 var webdriver = require('selenium-webdriver');
-var log = require('./logger');
+import {Logger} from './logger2';
 import * as q from 'q';
 import {ConfigParser} from './configParser';
+
+let logger = new Logger('plugins');
 
 export enum PromiseType {
   Q,
@@ -70,7 +72,7 @@ export class Plugins {
 
       this.annotatePluginObj(pluginObj, pluginConf, i);
 
-      log.debug('Plugin "' + pluginObj.name + '" loaded.');
+      logger.debug('Plugin "' + pluginObj.name + '" loaded.');
       this.pluginObjs.push(pluginObj);
     });
   };
@@ -111,7 +113,7 @@ export class Plugins {
     obj.addSuccess = (options?) => { addAssertion(options, true); };
     obj.addWarning = (message?, options?) => {
       options = options || {};
-      log.puts(
+      logger.warn(
           'Warning ' + (options.specName ? 'in ' + options.specName :
                                            'from "' + obj.name + '" plugin') +
           ': ' + message);
@@ -124,7 +126,7 @@ export class Plugins {
     var normalColor = '\x1b[39m';
 
     var printResult = (message: string, pass: boolean) => {
-      log.puts(
+      logger.info(
           pass ? green : red, '\t', pass ? 'Pass: ' : 'Fail: ', message,
           normalColor);
     };
@@ -139,9 +141,10 @@ export class Plugins {
         for (var k = 0; k < specResult.assertions.length; k++) {
           var assertion = specResult.assertions[k];
           if (!assertion.passed) {
-            log.puts('\t\t' + assertion.errorMsg);
+            logger.error('\t\t' + assertion.errorMsg);
             if (assertion.stackTrace) {
-              log.puts('\t\t' + assertion.stackTrace.replace(/\n/g, '\n\t\t'));
+              logger.error(
+                  '\t\t' + assertion.stackTrace.replace(/\n/g, '\n\t\t'));
             }
           }
         }
