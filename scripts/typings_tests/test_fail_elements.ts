@@ -1,4 +1,4 @@
-/// <reference path="../../built/index.d.ts" />
+/// <reference path="../../built/ambient.d.ts" />
 import {ElementArrayFinder, ElementFinder, ElementHelper, ProtractorBy} from 'protractor';
 let element: ElementHelper;
 let by: ProtractorBy;

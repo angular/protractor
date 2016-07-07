@@ -1,4 +1,4 @@
-/// <reference path="../../built/index.d.ts" />
+/// <reference path="../../built/ambient.d.ts" />
 import {Browser} from 'protractor';
 let browser: Browser;
 browser.getProcessedConfig(0);
