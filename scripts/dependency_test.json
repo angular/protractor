@@ -1,0 +1,6 @@
+{
+  "spec_dir": "",
+  "spec_files": [
+    "spec/dependencyTest/*_spec.js"
+  ]
+}
