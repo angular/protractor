@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "jasmine": "^2.4.1",
-    "protractor": "^4.0.0",
+    "protractor": "file:../",
     "typescript": "^1.8.10",
     "typings": "^1.0.5"
   }
