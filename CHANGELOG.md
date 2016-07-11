@@ -1,286 +1,26 @@
 # 4.0.0
-- ([8ca8450](https://github.com/angular/protractor/commit/8ca84507e7a7deb4497a7c64f2e222cec6b80a28)) 
-  docs(changelog): fix 3.3.0 issue text
 
-  also link-ify it
-- ([2a391bc](https://github.com/angular/protractor/commit/2a391bc1264bac2f9906b3cba58b944a42c692e3)) 
-  chore(es7): async/await example
-
-- ([0d8c37d](https://github.com/angular/protractor/commit/0d8c37d53271d0075e73b28d7a263944f00fdfde)) 
-  chore(config): optional params and formatting fixes (#3351)
-
-
-- ([7442726](https://github.com/angular/protractor/commit/7442726618cb89adea7ca7c790ce6baec5084396)) 
-  chore(example): change reference for a pre-released version of protractor to a local path (#3346)
-
-
-- ([a522078](https://github.com/angular/protractor/commit/a52207892b773dcd03e87543916ca10a6cf007f6)) 
-  chore(cleanup): clean up for requiring selenium-webdriver (#3345)
-
-
-- ([3c787af](https://github.com/angular/protractor/commit/3c787afba216e816aea752c234bcdbf84eba5e96)) 
-  docs(readme): add testapp dependency installation instructions (#3344)
-
-  closes #3340
-- ([b0d5cff](https://github.com/angular/protractor/commit/b0d5cff46adc3ce39c9613b1ef0fbfb1ebe02775)) 
-  chore(test): fix typings test with an ambient typings declaration file (#3343)
-
-  closes #3337
-- ([1bac40b](https://github.com/angular/protractor/commit/1bac40b1cd91e4c506ba207aa69b1c0269e7541a)) 
-  chore(logger): rename logger2 to logger (#3342)
-
-
-- ([cef37c8](https://github.com/angular/protractor/commit/cef37c878600a36f0490e32d535200a09ff7af2b)) 
-  chore(tests): remove jshint checks for dependency tests (#3341)
-
-
-- ([936dddd](https://github.com/angular/protractor/commit/936dddd8110f38cfa736bd9129d06338c80605f2)) 
-  chore(selenium): add a dependency test for selenium-webdriver (#3336)
-
-
-- ([3b0b324](https://github.com/angular/protractor/commit/3b0b324f8c865c4e2b9374a208084cec9b8d3121)) 
-  chore(typings): clang + typings upgrade (#3338)
-
-
-- ([4fd8033](https://github.com/angular/protractor/commit/4fd80336e99ab42352b8fc70d743eb784e7a34d0)) 
-  chore(logger): remove logger for logger2 (#3339)
-
-
-- ([bb65e5a](https://github.com/angular/protractor/commit/bb65e5aff2719eaf247d0821bdf48c512cf18602)) 
-  chore(website): clean up documentation (#3334)
-
-  - Remove getInnerHtml and getOuterHtml from inherited WebElement docs.
-  - Remove some of the goog.provide. Only one is required to build the website.
-- ([f5dc4f9](https://github.com/angular/protractor/commit/f5dc4f9f9a26699b847ed8a89ce64f332ee78d6d)) 
-  chore(example): add a protractor typescript example (#3323)
-
-
-- ([8b124cf](https://github.com/angular/protractor/commit/8b124cf2f4b9e54858145fea3dd9f59ae9236567)) 
-  chore(tests): fix typings for templated promises (#3335)
-
-
-- ([b04528d](https://github.com/angular/protractor/commit/b04528de8fa8b6e7f2fee9c633dfbaf6c12597c9)) 
-  chore(cleanup): clean up with clang issues (#3324)
-
-  - removed `gulp clang` from gulp file
-  - added `gulp format` - automatically clang formats typescript
-  - added `gulp format:enforce` - shows verbose clang errors
-  - updated the gulp tasks to use `gulp format` instead of the `gulp clang` task
-  - ran `gulp format` to clean up files
-- ([5395824](https://github.com/angular/protractor/commit/5395824fb9828bd2cdc9f839cbb1c3ac16881c64)) 
-  chore(types): make webdriver.promise.Promise generic (#3333)
-
-
-- ([270e974](https://github.com/angular/protractor/commit/270e974032ff037296b051f0de68d50d729e8742)) 
-  chore(testapp): upgrading and fixing angular 2 rc 4 imports (#3322)
-
-  - closes #3296
-  - upgrade hybrid app to angular2 rc4
-  - fix reference in system.config.js in ng2
-- ([1e9f500](https://github.com/angular/protractor/commit/1e9f5008fd7bad0f1ae99ee51652ffb865d8b7a3)) 
-  chore(types): split out config interface from configParser (#3321)
-
-  - split out config interface from configParser
-  - add comments from docs/referenceConf.js to lib/config.ts
-  - allows for users to `import {Config} from 'protractor';`
-- ([c80cbbf](https://github.com/angular/protractor/commit/c80cbbf8aba3cc8f4d91cfccf58f115811ce90ca)) 
-  chore(types): fix import of package.json typings (#3319)
-
-  - fixes types when used in package.json
-  - allows for users to `import {browser,element,by,$,$$,ExpectedConditions} from
-  'protractor/globals';`
-- ([23aabb8](https://github.com/angular/protractor/commit/23aabb84e40be40faa5c70c42cbb29eae2a41c5e)) 
-  chore(testapp): upgrade to angular2 rc4 (#3304)
-
-  * upgrade to angular2 rc4
-  * increase allScriptsTimeout and getPageTimeout for the angular 2 test
-
-- ([e786ea1](https://github.com/angular/protractor/commit/e786ea1ad1a1183a8fee83640f4155932ec666d2)) 
-  chore(expectedConditions): change the class name to appear on the website (#3315)
-
-  - after investigation, ExpectedConditions_ as a class name does not appear on the website
-  - changed ExpectedConditions_ to ProtractorExpectedConditions
-  - added an @alias so ProtractorExpectedConditions shows up as ExpectedConditions
-- ([f311320](https://github.com/angular/protractor/commit/f311320a1aed09b07d926d0c2aa586202f591b5b)) 
-  fix(website): edit getText JSDoc for shortDescription (#3310)
-
-  closes #3233
-- ([ba63a92](https://github.com/angular/protractor/commit/ba63a92de021193c90794c54fefae39d806fba4a)) 
-  fix(util): check stack exists before filtering the stack trace (#3309)
-
-  closes #3224
-- ([c86acd4](https://github.com/angular/protractor/commit/c86acd44bca821491558506964fe1ba8ed5b702a)) 
-  chore(website): fix website for items to appear properly (#3314)
-
-  - Fix order for website (see #3163. Does not include $ / $$)
-  - Replace @return with @returns so descriptions will appear
-- ([128f8e1](https://github.com/angular/protractor/commit/128f8e197e28601cc93228d917a0e37d4ab29a15)) 
-  dep(webdrivermanager): upgrade to 10.1.0 (#3312)
-
-  closes #3303
-- ([5dab402](https://github.com/angular/protractor/commit/5dab402ccce1c86661c2c2bba138ebaf11e87b98)) 
-  chore(typings): remove ptor from gulp types (#3307)
-
-  - after investigation, variables in the namespace cannot be assigned a value
-  - types will require import of the classes and then setting the value from global
-  
-   ```
-   import {Browser} from 'protractor';
-   var browser: Browser = global['browser'];
-   ```
-  
-  - update typing tests to set the value of the type
-- ([f018aa0](https://github.com/angular/protractor/commit/f018aa0bd6d64d85f1272bb79e9209abf27c8d0b)) 
-  chore(config): use thrown stack trace for ConfigError (#3305)
-
-  - update config error unit tests for stack trace errors
-   closes #3301
-- ([248ed99](https://github.com/angular/protractor/commit/248ed9974bc32a46077fe84a66bc674caa842899)) 
-  chore(testapp): use testapp's package.json to install node_modules (#3302)
-
-  * use testapp's package.json to install node_modules
-  * update hybrid to use the node_modules folder and remove lib folder
-- ([7c376c5](https://github.com/angular/protractor/commit/7c376c5f435ae2b9a47c3425ff062dadd32b839f)) 
-  chore(browserstack): get url for BrowserStack Automate Session at end of test (#3247)
-
-
-- ([b515ae8](https://github.com/angular/protractor/commit/b515ae87cbb863331c80f68403d54f9d5e614f46)) 
-  chore(test): add tests for declaration type file (#3297)
-
-
-- ([d438780](https://github.com/angular/protractor/commit/d4387803188d5f314dd7b7537ccdc1fd19fedd72)) 
-  chore(package): add typings and fix main (#3298)
-
-
-- ([e9b49f2](https://github.com/angular/protractor/commit/e9b49f24f34730e0648d262be1c410a7f585703a)) 
-  fix(config): do not flatten capabilities (#3291)
-
-  This is no longer necessary in the latest version of selenium-webdriver. Without this change,
-  `--capabilities.chromeOptions.binary` will do nothing, for example.
-   Closes #3290
-- ([cd21f4d](https://github.com/angular/protractor/commit/cd21f4dc54f4568a3c71f19e5121c79438039a8c)) 
-  chore(types): add in types inherited from selenium-webdriver (#3288)
-
-  - add element.ts to the gulp task for 'gulp types'
-  - clang clean up
-  - separate out selenium-webdriver types and extend them in protractor
-  - remove webdriver types for index.d.ts file
-- ([bc9995b](https://github.com/angular/protractor/commit/bc9995b244c7007d05980dfcfbb7185417a159d5)) 
-  chore(expectedConditions): fixing types to functions (#3281)
-
-
-- ([24c8ed7](https://github.com/angular/protractor/commit/24c8ed7e068ab45fa76f847cdd5acc02b63f3012)) 
-  chore(promises): match promises to webdriver.promise.Promise (#3282)
-
-  - resolve clang issues
-  - rename ptor_ to browser
-- ([e4dccbe](https://github.com/angular/protractor/commit/e4dccbee99c971baacfe95f305260b980bdd0cdc)) 
-  chore(types): add function types to element and locators (#3279)
-
-  - add 'gulp types' to output index.d.ts
-  - some clean up for functions to use fat arrow
-  - clang clean up
-- ([75f3481](https://github.com/angular/protractor/commit/75f3481ca1ab5babd7e00a7497d8f434972df7f4)) 
-  chore(element): fix to pass the error message from the browser to element (#3275)
-
-
-- ([d56ed38](https://github.com/angular/protractor/commit/d56ed38e6c92cf827fb8fd6ed0e42f413b18b618)) 
-  chore(browser): add function types (#3272)
-
-  adding parameter types and return types to functions that are defined in runner.
-- ([7d07119](https://github.com/angular/protractor/commit/7d071191bceacea730590d6c69b9ff7d4d831fd5)) 
-  chore(browser): clean up types (#3271)
-
-  - Clean up comments and clang issues.
-  - Move unnecessary exports to the browser class.
-  - Breaking changes for users directly requiring the protractor file:
-  `require('protractor/built/protractor')`
-   - The protractor file has been renamed to browser
-   - `By` and `ExpectedConditions` are now static variables of the Browser class.
-  
-
-- ([78d7447](https://github.com/angular/protractor/commit/78d74471180a1cc0ce6644a0c636f8c381d54bc7)) 
-  chore(launcher): clean up multicapabilities typing error (#3269)
-
-
-- ([d6910c1](https://github.com/angular/protractor/commit/d6910c168550da590b3d4db42f5c853e81cf83b6)) 
-  fix(edge): Use resetUrl about:blank for MicrosoftEdge (#3267)
-
-
-- ([68d2f73](https://github.com/angular/protractor/commit/68d2f7367984f0298295c87b8e1c710b57a3bfe5)) 
-  chore(request): remove request module in favor of node https (#3265)
-
-
-- ([78f3c64](https://github.com/angular/protractor/commit/78f3c64e6d466b44174417d4d6fbc382dbad34b1)) 
-  chore(exitCodes): adding exit code for browser connect errors (#3133)
-
-  * add exit code for browser connect errors
-  * add exit code for browserstack error
-  * add browser error for debug with multiple capabilities
-  * use thrown stack traces for errors (instead of creating new ones) with captureStackTrace
-  * allow for errors to suppress exit code for config parser thrown error
-- ([85209f4](https://github.com/angular/protractor/commit/85209f42621b8992c777263458e9fc4772968777)) 
-  feat(webdriver): extract webdriver-manager into a separate node module (#3068)
-
-  closes #607, #2402
-  
-  * Removed the config.json. This will be managed now by webdriver-manager.
-  * Wedriver-manager downloads the file to the node_modules/webdriver-manager/selenium folder. This
-  will no longer appear in the protractor directory.
-- ([8316917](https://github.com/angular/protractor/commit/83169174243c7ef9767a52d86e649838aa4759f9)) 
-  feat(expectedConditions): adding urlIs and urlContains (#3237)
-
-  * adding urlIs and urlContains
-  * tests for UrlIs and UrlContains
-- ([094ffa0](https://github.com/angular/protractor/commit/094ffa0381ba8e2e5482af6b2b5b8ba57862537b)) 
-  docs(plugins): fixing outdated info in plugins section (#3248)
-
-  Closes #3026
-- ([3675198](https://github.com/angular/protractor/commit/3675198c8cfe39288baaa8a03a35b3d7d3ec1576)) 
-  chore(tests): test for ngUpgrade support (#3024)
-
-  `upgrade.js` taken from https://github.com/angular/angular/pull/7603
-- ([bf603f5](https://github.com/angular/protractor/commit/bf603f50dfd48b63bfdef50508c1e8f95b2553da)) 
-  chore(selenium): update breakpoint to line 250 and update element explorer to use the built
-  directory (#3255)
-- ([4353069](https://github.com/angular/protractor/commit/43530693f6cafd1d3cd3407bd5d1088b51ab8101)) 
-  deps(outdated): Update outdated dependencies (#3251)
-
-  Updated the following outdated packages: body-parser, chai, chai-as-promised, glob, jshint, mocha,
-  request, saucelabs, typescript, typings
-- ([a6cae73](https://github.com/angular/protractor/commit/a6cae73e2266a20751548047f0d3721a5bd73807)) 
-  deps(selenium): upgrade to selenium-webdriver 2.53.2 (#3223)
-
-  closes #3173, closes #3167, closes #3058
-- ([b28c6c1](https://github.com/angular/protractor/commit/b28c6c1e7cc88d69bb5188d69988a42b68cd2ac0)) 
-  chore(npmignore): update npmignore to ignore .github/ (#3160)
-
-- ([f34a9d4](https://github.com/angular/protractor/commit/f34a9d4baaa80d78ac24193ac41c6a986dbe933d)) 
-  docs(expectedConditions): fix link to selenium's expected conditions (#3213)
-- ([e7e72e1](https://github.com/angular/protractor/commit/e7e72e1a5e5943207410115d799c38120400cb0e)) 
-  docs(styleguide) - update link for google Js style guide (#3217)
+## Breaking changes
 - ([d932ad7](https://github.com/angular/protractor/commit/d932ad7e853c0bda5d45b478a5c0271d072b6794)) 
   chore(browser): rename protractor to browser and add a protractor namespace (#3214)
 
   * added wrapDriver method from the browser.ts and ExpectedConditions to the protractor namespace
   * imported selenium webdriver ActionSequence, Key, promise, Command, and CommandName to the
   protractor namespace
-- ([97c482c](https://github.com/angular/protractor/commit/97c482c2b9859c0d61fd753caca80078dc4db1ea)) 
-  docs(element): Clean up return types for .each() and .then() (#3209)
 
-  Fixes #3028
+## Bug fixes
+- ([d6910c1](https://github.com/angular/protractor/commit/d6910c168550da590b3d4db42f5c853e81cf83b6)) 
+  fix(edge): Use resetUrl about:blank for MicrosoftEdge (#3267)
+
 - ([f205518](https://github.com/angular/protractor/commit/f2055181e60fd358c1764fe716af3d64fc64810b)) 
   fix(launcher): resolve promise for getMultiCapabilities (#3195)
 
   closes #3191
-- ([9177dca](https://github.com/angular/protractor/commit/9177dca445e8a16363a7df5328886688b7027180)) 
-  chore(website): use gulp-clean-css dependency (#3186)
+
 - ([f149bd1](https://github.com/angular/protractor/commit/f149bd1e91e749a77e8ee147fdb3881584ae6851)) 
   fix(docs): Change extension for docs links to .ts (#3187)
 
   closes #3170 
-- ([3083097](https://github.com/angular/protractor/commit/308309740885ca096e2214999d06b0c339363c96)) 
-  chore(testapp): Use newer angular beta (#3121)
 
 - ([67474e0](https://github.com/angular/protractor/commit/67474e05e73d3facead7c60150c18a2d866185c7)) 
   chore(configParser): allow non-glob file pattern (#2754)
@@ -294,11 +34,80 @@
   (https://github.com/npm/npm/issues/10637). Removing the rimraf package resolved this. It was only
   used to generate documentation which itself was removed a while ago.
 
-- ([f1bdca0](https://github.com/angular/protractor/commit/f1bdca09a8f3c050ea2652d3201df78808a13fe7)) 
-  chore(config): Update selenium-webdriver + selenium + iedriver versions (#3172)
+- ([f311320](https://github.com/angular/protractor/commit/f311320a1aed09b07d926d0c2aa586202f591b5b)) 
+  fix(website): edit getText JSDoc for shortDescription (#3310)
 
-  * Updating selenium-webdriver + selenium + iedriver
-  * Updating selenium version on CI Configurations
+  closes #3233
+- ([ba63a92](https://github.com/angular/protractor/commit/ba63a92de021193c90794c54fefae39d806fba4a)) 
+  fix(util): check stack exists before filtering the stack trace (#3309)
+
+  closes #3224
+
+- ([c86acd4](https://github.com/angular/protractor/commit/c86acd44bca821491558506964fe1ba8ed5b702a)) 
+  chore(website): fix website for items to appear properly (#3314)
+
+  - Fix order for website (see #3163. Does not include $ / $$)
+  - Replace @return with @returns so descriptions will appear
+
+- ([e9b49f2](https://github.com/angular/protractor/commit/e9b49f24f34730e0648d262be1c410a7f585703a)) 
+  fix(config): do not flatten capabilities (#3291)
+
+  This is no longer necessary in the latest version of selenium-webdriver. Without this change,
+  `--capabilities.chromeOptions.binary` will do nothing, for example.
+   Closes #3290
+
+## Features
+- ([78f3c64](https://github.com/angular/protractor/commit/78f3c64e6d466b44174417d4d6fbc382dbad34b1)) 
+  chore(exitCodes): adding exit code for browser connect errors (#3133)
+
+  * add exit code for browser connect errors
+  * add exit code for browserstack error
+  * add browser error for debug with multiple capabilities
+  * use thrown stack traces for errors (instead of creating new ones) with captureStackTrace
+  * allow for errors to suppress exit code for config parser thrown error
+
+- ([85209f4](https://github.com/angular/protractor/commit/85209f42621b8992c777263458e9fc4772968777)) 
+  feat(webdriver): extract webdriver-manager into a separate node module (#3068)
+
+  closes #607, #2402
+  
+  * Removed the config.json. This will be managed now by webdriver-manager.
+  * Wedriver-manager downloads the file to the node_modules/webdriver-manager/selenium folder. This
+  will no longer appear in the protractor directory.
+
+- ([8316917](https://github.com/angular/protractor/commit/83169174243c7ef9767a52d86e649838aa4759f9)) 
+  feat(expectedConditions): adding urlIs and urlContains (#3237)
+
+  * adding urlIs and urlContains
+  * tests for UrlIs and UrlContains
+
+## Dependency Upgrades
+- ([4353069](https://github.com/angular/protractor/commit/43530693f6cafd1d3cd3407bd5d1088b51ab8101)) 
+  deps(outdated): Update outdated dependencies (#3251)
+
+  Updated the following outdated packages: body-parser, chai, chai-as-promised, glob, jshint, mocha,
+  request, saucelabs, typescript, typings
+
+- ([a6cae73](https://github.com/angular/protractor/commit/a6cae73e2266a20751548047f0d3721a5bd73807)) 
+  deps(selenium): upgrade to selenium-webdriver 2.53.2 (#3223)
+
+  closes #3173, closes #3167, closes #3058
+
+- ([128f8e1](https://github.com/angular/protractor/commit/128f8e197e28601cc93228d917a0e37d4ab29a15)) 
+  dep(webdrivermanager): upgrade to 10.1.0 (#3312)
+
+## Other
+- ([2a391bc](https://github.com/angular/protractor/commit/2a391bc1264bac2f9906b3cba58b944a42c692e3)) 
+  chore(es7): async/await example
+
+- ([bb65e5a](https://github.com/angular/protractor/commit/bb65e5aff2719eaf247d0821bdf48c512cf18602)) 
+  chore(website): clean up documentation (#3334)
+
+  - Remove getInnerHtml and getOuterHtml from inherited WebElement docs.
+  - Remove some of the goog.provide. Only one is required to build the website.
+
+- ([f5dc4f9](https://github.com/angular/protractor/commit/f5dc4f9f9a26699b847ed8a89ce64f332ee78d6d)) 
+  chore(example): add a protractor typescript example (#3323)
 
 # 3.3.0
 _The [Protractor Website](http://www.protractortest.org) API docs have been streamlined. We've also, internally, moved to using TypeScript and building down to JS! Also, the logger has been improved._
