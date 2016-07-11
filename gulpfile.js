@@ -70,7 +70,7 @@ gulp.task('prepublish', function(done) {
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'types',
+    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'types', 'ambient',
     'built:copy', done);
 });
 
