@@ -160,7 +160,7 @@ export interface Config {
    *   'spec/*_spec.js'
    * ]
    */
-  specs: Array<string>;
+  specs?: Array<string>;
 
   /**
    * Patterns to exclude specs.
@@ -284,9 +284,8 @@ export interface Config {
      * `multiCapabilities`.
      *
      * If this returns a promise, it is resolved immediately after
-     * `beforeLaunch`
-     * is run, and before any driver is set up. If this is specified, both
-     * capabilities and multiCapabilities will be ignored.
+     * `beforeLaunch` is run, and before any driver is set up. If this is
+     * specified, both capabilities and multiCapabilities will be ignored.
      */
     getMultiCapabilities?: any;
 
@@ -310,15 +309,14 @@ export interface Config {
 
     /**
      * CSS Selector for the element housing the angular app - this defaults to
-     * body, but is necessary if ng-app is on a descendant of <body>.
+     * 'body', but is necessary if ng-app is on a descendant of <body>.
      */
     rootElement?: string;
 
     /**
      * The timeout in milliseconds for each script run on the browser. This
      * should be longer than the maximum time your application needs to
-     * stabilize
-     * between tasks.
+     * stabilize between tasks.
      */
     allScriptsTimeout?: number;
 
@@ -329,8 +327,7 @@ export interface Config {
 
     /**
      * A callback function called once configs are read but before any
-     * environment
-     * setup. This will only run once, and before onPrepare.
+     * environment setup. This will only run once, and before onPrepare.
      *
      * You can specify a file containing code to run by setting beforeLaunch to
      * the filename string.
@@ -350,9 +347,8 @@ export interface Config {
      * the filename string. onPrepare can optionally return a promise, which
      * Protractor will wait for before continuing execution. This can be used if
      * the preparation involves any asynchronous calls, e.g. interacting with
-     * the
-     * browser. Otherwise Protractor cannot guarantee order of execution and may
-     * start the tests before preparation finishes.
+     * the browser. Otherwise Protractor cannot guarantee order of execution
+     * and may start the tests before preparation finishes.
      *
      * At this point, global variable 'protractor' object will be set up, and
      * globals from the test framework will be available. For example, if you
@@ -373,10 +369,9 @@ export interface Config {
     onPrepare?: () => {};
 
     /**
-     * A callback function called once tests are finished.
-     * onComplete can optionally return a promise, which Protractor will wait
-     * for
-     * before shutting down webdriver.
+     * A callback function called once tests are finished. onComplete can
+     * optionally return a promise, which Protractor will wait for before
+     * shutting down webdriver.
      *
      * At this point, tests will be done but global objects will still be
      * available.
@@ -394,7 +389,7 @@ export interface Config {
      * A callback function called once all tests have finished running and
      * the WebDriver instance has been shut down. It is passed the exit code
      * (0 if the tests passed). afterLaunch must return a promise if you want
-     *  asynchronous code to be executed before the program exits.
+     * asynchronous code to be executed before the program exits.
      * This is called only once before the program exits (after onCleanUp).
      */
     afterLaunch?: (exitCode: number) => {};
@@ -432,10 +427,8 @@ export interface Config {
 
     /**
      * Protractor will track outstanding $timeouts by default, and report them
-     * in
-     * the error message if Protractor fails to synchronize with Angular in
-     * time.
-     * In order to do this Protractor needs to decorate $timeout.
+     * in the error message if Protractor fails to synchronize with Angular in
+     * time. In order to do this Protractor needs to decorate $timeout.
      *
      * CAUTION: If your app decorates $timeout, you must turn on this flag. This
      * is false by default.
@@ -449,6 +442,7 @@ export interface Config {
 
     /**
      * Test framework to use. This may be one of: jasmine, mocha or custom.
+     * Default value is 'jasmine'
      *
      * When the framework is set to "custom" you'll need to additionally
      * set frameworkPath with the path relative to the config file or absolute:
@@ -463,7 +457,7 @@ export interface Config {
      * Mocha has limited support. You will need to include your
      * own assertion framework (such as Chai) if working with Mocha.
      */
-    framework: string;
+    framework?: string;
 
     /**
      * Options to be passed to jasmine.
