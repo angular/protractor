@@ -1,4 +1,9 @@
 # 4.0.0
+This version includes some big changes, so we've decided to make it version 4.0!
+- webdriver-manager is now it's [own NPM](https://www.npmjs.com/package/webdriver-manager), so you
+can use it in your own projects.
+- Protractor has TypeScript typings! See the [example](https://github.com/angular/protractor/tree/master/exampleTypescript)
+for details on how to use TypeScript in your tests.
 
 ## Breaking changes
 - ([d932ad7](https://github.com/angular/protractor/commit/d932ad7e853c0bda5d45b478a5c0271d072b6794)) 
@@ -7,6 +12,9 @@
   * added wrapDriver method from the browser.ts and ExpectedConditions to the protractor namespace
   * imported selenium webdriver ActionSequence, Key, promise, Command, and CommandName to the
   protractor namespace
+
+- Selenium Webdriver has deprecated innerHTML() and outerHTML(). You'll need to update your tests to
+not use these methods.
 
 ## Bug fixes
 - ([d6910c1](https://github.com/angular/protractor/commit/d6910c168550da590b3d4db42f5c853e81cf83b6)) 
