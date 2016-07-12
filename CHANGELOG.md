@@ -1,7 +1,10 @@
 # 4.0.0
 This version includes some big changes, so we've decided to make it version 4.0!
+
 - webdriver-manager is now it's [own NPM](https://www.npmjs.com/package/webdriver-manager), so you
-can use it in your own projects.
+can use it in your own projects. Protractor depends on it, though, so you shouldn't need to change
+anything.
+
 - Protractor has TypeScript typings! See the [example](https://github.com/angular/protractor/tree/master/exampleTypescript)
 for details on how to use TypeScript in your tests.
 
@@ -13,8 +16,11 @@ for details on how to use TypeScript in your tests.
   * imported selenium webdriver ActionSequence, Key, promise, Command, and CommandName to the
   protractor namespace
 
-- Selenium Webdriver has deprecated innerHTML() and outerHTML(). You'll need to update your tests to
+- Selenium Webdriver has deprecated getInnerHtml and getOuterHtml. You'll need to update your tests to
 not use these methods.
+
+- Protractor node module no longer has a config.json file. This is now handled in the webdriver-manager
+node module and the files are also downloaded to the webdriver-manager/selenium folder.
 
 ## Bug fixes
 - ([d6910c1](https://github.com/angular/protractor/commit/d6910c168550da590b3d4db42f5c853e81cf83b6)) 
