@@ -31,7 +31,7 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '47',
+    'version': '44',
     'selenium-version': '2.53.1'
   }],
 
