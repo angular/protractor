@@ -3,7 +3,7 @@ This version includes some big changes, so we've decided to make it version 4.0!
 
 - webdriver-manager is now it's [own NPM](https://www.npmjs.com/package/webdriver-manager), so you
 can use it in your own projects. Protractor depends on it, though, so you shouldn't need to change
-anything.
+anything. However, because it is a new dependency you'll need to rerun `webdriver-manager update`.
 
 - Protractor has TypeScript typings! See the [example](https://github.com/angular/protractor/tree/master/exampleTypescript)
 for details on how to use TypeScript in your tests.
