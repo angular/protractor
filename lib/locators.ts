@@ -122,8 +122,7 @@ export class ProtractorBy extends WebdriverBy {
    * var deprecatedSyntax = element(by.binding('{{person.name}}'));
    *
    * @param {string} bindingDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString:
-   * Function|string}}
+   * @returns {Locator} location strategy
    */
   binding(bindingDescriptor: string): Locator {
     return {
@@ -155,8 +154,7 @@ export class ProtractorBy extends WebdriverBy {
    * expect(element(by.exactBinding('phone')).isPresent()).toBe(false);
    *
    * @param {string} bindingDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString:
-   * Function|string}}
+   * @returns {Locator} location strategy
    */
   exactBinding(bindingDescriptor: string): Locator {
     return {
@@ -184,6 +182,7 @@ export class ProtractorBy extends WebdriverBy {
    * expect(input.getAttribute('value')).toBe('Foo123');
    *
    * @param {string} model ng-model expression.
+   * @returns {Locator} location strategy
    */
   model(model: string): Locator {
     return {
@@ -205,8 +204,7 @@ export class ProtractorBy extends WebdriverBy {
    * element(by.buttonText('Save'));
    *
    * @param {string} searchText
-   * @returns {{findElementsOverride: findElementsOverride, toString:
-   * Function|string}}
+   * @returns {Locator} location strategy
    */
   buttonText(searchText: string): Locator {
     return {
@@ -231,8 +229,7 @@ export class ProtractorBy extends WebdriverBy {
    * element(by.partialButtonText('Save'));
    *
    * @param {string} searchText
-   * @returns {{findElementsOverride: findElementsOverride, toString:
-   * Function|string}}
+   * @returns {Locator} location strategy
    */
   partialButtonText(searchText: string): Locator {
     return {
@@ -344,13 +341,11 @@ export class ProtractorBy extends WebdriverBy {
    *
    * // Returns a promise that resolves to an array of WebElements containing
    * // all top level elements repeated by the repeater. For 2 pets rows
-   * resolves
-   * // to an array of 2 elements.
+   * // resolves to an array of 2 elements.
    * var rows = element.all(by.repeater('cat in pets'));
    *
    * // Returns a promise that resolves to an array of WebElements containing
-   * all
-   * // the elements with a binding to the book's name.
+   * // all the elements with a binding to the book's name.
    * var divs = element.all(by.repeater('book in library').column('book.name'));
    *
    * // Returns a promise that resolves to an array of WebElements containing
@@ -367,8 +362,7 @@ export class ProtractorBy extends WebdriverBy {
    * var divs = element.all(by.repeater('book in library'));
    *
    * @param {string} repeatDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString:
-   * Function|string}}
+   * @returns {Locator} location strategy
    */
   repeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(false, repeatDescriptor);
@@ -390,8 +384,7 @@ export class ProtractorBy extends WebdriverBy {
    * expect(element(by.exactRepeater('car in cars')).isPresent()).toBe(true);
    *
    * @param {string} repeatDescriptor
-   * @returns {{findElementsOverride: findElementsOverride, toString:
-   * Function|string}}
+   * @returns {Locator} location strategy
    */
   exactRepeater(repeatDescriptor: string): Locator {
     return this.byRepeaterInner(true, repeatDescriptor);
@@ -409,6 +402,10 @@ export class ProtractorBy extends WebdriverBy {
    * @example
    * // Returns the li for the dog, but not cat.
    * var dog = element(by.cssContainingText('.pet', 'Dog'));
+   *
+   * @param {string} cssSelector css selector
+   * @param {string} searchString text search
+   * @returns {Locator} location strategy
    */
   cssContainingText(cssSelector: string, searchText: string): Locator {
     return {
@@ -441,6 +438,7 @@ export class ProtractorBy extends WebdriverBy {
    * expect(firstOption.getText()).toEqual('red');
    *
    * @param {string} optionsDescriptor ng-options expression.
+   * @returns {Locator} location strategy
    */
   options(optionsDescriptor: string): Locator {
     return {
@@ -472,6 +470,9 @@ export class ProtractorBy extends WebdriverBy {
    * @example
    * var spans = element.all(by.deepCss('span'));
    * expect(spans.count()).toEqual(3);
+   *
+   * @param {string} selector a css selector within the Shadow DOM.
+   * @returns {Locator} location strategy
    */
   deepCss(selector: string): Locator {
     // TODO(julie): syntax will change from /deep/ to >>> at some point.

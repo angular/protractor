@@ -73,7 +73,7 @@ describe('Api', function() {
     expect(apiPage.title.getText()).toBe('element(locator) View code');
     expect(browser.getCurrentUrl()).toMatch(/api\?view=ElementFinder/);
   });
-  
+
   it('should show child functions', function() {
     // Given that you go to element.all().
     apiPage.clickOnMenuItem('element.all(locator)');
@@ -95,7 +95,7 @@ describe('Api', function() {
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
       'clone', 'all', 'filter', 'get', 'first', 'last', 'count', 'locator',
-      'each', 'map', 'reduce', 'evaluate', 'allowAnimations']);
+      'then', 'each', 'map', 'reduce', 'evaluate', 'allowAnimations']);
   });
 
   it('should show element functions', function() {
@@ -119,7 +119,7 @@ describe('Api', function() {
       'isElementPresent', 'addMockModule', 'clearMockModules',
       'removeMockModule', 'getRegisteredMockModules', 'get', 'refresh',
       'navigate', 'setLocation', 'getLocationAbsUrl', 'debugger', 'enterRepl',
-      'pause']);
+      'pause', 'wrapDriver']);
   });
 
   it('should view inherited function', function() {

@@ -304,7 +304,7 @@ export class Browser extends Webdriver {
    * @returns {webdriver.promise.Promise} A promise which resolves to the
    * capabilities object.
    */
-  getProcessedConfig: () => webdriver.promise.Promise<any>;
+  getProcessedConfig(): webdriver.promise.Promise<any> { return null; }
 
   /**
    * Fork another instance of protractor for use in interactive tests.
@@ -317,15 +317,17 @@ export class Browser extends Webdriver {
    * creation
    * @returns {Protractor} a protractor instance.
    */
-  forkNewDriverInstance:
-      (opt_useSameUrl?: boolean, opt_copyMockModules?: boolean) => Browser;
+  forkNewDriverInstance(
+      opt_useSameUrl?: boolean, opt_copyMockModules?: boolean): Browser {
+    return null;
+  }
 
   /**
    * Restart the browser instance.
    *
    * Set by the runner.
    */
-  restart: () => void;
+  restart() { return; }
 
   /**
    * Instead of using a single root element, search through all angular apps
