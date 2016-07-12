@@ -3,7 +3,6 @@
 execution to gather more data and potentially modify the test output.</p>
 <p>The Protractor API and available plugins are <em>BETA</em> and may change
 without a major version bump.</p>
-<p>The <code ng-non-bindable>plugins</code> folder contains default plugins for Protractor.</p>
 <p>##In this document:</p>
 <ul>
 <li><a href="#/plugins#using-plugins">Using Plugins</a></li>
@@ -31,8 +30,7 @@ exports.config = {
   }]
 };
 </code></pre>
-<p>Protractor contains built in plugins in the &#39;plugins&#39; folder. An example of
-using the &#39;ngHint&#39; plugin is shown below.</p>
+<p>An example of using the &#39;ngHint&#39; plugin is shown below.</p>
 <pre><code class="lang-javascript">  plugins: [{
     path: &#39;node_modules/protractor/plugins/ngHint&#39;,
   }]

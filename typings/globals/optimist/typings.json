@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/14fe4313f4a1cf69add3505a2ab1dbc690dc2116/optimist/optimist.d.ts",
+    "raw": "registry:dt/optimist#0.0.0+20160316171810",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/14fe4313f4a1cf69add3505a2ab1dbc690dc2116/optimist/optimist.d.ts"
+  }
+}
