@@ -1,4 +1,5 @@
 built/
+globals.js
 node_modules/
 selenium/
 testapp/inbrowsertest/
