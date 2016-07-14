@@ -6,7 +6,7 @@ Protractor [![Build Status](https://travis-ci.org/angular/protractor.png?branch=
 Compatibility
 -------------
 
-Protractor 3 is compatible with nodejs v4 and newer.
+Protractor 4 is compatible with nodejs v4 and newer.
 
 When using nodejs v0.12, use protractor 2 (`npm install -g protractor@2`).
 
