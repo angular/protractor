@@ -83,7 +83,7 @@ export class WebdriverWebElement {
  * });
  *
  * @constructor
- * @param {Browser} browser A protractor instance.
+ * @param {Browser} browser A browser instance.
  * @param {function(): Array.<webdriver.WebElement>} getWebElements A function
  *    that returns a list of the underlying Web Elements.
  * @param {webdriver.Locator} locator The most relevant locator. It is only
@@ -696,7 +696,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
  *
  * @constructor
  * @extends {webdriver.WebElement}
- * @param {Browser} browser_
+ * @param {Browser} browser_ A browser instance.
  * @param {ElementArrayFinder} elementArrayFinder The ElementArrayFinder
  *     that this is branched from.
  * @returns {ElementFinder}
