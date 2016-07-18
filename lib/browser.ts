@@ -73,10 +73,10 @@ export interface ElementHelper extends Function {
 }
 
 /**
- * Build the helper 'element' function for a given instance of Protractor.
+ * Build the helper 'element' function for a given instance of Browser.
  *
  * @private
- * @param {Protractor} ptor
+ * @param {Browser} browser A browser instance.
  * @returns {function(webdriver.Locator): ElementFinder}
  */
 function buildElementHelper(browser: Browser): ElementHelper {
@@ -307,7 +307,7 @@ export class Browser extends Webdriver {
   getProcessedConfig(): webdriver.promise.Promise<any> { return null; }
 
   /**
-   * Fork another instance of protractor for use in interactive tests.
+   * Fork another instance of browser for use in interactive tests.
    *
    * Set by the runner.
    *
@@ -315,7 +315,7 @@ export class Browser extends Webdriver {
    * creation
    * @param {boolean} opt_copyMockModules Whether to apply same mock modules on
    * creation
-   * @returns {Protractor} a protractor instance.
+   * @returns {Browser} A browser instance.
    */
   forkNewDriverInstance(
       opt_useSameUrl?: boolean, opt_copyMockModules?: boolean): Browser {
