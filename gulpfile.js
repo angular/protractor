@@ -78,7 +78,8 @@ gulp.task('default',['prepublish']);
 
 gulp.task('types', function(done) {
   var folder = 'built';
-  var files = ['browser', 'element', 'locators', 'expectedConditions', 'config'];
+  var files = ['browser', 'element', 'locators', 'expectedConditions',
+    'config', 'plugins'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
   files.forEach(file => {
