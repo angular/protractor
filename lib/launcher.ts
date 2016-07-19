@@ -188,7 +188,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                 protractorError.stack);
             process.exit(errorCode);
           } else {
-            logger.error(e);
+            logger.error(e.message);
+            logger.error(e.stack);
             process.exit(ProtractorError.CODE);
           }
         });
