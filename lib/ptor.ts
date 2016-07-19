@@ -16,19 +16,8 @@ export namespace protractor {
   export let ExpectedConditions: ProtractorExpectedConditions;
 
   // Define selenium webdriver imports.
-  export let promise = {
-    controlFlow: webdriver.promise.controlFlow,
-    createFlow: webdriver.promise.createFlow,
-    defer: webdriver.promise.defer,
-    delayed: webdriver.promise.delayed,
-    filter: webdriver.promise.filter,
-    fulfilled: webdriver.promise.fulfilled,
-    fullyResolved: webdriver.promise.fullyResolved,
-    isPromise: webdriver.promise.isPromise,
-    rejected: webdriver.promise.rejected,
-    thenFinally: webdriver.promise.thenFinally,
-    when: webdriver.promise.when
-  };
+  export let promise = webdriver.promise;
+  export let WebElement = webdriver.WebElement;
   export let ActionSequence = webdriver.ActionSequence;
   export let Key = webdriver.Key;
   export let Command = require('selenium-webdriver/lib/command').Command;
