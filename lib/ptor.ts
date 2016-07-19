@@ -15,14 +15,6 @@ export namespace protractor {
   export let wrapDriver: Function;
   export let ExpectedConditions: ProtractorExpectedConditions;
 
-  // Export the protractor classes
-  export let Browser = require('./browser').Browser;
-  export let ElementFinder = require('./element').ElementFinder;
-  export let ElementArrayFinder = require('./element').ElementArrayFinder;
-  export let ElementHelper = require('./browser').ElementHelper;
-  export let ProtractorBy = require('./locators').ProtractorBy;
-  export let ProtractorExpectedConditions = require('./expectedConditions').ProtractorExpectedConditions;
-
   // Define selenium webdriver imports.
   export let promise = webdriver.promise;
   export let WebElement = webdriver.WebElement;
