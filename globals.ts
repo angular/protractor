@@ -7,10 +7,22 @@ import {
   ProtractorExpectedConditions
 } from 'protractor';
 
-export var browser: Browser = global['browser'];
-export var element: ElementHelper = global['element'];
-export var by: ProtractorBy = global['by'];
-export var By: ProtractorBy = global['By'];
-export var $: (search: string) => ElementFinder = global['$'];
-export var $$: (search: string) => ElementArrayFinder = global['$$'];
-export var ExpectedConditions: ProtractorExpectedConditions = global['ExpectedConditions'];
+export var browser: Browser = global['protractor.browser'];
+export var element: ElementHelper = global['protractor.element'];
+export var by: ProtractorBy = global['protractor.by'];
+export var By: ProtractorBy = global['protractor.By'];
+export var $: (search: string) => ElementFinder = global['protractor.$'];
+export var $$: (search: string) => ElementArrayFinder = global['protractor.$$'];
+export var ExpectedConditions: ProtractorExpectedConditions =
+    global['protractor.ExpectedConditions'];
+
+export interface Protractor {
+  browser: Browser;
+  element: ElementHelper;
+  by: ProtractorBy;
+  By: ProtractorBy;
+  $: (search: string) => ElementFinder;
+  $$: (search: string) => ElementArrayFinder;
+  ExpectedConditions: ProtractorExpectedConditions;
+}
+export var protractor: Protractor = global['protractor'];
