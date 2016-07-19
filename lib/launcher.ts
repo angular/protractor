@@ -188,8 +188,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                 protractorError.stack);
             process.exit(errorCode);
           } else {
-            logger.error(
-                '"process.on(\'uncaughtException\'" error, see launcher');
+            logger.error(e.message);
+            logger.error(e.stack);
             process.exit(ProtractorError.CODE);
           }
         });
