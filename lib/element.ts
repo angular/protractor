@@ -429,16 +429,23 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   applyAction_(actionFn: Function): ElementArrayFinder {
     let callerError = new Error();
-    let actionResults = this.getWebElements()
-                            .then((arr: any) => {
-                              return webdriver.promise.all(arr.map(actionFn));
-                            })
-                            .then(null, (e: Error) => {
-                              let noSuchErr = (e as any);
-                              noSuchErr.stack =
-                                  noSuchErr.stack + (callerError as any).stack;
-                              throw noSuchErr;
-                            });
+    let actionResults =
+        this.getWebElements()
+            .then((arr: any) => {
+              return webdriver.promise.all(arr.map(actionFn));
+            })
+            .then(null, (e: Error) => {
+              let noSuchErr: any;
+              let stack: string;
+              if (e instanceof Error) {
+                noSuchErr = (e as any)
+                noSuchErr.stack = noSuchErr.stack + (callerError as any).stack;
+              } else {
+                noSuchErr = (new Error(e.toString()) as any);
+                noSuchErr.stack = (callerError as any).stack;
+              }
+              throw noSuchErr;
+            });
     return new ElementArrayFinder(
         this.browser_, this.getWebElements, this.locator_, actionResults);
   }
