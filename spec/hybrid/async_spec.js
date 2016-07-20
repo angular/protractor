@@ -1,6 +1,11 @@
 describe('async angular2 application', function() {
   beforeEach(function() {
+    this.ng12Hybrid = true;
     browser.get('/hybrid');
+  });
+
+  afterEach(function() {
+    this.ng12Hybrid = false;
   });
 
   it('should propertly load the page', function() {
