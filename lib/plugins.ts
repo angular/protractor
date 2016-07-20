@@ -191,7 +191,8 @@ export interface ProtractorPlugin {
   config?: PluginConfig;
 
   /**
-   * Adds a failed assertion to the test's results.
+   * Adds a failed assertion to the test's results. Note: this is added by the
+   * Protractor API, not to be implemented by the plugin author.
    *
    * @param {string} message The error message for the failed assertion
    * @param {specName: string, stackTrace: string} options Some optional extra
@@ -208,7 +209,8 @@ export interface ProtractorPlugin {
        info?: {specName?: string, stackTrace?: string}) => void;
 
   /**
-   * Adds a passed assertion to the test's results.
+   * Adds a passed assertion to the test's results. Note: this is added by the
+   * Protractor API, not to be implemented by the plugin author.
    *
    * @param {specName: string} options Extra information about the assertion:
    *       - specName The name of the spec which this assertion belongs to.
@@ -220,7 +222,8 @@ export interface ProtractorPlugin {
   addSuccess?: (info?: {specName?: string}) => void;
 
   /**
-   * Warns the user that something is problematic.
+   * Warns the user that something is problematic. Note: this is added by the
+   * Protractor API, not to be implemented by the plugin author.
    *
    * @param {string} message The message to warn the user about
    * @param {specName: string} options Extra information about the assertion:

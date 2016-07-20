@@ -334,17 +334,6 @@ module.exports = myPlugin;
 
 ```
 
-Then, in a separate file, export an instance of that class using an assignment
-export:
-
-```typescript
-import MyPlugin from './MyPlugin';
-
-export = new MyPlugin();
-```
-
-This instance is what you should point to in your config file.
-
 
 First Party Plugins
 -------------------
