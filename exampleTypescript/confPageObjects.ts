@@ -3,14 +3,14 @@
 // information.
 //
 // Why you might want to create your config with typescript:
-// edtiors like Microsoft Visual Studio Code will have autocomplete and
+// Editors like Microsoft Visual Studio Code will have autocomplete and
 // description hints.
 //
-// To run this example, run 'npm run tsc' to transpile the typescript to
-// javascript. run with 'protractor conf_withPageObjects.js'
+// To run this example, first transpile it to javascript with `npm run tsc`,
+// then run `protractor confPageObjects.js`.
 import {Config} from 'protractor';
 
-export let config: Config  = {
+export let config: Config = {
   framework: 'jasmine',
   capabilities: {
     browserName: 'chrome'

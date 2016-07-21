@@ -48,7 +48,7 @@ The ambient typings are downloaded from DefinitelyTyped in the `postinstall` ste
 
 ## Protractor typings
 
-To use Protractor types, you'll need to import `protractor/globals`. After this is imported, you should have auto completition hints when typing.
+To use Protractor types, you'll need to import `protractor/globals`. After this is imported, you should have autocompletion hints when typing.
 
 ```
 import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor/globals';
@@ -66,12 +66,12 @@ export let config: Config = {
 
 ## Ambient typings
 
-Protractor also uses ambient types including jasmine and node. These are brought in via the `typings.json` file. The ambient typings files are imported from the `typings/index.d.ts` generated file and are included in the project via the tsconfig.json configuration file.
+Protractor also uses ambient types including jasmine and node. These are brought in via the `typings.json` file. The ambient typings files are imported from the `typings/index.d.ts` generated file and are included in the project via the `tsconfig.json` configuration file.
 
 
 ## Compiling your code
 
-To convert your typescript to javascript (transpiling), you'll use the Typescript comipler (tsc). If you install typescript globally, the command is `tsc`. If it is not installed globally, the typescript compiler can be executed with `npm run tsc`.
+To convert your typescript to javascript (transpiling), you'll use the Typescript compiler (tsc). If you install typescript globally, the command is `tsc`. If it is not installed globally, the typescript compiler can be executed with `npm run tsc`.
 
 ## Running Protractor
 
