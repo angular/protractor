@@ -182,10 +182,9 @@ export class Plugins {
    * @return {boolean}
    */
   skipAngularStability() {
-    var result =
-        this.pluginObjs.reduce((skip: boolean, pluginObj: ProtractorPlugin) => {
-          return pluginObj.skipAngularStability || skip;
-        }, false);
+    var result = this.pluginObjs.some((pluginObj: ProtractorPlugin) => {
+      return pluginObj.skipAngularStability;
+    });
     return result;
   };
 
