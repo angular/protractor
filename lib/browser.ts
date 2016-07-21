@@ -8,11 +8,12 @@ import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
-import {protractor} from './ptor';
 import * as helper from './util';
 
 let clientSideScripts = require('./clientsidescripts');
 let webdriver = require('selenium-webdriver');
+let Command = require('selenium-webdriver/lib/command').Command;
+let CommandName = require('selenium-webdriver/lib/command').Name;
 
 // jshint browser: true
 /* global angular */
@@ -361,7 +362,7 @@ export class Browser extends Webdriver {
     }
 
     return this.driver.schedule(
-        new protractor.Command(protractor.CommandName.EXECUTE_SCRIPT)
+        new Command(CommandName.EXECUTE_SCRIPT)
             .setParameter('script', script)
             .setParameter('args', scriptArgs),
         description);
@@ -387,7 +388,7 @@ export class Browser extends Webdriver {
       script = 'return (' + script + ').apply(null, arguments);';
     }
     return this.driver.schedule(
-        new protractor.Command(protractor.CommandName.EXECUTE_ASYNC_SCRIPT)
+        new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
             .setParameter('script', script)
             .setParameter('args', scriptArgs),
         description);
@@ -1003,7 +1004,7 @@ export class Browser extends Webdriver {
     let context: Object = {require: require};
     global.list = (locator: Locator) => {
       /* globals browser */
-      return protractor.browser.findElements(locator).then(
+      return global.browser.findElements(locator).then(
           (arr: webdriver.WebElement[]) => {
             let found: string[] = [];
             for (let i = 0; i < arr.length; ++i) {

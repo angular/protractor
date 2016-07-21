@@ -50,7 +50,7 @@
     "protractor": "bin/protractor",
     "webdriver-manager": "bin/webdriver-manager"
   },
-  "main": "built/browser.js",
+  "main": "built/main.js",
   "typings": "built/index.d.ts",
   "scripts": {
     "prepublish": "gulp prepublish",
