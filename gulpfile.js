@@ -9,9 +9,13 @@ var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
 
-var runSpawn = function(done, task, opt_arg) {
+var runSpawn = function(done, task, opt_arg, opt_io) {
   opt_arg = typeof opt_arg !== 'undefined' ? opt_arg : [];
-  var child = spawn(task, opt_arg, {stdio: 'inherit'});
+  var stdio = 'inherit';
+  if (opt_io === 'ignore') {
+    stdio = 'ignore';
+  }
+  var child = spawn(task, opt_arg, {stdio: stdio});
   var running = false;
   child.on('close', function() {
     if (!running) {
@@ -64,14 +68,20 @@ gulp.task('tsc', function(done) {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
 
+gulp.task('tsc:globals', function(done) {
+  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', 'globals.ts'],
+    'ignore');
+});
+
 gulp.task('prepublish', function(done) {
-  runSequence(['typings', 'jshint', 'format'], 'tsc', 'types', 'ambient', 'built:copy', done);
+  runSequence(['typings', 'jshint', 'format'], 'tsc', 'tsc:globals', 'types',
+    'ambient', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'types', 'ambient',
-    'built:copy', done);
+    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'types',
+    'ambient', 'tsc:globals', 'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);

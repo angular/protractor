@@ -13,3 +13,4 @@ xmloutput*
 npm-debug.log
 
 *.swp
+globals.js

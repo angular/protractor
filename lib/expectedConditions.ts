@@ -1,5 +1,4 @@
 import {ElementFinder} from './element';
-import {protractor} from './ptor';
 
 let webdriver = require('selenium-webdriver');
 
@@ -150,7 +149,7 @@ export class ProtractorExpectedConditions {
    */
   alertIsPresent(): Function {
     return () => {
-      return protractor.browser.driver.switchTo().alert().then(
+      return global.browser.driver.switchTo().alert().then(
           (): boolean => { return true; },
           (err: any) => {
             if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
@@ -253,7 +252,7 @@ export class ProtractorExpectedConditions {
    */
   titleContains(title: string): Function {
     return () => {
-      return protractor.browser.driver.getTitle().then(
+      return global.browser.driver.getTitle().then(
           (actualTitle: string): boolean => {
             return actualTitle.indexOf(title) > -1;
           });
@@ -276,7 +275,7 @@ export class ProtractorExpectedConditions {
    */
   titleIs(title: string): Function {
     return () => {
-      return protractor.browser.driver.getTitle().then(
+      return global.browser.driver.getTitle().then(
           (actualTitle: string): boolean => { return actualTitle === title; });
     };
   }
@@ -298,7 +297,7 @@ export class ProtractorExpectedConditions {
    */
   urlContains(url: string): Function {
     return () => {
-      return protractor.browser.driver.getCurrentUrl().then(
+      return global.browser.driver.getCurrentUrl().then(
           (actualUrl: string): boolean => {
             return actualUrl.indexOf(url) > -1;
           });
@@ -321,7 +320,7 @@ export class ProtractorExpectedConditions {
    */
   urlIs(url: string): Function {
     return () => {
-      return protractor.browser.driver.getCurrentUrl().then(
+      return global.browser.driver.getCurrentUrl().then(
           (actualUrl: string): boolean => { return actualUrl === url; });
     };
   }
