@@ -312,29 +312,27 @@ export function onPageLoad(): void {
 };
 ```
 
-However, if you want your code more heavily typed, you can write your plugin as
-an extension of the `ProtractorPlugin` class:
+If you want your code more heavily typed, you can write your plugin with
+the `ProtractorPlugin` interface:
 
 ```typescript
-import {ProtractorPlugin} from 'protractor/built/plugins';
+import {ProtractorPlugin} from 'protractor';
 
-export class MyPlugin extends ProtractorPlugin {
+// creating a "var module: any" will allow use of module.exports
+declare var module: any;
+
+let myPlugin: ProtractorPlugin = {
+  addSuccess(info: {specName: string}) {
+    console.log('on success: ' + info.specName);
+  },
   onPageLoad() {
     this.addSuccess({specName: 'Hello, World!'});
-  };
+  }
 };
+
+module.exports = myPlugin;
+
 ```
-
-Then, in a separate file, export an instance of that class using an assignment
-export:
-
-```typescript
-import MyPlugin from './MyPlugin';
-
-export = new MyPlugin();
-```
-
-This instance is what you should point to in your config file.
 
 
 First Party Plugins
