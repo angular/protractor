@@ -67,26 +67,21 @@ export class BrowserStack extends DriverProvider {
         });
         let jobStatus = update.passed ? 'completed' : 'error';
         options.method = 'PUT';
-        https
-            .request(
-                options,
-                (res) => {
-                  let responseStr = '';
-                  res.on('data', (data: Buffer) => {
-                    responseStr += data.toString();
-                  });
-                  res.on('end', () => {
-                    logger.info(responseStr);
-                    deferred.resolve();
-                  });
-                  res.on('error', (e: Error) => {
-                    throw new BrowserError(
-                        logger,
-                        'Error updating BrowserStack pass/fail status: ' +
-                            util.inspect(e));
-                  });
-                })
-            .write('{\'status\': ' + jobStatus + '}');
+        let update_req = https.request(options, (res) => {
+          let responseStr = '';
+          res.on('data', (data: Buffer) => { responseStr += data.toString(); });
+          res.on('end', () => {
+            logger.info(responseStr);
+            deferred.resolve();
+          });
+          res.on('error', (e: Error) => {
+            throw new BrowserError(
+                logger, 'Error updating BrowserStack pass/fail status: ' +
+                    util.inspect(e));
+          });
+        });
+        update_req.write('{"status":"' + jobStatus + '"}');
+        update_req.end();
       });
       return deferred.promise;
     });
