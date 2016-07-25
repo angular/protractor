@@ -238,6 +238,15 @@ export class Browser extends Webdriver {
 
   debuggerValidated_: boolean;
 
+
+  /**
+   * If true, Protractor will interpret any angular apps it comes across as
+   * hybrid angular1/angular2 apps.
+   *
+   * @type {boolean}
+   */
+  ng12Hybrid: boolean;
+
   // This index type allows looking up methods by name so we can do mixins.
   [key: string]: any;
 
@@ -277,6 +286,7 @@ export class Browser extends Webdriver {
     this.ready = null;
     this.plugins_ = new Plugins({});
     this.resetUrl = DEFAULT_RESET_URL;
+    this.ng12Hybrid = false;
 
     this.driver.getCapabilities().then((caps: webdriver.Capabilities) => {
       // Internet Explorer does not accept data URLs, which are the default
@@ -419,7 +429,8 @@ export class Browser extends Webdriver {
       } else if (this.rootEl) {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAngular,
-            'Protractor.waitForAngular()' + description, this.rootEl);
+            'Protractor.waitForAngular()' + description, this.rootEl,
+            this.ng12Hybrid);
       } else {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAllAngular2,
@@ -759,7 +770,7 @@ export class Browser extends Webdriver {
     // Make sure the page is an Angular page.
     this.executeAsyncScript_(
             clientSideScripts.testForAngular, msg('test for angular'),
-            Math.floor(timeout / 1000))
+            Math.floor(timeout / 1000), this.ng12Hybrid)
         .then(
             (angularTestResult: {ver: string, message: string}) => {
               let angularVersion = angularTestResult.ver;
