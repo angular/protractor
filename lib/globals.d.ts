@@ -105,3 +105,7 @@ declare namespace webdriver {
     isPresent?: Function;
   }
 }
+
+declare interface HttpProxyAgent {
+  constructor(opts: Object): HttpProxyAgent;
+}

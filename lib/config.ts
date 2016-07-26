@@ -92,10 +92,23 @@ export interface Config {
    */
   sauceKey?: string;
   /**
-   * Use sauceAgent if you need customize agent for https connection to
-   * saucelabs.com (i.e. your computer behind corporate proxy)
+   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com.
+   * This is needed if your computer is behind a corporate proxy.
+   *
+   * To match sauce agent implementation, use
+   * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
+   * to generate the agent or use sauceProxy as an alternative. If a
+   * sauceProxy is provided, the sauceAgent will be overridden.
    */
-  sauceAgent?: string;
+  sauceAgent?: HttpProxyAgent;
+  /**
+   * Use sauceProxy if you are behind a corporate proxy to connect to
+   * saucelabs.com.
+   *
+   * The sauceProxy is used to generate an HTTP agent. If a sauceProxy is
+   * provided, the sauceAgent will be overridden.
+   */
+  sauceProxy?: string;
   /**
    * Use sauceBuild if you want to group test capabilites by a build ID
    */
