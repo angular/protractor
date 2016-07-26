@@ -97,8 +97,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
   getWebElements: Function;
 
   constructor(
-      private browser_: Browser, getWebElements?: Function,
-      private locator_?: any,
+      public browser_: Browser, getWebElements?: Function,
+      public locator_?: any,
       public actionResults_: webdriver.promise.Promise<any> = null) {
     super();
     this.getWebElements = getWebElements || null;
@@ -716,7 +716,7 @@ export class ElementFinder extends WebdriverWebElement {
        errorFn: Function) => webdriver.promise.Promise<any> = null;
 
   constructor(
-      private browser_: Browser, elementArrayFinder: ElementArrayFinder) {
+      public browser_: Browser, elementArrayFinder: ElementArrayFinder) {
     super();
     if (!elementArrayFinder) {
       throw new Error('BUG: elementArrayFinder cannot be empty');
