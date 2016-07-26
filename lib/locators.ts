@@ -16,7 +16,7 @@ export class WebdriverBy {
   xpath: (xpath: string) => Locator = webdriver.By.xpath;
 }
 
-// Interface for webdriver.Locator.
+// Protractor locator strategy
 export interface Locator {
   findElementsOverride?:
       (driver: webdriver.WebDriver, using: webdriver.WebElement,
