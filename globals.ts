@@ -16,6 +16,7 @@ export interface Protractor {
   $$: (search: string) => ElementArrayFinder;
   ExpectedConditions: ProtractorExpectedConditions;
 }
+interface global {};
 export var protractor: Protractor = global['protractor'];
 export var browser: Browser = global['protractor']['browser'];
 export var element: ElementHelper = global['protractor']['element'];
