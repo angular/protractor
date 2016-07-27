@@ -1,3 +1,60 @@
+#4.0.1
+
+## Bug fixes
+
+- ([ee8ec91](https://github.com/angular/protractor/commit/ee8ec9124477ed20702d6a09a51274864867da1a))
+  fix(element): set variables to public in constructor (#3417)
+
+  closes #3414
+- ([7266902](https://github.com/angular/protractor/commit/72669029636e56911de59ec90f0d893e7406dc1d))
+  fix(sauce): sauceAgent passed incorrectly to sauce node module (#3415)
+
+  closes #3410
+- ([828e80c](https://github.com/angular/protractor/commit/828e80c2f14f3d1a4ac9b1b3b0ae0c5cd322e118))
+  fix(browserstack): mark test suite as failed/passed on BrowserStack (#3409)
+
+  closes #3256
+- ([71532f0](https://github.com/angular/protractor/commit/71532f055c720b533fbf9dab2b3100b657966da6))
+  fix(hybrid): add flag specifying that an app is an ng1/ng2 hybrid (#3403)
+
+  Needed for angular2 after rc2
+- ([2a3a0dc](https://github.com/angular/protractor/commit/2a3a0dc80edccbb72e6b2ca8c487b1eaacf15a20))
+  fix(exports): fix type exports and require('protractor') exports (#3404)
+
+  * fix(package): set main to ptor instead of browser
+  * fix(exports): fix type exports and require('protractor') exports
+- ([b2eaa29](https://github.com/angular/protractor/commit/b2eaa290bbd1d069fdaf8f25eee5eb3da611b589))
+  fix(types): output plugin typings (#3389)
+
+  * output plugin typings
+  * change ProtractorPlugin to an interface
+  * doc clean up
+   closes #3365
+- ([d2145b1](https://github.com/angular/protractor/commit/d2145b129af3e220abf656731c2491cdf29030d1))
+  fix(launcher): output uncaught exception error (#3390)
+
+  * split out message and stack to hopefully provide more information to the error
+   closes #3384
+- ([d7cf42e](https://github.com/angular/protractor/commit/d7cf42e85f0a3c9288722ee47c15d08f8b8ab115))
+  fix(protractor): export class definitions under the protractor namespace (#3393)
+
+  closes #3377
+- ([2e83dcd](https://github.com/angular/protractor/commit/2e83dcd95d11e1fd10f011ac2a058bb33a1607ff))
+  fix(types): add webdriver.promise and webdriver.WebElement to namespace (#3392)
+
+  * fix(types): add webdriver.promise and webdriver.WebElement to namespace
+   closes #3391
+
+  * fix(protractor): export class definitions under the protractor namespace
+   closes #3377
+
+- ([dcbc832](https://github.com/angular/protractor/commit/dcbc832b6abdbdeb408c1741198bb20b5b9042a2))
+  fix(types): use protractor from global namespace (#3388)
+
+
+- ([ee038f9](https://github.com/angular/protractor/commit/ee038f945844490e7e57c78a57ee2a049d5a823d))
+  fix(error message): do not crash of thrown error has made `stack` readonly (#3372)
+
 # 4.0.0
 This version includes some big changes, so we've decided to make it version 4.0!
 
