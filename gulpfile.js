@@ -92,7 +92,6 @@ gulp.task('types', function(done) {
     'config', 'plugins'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
-  contents += '/// <reference path="../typings/globals/q/index.d.ts" />\n';
   files.forEach(file => {
     contents += parseTypingsFile(folder, file);
   });

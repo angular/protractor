@@ -7,7 +7,9 @@
   "scripts": {
     "tsc": "tsc",
     "typings": "typings install",
-    "postinstall": "typings install"
+    "postinstall": "typings install",
+    "pretest": "tsc",
+    "test": "protractor conf.js"
   },
   "dependencies": {
     "jasmine": "^2.4.1",
