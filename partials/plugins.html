@@ -279,23 +279,24 @@ syntax:</p>
   this.addSuccess({specName: &#39;Hello, World!&#39;});
 };
 </code></pre>
-<p>However, if you want your code more heavily typed, you can write your plugin as
-an extension of the <code ng-non-bindable>ProtractorPlugin</code> class:</p>
-<pre><code class="lang-typescript">import {ProtractorPlugin} from &#39;protractor/built/plugins&#39;;
+<p>If you want your code more heavily typed, you can write your plugin with
+the <code ng-non-bindable>ProtractorPlugin</code> interface:</p>
+<pre><code class="lang-typescript">import {ProtractorPlugin} from &#39;protractor&#39;;
 
-export class MyPlugin extends ProtractorPlugin {
+// creating a &quot;var module: any&quot; will allow use of module.exports
+declare var module: any;
+
+let myPlugin: ProtractorPlugin = {
+  addSuccess(info: {specName: string}) {
+    console.log(&#39;on success: &#39; + info.specName);
+  },
   onPageLoad() {
     this.addSuccess({specName: &#39;Hello, World!&#39;});
-  };
+  }
 };
-</code></pre>
-<p>Then, in a separate file, export an instance of that class using an assignment
-export:</p>
-<pre><code class="lang-typescript">import MyPlugin from &#39;./MyPlugin&#39;;
 
-export = new MyPlugin();
+module.exports = myPlugin;
 </code></pre>
-<p>This instance is what you should point to in your config file.</p>
 <h2 id="first-party-plugins" class="anchored"><div><a href="#{{path}}#first-party-plugins">&#x1f517;</a>First Party Plugins</div></h2>
 <ul>
 <li><p>Accessibility Plugin</p>
