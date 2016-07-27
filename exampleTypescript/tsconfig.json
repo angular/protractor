@@ -10,6 +10,7 @@
   "exclude": [
     "node_modules",
     "typings/globals",
-    "asyncAwait"
+    "asyncAwait",
+    "plugins.ts"
   ]
 }

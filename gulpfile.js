@@ -80,8 +80,8 @@ gulp.task('prepublish', function(done) {
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'types',
-    'ambient', 'tsc:globals', 'built:copy', done);
+    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'tsc:globals',
+    'types', 'ambient', 'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);
@@ -124,7 +124,7 @@ var parseTypingsFile = function(folder, file) {
         line = line.replace('declare', '').trim();
       }
 
-      // Remove webdriver types and http proxy agent
+      // Remove webdriver types, q, http proxy agent
       line = removeTypes(line,'webdriver.ActionSequence');
       line = removeTypes(line,'webdriver.promise.Promise<[a-zA-Z{},:; ]+>');
       line = removeTypes(line,'webdriver.util.Condition');
@@ -132,6 +132,7 @@ var parseTypingsFile = function(folder, file) {
       line = removeTypes(line,'webdriver.Locator');
       line = removeTypes(line,'webdriver.WebElement');
       line = removeTypes(line,'HttpProxyAgent');
+      line = removeTypes(line,'Q.Promise<[a-zA-Z{},:; ]+>');
       contents += line + '\n';
     }
   }
@@ -149,7 +150,6 @@ var removeTypes = function(line, webdriverType) {
 gulp.task('ambient', function(done) {
   var fileContents = fs.readFileSync(path.resolve('built/index.d.ts')).toString();
   var contents = '';
-  contents += '/// <reference path="../typings/globals/q/index.d.ts" />\n';
   contents += 'declare namespace protractor {\n';
   contents += fileContents + '\n';
   contents += '}\n';
