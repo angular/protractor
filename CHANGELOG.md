@@ -1,3 +1,10 @@
+#4.0.2
+
+## Bug fixes
+
+- ([767d552](https://github.com/angular/protractor/commit/767d552c4ba7972085406b8b9f40fc57da1d214f))
+  fix(types): typescript global reference and type declaration fixes (#3424)
+
 #4.0.1
 
 ## Bug fixes
