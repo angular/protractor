@@ -716,7 +716,8 @@ export class ElementFinder extends WebdriverWebElement {
        errorFn: Function) => webdriver.promise.Promise<any> = null;
 
   constructor(
-      public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
+      public browser_: ProtractorBrowser,
+      elementArrayFinder: ElementArrayFinder) {
     super();
     if (!elementArrayFinder) {
       throw new Error('BUG: elementArrayFinder cannot be empty');

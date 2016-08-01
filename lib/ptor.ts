@@ -1,4 +1,4 @@
-import {ProtractorBrowser, ElementHelper} from './browser';
+import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';

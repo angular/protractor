@@ -329,7 +329,8 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {Browser} A browser instance.
    */
   forkNewDriverInstance(
-      opt_useSameUrl?: boolean, opt_copyMockModules?: boolean): ProtractorBrowser {
+      opt_useSameUrl?: boolean,
+      opt_copyMockModules?: boolean): ProtractorBrowser {
     return null;
   }
 
