@@ -41,7 +41,7 @@ export function runFilenameOrFn_(
     if (filenameOrFn &&
         !(typeof filenameOrFn === 'string' ||
           typeof filenameOrFn === 'function')) {
-      throw 'filenameOrFn must be a string or function';
+      throw new Error('filenameOrFn must be a string or function');
     }
 
     if (typeof filenameOrFn === 'string') {
@@ -49,10 +49,14 @@ export function runFilenameOrFn_(
     }
     if (typeof filenameOrFn === 'function') {
       let results = when(filenameOrFn.apply(null, args), null, (err) => {
-        if (err.stack) {
+        if (typeof err === 'string') {
+          let error = new Error(err);
+          error.stack = exports.filterStackTrace(error.stack);
+          throw error;
+        } else {
           err.stack = exports.filterStackTrace(err.stack);
+          throw err;
         }
-        throw err;
       });
       resolvePromise(results);
     } else {
