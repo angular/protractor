@@ -2,7 +2,7 @@ import {EventEmitter} from 'events';
 import * as q from 'q';
 import * as util from 'util';
 
-import {Browser} from './browser';
+import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {DriverProvider} from './driverProviders';
@@ -151,15 +151,15 @@ export class Runner extends EventEmitter {
    * Sets up convenience globals for test specs
    * @private
    */
-  setupGlobals_(browser_: Browser) {
+  setupGlobals_(browser_: ProtractorBrowser) {
     // Keep $, $$, element, and by/By under the global protractor namespace
     protractor.browser = browser_;
     protractor.$ = browser_.$;
     protractor.$$ = browser_.$$;
     protractor.element = browser_.element;
-    protractor.by = protractor.By = Browser.By;
-    protractor.wrapDriver = Browser.wrapDriver;
-    protractor.ExpectedConditions = Browser.ExpectedConditions;
+    protractor.by = protractor.By = ProtractorBrowser.By;
+    protractor.wrapDriver = ProtractorBrowser.wrapDriver;
+    protractor.ExpectedConditions = ProtractorBrowser.ExpectedConditions;
 
     if (!this.config_.noGlobals) {
       // Export protractor to the global namespace to be used in tests.
@@ -197,7 +197,7 @@ export class Runner extends EventEmitter {
     var config = this.config_;
     var driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = Browser.wrapDriver(
+    var browser_ = ProtractorBrowser.wrapDriver(
         driver, config.baseUrl, config.rootElement,
         config.untrackOutstandingTimeouts);
 

@@ -1,5 +1,5 @@
 import {
-  Browser,
+  ProtractorBrowser,
   ElementArrayFinder,
   ElementFinder,
   ElementHelper,
@@ -8,7 +8,7 @@ import {
 } from 'protractor';
 
 export interface Protractor {
-  browser: Browser;
+  browser: ProtractorBrowser;
   element: ElementHelper;
   by: ProtractorBy;
   By: ProtractorBy;
@@ -18,7 +18,7 @@ export interface Protractor {
 }
 interface global {};
 export var protractor: Protractor = global['protractor'];
-export var browser: Browser = global['protractor']['browser'];
+export var browser: ProtractorBrowser = global['protractor']['browser'];
 export var element: ElementHelper = global['protractor']['element'];
 export var by: ProtractorBy = global['protractor']['by'];
 export var By: ProtractorBy = global['protractor']['By'];
