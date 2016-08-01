@@ -27,10 +27,23 @@ export namespace protractor {
       require('./expectedConditions').ProtractorExpectedConditions;
 
   // Export selenium webdriver.
-  export let promise = webdriver.promise;
-  export let WebElement = webdriver.WebElement;
   export let ActionSequence = webdriver.ActionSequence;
+  export let Browser = webdriver.Browser;
+  export let Builder = webdriver.Builder;
+  export let Button = webdriver.Button;
+  export let Capabilities = webdriver.Capabilities;
+  export let Capability = webdriver.Capability;
+  export let EventEmitter = webdriver.EventEmitter;
+  export let FileDetector = webdriver.FileDetector;
   export let Key = webdriver.Key;
+  export let Session = webdriver.Session;
+  export let WebDriver = webdriver.WebDriver;
+  export let WebElement = webdriver.WebElement;
+  export let WebElementPromise = webdriver.WebElementPromise;
+  export let error = webdriver.error;
+  export let logging = webdriver.logging;
+  export let promise = webdriver.promise;
+  export let util = webdriver.util;
   export let Command = require('selenium-webdriver/lib/command').Command;
   export let CommandName = require('selenium-webdriver/lib/command').Name;
 }
