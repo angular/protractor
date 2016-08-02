@@ -41,8 +41,9 @@ var passingTests = [
   // Unit tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
   // Dependency tests
-  'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json'
+  'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
   // Typings tests
+  'node spec/install/test.js'
   // FIX THIS: 'node scripts/typings_tests/test_typings.js'
 ];
 
