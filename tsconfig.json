@@ -17,6 +17,7 @@
     "typings/globals",
     "scripts",
     "globals.ts",
-    "exampleTypescript"
+    "exampleTypescript",
+    "spec"
   ]
 }

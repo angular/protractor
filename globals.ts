@@ -4,25 +4,18 @@ import {
   ElementFinder,
   ElementHelper,
   ProtractorBy,
-  ProtractorExpectedConditions
+  ProtractorExpectedConditions,
+  Ptor
 } from 'protractor';
 
-export interface Protractor {
-  browser: ProtractorBrowser;
-  element: ElementHelper;
-  by: ProtractorBy;
-  By: ProtractorBy;
-  $: (search: string) => ElementFinder;
-  $$: (search: string) => ElementArrayFinder;
-  ExpectedConditions: ProtractorExpectedConditions;
-}
-interface global {};
-export var protractor: Protractor = global['protractor'];
-export var browser: ProtractorBrowser = global['protractor']['browser'];
-export var element: ElementHelper = global['protractor']['element'];
-export var by: ProtractorBy = global['protractor']['by'];
-export var By: ProtractorBy = global['protractor']['By'];
-export var $: (search: string) => ElementFinder = global['protractor']['$'];
-export var $$: (search: string) => ElementArrayFinder = global['protractor']['$$'];
-export var ExpectedConditions: ProtractorExpectedConditions =
-    global['protractor']['ExpectedConditions'];
+export let protractor: Ptor = global['protractor'];
+export let browser: ProtractorBrowser = global['protractor']['browser'];
+export let $: (search: string) => ElementFinder = global['protractor']['$'];
+export let $$: (search: string) => ElementArrayFinder = global['protractor']['$$'];
+export let element: ElementHelper = global['protractor']['element'];
+export let By: ProtractorBy = global['protractor']['By'];
+export let by: ProtractorBy = global['protractor']['by'];
+export let wrapDriver:
+    (webdriver: any, baseUrl?: string, rootElement?: string,
+     untrackOutstandingTimeouts?: boolean) => ProtractorBrowser = global['protractor']['wrapDriver'];
+export let ExpectedConditions: ProtractorExpectedConditions = global['protractor']['ExpectedConditions'];
