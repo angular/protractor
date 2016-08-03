@@ -26,11 +26,12 @@ describe('javascript', function () {
         expect(typeof protractor.error).toEqual('object');
         expect(typeof protractor.logging).toEqual('object');
         expect(typeof protractor.promise).toEqual('object');
+        expect(typeof protractor.until).toEqual('object');
         expect(typeof protractor.Command).toEqual('function');
         expect(typeof protractor.CommandName).toEqual('object');
-        expect(typeof protractor.firefox).toEqual('object');
-        expect(typeof protractor.http).toEqual('object');
-        expect(typeof protractor.remote).toEqual('object');
+        expect(typeof protractor.utils.firefox).toEqual('object');
+        expect(typeof protractor.utils.http).toEqual('object');
+        expect(typeof protractor.utils.remote).toEqual('object');
     });
     it('should have protractor class definitions', function () {
         expect(typeof protractor.ProtractorBrowser).toBe('function');

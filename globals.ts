@@ -9,13 +9,13 @@ import {
 } from 'protractor';
 
 export let protractor: Ptor = global['protractor'];
-export let browser: ProtractorBrowser = global['protractor']['browser'];
-export let $: (search: string) => ElementFinder = global['protractor']['$'];
-export let $$: (search: string) => ElementArrayFinder = global['protractor']['$$'];
-export let element: ElementHelper = global['protractor']['element'];
-export let By: ProtractorBy = global['protractor']['By'];
-export let by: ProtractorBy = global['protractor']['by'];
+export let browser: ProtractorBrowser = protractor.browser;
+export let $: (search: string) => ElementFinder = protractor.$;
+export let $$: (search: string) => ElementArrayFinder = protractor.$$;
+export let element: ElementHelper = protractor.element;
+export let By: ProtractorBy = protractor.By;
+export let by: ProtractorBy = protractor.by;
 export let wrapDriver:
     (webdriver: any, baseUrl?: string, rootElement?: string,
-     untrackOutstandingTimeouts?: boolean) => ProtractorBrowser = global['protractor']['wrapDriver'];
-export let ExpectedConditions: ProtractorExpectedConditions = global['protractor']['ExpectedConditions'];
+     untrackOutstandingTimeouts?: boolean) => ProtractorBrowser = protractor.wrapDriver;
+export let ExpectedConditions: ProtractorExpectedConditions = protractor.ExpectedConditions;

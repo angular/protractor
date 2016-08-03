@@ -3,7 +3,6 @@
   "dependencies": {},
   "globalDependencies": {
     "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "node": "registry:dt/node#6.0.0+20160802155038",
-    "rimraf": "registry:dt/rimraf#0.0.0+20160317120654"
+    "node": "registry:dt/node#6.0.0+20160802155038"
   }
 }
