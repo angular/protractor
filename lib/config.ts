@@ -349,7 +349,7 @@ export interface Config {
      * and globals from the test framework will NOT be available. The main
      * purpose of this function should be to bring up test dependencies.
      */
-    beforeLaunch?: () => {};
+    beforeLaunch?: () => void;
 
     /**
      * A callback function called once protractor is ready and available, and
@@ -379,7 +379,7 @@ export interface Config {
      *      console.log('Executing capability', config.capabilities);
      *    });
      */
-    onPrepare?: () => {};
+    onPrepare?: () => void;
 
     /**
      * A callback function called once tests are finished. onComplete can
@@ -389,14 +389,14 @@ export interface Config {
      * At this point, tests will be done but global objects will still be
      * available.
      */
-    onComplete?: () => {};
+    onComplete?: () => void;
 
     /**
      * A callback function called once the tests have finished running and
      * the WebDriver instance has been shut down. It is passed the exit code
      * (0 if the tests passed). This is called once per capability.
      */
-    onCleanUp?: (exitCode: number) => {};
+    onCleanUp?: (exitCode: number) => void;
 
     /**
      * A callback function called once all tests have finished running and
@@ -405,7 +405,7 @@ export interface Config {
      * asynchronous code to be executed before the program exits.
      * This is called only once before the program exits (after onCleanUp).
      */
-    afterLaunch?: (exitCode: number) => {};
+    afterLaunch?: (exitCode: number) => void;
 
     /**
      * The params object will be passed directly to the Protractor instance,
@@ -491,7 +491,7 @@ export interface Config {
       /**
        * Function called to print jasmine results.
        */
-      print?: () => {};
+      print?: () => void;
       /**
        * If set, only execute specs whose names match the pattern, which is
        * internally compiled to a RegExp.
