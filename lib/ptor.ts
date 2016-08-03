@@ -46,6 +46,9 @@ export class Ptor {
   util = webdriver.util;
   Command = require('selenium-webdriver/lib/command').Command;
   CommandName = require('selenium-webdriver/lib/command').Name;
+  firefox = require('selenium-webdriver/firefox');
+  http = require('selenium-webdriver/http');
+  remote = require('selenium-webdriver/remote');
 }
 
 export var Protractor = new Ptor();

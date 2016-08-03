@@ -6,6 +6,7 @@
   "scripts": {
     "postinstall": "npm run typings",
     "typings": "typings install",
+    "tsc": "tsc",
     "test": "protractor conf.js"
   },
   "author": "",
