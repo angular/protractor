@@ -48,16 +48,19 @@ export function runFilenameOrFn_(
       filenameOrFn = require(resolve(configDir, filenameOrFn));
     }
     if (typeof filenameOrFn === 'function') {
-      let results = when(filenameOrFn.apply(null, args), null, (err) => {
-        if (typeof err === 'string') {
-          let error = new Error(err);
-          error.stack = exports.filterStackTrace(error.stack);
-          throw error;
-        } else {
-          err.stack = exports.filterStackTrace(err.stack);
-          throw err;
-        }
-      });
+      let results =
+          when(filenameOrFn.apply(null, args), null, (err: string | Error) => {
+            if (typeof err === 'string') {
+              err = new Error(err);
+            } else {
+              err = err as Error;
+              if (err.stack) {
+                err.stack = new Error().stack;
+              }
+            }
+            err.stack = exports.filterStackTrace(err.stack);
+            throw err;
+          });
       resolvePromise(results);
     } else {
       resolvePromise(undefined);
