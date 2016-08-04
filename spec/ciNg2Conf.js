@@ -16,3 +16,6 @@ exports.config.multiCapabilities = [{
     'platform': 'OS X 10.9'
   }];
 exports.config.capabilities = undefined;
+exports.config.allScriptsTimeout = 120000;
+exports.config.getPageTimeout = 120000;
+exports.config.jasmineNodeOpts.defaultTimeoutInterval = 120000;
