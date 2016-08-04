@@ -9,7 +9,7 @@ import {DriverProvider} from './driverProviders';
 import {ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
-import {Protractor} from './ptor';
+import {protractor} from './ptor';
 import * as helper from './util';
 
 var webdriver = require('selenium-webdriver');
@@ -153,13 +153,13 @@ export class Runner extends EventEmitter {
    */
   setupGlobals_(browser_: ProtractorBrowser) {
     // Keep $, $$, element, and by/By under the global protractor namespace
-    Protractor.browser = browser_;
-    Protractor.$ = browser_.$;
-    Protractor.$$ = browser_.$$;
-    Protractor.element = browser_.element;
-    Protractor.by = Protractor.By = ProtractorBrowser.By;
-    Protractor.wrapDriver = ProtractorBrowser.wrapDriver;
-    Protractor.ExpectedConditions = ProtractorBrowser.ExpectedConditions;
+    protractor.browser = browser_;
+    protractor.$ = browser_.$;
+    protractor.$$ = browser_.$$;
+    protractor.element = browser_.element;
+    protractor.by = protractor.By = ProtractorBrowser.By;
+    protractor.wrapDriver = ProtractorBrowser.wrapDriver;
+    protractor.ExpectedConditions = ProtractorBrowser.ExpectedConditions;
 
     if (!this.config_.noGlobals) {
       // Export protractor to the global namespace to be used in tests.
@@ -167,11 +167,11 @@ export class Runner extends EventEmitter {
       global.$ = browser_.$;
       global.$$ = browser_.$$;
       global.element = browser_.element;
-      global.by = global.By = Protractor.By;
-      global.ExpectedConditions = Protractor.ExpectedConditions;
+      global.by = global.By = protractor.By;
+      global.ExpectedConditions = protractor.ExpectedConditions;
     }
 
-    global.protractor = Protractor;
+    global.protractor = protractor;
 
     if (!this.config_.skipSourceMapSupport) {
       // Enable sourcemap support for stack traces.

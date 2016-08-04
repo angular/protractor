@@ -3,4 +3,4 @@
  * namespace.
  */
 
-export = require('./ptor').Protractor;
+export = require('./ptor').protractor;

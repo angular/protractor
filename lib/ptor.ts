@@ -53,4 +53,4 @@ export class Ptor {
   }
 }
 
-export var Protractor = new Ptor();
+export var protractor = new Ptor();
