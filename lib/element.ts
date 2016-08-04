@@ -2,7 +2,7 @@ let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
 
 import {Logger} from './logger';
-import {Browser} from './browser';
+import {ProtractorBrowser} from './browser';
 import {Locator} from './locators';
 
 let logger = new Logger('element');
@@ -83,7 +83,7 @@ export class WebdriverWebElement {
  * });
  *
  * @constructor
- * @param {Browser} browser A browser instance.
+ * @param {ProtractorBrowser} browser A browser instance.
  * @param {function(): Array.<webdriver.WebElement>} getWebElements A function
  *    that returns a list of the underlying Web Elements.
  * @param {webdriver.Locator} locator The most relevant locator. It is only
@@ -97,7 +97,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   getWebElements: Function;
 
   constructor(
-      public browser_: Browser, getWebElements?: Function,
+      public browser_: ProtractorBrowser, getWebElements?: Function,
       public locator_?: any,
       public actionResults_: webdriver.promise.Promise<any> = null) {
     super();
@@ -703,7 +703,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
  *
  * @constructor
  * @extends {webdriver.WebElement}
- * @param {Browser} browser_ A browser instance.
+ * @param {ProtractorBrowser} browser_ A browser instance.
  * @param {ElementArrayFinder} elementArrayFinder The ElementArrayFinder
  *     that this is branched from.
  * @returns {ElementFinder}
@@ -716,7 +716,8 @@ export class ElementFinder extends WebdriverWebElement {
        errorFn: Function) => webdriver.promise.Promise<any> = null;
 
   constructor(
-      public browser_: Browser, elementArrayFinder: ElementArrayFinder) {
+      public browser_: ProtractorBrowser,
+      elementArrayFinder: ElementArrayFinder) {
     super();
     if (!elementArrayFinder) {
       throw new Error('BUG: elementArrayFinder cannot be empty');
@@ -785,7 +786,7 @@ export class ElementFinder extends WebdriverWebElement {
   }
 
   static fromWebElement_(
-      browser: Browser, webElem: webdriver.WebElement,
+      browser: ProtractorBrowser, webElem: webdriver.WebElement,
       locator: Locator): ElementFinder {
     let getWebElements =
         () => { return webdriver.promise.fulfilled([webElem]); };

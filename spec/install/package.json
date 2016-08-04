@@ -1,0 +1,18 @@
+{
+  "name": "protractor-install",
+  "version": "1.0.0",
+  "description": "e2e typescript => javascript => running",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run typings",
+    "typings": "typings install",
+    "tsc": "tsc",
+    "test": "protractor conf.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "protractor": "file:../../",
+    "rimraf": "^2.5.4"
+  }
+}

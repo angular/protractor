@@ -43,7 +43,8 @@ gulp.task('webdriver:update', function(done) {
 
 gulp.task('jshint', function(done) {
   runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', 'lib', 'spec', 'scripts',
-      '--exclude=lib/selenium-webdriver/**/*.js,spec/dependencyTest/*.js']);
+      '--exclude=lib/selenium-webdriver/**/*.js,spec/dependencyTest/*.js,' +
+      'spec/install/**/*.js']);
 });
 
 gulp.task('format:enforce', () => {
@@ -89,7 +90,7 @@ gulp.task('default',['prepublish']);
 gulp.task('types', function(done) {
   var folder = 'built';
   var files = ['browser', 'element', 'locators', 'expectedConditions',
-    'config', 'plugins'];
+    'config', 'plugins', 'ptor'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
   files.forEach(file => {

@@ -80,7 +80,7 @@ export interface ElementHelper extends Function {
  * @param {Browser} browser A browser instance.
  * @returns {function(webdriver.Locator): ElementFinder}
  */
-function buildElementHelper(browser: Browser): ElementHelper {
+function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
   let element: ElementHelper = (locator: Locator) => {
     return new ElementArrayFinder(browser).all(locator).toElementFinder_();
   };
@@ -104,7 +104,7 @@ function buildElementHelper(browser: Browser): ElementHelper {
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
-export class Browser extends Webdriver {
+export class ProtractorBrowser extends Webdriver {
   /**
    * @type {ProtractorBy}
    */
@@ -329,7 +329,8 @@ export class Browser extends Webdriver {
    * @returns {Browser} A browser instance.
    */
   forkNewDriverInstance(
-      opt_useSameUrl?: boolean, opt_copyMockModules?: boolean): Browser {
+      opt_useSameUrl?: boolean,
+      opt_copyMockModules?: boolean): ProtractorBrowser {
     return null;
   }
 
@@ -1242,8 +1243,8 @@ export class Browser extends Webdriver {
    */
   static wrapDriver(
       webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,
-      untrackOutstandingTimeouts?: boolean): Browser {
-    return new Browser(
+      untrackOutstandingTimeouts?: boolean): ProtractorBrowser {
+    return new ProtractorBrowser(
         webdriver, baseUrl, rootElement, untrackOutstandingTimeouts);
   }
 }

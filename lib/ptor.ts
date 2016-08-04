@@ -1,36 +1,56 @@
-import {Browser, ElementHelper} from './browser';
+import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';
 
 let webdriver = require('selenium-webdriver');
 
-export namespace protractor {
+export class Ptor {
   // Variables tied to the global namespace.
-  export let browser: Browser;
-  export let $ = function(search: string): ElementFinder { return null;};
-  export let $$ = function(search: string): ElementArrayFinder { return null;};
-  export let element: ElementHelper;
-  export let By: ProtractorBy;
-  export let by: ProtractorBy;
-  export let wrapDriver:
+  browser: ProtractorBrowser;
+  $ = function(search: string): ElementFinder { return null; };
+  $$ = function(search: string): ElementArrayFinder { return null; };
+  element: ElementHelper;
+  By: ProtractorBy;
+  by: ProtractorBy;
+  wrapDriver:
       (webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,
-       untrackOutstandingTimeouts?: boolean) => Browser;
-  export let ExpectedConditions: ProtractorExpectedConditions;
+       untrackOutstandingTimeouts?: boolean) => ProtractorBrowser;
+  ExpectedConditions: ProtractorExpectedConditions;
 
   // Export protractor classes.
-  export let Browser = require('./browser').Browser;
-  export let ElementFinder = require('./element').ElementFinder;
-  export let ElementArrayFinder = require('./element').ElementArrayFinder;
-  export let ProtractorBy = require('./locators').ProtractorBy;
-  export let ProtractorExpectedConditions =
+  ProtractorBrowser = require('./browser').ProtractorBrowser;
+  ElementFinder = require('./element').ElementFinder;
+  ElementArrayFinder = require('./element').ElementArrayFinder;
+  ProtractorBy = require('./locators').ProtractorBy;
+  ProtractorExpectedConditions =
       require('./expectedConditions').ProtractorExpectedConditions;
 
   // Export selenium webdriver.
-  export let promise = webdriver.promise;
-  export let WebElement = webdriver.WebElement;
-  export let ActionSequence = webdriver.ActionSequence;
-  export let Key = webdriver.Key;
-  export let Command = require('selenium-webdriver/lib/command').Command;
-  export let CommandName = require('selenium-webdriver/lib/command').Name;
+  ActionSequence = webdriver.ActionSequence;
+  Browser = webdriver.Browser;
+  Builder = webdriver.Builder;
+  Button = webdriver.Button;
+  Capabilities = webdriver.Capabilities;
+  Capability = webdriver.Capability;
+  EventEmitter = webdriver.EventEmitter;
+  FileDetector = webdriver.FileDetector;
+  Key = webdriver.Key;
+  Session = webdriver.Session;
+  WebDriver = webdriver.WebDriver;
+  WebElement = webdriver.WebElement;
+  WebElementPromise = webdriver.WebElementPromise;
+  error = webdriver.error;
+  logging = webdriver.logging;
+  promise = webdriver.promise;
+  until = webdriver.until;
+  Command = require('selenium-webdriver/lib/command').Command;
+  CommandName = require('selenium-webdriver/lib/command').Name;
+  utils = {
+    firefox: require('selenium-webdriver/firefox'),
+    http: require('selenium-webdriver/http'),
+    remote: require('selenium-webdriver/remote')
+  }
 }
+
+export var protractor = new Ptor();
