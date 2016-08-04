@@ -41,19 +41,26 @@ export function runFilenameOrFn_(
     if (filenameOrFn &&
         !(typeof filenameOrFn === 'string' ||
           typeof filenameOrFn === 'function')) {
-      throw 'filenameOrFn must be a string or function';
+      throw new Error('filenameOrFn must be a string or function');
     }
 
     if (typeof filenameOrFn === 'string') {
       filenameOrFn = require(resolve(configDir, filenameOrFn));
     }
     if (typeof filenameOrFn === 'function') {
-      let results = when(filenameOrFn.apply(null, args), null, (err) => {
-        if (err.stack) {
-          err.stack = exports.filterStackTrace(err.stack);
-        }
-        throw err;
-      });
+      let results =
+          when(filenameOrFn.apply(null, args), null, (err: string | Error) => {
+            if (typeof err === 'string') {
+              err = new Error(err);
+            } else {
+              err = err as Error;
+              if (err.stack) {
+                err.stack = new Error().stack;
+              }
+            }
+            err.stack = exports.filterStackTrace(err.stack);
+            throw err;
+          });
       resolvePromise(results);
     } else {
       resolvePromise(undefined);
