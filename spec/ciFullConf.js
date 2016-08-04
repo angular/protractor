@@ -37,9 +37,12 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
+  allScriptsTimeout: 120000,
+  getPageTimeout: 120000,
+
   jasmineNodeOpts: {
     showTiming: true,
-    defaultTimeoutInterval: 90000
+    defaultTimeoutInterval: 120000
   },
 
   params: {

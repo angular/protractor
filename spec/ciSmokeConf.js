@@ -71,12 +71,12 @@ exports.config = {
   baseUrl: env.baseUrl + '/ng1/',
 
   // Up the timeouts for the slower browsers (IE, Safari).
-  allScriptsTimeout: 30000,
-  getPageTimeout: 30000,
+  allScriptsTimeout: 120000,
+  getPageTimeout: 120000,
 
   jasmineNodeOpts: {
     showTiming: true,
-    defaultTimeoutInterval: 90000
+    defaultTimeoutInterval: 120000
   },
 
   params: {
