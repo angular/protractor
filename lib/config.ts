@@ -567,6 +567,15 @@ export interface Config {
      */
     disableEnvironmentOverrides?: boolean;
 
+    /**
+     * Tells Protractor to interpret any angular apps it comes across as hybrid
+     * angular1/angular2 apps (i.e. apps using ngUpgrade)
+     * Defaults to `false`
+     *
+     * @type {boolean}
+     */
+    ng12Hybrid?: boolean;
+
     seleniumArgs?: Array<any>;
     configDir?: string;
     troubleshoot?: boolean;
