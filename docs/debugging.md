@@ -53,7 +53,7 @@ it('should fail to find a non-existent element', function() {
   browser.pause();
 
   // This element doesn't exist, so this fails.
-  var nonExistant = element(by.binding('nopenopenope')).getText();
+  var nonExistent = element(by.binding('nopenopenope')).getText();
 });
 ```
 
@@ -95,6 +95,7 @@ the test because ChromeDriver cannot operate when the Dev Tools are open.
 When you finish debugging, exit by pressing `Ctrl-C`. Your tests will continue
 where they left off, using the same browser.
 
+**Note:** Since these are asynchronous tasks, you would have to increase the default timeout of your specs else default timeout exception would be thrown!
 
 **Using debugger**
 
@@ -111,7 +112,7 @@ it('should fail to find a non-existent element', function() {
   browser.debugger();
 
   // This element doesn't exist, so this fails.
-  var nonExistant = element(by.binding('nopenopenope')).getText();
+  var nonExistent = element(by.binding('nopenopenope')).getText();
 });
 ```
 
@@ -122,11 +123,11 @@ protractor debug debugging/failureConf.js
 ```
 
 This uses the [node debugger](http://nodejs.org/api/debugger.html). Enter
-`c` to start execution and continue after the breakpoint.
+`c` to start execution and continue after the breakpoint or enter `next` command.The next command steps to the next line in control flow.
 
-`browser.debugger();` is different from from node's `debugger;` statement because
-it adds a breakpoint task asynchronous queue. This means the example above will
-pause after the `get` statement has been executing. Using `debugger;`
+`browser.debugger();` is different from node's `debugger;` statement because
+it adds a breakpoint task asynchronously in queue. This means the example above will
+pause after the `get` statement has been executed, whereas `debugger;`
 pauses the test after the get command is scheduled but has not yet
 been executed.
 
@@ -145,7 +146,21 @@ used from the browser's console.
 // You can also limit the scope of the locator
 > window.clientSideScripts.findInputs('username', document.getElementById('#myEl'));
 ```
+Setting Up VSCode for Debugging
+-------------------------------
+VS Code has built-in [debugging](https://code.visualstudio.com/docs/editor/debugging) support for the Node.js runtime and can debug JavaScript, TypeScript, and any other language that gets transpiled to JavaScript.
 
+To set up VSCode for Protractor, follow the below steps:
+
+1. Click on the Debugging icon in the View Bar on the side of VS Code.
+2. Click on the Configure gear icon on the Debug view top bar and choose nodejs environment.
+3. It will generate a `launch.json` file under your workspace's `.vscode` folder.
+4. Setup your launch.json file by configuring below two commands: 
+```
+ "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
+  "args": ["${workspaceRoot}/protractorConfig.js"],
+```
+5. Save you launch.json, put some breakpoints and start debugging. 
 
 Setting Up WebStorm for Debugging
 ---------------------------------
