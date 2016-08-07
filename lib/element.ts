@@ -392,7 +392,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
     return this.getWebElements().then(
         (arr: any) => { return arr.length; },
         (err: any) => {
-          if (err.code == new webdriver.error.NoSuchElementError()) {
+          if (err.code === webdriver.error.NoSuchElementError.code) {
             return 0;
           } else {
             throw err;
