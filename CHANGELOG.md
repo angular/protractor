@@ -1,3 +1,20 @@
+#4.0.3
+
+## Bug fixes
+
+- ([5f690fe](https://github.com/angular/protractor/commit/5f690fe0d0526d5ed4cc482fb5915d28eedbe11e))
+  fix(export): export selenium-webdriver (#3433)
+
+  - rename to ProtractorBrowser to be able to export selenium-webdriver Browser as Browser
+  - export all selenium-webdriver items and subfolders in ptor
+  - update dependency tests for selenium
+  - add tests when protractor is installed
+ closes #209227
+- ([27f7981](https://github.com/angular/protractor/commit/27f798117fc599ce369026ebbbf28b818bbbaac6))
+  fix(config): fix interface for functions such as onPrepare (#3434)
+
+  closes #3431
+
 #4.0.2
 
 ## Bug fixes

@@ -22,7 +22,7 @@
     "saucelabs": "~1.2.0",
     "selenium-webdriver": "2.53.3",
     "source-map-support": "~0.4.0",
-    "webdriver-manager": "^10.2.1"
+    "webdriver-manager": "^10.2.2"
   },
   "devDependencies": {
     "body-parser": "~1.15.2",
@@ -62,5 +62,5 @@
     "tsc:w": "./node_modules/typescript/bin/tsc -w"
   },
   "license": "MIT",
-  "version": "4.0.2"
+  "version": "4.0.3"
 }
