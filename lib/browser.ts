@@ -901,7 +901,8 @@ export class ProtractorBrowser extends Webdriver {
    * browser.get('http://angular.github.io/protractor/#/api');
    * expect(browser.getLocationAbsUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
-   * @returns {webdriver.promise.Promise<string>} The current absolute url from AngularJS.
+   * @returns {webdriver.promise.Promise<string>} The current absolute url from
+   * AngularJS.
    */
   getLocationAbsUrl(): webdriver.promise.Promise<any> {
     this.waitForAngular();
