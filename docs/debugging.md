@@ -160,7 +160,7 @@ To set up VSCode for Protractor, follow the below steps:
  "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
   "args": ["${workspaceRoot}/protractorConfig.js"],
 ```
-5. Save you launch.json, put some breakpoints and start debugging. 
+5. Save your launch.json, put some breakpoints and start debugging. 
 
 Setting Up WebStorm for Debugging
 ---------------------------------
