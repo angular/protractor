@@ -519,6 +519,14 @@ export interface Config {
      * Inverts 'grep' matches
      */
     invertGrep?: boolean;
+    /**
+     * If true, run specs in semi-random order
+     */
+    random?: boolean,
+    /**
+     * Set the randomization seed if randomization is turned on
+     */
+     seed?: string,
   };
 
   /**
