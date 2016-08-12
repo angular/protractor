@@ -923,9 +923,9 @@ export class ProtractorBrowser extends Webdriver {
    * While in the debugger, commands can be scheduled through webdriver by
    * entering the repl:
    *   debug> repl
-   *   Press Ctrl + C to leave rdebug repl
-   *   > ptor.findElement(protractor.By.input('user').sendKeys('Laura'));
-   *   > ptor.debugger();
+   *   > element(by.input('user')).sendKeys('Laura');
+   *   > browser.debugger();
+   *   Press Ctrl + c to leave debug repl
    *   debug> c
    *
    * This will run the sendKeys command as the next task, then re-enter the
