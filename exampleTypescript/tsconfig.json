@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "sourceMap": false,
     "declaration": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "outDir": "tmp"
   },
   "exclude": [
     "node_modules",
