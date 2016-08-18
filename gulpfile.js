@@ -61,10 +61,6 @@ gulp.task('format', () => {
     format.format('file', clangFormat)).pipe(gulp.dest('.'));
 });
 
-gulp.task('typings', function(done) {
-  runSpawn(done, 'node', ['node_modules/typings/dist/bin.js', 'install']);
-});
-
 gulp.task('tsc', function(done) {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
@@ -75,13 +71,13 @@ gulp.task('tsc:globals', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence(['typings', 'jshint', 'format'], 'tsc', 'tsc:globals', 'types',
+  runSequence(['jshint', 'format'], 'tsc', 'tsc:globals', 'types',
     'ambient', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence(
-    ['webdriver:update', 'typings', 'jshint', 'format'], 'tsc', 'tsc:globals',
+    ['webdriver:update', 'jshint', 'format'], 'tsc', 'tsc:globals',
     'types', 'ambient', 'built:copy', done);
 });
 

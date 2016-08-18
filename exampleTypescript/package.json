@@ -6,15 +6,16 @@
   "license": "MIT",
   "scripts": {
     "tsc": "tsc",
-    "typings": "typings install",
-    "postinstall": "typings install",
-    "pretest": "tsc",
-    "test": "protractor tmp/conf.js"
+    "pretest": "npm run tsc",
+    "test": "protractor conf.js"
   },
   "dependencies": {
     "jasmine": "^2.4.1",
     "protractor": "file:../",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.5"
+    "typescript": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.2.31",
+    "@types/node": "^6.0.35"
   }
 }
