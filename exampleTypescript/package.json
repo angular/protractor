@@ -7,7 +7,7 @@
   "scripts": {
     "tsc": "tsc",
     "pretest": "npm run tsc",
-    "test": "protractor conf.js"
+    "test": "protractor tmp/conf.js"
   },
   "dependencies": {
     "jasmine": "^2.4.1",

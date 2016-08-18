@@ -16,6 +16,7 @@
     "website",
     "scripts",
     "globals.ts",
+    "globals.d.ts",
     "exampleTypescript",
     "spec"
   ]

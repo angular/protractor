@@ -66,7 +66,7 @@ gulp.task('tsc', function(done) {
 });
 
 gulp.task('tsc:globals', function(done) {
-  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', 'globals.ts'],
+  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-d', 'globals.ts'],
     'ignore');
 });
 
