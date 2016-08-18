@@ -95,6 +95,22 @@ Plugins are node modules which export an object with the following API:
 exports.setup = function() {};
 
 /**
+ * This is called before the test have been run but after the test framework has
+ * been set up.  Analogous to a config file's `onPreare`.
+ *
+ * Very similar to using `setup`, but allows you to access framework-specific
+ * variables/funtions (e.g. `jasmine.getEnv().addReporter()`)
+ *
+ * @throws {*} If this function throws an error, a failed assertion is added to
+ *     the test results.
+ *
+ * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+ *     for the promise to resolve before continuing.  If the promise is
+ *     rejected, a failed assertion is added to the test results.
+ */
+exports.onPrepare = function() {};
+
+/**
  * This is called after the tests have been run, but before the WebDriver
  * session has been terminated.
  *
