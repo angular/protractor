@@ -31,6 +31,7 @@ export class Runner extends EventEmitter {
   preparer_: any;
   driverprovider_: DriverProvider;
   o: any;
+  plugins_: Plugins;
 
   constructor(config: Config) {
     super();
@@ -76,7 +77,9 @@ export class Runner extends EventEmitter {
    *     are finished.
    */
   runTestPreparer(): q.Promise<any> {
-    return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
+    return this.plugins_.onPrepare().then(() => {
+      return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
+    });
   }
 
   /**
@@ -268,7 +271,7 @@ export class Runner extends EventEmitter {
    */
   run(): q.Promise<any> {
     let testPassed: boolean;
-    let plugins = new Plugins(this.config_);
+    let plugins = this.plugins_ = new Plugins(this.config_);
     let pluginPostTestPromises: any;
     let browser_: any;
     let results: any;

@@ -35,6 +35,22 @@ export interface ProtractorPlugin {
   setup?: () => Q.Promise<any>;
 
   /**
+   * This is called before the test have been run but after the test framework has
+   * been set up.  Analogous to a config file's `onPreare`.
+   *
+   * Very similar to using `setup`, but allows you to access framework-specific
+   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`)
+   *
+   * @throws {*} If this function throws an error, a failed assertion is added to
+   *     the test results.
+   *
+   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+   *     for the promise to resolve before continuing.  If the promise is
+   *     rejected, a failed assertion is added to the test results.
+   */
+  onPrepare?: () => Q.Promise<any>;
+
+  /**
    * This is called after the tests have been run, but before the WebDriver
    * session has been terminated.
    *
@@ -396,6 +412,7 @@ export class Plugins {
    * @see docs/plugins.md#writing-plugins for information on these functions
    */
   setup: Function = pluginFunFactory('setup', PromiseType.Q);
+  onPrepare: Function = pluginFunFactory('onPrepare', PromiseType.Q);
   teardown: Function = pluginFunFactory('teardown', PromiseType.Q);
   postResults: Function = pluginFunFactory('postResults', PromiseType.Q);
   postTest: Function = pluginFunFactory('postTest', PromiseType.Q);
