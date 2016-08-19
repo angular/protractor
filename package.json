@@ -25,6 +25,14 @@
     "webdriver-manager": "^10.2.2"
   },
   "devDependencies": {
+    "@types/chalk": "^0.4.28",
+    "@types/glob": "^5.0.29",
+    "@types/jasmine": "^2.2.31",
+    "@types/minimatch": "^2.0.28",
+    "@types/minimist": "^1.1.28",
+    "@types/node": "^6.0.35",
+    "@types/optimist": "0.0.28",
+    "@types/q": "0.0.28",
     "body-parser": "~1.15.2",
     "chai": "~3.5.0",
     "chai-as-promised": "~5.3.0",
@@ -39,8 +47,7 @@
     "mocha": "2.5.3",
     "rimraf": "~2.5.3",
     "run-sequence": "^1.1.5",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4"
+    "typescript": "^2.0.0"
   },
   "repository": {
     "type": "git",

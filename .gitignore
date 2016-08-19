@@ -14,3 +14,4 @@ npm-debug.log
 
 *.swp
 globals.js
+globals.d.ts

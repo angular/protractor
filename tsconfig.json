@@ -14,9 +14,9 @@
     "node_modules",
     "testapp",
     "website",
-    "typings/globals",
     "scripts",
     "globals.ts",
+    "globals.d.ts",
     "exampleTypescript",
     "spec"
   ]
