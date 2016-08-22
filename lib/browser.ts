@@ -51,7 +51,8 @@ export class Webdriver {
 
 /**
  * Mix a function from one object onto another. The function will still be
- * called in the context of the original object.
+ * called in the context of the original object.  Any arguments of type
+ * `ElementFinder` will be unwrapped to their underlying `WebElement` instance
  *
  * @private
  * @param {Object} to
@@ -59,8 +60,13 @@ export class Webdriver {
  * @param {string} fnName
  * @param {function=} setupFn
  */
-function mixin(to: any, from: any, fnName: string, setupFn?: Function) {
+function ptorMixin(to: any, from: any, fnName: string, setupFn?: Function) {
   to[fnName] = function() {
+    for (var i = 0; i < arguments.length; i++) {
+      if (arguments[i] instanceof ElementFinder) {
+        arguments[i] = arguments[i].getWebElement();
+      }
+    }
     if (setupFn) {
       setupFn();
     }
@@ -265,11 +271,11 @@ export class ProtractorBrowser extends Webdriver {
         .forEach((method: string) => {
           if (!this[method] && typeof webdriverInstance[method] == 'function') {
             if (methodsToSync.indexOf(method) !== -1) {
-              mixin(
+              ptorMixin(
                   this, webdriverInstance, method,
                   this.waitForAngular.bind(this));
             } else {
-              mixin(this, webdriverInstance, method);
+              ptorMixin(this, webdriverInstance, method);
             }
           }
         });
@@ -863,7 +869,7 @@ export class ProtractorBrowser extends Webdriver {
    */
   navigate() {
     let nav = this.driver.navigate();
-    mixin(nav, this, 'refresh');
+    ptorMixin(nav, this, 'refresh');
     return nav;
   }
 

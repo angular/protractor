@@ -44,6 +44,12 @@ describe('protractor library', function() {
         expect(browser.driver.getCurrentUrl()).toMatch('#/form');
       });
 
+  it('should unwrap WebElements', function() {
+    browser.get('index.html');
+    var ptorEl = element(by.binding('greet'));
+    browser.executeScript('', ptorEl); // Will crash if element isn't unwrapped
+  });
+
   it('should have access to the processed config block', function() {
     function containsMatching(arr, string) {
       var contains = false;
