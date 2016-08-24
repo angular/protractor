@@ -8,7 +8,7 @@ import {
   Ptor
 } from 'protractor';
 
-export let protractor: Ptor = global['protractor'];
+export let protractor: Ptor = (global as any)['protractor'];
 export let browser: ProtractorBrowser = protractor.browser;
 export let $: (search: string) => ElementFinder = protractor.$;
 export let $$: (search: string) => ElementArrayFinder = protractor.$$;
