@@ -1,0 +1,10 @@
+import { ProtractorBrowser, ElementArrayFinder, ElementFinder, ElementHelper, ProtractorBy, ProtractorExpectedConditions, Ptor } from 'protractor';
+export declare let protractor: Ptor;
+export declare let browser: ProtractorBrowser;
+export declare let $: (search: string) => ElementFinder;
+export declare let $$: (search: string) => ElementArrayFinder;
+export declare let element: ElementHelper;
+export declare let By: ProtractorBy;
+export declare let by: ProtractorBy;
+export declare let wrapDriver: (webdriver: any, baseUrl?: string, rootElement?: string, untrackOutstandingTimeouts?: boolean) => ProtractorBrowser;
+export declare let ExpectedConditions: ProtractorExpectedConditions;

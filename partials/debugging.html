@@ -33,7 +33,7 @@ would like precise control over the node debugger.</p>
   browser.pause();
 
   // This element doesn&#39;t exist, so this fails.
-  var nonExistant = element(by.binding(&#39;nopenopenope&#39;)).getText();
+  var nonExistent = element(by.binding(&#39;nopenopenope&#39;)).getText();
 });
 </code></pre>
 <p>Run your tests normally.</p>
@@ -62,6 +62,7 @@ if you open the Chrome Dev Tools, you must close them before continuing
 the test because ChromeDriver cannot operate when the Dev Tools are open.</p>
 <p>When you finish debugging, exit by pressing <code ng-non-bindable>Ctrl-C</code>. Your tests will continue
 where they left off, using the same browser.</p>
+<p><strong>Note:</strong> Since these are asynchronous tasks, you would have to increase the default timeout of your specs else default timeout exception would be thrown!</p>
 <p><strong>Using debugger</strong></p>
 <p>Insert <code ng-non-bindable>browser.debugger();</code> into your test where you want to break:</p>
 <pre><code class="lang-javascript">it(&#39;should fail to find a non-existent element&#39;, function() {
@@ -74,16 +75,16 @@ where they left off, using the same browser.</p>
   browser.debugger();
 
   // This element doesn&#39;t exist, so this fails.
-  var nonExistant = element(by.binding(&#39;nopenopenope&#39;)).getText();
+  var nonExistent = element(by.binding(&#39;nopenopenope&#39;)).getText();
 });
 </code></pre>
 <p>Then run the test <em>in debug mode</em>:</p>
 <pre><code ng-non-bindable>protractor debug debugging/failureConf.js
 </code></pre><p>This uses the <a href="http://nodejs.org/api/debugger.html">node debugger</a>. Enter
-<code ng-non-bindable>c</code> to start execution and continue after the breakpoint.</p>
-<p><code ng-non-bindable>browser.debugger();</code> is different from from node&#39;s <code ng-non-bindable>debugger;</code> statement because
-it adds a breakpoint task asynchronous queue. This means the example above will
-pause after the <code ng-non-bindable>get</code> statement has been executing. Using <code ng-non-bindable>debugger;</code>
+<code ng-non-bindable>c</code> to start execution and continue after the breakpoint or enter <code ng-non-bindable>next</code> command.The next command steps to the next line in control flow.</p>
+<p><code ng-non-bindable>browser.debugger();</code> is different from node&#39;s <code ng-non-bindable>debugger;</code> statement because
+it adds a breakpoint task asynchronously in queue. This means the example above will
+pause after the <code ng-non-bindable>get</code> statement has been executed, whereas <code ng-non-bindable>debugger;</code>
 pauses the test after the get command is scheduled but has not yet
 been executed.</p>
 <p>Protractor&#39;s <code ng-non-bindable>debugger()</code> method works by scheduling a node debug breakpoint
@@ -98,6 +99,18 @@ used from the browser&#39;s console.</p>
 // You can also limit the scope of the locator
 &gt; window.clientSideScripts.findInputs(&#39;username&#39;, document.getElementById(&#39;#myEl&#39;));
 </code></pre>
+<h2 id="setting-up-vscode-for-debugging" class="anchored"><div><a href="#{{path}}#setting-up-vscode-for-debugging">&#x1f517;</a>Setting Up VSCode for Debugging</div></h2>
+<p>VS Code has built-in <a href="https://code.visualstudio.com/docs/editor/debugging">debugging</a> support for the Node.js runtime and can debug JavaScript, TypeScript, and any other language that gets transpiled to JavaScript.</p>
+<p>To set up VSCode for Protractor, follow the below steps:</p>
+<ol>
+<li>Click on the Debugging icon in the View Bar on the side of VS Code.</li>
+<li>Click on the Configure gear icon on the Debug view top bar and choose nodejs environment.</li>
+<li>It will generate a <code ng-non-bindable>launch.json</code> file under your workspace&#39;s <code ng-non-bindable>.vscode</code> folder.</li>
+<li>Setup your launch.json file by configuring below two commands: <pre><code ng-non-bindable>&quot;program&quot;: &quot;${workspaceRoot}/node_modules/protractor/bin/protractor&quot;,
+&quot;args&quot;: [&quot;${workspaceRoot}/protractorConfig.js&quot;],
+</code></pre></li>
+<li>Save your launch.json, put some breakpoints and start debugging. </li>
+</ol>
 <h2 id="setting-up-webstorm-for-debugging" class="anchored"><div><a href="#{{path}}#setting-up-webstorm-for-debugging">&#x1f517;</a>Setting Up WebStorm for Debugging</div></h2>
 <p>To set up WebStorm for Protractor, do the following:</p>
 <ol>
