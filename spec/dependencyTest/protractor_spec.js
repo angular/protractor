@@ -1,5 +1,5 @@
 // require('protractor') equivalent is requiring ptor
-let protractor = require('../../built/main');
+var protractor = require('../../built/main');
 
 // the webdriver stuff we are exposing externally
 
