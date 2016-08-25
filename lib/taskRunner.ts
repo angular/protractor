@@ -53,6 +53,17 @@ export class TaskRunner extends EventEmitter {
       specResults: []
     };
 
+    let configParser = new ConfigParser();
+    if (this.configFile) {
+      configParser.addFileConfig(this.configFile);
+    }
+    if (this.additionalConfig) {
+      configParser.addConfig(this.additionalConfig);
+    }
+    let config = configParser.getConfig();
+    config.capabilities = this.task.capabilities;
+    config.specs = this.task.specs;
+
     if (this.runInFork) {
       let deferred = q.defer();
 
@@ -72,6 +83,9 @@ export class TaskRunner extends EventEmitter {
       childProcess
           .on('message',
               (m: any) => {
+                if (config.verboseMultiSessions) {
+                  taskLogger.peek();
+                }
                 switch (m.event) {
                   case 'testPass':
                     process.stdout.write('.');
@@ -106,17 +120,6 @@ export class TaskRunner extends EventEmitter {
 
       return deferred.promise;
     } else {
-      let configParser = new ConfigParser();
-      if (this.configFile) {
-        configParser.addFileConfig(this.configFile);
-      }
-      if (this.additionalConfig) {
-        configParser.addConfig(this.additionalConfig);
-      }
-      let config = configParser.getConfig();
-      config.capabilities = this.task.capabilities;
-      config.specs = this.task.specs;
-
       let runner = new Runner(config);
 
       runner.on('testsDone', (results: RunResults) => {
