@@ -1,5 +1,4 @@
 var EC = protractor.ExpectedConditions;
-var env = require('../environment');
 
 describe('expected conditions', function() {
   beforeEach(function() {
@@ -75,10 +74,10 @@ describe('expected conditions', function() {
 
   it('should have urlIs', function() {
       var baseUrlFromSpec = browser.baseUrl;
-      expect(EC.urlIs(env.baseUrl).call()).toBe(false);
+      expect(EC.urlIs(browser.baseUrl).call()).toBe(false);
       expect(EC.urlIs(baseUrlFromSpec+'index.html#/form').call()).toBe(true);
   });
-  
+
   it('should have elementToBeClickable', function() {
     var invalidIsClickable = EC.elementToBeClickable($('#INVALID'));
     var buttonIsClickable = EC.elementToBeClickable($('#disabledButton'));
