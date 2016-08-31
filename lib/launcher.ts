@@ -179,7 +179,10 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         // 4) Run tests.
         let scheduler = new TaskScheduler(config);
 
-        process.on('uncaughtException', (e: Error) => {
+        process.on('uncaughtException', (exc: (Error|string)) => {
+          // If the exception is a raw string, wrap it in an Error.
+          let e = (typeof exc == 'string') ? new Error(exc) : exc;
+
           let errorCode = ErrorHandler.parseError(e);
           if (errorCode) {
             let protractorError = e as ProtractorError;
@@ -188,6 +191,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                 protractorError.stack);
             process.exit(errorCode);
           } else {
+            logger.error(e);
             logger.error(e.message);
             logger.error(e.stack);
             process.exit(ProtractorError.CODE);
