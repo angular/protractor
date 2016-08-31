@@ -316,7 +316,7 @@ export interface Config {
      * when running multiple sessions in parallel results will be logged when
      * each test finishes.
      */
-    verboseMultiSessions: boolean;
+    verboseMultiSessions?: boolean;
 
     // ---------------------------------------------------------------------------
     // ----- Global test information
