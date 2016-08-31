@@ -311,10 +311,10 @@ export interface Config {
 
     /**
      * Whether or not to buffer output when running tests on multiple browsers
-     * in parallel. By default, when running multiple browser sessions results
-     * are buffered and not logged until the test run finishes. If true, when
-     * running multiple sessions in parallel results will be logged when each
-     * test finishes.
+     * in parallel. By default, when running multiple browser sessions, the
+     * results are buffered and not logged until the test run finishes. If true,
+     * when running multiple sessions in parallel results will be logged when
+     * each test finishes.
      */
     verboseMultiSessions: boolean;
 
