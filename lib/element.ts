@@ -131,9 +131,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
   /**
    * Calls to ElementArrayFinder may be chained to find an array of elements
    * using the current elements in this ElementArrayFinder as the starting
-   * point.
-   * This function returns a new ElementArrayFinder which would contain the
-   * children elements found (and could also be empty).
+   * point. This function returns a new ElementArrayFinder which would contain
+   * the children elements found (and could also be empty).
    *
    * @alias element.all(locator).all(locator)
    * @view
@@ -167,13 +166,15 @@ export class ElementArrayFinder extends WebdriverWebElement {
     let getWebElements = () => {
       if (this.getWebElements === null) {
         // This is the first time we are looking for an element
-        return ptor.waitForAngular('Locator: ' + locator).then(() => {
-          if (locator.findElementsOverride) {
-            return locator.findElementsOverride(ptor.driver, null, ptor.rootEl);
-          } else {
-            return ptor.driver.findElements(locator);
-          }
-        });
+        return ptor.waitForAngular('Locator: ' + locator)
+            .then((): webdriver.promise.Promise<webdriver.WebElement[]> => {
+              if (locator.findElementsOverride) {
+                return locator.findElementsOverride(
+                    ptor.driver, null, ptor.rootEl);
+              } else {
+                return ptor.driver.findElements(locator);
+              }
+            });
       } else {
         return this.getWebElements().then(
             (parentWebElements: webdriver.WebElement[]) => {
@@ -208,13 +209,10 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
   /**
    * Apply a filter function to each element within the ElementArrayFinder.
-   * Returns
-   * a new ElementArrayFinder with all elements that pass the filter function.
-   * The
-   * filter function receives the ElementFinder as the first argument
-   * and the index as a second arg.
-   * This does not actually retrieve the underlying list of elements, so it can
-   * be used in page objects.
+   * Returns a new ElementArrayFinder with all elements that pass the filter
+   * function. The filter function receives the ElementFinder as the first
+   * argument and the index as a second arg. This does not actually retrieve
+   * the underlying list of elements, so it can be used in page objects.
    *
    * @alias element.all(locator).filter(filterFn)
    * @view
@@ -263,8 +261,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
   /**
    * Get an element within the ElementArrayFinder by index. The index starts at
-   * 0.
-   * Negative indices are wrapped (i.e. -i means ith element from last)
+   * 0. Negative indices are wrapped (i.e. -i means ith element from last)
    * This does not actually retrieve the underlying element.
    *
    * @alias element.all(locator).get(index)
@@ -751,7 +748,7 @@ export class ElementFinder extends WebdriverWebElement {
     // This filter verifies that there is only 1 element returned by the
     // elementArrayFinder. It will warn if there are more than 1 element and
     // throw an error if there are no elements.
-    let getWebElements = () => {
+    let getWebElements = (): webdriver.WebElement[] => {
       return elementArrayFinder.getWebElements().then(
           (webElements: webdriver.WebElement[]) => {
             if (webElements.length === 0) {
@@ -961,12 +958,12 @@ export class ElementFinder extends WebdriverWebElement {
    * // Element not present.
    * expect(element(by.binding('notPresent')).isPresent()).toBe(false);
    *
-   * @returns {ElementFinder} which resolves to whether
+   * @returns {webdriver.promise.Promise<boolean>} which resolves to whether
    *     the element is present on the page.
    */
-  isPresent(): ElementFinder {
+  isPresent(): webdriver.promise.Promise<boolean> {
     return this.parentElementArrayFinder.getWebElements().then(
-        (arr: webdriver.WebElement[]) => {
+        (arr: any) => {
           if (arr.length === 0) {
             return false;
           }
@@ -995,16 +992,16 @@ export class ElementFinder extends WebdriverWebElement {
   /**
    * Same as ElementFinder.isPresent(), except this checks whether the element
    * identified by the subLocator is present, rather than the current element
-   * finder. i.e. `element(by.css('#abc')).element(by.css('#def')).isPresent()` is
-   * identical to `element(by.css('#abc')).isElementPresent(by.css('#def'))`.
+   * finder. i.e. `element(by.css('#abc')).element(by.css('#def')).isPresent()`
+   * is identical to `element(by.css('#abc')).isElementPresent(by.css('#def'))`.
    *
    * @see ElementFinder.isPresent
    *
    * @param {webdriver.Locator} subLocator Locator for element to look for.
-   * @returns {ElementFinder} which resolves to whether
+   * @returns {webdriver.promise.Promise<boolean>} which resolves to whether
    *     the subelement is present on the page.
    */
-  isElementPresent(subLocator: any): ElementFinder {
+  isElementPresent(subLocator: any): webdriver.promise.Promise<boolean> {
     if (!subLocator) {
       throw new Error(
           'SubLocator is not supplied as a parameter to ' +

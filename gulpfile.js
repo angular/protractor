@@ -88,7 +88,8 @@ gulp.task('types', function(done) {
   var files = ['browser', 'element', 'locators', 'expectedConditions',
     'config', 'plugins', 'ptor'];
   var outputFile = path.resolve(folder, 'index.d.ts');
-  var contents = '';
+  var contents = '/// <reference path="../typings/index.d.ts" />\n';
+  contents += 'import {By, WebDriver, WebElement, promise} from \'selenium-webdriver\';\n';
   files.forEach(file => {
     contents += parseTypingsFile(folder, file);
   });

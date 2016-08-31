@@ -18,6 +18,7 @@
     "globals.ts",
     "globals.d.ts",
     "exampleTypescript",
+    "typings/globals",
     "spec"
   ]
 }

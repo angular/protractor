@@ -269,7 +269,8 @@ export class ProtractorBrowser extends Webdriver {
     // Mix all other driver functionality into Protractor.
     Object.getOwnPropertyNames(webdriver.WebDriver.prototype)
         .forEach((method: string) => {
-          if (!this[method] && typeof webdriverInstance[method] == 'function') {
+          if (!this[method] &&
+              typeof(webdriverInstance as any)[method] == 'function') {
             if (methodsToSync.indexOf(method) !== -1) {
               ptorMixin(
                   this, webdriverInstance, method,
@@ -570,9 +571,10 @@ export class ProtractorBrowser extends Webdriver {
    */
   isElementPresent(locatorOrElement: webdriver.Locator|
                    webdriver.WebElement): webdriver.promise.Promise<any> {
-    let element = (locatorOrElement.isPresent) ? locatorOrElement :
-                                                 this.element(locatorOrElement);
-    return element.isPresent();
+    let element = ((locatorOrElement as any).isPresent) ?
+        locatorOrElement :
+        this.element(locatorOrElement);
+    return (element as any).isPresent();
   }
 
   /**
@@ -870,7 +872,7 @@ export class ProtractorBrowser extends Webdriver {
    * Mixin navigation methods back into the navigation object so that
    * they are invoked as before, i.e. driver.navigate().refresh()
    */
-  navigate() {
+  navigate(): any {
     let nav = this.driver.navigate();
     ptorMixin(nav, this, 'refresh');
     return nav;
