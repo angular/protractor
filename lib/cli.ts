@@ -72,7 +72,7 @@ optimist
     .string('capabilities.tunnel-identifier')
     .check(function(arg: any) {
       if (arg._.length > 1) {
-        throw 'Error: more than one config file specified';
+        throw new Error('Error: more than one config file specified');
       }
     });
 

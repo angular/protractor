@@ -448,8 +448,9 @@ export class ProtractorBrowser extends Webdriver {
     return runWaitForAngularScript()
         .then((browserErr: Function) => {
           if (browserErr) {
-            throw 'Error while waiting for Protractor to ' +
-                'sync with the page: ' + JSON.stringify(browserErr);
+            throw new Error(
+                'Error while waiting for Protractor to ' +
+                'sync with the page: ' + JSON.stringify(browserErr));
           }
         })
         .then(
@@ -790,7 +791,8 @@ export class ProtractorBrowser extends Webdriver {
               return angularVersion;
             },
             (err: Error) => {
-              throw 'Error while running testForAngular: ' + err.message;
+              throw new Error(
+                  'Error while running testForAngular: ' + err.message);
             })
         .then(loadMocks, deferred.reject);
 
@@ -812,8 +814,9 @@ export class ProtractorBrowser extends Webdriver {
               .then(
                   null,
                   (err: Error) => {
-                    throw 'Error while running module script ' + name + ': ' +
-                        err.message;
+                    throw new Error(
+                        'Error while running module script ' + name + ': ' +
+                        err.message);
                   })
               .then(null, deferred.reject);
         }
