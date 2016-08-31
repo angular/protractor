@@ -180,8 +180,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         let scheduler = new TaskScheduler(config);
 
         process.on('uncaughtException', (exc: (Error|string)) => {
-          // If the exception is a raw string, wrap it in an Error.
-          let e = (typeof exc == 'string') ? new Error(exc) : exc;
+          let e = (exc instanceof Error) ? exc : new Error(exc);
 
           let errorCode = ErrorHandler.parseError(e);
           if (errorCode) {
