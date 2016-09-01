@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": false,
@@ -11,7 +11,7 @@
     "types": [
       "jasmine", "node",
       "chalk", "glob", "minimatch",
-      "minimist", "optimist", "q"
+      "minimist", "optimist"
     ]
   },
   "exclude": [
