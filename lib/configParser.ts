@@ -28,6 +28,7 @@ export class ConfigParser {
     this.config_ = {
       specs: [],
       multiCapabilities: [],
+      verboseMultiSessions: false,
       rootElement: 'body',
       allScriptsTimeout: 11000,
       getPageTimeout: 10000,

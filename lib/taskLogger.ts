@@ -32,14 +32,23 @@ export class TaskLogger {
   }
 
   /**
-   * Flushes the buffer to stdout.
+   * Prints the contents of the buffer without clearing it.
    */
-  public flush(): void {
+  public peek(): void {
     if (this.buffer) {
       // Flush buffer if nonempty
       logger.info(os.EOL + '------------------------------------' + os.EOL);
       logger.info(this.buffer);
       logger.info(os.EOL);
+    }
+  }
+
+  /**
+   * Flushes the buffer to stdout.
+   */
+  public flush(): void {
+    if (this.buffer) {
+      this.peek();
       this.buffer = '';
     }
   }
