@@ -15,7 +15,7 @@
     "typescript": "^2.0.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.2.31",
-    "@types/node": "^6.0.35"
+    "@types/jasmine": "^2.2.33",
+    "@types/node": "^6.0.38"
   }
 }
