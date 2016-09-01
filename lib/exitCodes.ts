@@ -85,7 +85,7 @@ export class ErrorHandler {
     if (errMsgs && errMsgs.length > 0) {
       for (let errPos in errMsgs) {
         let errMsg = errMsgs[errPos];
-        if (e.message.indexOf(errMsg) !== -1) {
+        if (e.message && e.message.indexOf(errMsg) !== -1) {
           return true;
         }
       }

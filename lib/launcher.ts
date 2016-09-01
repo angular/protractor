@@ -179,7 +179,9 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         // 4) Run tests.
         let scheduler = new TaskScheduler(config);
 
-        process.on('uncaughtException', (e: Error) => {
+        process.on('uncaughtException', (exc: (Error|string)) => {
+          let e = (exc instanceof Error) ? exc : new Error(exc);
+
           let errorCode = ErrorHandler.parseError(e);
           if (errorCode) {
             let protractorError = e as ProtractorError;
