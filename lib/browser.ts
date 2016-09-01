@@ -375,7 +375,7 @@ export class ProtractorBrowser extends Webdriver {
    *    scripts return value.
    * @template T
    */
-  private executeScript_(
+  executeScript_(
       script: string|Function, description: string,
       ...scriptArgs: any[]): wdpromise.Promise<any> {
     if (typeof script === 'function') {
@@ -1042,6 +1042,118 @@ export class ProtractorBrowser extends Webdriver {
             return found;
           });
     };
+
+    var getAbsoluteXPath = function(element: webdriver.WebElement) {
+      return global.browser.driver.executeScript(
+          'function absoluteXPath(element) {' +
+              'var comp, comps = [];' +
+              'var parent = null;' +
+              'var xpath = \'\';' +
+              'var getPos = function(element) {' +
+              'var position = 1, curNode;' +
+              'if (element.nodeType == Node.ATTRIBUTE_NODE) {' +
+              'return null;' +
+              '}' +
+              'for (curNode = element.previousSibling; curNode; curNode = curNode.previousSibling) {' +
+              'if (curNode.nodeName == element.nodeName) {' +
+              '++position;' +
+              '}' +
+              '}' +
+              'return position;' +
+              '};' +
+
+              'if (element instanceof Document) {' +
+              'return \'/\';' +
+              '}' +
+
+              'for (; element && !(element instanceof Document); element = element.nodeType == Node.ATTRIBUTE_NODE ? element.ownerElement : element.parentNode) {' +
+              'comp = comps[comps.length] = {};' +
+              'switch (element.nodeType) {' +
+              'case Node.TEXT_NODE:' +
+              'comp.name = \'text()\';' +
+              'break;' +
+              'case Node.ATTRIBUTE_NODE:' +
+              'comp.name = \'@\' + element.nodeName;' +
+              'break;' +
+              'case Node.PROCESSING_INSTRUCTION_NODE:' +
+              'comp.name = \'processing-instruction()\';' +
+              'break;' +
+              'case Node.COMMENT_NODE:' +
+              'comp.name = \'comment()\';' +
+              'break;' +
+              'case Node.ELEMENT_NODE:' +
+              'comp.name = element.nodeName;' +
+              'break;' +
+              '}' +
+              'comp.position = getPos(element);' +
+              '}' +
+
+              'for (var i = comps.length - 1; i >= 0; i--) {' +
+              'comp = comps[i];' +
+              'xpath += \'/\' + comp.name.toLowerCase();' +
+              'if (comp.position !== null) {' +
+              'xpath += \'[\' + comp.position + \']\';' +
+              '}' +
+              '}' +
+
+              'return xpath;' +
+
+              '} return absoluteXPath(arguments[0]);',
+          element);
+    };
+
+    global.highlight = (locator: Locator) => {
+      let xPaths: string[] = [];
+      let cssBorders: string[] = [];
+
+      return global.browser.findElements(locator)
+          .then((arr: webdriver.WebElement[]) => {
+            for (var i = 0; i < arr.length; ++i) {
+              getAbsoluteXPath(arr[i]).then(function(result: string) {
+                xPaths.push(result);
+              });
+
+              (arr[i] as any).getCssValue('border').then(function(val: string) {
+                cssBorders.push(val);
+              });
+            }
+
+            if (arr.length == 0) {
+              return 'No elements found.';
+            }
+          })
+          .then(function() {
+            var timesFlashed = 10;
+            var waitTime = 500;
+
+            for (var t = 0; t < timesFlashed; t++) {
+              var borderValue = '5px dotted rgb(255, 55, 55)';
+              if (t % 2 == 1) {
+                borderValue = '5px dotted rgb(255, 180, 55)';
+              }
+              for (var i = 0; i < xPaths.length; i++) {
+                global.browser.driver.executeScript(
+                    'var x = document.evaluate(\'' + xPaths[i] +
+                    '\', document, null, XPathResult.ANY_TYPE, null); var xx = x.iterateNext(); xx.style.border = \'' +
+                    borderValue + '\';');
+              }
+
+              global.browser.driver.sleep(waitTime);
+            }
+          })
+          .then(function() {
+            for (var j = 0; j < cssBorders.length; j++) {
+              global.browser.driver.executeScript(
+                  'var x = document.evaluate(\'' + xPaths[j] +
+                  '\', document, null, XPathResult.ANY_TYPE, null); var xx = x.iterateNext(); xx.style.border = \'' +
+                  cssBorders[j] + '\';');
+            }
+
+            return 'Highlighting Completed.';
+          });
+    };
+
+
     for (let key in global) {
       context[key] = global[key];
     }
@@ -1213,8 +1325,11 @@ export class ProtractorBrowser extends Webdriver {
       logger.info();
       logger.info('Type <tab> to see a list of locator strategies.');
       logger.info(
-          'Use the `list` helper function to find elements by strategy:');
-      logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
+          'Use the `list` helper function to find elements and return the text:');
+      logger.info('  e.g., list(by.binding(\'\'))');
+      logger.info(
+          'Use the `highlight` helper function to find and highlight the element:');
+      logger.info('  e.g., highlight(by.binding(\'\'))');
       logger.info();
     };
     this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
