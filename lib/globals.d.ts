@@ -30,6 +30,11 @@ declare namespace NodeJS {
   }
 }
 
+declare interface IError extends Error {
+  code?: number;
+  stack?: string;
+}
+
 declare interface String { startsWith: Function; }
 
 declare namespace webdriver {

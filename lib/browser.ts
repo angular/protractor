@@ -1,5 +1,6 @@
 // Util from NodeJs
 import * as net from 'net';
+import {ActionSequence, promise as wdpromise, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
 import * as util from 'util';
 
@@ -33,20 +34,18 @@ for (let foo in webdriver) {
 
 // Explicitly define webdriver.WebDriver.
 export class Webdriver {
-  actions: () => webdriver.ActionSequence = webdriver.WebDriver.actions;
+  actions: () => ActionSequence = webdriver.WebDriver.actions;
   wait:
-      (condition: webdriver.promise.Promise<any>|webdriver.util.Condition|
-       Function,
+      (condition: wdpromise.Promise<any>|until.Condition<any>|Function,
        opt_timeout?: number,
        opt_message?:
-           string) => webdriver.promise.Promise<any> = webdriver.WebDriver.wait;
-  sleep: (ms: number) => webdriver.promise.Promise<any> =
-      webdriver.WebDriver.sleep;
+           string) => wdpromise.Promise<any> = webdriver.WebDriver.wait;
+  sleep: (ms: number) => wdpromise.Promise<any> = webdriver.WebDriver.sleep;
   getCurrentUrl:
-      () => webdriver.promise.Promise<any> = webdriver.WebDriver.getCurrentUrl;
-  getTitle: () => webdriver.promise.Promise<any> = webdriver.WebDriver.getTitle;
+      () => wdpromise.Promise<any> = webdriver.WebDriver.getCurrentUrl;
+  getTitle: () => wdpromise.Promise<any> = webdriver.WebDriver.getTitle;
   takeScreenshot:
-      () => webdriver.promise.Promise<any> = webdriver.WebDriver.takeScreenshot;
+      () => wdpromise.Promise<any> = webdriver.WebDriver.takeScreenshot;
 }
 
 /**
@@ -127,7 +126,7 @@ export class ProtractorBrowser extends Webdriver {
    *
    * @type {webdriver.WebDriver}
    */
-  driver: webdriver.WebDriver;
+  driver: WebDriver;
 
   /**
    * Helper function for finding elements.
@@ -197,7 +196,7 @@ export class ProtractorBrowser extends Webdriver {
    *
    * @type {q.Promise} Done when the new browser is ready for use
    */
-  ready: webdriver.promise.Promise<any>;
+  ready: wdpromise.Promise<any>;
 
   /*
    * Set by the runner.
@@ -257,7 +256,7 @@ export class ProtractorBrowser extends Webdriver {
   [key: string]: any;
 
   constructor(
-      webdriverInstance: webdriver.WebDriver, opt_baseUrl?: string,
+      webdriverInstance: WebDriver, opt_baseUrl?: string,
       opt_rootElement?: string, opt_untrackOutstandingTimeouts?: boolean) {
     super();
     // These functions should delegate to the webdriver instance, but should
@@ -322,7 +321,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {webdriver.promise.Promise} A promise which resolves to the
    * capabilities object.
    */
-  getProcessedConfig(): webdriver.promise.Promise<any> { return null; }
+  getProcessedConfig(): wdpromise.Promise<any> { return null; }
 
   /**
    * Fork another instance of browser for use in interactive tests.
@@ -374,7 +373,7 @@ export class ProtractorBrowser extends Webdriver {
    */
   private executeScript_(
       script: string|Function, description: string,
-      ...scriptArgs: any[]): webdriver.promise.Promise<any> {
+      ...scriptArgs: any[]): wdpromise.Promise<any> {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
@@ -401,7 +400,7 @@ export class ProtractorBrowser extends Webdriver {
    */
   private executeAsyncScript_(
       script: string|Function, description: string,
-      ...scriptArgs: any[]): webdriver.promise.Promise<any> {
+      ...scriptArgs: any[]): wdpromise.Promise<any> {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
@@ -423,7 +422,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!webdriver.promise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
-  waitForAngular(opt_description?: string): webdriver.promise.Promise<any> {
+  waitForAngular(opt_description?: string): wdpromise.Promise<any> {
     let description = opt_description ? ' - ' + opt_description : '';
     if (this.ignoreSynchronization) {
       return this.driver.controlFlow().execute(() => {
@@ -431,7 +430,7 @@ export class ProtractorBrowser extends Webdriver {
       }, 'Ignore Synchronization Protractor.waitForAngular()');
     }
 
-    let runWaitForAngularScript: () => webdriver.promise.Promise<any> = () => {
+    let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
       if (this.plugins_.skipAngularStability()) {
         return webdriver.promise.fulfilled();
       } else if (this.rootEl) {
@@ -493,14 +492,14 @@ export class ProtractorBrowser extends Webdriver {
                   errMsg +=
                       '\nWhile waiting for element with locator' + description;
                 }
-                let pendingTimeoutsPromise: webdriver.promise.Promise<any>;
+                let pendingTimeoutsPromise: wdpromise.Promise<any>;
                 if (this.trackOutstandingTimeouts_) {
                   pendingTimeoutsPromise = this.executeScript_(
                       'return window.NG_PENDING_TIMEOUTS',
                       'Protractor.waitForAngular() - getting pending timeouts' +
                           description);
                 } else {
-                  pendingTimeoutsPromise = webdriver.promise.fulfilled({});
+                  pendingTimeoutsPromise = wdpromise.fulfilled({});
                 }
                 let pendingHttpsPromise = this.executeScript_(
                     clientSideScripts.getPendingHttpRequests,
@@ -508,7 +507,7 @@ export class ProtractorBrowser extends Webdriver {
                         description,
                     this.rootEl);
 
-                return webdriver.promise
+                return wdpromise
                     .all([pendingTimeoutsPromise, pendingHttpsPromise])
                     .then(
                         (arr: any[]) => {
@@ -549,7 +548,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!webdriver.promise.Promise} A promise that will be resolved to
    *      the located {@link webdriver.WebElement}.
    */
-  findElement(locator: Locator): webdriver.WebElement {
+  findElement(locator: Locator): WebElement {
     return this.element(locator).getWebElement();
   }
 
