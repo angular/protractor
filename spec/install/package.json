@@ -10,8 +10,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@types/jasmine": "^2.2.33",
-    "@types/node": "^6.0.38",
     "protractor": "file:../../",
     "rimraf": "^2.5.4"
   }
