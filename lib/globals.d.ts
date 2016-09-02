@@ -25,7 +25,7 @@ declare namespace NodeJS {
     Command: any;
     CommandName: any;
     // Helper function added by the debugger in protractor.ps
-    list: (locator: webdriver.Locator) => string[];
+    list: (locator: any) => string[];
     [key: string]: any;
   }
 }
@@ -38,23 +38,8 @@ declare interface IError extends Error {
 declare interface String { startsWith: Function; }
 
 declare namespace webdriver {
-  namespace promise {
-    interface Promise<T> {
-      controlFlow: Function;
-    }
-  }
-
-  namespace util {
-    interface Condition {}
-  }
-
   class ErrorCode {
     code: number;
-  }
-
-  interface Locator {
-    toString(): string;
-    isPresent?: Function;
   }
 }
 

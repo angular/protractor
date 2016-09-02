@@ -89,90 +89,28 @@ gulp.task('tsc:globals', function(done) {
 
 gulp.task('prepublish', function(done) {
   runSequence('checkVersion', ['jshint', 'format'], 'tsc', 'tsc:globals', 'types',
-    'ambient', 'built:copy', done);
+    'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
     ['webdriver:update', 'jshint', 'format'], 'tsc', 'tsc:globals',
-    'types', 'ambient', 'built:copy', done);
+    'types', 'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);
 
 gulp.task('types', function(done) {
-  var folder = 'built';
-  var files = ['browser', 'element', 'locators', 'expectedConditions',
-    'config', 'plugins', 'ptor'];
-  var outputFile = path.resolve(folder, 'index.d.ts');
+  var outputFile = path.resolve('built', 'index.d.ts');
   var contents = '';
   contents += '/// <reference path="../typings/index.d.ts" />\n';
   contents += '/// <reference path="./globals.d.ts" />\n';
-  contents += 'import {ActionSequence, By, WebDriver, WebElement, WebElementPromise, promise, promise as wdpromise, until} from \'selenium-webdriver\';\n';
-  files.forEach(function(file) {
-    contents += parseTypingsFile(folder, file);
-  });
-
-  // remove files with d.ts
-  glob.sync(folder + '/**/*.d.ts').forEach(function(file) {
-    fs.unlinkSync(path.resolve(file));
-  });
-
-  // write contents to 'built/index.d.ts'
+  contents += 'export { ElementHelper, ProtractorBrowser } from \'./browser\';\n';
+  contents += 'export { ElementArrayFinder, ElementFinder } from \'./element\';\n';
+  contents += 'export { ProtractorExpectedConditions } from \'./expectedConditions\';\n';
+  contents += 'export { ProtractorBy } from \'./locators\';\n';
+  contents += 'export { Config } from \'./config\';\n';
+  contents += 'export { Ptor } from \'./ptor\';\n';
   fs.writeFileSync(outputFile, contents);
-  done();
-});
-
-var parseTypingsFile = function(folder, file) {
-  var fileContents = fs.readFileSync(path.resolve(folder, file + '.d.ts')).toString();
-  // Remove new lines inside types
-  fileContents = fileContents.replace(
-    /webdriver.promise.Promise<\{[a-zA-Z:,; \n]+\}>/g, function(type) {
-        return type.replace(/\n/g, '');
-    }
-  );
-  var lines = fileContents.split('\n');
-  var contents = '';
-  for (var linePos in lines) {
-    var line = lines[linePos];
-    if (!line.startsWith('import')) {
-      if (line.indexOf('declare') !== -1) {
-        line = line.replace('declare', '').trim();
-      }
-
-      // Remove webdriver types, q, http proxy agent
-      line = removeTypes(line,'webdriver.ActionSequence');
-      line = removeTypes(line,'webdriver.promise.Promise<[a-zA-Z{},:; ]+>');
-      line = removeTypes(line,'webdriver.util.Condition');
-      line = removeTypes(line,'webdriver.WebDriver');
-      line = removeTypes(line,'webdriver.Locator');
-      line = removeTypes(line,'webdriver.WebElement');
-      line = removeTypes(line,'HttpProxyAgent');
-      line = removeTypes(line,'Q.Promise<[a-zA-Z{},:; ]+>');
-      contents += line + '\n';
-    }
-  }
-  return contents;
-}
-
-var removeTypes = function(line, webdriverType) {
-  var tempLine = line.trim();
-  if (tempLine.startsWith('/**') || tempLine.startsWith('*')) {
-    return line;
-  }
-  return line.replace(new RegExp(webdriverType,'g'), 'any');
-}
-
-gulp.task('ambient', function(done) {
-  var fileContents = fs.readFileSync(path.resolve('built/index.d.ts')).toString();
-  var contents = '';
-  contents += 'declare namespace protractor {\n';
-  contents += fileContents + '\n';
-  contents += '}\n';
-  contents += 'declare module "protractor" {\n';
-
-  contents += '  export = protractor; \n';
-  contents += '}\n';
-  fs.writeFileSync(path.resolve('built/ambient.d.ts'), contents);
   done();
 });
