@@ -241,8 +241,12 @@ export class ProtractorBrowser extends Webdriver {
    */
   debuggerServerPort_: number;
 
+  /**
+   * Set to true when we validate that the debug port is open. Since the debug
+   * port is held open forever once the debugger is attached, it's important
+   * we only do validation once.
+   */
   debuggerValidated_: boolean;
-
 
   /**
    * If true, Protractor will interpret any angular apps it comes across as
@@ -983,10 +987,12 @@ export class ProtractorBrowser extends Webdriver {
       }
     });
 
-    return doneDeferred.then(null, (err: string) => {
-      console.error(err);
-      process.exit(1);
-    });
+    return doneDeferred.then(
+        () => { this.debuggerValidated_ = true; },
+        (err: string) => {
+          console.error(err);
+          process.exit(1);
+        });
   }
 
   private dbgCodeExecutor_: any;
@@ -1043,10 +1049,10 @@ export class ProtractorBrowser extends Webdriver {
 
     let browserUnderDebug = this;
     let debuggerReadyPromise = webdriver.promise.defer();
-    flow.execute(function() {
+    flow.execute(() => {
       process['debugPort'] = opt_debugPort || process['debugPort'];
       browserUnderDebug.validatePortAvailability_(process['debugPort'])
-          .then(function(firstTime: boolean) {
+          .then((firstTime: boolean) => {
             onStartFn(firstTime);
 
             let args = [process.pid, process['debugPort']];
@@ -1056,11 +1062,19 @@ export class ProtractorBrowser extends Webdriver {
             let nodedebug =
                 require('child_process').fork(debuggerClientPath, args);
             process.on('exit', function() { nodedebug.kill('SIGTERM'); });
-            nodedebug.on('message', function(m: string) {
-              if (m === 'ready') {
-                debuggerReadyPromise.fulfill();
-              }
-            });
+            nodedebug
+                .on('message',
+                    (m: string) => {
+                      if (m === 'ready') {
+                        debuggerReadyPromise.fulfill();
+                      }
+                    })
+                .on('exit', () => {
+                  logger.info('Debugger exiting');
+                  // Clear this so that we know it's ok to attach a debugger
+                  // again.
+                  this.dbgCodeExecutor_ = null;
+                });
           });
     });
 
@@ -1167,6 +1181,8 @@ export class ProtractorBrowser extends Webdriver {
         return this.execPromiseResult_;
       }
     };
+
+    return pausePromise;
   }
 
   /**
@@ -1221,7 +1237,12 @@ export class ProtractorBrowser extends Webdriver {
    * @param {number=} opt_debugPort Optional port to use for the debugging
    * process
    */
-  pause(opt_debugPort?: number) {
+  pause(opt_debugPort?: number): webdriver.promise.Promise<any> {
+    if (this.dbgCodeExecutor_) {
+      logger.info(
+          'Encountered browser.pause(), but debugger already attached.');
+      return webdriver.promise.fulfilled(true);
+    }
     let debuggerClientPath = __dirname + '/debugger/clients/wddebugger.js';
     let onStartFn = (firstTime: boolean) => {
       logger.info();
@@ -1240,7 +1261,7 @@ export class ProtractorBrowser extends Webdriver {
         logger.info();
       }
     };
-    this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
+    return this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
