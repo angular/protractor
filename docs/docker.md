@@ -22,9 +22,10 @@ Docker version 1.12.0-rc4, build e4a0dbc, experimental
 Step 0 - Download the docker images for Selenium Hub and Selenium Node
 -----------------------------------------------------------------------------
 
+``` shell
 docker pull selenium/hub:latest
 docker pull selenium/node-chrome:latest
-
+```
 One could pull 'node-firefox' if they want to work with firefox node. 
 For more information about the different images one can work with , please look at [Docker Selenium Images List](https://github.com/SeleniumHQ/docker-selenium/blob/master/README.md)
 
