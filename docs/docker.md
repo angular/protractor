@@ -33,7 +33,7 @@ For more information about the different images one can work with , please look 
 Step 1 - Starting the Selenium Grid
 -----------------------------------------------------------------------------
 ``` shell
-$ docker run -d -p 4444:4444 --name selenium-hub selenium/hub:latest
+docker run -d -p 4444:4444 --name selenium-hub selenium/hub:latest
 ```
 
 One can change the tag from 'latest' to '2.53.0' or any other version as they see fit.
@@ -41,8 +41,8 @@ One can change the tag from 'latest' to '2.53.0' or any other version as they se
 Step 2 - Starting the Selenium Nodes
 -----------------------------------------------------------------------------
 ``` shell
-$ docker run -d --link selenium-hub:hub selenium/node-chrome:latest
-$ docker run -d --link selenium-hub:hub selenium/node-firefox:latest
+docker run -d --link selenium-hub:hub selenium/node-chrome:latest
+docker run -d --link selenium-hub:hub selenium/node-firefox:latest
 ```
 
 The above would create a chrome node and link it to the Selenium hub/grid created earlier.
@@ -59,7 +59,7 @@ seleniumAddress: 'http://localhost:4444/wd/hub'
 and run your tests. 
 
 ``` shell
-$ ./node_modules/.bin/protractor protractor-conf.js
+./node_modules/.bin/protractor protractor-conf.js
 ```
 
 At this point you would be able to see the output of the tests and  will not be able to visually confirm that the tests are running.
@@ -74,19 +74,19 @@ One can add a chrome-debug-node which has a vnc server set up to the selenium gr
 One can also use the standalone-chrome-debug too.
 
 ``` shell
-$ docker run -d -p <port>:5900 --link selenium-hub:hub selenium/node-chrome-debug:latest
+docker run -d -p <port>:5900 --link selenium-hub:hub selenium/node-chrome-debug:latest
 ```
 
 Find the port that VNC server exposes for the container :
 
 ``` shell
-$ docker port <container-name or container-id> 5900
+docker port <container-name or container-id> 5900
 ```
 
 and view it using the vnc viewer using the output of the above command.
 
 
-Step 5 - Using Docker Compose
+Using Docker Compose
 ---------------------------------------------------------------------------
 Till this point , the selenium hub and nodes were created by typing commands in the CLI. This approach would work on one's machine , but is not a scalable solution.
 That's where [Docker Compose](https://docs.docker.com/compose/) comes into picture.
@@ -118,12 +118,12 @@ chromenode:
 Then in the terminal, enter the command
 
 ``` shell
-$ docker-compose up -d
+docker-compose up -d
 ```
 In order to scale the number of chrome nodes , one can do :
 
 ``` shell 
-$ docker-compose scale chromenode=5
+docker-compose scale chromenode=5
 ```
 
 The best way to do would be to wrap all of the above in a shell script file .
@@ -141,7 +141,7 @@ docker-compose scale chromenode=5
 ```
 
 ``` shell
-$ ./run-tests.sh
+./run-tests.sh
 ```
 
 Where to go next
