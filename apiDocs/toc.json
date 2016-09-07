@@ -1,5 +1,5 @@
 {
-  "version": "4.0.4",
+  "version": "4.0.5",
   "items": [
   {
     "alias": "browser",
@@ -21,7 +21,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 92,
+        "startingLine": 93,
         "typeExpression": "webdriver.WebDriver",
         "type": {
           "type": "NameExpression",
@@ -46,7 +46,7 @@
         },
         "tagName": "param",
         "description": "A base URL to run get requests against.",
-        "startingLine": 93,
+        "startingLine": 94,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -73,7 +73,7 @@
         },
         "tagName": "param",
         "description": "Selector element that has an ng-app in scope.",
-        "startingLine": 94,
+        "startingLine": 95,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -100,7 +100,7 @@
         },
         "tagName": "param",
         "description": "Whether Protractor should stop tracking outstanding $timeouts.",
-        "startingLine": 96,
+        "startingLine": 97,
         "typeExpression": "boolean=",
         "type": {
           "type": "NameExpression",
@@ -116,7 +116,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Get the processed configuration object that is currently being run. This\nwill contain the specs and capabilities properties of the current runner\ninstance.</p>\n<p>Set by the runner.</p>\n",
@@ -135,7 +135,7 @@
       },
       "tagName": "returns",
       "description": "A promise which resolves to the\ncapabilities object.",
-      "startingLine": 155,
+      "startingLine": 157,
       "typeExpression": "webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -146,7 +146,7 @@
       ]
     },
     "returnString": "webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Fork another instance of browser for use in interactive tests.</p>\n<p>Set by the runner.</p>\n",
@@ -166,7 +166,7 @@
         },
         "tagName": "param",
         "description": "Whether to navigate to current url on\ncreation",
-        "startingLine": 164,
+        "startingLine": 166,
         "typeExpression": "boolean",
         "type": {
           "type": "NameExpression",
@@ -191,7 +191,7 @@
         },
         "tagName": "param",
         "description": "Whether to apply same mock modules on\ncreation",
-        "startingLine": 166,
+        "startingLine": 168,
         "typeExpression": "boolean",
         "type": {
           "type": "NameExpression",
@@ -217,7 +217,7 @@
       },
       "tagName": "returns",
       "description": "A browser instance.",
-      "startingLine": 168,
+      "startingLine": 170,
       "typeExpression": "Browser",
       "type": {
         "type": "NameExpression",
@@ -228,21 +228,21 @@
       ]
     },
     "returnString": "Browser",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Restart the browser instance.</p>\n<p>Set by the runner.</p>\n",
     "fileName": "browser",
     "name": "ProtractorBrowser.prototype.restart",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Instead of using a single root element, search through all angular apps\navailable on the page when finding elements or waiting for stability.\nOnly compatible with Angular2.</p>\n",
     "fileName": "browser",
     "name": "ProtractorBrowser.prototype.useAllAngular2AppRoots",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Instruct webdriver to wait until Angular has finished rendering and has\nno outstanding $http or $timeout calls before continuing.\nNote that Protractor automatically applies this command before every\nWebDriver action.</p>\n",
@@ -262,7 +262,7 @@
         },
         "tagName": "param",
         "description": "An optional description to be added to webdriver logs.",
-        "startingLine": 245,
+        "startingLine": 247,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -290,7 +290,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will resolve to the scripts return value.",
-      "startingLine": 247,
+      "startingLine": 249,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -302,7 +302,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Waits for Angular to finish rendering before searching for elements.</p>\n<br />See <code ng-non-bindable>webdriver.WebDriver.findElement</code>",
@@ -321,7 +321,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will be resolved to the located [<code ng-non-bindable>webdriver.WebElement</code>](webdriver.WebElement).",
-      "startingLine": 351,
+      "startingLine": 353,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -333,7 +333,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Waits for Angular to finish rendering before searching for elements.</p>\n<br />See <code ng-non-bindable>webdriver.WebDriver.findElements</code>",
@@ -352,7 +352,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will be resolved to an array of the located [<code ng-non-bindable>webdriver.WebElement</code>](webdriver.WebElement)s.",
-      "startingLine": 360,
+      "startingLine": 362,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -364,7 +364,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Tests if an element is present on the page.</p>\n<br />See <code ng-non-bindable>webdriver.WebDriver.isElementPresent</code>",
@@ -383,7 +383,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will resolve to whether the element is present on the page.",
-      "startingLine": 369,
+      "startingLine": 371,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -395,7 +395,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Add a module to load before Angular whenever Protractor.get is called.\nModules will be registered after existing modules already on the page,\nso any module registered here will override preexisting modules with the\nsame\nname.</p>\n",
@@ -416,7 +416,7 @@
         },
         "tagName": "param",
         "description": "The name of the module to load or override.",
-        "startingLine": 389,
+        "startingLine": 392,
         "typeExpression": "!string",
         "type": {
           "type": "NameExpression",
@@ -442,7 +442,7 @@
         },
         "tagName": "param",
         "description": "The JavaScript to load the module. Note that this will be executed in the browser context, so it cannot access variables from outside its scope.",
-        "startingLine": 390,
+        "startingLine": 393,
         "typeExpression": "!string|Function",
         "type": {
           "type": "TypeUnion",
@@ -478,7 +478,7 @@
         },
         "tagName": "param",
         "description": "Any additional arguments will be provided to the script and may be referenced using the `arguments` object.",
-        "startingLine": 393,
+        "startingLine": 396,
         "typeExpression": "...*",
         "type": {
           "type": "AllLiteral",
@@ -492,14 +492,14 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Clear the list of registered mock modules.</p>\n",
     "fileName": "browser",
     "name": "ProtractorBrowser.prototype.clearMockModules",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Remove a registered mock module.</p>\n",
@@ -520,7 +520,7 @@
         },
         "tagName": "param",
         "description": "The name of the module to remove.",
-        "startingLine": 416,
+        "startingLine": 419,
         "typeExpression": "!string",
         "type": {
           "type": "NameExpression",
@@ -535,7 +535,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Get a list of the current mock modules.</p>\n",
@@ -554,7 +554,7 @@
       },
       "tagName": "returns",
       "description": "The list of mock modules.",
-      "startingLine": 428,
+      "startingLine": 431,
       "typeExpression": "Array.<!string|Function>",
       "type": {
         "type": "TypeApplication",
@@ -584,7 +584,7 @@
       ]
     },
     "returnString": "Array.&lt;!string&#124;Function&gt;",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "See <code ng-non-bindable>webdriver.WebDriver.get</code><br />Navigate to the given destination and loads mock modules before Angular. Assumes that the page being loaded uses Angular. If you need to access a page which does not have Angular on load, use the wrapped webdriver directly.",
@@ -605,7 +605,7 @@
         },
         "tagName": "param",
         "description": "Destination URL.",
-        "startingLine": 507,
+        "startingLine": 510,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -630,7 +630,7 @@
         },
         "tagName": "param",
         "description": "Number of milliseconds to wait for Angular to start.",
-        "startingLine": 508,
+        "startingLine": 511,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -646,7 +646,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "See <code ng-non-bindable>webdriver.WebDriver.refresh</code><br />Makes a full reload of the current page and loads mock modules before Angular. Assumes that the page being loaded uses Angular. If you need to access a page which does not have Angular on load, use the wrapped webdriver directly.",
@@ -666,7 +666,7 @@
         },
         "tagName": "param",
         "description": "Number of milliseconds to wait for Angular to start.",
-        "startingLine": 618,
+        "startingLine": 621,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -682,14 +682,14 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Mixin navigation methods back into the navigation object so that\nthey are invoked as before, i.e. driver.navigate().refresh()</p>\n",
     "fileName": "browser",
     "name": "ProtractorBrowser.prototype.navigate",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Browse to another page using in-page navigation.</p>\n",
@@ -710,7 +710,7 @@
         },
         "tagName": "param",
         "description": "In page URL using the same syntax as $location.url()",
-        "startingLine": 647,
+        "startingLine": 650,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -736,7 +736,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will resolve once page has been changed.",
-      "startingLine": 648,
+      "startingLine": 651,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -748,7 +748,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Returns the current absolute url from AngularJS.</p>\n",
@@ -768,7 +768,7 @@
       },
       "tagName": "returns",
       "description": "The current absolute url from\nAngularJS.",
-      "startingLine": 669,
+      "startingLine": 672,
       "typeExpression": "webdriver.promise.Promise<string>",
       "type": {
         "type": "TypeApplication",
@@ -788,7 +788,7 @@
       ]
     },
     "returnString": "webdriver.promise.Promise&lt;string&gt;",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Adds a task to the control flow to pause the test and inject helper\nfunctions\ninto the browser, so that debugging may be done in the browser console.</p>\n<p>This should be used under node in debug mode, i.e. with\nprotractor debug <configuration.js></p>\n",
@@ -796,7 +796,7 @@
     "fileName": "browser",
     "name": "ProtractorBrowser.prototype.debugger",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Beta (unstable) enterRepl function for entering the repl loop from\nany point in the control flow. Use browser.enterRepl() in your test.\nDoes not require changes to the command line (no need to add &#39;debug&#39;).\nNote, if you are wrapping your own instance of Protractor, you must\nexpose globals &#39;browser&#39; and &#39;protractor&#39; for pause to work.</p>\n",
@@ -817,7 +817,7 @@
         },
         "tagName": "param",
         "description": "Optional port to use for the debugging\nprocess",
-        "startingLine": 912,
+        "startingLine": 925,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -833,7 +833,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Beta (unstable) pause function for debugging webdriver tests. Use\nbrowser.pause() in your test to enter the protractor debugger from that\npoint in the control flow.\nDoes not require changes to the command line (no need to add &#39;debug&#39;).\nNote, if you are wrapping your own instance of Protractor, you must\nexpose globals &#39;browser&#39; and &#39;protractor&#39; for pause to work.</p>\n",
@@ -854,7 +854,7 @@
         },
         "tagName": "param",
         "description": "Optional port to use for the debugging\nprocess",
-        "startingLine": 945,
+        "startingLine": 958,
         "typeExpression": "number=",
         "type": {
           "type": "NameExpression",
@@ -870,7 +870,7 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "description": "<p>Create a new instance of Browser by wrapping a webdriver instance.</p>\n",
@@ -890,7 +890,7 @@
         },
         "tagName": "param",
         "description": "The configured webdriver instance.",
-        "startingLine": 971,
+        "startingLine": 988,
         "typeExpression": "webdriver.WebDriver",
         "type": {
           "type": "NameExpression",
@@ -915,7 +915,7 @@
         },
         "tagName": "param",
         "description": "A URL to prepend to relative gets.",
-        "startingLine": 972,
+        "startingLine": 989,
         "typeExpression": "string=",
         "type": {
           "type": "NameExpression",
@@ -942,7 +942,7 @@
         },
         "tagName": "param",
         "description": "Whether Browser should stop tracking outstanding $timeouts.",
-        "startingLine": 973,
+        "startingLine": 990,
         "typeExpression": "boolean=",
         "type": {
           "type": "NameExpression",
@@ -970,7 +970,7 @@
       },
       "tagName": "returns",
       "description": "a new Browser instance",
-      "startingLine": 975,
+      "startingLine": 992,
       "typeExpression": "Browser",
       "type": {
         "type": "NameExpression",
@@ -981,7 +981,7 @@
       ]
     },
     "returnString": "Browser",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/browser.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/browser.ts"
   },
   {
     "alias": "element.all(locator)",
@@ -1004,7 +1004,7 @@
         },
         "tagName": "param",
         "description": "A browser instance.",
-        "startingLine": 66,
+        "startingLine": 67,
         "typeExpression": "ProtractorBrowser",
         "type": {
           "type": "NameExpression",
@@ -1029,7 +1029,7 @@
         },
         "tagName": "param",
         "description": "A function that returns a list of the underlying Web Elements.",
-        "startingLine": 67,
+        "startingLine": 68,
         "typeExpression": "function(): Array.<webdriver.WebElement>",
         "type": {
           "type": "FunctionType",
@@ -1067,7 +1067,7 @@
         },
         "tagName": "param",
         "description": "The most relevant locator. It is only used for error reporting and ElementArrayFinder.locator.",
-        "startingLine": 69,
+        "startingLine": 70,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -1092,7 +1092,7 @@
         },
         "tagName": "param",
         "description": "An array of promises which will be retrieved with then. Resolves to the latest action result, or null if no action has been called.",
-        "startingLine": 71,
+        "startingLine": 72,
         "typeExpression": "Array.<webdriver.promise.Promise>",
         "type": {
           "type": "TypeApplication",
@@ -1127,7 +1127,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 74,
+      "startingLine": 75,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -1138,7 +1138,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1158,7 +1158,7 @@
       },
       "tagName": "returns",
       "description": "A shallow copy of this.",
-      "startingLine": 103,
+      "startingLine": 105,
       "typeExpression": "!ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -1170,11 +1170,11 @@
       ]
     },
     "returnString": "&#33;[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "alias": "element.all(locator).all(locator)",
-    "description": "<p>Calls to ElementArrayFinder may be chained to find an array of elements\nusing the current elements in this ElementArrayFinder as the starting\npoint.\nThis function returns a new ElementArrayFinder which would contain the\nchildren elements found (and could also be empty).</p>\n",
+    "description": "<p>Calls to ElementArrayFinder may be chained to find an array of elements\nusing the current elements in this ElementArrayFinder as the starting\npoint. This function returns a new ElementArrayFinder which would contain\nthe children elements found (and could also be empty).</p>\n",
     "example": "let foo = element.all(by.css('.parent')).all(by.css('.foo'))\nexpect(foo.getText()).toEqual(['1a', '2a'])\nlet baz = element.all(by.css('.parent')).all(by.css('.baz'))\nexpect(baz.getText()).toEqual(['1b'])\nlet nonexistent =\nelement.all(by.css('.parent')).all(by.css('.NONEXISTENT'))\nexpect(nonexistent.getText()).toEqual([''])",
     "fileName": "element",
     "htmlView": "&lt;div id='id1' class=&quot;parent&quot;&gt;\n  &lt;ul&gt;\n    &lt;li class=&quot;foo&quot;&gt;1a&lt;/li&gt;\n    &lt;li class=&quot;baz&quot;&gt;1b&lt;/li&gt;\n  &lt;/ul&gt;\n&lt;/div&gt;\n&lt;div id='id2' class=&quot;parent&quot;&gt;\n  &lt;ul&gt;\n    &lt;li class=&quot;foo&quot;&gt;2a&lt;/li&gt;\n    &lt;li class=&quot;bar&quot;&gt;2b&lt;/li&gt;\n  &lt;/ul&gt;\n&lt;/div&gt;",
@@ -1193,7 +1193,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 142,
+        "startingLine": 143,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -1219,7 +1219,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 143,
+      "startingLine": 144,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -1230,12 +1230,12 @@
       ]
     },
     "returnString": "[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<div id='id1' class=\"parent\">\n  <ul>\n    <li class=\"foo\">1a</li>\n    <li class=\"baz\">1b</li>\n  </ul>\n</div>\n<div id='id2' class=\"parent\">\n  <ul>\n    <li class=\"foo\">2a</li>\n    <li class=\"bar\">2b</li>\n  </ul>\n</div>"
   },
   {
     "alias": "element.all(locator).filter(filterFn)",
-    "description": "<p>Apply a filter function to each element within the ElementArrayFinder.\nReturns\na new ElementArrayFinder with all elements that pass the filter function.\nThe\nfilter function receives the ElementFinder as the first argument\nand the index as a second arg.\nThis does not actually retrieve the underlying list of elements, so it can\nbe used in page objects.</p>\n",
+    "description": "<p>Apply a filter function to each element within the ElementArrayFinder.\nReturns a new ElementArrayFinder with all elements that pass the filter\nfunction. The filter function receives the ElementFinder as the first\nargument and the index as a second arg. This does not actually retrieve\nthe underlying list of elements, so it can be used in page objects.</p>\n",
     "example": "element.all(by.css('.items li')).filter(function(elem, index) {\n  return elem.getText().then(function(text) {\n    return text === 'Third';\n  });\n}).first().click();",
     "fileName": "element",
     "htmlView": "&lt;ul class=&quot;items&quot;&gt;\n  &lt;li class=&quot;one&quot;&gt;First&lt;/li&gt;\n  &lt;li class=&quot;two&quot;&gt;Second&lt;/li&gt;\n  &lt;li class=&quot;three&quot;&gt;Third&lt;/li&gt;\n&lt;/ul&gt;",
@@ -1254,7 +1254,7 @@
         },
         "tagName": "param",
         "description": "Filter function that will test if an element should be returned. filterFn can either return a boolean or a promise that resolves to a\nboolean",
-        "startingLine": 209,
+        "startingLine": 208,
         "typeExpression": "function(ElementFinder, number): webdriver.WebElement.Promise",
         "type": {
           "type": "FunctionType",
@@ -1293,7 +1293,7 @@
       },
       "tagName": "returns",
       "description": "A ElementArrayFinder that represents an\narray of element that satisfy the filter function.",
-      "startingLine": 214,
+      "startingLine": 213,
       "typeExpression": "!ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -1305,12 +1305,12 @@
       ]
     },
     "returnString": "&#33;[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li class=\"one\">First</li>\n  <li class=\"two\">Second</li>\n  <li class=\"three\">Third</li>\n</ul>"
   },
   {
     "alias": "element.all(locator).get(index)",
-    "description": "<p>Get an element within the ElementArrayFinder by index. The index starts at\n0.\nNegative indices are wrapped (i.e. -i means ith element from last)\nThis does not actually retrieve the underlying element.</p>\n",
+    "description": "<p>Get an element within the ElementArrayFinder by index. The index starts at</p>\n<ol>\n<li>Negative indices are wrapped (i.e. -i means ith element from last)\nThis does not actually retrieve the underlying element.</li>\n</ol>\n",
     "example": "let list = element.all(by.css('.items li'));\nexpect(list.get(0).getText()).toBe('First');\nexpect(list.get(1).getText()).toBe('Second');",
     "fileName": "element",
     "htmlView": "&lt;ul class=&quot;items&quot;&gt;\n  &lt;li&gt;First&lt;/li&gt;\n  &lt;li&gt;Second&lt;/li&gt;\n  &lt;li&gt;Third&lt;/li&gt;\n&lt;/ul&gt;",
@@ -1329,7 +1329,7 @@
         },
         "tagName": "param",
         "description": "Element index.",
-        "startingLine": 254,
+        "startingLine": 252,
         "typeExpression": "number|webdriver.promise.Promise",
         "type": {
           "type": "TypeUnion",
@@ -1365,7 +1365,7 @@
       },
       "tagName": "returns",
       "description": "finder representing element at the given index.",
-      "startingLine": 255,
+      "startingLine": 253,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1376,7 +1376,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1399,7 +1399,7 @@
       },
       "tagName": "returns",
       "description": "finder representing the first matching element",
-      "startingLine": 297,
+      "startingLine": 295,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1410,7 +1410,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1433,7 +1433,7 @@
       },
       "tagName": "returns",
       "description": "finder representing the last matching element",
-      "startingLine": 317,
+      "startingLine": 315,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -1444,7 +1444,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1467,7 +1467,7 @@
       },
       "tagName": "returns",
       "description": "A promise which resolves to the number of elements matching the locator.",
-      "startingLine": 354,
+      "startingLine": 352,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1479,7 +1479,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1500,7 +1500,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 380,
+      "startingLine": 379,
       "typeExpression": "webdriver.Locator",
       "type": {
         "type": "NameExpression",
@@ -1511,7 +1511,7 @@
       ]
     },
     "returnString": "webdriver.Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "alias": "element.all(locator).then(thenFunction)",
@@ -1534,7 +1534,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 447,
+        "startingLine": 448,
         "typeExpression": "function(Array.<ElementFinder>)",
         "type": {
           "type": "FunctionType",
@@ -1573,7 +1573,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 448,
+        "startingLine": 449,
         "typeExpression": "function(Error)",
         "type": {
           "type": "FunctionType",
@@ -1604,7 +1604,7 @@
       },
       "tagName": "returns",
       "description": "A promise which will resolve to an array of ElementFinders represented by the ElementArrayFinder.",
-      "startingLine": 450,
+      "startingLine": 451,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1616,7 +1616,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1640,7 +1640,7 @@
         },
         "tagName": "param",
         "description": "Input function",
-        "startingLine": 481,
+        "startingLine": 482,
         "typeExpression": "function(ElementFinder)",
         "type": {
           "type": "FunctionType",
@@ -1671,7 +1671,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will resolve when the function has been called on all the ElementFinders. The promise will resolve to null.",
-      "startingLine": 483,
+      "startingLine": 484,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1683,7 +1683,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ul>"
   },
   {
@@ -1707,7 +1707,7 @@
         },
         "tagName": "param",
         "description": "Map function that will be applied to each element.",
-        "startingLine": 517,
+        "startingLine": 518,
         "typeExpression": "function(ElementFinder, number)",
         "type": {
           "type": "FunctionType",
@@ -1742,7 +1742,7 @@
       },
       "tagName": "returns",
       "description": "A promise that resolves to an array of values returned by the map function.",
-      "startingLine": 519,
+      "startingLine": 520,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1754,7 +1754,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li class=\"one\">First</li>\n  <li class=\"two\">Second</li>\n  <li class=\"three\">Third</li>\n</ul>"
   },
   {
@@ -1778,7 +1778,7 @@
         },
         "tagName": "param",
         "description": "Reduce function that reduces every element into a single\nvalue.",
-        "startingLine": 558,
+        "startingLine": 559,
         "typeExpression": "function(number, ElementFinder, number, Array.<ElementFinder>)",
         "type": {
           "type": "FunctionType",
@@ -1829,7 +1829,7 @@
         },
         "tagName": "param",
         "description": "Initial value of the accumulator.",
-        "startingLine": 561,
+        "startingLine": 562,
         "typeExpression": "*",
         "type": {
           "type": "AllLiteral"
@@ -1854,7 +1854,7 @@
       },
       "tagName": "returns",
       "description": "A promise that resolves to the final value of the accumulator.",
-      "startingLine": 562,
+      "startingLine": 563,
       "typeExpression": "!webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -1866,7 +1866,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<ul class=\"items\">\n  <li class=\"one\">First</li>\n  <li class=\"two\">Second</li>\n  <li class=\"three\">Third</li>\n</ul>"
   },
   {
@@ -1889,7 +1889,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 585,
+        "startingLine": 586,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1915,7 +1915,7 @@
       },
       "tagName": "returns",
       "description": "which resolves to the evaluated expression for each underlying element. The result will be resolved as in <code ng-non-bindable>webdriver.WebDriver.executeScript</code>. In summary - primitives will be resolved as is, functions will be converted to string, and elements will be returned as a WebElement.",
-      "startingLine": 587,
+      "startingLine": 588,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -1926,7 +1926,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<span class=\"foo\">{{letiableInScope}}</span>"
   },
   {
@@ -1948,7 +1948,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 602,
+        "startingLine": 603,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -1974,7 +1974,7 @@
       },
       "tagName": "returns",
       "description": "which resolves to whether animation is\nallowed.",
-      "startingLine": 608,
+      "startingLine": 609,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -1985,7 +1985,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "alias": "element(locator)",
@@ -2009,7 +2009,7 @@
         },
         "tagName": "param",
         "description": "A browser instance.",
-        "startingLine": 660,
+        "startingLine": 661,
         "typeExpression": "ProtractorBrowser",
         "type": {
           "type": "NameExpression",
@@ -2034,7 +2034,7 @@
         },
         "tagName": "param",
         "description": "The ElementArrayFinder that this is branched from.",
-        "startingLine": 661,
+        "startingLine": 662,
         "typeExpression": "ElementArrayFinder",
         "type": {
           "type": "NameExpression",
@@ -2060,7 +2060,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 663,
+      "startingLine": 664,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -2071,7 +2071,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<span>{{person.name}}</span>\n<span ng-bind=\"person.email\"></span>\n<input type=\"text\" ng-model=\"person.name\"/>"
   },
   {
@@ -2092,7 +2092,7 @@
         },
         "tagName": "param",
         "description": "Function which takes the value of the underlying actionResult.",
-        "startingLine": 682,
+        "startingLine": 683,
         "typeExpression": "function(webdriver.promise.Promise)",
         "type": {
           "type": "FunctionType",
@@ -2122,7 +2122,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 684,
+        "startingLine": 685,
         "typeExpression": "function(Error)",
         "type": {
           "type": "FunctionType",
@@ -2153,7 +2153,7 @@
       },
       "tagName": "returns",
       "description": "Promise which contains the results\nof evaluating fn.",
-      "startingLine": 686,
+      "startingLine": 687,
       "typeExpression": "webdriver.promise.Promise",
       "type": {
         "type": "NameExpression",
@@ -2164,7 +2164,7 @@
       ]
     },
     "returnString": "webdriver.promise.Promise",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "description": "<p>Create a shallow copy of ElementFinder.</p>\n",
@@ -2183,7 +2183,7 @@
       },
       "tagName": "returns",
       "description": "A shallow copy of this.",
-      "startingLine": 741,
+      "startingLine": 742,
       "typeExpression": "!ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -2195,7 +2195,7 @@
       ]
     },
     "returnString": "&#33;[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "description": "See [<code ng-non-bindable>ElementArrayFinder.prototype.locator</code>](ElementArrayFinder.prototype.locator)",
@@ -2214,7 +2214,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 751,
+      "startingLine": 752,
       "typeExpression": "webdriver.Locator",
       "type": {
         "type": "NameExpression",
@@ -2225,7 +2225,7 @@
       ]
     },
     "returnString": "webdriver.Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "alias": "element(locator).getWebElement()",
@@ -2247,7 +2247,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 770,
+      "startingLine": 771,
       "typeExpression": "webdriver.WebElement",
       "type": {
         "type": "NameExpression",
@@ -2258,7 +2258,7 @@
       ]
     },
     "returnString": "[webdriver.WebElement](webdriver.WebElement)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<div class=\"parent\">\n  some text\n</div>"
   },
   {
@@ -2282,7 +2282,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 795,
+        "startingLine": 796,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -2308,7 +2308,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 796,
+      "startingLine": 797,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -2319,7 +2319,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<div class=\"parent\">\n  <ul>\n    <li class=\"one\">First</li>\n    <li class=\"two\">Second</li>\n    <li class=\"three\">Third</li>\n  </ul>\n</div>"
   },
   {
@@ -2343,7 +2343,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 825,
+        "startingLine": 826,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -2369,7 +2369,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 826,
+      "startingLine": 827,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -2380,7 +2380,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<div class=\"parent\">\n  <div class=\"child\">\n    Child text\n    <div>{{person.phone}}</div>\n  </div>\n</div>"
   },
   {
@@ -2404,7 +2404,7 @@
         },
         "tagName": "param",
         "description": "a css selector",
-        "startingLine": 848,
+        "startingLine": 849,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2430,7 +2430,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 849,
+      "startingLine": 850,
       "typeExpression": "ElementArrayFinder",
       "type": {
         "type": "NameExpression",
@@ -2441,7 +2441,7 @@
       ]
     },
     "returnString": "[ElementArrayFinder](ElementArrayFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<div class=\"parent\">\n  <ul>\n    <li class=\"one\">First</li>\n    <li class=\"two\">Second</li>\n    <li class=\"three\">Third</li>\n  </ul>\n</div>"
   },
   {
@@ -2465,7 +2465,7 @@
         },
         "tagName": "param",
         "description": "A css selector",
-        "startingLine": 878,
+        "startingLine": 879,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2491,7 +2491,7 @@
       },
       "tagName": "returns",
       "description": "",
-      "startingLine": 879,
+      "startingLine": 880,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -2502,7 +2502,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<div class=\"parent\">\n  <div class=\"child\">\n    Child text\n    <div>{{person.phone}}</div>\n  </div>\n</div>"
   },
   {
@@ -2524,22 +2524,31 @@
       },
       "tagName": "returns",
       "description": "which resolves to whether the element is present on the page.",
-      "startingLine": 897,
-      "typeExpression": "ElementFinder",
+      "startingLine": 898,
+      "typeExpression": "webdriver.promise.Promise<boolean>",
       "type": {
-        "type": "NameExpression",
-        "name": "ElementFinder"
+        "type": "TypeApplication",
+        "expression": {
+          "type": "NameExpression",
+          "name": "webdriver.promise.Promise"
+        },
+        "applications": [
+          {
+            "type": "NameExpression",
+            "name": "boolean"
+          }
+        ]
       },
       "typeList": [
-        "ElementFinder"
+        "webdriver.promise.Promise<boolean>"
       ]
     },
-    "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "returnString": "webdriver.promise.Promise&lt;boolean&gt;",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<span>{{person.name}}</span>"
   },
   {
-    "description": "<p>Same as ElementFinder.isPresent(), except this checks whether the element\nidentified by the subLocator is present, rather than the current element\nfinder. i.e. <code>element(by.css(&#39;#abc&#39;)).element(by.css(&#39;#def&#39;)).isPresent()</code> is\nidentical to <code>element(by.css(&#39;#abc&#39;)).isElementPresent(by.css(&#39;#def&#39;))</code>.</p>\n<br />See <code ng-non-bindable>ElementFinder.isPresent</code>",
+    "description": "<p>Same as ElementFinder.isPresent(), except this checks whether the element\nidentified by the subLocator is present, rather than the current element\nfinder. i.e. <code>element(by.css(&#39;#abc&#39;)).element(by.css(&#39;#def&#39;)).isPresent()</code>\nis identical to <code>element(by.css(&#39;#abc&#39;)).isElementPresent(by.css(&#39;#def&#39;))</code>.</p>\n<br />See <code ng-non-bindable>ElementFinder.isPresent</code>",
     "fileName": "element",
     "name": "ElementFinder.prototype.isElementPresent",
     "params": [
@@ -2556,7 +2565,7 @@
         },
         "tagName": "param",
         "description": "Locator for element to look for.",
-        "startingLine": 933,
+        "startingLine": 934,
         "typeExpression": "webdriver.Locator",
         "type": {
           "type": "NameExpression",
@@ -2582,18 +2591,27 @@
       },
       "tagName": "returns",
       "description": "which resolves to whether the subelement is present on the page.",
-      "startingLine": 934,
-      "typeExpression": "ElementFinder",
+      "startingLine": 935,
+      "typeExpression": "webdriver.promise.Promise<boolean>",
       "type": {
-        "type": "NameExpression",
-        "name": "ElementFinder"
+        "type": "TypeApplication",
+        "expression": {
+          "type": "NameExpression",
+          "name": "webdriver.promise.Promise"
+        },
+        "applications": [
+          {
+            "type": "NameExpression",
+            "name": "boolean"
+          }
+        ]
       },
       "typeList": [
-        "ElementFinder"
+        "webdriver.promise.Promise<boolean>"
       ]
     },
-    "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "returnString": "webdriver.promise.Promise&lt;boolean&gt;",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "description": "<p>Evaluates the input as if it were on the scope of the current element.</p>\n<br />See [<code ng-non-bindable>ElementArrayFinder.prototype.evaluate</code>](ElementArrayFinder.prototype.evaluate)",
@@ -2615,7 +2633,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 955,
+        "startingLine": 956,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2641,7 +2659,7 @@
       },
       "tagName": "returns",
       "description": "which resolves to the evaluated expression.",
-      "startingLine": 957,
+      "startingLine": 958,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -2652,7 +2670,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts",
     "view": "<span id=\"foo\">{{letiableInScope}}</span>"
   },
   {
@@ -2673,7 +2691,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 964,
+        "startingLine": 965,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2699,7 +2717,7 @@
       },
       "tagName": "returns",
       "description": "which resolves to whether animation is allowed.",
-      "startingLine": 966,
+      "startingLine": 967,
       "typeExpression": "ElementFinder",
       "type": {
         "type": "NameExpression",
@@ -2710,7 +2728,7 @@
       ]
     },
     "returnString": "[ElementFinder](ElementFinder)",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "description": "<p>Compares an element to this one for equality.</p>\n",
@@ -2730,7 +2748,7 @@
         },
         "tagName": "param",
         "description": "element to compare to.",
-        "startingLine": 974,
+        "startingLine": 975,
         "typeExpression": "!ElementFinder|!webdriver.WebElement",
         "type": {
           "type": "TypeUnion",
@@ -2768,7 +2786,7 @@
       },
       "tagName": "returns",
       "description": "A promise that will be resolved to whether the two WebElements are equal.",
-      "startingLine": 976,
+      "startingLine": 977,
       "typeExpression": "!webdriver.promise.Promise.<boolean>",
       "type": {
         "type": "TypeApplication",
@@ -2789,7 +2807,7 @@
       ]
     },
     "returnString": "!webdriver.promise.Promise.&lt;boolean&gt;",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/element.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/element.ts"
   },
   {
     "alias": "by",
@@ -2798,7 +2816,7 @@
     "fileName": "locators",
     "name": "ProtractorBy",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts"
   },
   {
     "alias": "by.addLocator(locatorName, functionOrScript)",
@@ -2870,11 +2888,11 @@
       }
     ],
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<button ng-click=\"doAddition()\">Go!</button>"
   },
   {
-    "description": "<p>Find an element by text binding. Does a partial match, so any elements\nbound\nto variables containing the input string will be returned.</p>\n<p>Note: For AngularJS version 1.2, the interpolation brackets, (usually\n{{}}),\nare optionally allowed in the binding description string. For Angular\nversion\n1.3+, they are not allowed, and no elements will be found if they are used.</p>\n",
+    "description": "<p>Find an element by text binding. Does a partial match, so any elements\nbound to variables containing the input string will be returned.</p>\n<p>Note: For AngularJS version 1.2, the interpolation brackets, (usually\n{{}}), are optionally allowed in the binding description string. For\nAngular version 1.3+, they are not allowed, and no elements will be found\nif they are used.</p>\n",
     "example": "var span1 = element(by.binding('person.name'));\nexpect(span1.getText()).toBe('Foo');\n\nvar span2 = element(by.binding('person.email'));\nexpect(span2.getText()).toBe('foo@bar.com');\n\n// You can also use a substring for a partial match\nvar span1alt = element(by.binding('name'));\nexpect(span1alt.getText()).toBe('Foo');\n\n// This works for sites using Angular 1.2 but NOT 1.3\nvar deprecatedSyntax = element(by.binding('{{person.name}}'));",
     "fileName": "locators",
     "htmlView": "&lt;span&gt;{{person.name}}&lt;/span&gt;\n&lt;span ng-bind=&quot;person.email&quot;&gt;&lt;/span&gt;",
@@ -2893,7 +2911,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 120,
+        "startingLine": 122,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -2919,7 +2937,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 121,
+      "startingLine": 123,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -2930,7 +2948,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<span>{{person.name}}</span>\n<span ng-bind=\"person.email\"></span>"
   },
   {
@@ -2990,7 +3008,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<span>{{ person.name }}</span>\n<span ng-bind=\"person-email\"></span>\n<span>{{person_phone|uppercase}}</span>"
   },
   {
@@ -3051,7 +3069,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<input type=\"text\" ng-model=\"person.name\">"
   },
   {
@@ -3111,7 +3129,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<button>Save</button>"
   },
   {
@@ -3134,7 +3152,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 220,
+        "startingLine": 218,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3160,7 +3178,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 221,
+      "startingLine": 219,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -3171,7 +3189,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<button>Save my file</button>"
   },
   {
@@ -3194,7 +3212,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 340,
+        "startingLine": 334,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3220,7 +3238,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 341,
+      "startingLine": 335,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -3231,7 +3249,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<div ng-repeat=\"cat in pets\">\n  <span>{{cat.name}}</span>\n  <span>{{cat.age}}</span>\n</div>\n\n<div class=\"book-img\" ng-repeat-start=\"book in library\">\n  <span>{{$index}}</span>\n</div>\n<div class=\"book-info\" ng-repeat-end>\n  <h4>{{book.name}}</h4>\n  <p>{{book.blurb}}</p>\n</div>"
   },
   {
@@ -3254,7 +3272,7 @@
         },
         "tagName": "param",
         "description": "",
-        "startingLine": 361,
+        "startingLine": 355,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3280,7 +3298,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 362,
+      "startingLine": 356,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -3291,7 +3309,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<li ng-repeat=\"person in peopleWithRedHair\"></li>\n<li ng-repeat=\"car in cars | orderBy:year\"></li>"
   },
   {
@@ -3314,7 +3332,7 @@
         },
         "tagName": "param",
         "description": "css selector",
-        "startingLine": 380,
+        "startingLine": 374,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3339,7 +3357,7 @@
         },
         "tagName": "param",
         "description": "text search",
-        "startingLine": 381,
+        "startingLine": 375,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3365,7 +3383,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 382,
+      "startingLine": 376,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -3376,7 +3394,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<ul>\n  <li class=\"pet\">Dog</li>\n  <li class=\"pet\">Cat</li>\n</ul>"
   },
   {
@@ -3400,7 +3418,7 @@
         },
         "tagName": "param",
         "description": "ng-options expression.",
-        "startingLine": 412,
+        "startingLine": 406,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3426,7 +3444,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 413,
+      "startingLine": 407,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -3437,7 +3455,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<select ng-model=\"color\" ng-options=\"c for c in colors\">\n  <option value=\"0\" selected=\"selected\">red</option>\n  <option value=\"1\">green</option>\n</select>"
   },
   {
@@ -3461,7 +3479,7 @@
         },
         "tagName": "param",
         "description": "a css selector within the Shadow DOM.",
-        "startingLine": 444,
+        "startingLine": 436,
         "typeExpression": "string",
         "type": {
           "type": "NameExpression",
@@ -3487,7 +3505,7 @@
       },
       "tagName": "returns",
       "description": "location strategy",
-      "startingLine": 445,
+      "startingLine": 437,
       "typeExpression": "Locator",
       "type": {
         "type": "NameExpression",
@@ -3498,7 +3516,7 @@
       ]
     },
     "returnString": "Locator",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/locators.ts",
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/locators.ts",
     "view": "<div>\n  <span id=\"outerspan\">\n  <\"shadow tree\">\n    <span id=\"span1\"></span>\n    <\"shadow tree\">\n      <span id=\"span2\"></span>\n    </>\n  </>\n</div>"
   },
   {
@@ -3508,7 +3526,7 @@
     "fileName": "expectedConditions",
     "name": "ProtractorExpectedConditions",
     "returnString": "",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.not",
@@ -3569,7 +3587,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.and",
@@ -3638,7 +3656,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.or",
@@ -3707,7 +3725,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.alertIsPresent",
@@ -3740,7 +3758,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.elementToBeClickable",
@@ -3801,7 +3819,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.textToBePresentInElement",
@@ -3888,7 +3906,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.textToBePresentInElement",
@@ -3975,7 +3993,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.titleContains",
@@ -4036,7 +4054,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.titleIs",
@@ -4097,7 +4115,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.urlContains",
@@ -4158,7 +4176,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.urlIs",
@@ -4219,7 +4237,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.presenceOf",
@@ -4280,7 +4298,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.stalenessOf",
@@ -4341,7 +4359,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.visibilityOf",
@@ -4402,7 +4420,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.invisibilityOf",
@@ -4463,7 +4481,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "alias": "ExpectedConditions.elementToBeSelected",
@@ -4524,7 +4542,7 @@
       ]
     },
     "returnString": "!function",
-    "sourceLink": "https://github.com/angular/protractor/blob/4.0.4/lib/expectedConditions.ts"
+    "sourceLink": "https://github.com/angular/protractor/blob/4.0.5/lib/expectedConditions.ts"
   },
   {
     "description": "<p>A collection of factory functions for creating <code ng-non-bindable>webdriver.Locator</code>\ninstances.</p>\n",
