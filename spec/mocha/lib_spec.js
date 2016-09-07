@@ -39,7 +39,7 @@ describe('protractor library', function() {
     var finished = false;
 
     it('should wait for async operations to finish', function() {
-      browser.get('index.html').then(() => { finished = true });
+      browser.get('index.html').then(function() { finished = true; });
     });
 
     after('verify mocha waited', function() {

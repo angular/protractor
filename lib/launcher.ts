@@ -106,7 +106,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
     configParser.addConfig(additionalConfig);
   }
   let config = configParser.getConfig();
-
+  Logger.set(config);
   logger.debug('Running with --troubleshoot');
   logger.debug('Protractor version: ' + require('../package.json').version);
   logger.debug('Your base url for tests is ' + config.baseUrl);
