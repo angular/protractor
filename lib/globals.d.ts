@@ -30,74 +30,26 @@ declare namespace NodeJS {
   }
 }
 
+declare interface IError extends Error {
+  code?: number;
+  stack?: string;
+}
+
 declare interface String { startsWith: Function; }
 
 declare namespace webdriver {
-  var error: any;
-
-  class ActionSequence {}
-
-  class WebDriver {
-    findElements: Function;
-    getSession: Function;
-    quit: Function;
-    executeScript: Function;
-    getCapabilities: Function;
-    getCurrentUrl: Function;
-    getPageSource: Function;
-    getTitle: Function;
-    navigate: Function;
-    get: Function;
-    wait: Function;
-    schedule: Function;
-    switchTo: Function;
-    controlFlow: Function;
-    static attachToSession: Function;
-    // This index type allows looking up methods by name so we can do mixins.
-    [key: string]: any;
-  }
-
-  class Session {
-    getId: Function;
-    getCapabilities: Function;
-  }
-
   namespace promise {
     interface Promise<T> {
       controlFlow: Function;
-      then: Function;
     }
   }
 
   namespace util {
     interface Condition {}
   }
-  class Capabilities {
-    get: Function;
-  }
-
-  class WebElement {
-    getDriver: Function;
-    isEnabled: Function;
-    findElements: Function;
-    isPresent: Function;
-    getText: Function;
-  }
 
   class ErrorCode {
     code: number;
-  }
-
-  class By {
-    static css: (css: string) => webdriver.By;
-    static id: (id: string) => webdriver.By;
-    static linkText: (linkText: string) => webdriver.By;
-    static js: (js: string) => webdriver.By;
-    static name: (name: string) => webdriver.By;
-    static partialLinkText: (partialLinkText: string) => webdriver.By;
-    static tagName: (tagName: string) => webdriver.By;
-    static xpath: (xpath: string) => webdriver.By;
-    toString(): string;
   }
 
   interface Locator {

@@ -4,8 +4,6 @@
   "description": "e2e typescript => javascript => running",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run typings",
-    "typings": "typings install",
     "tsc": "tsc",
     "test": "protractor conf.js"
   },

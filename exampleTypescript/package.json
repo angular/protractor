@@ -13,9 +13,5 @@
     "jasmine": "^2.4.1",
     "protractor": "file:../",
     "typescript": "^2.0.0"
-  },
-  "devDependencies": {
-    "@types/jasmine": "^2.2.31",
-    "@types/node": "^6.0.35"
   }
 }

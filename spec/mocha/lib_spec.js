@@ -34,4 +34,16 @@ describe('protractor library', function() {
     browser.get('index.html');
     expect(browser.getTitle()).to.eventually.equal('My AngularJS App');
   });
+
+  describe('with async tests', function() {
+    var finished = false;
+
+    it('should wait for async operations to finish', function() {
+      browser.get('index.html').then(() => { finished = true });
+    });
+
+    after('verify mocha waited', function() {
+      if(!finished) { throw new Error('Mocha did not wait for async!'); }
+    });
+  });
 });

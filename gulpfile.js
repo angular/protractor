@@ -89,6 +89,10 @@ gulp.task('types', function(done) {
     'config', 'plugins', 'ptor'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
+  contents += '/// <reference path="../../@types/node/index.d.ts" />\n';
+  contents += '/// <reference path="../../@types/jasmine/index.d.ts" />\n';
+  contents += '/// <reference path="../typings/index.d.ts" />\n';
+  contents += 'import {ActionSequence, By, WebDriver, WebElement, WebElementPromise, promise, promise as wdpromise, until} from \'selenium-webdriver\';\n';
   files.forEach(file => {
     contents += parseTypingsFile(folder, file);
   });

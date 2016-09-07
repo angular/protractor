@@ -11,6 +11,7 @@ chromedriver.log
 libpeerconnection.log
 xmloutput*
 npm-debug.log
+.idea/
 
 *.swp
 globals.js
