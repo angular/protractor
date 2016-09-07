@@ -1,3 +1,55 @@
+# 4.0.5
+
+## Features
+
+- ([30102fb](https://github.com/angular/protractor/commit/30102fbdaa6354e8ba1a067c6731799aa0f0ff42))
+  feat(util): Allow more verbose logging with multiple sessions (#2985). (#3499)
+
+## Bug fixes
+
+- ([c5cc75b](https://github.com/angular/protractor/commit/c5cc75b41bc1a860061a5da1c23b718d440815ed))
+  fix(logger): Set the log level based on the config at startup. (#3523)
+
+  Fixes #3522. Also fix the mocha spec to stop yelling at us about ES6 arrow functions.
+
+- ([c7fff5e](https://github.com/angular/protractor/commit/c7fff5e9182c5a2a96b57f4f23889b5a5a13f44e))
+  fix(jasmine): Pass control flow to Jasminewd (#3519)
+
+  Fixes #3505 and #2790, which is caused by JasmineWd and Protractor using different controlflow
+  instances
+
+- ([64b4910](https://github.com/angular/protractor/commit/64b491034c0373755a2f34db5db1810b8d90187a))
+  fix(debugger): Fix issues when calling pause() multiple times (#3501) (#3504)
+
+- ([143c710](https://github.com/angular/protractor/commit/143c710b5612667c183eacc7e080b1e172d9f97e))
+  chore(types): webdriver typings for elements and browser (#3513)
+
+  - include node and jasmine dependency to built/index.d.ts
+  - update example and spec/install to not need @types/jasmine and @types/node to install
+  - add more selenium-webdriver to gulp task
+  - added an interface in globals for Error to include a code and stack
+  - improve webdriver typings to elements and browser
+
+- ([8ca9833](https://github.com/angular/protractor/commit/8ca98339341434fcff500accd34acfe97b5840e1))
+  fix(mocha): Wrap it.only with the selenium adapter. (#3512)
+
+  Fixes #3045. Since mocha 2.4.1, we should be wrapping global.it.only.
+
+- ([f23d027](https://github.com/angular/protractor/commit/f23d0277e8796fef4b4679043d52009149e22ce9))
+  chore(types): webdriver typings for locators (#3507)
+
+  - temporarily add typings for selenium-webdriver.d.ts
+  - include selenium-webdriver dependency to built/index.d.ts
+  - add webdriver typings to locators
+  - update example and spec/install to not use typings.json
+   - spec test updated to get the tsc test to pass
+  - includes clang formatting fixes
+
+- ([e0b151a](https://github.com/angular/protractor/commit/e0b151a8b4e40364d4b7ac369faf7c5702dcf0a0))
+  fix(launcher): Handle uncaught exceptions that are strings. (#3506)
+
+  Also clean up instances where we were throwing strings instead of Errors.
+
 # 4.0.4
 
 ## Features
