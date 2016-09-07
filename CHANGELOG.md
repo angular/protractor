@@ -1,5 +1,17 @@
 # 4.0.5
 
+In this version, there are several small changes that affect TypeScript users
+from the previous version 4.0.4. Here are some of the steps to resolve any
+transpiling errors:
+
+- In your package.json, use TypeScript 2.0.0. This will allow Protractor to use
+  the `@types/node` and `@types/jasmine` installed in node\_modules.
+- Remove `jasmine` and `node` from your `typings.json` since these types are
+  already included via `@types`. If these were the only ambient typings
+  installed, remove the `typings.json` file.
+- If you still have a `typings.json` file, remove `typings` directory and
+  install a fresh set of ambient typings with: `typings install`.
+
 ## Features
 
 - ([30102fb](https://github.com/angular/protractor/commit/30102fbdaa6354e8ba1a067c6731799aa0f0ff42))
