@@ -2,8 +2,6 @@
  * The launcher is responsible for parsing the capabilities from the
  * input configuration and launching test runners.
  */
-import * as q from 'q';
-
 import {Config} from './config';
 import {ConfigParser} from './configParser';
 import {ConfigError, ErrorHandler, ProtractorError} from './exitCodes';
@@ -115,26 +113,28 @@ let initFn = function(configFile: string, additionalConfig: Config) {
   helper.runFilenameOrFn_(config.configDir, config.beforeLaunch)
       .then(() => {
 
-        return q
-            .Promise<any>((resolve: Function) => {
-              // 1) If getMultiCapabilities is set, resolve that as
-              // `multiCapabilities`.
-              if (config.getMultiCapabilities &&
-                  typeof config.getMultiCapabilities === 'function') {
-                if (config.multiCapabilities.length || config.capabilities) {
-                  logger.warn(
-                      'getMultiCapabilities() will override both capabilities ' +
-                      'and multiCapabilities');
-                }
-                // If getMultiCapabilities is defined and a function, use this.
-                q.when(config.getMultiCapabilities(), (multiCapabilities) => {
-                   config.multiCapabilities = multiCapabilities;
-                   config.capabilities = null;
-                 }).then(() => resolve());
-              } else {
-                resolve();
-              }
-            })
+        return new Promise<any>((resolve: Function) => {
+                 // 1) If getMultiCapabilities is set, resolve that as
+                 // `multiCapabilities`.
+                 if (config.getMultiCapabilities &&
+                     typeof config.getMultiCapabilities === 'function') {
+                   if (config.multiCapabilities.length || config.capabilities) {
+                     logger.warn(
+                         'getMultiCapabilities() will override both capabilities ' +
+                         'and multiCapabilities');
+                   }
+
+                   (<Promise<any>>config.getMultiCapabilities())
+                       .then(multiCapabilities => {
+                         config.multiCapabilities = multiCapabilities;
+                         config.capabilities = null;
+                         resolve();
+                       });
+
+                 } else {
+                   resolve();
+                 }
+               })
             .then(() => {
               // 2) Set `multicapabilities` using `capabilities`,
               // `multicapabilities`,
@@ -238,68 +238,65 @@ let initFn = function(configFile: string, additionalConfig: Config) {
           }
         }
 
-        let deferred = q.defer<any>();  // Resolved when all tasks are completed
-        let createNextTaskRunner = () => {
-          var task = scheduler.nextTask();
-          if (task) {
-            let taskRunner =
-                new TaskRunner(configFile, additionalConfig, task, forkProcess);
-            taskRunner.run()
-                .then((result) => {
-                  if (result.exitCode && !result.failedCount) {
+        new Promise<any>((resolve, reject) => {
+          let createNextTaskRunner = () => {
+            var task = scheduler.nextTask();
+            if (task) {
+              let taskRunner = new TaskRunner(
+                  configFile, additionalConfig, task, forkProcess);
+              taskRunner.run()
+                  .then((result: any) => {
+                    if (result.exitCode && !result.failedCount) {
+                      logger.error(
+                          'Runner process exited unexpectedly with error code: ' +
+                          result.exitCode);
+                    }
+                    taskResults_.add(result);
+                    task.done();
+                    createNextTaskRunner();
+                    // If all tasks are finished
+                    if (scheduler.numTasksOutstanding() === 0) {
+                      resolve();
+                    }
+                    logger.info(
+                        scheduler.countActiveTasks() +
+                        ' instance(s) of WebDriver still running');
+                  })
+                  .catch((err: Error) => {
                     logger.error(
-                        'Runner process exited unexpectedly with error code: ' +
-                        result.exitCode);
-                  }
-                  taskResults_.add(result);
-                  task.done();
-                  createNextTaskRunner();
-                  // If all tasks are finished
-                  if (scheduler.numTasksOutstanding() === 0) {
-                    deferred.resolve();
-                  }
-                  logger.info(
-                      scheduler.countActiveTasks() +
-                      ' instance(s) of WebDriver still running');
-                })
-                .catch((err: Error) => {
-                  logger.error(
-                      'Error:', (err as any).stack || err.message || err);
-                  cleanUpAndExit(RUNNERS_FAILED_EXIT_CODE);
-                });
+                        'Error:', (err as any).stack || err.message || err);
+                    cleanUpAndExit(RUNNERS_FAILED_EXIT_CODE);
+                  });
+            }
+          };
+          // Start `scheduler.maxConcurrentTasks()` workers for handling tasks
+          // in
+          // the beginning. As a worker finishes a task, it will pick up the
+          // next
+          // task
+          // from the scheduler's queue until all tasks are gone.
+          for (var i = 0; i < scheduler.maxConcurrentTasks(); ++i) {
+            createNextTaskRunner();
           }
-        };
-        // Start `scheduler.maxConcurrentTasks()` workers for handling tasks in
-        // the beginning. As a worker finishes a task, it will pick up the next
-        // task
-        // from the scheduler's queue until all tasks are gone.
-        for (var i = 0; i < scheduler.maxConcurrentTasks(); ++i) {
-          createNextTaskRunner();
-        }
-        logger.info(
-            'Running ' + scheduler.countActiveTasks() +
-            ' instances of WebDriver');
+          logger.info(
+              'Running ' + scheduler.countActiveTasks() +
+              ' instances of WebDriver');
+        }).then(() => {
+          // Save results if desired
+          if (config.resultJsonOutputFile) {
+            taskResults_.saveResults(config.resultJsonOutputFile);
+          }
 
-        // By now all runners have completed.
-        deferred.promise
-            .then(function() {
-              // Save results if desired
-              if (config.resultJsonOutputFile) {
-                taskResults_.saveResults(config.resultJsonOutputFile);
-              }
-
-              taskResults_.reportSummary();
-              let exitCode = 0;
-              if (taskResults_.totalProcessFailures() > 0) {
-                exitCode = RUNNERS_FAILED_EXIT_CODE;
-              } else if (taskResults_.totalSpecFailures() > 0) {
-                exitCode = 1;
-              }
-              return cleanUpAndExit(exitCode);
-            })
-            .done();
-      })
-      .done();
+          taskResults_.reportSummary();
+          let exitCode = 0;
+          if (taskResults_.totalProcessFailures() > 0) {
+            exitCode = RUNNERS_FAILED_EXIT_CODE;
+          } else if (taskResults_.totalSpecFailures() > 0) {
+            exitCode = 1;
+          }
+          return cleanUpAndExit(exitCode);
+        });
+      });
 };
 
 export let init = initFn;

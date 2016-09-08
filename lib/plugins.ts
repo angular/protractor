@@ -1,6 +1,6 @@
 var webdriver = require('selenium-webdriver');
 import {Logger} from './logger';
-import * as Q from 'q';
+// import * as Q from 'q';
 import {ConfigParser} from './configParser';
 
 let logger = new Logger('plugins');
@@ -32,7 +32,7 @@ export interface ProtractorPlugin {
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  setup?: () => Q.Promise<any>;
+  setup?: () => Promise<any>;
 
   /**
    * This is called before the test have been run but after the test framework has
@@ -48,7 +48,7 @@ export interface ProtractorPlugin {
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  onPrepare?: () => Q.Promise<any>;
+  onPrepare?: () => Promise<any>;
 
   /**
    * This is called after the tests have been run, but before the WebDriver
@@ -63,7 +63,7 @@ export interface ProtractorPlugin {
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  teardown?: () => Q.Promise<any>;
+  teardown?: () => Promise<any>;
 
   /**
    * Called after the test results have been finalized and any jobs have been
@@ -77,7 +77,7 @@ export interface ProtractorPlugin {
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, an error is logged to the console.
    */
-  postResults?: () => Q.Promise<any>;
+  postResults?: () => Promise<any>;
 
   /**
    * Called after each test block (in Jasmine, this means an `it` block)
@@ -96,7 +96,7 @@ export interface ProtractorPlugin {
    *     will *not* wait before executing the next test, however.  If the promise
    *     is rejected, a failed assertion is added to the test results.
    */
-  postTest?: (passed: boolean, testInfo: any) => Q.Promise<any>;
+  postTest?: (passed: boolean, testInfo: any) => Promise<any>;
 
   /**
    * This is called inside browser.get() directly after the page loads, and before
@@ -111,7 +111,7 @@ export interface ProtractorPlugin {
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  onPageLoad?: () => Q.Promise<any>;
+  onPageLoad?: () => Promise<any>;
 
   /**
    * This is called inside browser.get() directly after angular is done
@@ -127,7 +127,7 @@ export interface ProtractorPlugin {
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  onPageStable?: () => Q.Promise<any>;
+  onPageStable?: () => Promise<any>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -147,7 +147,7 @@ export interface ProtractorPlugin {
    *     other than a promise is returned, protractor will continue onto the next
    *     command.
    */
-  waitForPromise?: () => Q.Promise<any>;
+  waitForPromise?: () => Promise<any>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -166,7 +166,7 @@ export interface ProtractorPlugin {
    *     assertion is added to the test results, and protractor will continue onto
    *     the next command.
    */
-  waitForCondition?: () => Q.Promise<any>;
+  waitForCondition?: () => Promise<any>;
 
   /**
    * Used to turn off default checks for angular stability
@@ -444,38 +444,44 @@ export class Plugins {
   safeCallPluginFun(
       pluginObj: ProtractorPlugin, funName: string, args: IArguments,
       promiseType: PromiseType, failReturnVal: any): any {
-    var deferred =
-        promiseType == PromiseType.Q ? Q.defer() : webdriver.promise.defer();
-    var logError = (e: any) => {
+    // log error method defined for try catch
+    let logError = (e: Error, deferred: any): void => {
       if (this.resultsReported) {
         this.printPluginResults([{
           description: pluginObj.name + ' Runtime',
           assertions: [{
             passed: false,
-            errorMsg: 'Failure during ' + funName + ': ' + (e.message || e),
+            errorMsg: 'Failure during ' + funName + ': ' + (e.message),
             stackTrace: e.stack
           }]
         }]);
       } else {
         pluginObj.addFailure(
-            'Failure during ' + funName + ': ' + e.message || e,
+            'Failure during ' + funName + ': ' + e.message,
             {stackTrace: e.stack});
       }
       deferred.fulfill(failReturnVal);
     };
+
+    let result = (<any>pluginObj)[funName].apply(pluginObj, args);
+    let promise: any;
+
+
+    let deferred = webdriver.promise.defer();
     try {
-      var result = (<any>pluginObj)[funName].apply(pluginObj, args);
       if (webdriver.promise.isPromise(result)) {
         result.then(
-            function() { deferred.fulfill.apply(deferred, arguments); },
-            (e: any) => { logError(e); });
+            () => { deferred.fulfill.apply(deferred, arguments); },
+            (e: any) => { logError(e, deferred); });
+        promise = deferred.promise;
       } else {
-        deferred.fulfill(result);
+        promise = new Promise((resolve, reject) => { resolve(result); });
       }
+
     } catch (e) {
-      logError(e);
+      logError(e, deferred);
     }
-    return deferred.promise;
+    return promise;
   }
 }
 
@@ -506,7 +512,7 @@ function pluginFunFactory(
     });
 
     if (promiseType == PromiseType.Q) {
-      return Q.all(promises);
+      return Promise.all(promises);
     } else {
       return webdriver.promise.all(promises);
     }

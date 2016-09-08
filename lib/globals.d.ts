@@ -26,6 +26,7 @@ declare namespace NodeJS {
     CommandName: any;
     // Helper function added by the debugger in protractor.ps
     list: (locator: webdriver.Locator) => string[];
+    highlight: (locator: webdriver.Locator) => void;
     [key: string]: any;
   }
 }
@@ -34,8 +35,6 @@ declare interface IError extends Error {
   code?: number;
   stack?: string;
 }
-
-declare interface String { startsWith: Function; }
 
 declare namespace webdriver {
   namespace promise {

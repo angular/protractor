@@ -1,5 +1,4 @@
 import {EventEmitter} from 'events';
-import * as q from 'q';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
@@ -76,7 +75,7 @@ export class Runner extends EventEmitter {
    * @return {q.Promise} A promise that will resolve when the test preparers
    *     are finished.
    */
-  runTestPreparer(): q.Promise<any> {
+  runTestPreparer(): Promise<any> {
     return this.plugins_.onPrepare().then(() => {
       return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
     });
@@ -258,8 +257,8 @@ export class Runner extends EventEmitter {
    * @return {q.Promise} A promise which resolves on finish.
    * @private
    */
-  shutdown_(): q.Promise<any> {
-    return q.all(this.driverprovider_.getExistingDrivers().map(
+  shutdown_(): Promise<any> {
+    return Promise.all(this.driverprovider_.getExistingDrivers().map(
         (webdriver) => { return this.driverprovider_.quitDriver(webdriver); }));
   }
 
@@ -269,7 +268,7 @@ export class Runner extends EventEmitter {
    * @return {q.Promise} A promise which resolves to the exit code of the tests.
    * @public
    */
-  run(): q.Promise<any> {
+  run(): Promise<any> {
     let testPassed: boolean;
     let plugins = this.plugins_ = new Plugins(this.config_);
     let pluginPostTestPromises: any;
@@ -358,7 +357,7 @@ export class Runner extends EventEmitter {
         })
         .then((testResults: any) => {
           results = testResults;
-          return q.all(pluginPostTestPromises);
+          return Promise.all(pluginPostTestPromises);
           // 6) Teardown plugins
         })
         .then(() => {
@@ -385,6 +384,6 @@ export class Runner extends EventEmitter {
           var exitCode = testPassed ? 0 : 1;
           return this.exit_(exitCode);
         })
-        .fin(() => { return this.shutdown_(); });
+        .then(() => { return this.shutdown_(); });
   }
 }

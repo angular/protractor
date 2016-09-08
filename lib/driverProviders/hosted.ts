@@ -3,7 +3,6 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
-import * as q from 'q';
 import * as util from 'util';
 
 import {Config} from '../config';
@@ -21,8 +20,8 @@ export class Hosted extends DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
+  setupEnv(): Promise<any> {
     logger.info('Using the selenium server at ' + this.config_.seleniumAddress);
-    return q.fcall(function() {});
+    return new Promise((resolve, reject) => resolve());
   }
 }

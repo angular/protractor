@@ -8,7 +8,6 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import * as q from 'q';
 import * as util from 'util';
 
 import {Config} from '../config';
@@ -80,43 +79,41 @@ export class Local extends DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
-    let deferred = q.defer();
+  setupEnv(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.addDefaultBinaryLocs_();
 
-    this.addDefaultBinaryLocs_();
+      logger.info('Starting selenium standalone server...');
 
-    logger.info('Starting selenium standalone server...');
+      let serverConf = this.config_.localSeleniumStandaloneOpts || {};
 
-    let serverConf = this.config_.localSeleniumStandaloneOpts || {};
+      // If args or port is not set use seleniumArgs and seleniumPort
+      // for backward compatibility
+      if (serverConf.args === undefined) {
+        serverConf.args = this.config_.seleniumArgs || [];
+      }
+      if (serverConf.port === undefined) {
+        serverConf.port = this.config_.seleniumPort;
+      }
 
-    // If args or port is not set use seleniumArgs and seleniumPort
-    // for backward compatibility
-    if (serverConf.args === undefined) {
-      serverConf.args = this.config_.seleniumArgs || [];
-    }
-    if (serverConf.port === undefined) {
-      serverConf.port = this.config_.seleniumPort;
-    }
+      // configure server
+      if (this.config_.chromeDriver) {
+        serverConf.args.push(
+            '-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
+      }
 
-    // configure server
-    if (this.config_.chromeDriver) {
-      serverConf.args.push(
-          '-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
-    }
+      this.server_ =
+          new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
-    this.server_ =
-        new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
-
-    // start local server, grab hosted address, and resolve promise
-    this.server_.start().then((url: string) => {
-      logger.info('Selenium standalone server started at ' + url);
-      this.server_.address().then((address: string) => {
-        this.config_.seleniumAddress = address;
-        deferred.resolve();
+      // start local server, grab hosted address, and resolve promise
+      this.server_.start().then((url: string) => {
+        logger.info('Selenium standalone server started at ' + url);
+        this.server_.address().then((address: string) => {
+          this.config_.seleniumAddress = address;
+          resolve();
+        });
       });
     });
-
-    return deferred.promise;
   }
 
   /**
@@ -128,12 +125,12 @@ export class Local extends DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment
    *     is down.
    */
-  teardownEnv(): q.Promise<any> {
-    let deferred = q.defer();
-    super.teardownEnv().then(() => {
-      logger.info('Shutting down selenium standalone server.');
-      this.server_.stop().then(() => { deferred.resolve(); });
+  teardownEnv(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      super.teardownEnv().then(() => {
+        logger.info('Shutting down selenium standalone server.');
+        this.server_.stop().then(() => { resolve(); });
+      });
     });
-    return deferred.promise;
   }
 }

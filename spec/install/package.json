@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "protractor": "file:../../",
-    "rimraf": "^2.5.4"
+    "rimraf": "^2.5.4",
+    "typescript": "^2.0.0"
   }
 }

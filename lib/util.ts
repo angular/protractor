@@ -1,5 +1,5 @@
-import {resolve} from 'path';
-import {Promise, when} from 'q';
+import * as path from 'path';
+// import {Promise, when} from 'q';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
   'node_modules/jasmine/', 'node_modules/selenium-webdriver', 'at Module.',
@@ -37,7 +37,7 @@ export function filterStackTrace(text: string): string {
  */
 export function runFilenameOrFn_(
     configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
-  return Promise((resolvePromise) => {
+  return new Promise((resolve, reject) => {
     if (filenameOrFn &&
         !(typeof filenameOrFn === 'string' ||
           typeof filenameOrFn === 'function')) {
@@ -45,10 +45,17 @@ export function runFilenameOrFn_(
     }
 
     if (typeof filenameOrFn === 'string') {
-      filenameOrFn = require(resolve(configDir, filenameOrFn));
+      filenameOrFn = require(path.resolve(configDir, filenameOrFn));
     }
     if (typeof filenameOrFn === 'function') {
-      let results = when(filenameOrFn.apply(null, args), null, (err) => {
+      try {
+        let result = filenameOrFn.apply(null, args);
+        if (result instanceof Promise) {
+          result.then(() => { resolve(); });
+        } else {
+          resolve();
+        }
+      } catch (err) {
         if (typeof err === 'string') {
           err = new Error(err);
         } else {
@@ -59,10 +66,9 @@ export function runFilenameOrFn_(
         }
         err.stack = exports.filterStackTrace(err.stack);
         throw err;
-      });
-      resolvePromise(results);
+      }
     } else {
-      resolvePromise(undefined);
+      resolve();
     }
   });
 }
