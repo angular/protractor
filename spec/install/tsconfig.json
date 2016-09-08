@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "sourceMap": false,
     "declaration": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["node", "jasmine"]
   },
   "exclude": [
     "node_modules",

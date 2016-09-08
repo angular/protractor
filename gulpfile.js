@@ -33,7 +33,7 @@ var runSpawn = function(done, task, opt_arg, opt_io) {
 };
 
 gulp.task('built:copy', function() {
-  return gulp.src(['lib/**/*','!lib/**/*.ts'])
+  return gulp.src(['lib/**/*.js','lib/globals.d.ts'])
       .pipe(gulp.dest('built/'));
 });
 
@@ -89,9 +89,8 @@ gulp.task('types', function(done) {
     'config', 'plugins', 'ptor'];
   var outputFile = path.resolve(folder, 'index.d.ts');
   var contents = '';
-  contents += '/// <reference path="../../@types/node/index.d.ts" />\n';
-  contents += '/// <reference path="../../@types/jasmine/index.d.ts" />\n';
   contents += '/// <reference path="../typings/index.d.ts" />\n';
+  contents += '/// <reference path="./globals.d.ts" />\n';
   contents += 'import {ActionSequence, By, WebDriver, WebElement, WebElementPromise, promise, promise as wdpromise, until} from \'selenium-webdriver\';\n';
   files.forEach(file => {
     contents += parseTypingsFile(folder, file);
