@@ -5,6 +5,7 @@ var clangFormat = require('clang-format');
 var gulpFormat = require('gulp-clang-format');
 var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
+var spawnSync = require('child_process').spawnSync;
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
@@ -32,6 +33,30 @@ var runSpawn = function(done, task, opt_arg, opt_io) {
   });
 };
 
+// prevent contributors from using the wrong version of node
+gulp.task('checkVersion', function(done) {
+  var version = spawnSync('node', ['--version']).stdout.toString();
+  var versionArray = version.replace('v', '').split('.');
+  var major = versionArray[0];
+  var minor = versionArray[1];
+
+  // read minimum node on package.json
+  var packageJson = JSON.parse(fs.readFileSync(path.resolve('package.json')));
+  var protractorVersion = packageJson.version;
+  var nodeVersion = packageJson.engines.node.replace('>=','');
+  var nodeVersionArray = nodeVersion.split('.');
+  var requiredMajor = nodeVersionArray[0];
+  var requiredMinor = nodeVersionArray[1];
+
+  if (major >= requiredMajor && minor >= requiredMinor) {
+    done();
+  } else {
+    console.error('minimum node version for Protractor ' + protractorVersion +
+      ' is node >= ' + nodeVersion);
+    return 1;
+  }
+});
+
 gulp.task('built:copy', function() {
   return gulp.src(['lib/**/*','!lib/**/*.ts'])
       .pipe(gulp.dest('built/'));
@@ -47,16 +72,16 @@ gulp.task('jshint', function(done) {
       'spec/install/**/*.js']);
 });
 
-gulp.task('format:enforce', () => {
-  const format = require('gulp-clang-format');
-  const clangFormat = require('clang-format');
+gulp.task('format:enforce', function() {
+  var format = require('gulp-clang-format');
+  var clangFormat = require('clang-format');
   return gulp.src(['lib/**/*.ts']).pipe(
     format.checkFormat('file', clangFormat, {verbose: true, fail: true}));
 });
 
-gulp.task('format', () => {
-  const format = require('gulp-clang-format');
-  const clangFormat = require('clang-format');
+gulp.task('format', function() {
+  var format = require('gulp-clang-format');
+  var clangFormat = require('clang-format');
   return gulp.src(['lib/**/*.ts'], { base: '.' }).pipe(
     format.format('file', clangFormat)).pipe(gulp.dest('.'));
 });
@@ -71,12 +96,12 @@ gulp.task('tsc:globals', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence(['jshint', 'format'], 'tsc', 'tsc:globals', 'types',
+  runSequence('checkVersion', ['jshint', 'format'], 'tsc', 'tsc:globals', 'types',
     'ambient', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
-  runSequence(
+  runSequence('checkVersion',
     ['webdriver:update', 'jshint', 'format'], 'tsc', 'tsc:globals',
     'types', 'ambient', 'built:copy', done);
 });
@@ -93,12 +118,12 @@ gulp.task('types', function(done) {
   contents += '/// <reference path="../../@types/jasmine/index.d.ts" />\n';
   contents += '/// <reference path="../typings/index.d.ts" />\n';
   contents += 'import {ActionSequence, By, WebDriver, WebElement, WebElementPromise, promise, promise as wdpromise, until} from \'selenium-webdriver\';\n';
-  files.forEach(file => {
+  files.forEach(function(file) {
     contents += parseTypingsFile(folder, file);
   });
 
   // remove files with d.ts
-  glob.sync(folder + '/**/*.d.ts').forEach(file => {
+  glob.sync(folder + '/**/*.d.ts').forEach(function(file) {
     fs.unlinkSync(path.resolve(file));
   });
 
@@ -111,7 +136,7 @@ var parseTypingsFile = function(folder, file) {
   var fileContents = fs.readFileSync(path.resolve(folder, file + '.d.ts')).toString();
   // Remove new lines inside types
   fileContents = fileContents.replace(
-    /webdriver.promise.Promise<\{[a-zA-Z:,; \n]+\}>/g, (type) => {
+    /webdriver.promise.Promise<\{[a-zA-Z:,; \n]+\}>/g, function(type) {
         return type.replace(/\n/g, '');
     }
   );
