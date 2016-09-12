@@ -1,3 +1,22 @@
+# 4.0.6
+
+## Bug Fixes
+
+- ([d18bba3](https://github.com/angular/protractor/commit/d18bba3e288610dd606aac4b656581da0dc65491))
+  fix(types): remove relative path used for @types/node and @types/jasmine (#3535)
+
+
+## Dependencies
+
+  closes #3533
+- ([4e7e8ec](https://github.com/angular/protractor/commit/4e7e8ec2c0a018e6159b557decee6b2df53958b5))
+  deps(outdated): update types/q and jasmine (#3525)
+
+## Other
+
+- ([9d5edbe](https://github.com/angular/protractor/commit/9d5edbe315ea70aad1fd0a2eaeff3328a2f8ee93))
+  chore(node): require the minimum node version 4.2.x required by selenium-webdriver (#3534)
+
 # 4.0.5
 
 In this version, there are several small changes that affect TypeScript users
