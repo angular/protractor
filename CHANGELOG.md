@@ -1,3 +1,12 @@
+# 4.0.7
+
+## Dependencies
+
+- ([a68dd3f](https://github.com/angular/protractor/commit/a68dd3f0c6e33f93a5b7e9674197154b0e68cedd))
+  deps(jasmine): lower jasmine version down to 2.4.1 (#3540)
+
+  - upgrading to 2.5.x no longer logs jasmine output
+
 # 4.0.6
 
 ## Bug Fixes
