@@ -1,4 +1,4 @@
-// Compiled using typings@0.6.10
+// Compiled using typings@0.6.8
 // Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/bc92442c075929849ec41d28ab618892ba493504/jasmine/jasmine.d.ts
 // Type definitions for Jasmine 2.2
 // Project: http://jasmine.github.io/
