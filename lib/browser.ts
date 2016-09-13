@@ -1,6 +1,7 @@
 // Util from NodeJs
 import * as net from 'net';
-import {ActionSequence, promise as wdpromise, until, WebDriver, WebElement} from 'selenium-webdriver';
+import {ActionSequence, Capabilities, Command as WdCommand, FileDetector, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
+
 import * as url from 'url';
 import * as util from 'util';
 
@@ -32,20 +33,37 @@ for (let foo in webdriver) {
   exports[foo] = webdriver[foo];
 }
 
-// Explicitly define webdriver.WebDriver.
+// Explicitly define webdriver.WebDriver
+// TODO: extend WebDriver from selenium-webdriver typings
 export class Webdriver {
-  actions: () => ActionSequence = webdriver.WebDriver.actions;
+  actions: () => ActionSequence;
+  call:
+      (fn: (...var_args: any[]) => any, opt_scope?: any,
+       ...var_args: any[]) => wdpromise.Promise<any>;
+  close: () => void;
+  controlFlow: () => wdpromise.ControlFlow;
+  executeScript:
+      (script: string|Function, ...var_args: any[]) => wdpromise.Promise<any>;
+  executeAsyncScript:
+      (script: string|Function, ...var_args: any[]) => wdpromise.Promise<any>;
+  getCapabilities: () => Capabilities;
+  getCurrentUrl: () => wdpromise.Promise<string>;
+  getPageSource: () => wdpromise.Promise<string>;
+  getSession: () => wdpromise.Promise<Session>;
+  getTitle: () => wdpromise.Promise<string>;
+  getWindowHandle: () => wdpromise.Promise<string>;
+  getAllWindowHandles: () => wdpromise.Promise<string[]>;
+  manage: () => Options;
+  quit: () => void;
+  schedule: (command: WdCommand, description: string) => wdpromise.Promise<any>;
+  setFileDetector: (detector: FileDetector) => void;
+  sleep: (ms: number) => wdpromise.Promise<void>;
+  switchTo: () => TargetLocator;
+  takeScreenshot: () => wdpromise.Promise<any>;
+  touchActions: () => TouchSequence;
   wait:
       (condition: wdpromise.Promise<any>|until.Condition<any>|Function,
-       opt_timeout?: number,
-       opt_message?:
-           string) => wdpromise.Promise<any> = webdriver.WebDriver.wait;
-  sleep: (ms: number) => wdpromise.Promise<any> = webdriver.WebDriver.sleep;
-  getCurrentUrl:
-      () => wdpromise.Promise<any> = webdriver.WebDriver.getCurrentUrl;
-  getTitle: () => wdpromise.Promise<any> = webdriver.WebDriver.getTitle;
-  takeScreenshot:
-      () => wdpromise.Promise<any> = webdriver.WebDriver.takeScreenshot;
+       opt_timeout?: number, opt_message?: string) => wdpromise.Promise<any>;
 }
 
 /**
@@ -268,7 +286,6 @@ export class ProtractorBrowser extends Webdriver {
     // include functions which are overridden by protractor below.
     let methodsToSync = ['getCurrentUrl', 'getPageSource', 'getTitle'];
 
-
     // Mix all other driver functionality into Protractor.
     Object.getOwnPropertyNames(webdriver.WebDriver.prototype)
         .forEach((method: string) => {
@@ -298,7 +315,7 @@ export class ProtractorBrowser extends Webdriver {
     this.resetUrl = DEFAULT_RESET_URL;
     this.ng12Hybrid = false;
 
-    this.driver.getCapabilities().then((caps: webdriver.Capabilities) => {
+    this.driver.getCapabilities().then((caps: Capabilities) => {
       // Internet Explorer does not accept data URLs, which are the default
       // reset URL for Protractor.
       // Safari accepts data urls, but SafariDriver fails after one is used.
@@ -492,7 +509,7 @@ export class ProtractorBrowser extends Webdriver {
                     'Timed out waiting for Protractor to synchronize with ' +
                     'the page after ' + timeout + '. Please see ' +
                     'https://github.com/angular/protractor/blob/master/docs/faq.md';
-                if (description.startsWith(' - Locator: ')) {
+                if (description.indexOf(' - Locator: ') == 0) {
                   errMsg +=
                       '\nWhile waiting for element with locator' + description;
                 }
@@ -572,7 +589,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!webdriver.promise.Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
-  isElementPresent(locatorOrElement: webdriver.Locator|
+  isElementPresent(locatorOrElement: ProtractorBy|
                    webdriver.WebElement): webdriver.promise.Promise<any> {
     let element = ((locatorOrElement as any).isPresent) ?
         locatorOrElement :
@@ -757,17 +774,14 @@ export class ProtractorBrowser extends Webdriver {
                       'return window.location.href;', msg('get url'))
                   .then(
                       (url: any) => { return url !== this.resetUrl; },
-                      (err: webdriver.ErrorCode) => {
+                      (err: IError) => {
                         if (err.code == 13) {
                           // Ignore the error, and continue trying. This is
-                          // because IE
-                          // driver sometimes (~1%) will throw an unknown error
-                          // from this
-                          // execution. See
+                          // because IE driver sometimes (~1%) will throw an
+                          // unknown error from this execution. See
                           // https://github.com/angular/protractor/issues/841
                           // This shouldn't mask errors because it will fail
-                          // with the timeout
-                          // anyway.
+                          // with the timeout anyway.
                           return false;
                         } else {
                           throw err;

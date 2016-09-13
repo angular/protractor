@@ -13,6 +13,7 @@ declare namespace NodeJS {
   }
 
   interface Global {
+    // These are here because we tie these variables to the global namespace.
     browser: any;
     protractor: any;
     $: any;
@@ -24,8 +25,8 @@ declare namespace NodeJS {
     DartObject: any;
     Command: any;
     CommandName: any;
-    // Helper function added by the debugger in protractor.ps
-    list: (locator: webdriver.Locator) => string[];
+    // Helper function added by the debugger and element explorer
+    list: (locator: any) => string[];
     [key: string]: any;
   }
 }
@@ -33,29 +34,6 @@ declare namespace NodeJS {
 declare interface IError extends Error {
   code?: number;
   stack?: string;
-}
-
-declare interface String { startsWith: Function; }
-
-declare namespace webdriver {
-  namespace promise {
-    interface Promise<T> {
-      controlFlow: Function;
-    }
-  }
-
-  namespace util {
-    interface Condition {}
-  }
-
-  class ErrorCode {
-    code: number;
-  }
-
-  interface Locator {
-    toString(): string;
-    isPresent?: Function;
-  }
 }
 
 declare interface HttpProxyAgent { constructor(opts: Object): HttpProxyAgent; }
