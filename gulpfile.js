@@ -9,6 +9,7 @@ var spawnSync = require('child_process').spawnSync;
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
+var semver = require('semver');
 
 var runSpawn = function(done, task, opt_arg, opt_io) {
   opt_arg = typeof opt_arg !== 'undefined' ? opt_arg : [];
@@ -35,25 +36,16 @@ var runSpawn = function(done, task, opt_arg, opt_io) {
 
 // prevent contributors from using the wrong version of node
 gulp.task('checkVersion', function(done) {
-  var version = spawnSync('node', ['--version']).stdout.toString();
-  var versionArray = version.replace('v', '').split('.');
-  var major = versionArray[0];
-  var minor = versionArray[1];
-
   // read minimum node on package.json
   var packageJson = JSON.parse(fs.readFileSync(path.resolve('package.json')));
   var protractorVersion = packageJson.version;
-  var nodeVersion = packageJson.engines.node.replace('>=','');
-  var nodeVersionArray = nodeVersion.split('.');
-  var requiredMajor = nodeVersionArray[0];
-  var requiredMinor = nodeVersionArray[1];
+  var nodeVersion = packageJson.engines.node;
 
-  if (major >= requiredMajor && minor >= requiredMinor) {
+  if (semver.satisfies(process.version, nodeVersion)) {
     done();
   } else {
-    console.error('minimum node version for Protractor ' + protractorVersion +
-      ' is node >= ' + nodeVersion);
-    return 1;
+    throw new Error('minimum node version for Protractor ' + protractorVersion +
+      ' is node ' + nodeVersion);
   }
 });
 
