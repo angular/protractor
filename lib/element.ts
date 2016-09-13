@@ -18,6 +18,7 @@ let WEB_ELEMENT_FUNCTIONS = [
 ];
 
 // Explicitly define webdriver.WebElement.
+// TODO: extend WebElement from selenium-webdriver typings
 export class WebdriverWebElement {
   getDriver: () => WebDriver;
   getId: () => wdpromise.Promise<any>;

@@ -34,6 +34,7 @@ for (let foo in webdriver) {
 }
 
 // Explicitly define webdriver.WebDriver
+// TODO: extend WebDriver from selenium-webdriver typings
 export class Webdriver {
   actions: () => ActionSequence;
   call:
@@ -508,7 +509,7 @@ export class ProtractorBrowser extends Webdriver {
                     'Timed out waiting for Protractor to synchronize with ' +
                     'the page after ' + timeout + '. Please see ' +
                     'https://github.com/angular/protractor/blob/master/docs/faq.md';
-                if (description.startsWith(' - Locator: ')) {
+                if (description.indexOf(' - Locator: ') == 0) {
                   errMsg +=
                       '\nWhile waiting for element with locator' + description;
                 }
@@ -773,17 +774,14 @@ export class ProtractorBrowser extends Webdriver {
                       'return window.location.href;', msg('get url'))
                   .then(
                       (url: any) => { return url !== this.resetUrl; },
-                      (err: webdriver.ErrorCode) => {
+                      (err: IError) => {
                         if (err.code == 13) {
                           // Ignore the error, and continue trying. This is
-                          // because IE
-                          // driver sometimes (~1%) will throw an unknown error
-                          // from this
-                          // execution. See
+                          // because IE driver sometimes (~1%) will throw an
+                          // unknown error from this execution. See
                           // https://github.com/angular/protractor/issues/841
                           // This shouldn't mask errors because it will fail
-                          // with the timeout
-                          // anyway.
+                          // with the timeout anyway.
                           return false;
                         } else {
                           throw err;

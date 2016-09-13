@@ -49,9 +49,10 @@ gulp.task('checkVersion', function(done) {
   }
 });
 
-gulp.task('built:copy', function() {
-  return gulp.src(['lib/**/*.js','lib/globals.d.ts'])
+gulp.task('built:copy', function(done) {
+  return gulp.src(['lib/**/*.js','lib/globals.d.ts','lib/index.d.ts'])
       .pipe(gulp.dest('built/'));
+  done();
 });
 
 gulp.task('webdriver:update', function(done) {
@@ -88,29 +89,14 @@ gulp.task('tsc:globals', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', ['jshint', 'format'], 'tsc', 'tsc:globals', 'types',
+  runSequence('checkVersion', ['jshint', 'format'], 'tsc', 'tsc:globals',
     'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
     ['webdriver:update', 'jshint', 'format'], 'tsc', 'tsc:globals',
-    'types', 'built:copy', done);
+    'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);
-
-gulp.task('types', function(done) {
-  var outputFile = path.resolve('built', 'index.d.ts');
-  var contents = '';
-  contents += '/// <reference path="../typings/index.d.ts" />\n';
-  contents += '/// <reference path="./globals.d.ts" />\n';
-  contents += 'export { ElementHelper, ProtractorBrowser } from \'./browser\';\n';
-  contents += 'export { ElementArrayFinder, ElementFinder } from \'./element\';\n';
-  contents += 'export { ProtractorExpectedConditions } from \'./expectedConditions\';\n';
-  contents += 'export { ProtractorBy } from \'./locators\';\n';
-  contents += 'export { Config } from \'./config\';\n';
-  contents += 'export { Ptor } from \'./ptor\';\n';
-  fs.writeFileSync(outputFile, contents);
-  done();
-});
