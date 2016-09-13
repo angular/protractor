@@ -3,9 +3,7 @@ declare namespace angular {
   var module: Function;
 }
 
-declare interface Object { [key: string]: any; }
-
-declare interface Window { [key: string]: any; }
+// declare interface Window { [key: string]: any; }
 
 declare namespace NodeJS {
   interface Process {
@@ -35,5 +33,3 @@ declare interface IError extends Error {
   code?: number;
   stack?: string;
 }
-
-declare interface HttpProxyAgent { constructor(opts: Object): HttpProxyAgent; }

@@ -1,3 +1,5 @@
+export interface HttpProxyAgent { constructor(opts: Object): HttpProxyAgent; }
+
 export interface Config {
   // ---------------------------------------------------------------------------
   // ----- How to connect to Browser Drivers -----------------------------------

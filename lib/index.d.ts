@@ -1,5 +1,4 @@
 /// <reference path="../typings/index.d.ts" />
-/// <reference path="./globals.d.ts" />
 export {ElementHelper, ProtractorBrowser} from './browser';
 export {Config} from './config';
 export {ElementArrayFinder, ElementFinder} from './element';
