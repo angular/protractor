@@ -660,72 +660,8 @@ export class ProtractorBrowser extends Webdriver {
    */
   private addBaseMockModules_() {
     this.addMockModule(
-        'protractorBaseModule_', (trackOutstandingTimeouts: boolean) => {
-          let ngMod = angular.module('protractorBaseModule_', []).config([
-            '$compileProvider',
-            ($compileProvider: any) => {
-              if ($compileProvider.debugInfoEnabled) {
-                $compileProvider.debugInfoEnabled(true);
-              }
-            }
-          ]);
-          if (trackOutstandingTimeouts) {
-            ngMod.config([
-              '$provide',
-              ($provide: any) => {
-                $provide.decorator('$timeout', [
-                  '$delegate',
-                  ($delegate: any) => {
-                    let $timeout = $delegate;
-
-                    let taskId = 0;
-
-                    interface Window {
-                      [key: string]: any;
-                    }
-                    if (!(<Window>window)['NG_PENDING_TIMEOUTS']) {
-                      (<Window>window)['NG_PENDING_TIMEOUTS'] = {};
-                    }
-
-                    let extendedTimeout: any = function() {
-                      let args = Array.prototype.slice.call(arguments);
-                      if (typeof(args[0]) !== 'function') {
-                        return $timeout.apply(null, args);
-                      }
-
-                      taskId++;
-                      let fn = args[0];
-                      (<Window>window)['NG_PENDING_TIMEOUTS'][taskId] =
-                          fn.toString();
-                      let wrappedFn = ((taskId_: number) => {
-                        return function() {
-                          delete (
-                              <Window>window)['NG_PENDING_TIMEOUTS'][taskId_];
-                          return fn.apply(null, arguments);
-                        };
-                      })(taskId);
-                      args[0] = wrappedFn;
-
-                      let promise = $timeout.apply(null, args);
-                      promise.ptorTaskId_ = taskId;
-                      return promise;
-                    };
-
-                    extendedTimeout.cancel = function() {
-                      let taskId_ = arguments[0] && arguments[0].ptorTaskId_;
-                      if (taskId_) {
-                        delete (<Window>window)['NG_PENDING_TIMEOUTS'][taskId_];
-                      }
-                      return $timeout.cancel.apply($timeout, arguments);
-                    };
-
-                    return extendedTimeout;
-                  }
-                ]);
-              }
-            ]);
-          }
-        }, this.trackOutstandingTimeouts_);
+        'protractorBaseModule_', clientSideScripts.protractorBaseModuleFn,
+        this.trackOutstandingTimeouts_);
   }
 
   /**
