@@ -1,3 +1,13 @@
+# 4.0.8
+
+## Bug Fixes
+
+- ([58459a9](https://github.com/angular/protractor/commit/58459a94b9e7a54f4b48614b93c0614177a8a522))
+  fix(types): do not publish built/globals.d.ts (#3546)
+
+  - do not publish built/globals.d.ts
+  - remove type interface for HttpProxyAgent and set to to any
+
 # 4.0.7
 
 ## Dependencies
