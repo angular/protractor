@@ -1,0 +1,44 @@
+import { ElementHelper, ProtractorBrowser } from './browser';
+import { ElementArrayFinder, ElementFinder } from './element';
+import { ProtractorExpectedConditions } from './expectedConditions';
+import { ProtractorBy } from './locators';
+export declare class Ptor {
+    browser: ProtractorBrowser;
+    $: (search: string) => ElementFinder;
+    $$: (search: string) => ElementArrayFinder;
+    element: ElementHelper;
+    By: ProtractorBy;
+    by: ProtractorBy;
+    wrapDriver: (webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string, untrackOutstandingTimeouts?: boolean) => ProtractorBrowser;
+    ExpectedConditions: ProtractorExpectedConditions;
+    ProtractorBrowser: any;
+    ElementFinder: any;
+    ElementArrayFinder: any;
+    ProtractorBy: any;
+    ProtractorExpectedConditions: any;
+    ActionSequence: any;
+    Browser: any;
+    Builder: any;
+    Button: any;
+    Capabilities: any;
+    Capability: any;
+    EventEmitter: any;
+    FileDetector: any;
+    Key: any;
+    Session: any;
+    WebDriver: any;
+    WebElement: any;
+    WebElementPromise: any;
+    error: any;
+    logging: any;
+    promise: any;
+    until: any;
+    Command: any;
+    CommandName: any;
+    utils: {
+        firefox: any;
+        http: any;
+        remote: any;
+    };
+}
+export declare var protractor: Ptor;
