@@ -1,11 +1,14 @@
-describe('async angular2 application', function() {
+describe('async angular1/2 hybrid using ngUpgrade application', function() {
   beforeEach(function() {
-    this.ng12Hybrid = true;
-    browser.get('/hybrid');
+    browser.ng12Hybrid = true;
+    // TODO(sjelin): Fix this when properly loading a hybrid page works again.
+    // Should just be able to use `browser.get` and remove the sleep statement.
+    browser.driver.get(browser.baseUrl + '/hybrid');
+    browser.sleep(3000);
   });
 
   afterEach(function() {
-    this.ng12Hybrid = false;
+    browser.ng12Hybrid = false;
   });
 
   it('should propertly load the page', function() {

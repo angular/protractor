@@ -33,8 +33,7 @@ var passingTests = [
   'node built/cli.js spec/customFramework.js',
   'node built/cli.js spec/noGlobalsConf.js',
   'node built/cli.js spec/angular2Conf.js',
-  // TODO: fix the hybrid testapp and re-enable hybridConf test
-  // 'node built/cli.js spec/hybridConf.js',
+  'node built/cli.js spec/hybridConf.js',
   'node scripts/attachSession.js',
   'node scripts/exitCodes.js',
   'node scripts/interactive_tests/interactive_test.js',
