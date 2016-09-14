@@ -1,8 +1,9 @@
 import {ElementFinder} from './element';
+import {Ptor} from './ptor';
 
 let webdriver = require('selenium-webdriver');
 
-/* globals browser */
+declare var global: any;
 
 /**
  * Represents a library of canned expected conditions that are useful for
@@ -149,15 +150,18 @@ export class ProtractorExpectedConditions {
    */
   alertIsPresent(): Function {
     return () => {
-      return global.browser.driver.switchTo().alert().then(
-          (): boolean => { return true; },
-          (err: any) => {
-            if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
-              return false;
-            } else {
-              throw err;
-            }
-          });
+      return (<Ptor>global.protractor)
+          .browser.driver.switchTo()
+          .alert()
+          .then(
+              (): boolean => { return true; },
+              (err: any) => {
+                if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
+                  return false;
+                } else {
+                  throw err;
+                }
+              });
     };
   }
 
@@ -252,8 +256,9 @@ export class ProtractorExpectedConditions {
    */
   titleContains(title: string): Function {
     return () => {
-      return global.browser.driver.getTitle().then(
-          (actualTitle: string): boolean => {
+      return (<Ptor>global.protractor)
+          .browser.driver.getTitle()
+          .then((actualTitle: string): boolean => {
             return actualTitle.indexOf(title) > -1;
           });
     };
@@ -275,8 +280,11 @@ export class ProtractorExpectedConditions {
    */
   titleIs(title: string): Function {
     return () => {
-      return global.browser.driver.getTitle().then(
-          (actualTitle: string): boolean => { return actualTitle === title; });
+      return (<Ptor>global.protractor)
+          .browser.driver.getTitle()
+          .then((actualTitle: string): boolean => {
+            return actualTitle === title;
+          });
     };
   }
 
@@ -297,8 +305,9 @@ export class ProtractorExpectedConditions {
    */
   urlContains(url: string): Function {
     return () => {
-      return global.browser.driver.getCurrentUrl().then(
-          (actualUrl: string): boolean => {
+      return (<Ptor>global.protractor)
+          .browser.driver.getCurrentUrl()
+          .then((actualUrl: string): boolean => {
             return actualUrl.indexOf(url) > -1;
           });
     };
@@ -320,8 +329,9 @@ export class ProtractorExpectedConditions {
    */
   urlIs(url: string): Function {
     return () => {
-      return global.browser.driver.getCurrentUrl().then(
-          (actualUrl: string): boolean => { return actualUrl === url; });
+      return (<Ptor>global.protractor)
+          .browser.driver.getCurrentUrl()
+          .then((actualUrl: string): boolean => { return actualUrl === url; });
     };
   }
 

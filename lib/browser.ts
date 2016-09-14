@@ -10,7 +10,11 @@ import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
+import {Ptor} from './ptor';
 import * as helper from './util';
+
+declare var global: any;
+declare var process: any;
 
 let clientSideScripts = require('./clientsidescripts');
 let webdriver = require('selenium-webdriver');
@@ -18,7 +22,6 @@ let Command = require('selenium-webdriver/lib/command').Command;
 let CommandName = require('selenium-webdriver/lib/command').Name;
 
 // jshint browser: true
-/* global angular */
 
 const DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
 const DEFAULT_RESET_URL = 'data:text/html,<html></html>';
@@ -992,9 +995,9 @@ export class ProtractorBrowser extends Webdriver {
     }
     let context: Context = {require: require};
     global.list = (locator: Locator) => {
-      /* globals browser */
-      return global.browser.findElements(locator).then(
-          (arr: webdriver.WebElement[]) => {
+      return (<Ptor>global.protractor)
+          .browser.findElements(locator)
+          .then((arr: webdriver.WebElement[]) => {
             let found: string[] = [];
             for (let i = 0; i < arr.length; ++i) {
               arr[i].getText().then((text: string) => { found.push(text); });
