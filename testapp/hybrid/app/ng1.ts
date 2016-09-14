@@ -8,7 +8,7 @@ function ctrl($scope: any, $timeout: any) {
   };
 }
 
-export function ng1() {
+export function ng1Dir() {
   return {
     scope: {},
     templateUrl: './html/ng1.html',

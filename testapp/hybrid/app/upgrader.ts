@@ -1,6 +1,8 @@
 import { UpgradeAdapter } from '@angular/upgrade';
 import { BrowserModule } from '@angular/platform-browser';
 import { forwardRef, NgModule } from '@angular/core';
+import { Ng2Component } from './ng2'
+
 
 export const adapter: UpgradeAdapter = new UpgradeAdapter(forwardRef(() => Ng2Module));
 
@@ -9,6 +11,7 @@ export const adapter: UpgradeAdapter = new UpgradeAdapter(forwardRef(() => Ng2Mo
     BrowserModule
   ],
   declarations: [
+    Ng2Component, adapter.upgradeNg1Component('ng1')
   ],
 
 })

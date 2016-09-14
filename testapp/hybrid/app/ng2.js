@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var upgrader_1 = require('./upgrader');
 var Ng2Component = (function () {
     function Ng2Component() {
         var _this = this;
@@ -29,5 +28,5 @@ var Ng2Component = (function () {
     ], Ng2Component);
     return Ng2Component;
 }());
-exports.ng2 = upgrader_1.adapter.downgradeNg2Component(Ng2Component);
+exports.Ng2Component = Ng2Component;
 //# sourceMappingURL=ng2.js.map

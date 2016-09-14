@@ -7,7 +7,7 @@ function ctrl($scope, $timeout) {
         }, 1000);
     };
 }
-function ng1() {
+function ng1Dir() {
     return {
         scope: {},
         templateUrl: './html/ng1.html',
@@ -15,5 +15,5 @@ function ng1() {
         controllerAs: 'ctrl'
     };
 }
-exports.ng1 = ng1;
+exports.ng1Dir = ng1Dir;
 //# sourceMappingURL=ng1.js.map

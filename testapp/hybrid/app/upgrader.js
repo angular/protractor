@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var upgrade_1 = require('@angular/upgrade');
 var platform_browser_1 = require('@angular/platform-browser');
 var core_1 = require('@angular/core');
+var ng2_1 = require('./ng2');
 exports.adapter = new upgrade_1.UpgradeAdapter(core_1.forwardRef(function () { return Ng2Module; }));
 var Ng2Module = (function () {
     function Ng2Module() {
@@ -20,7 +21,9 @@ var Ng2Module = (function () {
             imports: [
                 platform_browser_1.BrowserModule
             ],
-            declarations: [],
+            declarations: [
+                ng2_1.Ng2Component, exports.adapter.upgradeNg1Component('ng1')
+            ],
         }), 
         __metadata('design:paramtypes', [])
     ], Ng2Module);
