@@ -50,7 +50,7 @@ gulp.task('checkVersion', function(done) {
 });
 
 gulp.task('built:copy', function(done) {
-  return gulp.src(['lib/**/*.js','lib/globals.d.ts','lib/index.d.ts'])
+  return gulp.src(['lib/**/*.js','lib/index.d.ts'])
       .pipe(gulp.dest('built/'));
   done();
 });

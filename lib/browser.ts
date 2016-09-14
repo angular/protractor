@@ -679,8 +679,12 @@ export class ProtractorBrowser extends Webdriver {
                     let $timeout = $delegate;
 
                     let taskId = 0;
-                    if (!window['NG_PENDING_TIMEOUTS']) {
-                      window['NG_PENDING_TIMEOUTS'] = {};
+
+                    interface Window {
+                      [key: string]: any;
+                    }
+                    if (!(<Window>window)['NG_PENDING_TIMEOUTS']) {
+                      (<Window>window)['NG_PENDING_TIMEOUTS'] = {};
                     }
 
                     let extendedTimeout: any = function() {
@@ -691,10 +695,12 @@ export class ProtractorBrowser extends Webdriver {
 
                       taskId++;
                       let fn = args[0];
-                      window['NG_PENDING_TIMEOUTS'][taskId] = fn.toString();
+                      (<Window>window)['NG_PENDING_TIMEOUTS'][taskId] =
+                          fn.toString();
                       let wrappedFn = ((taskId_: number) => {
                         return function() {
-                          delete window['NG_PENDING_TIMEOUTS'][taskId_];
+                          delete (
+                              <Window>window)['NG_PENDING_TIMEOUTS'][taskId_];
                           return fn.apply(null, arguments);
                         };
                       })(taskId);
@@ -708,7 +714,7 @@ export class ProtractorBrowser extends Webdriver {
                     extendedTimeout.cancel = function() {
                       let taskId_ = arguments[0] && arguments[0].ptorTaskId_;
                       if (taskId_) {
-                        delete window['NG_PENDING_TIMEOUTS'][taskId_];
+                        delete (<Window>window)['NG_PENDING_TIMEOUTS'][taskId_];
                       }
                       return $timeout.cancel.apply($timeout, arguments);
                     };
@@ -1044,7 +1050,11 @@ export class ProtractorBrowser extends Webdriver {
     let vm_ = require('vm');
     let flow = webdriver.promise.controlFlow();
 
-    let context: Object = {require: require};
+    interface Context {
+      require: any;
+      [key: string]: any;
+    }
+    let context: Context = {require: require};
     global.list = (locator: Locator) => {
       /* globals browser */
       return global.browser.findElements(locator).then(
