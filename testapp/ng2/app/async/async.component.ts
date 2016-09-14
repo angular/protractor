@@ -1,9 +1,7 @@
 import { Component, NgZone } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 @Component({
   templateUrl: 'app/async/async.component.html',
-  directives: [NgIf]
 })
 export class AsyncComponent {
   val1: number = 0;

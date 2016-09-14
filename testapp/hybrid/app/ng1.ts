@@ -1,4 +1,4 @@
-function ctrl($scope, $timeout) {
+function ctrl($scope: any, $timeout: any) {
   $scope.callCount = 0;
 
   $scope.clickButton = function() {
