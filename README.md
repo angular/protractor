@@ -6,9 +6,10 @@ Protractor [![Build Status](https://travis-ci.org/angular/protractor.png?branch=
 Compatibility
 -------------
 
-Protractor 4 is compatible with nodejs v4 and newer.
+Protractor 4 is compatible with nodejs v4 and newer. If you absolutely need to use nodjs at 0.12, use Protractor@2.
 
-When using nodejs v0.12, use protractor 2 (`npm install -g protractor@2`).
+Protractor work with Angular versions greater than 1.0.6/1.1.4, and is compatible with Angular 2 applications. Note that for Angular 2 apps, the `binding` and `model` locators are not supported. We recommend using `by.css`.
+
 
 Getting Started
 ---------------

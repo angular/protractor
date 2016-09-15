@@ -8,16 +8,19 @@ Note that because Protractor uses WebDriver to drive browsers, any issues with W
 | Driver                 | Support      | Known Issues    |
 |------------------------|--------------|-----------------|
 |ChromeDriver            |Yes           |[Link](https://github.com/angular/protractor/labels/browser%3A%20chrome) |
-|FirefoxDriver           |Yes           |[Link](https://github.com/angular/protractor/labels/browser%3A%20firefox) |
+|FirefoxDriver*          |Yes           |[Link](https://github.com/angular/protractor/labels/browser%3A%20firefox) |
 |SafariDriver            |Yes           |[Link](https://github.com/angular/protractor/labels/browser%3A%20safari) |
 |IEDriver                |Yes           |[Link](https://github.com/angular/protractor/labels/browser%3A%20IE) |
 |OperaDriver             |No            |                 |
 |ios-Driver              |No            |                 |
-|Appium - iOS/Safari     |Yes*          |[Link](https://github.com/angular/protractor/labels/browser%3A%20iOS%20safari) |
-|Appium - Android/Chrome |Yes*          |[Link](https://github.com/angular/protractor/labels/browser%3A%20android%20chrome) |
-|Selendroid              |Yes*          |                 |
-|PhantomJS / GhostDriver |**            |[Link](https://github.com/angular/protractor/labels/browser%3A%20phantomjs) | 
+|Appium - iOS/Safari     |Yes**         |[Link](https://github.com/angular/protractor/labels/browser%3A%20iOS%20safari) |
+|Appium - Android/Chrome |Yes**         |[Link](https://github.com/angular/protractor/labels/browser%3A%20android%20chrome) |
+|Selendroid              |Yes**         |                 |
+|PhantomJS / GhostDriver |***           |[Link](https://github.com/angular/protractor/labels/browser%3A%20phantomjs) | 
 
-(*) These drivers are not yet in the Protractor smoke tests.
 
-(**) We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers.
+(*) WebDriver support fr Firefox has changed recently, and FireFox version 48 does not work properly with the current tools. For the moment, we recommend testing against FireFox 47. In future releases, support for WebDriver via Mozilla's Marionette project will be available.
+
+(**) These drivers are not yet in the Protractor smoke tests.
+
+(***) We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers.
