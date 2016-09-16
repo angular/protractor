@@ -48,10 +48,10 @@ The ambient typings are downloaded from DefinitelyTyped in the `postinstall` ste
 
 ## Protractor typings
 
-To use Protractor types, you'll need to import `protractor/globals`. After this is imported, you should have autocompletion hints when typing.
+To use Protractor types, you'll need to import `protractor`. After this is imported, you should have autocompletion hints when typing.
 
 ```
-import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor/globals';
+import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
 ```
 
 Although the Protractor configuration file can be written in javascript, creating it in typescript will have some hints. These hints and the reference configuration can be found in `lib/config.ts`. Below we are importing the Config interface and applying that interface to the config variable:

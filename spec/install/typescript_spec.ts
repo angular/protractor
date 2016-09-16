@@ -1,4 +1,4 @@
-import {browser, by, By, element, $, $$, ExpectedConditions, protractor, ProtractorBrowser} from 'protractor';
+import {browser, by, By, element, $, $$, ExpectedConditions, protractor} from 'protractor';
 
 describe('typescript imports', () => {
   it('should have global objects that match the protractor namespace', () => {
