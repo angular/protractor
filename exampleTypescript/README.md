@@ -2,6 +2,8 @@
 
 Typescript provides code auto completion and helpful hints with a text editor like Microsoft's Visual Studio Code or another text editor with Typescript support.
 
+Note that this example uses TypeScript 2.0.
+
 ## Examples
 
 There are two examples in this directory:
@@ -18,18 +20,17 @@ There are two examples in this directory:
 ```
 exampleTypescript/
 |- node_modules/       // downloaded node modules
-|- typings/            // downloaded ambient types
-|   |- index.d.ts      // generated typings file
+|- tmp/                // compiled javascript output
+|
 |- .gitignore          // since typescript produces javascript, we should not
 |                      // commit javascript to the repo
 |- angularPage.ts      // page object example
 |- confPageObjects.ts  // configuration for the page objects example
 |- package.json        // node dependencies for the project
-|- readme.md           // this file
+|- README.md           // this file
 |- spec.ts             // spec for the simple protractor example
 |- specPageObjects.ts  // spec for the page objects example
 |- tsconfig.json       // typescript transpile configuration
-|- typings.json        // ambient typing imports (jasmine, node, etc)
 ```
 
 
@@ -37,13 +38,11 @@ exampleTypescript/
 
 This package.json references the local protractor directory with `"protractor": "file: ../"`. For the type declarations to work, from the protractor directory run an `npm install` to generate the declarations file.
 
-Next, install the exampleTypescript node_modules and ambient typings with:
+Next, install the exampleTypescript node_modules with:
 
 ```
 npm install
 ```
-
-The ambient typings are downloaded from DefinitelyTyped in the `postinstall` step. The files that are downloaded are listed in the `typings.json` file.
 
 
 ## Protractor typings
@@ -66,7 +65,7 @@ export let config: Config = {
 
 ## Ambient typings
 
-Protractor also uses ambient types including jasmine and node. These are brought in via the `typings.json` file. The ambient typings files are imported from the `typings/index.d.ts` generated file and are included in the project via the `tsconfig.json` configuration file.
+Protractor also uses ambient types including jasmine and node. These are brought in via the `tsconfig.json` file, which uses npm module resolution to get types from `node_modules/@types`.
 
 
 ## Compiling your code
