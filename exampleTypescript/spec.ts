@@ -5,7 +5,7 @@
 //   from 'protractor/globals';
 //
 // The jasmine typings are brought in via DefinitelyTyped ambient typings.
-import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor/globals';
+import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
 
 describe('protractor with typescript typings', () => {
   beforeEach(() => {
