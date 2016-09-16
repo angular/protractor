@@ -19,4 +19,3 @@ libpeerconnection.log
 npm-debug.log
 xmloutput*
 release.md
-globals.ts

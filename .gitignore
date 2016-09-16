@@ -14,5 +14,4 @@ npm-debug.log
 .idea/
 
 *.swp
-globals.js
-globals.d.ts
+
