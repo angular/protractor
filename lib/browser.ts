@@ -6,6 +6,7 @@ import * as url from 'url';
 import * as util from 'util';
 
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
+import {IError} from './exitCodes';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';

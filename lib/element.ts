@@ -4,6 +4,7 @@ import {ElementHelper} from './browser';
 import {ProtractorBrowser} from './browser';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
+import {IError} from './exitCodes';
 
 let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
