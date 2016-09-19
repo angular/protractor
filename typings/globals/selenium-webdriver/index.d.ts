@@ -3552,7 +3552,7 @@ declare namespace webdriver {
      * @implements {promise.Thenable.<!webdriver.Alert>}
      * @final
      */
-    class AlertPromise extends Alert {
+    class AlertPromise extends Alert implements webdriver.promise.IThenable<Alert>{
       /**
        * @param {!WebDriver} driver The driver controlling the browser this
        *     alert is attached to.
@@ -3560,6 +3560,128 @@ declare namespace webdriver {
        *     that will be fulfilled with the promised alert.
        */
       constructor(driver: WebDriver, alert: webdriver.promise.Promise<Alert>);
+
+            //region Methods
+
+            /**
+             * Cancels the computation of this promise's value, rejecting the promise in the
+             * process.
+             * @param {*} reason The reason this promise is being cancelled. If not an
+             *     {@code Error}, one will be created using the value's string
+             *     representation.
+             */
+            cancel(opt_reason?: string|Error): void;
+
+            /** @return {boolean} Whether this promise's value is still being computed. */
+            isPending(): boolean;
+
+            /**
+             * Registers listeners for when this instance is resolved. This function most
+             * overridden by subtypes.
+             *
+             * @param opt_callback The function to call if this promise is
+             *     successfully resolved. The function should expect a single argument: the
+             *     promise's resolved value.
+             * @param opt_errback The function to call if this promise is
+             *     rejected. The function should expect a single argument: the rejection
+             *     reason.
+             * @return A new promise which will be resolved
+             *     with the result of the invoked callback.
+             */
+            then(opt_callback?: Function, opt_errback?: Function): webdriver.promise.Promise<any>;
+
+            /**
+             * Registers a listener for when this promise is rejected. This is synonymous
+             * with the {@code catch} clause in a synchronous API:
+             * <pre><code>
+             *   // Synchronous API:
+             *   try {
+             *     doSynchronousWork();
+             *   } catch (ex) {
+             *     console.error(ex);
+             *   }
+             *
+             *   // Asynchronous promise API:
+             *   doAsynchronousWork().thenCatch(function(ex) {
+             *     console.error(ex);
+             *   });
+             * </code></pre>
+             *
+             * @param {function(*): (R|webdriver.promise.Promise.<R>)} errback The function
+             *     to call if this promise is rejected. The function should expect a single
+             *     argument: the rejection reason.
+             * @return {!webdriver.promise.Promise.<R>} A new promise which will be
+             *     resolved with the result of the invoked callback.
+             * @template R
+             */
+            thenCatch<R>(errback: (error: any) => any): webdriver.promise.Promise<R>;
+
+            /**
+             * Registers a listener for when this promise is rejected. This is synonymous
+             * with the {@code catch} clause in a synchronous API:
+             *
+             *     // Synchronous API:
+             *     try {
+             *       doSynchronousWork();
+             *     } catch (ex) {
+             *       console.error(ex);
+             *     }
+             *
+             *     // Asynchronous promise API:
+             *     doAsynchronousWork().catch(function(ex) {
+             *       console.error(ex);
+             *     });
+             *
+             * @param {function(*): (R|IThenable<R>)} errback The
+             *     function to call if this promise is rejected. The function should
+             *     expect a single argument: the rejection reason.
+             * @return {!ManagedPromise<R>} A new promise which will be
+             *     resolved with the result of the invoked callback.
+             * @template R
+             */
+            catch<R>(errback: Function): webdriver.promise.Promise<R>;
+
+
+            /**
+             * Registers a listener to invoke when this promise is resolved, regardless
+             * of whether the promise's value was successfully computed. This function
+             * is synonymous with the {@code finally} clause in a synchronous API:
+             * <pre><code>
+             *   // Synchronous API:
+             *   try {
+             *     doSynchronousWork();
+             *   } finally {
+             *     cleanUp();
+             *   }
+             *
+             *   // Asynchronous promise API:
+             *   doAsynchronousWork().thenFinally(cleanUp);
+             * </code></pre>
+             *
+             * <b>Note:</b> similar to the {@code finally} clause, if the registered
+             * callback returns a rejected promise or throws an error, it will silently
+             * replace the rejection error (if any) from this promise:
+             * <pre><code>
+             *   try {
+             *     throw Error('one');
+             *   } finally {
+             *     throw Error('two');  // Hides Error: one
+             *   }
+             *
+             *   webdriver.promise.rejected(Error('one'))
+             *       .thenFinally(function() {
+             *         throw Error('two');  // Hides Error: one
+             *       });
+             * </code></pre>
+             *
+             *
+             * @param {function(): (R|webdriver.promise.Promise.<R>)} callback The function
+             *     to call when this promise is resolved.
+             * @return {!webdriver.promise.Promise.<R>} A promise that will be fulfilled
+             *     with the callback result.
+             * @template R
+             */
+            thenFinally<R>(callback: Function): webdriver.promise.Promise<R>;
     }
 
     /** @deprecated Use {@link error.UnexpectedAlertOpenError} instead. */
