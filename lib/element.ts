@@ -491,7 +491,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then(fn: Function, errorFn: Function): wdpromise.Promise<any> {
+  then(fn?: Function, errorFn?: Function): wdpromise.Promise<any[]> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
     } else {
@@ -525,7 +525,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     function has been called on all the ElementFinders. The promise will
    *     resolve to null.
    */
-  each(fn: (elementFinder: ElementFinder, index: number) => any):
+  each(fn: (elementFinder?: ElementFinder, index?: number) => any):
       wdpromise.Promise<any> {
     return this.map(fn).then((): any => { return null; });
   }
@@ -562,10 +562,10 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
-  map(mapFn: (elementFinder: ElementFinder, index: number) => any):
+  map(mapFn: (elementFinder?: ElementFinder, index?: number) => any):
       wdpromise.Promise<any> {
     return this.asElementFinders_().then((arr: ElementFinder[]) => {
-      let list = arr.map((elementFinder: ElementFinder, index: number) => {
+      let list = arr.map((elementFinder?: ElementFinder, index?: number) => {
         let mapResult = mapFn(elementFinder, index);
         // All nested arrays and objects will also be fully resolved.
         return wdpromise.fullyResolved(mapResult);
