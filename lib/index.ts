@@ -1,8 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
-// TODO: we'd like to remove the triple-slash reference, but it's necessary
-// until definitely-typed is updated for selenium-webdriver.
-
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';

@@ -6,6 +6,7 @@ spec/
 stress/
 selenium/
 testapp/
+typings/
 website/
 
 .gitattributes

@@ -11,7 +11,8 @@
     "types": [
       "jasmine", "node",
       "chalk", "glob", "minimatch",
-      "minimist", "optimist", "q"
+      "minimist", "optimist", "q",
+      "selenium-webdriver"
     ]
   },
   "exclude": [
@@ -21,7 +22,6 @@
     "website",
     "scripts",
     "exampleTypescript",
-    "typings/globals",
     "spec"
   ]
 }
