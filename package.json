@@ -59,7 +59,7 @@
     "protractor": "bin/protractor",
     "webdriver-manager": "bin/webdriver-manager"
   },
-  "main": "built/main.js",
+  "main": "built/index.js",
   "typings": "built/index.d.ts",
   "scripts": {
     "prepublish": "gulp prepublish",
