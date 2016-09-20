@@ -1,7 +1,7 @@
 function FrameCtrl($scope) {
 
   $scope.frameName = 'default';
-  $scope.frameUrl = 'http://google.com';
+  $scope.frameUrl = 'window/windows.html';
 
 }
 FrameCtrl.$inject = ['$scope'];
