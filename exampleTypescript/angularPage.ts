@@ -4,7 +4,7 @@
 // import {browser, element, by, By, $, $$, ExpectedConditions}
 //   from 'protractor/globals';
 //
-import {browser, element, by} from 'protractor/globals';
+import {browser, element, by} from 'protractor';
 
 export class AngularHomepage {
   nameInput = element(by.model('yourName'));

@@ -1,11 +1,12 @@
-describe('async angular2 application', function() {
+describe('async angular1/2 hybrid using ngUpgrade application', function() {
   beforeEach(function() {
-    this.ng12Hybrid = true;
+    browser.ng12Hybrid = true;
+
     browser.get('/hybrid');
   });
 
   afterEach(function() {
-    this.ng12Hybrid = false;
+    browser.ng12Hybrid = false;
   });
 
   it('should propertly load the page', function() {

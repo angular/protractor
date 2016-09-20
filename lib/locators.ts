@@ -1,4 +1,4 @@
-import {By, promise, WebDriver, WebElement} from 'selenium-webdriver';
+import {By, promise as wdpromise, WebDriver, WebElement} from 'selenium-webdriver';
 import * as util from 'util';
 
 let webdriver = require('selenium-webdriver');
@@ -22,7 +22,7 @@ export class WebdriverBy {
 export interface Locator {
   findElementsOverride?:
       (driver: WebDriver, using: WebElement,
-       rootSelector: string) => promise.Promise<WebElement[]>;
+       rootSelector: string) => wdpromise.Promise<WebElement[]>;
   row?: (index: number) => Locator;
   column?: (index: string) => Locator;
 }
@@ -77,7 +77,7 @@ export class ProtractorBy extends WebdriverBy {
       return {
         findElementsOverride:
             (driver: WebDriver, using: WebElement, rootSelector: string):
-                promise.Promise<WebElement[]> => {
+                wdpromise.Promise<WebElement[]> => {
               let findElementArguments: any[] = [script];
               for (let i = 0; i < locatorArguments.length; i++) {
                 findElementArguments.push(locatorArguments[i]);
@@ -130,7 +130,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findBindings, bindingDescriptor, false, using,
                 rootSelector));
@@ -163,7 +163,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findBindings, bindingDescriptor, true, using,
                 rootSelector));
@@ -193,7 +193,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findByModel, model, using, rootSelector));
           },
@@ -217,7 +217,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findByButtonText, searchText, using,
                 rootSelector));
@@ -242,7 +242,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findByPartialButtonText, searchText, using,
                 rootSelector));
@@ -258,7 +258,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findAllRepeaterRows, repeatDescriptor, exact,
                 using, rootSelector));
@@ -268,7 +268,7 @@ export class ProtractorBy extends WebdriverBy {
         return {
           findElementsOverride:
               (driver: WebDriver, using: WebElement, rootSelector: string):
-                  promise.Promise<WebElement[]> => {
+                  wdpromise.Promise<WebElement[]> => {
                 return driver.findElements(webdriver.By.js(
                     clientSideScripts.findRepeaterRows, repeatDescriptor, exact,
                     index, using, rootSelector));
@@ -280,7 +280,7 @@ export class ProtractorBy extends WebdriverBy {
             return {
               findElementsOverride:
                   (driver: WebDriver, using: WebElement, rootSelector: string):
-                      promise.Promise<WebElement[]> => {
+                      wdpromise.Promise<WebElement[]> => {
                     return driver.findElements(webdriver.By.js(
                         clientSideScripts.findRepeaterElement, repeatDescriptor,
                         exact, index, binding, using, rootSelector));
@@ -297,7 +297,7 @@ export class ProtractorBy extends WebdriverBy {
         return {
           findElementsOverride:
               (driver: WebDriver, using: WebElement, rootSelector: string):
-                  promise.Promise<WebElement[]> => {
+                  wdpromise.Promise<WebElement[]> => {
                 return driver.findElements(webdriver.By.js(
                     clientSideScripts.findRepeaterColumn, repeatDescriptor,
                     exact, binding, using, rootSelector));
@@ -310,7 +310,7 @@ export class ProtractorBy extends WebdriverBy {
             return {
               findElementsOverride:
                   (driver: WebDriver, using: WebElement, rootSelector: string):
-                      promise.Promise<WebElement[]> => {
+                      wdpromise.Promise<WebElement[]> => {
                     return driver.findElements(webdriver.By.js(
                         clientSideScripts.findRepeaterElement, repeatDescriptor,
                         exact, index, binding, using, rootSelector));
@@ -427,7 +427,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findByCssContainingText, cssSelector,
                 searchText, using, rootSelector));
@@ -462,7 +462,7 @@ export class ProtractorBy extends WebdriverBy {
     return {
       findElementsOverride:
           (driver: WebDriver, using: WebElement, rootSelector: string):
-              promise.Promise<WebElement[]> => {
+              wdpromise.Promise<WebElement[]> => {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findByOptions, optionsDescriptor, using,
                 rootSelector));

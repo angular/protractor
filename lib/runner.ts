@@ -12,6 +12,9 @@ import {Plugins} from './plugins';
 import {protractor} from './ptor';
 import * as helper from './util';
 
+declare var global: any;
+declare var process: any;
+
 var webdriver = require('selenium-webdriver');
 let logger = new Logger('runner');
 /*
@@ -38,11 +41,11 @@ export class Runner extends EventEmitter {
     this.config_ = config;
     if (config.v8Debug) {
       // Call this private function instead of sending SIGUSR1 because Windows.
-      (<any>process)['_debugProcess'](process.pid);
+      process['_debugProcess'](process.pid);
     }
 
     if (config.nodeDebug) {
-      (<any>process)['_debugProcess'](process.pid);
+      process['_debugProcess'](process.pid);
       let flow = webdriver.promise.controlFlow();
 
       flow.execute(() => {

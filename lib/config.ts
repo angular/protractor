@@ -100,7 +100,7 @@ export interface Config {
    * to generate the agent or use sauceProxy as an alternative. If a
    * sauceProxy is provided, the sauceAgent will be overridden.
    */
-  sauceAgent?: HttpProxyAgent;
+  sauceAgent?: any;
   /**
    * Use sauceProxy if you are behind a corporate proxy to connect to
    * saucelabs.com.

@@ -1,3 +1,41 @@
+# 4.0.8
+
+## Bug Fixes
+
+- ([58459a9](https://github.com/angular/protractor/commit/58459a94b9e7a54f4b48614b93c0614177a8a522))
+  fix(types): do not publish built/globals.d.ts (#3546)
+
+  - do not publish built/globals.d.ts
+  - remove type interface for HttpProxyAgent and set to to any
+
+# 4.0.7
+
+## Dependencies
+
+- ([a68dd3f](https://github.com/angular/protractor/commit/a68dd3f0c6e33f93a5b7e9674197154b0e68cedd))
+  deps(jasmine): lower jasmine version down to 2.4.1 (#3540)
+
+  - upgrading to 2.5.x no longer logs jasmine output
+
+# 4.0.6
+
+## Bug Fixes
+
+- ([d18bba3](https://github.com/angular/protractor/commit/d18bba3e288610dd606aac4b656581da0dc65491))
+  fix(types): remove relative path used for @types/node and @types/jasmine (#3535)
+
+
+## Dependencies
+
+  closes #3533
+- ([4e7e8ec](https://github.com/angular/protractor/commit/4e7e8ec2c0a018e6159b557decee6b2df53958b5))
+  deps(outdated): update types/q and jasmine (#3525)
+
+## Other
+
+- ([9d5edbe](https://github.com/angular/protractor/commit/9d5edbe315ea70aad1fd0a2eaeff3328a2f8ee93))
+  chore(node): require the minimum node version 4.2.x required by selenium-webdriver (#3534)
+
 # 4.0.5
 
 In this version, there are several small changes that affect TypeScript users

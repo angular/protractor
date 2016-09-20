@@ -1,4 +1,4 @@
-function ctrl($scope, $timeout) {
+function ctrl($scope: any, $timeout: any) {
   $scope.callCount = 0;
 
   $scope.clickButton = function() {
@@ -8,7 +8,7 @@ function ctrl($scope, $timeout) {
   };
 }
 
-export function ng1() {
+export function ng1Dir() {
   return {
     scope: {},
     templateUrl: './html/ng1.html',

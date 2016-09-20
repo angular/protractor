@@ -4,15 +4,17 @@ const CONFIG_ERROR_CODE = 105;
 const BROWSER_CONNECT_ERROR_CODE = 135;
 const KITCHEN_SINK_CODE = 199;
 
-export class ProtractorError extends Error {
+export class IError extends Error {
+  code?: number;
+  stack?: string;
+}
+
+export class ProtractorError extends IError {
   static ERR_MSGS: string[];
   static CODE = KITCHEN_SINK_CODE;
   static SUPRESS_EXIT_CODE = false;
 
-  message:
-      string;  // a one liner, if more than one line is sent, it will be cut off
-  stack: string;  // has the message with the stack trace
-  code: number;
+  message: string;  // a one line message
 
   /**
    * Captures the stack trace to this.stack from the Error.captureStackTrace.
