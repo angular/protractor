@@ -13,6 +13,8 @@ angular.module('myApp', ['ngAnimate', 'ngRoute', 'myApp.appVersion']).
     $routeProvider.when('/animation', {templateUrl: 'animation/animation.html', controller: AnimationCtrl});
     $routeProvider.when('/interaction', {templateUrl: 'interaction/interaction.html', controller: InteractionCtrl});
     $routeProvider.when('/shadow', {templateUrl: 'shadow/shadow.html', controller: ShadowCtrl});
+    $routeProvider.when('/frames', {templateUrl: 'frames/frames.html', controller: FrameCtrl});
+    $routeProvider.when('/window', {templateUrl: 'window/windows.html', controller: WindowCtrl});
     $routeProvider.when('/slowloader', {
       templateUrl: 'polling/polling.html',
       controller: PollingCtrl,
