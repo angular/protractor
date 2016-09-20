@@ -2,9 +2,9 @@ import {By, error, ILocation, ISize, promise as wdpromise, WebDriver, WebElement
 
 import {ElementHelper} from './browser';
 import {ProtractorBrowser} from './browser';
+import {IError} from './exitCodes';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
-import {IError} from './exitCodes';
 
 let webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
