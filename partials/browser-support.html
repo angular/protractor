@@ -16,7 +16,7 @@
 <td><a href="https://github.com/angular/protractor/labels/browser%3A%20chrome">Link</a></td>
 </tr>
 <tr>
-<td>FirefoxDriver</td>
+<td>FirefoxDriver*</td>
 <td>Yes</td>
 <td><a href="https://github.com/angular/protractor/labels/browser%3A%20firefox">Link</a></td>
 </tr>
@@ -42,25 +42,26 @@
 </tr>
 <tr>
 <td>Appium - iOS/Safari</td>
-<td>Yes*</td>
+<td>Yes**</td>
 <td><a href="https://github.com/angular/protractor/labels/browser%3A%20iOS%20safari">Link</a></td>
 </tr>
 <tr>
 <td>Appium - Android/Chrome</td>
-<td>Yes*</td>
+<td>Yes**</td>
 <td><a href="https://github.com/angular/protractor/labels/browser%3A%20android%20chrome">Link</a></td>
 </tr>
 <tr>
 <td>Selendroid</td>
-<td>Yes*</td>
+<td>Yes**</td>
 <td></td>
 </tr>
 <tr>
 <td>PhantomJS / GhostDriver</td>
-<td>**</td>
+<td><em>*</em></td>
 <td><a href="https://github.com/angular/protractor/labels/browser%3A%20phantomjs">Link</a></td>
 </tr>
 </tbody>
 </table>
-<p>(*) These drivers are not yet in the Protractor smoke tests.</p>
-<p>(**) We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers.</p>
+<p>(*) WebDriver support fr Firefox has changed recently, and FireFox version 48 does not work properly with the current tools. For the moment, we recommend testing against FireFox 47. In future releases, support for WebDriver via Mozilla&#39;s Marionette project will be available.</p>
+<p>(**) These drivers are not yet in the Protractor smoke tests.</p>
+<p>(<em>*</em>) We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers.</p>

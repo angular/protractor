@@ -1,8 +1,8 @@
 <h1 id="tutorial">Tutorial</h1>
 <p>This is a simple tutorial that shows you how to set up Protractor and start running tests.</p>
 <h2 id="prerequisites" class="anchored"><div><a href="#{{path}}#prerequisites">&#x1f517;</a>Prerequisites</div></h2>
-<p>Protractor is a <a href="http://nodejs.org/">Node.js</a> program. To run, you will need to have Node.js installed. You will download Protractor package using <a href="https://www.npmjs.org/">npm</a>, which comes with Node.js. Check the version of Node.js you have by running <code ng-non-bindable>node --version</code>. Then, check the [compatibility notes] (<a href="https://github.com/angular/protractor#compatibility">https://github.com/angular/protractor#compatibility</a>) in the Protractor README to make sure your version of Node.js is compatible with Protractor. </p>
-<p>By default, Protractor uses the <a href="http://jasmine.github.io/">Jasmine</a> test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.3.</p>
+<p>Protractor is a <a href="http://nodejs.org/">Node.js</a> program. To run, you will need to have Node.js installed. You will download Protractor package using <a href="https://www.npmjs.org/">npm</a>, which comes with Node.js. Check the version of Node.js you have by running <code ng-non-bindable>node --version</code>. Then, check the <a href="https://github.com/angular/protractor#compatibility">compatibility notes</a> in the Protractor README to make sure your version of Node.js is compatible with Protractor. </p>
+<p>By default, Protractor uses the <a href="http://jasmine.github.io/">Jasmine</a> test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.4.</p>
 <p>This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit (JDK)</a> installed to run the standalone Selenium Server. Check this by running <code ng-non-bindable>java -version</code> from the command line.</p>
 <h2 id="setup" class="anchored"><div><a href="#{{path}}#setup">&#x1f517;</a>Setup</div></h2>
 <p>Use npm to install Protractor globally with:</p>
@@ -59,7 +59,7 @@ describe(&#39;Protractor Demo App&#39;, function() {
 <p>This uses the globals <code ng-non-bindable>element</code> and <code ng-non-bindable>by</code>, which are also created by Protractor. The <code ng-non-bindable>element</code> function is used for finding HTML elements on your webpage. It returns an ElementFinder object, which can be used to interact with the element or get information from it. In this test, we use <code ng-non-bindable>sendKeys</code> to type into <code ng-non-bindable>&lt;input&gt;</code>s, <code ng-non-bindable>click</code> to click a button, and <code ng-non-bindable>getText</code> to return the content of an element.</p>
 <p><code ng-non-bindable>element</code> takes one parameter, a Locator, which describes how to find the element. The <code ng-non-bindable>by</code> object creates Locators. Here, we&#39;re using three types of Locators:</p>
 <ul>
-<li><code ng-non-bindable>by.model(&#39;first&#39;)</code> to find the element with <code ng-non-bindable>ng-model=&quot;first&quot;</code>. If you inspect the Calculator page source, you will see this is <code ng-non-bindable>&lt;input type=text ng-model=&quot;first&quot;&gt;</code>.</li>
+<li><code ng-non-bindable>by.model(&#39;first&#39;)</code> to find the element with <code ng-non-bindable>ng-model=&quot;first&quot;</code>. If you inspect the Calculator page source, you will see this is <code ng-non-bindable>&lt;input type=&quot;text&quot; ng-model=&quot;first&quot;&gt;</code>.</li>
 <li><code ng-non-bindable>by.id(&#39;gobutton&#39;)</code> to find the element with the given id. This finds <code ng-non-bindable>&lt;button id=&quot;gobutton&quot;&gt;</code>.</li>
 <li><p><code ng-non-bindable>by.binding(&#39;latest&#39;)</code> to find the element bound to the variable <code ng-non-bindable>latest</code>. This finds the span containing <code ng-non-bindable>{{latest}}</code></p>
 <p><a href="#/locators">Learn more about locators and ElementFinders</a>.</p>
@@ -113,7 +113,7 @@ exports.config = {
   }
 }
 </code></pre>
-<p>Try running the tests again. You should see the tests running on Firefox instead of Chrome. The <code ng-non-bindable>capabilities</code> object describes the browser to be tested against. For a full list of options, see <a href="https://github.com/angular/protractor/blob/master/docs/referenceConf.js">the reference config file</a>.</p>
+<p>Try running the tests again. You should see the tests running on Firefox instead of Chrome. The <code ng-non-bindable>capabilities</code> object describes the browser to be tested against. For a full list of options, see <a href="https://github.com/angular/protractor/blob/master/lib/config.ts">the config file</a>.</p>
 <p>You can also run tests on more than one browser at once. Change conf.js to:</p>
 <pre><code class="lang-js">// conf.js
 exports.config = {
