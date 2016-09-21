@@ -63,7 +63,9 @@ export class DriverProvider {
     } else {
       driver.getSession().then((session_: string) => {
         if (session_) {
-          driver.quit().then(function() { deferred.resolve(); });
+          driver.quit().then(function() {
+            deferred.resolve();
+          });
         } else {
           deferred.resolve();
         }
@@ -97,7 +99,8 @@ export class DriverProvider {
    *     is down.
    */
   teardownEnv(): q.Promise<q.Promise<webdriver.WebDriver>[]> {
-    return q.all<any>(this.drivers_.map(
-        (driver: webdriver.WebDriver) => { return this.quitDriver(driver); }));
+    return q.all<any>(this.drivers_.map((driver: webdriver.WebDriver) => {
+      return this.quitDriver(driver);
+    }));
   }
 }

@@ -15,7 +15,9 @@ export class TaskLogger {
    * @param {object} task Task that is being reported.
    * @param {number} pid PID of process running the task.
    */
-  constructor(private task: any, private pid: number) { this.logHeader_(); }
+  constructor(private task: any, private pid: number) {
+    this.logHeader_();
+  }
 
   /**
    * Log the header for the current task including information such as

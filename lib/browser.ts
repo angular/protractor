@@ -346,7 +346,9 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {webdriver.promise.Promise} A promise which resolves to the
    * capabilities object.
    */
-  getProcessedConfig(): wdpromise.Promise<any> { return null; }
+  getProcessedConfig(): wdpromise.Promise<any> {
+    return null;
+  }
 
   /**
    * Fork another instance of browser for use in interactive tests.
@@ -370,7 +372,9 @@ export class ProtractorBrowser extends Webdriver {
    *
    * Set by the runner.
    */
-  restart() { return; }
+  restart() {
+    return;
+  }
 
   /**
    * Instead of using a single root element, search through all angular apps
@@ -482,14 +486,17 @@ export class ProtractorBrowser extends Webdriver {
             () => {
               return this.driver.controlFlow()
                   .execute(
-                      () => { return this.plugins_.waitForPromise(); },
+                      () => {
+                        return this.plugins_.waitForPromise();
+                      },
                       'Plugins.waitForPromise()')
                   .then(() => {
                     return this.driver.wait(() => {
                       return this.plugins_.waitForCondition().then(
                           (results: boolean[]) => {
-                            return results.reduce(
-                                (x, y) => { return x && y; }, true);
+                            return results.reduce((x, y) => {
+                              return x && y;
+                            }, true);
                           });
                     }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
                   });
@@ -654,7 +661,9 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {Array.<!string|Function>} The list of mock modules.
    */
   getRegisteredMockModules(): Array<string|Function> {
-    return this.mockModules_.map((module) => { return module.script; });
+    return this.mockModules_.map((module) => {
+      return module.script;
+    });
   };
 
   /**
@@ -696,8 +705,9 @@ export class ProtractorBrowser extends Webdriver {
 
     if (this.ignoreSynchronization) {
       this.driver.get(destination);
-      return this.driver.controlFlow().execute(
-          () => { return this.plugins_.onPageLoad(); });
+      return this.driver.controlFlow().execute(() => {
+        return this.plugins_.onPageLoad();
+      });
     }
 
     let deferred = webdriver.promise.defer();
@@ -719,7 +729,9 @@ export class ProtractorBrowser extends Webdriver {
                   .executeScript_(
                       'return window.location.href;', msg('get url'))
                   .then(
-                      (url: any) => { return url !== this.resetUrl; },
+                      (url: any) => {
+                        return url !== this.resetUrl;
+                      },
                       (err: IError) => {
                         if (err.code == 13) {
                           // Ignore the error, and continue trying. This is
@@ -737,8 +749,9 @@ export class ProtractorBrowser extends Webdriver {
             timeout, 'waiting for page to load for ' + timeout + 'ms')
         .then(null, deferred.reject);
 
-    this.driver.controlFlow().execute(
-        () => { return this.plugins_.onPageLoad(); });
+    this.driver.controlFlow().execute(() => {
+      return this.plugins_.onPageLoad();
+    });
 
     // Make sure the page is an Angular page.
     this.executeAsyncScript_(
@@ -803,8 +816,12 @@ export class ProtractorBrowser extends Webdriver {
 
     this.driver.controlFlow().execute(() => {
       return self.plugins_.onPageStable().then(
-          () => { deferred.fulfill(); },
-          (error: Error) => { deferred.reject(error); });
+          () => {
+            deferred.fulfill();
+          },
+          (error: Error) => {
+            deferred.reject(error);
+          });
     });
 
     return deferred.promise;
@@ -828,7 +845,9 @@ export class ProtractorBrowser extends Webdriver {
     return this
         .executeScript_(
             'return window.location.href', 'Protractor.refresh() - getUrl')
-        .then((href: string) => { return this.get(href, opt_timeout); });
+        .then((href: string) => {
+          return this.get(href, opt_timeout);
+        });
   }
 
   /**
@@ -908,8 +927,9 @@ export class ProtractorBrowser extends Webdriver {
   debugger() {
     // jshint debug: true
     this.driver.executeScript(clientSideScripts.installInBrowser);
-    webdriver.promise.controlFlow().execute(
-        () => { debugger; }, 'add breakpoint to control flow');
+    webdriver.promise.controlFlow().execute(() => {
+      debugger;
+    }, 'add breakpoint to control flow');
   }
 
   /**
@@ -939,7 +959,13 @@ export class ProtractorBrowser extends Webdriver {
     });
     tester.once('error', (err: NodeJS.ErrnoException) => {
       if (err.code === 'ECONNREFUSED') {
-        tester.once('close', () => { doneDeferred.fulfill(true); }).end();
+        tester
+            .once(
+                'close',
+                () => {
+                  doneDeferred.fulfill(true);
+                })
+            .end();
       } else {
         doneDeferred.reject(
             'Unexpected failure testing for port ' + port + ': ' +
@@ -948,7 +974,9 @@ export class ProtractorBrowser extends Webdriver {
     });
 
     return doneDeferred.then(
-        () => { this.debuggerValidated_ = true; },
+        () => {
+          this.debuggerValidated_ = true;
+        },
         (err: string) => {
           console.error(err);
           process.exit(1);
@@ -1001,7 +1029,9 @@ export class ProtractorBrowser extends Webdriver {
           .then((arr: webdriver.WebElement[]) => {
             let found: string[] = [];
             for (let i = 0; i < arr.length; ++i) {
-              arr[i].getText().then((text: string) => { found.push(text); });
+              arr[i].getText().then((text: string) => {
+                found.push(text);
+              });
             }
             return found;
           });
@@ -1025,7 +1055,9 @@ export class ProtractorBrowser extends Webdriver {
             }
             let nodedebug =
                 require('child_process').fork(debuggerClientPath, args);
-            process.on('exit', function() { nodedebug.kill('SIGTERM'); });
+            process.on('exit', function() {
+              nodedebug.kill('SIGTERM');
+            });
             nodedebug
                 .on('message',
                     (m: string) => {
@@ -1076,8 +1108,12 @@ export class ProtractorBrowser extends Webdriver {
         this.execPromiseResult_ = this.execPromiseError_ = undefined;
 
         this.execPromise_ = this.execPromise_.then(execFn_).then(
-            (result: Object) => { this.execPromiseResult_ = result; },
-            (err: Error) => { this.execPromiseError_ = err; });
+            (result: Object) => {
+              this.execPromiseResult_ = result;
+            },
+            (err: Error) => {
+              this.execPromiseError_ = err;
+            });
 
         // This dummy command is necessary so that the DeferredExecutor.execute
         // break point can find something to stop at instead of moving on to the
@@ -1131,7 +1167,9 @@ export class ProtractorBrowser extends Webdriver {
       },
 
       // Code finished executing.
-      resultReady: function() { return !this.execPromise_.isPending(); },
+      resultReady: function() {
+        return !this.execPromise_.isPending();
+      },
 
       // Get asynchronous results synchronously.
       // This will throw if result is not ready.

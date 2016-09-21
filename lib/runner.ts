@@ -51,8 +51,12 @@ export class Runner extends EventEmitter {
       flow.execute(() => {
         let nodedebug =
             require('child_process').fork('debug', ['localhost:5858']);
-        process.on('exit', function() { nodedebug.kill('SIGTERM'); });
-        nodedebug.on('exit', function() { process.exit(1); });
+        process.on('exit', function() {
+          nodedebug.kill('SIGTERM');
+        });
+        nodedebug.on('exit', function() {
+          process.exit(1);
+        });
       }, 'start the node debugger');
       flow.timeout(1000, 'waiting for debugger to attach');
     }
@@ -151,7 +155,9 @@ export class Runner extends EventEmitter {
    * Get the control flow used by this runner.
    * @return {Object} WebDriver control flow.
    */
-  controlFlow(): any { return webdriver.promise.controlFlow(); }
+  controlFlow(): any {
+    return webdriver.promise.controlFlow();
+  }
 
   /**
    * Sets up convenience globals for test specs
@@ -185,7 +191,9 @@ export class Runner extends EventEmitter {
     }
     // Required by dart2js machinery.
     // https://code.google.com/p/dart/source/browse/branches/bleeding_edge/dart/sdk/lib/js/dart2js/js_dart2js.dart?spec=svn32943&r=32943#487
-    global.DartObject = function(o: any) { this.o = o; };
+    global.DartObject = function(o: any) {
+      this.o = o;
+    };
   }
 
   /**
@@ -227,8 +235,9 @@ export class Runner extends EventEmitter {
     browser_.ready =
         driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
 
-    browser_.getProcessedConfig =
-        () => { return webdriver.promise.fulfilled(config); };
+    browser_.getProcessedConfig = () => {
+      return webdriver.promise.fulfilled(config);
+    };
 
     browser_.forkNewDriverInstance =
         (opt_useSameUrl: boolean, opt_copyMockModules: boolean) => {
@@ -237,8 +246,9 @@ export class Runner extends EventEmitter {
             newBrowser.mockModules_ = browser_.mockModules_;
           }
           if (opt_useSameUrl) {
-            browser_.driver.getCurrentUrl().then(
-                (url: string) => { newBrowser.get(url); });
+            browser_.driver.getCurrentUrl().then((url: string) => {
+              newBrowser.get(url);
+            });
           }
           return newBrowser;
         };
@@ -262,8 +272,9 @@ export class Runner extends EventEmitter {
    * @private
    */
   shutdown_(): q.Promise<any> {
-    return q.all(this.driverprovider_.getExistingDrivers().map(
-        (webdriver) => { return this.driverprovider_.quitDriver(webdriver); }));
+    return q.all(this.driverprovider_.getExistingDrivers().map((webdriver) => {
+      return this.driverprovider_.quitDriver(webdriver);
+    }));
   }
 
   /**
@@ -336,7 +347,9 @@ export class Runner extends EventEmitter {
           }
 
           if (this.config_.restartBrowserBetweenTests) {
-            var restartDriver = () => { browser_.restart(); };
+            var restartDriver = () => {
+              browser_.restart();
+            };
             this.on('testPass', restartDriver);
             this.on('testFail', restartDriver);
           }
@@ -374,7 +387,9 @@ export class Runner extends EventEmitter {
           testPassed = results.failedCount === 0;
           if (this.driverprovider_.updateJob) {
             return this.driverprovider_.updateJob({'passed': testPassed})
-                .then(() => { return this.driverprovider_.teardownEnv(); });
+                .then(() => {
+                  return this.driverprovider_.teardownEnv();
+                });
           } else {
             return this.driverprovider_.teardownEnv();
           }
@@ -388,6 +403,8 @@ export class Runner extends EventEmitter {
           var exitCode = testPassed ? 0 : 1;
           return this.exit_(exitCode);
         })
-        .fin(() => { return this.shutdown_(); });
+        .fin(() => {
+          return this.shutdown_();
+        });
   }
 }

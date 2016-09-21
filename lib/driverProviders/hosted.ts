@@ -13,7 +13,9 @@ import {DriverProvider} from './driverProvider';
 
 let logger = new Logger('hosted');
 export class Hosted extends DriverProvider {
-  constructor(config: Config) { super(config); }
+  constructor(config: Config) {
+    super(config);
+  }
 
   /**
    * Configure and launch (if applicable) the object's environment.

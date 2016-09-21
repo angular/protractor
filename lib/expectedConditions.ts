@@ -63,8 +63,9 @@ export class ProtractorExpectedConditions {
    */
   not(expectedCondition: Function): Function {
     return (): Function => {
-      return expectedCondition().then(
-          (bool: boolean): boolean => { return !bool; });
+      return expectedCondition().then((bool: boolean): boolean => {
+        return !bool;
+      });
     };
   }
 
@@ -114,7 +115,9 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical and.
    */
-  and(...args: Function[]): Function { return this.logicalChain_(true, args); }
+  and(...args: Function[]): Function {
+    return this.logicalChain_(true, args);
+  }
 
   /**
    * Chain a number of expected conditions using logical_or, short circuiting
@@ -134,7 +137,9 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical or.
    */
-  or(...args: Function[]): Function { return this.logicalChain_(false, args); }
+  or(...args: Function[]): Function {
+    return this.logicalChain_(false, args);
+  }
 
   /**
    * Expect an alert to be present.
@@ -154,7 +159,10 @@ export class ProtractorExpectedConditions {
           .browser.driver.switchTo()
           .alert()
           .then(
-              (): boolean => { return true; },
+              ():
+                  boolean => {
+                    return true;
+                  },
               (err: any) => {
                 if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
                   return false;
@@ -331,7 +339,9 @@ export class ProtractorExpectedConditions {
     return () => {
       return (<Ptor>global.protractor)
           .browser.driver.getCurrentUrl()
-          .then((actualUrl: string): boolean => { return actualUrl === url; });
+          .then((actualUrl: string): boolean => {
+            return actualUrl === url;
+          });
     };
   }
 

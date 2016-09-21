@@ -45,7 +45,9 @@ export class TaskScheduler {
         ConfigParser
             .resolveFilePatterns(
                 ConfigParser.getSpecs(config), false, config.configDir)
-            .filter((path: string) => { return excludes.indexOf(path) < 0; });
+            .filter((path: string) => {
+              return excludes.indexOf(path) < 0;
+            });
 
     let taskQueues: Array<TaskQueue> = [];
     config.multiCapabilities.forEach((capabilities) => {
@@ -59,8 +61,9 @@ export class TaskScheduler {
       if (capabilities.exclude) {
         let capabilitiesSpecExcludes = ConfigParser.resolveFilePatterns(
             capabilities.exclude, true, config.configDir);
-        capabilitiesSpecs = capabilitiesSpecs.filter(
-            (path) => { return capabilitiesSpecExcludes.indexOf(path) < 0; });
+        capabilitiesSpecs = capabilitiesSpecs.filter((path) => {
+          return capabilitiesSpecExcludes.indexOf(path) < 0;
+        });
       }
 
       let specLists: Array<Array<string>> = [];
@@ -68,7 +71,9 @@ export class TaskScheduler {
       // the spec file. If we don't shard, we return an one element array
       // containing an array of all the spec files
       if (capabilities.shardTestFiles) {
-        capabilitiesSpecs.forEach((spec) => { specLists.push([spec]); });
+        capabilitiesSpecs.forEach((spec) => {
+          specLists.push([spec]);
+        });
       } else {
         specLists.push(capabilitiesSpecs);
       }
@@ -108,7 +113,9 @@ export class TaskScheduler {
           capabilities: queue.capabilities,
           specs: specs,
           taskId: taskId,
-          done: function() { --queue.numRunningInstances; }
+          done: function() {
+            --queue.numRunningInstances;
+          }
         };
       }
     }
@@ -153,7 +160,9 @@ export class TaskScheduler {
    */
   public countActiveTasks() {
     var count = 0;
-    this.taskQueues.forEach((queue) => { count += queue.numRunningInstances; });
+    this.taskQueues.forEach((queue) => {
+      count += queue.numRunningInstances;
+    });
     return count;
   }
 }

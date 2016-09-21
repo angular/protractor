@@ -16,7 +16,9 @@ let executors = require('selenium-webdriver/executors');
 let logger = new Logger('attachSession');
 
 export class AttachSession extends DriverProvider {
-  constructor(config: Config) { super(config); }
+  constructor(config: Config) {
+    super(config);
+  }
 
   /**
    * Configure and launch (if applicable) the object's environment.

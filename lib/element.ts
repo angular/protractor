@@ -108,8 +108,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
     // wrap each one explicity with its own documentation?
     WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
       this[fnName] = (...args: any[]) => {
-        let actionFn =
-            (webElem: any) => { return webElem[fnName].apply(webElem, args); };
+        let actionFn = (webElem: any) => {
+          return webElem[fnName].apply(webElem, args);
+        };
         return this.applyAction_(actionFn);
       };
     });
@@ -325,7 +326,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @returns {ElementFinder} finder representing the first matching element
    */
-  first(): ElementFinder { return this.get(0); };
+  first(): ElementFinder {
+    return this.get(0);
+  };
 
   /**
    * Get the last matching element for the ElementArrayFinder. This does not
@@ -345,7 +348,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @returns {ElementFinder} finder representing the last matching element
    */
-  last(): ElementFinder { return this.get(-1); }
+  last(): ElementFinder {
+    return this.get(-1);
+  }
 
   /**
    * Shorthand function for finding arrays of elements by css.
@@ -388,7 +393,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   count(): wdpromise.Promise<number> {
     return this.getWebElements().then(
-        (arr: WebElement[]) => { return arr.length; },
+        (arr: WebElement[]) => {
+          return arr.length;
+        },
         (err: IError) => {
           if (err.code &&
               err.code == new webdriver.error.NoSuchElementError()) {
@@ -414,7 +421,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @returns {webdriver.Locator}
    */
-  locator(): Locator { return this.locator_; }
+  locator(): Locator {
+    return this.locator_;
+  }
 
   /**
    * Apply an action function to every element in the ElementArrayFinder,
@@ -528,7 +537,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   each(fn: (elementFinder?: ElementFinder, index?: number) => any):
       wdpromise.Promise<any> {
-    return this.map(fn).then((): any => { return null; });
+    return this.map(fn).then((): any => {
+      return null;
+    });
   }
 
   /**
@@ -791,7 +802,9 @@ export class ElementFinder extends WebdriverWebElement {
   static fromWebElement_(
       browser: ProtractorBrowser, webElem: WebElement,
       locator: Locator): ElementFinder {
-    let getWebElements = () => { return wdpromise.fulfilled([webElem]); };
+    let getWebElements = () => {
+      return wdpromise.fulfilled([webElem]);
+    };
     return new ElementArrayFinder(browser, getWebElements, locator)
         .toElementFinder_();
   }
@@ -812,7 +825,9 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * @returns {webdriver.Locator}
    */
-  locator(): any { return this.elementArrayFinder_.locator(); }
+  locator(): any {
+    return this.elementArrayFinder_.locator();
+  }
 
   /**
    * Returns the WebElement represented by this ElementFinder.
@@ -1081,7 +1096,9 @@ export class ElementFinder extends WebdriverWebElement {
  *     {@link webdriver.WebElement}
  */
 export let build$ = (element: ElementHelper, by: ProtractorBy) => {
-  return (selector: string) => { return element(by.css(selector)); };
+  return (selector: string) => {
+    return element(by.css(selector));
+  };
 };
 
 /**
@@ -1110,5 +1127,7 @@ export let build$ = (element: ElementHelper, by: ProtractorBy) => {
  *     array of the located {@link webdriver.WebElement}s.
  */
 export let build$$ = (element: ElementHelper, by: ProtractorBy) => {
-  return (selector: string) => { return element.all(by.css(selector)); };
+  return (selector: string) => {
+    return element.all(by.css(selector));
+  };
 };

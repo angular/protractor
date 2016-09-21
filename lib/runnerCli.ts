@@ -36,14 +36,20 @@ process.on('message', (m: any) => {
       let runner = new Runner(config);
 
       // Pipe events back to the launcher.
-      runner.on('testPass', () => { process.send({event: 'testPass'}); });
-      runner.on('testFail', () => { process.send({event: 'testFail'}); });
+      runner.on('testPass', () => {
+        process.send({event: 'testPass'});
+      });
+      runner.on('testFail', () => {
+        process.send({event: 'testFail'});
+      });
       runner.on('testsDone', (results: any) => {
         process.send({event: 'testsDone', results: results});
       });
 
       runner.run()
-          .then((exitCode: number) => { process.exit(exitCode); })
+          .then((exitCode: number) => {
+            process.exit(exitCode);
+          })
           .catch((err: Error) => {
             logger.info(err.message);
             process.exit(1);

@@ -26,7 +26,9 @@ let SeleniumStandAlone =
 
 let logger = new Logger('direct');
 export class Direct extends DriverProvider {
-  constructor(config: Config) { super(config); }
+  constructor(config: Config) {
+    super(config);
+  }
 
   /**
    * Configure and launch (if applicable) the object's environment.

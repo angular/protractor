@@ -11,7 +11,9 @@ import {DriverProvider} from './driverProvider';
 let webdriver = require('selenium-webdriver');
 
 export class Mock extends DriverProvider {
-  constructor(config?: Config) { super(config); }
+  constructor(config?: Config) {
+    super(config);
+  }
 
   /**
    * An execute function that returns a promise with a test value.

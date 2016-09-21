@@ -25,7 +25,9 @@ class TaskResults {
   // TODO: set a type for result
   results_: any[] = [];
 
-  add(result: any): void { this.results_.push(result); }
+  add(result: any): void {
+    this.results_.push(result);
+  }
 
   totalSpecFailures(): number {
     return this.results_.reduce((specFailures, result) => {
@@ -168,7 +170,9 @@ let initFn = function(configFile: string, additionalConfig: Config) {
 
           let runner = new Runner(config);
           return runner.run().then(
-              (exitCode: number) => { process.exit(exitCode); },
+              (exitCode: number) => {
+                process.exit(exitCode);
+              },
               (err: Error) => {
                 logger.error(err);
                 process.exit(1);

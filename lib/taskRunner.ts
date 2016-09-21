@@ -73,12 +73,14 @@ export class TaskRunner extends EventEmitter {
       let taskLogger = new TaskLogger(this.task, childProcess.pid);
 
       // stdout pipe
-      childProcess.stdout.on(
-          'data', (data: string) => { taskLogger.log(data); });
+      childProcess.stdout.on('data', (data: string) => {
+        taskLogger.log(data);
+      });
 
       // stderr pipe
-      childProcess.stderr.on(
-          'data', (data: string) => { taskLogger.log(data); });
+      childProcess.stderr.on('data', (data: string) => {
+        taskLogger.log(data);
+      });
 
       childProcess
           .on('message',

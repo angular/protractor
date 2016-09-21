@@ -135,8 +135,9 @@ export class ProtractorBy extends WebdriverBy {
                 clientSideScripts.findBindings, bindingDescriptor, false, using,
                 rootSelector));
           },
-      toString:
-          (): string => { return 'by.binding("' + bindingDescriptor + '")'; }
+      toString: (): string => {
+        return 'by.binding("' + bindingDescriptor + '")';
+      }
     };
   };
 
@@ -197,7 +198,9 @@ export class ProtractorBy extends WebdriverBy {
             return driver.findElements(webdriver.By.js(
                 clientSideScripts.findByModel, model, using, rootSelector));
           },
-      toString: (): string => { return 'by.model("' + model + '")'; }
+      toString: (): string => {
+        return 'by.model("' + model + '")';
+      }
     };
   };
 
@@ -222,7 +225,9 @@ export class ProtractorBy extends WebdriverBy {
                 clientSideScripts.findByButtonText, searchText, using,
                 rootSelector));
           },
-      toString: (): string => { return 'by.buttonText("' + searchText + '")'; }
+      toString: (): string => {
+        return 'by.buttonText("' + searchText + '")';
+      }
     };
   };
 
@@ -247,8 +252,9 @@ export class ProtractorBy extends WebdriverBy {
                 clientSideScripts.findByPartialButtonText, searchText, using,
                 rootSelector));
           },
-      toString:
-          (): string => { return 'by.partialButtonText("' + searchText + '")'; }
+      toString: (): string => {
+        return 'by.partialButtonText("' + searchText + '")';
+      }
     };
   };
 
@@ -263,7 +269,9 @@ export class ProtractorBy extends WebdriverBy {
                 clientSideScripts.findAllRepeaterRows, repeatDescriptor, exact,
                 using, rootSelector));
           },
-      toString: (): string => { return name + '("' + repeatDescriptor + '")'; },
+      toString: (): string => {
+        return name + '("' + repeatDescriptor + '")';
+      },
       row: (index: number): Locator => {
         return {
           findElementsOverride:
@@ -467,8 +475,9 @@ export class ProtractorBy extends WebdriverBy {
                 clientSideScripts.findByOptions, optionsDescriptor, using,
                 rootSelector));
           },
-      toString:
-          (): string => { return 'by.option("' + optionsDescriptor + '")'; }
+      toString: (): string => {
+        return 'by.option("' + optionsDescriptor + '")';
+      }
     };
   };
 

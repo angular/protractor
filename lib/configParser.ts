@@ -173,7 +173,9 @@ export class ConfigParser {
    * @public
    * @return {Object} config
    */
-  public getConfig(): Config { return this.config_; }
+  public getConfig(): Config {
+    return this.config_;
+  }
 }
 
 /**

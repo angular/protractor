@@ -328,9 +328,12 @@ export class Plugins {
     obj.name =
         obj.name || conf.name || conf.path || conf.package || ('Plugin #' + i);
     obj.config = conf;
-    obj.addFailure =
-        (message?, info?) => { addAssertion(info, false, message); };
-    obj.addSuccess = (options?) => { addAssertion(options, true); };
+    obj.addFailure = (message?, info?) => {
+      addAssertion(info, false, message);
+    };
+    obj.addSuccess = (options?) => {
+      addAssertion(options, true);
+    };
     obj.addWarning = (message?, options?) => {
       options = options || {};
       logger.warn(
@@ -353,8 +356,13 @@ export class Plugins {
 
     for (var j = 0; j < specResults.length; j++) {
       var specResult = specResults[j];
-      var passed = specResult.assertions.map((x: any) => { return x.passed; })
-                       .reduce((x: any, y: any) => { return x && y; }, true);
+      var passed = specResult.assertions
+                       .map((x: any) => {
+                         return x.passed;
+                       })
+                       .reduce((x: any, y: any) => {
+                         return x && y;
+                       }, true);
 
       printResult(specResult.description, passed);
       if (!passed) {
@@ -386,10 +394,11 @@ export class Plugins {
     for (var specName in this.assertions) {
       results.specResults.push(
           {description: specName, assertions: this.assertions[specName]});
-      results.failedCount +=
-          this.assertions[specName]
-              .filter((assertion: any) => { return !assertion.passed; })
-              .length;
+      results.failedCount += this.assertions[specName]
+                                 .filter((assertion: any) => {
+                                   return !assertion.passed;
+                                 })
+                                 .length;
     }
     this.printPluginResults(results.specResults);
     this.resultsReported = true;
@@ -467,8 +476,12 @@ export class Plugins {
       var result = (<any>pluginObj)[funName].apply(pluginObj, args);
       if (webdriver.promise.isPromise(result)) {
         result.then(
-            function() { deferred.fulfill.apply(deferred, arguments); },
-            (e: any) => { logError(e); });
+            function() {
+              deferred.fulfill.apply(deferred, arguments);
+            },
+            (e: any) => {
+              logError(e);
+            });
       } else {
         deferred.fulfill(result);
       }

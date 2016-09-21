@@ -132,7 +132,9 @@ export class Local extends DriverProvider {
     let deferred = q.defer();
     super.teardownEnv().then(() => {
       logger.info('Shutting down selenium standalone server.');
-      this.server_.stop().then(() => { deferred.resolve(); });
+      this.server_.stop().then(() => {
+        deferred.resolve();
+      });
     });
     return deferred.promise;
   }

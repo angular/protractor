@@ -18,7 +18,9 @@ let logger = new Logger('sauce');
 export class Sauce extends DriverProvider {
   sauceServer_: any;
 
-  constructor(config: Config) { super(config); }
+  constructor(config: Config) {
+    super(config);
+  }
 
   /**
    * Hook to update the sauce job.

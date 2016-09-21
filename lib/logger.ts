@@ -14,7 +14,9 @@ try {
   printYellow = chalk.yellow;
   printGray = chalk.gray;
 } catch (e) {
-  printRed = printYellow = printGray = (msg: any) => { return msg; };
+  printRed = printYellow = printGray = (msg: any) => {
+    return msg;
+  };
 }
 
 export enum LogLevel {
@@ -81,25 +83,33 @@ export class Logger {
    * Log INFO
    * @param ...msgs multiple arguments to be logged.
    */
-  info(...msgs: any[]): void { this.log_(LogLevel.INFO, msgs); }
+  info(...msgs: any[]): void {
+    this.log_(LogLevel.INFO, msgs);
+  }
 
   /**
    * Log DEBUG
    * @param ...msgs multiple arguments to be logged.
    */
-  debug(...msgs: any[]): void { this.log_(LogLevel.DEBUG, msgs); }
+  debug(...msgs: any[]): void {
+    this.log_(LogLevel.DEBUG, msgs);
+  }
 
   /**
    * Log WARN
    * @param ...msgs multiple arguments to be logged.
    */
-  warn(...msgs: any[]): void { this.log_(LogLevel.WARN, msgs); }
+  warn(...msgs: any[]): void {
+    this.log_(LogLevel.WARN, msgs);
+  }
 
   /**
    * Log ERROR
    * @param ...msgs multiple arguments to be logged.
    */
-  error(...msgs: any[]): void { this.log_(LogLevel.ERROR, msgs); }
+  error(...msgs: any[]): void {
+    this.log_(LogLevel.ERROR, msgs);
+  }
 
   /**
    * For the log level set, check to see if the messages should be logged.

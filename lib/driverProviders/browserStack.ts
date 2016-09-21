@@ -16,7 +16,9 @@ import {DriverProvider} from './driverProvider';
 let logger = new Logger('browserstack');
 
 export class BrowserStack extends DriverProvider {
-  constructor(config: Config) { super(config); }
+  constructor(config: Config) {
+    super(config);
+  }
 
   /**
    * Hook to update the BrowserStack job status.
@@ -69,7 +71,9 @@ export class BrowserStack extends DriverProvider {
         options.method = 'PUT';
         let update_req = https.request(options, (res) => {
           let responseStr = '';
-          res.on('data', (data: Buffer) => { responseStr += data.toString(); });
+          res.on('data', (data: Buffer) => {
+            responseStr += data.toString();
+          });
           res.on('end', () => {
             logger.info(responseStr);
             deferred.resolve();

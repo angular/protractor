@@ -8,8 +8,12 @@ let webdriver = require('selenium-webdriver');
 export class Ptor {
   // Variables tied to the global namespace.
   browser: ProtractorBrowser;
-  $ = function(search: string): ElementFinder { return null; };
-  $$ = function(search: string): ElementArrayFinder { return null; };
+  $ = function(search: string): ElementFinder {
+    return null;
+  };
+  $$ = function(search: string): ElementArrayFinder {
+    return null;
+  };
   element: ElementHelper;
   By: ProtractorBy;
   by: ProtractorBy;
