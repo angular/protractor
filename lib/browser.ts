@@ -1238,7 +1238,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {Browser} a new Browser instance
    */
   static wrapDriver(
-      webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,
+      webdriver: WebDriver, baseUrl?: string, rootElement?: string,
       untrackOutstandingTimeouts?: boolean): ProtractorBrowser {
     return new ProtractorBrowser(
         webdriver, baseUrl, rootElement, untrackOutstandingTimeouts);

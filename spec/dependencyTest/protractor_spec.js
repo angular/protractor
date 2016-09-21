@@ -1,8 +1,4 @@
-// require('protractor') equivalent is requiring ptor
-var protractor = require('../../built/main');
-
-// the webdriver stuff we are exposing externally
-
+var protractor = require('../../built/index');
 
 describe('require(\'protractor\')', () => {
 
@@ -15,16 +11,25 @@ describe('require(\'protractor\')', () => {
         expect(typeof protractor[property]).toEqual('function');
       }
     });
-    var seleniumClasses = ['ActionSequence', 'Browser', 'Builder', 'Button',
-      'Capabilities', 'Capability', 'EventEmitter', 'FileDetector', 'Key',
-      'Session', 'WebDriver', 'WebElement', 'WebElementPromise', 'Command',
-      'CommandName'];
-    for (var pos in seleniumClasses) {
-      var propertyObj = seleniumClasses[pos];
-      it('should have selenium-webdriver defined: ' + propertyObj, () => {
-          expect(typeof protractor[propertyObj]).toEqual('object');
-      });
-    }
+
+    it('should have selenium-webdriver functions defined', () => {
+      var seleniumFunctions = ['ActionSequence', 'Builder',
+        'Capabilities', 'Command', 'EventEmitter', 'FileDetector',
+        'Session', 'WebDriver', 'WebElement', 'WebElementPromise'];
+      for (var pos in seleniumFunctions) {
+        var propertyObj = seleniumFunctions[pos];
+        expect(typeof protractor[propertyObj]).toEqual('function');
+      }
+    });
+
+    it('should have selenium-webdriver objects defined', () => {
+      var seleniumObjects = ['Browser', 'Button', 'Capability', 'CommandName', 'Key'];
+      for (var pos in seleniumObjects) {
+        var propertyObj = seleniumObjects[pos];
+        expect(typeof protractor[propertyObj]).toEqual('object');
+      }
+    });
+
 
     it('should have selenium-webdriver promise.Promise', function() {
       expect(typeof protractor['promise']['Promise']).toEqual('function');
@@ -44,35 +49,16 @@ describe('require(\'protractor\')', () => {
         }
       });
     });
-
   });
 
-  describe('exported webdriver namespace', ()=> {
-    it('should have exported classes', () => {
-      var webdriverClasses = ['WebElement', 'ActionSequence', 'Command'];
-      for (var pos in webdriverClasses) {
-        var property = webdriverClasses[pos];
-        expect(typeof protractor[property]).toEqual('function');
+  describe('promise namespace', () => {
+    it('should have functions defined (spot check)', () => {
+      var promiseFunctions = ['Promise', 'defer', 'delayed', 'createFlow',
+        'controlFlow', 'all', 'fulfilled', 'filter', 'when' ]
+      for (var pos in promiseFunctions) {
+        var property = promiseFunctions[pos];
+        expect(typeof protractor.promise[property]).toEqual('function');
       }
-    });
-
-    it('should have variables defined', () => {
-      var webdriverObjects = ['Key', 'CommandName'];
-      for (var pos in webdriverObjects) {
-        var property = webdriverObjects[pos];
-        expect(typeof protractor[property]).toEqual('object');
-      }
-    });
-
-    describe('promise namespace', () => {
-      it('should have functions defined (spot check)', () => {
-        var promiseFunctions = ['Promise', 'defer', 'delayed', 'createFlow',
-          'controlFlow', 'all', 'fulfilled', 'filter', 'when' ]
-        for (var pos in promiseFunctions) {
-          var property = promiseFunctions[pos];
-          expect(typeof protractor.promise[property]).toEqual('function');
-        }
-      });
     });
   });
 });
