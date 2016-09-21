@@ -1,3 +1,50 @@
+# 4.0.9
+
+This version includes a breaking change to the TypeScript import statement.
+Please see the feature below.
+
+# Features
+
+- ([5034c89](https://github.com/angular/protractor/commit/5034c89242794dd14aba294ba3468937e06a7b69))
+  feat(typescript): move typescript variable instances from protractor/… (#3565)
+
+  Breaking change for TypeScript:
+  Instead of importing globals like `browser` from `protractor/globals`,
+  import from `protractor`.
+
+  Before:
+
+   ```ts
+   import {browser, element} from 'protractor/globals';
+   import {ElementFinder} from 'protractor';
+
+   describe('my app', () => {
+     myElement: ElementFinder;
+
+     beforeEach(() => {
+       browser.get('example.com');
+       myElement = element(by.css('foo'));
+     });
+   });
+   ```
+
+   After
+
+   ```ts
+   import {browser, element, ElementFinder} from 'protractor';
+
+   describe('my app', () => {
+     myElement: ElementFinder;
+
+     beforeEach(() => {
+       browser.get('example.com');
+       myElement = element(by.css('foo'));
+     });
+   });
+   ```
+
+   Closes #3564
+
 # 4.0.8
 
 ## Bug Fixes
