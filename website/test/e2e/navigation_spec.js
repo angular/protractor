@@ -35,7 +35,7 @@ describe('Navigation', function() {
         'Tutorial'
       ]);
     });
-    
+
     it('should have items under Protractor Setup', function() {
       expect(menu.dropdown('Protractor Setup').itemNames()).toEqual([
           'Setting Up Protractor',
@@ -59,7 +59,7 @@ describe('Navigation', function() {
 
     it('should have items under Reference', function() {
       expect(menu.dropdown('Reference').itemNames()).toEqual([
-        'Configuration File Reference',
+        'Configuration File',
         'Protractor API',
         'Style Guide',
         'Protractor Syntax vs WebDriverJS Syntax',
@@ -81,7 +81,7 @@ describe('Navigation', function() {
 
       expect($('h1').getText()).toBe('Setting Up Protractor');
     });
-    
+
     it('should go to Setting Up the Selenium Server', function() {
       menu.dropdown('Protractor Setup').item('Setting Up the Selenium Server');
 
