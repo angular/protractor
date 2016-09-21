@@ -1,10 +1,10 @@
 // Util from NodeJs
 import * as net from 'net';
 import {ActionSequence, Capabilities, Command as WdCommand, FileDetector, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
-
 import * as url from 'url';
 import * as util from 'util';
 
+import {ExplorerScripts} from './debugger/clients/explorerScripts';
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
 import {IError} from './exitCodes';
 import {ProtractorExpectedConditions} from './expectedConditions';
@@ -377,11 +377,16 @@ export class ProtractorBrowser extends Webdriver {
    * available on the page when finding elements or waiting for stability.
    * Only compatible with Angular2.
    */
-  useAllAngular2AppRoots() {
+  useAllAngular2AppRoots(): void {
     // The empty string is an invalid css selector, so we use it to easily
     // signal to scripts to not find a root element.
     this.rootEl = '';
   }
+
+  /**
+   * Set the rootEl
+   */
+  setRootEl(rootEl: string): void { this.rootEl = rootEl; }
 
   /**
    * The same as {@code webdriver.WebDriver.prototype.executeScript},
@@ -995,17 +1000,9 @@ export class ProtractorBrowser extends Webdriver {
       [key: string]: any;
     }
     let context: Context = {require: require};
-    global.list = (locator: Locator) => {
-      return (<Ptor>global.protractor)
-          .browser.findElements(locator)
-          .then((arr: webdriver.WebElement[]) => {
-            let found: string[] = [];
-            for (let i = 0; i < arr.length; ++i) {
-              arr[i].getText().then((text: string) => { found.push(text); });
-            }
-            return found;
-          });
-    };
+    (<any>global).list = ExplorerScripts.list;
+    (<any>global).highlight = ExplorerScripts.highlight;
+
     for (let key in global) {
       context[key] = global[key];
     }
@@ -1075,9 +1072,20 @@ export class ProtractorBrowser extends Webdriver {
       execute_: function(execFn_: Function) {
         this.execPromiseResult_ = this.execPromiseError_ = undefined;
 
-        this.execPromise_ = this.execPromise_.then(execFn_).then(
-            (result: Object) => { this.execPromiseResult_ = result; },
-            (err: Error) => { this.execPromiseError_ = err; });
+        (<any>global).tempEl = (<any>global).browser.rootEl;
+        this.execPromise_ =
+            this.execPromise_.then(execFn_)
+                .then((result: Object) => { this.execPromiseResult_ = result; })
+                .catch(() => {
+                  (<any>global).browser.rootEl = '';
+                  execFn_()
+                      .then((result: Object) => {
+                        this.execPromiseResult_ = result;
+                      })
+                      .catch((err: any) => { this.execPromiseError_ = err; });
+                  (<any>global).browser.rootEl = (<any>global).tempEl;
+                });
+
 
         // This dummy command is necessary so that the DeferredExecutor.execute
         // break point can find something to stop at instead of moving on to the
@@ -1094,6 +1102,7 @@ export class ProtractorBrowser extends Webdriver {
           // Run code through vm so that we can maintain a local scope which is
           // isolated from the rest of the execution.
           let res = vm_.runInContext(code, sandbox);
+
           if (!webdriver.promise.isPromise(res)) {
             res = webdriver.promise.fulfilled(res);
           }
@@ -1104,8 +1113,7 @@ export class ProtractorBrowser extends Webdriver {
             } else {
               // The '' forces res to be expanded into a string instead of just
               // '[Object]'. Then we remove the extra space caused by the ''
-              // using
-              // substring.
+              // using substring.
               return util.format.apply(this, ['', res]).substring(1);
             }
           });
@@ -1169,16 +1177,16 @@ export class ProtractorBrowser extends Webdriver {
     let debuggerClientPath = __dirname + '/debugger/clients/explorer.js';
     let onStartFn = () => {
       logger.info();
-      logger.info('------- Element Explorer -------');
-      logger.info(
-          'Starting WebDriver debugger in a child process. Element ' +
-          'Explorer is still beta, please report issues at ' +
-          'github.com/angular/protractor');
+      logger.info('------- Element Explorer ---------------------------------');
+      logger.info('Starting WebDriver debugger in a child process. Element');
+      logger.info('Explorer is still beta, please report issues at ');
+      logger.info('github.com/angular/protractor');
       logger.info();
       logger.info('Type <tab> to see a list of locator strategies.');
-      logger.info(
-          'Use the `list` helper function to find elements by strategy:');
-      logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
+      logger.info('Use the `list` and `highlight` helper function to find');
+      logger.info('elements by strategy:')
+      logger.info('  e.g., list(by.binding(\'\')) gets text of all bindings.');
+      logger.info('  e.g., highlight(by.binding(\'\')) highlight html.');
       logger.info();
     };
     this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
