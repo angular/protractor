@@ -17,7 +17,7 @@ Protractor Tests
  - [Debugging Protractor Tests](/docs/debugging.md)
 
 Reference
- - [Reference Config File](/docs/referenceConf.js)
+ - [Config File](/lib/config.ts)
  - [Protractor API](/docs/api.md)
  - [Browser Support](/docs/browser-support.md)
  - [Timeouts](/docs/timeouts.md)

@@ -166,7 +166,7 @@ exports.config = {
 }
 ```
 
-Try running the tests again. You should see the tests running on Firefox instead of Chrome. The `capabilities` object describes the browser to be tested against. For a full list of options, see [the reference config file](/docs/referenceConf.js).
+Try running the tests again. You should see the tests running on Firefox instead of Chrome. The `capabilities` object describes the browser to be tested against. For a full list of options, see [the config file](/lib/config.ts).
 
 You can also run tests on more than one browser at once. Change conf.js to:
 

@@ -81,10 +81,10 @@ exports.config = {
 };
 ```
 
-Reference Config File
----------------------
+Config File
+-----------
 
-The [reference config file](/docs/referenceConf.js) file provides explanations for all of the Protractor configuration options. Default settings include the standalone Selenium Server, the Chrome browser, and the Jasmine test framework. Additional information about various configuration options is available here:
+The [config file](/lib/config.ts) file provides explanations for all of the Protractor configuration options. Default settings include the standalone Selenium Server, the Chrome browser, and the Jasmine test framework. Additional information about various configuration options is available here:
 
  - [Setting Up the Selenium Server](/docs/server-setup.md)
  - [Setting Up the Browser](/docs/browser-setup.md)

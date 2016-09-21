@@ -62,6 +62,6 @@ exports.config = {
 };
 ```
 
-More on this at [referenceConf](../../docs/referenceConf.js) "The test framework" section.
+More on this at the [configuration](../config.ts).
 
 **Disclaimer**: current framework interface can change without a major version bump.

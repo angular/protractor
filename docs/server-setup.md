@@ -7,7 +7,7 @@ The server forwards commands from your script to the driver and returns response
 
          [Test Scripts] < ------------ > [Selenium Server] < ------------ > [Browser Drivers]
 
-The [reference config file](/docs/referenceConf.js) includes several options for the Selenium Server, which are explained in the sections below.
+The [config file](/lib/config.ts) includes several options for the Selenium Server, which are explained in the sections below.
 
 
 Standalone Selenium Server
@@ -71,7 +71,7 @@ In your config file, set these options:
 
 Please note that if you set `browserstackUser` and `browserstackKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
 
-You can optionally set the [`name` property](referenceConf.js#L121) in a capability in order to give the jobs a name on the server.  Otherwise they will just be allotted a random hash.
+You can optionally set the `name` property in a capability in order to give the jobs a name on the server.  Otherwise they will just be allotted a random hash.
 
 **Using Sauce Labs as remote Selenium Server**
 
@@ -81,7 +81,7 @@ In your config file, set these options:
 
 Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` and `browserstackKey` will be ignored.
 
-You can optionally set the [`name` property](referenceConf.js#L121) in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
+You can optionally set the `name` property in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
 
 
 Connecting Directly to Browser Drivers
