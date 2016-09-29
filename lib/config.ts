@@ -457,6 +457,12 @@ export interface Config {
      */
     untrackOutstandingTimeouts?: boolean;
 
+    /**
+     * If set, Protractor will ignore uncaught exceptions instead of exiting
+     * without an error code. The exceptions will still be logged as warnings.
+     */
+    ignoreUncaughtExceptions?: boolean;
+
     // ---------------------------------------------------------------------------
     // ----- The test framework
     // --------------------------------------------------

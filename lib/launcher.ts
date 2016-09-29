@@ -185,6 +185,13 @@ let initFn = function(configFile: string, additionalConfig: Config) {
 
         process.on('uncaughtException', (exc: (Error|string)) => {
           let e = (exc instanceof Error) ? exc : new Error(exc);
+          if (config.ignoreUncaughtExceptions) {
+            // This can be a sign of a bug in the test framework, that it may
+            // not be handling WebDriver errors properly. However, we don't
+            // want these errors to prevent running the tests.
+            logger.warn('Ignoring uncaught error ' + exc);
+            return;
+          }
 
           let errorCode = ErrorHandler.parseError(e);
           if (errorCode) {
