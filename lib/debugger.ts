@@ -24,7 +24,7 @@ export class DebugHelper {
    */
   debuggerValidated_: boolean;
 
-  dbgCodeExecutor_: any;
+  dbgCodeExecutor: any;
 
   constructor(browser: ProtractorBrowser) {
     this.browser = browser;
@@ -98,7 +98,7 @@ export class DebugHelper {
                   logger.info('Debugger exiting');
                   // Clear this so that we know it's ok to attach a debugger
                   // again.
-                  this.dbgCodeExecutor_ = null;
+                  this.dbgCodeExecutor = null;
                 });
           });
     });
@@ -117,7 +117,7 @@ export class DebugHelper {
     // flow, so that we can insert frames into it.
     // To be able to simulate callback/asynchronous code, we poll this object
     // for a result at every run of DeferredExecutor.execute.
-    this.dbgCodeExecutor_ = {
+    this.dbgCodeExecutor = {
       execPromise_: pausePromise,  // Promise pointing to current stage of flow.
       execPromiseResult_: undefined,  // Return value of promise.
       execPromiseError_: undefined,   // Error from promise.
@@ -268,6 +268,6 @@ export class DebugHelper {
   }
 
   public isAttached(): boolean {
-    return !!this.dbgCodeExecutor_;
+    return !!this.dbgCodeExecutor;
   }
 }
