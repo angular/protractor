@@ -995,7 +995,7 @@ export class ProtractorBrowser extends Webdriver {
    * process
    */
   pause(opt_debugPort?: number): webdriver.promise.Promise<any> {
-    if (!this.debugHelper.isAttached()) {
+    if (this.debugHelper.isAttached()) {
       logger.info(
           'Encountered browser.pause(), but debugger already attached.');
       return webdriver.promise.fulfilled(true);
