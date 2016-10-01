@@ -1,17 +1,13 @@
-import * as net from 'net';
+import {ActionSequence, Capabilities, Command as WdCommand, FileDetector, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
 
-import {ActionSequence, Capabilities, Command as WdCommand, FileDetector, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
+import {DebugHelper} from './debugger';
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
 import {IError} from './exitCodes';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
-import {Debugger} from './debugger';
-
-declare var global: any;
-declare var process: any;
 
 let clientSideScripts = require('./clientsidescripts');
 let webdriver = require('selenium-webdriver');
@@ -257,14 +253,7 @@ export class ProtractorBrowser extends Webdriver {
    * when running element explorer.
    * @private {number}
    */
-  debuggerServerPort_: number;
-
-  /**
-   * Set to true when we validate that the debug port is open. Since the debug
-   * port is held open forever once the debugger is attached, it's important
-   * we only do validation once.
-   */
-  debuggerValidated_: boolean;
+  public debuggerServerPort: number;
 
   /**
    * If true, Protractor will interpret any angular apps it comes across as
@@ -273,6 +262,11 @@ export class ProtractorBrowser extends Webdriver {
    * @type {boolean}
    */
   ng12Hybrid: boolean;
+
+  /**
+   * A helper manages debugging.
+   */
+  debugHelper: DebugHelper;
 
   // This index type allows looking up methods by name so we can do mixins.
   [key: string]: any;
@@ -314,6 +308,7 @@ export class ProtractorBrowser extends Webdriver {
     this.plugins_ = new Plugins({});
     this.resetUrl = DEFAULT_RESET_URL;
     this.ng12Hybrid = false;
+    this.debugHelper = new DebugHelper(this);
 
     this.driver.getCapabilities().then((caps: Capabilities) => {
       // Internet Explorer does not accept data URLs, which are the default
@@ -396,7 +391,7 @@ export class ProtractorBrowser extends Webdriver {
    *    scripts return value.
    * @template T
    */
-  private executeScript_(
+  public executeScriptWithDescription(
       script: string|Function, description: string,
       ...scriptArgs: any[]): wdpromise.Promise<any> {
     if (typeof script === 'function') {
@@ -522,14 +517,14 @@ export class ProtractorBrowser extends Webdriver {
                 }
                 let pendingTimeoutsPromise: wdpromise.Promise<any>;
                 if (this.trackOutstandingTimeouts_) {
-                  pendingTimeoutsPromise = this.executeScript_(
+                  pendingTimeoutsPromise = this.executeScriptWithDescription(
                       'return window.NG_PENDING_TIMEOUTS',
                       'Protractor.waitForAngular() - getting pending timeouts' +
                           description);
                 } else {
                   pendingTimeoutsPromise = wdpromise.fulfilled({});
                 }
-                let pendingHttpsPromise = this.executeScript_(
+                let pendingHttpsPromise = this.executeScriptWithDescription(
                     clientSideScripts.getPendingHttpRequests,
                     'Protractor.waitForAngular() - getting pending https' +
                         description,
@@ -709,7 +704,7 @@ export class ProtractorBrowser extends Webdriver {
     let deferred = webdriver.promise.defer();
 
     this.driver.get(this.resetUrl).then(null, deferred.reject);
-    this.executeScript_(
+    this.executeScriptWithDescription(
             'window.name = "' + DEFER_LABEL + '" + window.name;' +
 
                 'window.location.replace("' + destination + '");',
@@ -722,7 +717,7 @@ export class ProtractorBrowser extends Webdriver {
         .wait(
             () => {
               return this
-                  .executeScript_(
+                  .executeScriptWithDescription(
                       'return window.location.href;', msg('get url'))
                   .then(
                       (url: any) => {
@@ -784,7 +779,7 @@ export class ProtractorBrowser extends Webdriver {
           let executeScriptArgs = [
             mockModule.script, msg('add mock module ' + name)
           ].concat(mockModule.args);
-          self.executeScript_.apply(self, executeScriptArgs)
+          self.executeScriptWithDescription.apply(self, executeScriptArgs)
               .then(
                   null,
                   (err: Error) => {
@@ -795,7 +790,7 @@ export class ProtractorBrowser extends Webdriver {
               .then(null, deferred.reject);
         }
 
-        self.executeScript_(
+        self.executeScriptWithDescription(
                 'angular.resumeBootstrap(arguments[0]);',
                 msg('resume bootstrap'), moduleNames)
             .then(null, deferred.reject);
@@ -839,7 +834,7 @@ export class ProtractorBrowser extends Webdriver {
     }
 
     return this
-        .executeScript_(
+        .executeScriptWithDescription(
             'return window.location.href', 'Protractor.refresh() - getUrl')
         .then((href: string) => {
           return this.get(href, opt_timeout);
@@ -872,7 +867,7 @@ export class ProtractorBrowser extends Webdriver {
   setLocation(url: string): webdriver.promise.Promise<any> {
     this.waitForAngular();
     return this
-        .executeScript_(
+        .executeScriptWithDescription(
             clientSideScripts.setLocation, 'Protractor.setLocation()',
             this.rootEl, url)
         .then((browserErr: Error) => {
@@ -895,7 +890,7 @@ export class ProtractorBrowser extends Webdriver {
    */
   getLocationAbsUrl(): webdriver.promise.Promise<any> {
     this.waitForAngular();
-    return this.executeScript_(
+    return this.executeScriptWithDescription(
         clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()',
         this.rootEl);
   }
@@ -929,58 +924,6 @@ export class ProtractorBrowser extends Webdriver {
   }
 
   /**
-   * Validates that the port is free to use. This will only validate the first
-   * time it is called. The reason is that on subsequent calls, the port will
-   * already be bound to the debugger, so it will not be available, but that is
-   * okay.
-   *
-   * @returns {Promise<boolean>} A promise that becomes ready when the
-   * validation
-   *     is done. The promise will resolve to a boolean which represents whether
-   *     this is the first time that the debugger is called.
-   */
-  private validatePortAvailability_(port: number):
-      webdriver.promise.Promise<any> {
-    if (this.debuggerValidated_) {
-      return webdriver.promise.fulfilled(false);
-    }
-
-    let doneDeferred = webdriver.promise.defer();
-
-    // Resolve doneDeferred if port is available.
-    let tester = net.connect({port: port}, () => {
-      doneDeferred.reject(
-          'Port ' + port + ' is already in use. Please specify ' +
-          'another port to debug.');
-    });
-    tester.once('error', (err: NodeJS.ErrnoException) => {
-      if (err.code === 'ECONNREFUSED') {
-        tester
-            .once(
-                'close',
-                () => {
-                  doneDeferred.fulfill(true);
-                })
-            .end();
-      } else {
-        doneDeferred.reject(
-            'Unexpected failure testing for port ' + port + ': ' +
-            JSON.stringify(err));
-      }
-    });
-
-    return doneDeferred.then(
-        () => {
-          this.debuggerValidated_ = true;
-        },
-        (err: string) => {
-          console.error(err);
-          process.exit(1);
-        });
-  }
-
-  private dbgCodeExecutor_: any;
-  /**
    * Helper function to:
    *  1) Set up helper functions for debugger clients to call on (e.g.
    *     getControlFlowText, execute code, get autocompletion).
@@ -996,7 +939,7 @@ export class ProtractorBrowser extends Webdriver {
    */
   private initDebugger_(
       debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
-    return Debugger.init(debuggerClientPath, onStartFn, opt_debugPort);
+    return this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
@@ -1052,7 +995,7 @@ export class ProtractorBrowser extends Webdriver {
    * process
    */
   pause(opt_debugPort?: number): webdriver.promise.Promise<any> {
-    if (this.dbgCodeExecutor_) {
+    if (!this.debugHelper.isAttached()) {
       logger.info(
           'Encountered browser.pause(), but debugger already attached.');
       return webdriver.promise.fulfilled(true);
@@ -1063,7 +1006,7 @@ export class ProtractorBrowser extends Webdriver {
       logger.info('Encountered browser.pause(). Attaching debugger...');
       if (firstTime) {
         logger.info();
-        logger.info('------- WebDriver Debugger -------');
+        logger.info('------- WebDriver DebugHelper -------');
         logger.info(
             'Starting WebDriver debugger in a child process. Pause is ' +
             'still beta, please report issues at github.com/angular/protractor');

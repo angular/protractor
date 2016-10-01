@@ -226,7 +226,7 @@ export class Runner extends EventEmitter {
       browser_.allScriptsTimeout = config.allScriptsTimeout;
     }
     if (config.debuggerServerPort) {
-      browser_.debuggerServerPort_ = config.debuggerServerPort;
+      browser_.debuggerServerPort = config.debuggerServerPort;
     }
     if (config.useAllAngular2AppRoots) {
       browser_.useAllAngular2AppRoots();
