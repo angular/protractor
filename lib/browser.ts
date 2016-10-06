@@ -264,7 +264,7 @@ export class ProtractorBrowser extends Webdriver {
   ng12Hybrid: boolean;
 
   /**
-   * A helper manages debugging.
+   * A helper that manages debugging tests.
    */
   debugHelper: DebugHelper;
 
@@ -387,8 +387,7 @@ export class ProtractorBrowser extends Webdriver {
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
    * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
-   * the
-   *    scripts return value.
+   * the scripts return value.
    * @template T
    */
   public executeScriptWithDescription(
