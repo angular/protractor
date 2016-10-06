@@ -214,7 +214,8 @@ export class ProtractorExpectedConditions {
       Function {
     var hasText = () => {
       return elementFinder.getText().then((actualText: string): boolean => {
-        return actualText.indexOf(text) > -1;
+        // MSEdge does not properly remove newlines, which causes false negatives
+        return actualText.replace(/\r?\n|\r/g, '').indexOf(text) > -1;
       });
     };
     return this.and(this.presenceOf(elementFinder), hasText);
