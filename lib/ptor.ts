@@ -1,3 +1,8 @@
+import {ActionSequence, Browser, Builder, Button, Capabilities, Capability, Command, CommandName, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import * as chrome from 'selenium-webdriver/firefox';
+import * as http from 'selenium-webdriver/http';
+import * as remote from 'selenium-webdriver/remote';
+
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
