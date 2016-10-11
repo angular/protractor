@@ -49,10 +49,10 @@ export class Runner extends EventEmitter {
 
       flow.execute(() => {
         let nodedebug = require('child_process').fork('debug', ['localhost:5858']);
-        process.on('exit', function() {
+        process.on('exit', function () {
           nodedebug.kill('SIGTERM');
         });
-        nodedebug.on('exit', function() {
+        nodedebug.on('exit', function () {
           process.exit(1);
         });
       }, 'start the node debugger');
@@ -126,17 +126,16 @@ export class Runner extends EventEmitter {
    * @private
    * @param {int} Standard unix exit code
    */
-  exit_ = function(exitCode: number):
-      any {
-        return helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode])
-            .then((returned): number | any => {
-              if (typeof returned === 'number') {
-                return returned;
-              } else {
-                return exitCode;
-              }
-            });
-      }
+  exit_ = function (exitCode: number): any {
+    return helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode])
+        .then((returned): number | any => {
+          if (typeof returned === 'number') {
+            return returned;
+          } else {
+            return exitCode;
+          }
+        });
+  }
 
   /**
    * Getter for the Runner config object
@@ -186,7 +185,7 @@ export class Runner extends EventEmitter {
     }
     // Required by dart2js machinery.
     // https://code.google.com/p/dart/source/browse/branches/bleeding_edge/dart/sdk/lib/js/dart2js/js_dart2js.dart?spec=svn32943&r=32943#487
-    global.DartObject = function(o: any) {
+    global.DartObject = function (o: any) {
       this.o = o;
     };
   }
@@ -206,8 +205,12 @@ export class Runner extends EventEmitter {
     var config = this.config_;
     var driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = new ProtractorBrowser(
-        driver, config.baseUrl, config.rootElement, config.untrackOutstandingTimeouts);
+    let blockingProxyUrl: string;
+    if (config.useBlockingProxy) {
+      blockingProxyUrl = this.driverprovider_.getBPUrl();
+    }
+
+    var browser_ = new ProtractorBrowser(driver, config.baseUrl, config.rootElement, config.untrackOutstandingTimeouts, blockingProxyUrl);
 
     browser_.params = config.params;
     if (plugins) {

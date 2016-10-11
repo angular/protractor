@@ -1,3 +1,6 @@
+// Util from NodeJs
+import {BPClient} from 'blockingproxy';
+import * as net from 'net';
 import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
 
@@ -142,6 +145,11 @@ export class ProtractorBrowser extends Webdriver {
   driver: WebDriver;
 
   /**
+   * TODO
+   */
+  bpClient: BPClient;
+
+  /**
    * Helper function for finding elements.
    *
    * @type {function(webdriver.Locator): ElementFinder}
@@ -188,7 +196,21 @@ export class ProtractorBrowser extends Webdriver {
    *
    * @type {boolean}
    */
-  ignoreSynchronization: boolean;
+  set ignoreSynchronization(value) {
+    this.driver.controlFlow().execute(() => {
+      if (this.bpClient) {
+        logger.info('Setting synchronization ' + value);
+        this.bpClient.setSynchronization(!value);
+      }
+    }, `Set proxy synchronization to ${value}`);
+    this.internalIgnoreSynchronization = value;
+  }
+
+  get ignoreSynchronization() {
+    return this.internalIgnoreSynchronization;
+  }
+
+  internalIgnoreSynchronization: boolean;
 
   /**
    * Timeout in milliseconds to wait for pages to load when calling `get`.
@@ -272,7 +294,7 @@ export class ProtractorBrowser extends Webdriver {
 
   constructor(
       webdriverInstance: WebDriver, opt_baseUrl?: string, opt_rootElement?: string,
-      opt_untrackOutstandingTimeouts?: boolean) {
+      opt_untrackOutstandingTimeouts?: boolean, opt_blockingProxyUrl?: string) {
     super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
@@ -291,6 +313,10 @@ export class ProtractorBrowser extends Webdriver {
     });
 
     this.driver = webdriverInstance;
+    if (opt_blockingProxyUrl) {
+      logger.info('Starting BP client');
+      this.bpClient = new BPClient(opt_blockingProxyUrl);
+    }
     this.element = buildElementHelper(this);
     this.$ = build$(this.element, By);
     this.$$ = build$$(this.element, By);
@@ -445,7 +471,7 @@ export class ProtractorBrowser extends Webdriver {
     }
 
     let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
-      if (this.plugins_.skipAngularStability()) {
+      if (this.plugins_.skipAngularStability() || this.bpClient) {
         return wdpromise.fulfilled();
       } else if (this.rootEl) {
         return this.executeAsyncScript_(
@@ -668,7 +694,7 @@ export class ProtractorBrowser extends Webdriver {
       return 'Protractor.get(' + destination + ') - ' + str;
     };
 
-    if (this.ignoreSynchronization) {
+    if (this.ignoreSynchronization || this.bpClient) {
       this.driver.get(destination);
       return this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()).then(() => {});
     }
@@ -788,7 +814,7 @@ export class ProtractorBrowser extends Webdriver {
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to start.
    */
   refresh(opt_timeout?: number) {
-    if (this.ignoreSynchronization) {
+    if (this.ignoreSynchronization || this.bpClient) {
       return this.driver.navigate().refresh();
     }
 

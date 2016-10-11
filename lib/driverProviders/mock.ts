@@ -28,7 +28,7 @@ export class Mock extends DriverProvider {
    * @public
    * @return {q.promise} A promise which will resolve immediately.
    */
-  setupEnv(): q.Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     return q.fcall(function() {});
   }
 

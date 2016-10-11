@@ -51,7 +51,7 @@ export class Sauce extends DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
     this.sauceServer_ = new SauceLabs({
       username: this.config_.sauceUser,

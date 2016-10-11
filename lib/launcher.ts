@@ -102,6 +102,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
     configParser.addConfig(additionalConfig);
   }
   let config = configParser.getConfig();
+
   Logger.set(config);
   logger.debug('Running with --troubleshoot');
   logger.debug('Protractor version: ' + require('../package.json').version);
@@ -173,7 +174,8 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         }
       })
       .then(() => {
-        // 4) Run tests.
+        // 5) Run tests.
+        console.log(config.seleniumAddress);
         let scheduler = new TaskScheduler(config);
 
         process.on('uncaughtException', (exc: (Error|string)) => {
@@ -198,7 +200,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
           }
         });
 
-        process.on('exit', (code: number) => {
+        process.on('exit', (code: number, signal: number) => {
           if (code) {
             logger.error('Process exited with error code ' + code);
           } else if (scheduler.numTasksOutstanding() > 0) {
