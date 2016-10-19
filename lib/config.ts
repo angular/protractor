@@ -516,6 +516,10 @@ export interface Config {
        * Inverts 'grep' matches
        */
       invertGrep?: boolean;
+      /**
+       * Clears default reporters
+       */
+      clearReporters?: boolean;
     };
 
     /**
