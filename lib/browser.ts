@@ -775,8 +775,8 @@ export class ProtractorBrowser extends Webdriver {
         .then(loadMocks, deferred.reject);
 
     let self = this;
-    function loadMocks(angularVersion: number) {
-      if (angularVersion === 1) {
+    function loadMocks(angularVersion: string) {
+      if (angularVersion == '1') {
         // At this point, Angular will pause for us until
         // angular.resumeBootstrap
         // is called.

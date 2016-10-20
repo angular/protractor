@@ -4,7 +4,10 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
+import {Session} from 'selenium-webdriver';
+
 import {Config} from '../config';
+
 let webdriver = require('selenium-webdriver');
 
 export class DriverProvider {
@@ -61,7 +64,7 @@ export class DriverProvider {
     if (driver.getSession() === undefined) {
       deferred.resolve();
     } else {
-      driver.getSession().then((session_: string) => {
+      driver.getSession().then((session_: Session) => {
         if (session_) {
           driver.quit().then(function() {
             deferred.resolve();

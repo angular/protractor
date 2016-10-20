@@ -178,32 +178,28 @@ export class ElementArrayFinder extends WebdriverWebElement {
               }
             });
       } else {
-        return this.getWebElements().then(
-            (parentWebElements: webdriver.WebElement[]) => {
-              // For each parent web element, find their children and construct
-              // a
-              // list of Promise<List<child_web_element>>
-              let childrenPromiseList = parentWebElements.map(
-                  (parentWebElement: webdriver.WebElement) => {
-                    return locator.findElementsOverride ?
-                        locator.findElementsOverride(
-                            ptor.driver, parentWebElement, ptor.rootEl) :
-                        parentWebElement.findElements(locator);
-                  });
+        return this.getWebElements().then((parentWebElements: WebElement[]) => {
+          // For each parent web element, find their children and construct
+          // a list of Promise<List<child_web_element>>
+          let childrenPromiseList = parentWebElements.map(
+              (parentWebElement: webdriver.WebElement) => {
+                return locator.findElementsOverride ?
+                    locator.findElementsOverride(
+                        ptor.driver, parentWebElement, ptor.rootEl) :
+                    parentWebElement.findElements(locator);
+              });
 
-              // Resolve the list of Promise<List<child_web_elements>> and merge
-              // into
-              // a single list
-              return wdpromise.all(childrenPromiseList)
-                  .then((resolved: webdriver.WebElement[]) => {
-                    return resolved.reduce(
-                        (childrenList: webdriver.WebElement[],
-                         resolvedE: webdriver.WebElement) => {
-                          return childrenList.concat(resolvedE);
-                        },
-                        []);
-                  });
-            });
+          // Resolve the list of Promise<List<child_web_elements>> and merge
+          // into a single list
+          return wdpromise.all(childrenPromiseList).then((resolved: any) => {
+            return resolved.reduce(
+                (childrenList: WebElement[],
+                 resolvedE: webdriver.WebElement) => {
+                  return childrenList.concat(resolvedE);
+                },
+                []);
+          });
+        });
       }
     };
     return new ElementArrayFinder(this.browser_, getWebElements, locator);
@@ -501,7 +497,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then(fn?: Function, errorFn?: Function): wdpromise.Promise<any[]> {
+  then(
+      fn?: (value: any) => {} | wdpromise.IThenable<{}>,
+      errorFn?: (error: any) => any): wdpromise.Promise<any[]> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
     } else {
@@ -726,7 +724,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
 export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
-  then: (fn: Function, errorFn: Function) => wdpromise.Promise<any> = null;
+  then: (fn: Function, errorFn?: Function) => wdpromise.Promise<any> = null;
 
   constructor(
       public browser_: ProtractorBrowser,
@@ -751,14 +749,16 @@ export class ElementFinder extends WebdriverWebElement {
        * of
        *     evaluating fn.
        */
-      this.then = (fn: Function, errorFn: Function) => {
-        return this.elementArrayFinder_.then((actionResults: any) => {
-          if (!fn) {
-            return actionResults[0];
-          }
-          return fn(actionResults[0]);
-        }, errorFn);
-      };
+      this.then =
+          (fn: (value: any) => {} | wdpromise.IThenable<{}>,
+           errorFn?: (error: any) => any) => {
+            return this.elementArrayFinder_.then((actionResults: any) => {
+              if (!fn) {
+                return actionResults[0];
+              }
+              return fn(actionResults[0]);
+            }, errorFn);
+          };
     }
 
     // This filter verifies that there is only 1 element returned by the
