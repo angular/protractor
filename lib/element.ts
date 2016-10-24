@@ -191,13 +191,10 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
           // Resolve the list of Promise<List<child_web_elements>> and merge
           // into a single list
-          return wdpromise.all(childrenPromiseList).then((resolved: any) => {
-            return resolved.reduce(
-                (childrenList: WebElement[],
-                 resolvedE: webdriver.WebElement) => {
-                  return childrenList.concat(resolvedE);
-                },
-                []);
+          return wdpromise.all(childrenPromiseList).then((resolved) => {
+            return resolved.reduce((childrenList, resolvedE) => {
+              return childrenList.concat(resolvedE);
+            }, []);
           });
         });
       }
