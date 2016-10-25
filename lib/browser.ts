@@ -1,21 +1,13 @@
-// Util from NodeJs
-import * as net from 'net';
 import {ActionSequence, Capabilities, Command as WdCommand, FileDetector, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
-
 import * as url from 'url';
-import * as util from 'util';
 
+import {DebugHelper} from './debugger';
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
 import {IError} from './exitCodes';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
-import {Ptor} from './ptor';
-import * as helper from './util';
-
-declare var global: any;
-declare var process: any;
 
 let clientSideScripts = require('./clientsidescripts');
 let webdriver = require('selenium-webdriver');
@@ -259,16 +251,9 @@ export class ProtractorBrowser extends Webdriver {
   /**
    * If specified, start a debugger server at specified port instead of repl
    * when running element explorer.
-   * @private {number}
+   * @public {number}
    */
-  debuggerServerPort_: number;
-
-  /**
-   * Set to true when we validate that the debug port is open. Since the debug
-   * port is held open forever once the debugger is attached, it's important
-   * we only do validation once.
-   */
-  debuggerValidated_: boolean;
+  public debuggerServerPort: number;
 
   /**
    * If true, Protractor will interpret any angular apps it comes across as
@@ -277,6 +262,11 @@ export class ProtractorBrowser extends Webdriver {
    * @type {boolean}
    */
   ng12Hybrid: boolean;
+
+  /**
+   * A helper that manages debugging tests.
+   */
+  debugHelper: DebugHelper;
 
   // This index type allows looking up methods by name so we can do mixins.
   [key: string]: any;
@@ -318,6 +308,7 @@ export class ProtractorBrowser extends Webdriver {
     this.plugins_ = new Plugins({});
     this.resetUrl = DEFAULT_RESET_URL;
     this.ng12Hybrid = false;
+    this.debugHelper = new DebugHelper(this);
 
     this.driver.getCapabilities().then((caps: Capabilities) => {
       // Internet Explorer does not accept data URLs, which are the default
@@ -396,11 +387,10 @@ export class ProtractorBrowser extends Webdriver {
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
    * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
-   * the
-   *    scripts return value.
+   * the scripts return value.
    * @template T
    */
-  private executeScript_(
+  public executeScriptWithDescription(
       script: string|Function, description: string,
       ...scriptArgs: any[]): wdpromise.Promise<any> {
     if (typeof script === 'function') {
@@ -526,14 +516,14 @@ export class ProtractorBrowser extends Webdriver {
                 }
                 let pendingTimeoutsPromise: wdpromise.Promise<any>;
                 if (this.trackOutstandingTimeouts_) {
-                  pendingTimeoutsPromise = this.executeScript_(
+                  pendingTimeoutsPromise = this.executeScriptWithDescription(
                       'return window.NG_PENDING_TIMEOUTS',
                       'Protractor.waitForAngular() - getting pending timeouts' +
                           description);
                 } else {
                   pendingTimeoutsPromise = wdpromise.fulfilled({});
                 }
-                let pendingHttpsPromise = this.executeScript_(
+                let pendingHttpsPromise = this.executeScriptWithDescription(
                     clientSideScripts.getPendingHttpRequests,
                     'Protractor.waitForAngular() - getting pending https' +
                         description,
@@ -713,7 +703,7 @@ export class ProtractorBrowser extends Webdriver {
     let deferred = webdriver.promise.defer();
 
     this.driver.get(this.resetUrl).then(null, deferred.reject);
-    this.executeScript_(
+    this.executeScriptWithDescription(
             'window.name = "' + DEFER_LABEL + '" + window.name;' +
 
                 'window.location.replace("' + destination + '");',
@@ -726,7 +716,7 @@ export class ProtractorBrowser extends Webdriver {
         .wait(
             () => {
               return this
-                  .executeScript_(
+                  .executeScriptWithDescription(
                       'return window.location.href;', msg('get url'))
                   .then(
                       (url: any) => {
@@ -788,7 +778,7 @@ export class ProtractorBrowser extends Webdriver {
           let executeScriptArgs = [
             mockModule.script, msg('add mock module ' + name)
           ].concat(mockModule.args);
-          self.executeScript_.apply(self, executeScriptArgs)
+          self.executeScriptWithDescription.apply(self, executeScriptArgs)
               .then(
                   null,
                   (err: Error) => {
@@ -799,7 +789,7 @@ export class ProtractorBrowser extends Webdriver {
               .then(null, deferred.reject);
         }
 
-        self.executeScript_(
+        self.executeScriptWithDescription(
                 'angular.resumeBootstrap(arguments[0]);',
                 msg('resume bootstrap'), moduleNames)
             .then(null, deferred.reject);
@@ -843,7 +833,7 @@ export class ProtractorBrowser extends Webdriver {
     }
 
     return this
-        .executeScript_(
+        .executeScriptWithDescription(
             'return window.location.href', 'Protractor.refresh() - getUrl')
         .then((href: string) => {
           return this.get(href, opt_timeout);
@@ -876,7 +866,7 @@ export class ProtractorBrowser extends Webdriver {
   setLocation(url: string): webdriver.promise.Promise<any> {
     this.waitForAngular();
     return this
-        .executeScript_(
+        .executeScriptWithDescription(
             clientSideScripts.setLocation, 'Protractor.setLocation()',
             this.rootEl, url)
         .then((browserErr: Error) => {
@@ -899,7 +889,7 @@ export class ProtractorBrowser extends Webdriver {
    */
   getLocationAbsUrl(): webdriver.promise.Promise<any> {
     this.waitForAngular();
-    return this.executeScript_(
+    return this.executeScriptWithDescription(
         clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()',
         this.rootEl);
   }
@@ -930,261 +920,6 @@ export class ProtractorBrowser extends Webdriver {
     webdriver.promise.controlFlow().execute(() => {
       debugger;
     }, 'add breakpoint to control flow');
-  }
-
-  /**
-   * Validates that the port is free to use. This will only validate the first
-   * time it is called. The reason is that on subsequent calls, the port will
-   * already be bound to the debugger, so it will not be available, but that is
-   * okay.
-   *
-   * @returns {Promise<boolean>} A promise that becomes ready when the
-   * validation
-   *     is done. The promise will resolve to a boolean which represents whether
-   *     this is the first time that the debugger is called.
-   */
-  private validatePortAvailability_(port: number):
-      webdriver.promise.Promise<any> {
-    if (this.debuggerValidated_) {
-      return webdriver.promise.fulfilled(false);
-    }
-
-    let doneDeferred = webdriver.promise.defer();
-
-    // Resolve doneDeferred if port is available.
-    let tester = net.connect({port: port}, () => {
-      doneDeferred.reject(
-          'Port ' + port + ' is already in use. Please specify ' +
-          'another port to debug.');
-    });
-    tester.once('error', (err: NodeJS.ErrnoException) => {
-      if (err.code === 'ECONNREFUSED') {
-        tester
-            .once(
-                'close',
-                () => {
-                  doneDeferred.fulfill(true);
-                })
-            .end();
-      } else {
-        doneDeferred.reject(
-            'Unexpected failure testing for port ' + port + ': ' +
-            JSON.stringify(err));
-      }
-    });
-
-    return doneDeferred.then(
-        () => {
-          this.debuggerValidated_ = true;
-        },
-        (err: string) => {
-          console.error(err);
-          process.exit(1);
-        });
-  }
-
-  private dbgCodeExecutor_: any;
-  /**
-   * Helper function to:
-   *  1) Set up helper functions for debugger clients to call on (e.g.
-   *     getControlFlowText, execute code, get autocompletion).
-   *  2) Enter process into debugger mode. (i.e. process._debugProcess).
-   *  3) Invoke the debugger client specified by debuggerClientPath.
-   *
-   * @param {string} debuggerClientPath Absolute path of debugger client to use
-   * @param {Function} onStartFn Function to call when the debugger starts. The
-   *     function takes a single parameter, which represents whether this is the
-   *     first time that the debugger is called.
-   * @param {number=} opt_debugPort Optional port to use for the debugging
-   * process
-   */
-  private initDebugger_(
-      debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
-    // Patch in a function to help us visualize what's going on in the control
-    // flow.
-    webdriver.promise.ControlFlow.prototype.getControlFlowText = function() {
-      let controlFlowText = this.getSchedule(/* opt_includeStackTraces */ true);
-      // This filters the entire control flow text, not just the stack trace, so
-      // unless we maintain a good (i.e. non-generic) set of keywords in
-      // STACK_SUBSTRINGS_TO_FILTER, we run the risk of filtering out non stack
-      // trace. The alternative though, which is to reimplement
-      // webdriver.promise.ControlFlow.prototype.getSchedule() here is much
-      // hackier, and involves messing with the control flow's internals /
-      // private
-      // variables.
-      return helper.filterStackTrace(controlFlowText);
-    };
-
-    let vm_ = require('vm');
-    let flow = webdriver.promise.controlFlow();
-
-    interface Context {
-      require: any;
-      [key: string]: any;
-    }
-    let context: Context = {require: require};
-    global.list = (locator: Locator) => {
-      return (<Ptor>global.protractor)
-          .browser.findElements(locator)
-          .then((arr: webdriver.WebElement[]) => {
-            let found: string[] = [];
-            for (let i = 0; i < arr.length; ++i) {
-              arr[i].getText().then((text: string) => {
-                found.push(text);
-              });
-            }
-            return found;
-          });
-    };
-    for (let key in global) {
-      context[key] = global[key];
-    }
-    let sandbox = vm_.createContext(context);
-
-    let browserUnderDebug = this;
-    let debuggerReadyPromise = webdriver.promise.defer();
-    flow.execute(() => {
-      process['debugPort'] = opt_debugPort || process['debugPort'];
-      browserUnderDebug.validatePortAvailability_(process['debugPort'])
-          .then((firstTime: boolean) => {
-            onStartFn(firstTime);
-
-            let args = [process.pid, process['debugPort']];
-            if (browserUnderDebug.debuggerServerPort_) {
-              args.push(browserUnderDebug.debuggerServerPort_);
-            }
-            let nodedebug =
-                require('child_process').fork(debuggerClientPath, args);
-            process.on('exit', function() {
-              nodedebug.kill('SIGTERM');
-            });
-            nodedebug
-                .on('message',
-                    (m: string) => {
-                      if (m === 'ready') {
-                        debuggerReadyPromise.fulfill();
-                      }
-                    })
-                .on('exit', () => {
-                  logger.info('Debugger exiting');
-                  // Clear this so that we know it's ok to attach a debugger
-                  // again.
-                  this.dbgCodeExecutor_ = null;
-                });
-          });
-    });
-
-    let pausePromise = flow.execute(function() {
-      return debuggerReadyPromise.then(function() {
-        // Necessary for backward compatibility with node < 0.12.0
-        return browserUnderDebug.executeScript_('', 'empty debugger hook');
-      });
-    });
-
-    // Helper used only by debuggers at './debugger/modes/*.js' to insert code
-    // into the control flow.
-    // In order to achieve this, we maintain a promise at the top of the control
-    // flow, so that we can insert frames into it.
-    // To be able to simulate callback/asynchronous code, we poll this object
-    // for an result at every run of DeferredExecutor.execute.
-    this.dbgCodeExecutor_ = {
-      execPromise_: pausePromise,  // Promise pointing to current stage of flow.
-      execPromiseResult_: undefined,  // Return value of promise.
-      execPromiseError_: undefined,   // Error from promise.
-
-      // A dummy repl server to make use of its completion function.
-      replServer_: require('repl').start({
-        input: {
-          on: function() {},
-          resume: function() {}
-        },                               // dummy readable stream
-        output: {write: function() {}},  // dummy writable stream
-        useGlobal: true
-      }),
-
-      // Execute a function, which could yield a value or a promise,
-      // and allow its result to be accessed synchronously
-      execute_: function(execFn_: Function) {
-        this.execPromiseResult_ = this.execPromiseError_ = undefined;
-
-        this.execPromise_ = this.execPromise_.then(execFn_).then(
-            (result: Object) => {
-              this.execPromiseResult_ = result;
-            },
-            (err: Error) => {
-              this.execPromiseError_ = err;
-            });
-
-        // This dummy command is necessary so that the DeferredExecutor.execute
-        // break point can find something to stop at instead of moving on to the
-        // next real command.
-        this.execPromise_.then(() => {
-          return browserUnderDebug.executeScript_('', 'empty debugger hook');
-        });
-      },
-
-      // Execute a piece of code.
-      // Result is a string representation of the evaluation.
-      execute: function(code: Function) {
-        let execFn_ = () => {
-          // Run code through vm so that we can maintain a local scope which is
-          // isolated from the rest of the execution.
-          let res = vm_.runInContext(code, sandbox);
-          if (!webdriver.promise.isPromise(res)) {
-            res = webdriver.promise.fulfilled(res);
-          }
-
-          return res.then((res: any) => {
-            if (res === undefined) {
-              return undefined;
-            } else {
-              // The '' forces res to be expanded into a string instead of just
-              // '[Object]'. Then we remove the extra space caused by the ''
-              // using
-              // substring.
-              return util.format.apply(this, ['', res]).substring(1);
-            }
-          });
-        };
-        this.execute_(execFn_);
-      },
-
-      // Autocomplete for a line.
-      // Result is a JSON representation of the autocomplete response.
-      complete: function(line: string) {
-        let execFn_ = () => {
-          let deferred = webdriver.promise.defer();
-          this.replServer_.complete(line, (err: any, res: any) => {
-            if (err) {
-              deferred.reject(err);
-            } else {
-              deferred.fulfill(JSON.stringify(res));
-            }
-          });
-          return deferred;
-        };
-        this.execute_(execFn_);
-      },
-
-      // Code finished executing.
-      resultReady: function() {
-        return !this.execPromise_.isPending();
-      },
-
-      // Get asynchronous results synchronously.
-      // This will throw if result is not ready.
-      getResult: function() {
-        if (!this.resultReady()) {
-          throw new Error('Result not ready');
-        }
-        if (this.execPromiseError_) {
-          throw this.execPromiseError_;
-        }
-        return this.execPromiseResult_;
-      }
-    };
-
-    return pausePromise;
   }
 
   /**
@@ -1219,7 +954,7 @@ export class ProtractorBrowser extends Webdriver {
       logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
       logger.info();
     };
-    this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
+    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
@@ -1240,7 +975,7 @@ export class ProtractorBrowser extends Webdriver {
    * process
    */
   pause(opt_debugPort?: number): webdriver.promise.Promise<any> {
-    if (this.dbgCodeExecutor_) {
+    if (this.debugHelper.isAttached()) {
       logger.info(
           'Encountered browser.pause(), but debugger already attached.');
       return webdriver.promise.fulfilled(true);
@@ -1263,7 +998,7 @@ export class ProtractorBrowser extends Webdriver {
         logger.info();
       }
     };
-    return this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
+    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
