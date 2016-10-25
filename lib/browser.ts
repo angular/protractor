@@ -97,7 +97,7 @@ function ptorMixin(to: any, from: any, fnName: string, setupFn?: Function) {
 
 export interface ElementHelper extends Function {
   (locator: Locator): ElementFinder;
-  all?: (locator: Locator) => ElementArrayFinder;
+  all: (locator: Locator) => ElementArrayFinder;
 }
 
 /**
@@ -108,9 +108,9 @@ export interface ElementHelper extends Function {
  * @returns {function(webdriver.Locator): ElementFinder}
  */
 function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
-  let element: ElementHelper = (locator: Locator) => {
+  let element = ((locator: Locator) => {
     return new ElementArrayFinder(browser).all(locator).toElementFinder_();
-  };
+  }) as ElementHelper;
 
   element.all =
       (locator: Locator) => {
