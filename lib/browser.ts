@@ -758,7 +758,7 @@ export class ProtractorBrowser extends Webdriver {
             clientSideScripts.testForAngular, msg('test for angular'),
             Math.floor(timeout / 1000), this.ng12Hybrid)
         .then(
-            (angularTestResult: {ver: string, message: string}) => {
+            (angularTestResult: {ver: number, message: string}) => {
               let angularVersion = angularTestResult.ver;
               if (!angularVersion) {
                 let message = angularTestResult.message;
