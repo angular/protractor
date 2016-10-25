@@ -14,6 +14,7 @@ import * as helper from './util';
 
 declare var global: any;
 declare var process: any;
+declare var Object: any;
 
 var webdriver = require('selenium-webdriver');
 let logger = new Logger('runner');
@@ -258,7 +259,8 @@ export class Runner extends EventEmitter {
       // calls here are not guaranteed to complete before the tests resume.
       this.driverprovider_.quitDriver(browser_.driver);
       // Copy mock modules, but do not navigate to previous URL.
-      browser_ = browser_.forkNewDriverInstance(false, true);
+      let forkBrowser = browser_.forkNewDriverInstance(false, true);
+      browser_.driver = forkBrowser.driver;
       this.setupGlobals_(browser_);
     };
 
