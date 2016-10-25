@@ -1,4 +1,3 @@
-// Util from NodeJs
 import * as net from 'net';
 import * as util from 'util'
 
@@ -15,8 +14,6 @@ let logger = new Logger('protractor');
 let webdriver = require('selenium-webdriver');
 
 export class DebugHelper {
-  browser: ProtractorBrowser;
-
   /**
    * Set to true when we validate that the debug port is open. Since the debug
    * port is held open forever once the debugger is attached, it's important
@@ -26,10 +23,21 @@ export class DebugHelper {
 
   dbgCodeExecutor: any;
 
-  constructor(browser: ProtractorBrowser) {
-    this.browser = browser;
-  }
+  constructor(private browserUnderDebug_: ProtractorBrowser) {}
 
+  /**
+   *  1) Set up helper functions for debugger clients to call on (e.g.
+   *     getControlFlowText, execute code, get autocompletion).
+   *  2) Enter process into debugger mode. (i.e. process._debugProcess).
+   *  3) Invoke the debugger client specified by debuggerClientPath.
+   *
+   * @param {string} debuggerClientPath Absolute path of debugger client to use.
+   * @param {Function} onStartFn Function to call when the debugger starts. The
+   *     function takes a single parameter, which represents whether this is the
+   *     first time that the debugger is called.
+   * @param {number=} opt_debugPort Optional port to use for the debugging
+   *     process.
+   */
   init(
       debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
     webdriver.promise.ControlFlow.prototype.getControlFlowText = function() {
@@ -70,7 +78,6 @@ export class DebugHelper {
     }
     let sandbox = vm_.createContext(context);
 
-    let browserUnderDebug = this.browser;
     let debuggerReadyPromise = webdriver.promise.defer();
     flow.execute(() => {
       process['debugPort'] = opt_debugPort || process['debugPort'];
@@ -79,8 +86,8 @@ export class DebugHelper {
             onStartFn(firstTime);
 
             let args = [process.pid, process['debugPort']];
-            if (browserUnderDebug.debuggerServerPort) {
-              args.push(browserUnderDebug.debuggerServerPort);
+            if (this.browserUnderDebug_.debuggerServerPort) {
+              args.push(this.browserUnderDebug_.debuggerServerPort);
             }
             let nodedebug =
                 require('child_process').fork(debuggerClientPath, args);
@@ -103,10 +110,10 @@ export class DebugHelper {
           });
     });
 
-    let pausePromise = flow.execute(function() {
-      return debuggerReadyPromise.then(function() {
+    let pausePromise = flow.execute(() => {
+      return debuggerReadyPromise.then(() => {
         // Necessary for backward compatibility with node < 0.12.0
-        return browserUnderDebug.executeScriptWithDescription(
+        return this.browserUnderDebug_.executeScriptWithDescription(
             '', 'empty debugger hook');
       });
     });
@@ -117,6 +124,7 @@ export class DebugHelper {
     // flow, so that we can insert frames into it.
     // To be able to simulate callback/asynchronous code, we poll this object
     // for a result at every run of DeferredExecutor.execute.
+    let browserUnderDebug = this.browserUnderDebug_;
     this.dbgCodeExecutor = {
       execPromise_: pausePromise,  // Promise pointing to current stage of flow.
       execPromiseResult_: undefined,  // Return value of promise.

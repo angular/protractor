@@ -251,7 +251,7 @@ export class ProtractorBrowser extends Webdriver {
   /**
    * If specified, start a debugger server at specified port instead of repl
    * when running element explorer.
-   * @private {number}
+   * @public {number}
    */
   public debuggerServerPort: number;
 
@@ -923,25 +923,6 @@ export class ProtractorBrowser extends Webdriver {
   }
 
   /**
-   * Helper function to:
-   *  1) Set up helper functions for debugger clients to call on (e.g.
-   *     getControlFlowText, execute code, get autocompletion).
-   *  2) Enter process into debugger mode. (i.e. process._debugProcess).
-   *  3) Invoke the debugger client specified by debuggerClientPath.
-   *
-   * @param {string} debuggerClientPath Absolute path of debugger client to use
-   * @param {Function} onStartFn Function to call when the debugger starts. The
-   *     function takes a single parameter, which represents whether this is the
-   *     first time that the debugger is called.
-   * @param {number=} opt_debugPort Optional port to use for the debugging
-   * process
-   */
-  private initDebugger_(
-      debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
-    return this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
-  }
-
-  /**
    * Beta (unstable) enterRepl function for entering the repl loop from
    * any point in the control flow. Use browser.enterRepl() in your test.
    * Does not require changes to the command line (no need to add 'debug').
@@ -973,7 +954,7 @@ export class ProtractorBrowser extends Webdriver {
       logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
       logger.info();
     };
-    this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
+    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
@@ -1005,7 +986,7 @@ export class ProtractorBrowser extends Webdriver {
       logger.info('Encountered browser.pause(). Attaching debugger...');
       if (firstTime) {
         logger.info();
-        logger.info('------- WebDriver DebugHelper -------');
+        logger.info('------- WebDriver Debugger -------');
         logger.info(
             'Starting WebDriver debugger in a child process. Pause is ' +
             'still beta, please report issues at github.com/angular/protractor');
@@ -1017,7 +998,7 @@ export class ProtractorBrowser extends Webdriver {
         logger.info();
       }
     };
-    return this.initDebugger_(debuggerClientPath, onStartFn, opt_debugPort);
+    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
