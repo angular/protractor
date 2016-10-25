@@ -258,7 +258,13 @@ export class Runner extends EventEmitter {
       // calls here are not guaranteed to complete before the tests resume.
       this.driverprovider_.quitDriver(browser_.driver);
       // Copy mock modules, but do not navigate to previous URL.
-      browser_ = browser_.forkNewDriverInstance(false, true);
+      let forkBrowser = browser_.forkNewDriverInstance(false, true);
+
+      // Replace the items in browser_ but do not create a new object
+      // since this will break typescript imports
+      for (let item in forkBrowser) {
+        browser_[item] = forkBrowser[item];
+      }
       this.setupGlobals_(browser_);
     };
 

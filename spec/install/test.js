@@ -36,10 +36,10 @@ function tsc() {
   }
 }
 
-function test() {
+function test(file) {
   var options = {cwd: __dirname};
   var output = TestUtils.runCommand('node',
-      ['node_modules/protractor/bin/protractor','conf.js'],
+      ['node_modules/protractor/bin/protractor',file],
       options);
   if (output && output[1]) {
     console.log(output[1].toString());
@@ -60,4 +60,5 @@ function test() {
 
 install();
 tsc();
-test();
+test('conf.js');
+test('typescript_conf.js');
