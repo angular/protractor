@@ -1005,8 +1005,10 @@ export class ProtractorBrowser extends Webdriver {
    * Create a new instance of Browser by wrapping a webdriver instance.
    *
    * @param {webdriver.WebDriver} webdriver The configured webdriver instance.
-   * @param {string=} opt_baseUrl A URL to prepend to relative gets.
-   * @param {boolean=} opt_untrackOutstandingTimeouts Whether Browser should
+   * @param {string=} baseUrl A URL to prepend to relative gets.
+   * @param {string=} rootElement The css selector for the element which is the
+   *     root of the Angular app.
+   * @param {boolean=} untrackOutstandingTimeouts Whether Browser should
    *     stop tracking outstanding $timeouts.
    * @returns {Browser} a new Browser instance
    */

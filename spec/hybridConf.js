@@ -14,5 +14,7 @@ exports.config = {
 
   baseUrl: env.baseUrl,
 
-  rootElement: 'body'
+  rootElement: 'body',
+
+  ng12Hybrid: true
 };

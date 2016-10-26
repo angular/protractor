@@ -1,16 +1,10 @@
 describe('async angular1/2 hybrid using ngUpgrade application', function() {
   beforeEach(function() {
-    browser.ng12Hybrid = true;
-
     browser.get('/hybrid');
   });
 
-  afterEach(function() {
-    browser.ng12Hybrid = false;
-  });
-
-  it('should propertly load the page', function() {
-    expect($('h1').getText()).toEqual('My App');
+  it('should set browser flag via config', function() {
+    expect(browser.ng12Hybrid).toBe(true);
   });
 
   it('should be able to click buttons and wait for $timeout', function() {
@@ -28,5 +22,11 @@ describe('async angular1/2 hybrid using ngUpgrade application', function() {
     expect(ng1Btn.getText()).toEqual('Click Count: 0');
     ng1Btn.click();
     expect(ng1Btn.getText()).toEqual('Click Count: 1');
+  });
+
+  it('should use the flag on the browser object', function() {
+    browser.ng12Hybrid = false;
+    browser.get('/ng2'); // will time out if Protractor expects hybrid
+    browser.ng12Hybrid = true;
   });
 });
