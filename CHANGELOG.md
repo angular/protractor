@@ -1,9 +1,40 @@
+# 4.0.10
+
+## Features
+
+- ([7083426](https://github.com/angular/protractor/commit/70834269ac375f2be5a6cadf8ec9169cf19abff6))
+  feat(hybrid): set ng12hybrid flag in the config (#3452)
+
+## Bug Fixes
+
+- ([b67d8eb](https://github.com/angular/protractor/commit/b67d8eb4101ee80c53476d1640865ca612793436))
+  fix(restart): typescript fix for browser.restart (#3658)
+
+  closes #3648
+
+- ([6626ce7](https://github.com/angular/protractor/commit/6626ce7690e1120c3b246eff7793a26cb038b091))
+  fix(launcher) Ignore uncaught exceptions from webdriver. (#3608)
+
+
+- ([5cef1bf](https://github.com/angular/protractor/commit/5cef1bf20f88a2c3bb8944afbc6a328fc273aedd))
+  Explicitly remove newlines from getText() (#3618)
+
+  MSEdge does not properly remove newlines, which causes false negatives when using
+  `textToBePresentInElement()`
+
+## Dependencies
+
+- ([c11945a](https://github.com/angular/protractor/commit/c11945a1b67bdc774b267f101887dc3f575ad00b))
+  deps(outdated): webdriver-manager and @types updated
+
+  - webdriver-manager 10.2.6 uses the latest chromedriver, version 2.25
+
 # 4.0.9
 
 This version includes a breaking change to the TypeScript import statement.
 Please see the feature below.
 
-# Features
+## Features
 
 - ([5034c89](https://github.com/angular/protractor/commit/5034c89242794dd14aba294ba3468937e06a7b69))
   feat(typescript): move typescript variable instances from protractor/… (#3565)
