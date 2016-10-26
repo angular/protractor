@@ -423,8 +423,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
         (arr: WebElement[]) => {
           return arr.length;
         },
-        (err: IError) => {
-          if (err.code && err.code == new webdriver.error.NoSuchElementError()) {
+        (err: Error) => {
+          if (err instanceof error.NoSuchElementError) {
             return 0;
           } else {
             throw err;
@@ -1085,8 +1085,8 @@ export class ElementFinder extends WebdriverWebElement {
                 }
               });
         },
-        (err: any) => {
-          if (err.code == webdriver.error.ErrorCode.NO_SUCH_ELEMENT) {
+        (err: Error) => {
+          if (err instanceof error.NoSuchElementError) {
             return false;
           } else {
             throw err;
