@@ -4,13 +4,14 @@
   "description": "e2e typescript => javascript => running",
   "main": "index.js",
   "scripts": {
-    "tsc": "../../node_modules/typescript/bin/tsc",
+    "tsc": "node_modules/typescript/bin/tsc",
     "test": "protractor conf.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "protractor": "file:../../",
-    "rimraf": "^2.5.4"
+    "rimraf": "^2.5.4",
+    "typescript": "^2.0.0"
   }
 }
