@@ -1,8 +1,5 @@
 dependencies: 
   post:
-    - sudo apt-get install -y x11vnc
-    - x11vnc -forever -nopw:
-          background: true
     - ./node_modules/.bin/webdriver-manager update
     - ./node_modules/.bin/webdriver-manager start:
           background: true
