@@ -43,7 +43,7 @@ expect(myElement.getText()).to.eventually.equal('some text');
 
 Finally, set the 'framework' property to 'mocha', either by adding `framework: 'mocha'` to the config file or by adding `--framework=mocha` to the command line.
 
-Options for Mocha such as 'reporter' and 'slow' can be given in the [config file](../spec/mochaConf.js) with mochaOpts:
+Options for Mocha such as 'reporter' and 'slow' can be given in the [config file](/spec/mochaConf.js) with mochaOpts:
 
 ```js
 mochaOpts: {
@@ -68,7 +68,7 @@ npm install -g cucumber
 npm install --save-dev protractor-cucumber-framework
 ```
 
-Set the 'framework' property to custom by adding `framework: 'custom'` and `frameworkPath: 'protractor-cucumber-framework'` to the [config file](../spec/cucumberConf.js)
+Set the 'framework' property to custom by adding `framework: 'custom'` and `frameworkPath: 'protractor-cucumber-framework'` to the [config file](/spec/cucumberConf.js)
 
 Options for Cucumber such as 'format' can be given in the config file with cucumberOpts:
 
@@ -90,6 +90,6 @@ exports.config = {
 Using a Custom Framework
 ------------------------
 
-Check section [Framework Adapters for Protractor](../lib/frameworks/README.md) specifically [Custom Frameworks](../lib/frameworks/README.md#custom-frameworks)
+Check section [Framework Adapters for Protractor](/lib/frameworks/README.md) specifically [Custom Frameworks](/lib/frameworks/README.md#custom-frameworks)
 
 
