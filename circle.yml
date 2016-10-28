@@ -1,0 +1,19 @@
+machine:
+  environment:
+    # Fix issue with selenium-server in containers.
+    # See http://github.com/SeleniumHQ/docker-selenium/issues/87
+    DBUS_SESSION_BUS_ADDRESS: /dev/null
+  post:
+    - npm install -g npm@3
+
+dependencies: 
+  post:
+    - ./node_modules/.bin/webdriver-manager update
+    - ./node_modules/.bin/webdriver-manager start:
+          background: true
+    - npm run install_testapp
+    - npm start:
+          background: true
+test:
+  override:
+    - npm test
