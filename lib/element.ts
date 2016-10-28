@@ -12,9 +12,9 @@ let clientSideScripts = require('./clientsidescripts');
 let logger = new Logger('element');
 
 let WEB_ELEMENT_FUNCTIONS = [
-  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
-  'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
+  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText',
+  'getSize', 'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear',
+  'isDisplayed', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
 ];
 
 export class WebdriverWebElement {}
@@ -1078,7 +1078,7 @@ export class ElementFinder extends WebdriverWebElement {
                 return true;  // is present, whether it is enabled or not
               },
               (err: any) => {
-                if (err.code == webdriver.error.ErrorCode.STALE_ELEMENT_REFERENCE) {
+                if (err instanceof error.StaleElementReferenceError) {
                   return false;
                 } else {
                   throw err;

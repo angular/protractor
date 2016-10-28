@@ -470,15 +470,13 @@ describe('ElementArrayFinder', function() {
     browser.get('index.html#/form');
     var labels = element.all(by.css('#animals ul li')).map(function(elm) {
       return {
-        text: elm.getText(),
-        inner: elm.getInnerHtml()
+        text: elm.getText()
       };
     });
 
     var newExpected = function(expectedLabel) {
       return {
         text: expectedLabel,
-        inner: expectedLabel
       };
     };
 
