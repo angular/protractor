@@ -1,4 +1,4 @@
-import {ActionSequence, Capabilities, Command as WdCommand, FileDetector, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
+import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
 
 import {DebugHelper} from './debugger';
@@ -9,10 +9,11 @@ import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
 
-let clientSideScripts = require('./clientsidescripts');
-let webdriver = require('selenium-webdriver');
-let Command = require('selenium-webdriver/lib/command').Command;
-let CommandName = require('selenium-webdriver/lib/command').Name;
+const clientSideScripts = require('./clientsidescripts');
+const webdriver = require('selenium-webdriver');
+// TODO: fix the typings for selenium-webdriver/lib/command
+const Command = require('selenium-webdriver/lib/command').Command as typeof WdCommand;
+const CommandName = require('selenium-webdriver/lib/command').Name as ICommandName;
 
 // jshint browser: true
 
@@ -244,7 +245,7 @@ export class ProtractorBrowser extends Webdriver {
    * @type {Array<{name: string, script: function|string, args:
    * Array.<string>}>}
    */
-  mockModules_: any[];
+  mockModules_: {name: string, script: string|Function, args: any[]}[];
 
   /**
    * If specified, start a debugger server at specified port instead of repl
@@ -279,8 +280,8 @@ export class ProtractorBrowser extends Webdriver {
     let methodsToSync = ['getCurrentUrl', 'getPageSource', 'getTitle'];
 
     // Mix all other driver functionality into Protractor.
-    Object.getOwnPropertyNames(webdriver.WebDriver.prototype).forEach((method: string) => {
-      if (!this[method] && typeof(webdriverInstance as any)[method] == 'function') {
+    Object.getOwnPropertyNames(WebDriver.prototype).forEach(method => {
+      if (!this[method] && typeof(webdriverInstance as any)[method] === 'function') {
         if (methodsToSync.indexOf(method) !== -1) {
           ptorMixin(this, webdriverInstance, method, this.waitForAngular.bind(this));
         } else {
@@ -291,8 +292,8 @@ export class ProtractorBrowser extends Webdriver {
 
     this.driver = webdriverInstance;
     this.element = buildElementHelper(this);
-    this.$ = build$(this.element, webdriver.By);
-    this.$$ = build$$(this.element, webdriver.By);
+    this.$ = build$(this.element, By);
+    this.$$ = build$$(this.element, By);
     this.baseUrl = opt_baseUrl || '';
     this.rootEl = opt_rootElement || 'body';
     this.ignoreSynchronization = false;
@@ -442,7 +443,7 @@ export class ProtractorBrowser extends Webdriver {
 
     let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
       if (this.plugins_.skipAngularStability()) {
-        return webdriver.promise.fulfilled();
+        return wdpromise.fulfilled();
       } else if (this.rootEl) {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
@@ -472,9 +473,7 @@ export class ProtractorBrowser extends Webdriver {
                   .then(() => {
                     return this.driver.wait(() => {
                       return this.plugins_.waitForCondition().then((results: boolean[]) => {
-                        return results.reduce((x, y) => {
-                          return x && y;
-                        }, true);
+                        return results.reduce((x, y) => x && y, true);
                       });
                     }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
                   });
@@ -580,8 +579,7 @@ export class ProtractorBrowser extends Webdriver {
    * Add a module to load before Angular whenever Protractor.get is called.
    * Modules will be registered after existing modules already on the page,
    * so any module registered here will override preexisting modules with the
-   * same
-   * name.
+   * same name.
    *
    * @example
    * browser.addMockModule('modName', function() {
@@ -629,9 +627,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {Array.<!string|Function>} The list of mock modules.
    */
   getRegisteredMockModules(): Array<string|Function> {
-    return this.mockModules_.map((module) => {
-      return module.script;
-    });
+    return this.mockModules_.map(module => module.script);
   };
 
   /**
@@ -661,9 +657,7 @@ export class ProtractorBrowser extends Webdriver {
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to
    *     start.
    */
-  get(destination: string, opt_timeout?: number) {
-    let timeout = opt_timeout ? opt_timeout : this.getPageTimeout;
-
+  get(destination: string, timeout = this.getPageTimeout) {
     destination = this.baseUrl.indexOf('file://') === 0 ? this.baseUrl + destination :
                                                           url.resolve(this.baseUrl, destination);
     let msg = (str: string) => {
@@ -672,17 +666,14 @@ export class ProtractorBrowser extends Webdriver {
 
     if (this.ignoreSynchronization) {
       this.driver.get(destination);
-      return this.driver.controlFlow().execute(() => {
-        return this.plugins_.onPageLoad();
-      });
+      return this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()).then(() => {});
     }
 
-    let deferred = webdriver.promise.defer();
+    let deferred = wdpromise.defer<void>();
 
     this.driver.get(this.resetUrl).then(null, deferred.reject);
     this.executeScriptWithDescription(
             'window.name = "' + DEFER_LABEL + '" + window.name;' +
-
                 'window.location.replace("' + destination + '");',
             msg('reset url'))
         .then(null, deferred.reject);
@@ -741,16 +732,11 @@ export class ProtractorBrowser extends Webdriver {
     let self = this;
     function loadMocks(angularVersion: number) {
       if (angularVersion === 1) {
-        // At this point, Angular will pause for us until
-        // angular.resumeBootstrap
-        // is called.
+        // At this point, Angular will pause for us until angular.resumeBootstrap is called.
         let moduleNames: string[] = [];
-        for (let i = 0; i < self.mockModules_.length; ++i) {
-          let mockModule = self.mockModules_[i];
-          let name = mockModule.name;
+        for (const {name, script, args} of self.mockModules_) {
           moduleNames.push(name);
-          let executeScriptArgs =
-              [mockModule.script, msg('add mock module ' + name)].concat(mockModule.args);
+          let executeScriptArgs = [script, msg('add mock module ' + name), ...args];
           self.executeScriptWithDescription.apply(self, executeScriptArgs)
               .then(
                   null,
@@ -776,13 +762,9 @@ export class ProtractorBrowser extends Webdriver {
     }
 
     this.driver.controlFlow().execute(() => {
-      return self.plugins_.onPageStable().then(
-          () => {
-            deferred.fulfill();
-          },
-          (error: Error) => {
-            deferred.reject(error);
-          });
+      return this.plugins_.onPageStable().then(() => {
+        deferred.fulfill();
+      }, deferred.reject);
     });
 
     return deferred.promise;
@@ -885,7 +867,7 @@ export class ProtractorBrowser extends Webdriver {
   debugger() {
     // jshint debug: true
     this.driver.executeScript(clientSideScripts.installInBrowser);
-    webdriver.promise.controlFlow().execute(() => {
+    wdpromise.controlFlow().execute(() => {
       debugger;
     }, 'add breakpoint to control flow');
   }
@@ -944,7 +926,7 @@ export class ProtractorBrowser extends Webdriver {
   pause(opt_debugPort?: number): webdriver.promise.Promise<any> {
     if (this.debugHelper.isAttached()) {
       logger.info('Encountered browser.pause(), but debugger already attached.');
-      return webdriver.promise.fulfilled(true);
+      return wdpromise.fulfilled(true);
     }
     let debuggerClientPath = __dirname + '/debugger/clients/wddebugger.js';
     let onStartFn = (firstTime: boolean) => {
