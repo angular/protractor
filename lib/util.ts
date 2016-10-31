@@ -53,7 +53,7 @@ export function runFilenameOrFn_(
           err = new Error(err);
         } else {
           err = err as Error;
-          if (err.stack) {
+          if (!err.stack) {
             err.stack = new Error().stack;
           }
         }
