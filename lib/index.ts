@@ -33,12 +33,9 @@ export let CommandName = require('selenium-webdriver/lib/command').Name;
 // with a different instance of Protractor if the module is
 // installed both globally and locally.
 export let protractor: Ptor = (global as any)['protractor'];
-export let browser: ProtractorBrowser =
-    protractor ? protractor.browser : undefined;
-export let $: (search: string) => ElementFinder =
-    protractor ? protractor.$ : undefined;
-export let $$: (search: string) => ElementArrayFinder =
-    protractor ? protractor.$$ : undefined;
+export let browser: ProtractorBrowser = protractor ? protractor.browser : undefined;
+export let $: (search: string) => ElementFinder = protractor ? protractor.$ : undefined;
+export let $$: (search: string) => ElementArrayFinder = protractor ? protractor.$$ : undefined;
 export let element: ElementHelper = protractor ? protractor.element : undefined;
 export let By: ProtractorBy = protractor ? protractor.By : undefined;
 export let by: ProtractorBy = protractor ? protractor.by : undefined;

@@ -42,10 +42,8 @@ optimist
     .describe('browser', 'Browsername, e.g. chrome or firefox')
     .describe('seleniumAddress', 'A running selenium address to use')
     .describe('seleniumSessionId', 'Attaching an existing session id')
-    .describe(
-        'seleniumServerJar', 'Location of the standalone selenium jar file')
-    .describe(
-        'seleniumPort', 'Optional port for the selenium standalone server')
+    .describe('seleniumServerJar', 'Location of the standalone selenium jar file')
+    .describe('seleniumPort', 'Optional port for the selenium standalone server')
     .describe('baseUrl', 'URL to prepend to all relative paths')
     .describe('rootElement', 'Element housing ng-app, if not html or body')
     .describe('specs', 'Comma-separated list of files to test')
@@ -57,9 +55,7 @@ optimist
     .describe('resultJsonOutputFile', 'Path to save JSON test result')
     .describe('troubleshoot', 'Turn on troubleshooting output')
     .describe('elementExplorer', 'Interactively test Protractor commands')
-    .describe(
-        'debuggerServerPort',
-        'Start a debugger server at specified port instead of repl')
+    .describe('debuggerServerPort', 'Start a debugger server at specified port instead of repl')
     .alias('browser', 'capabilities.browserName')
     .alias('name', 'capabilities.name')
     .alias('platform', 'capabilities.platform')
@@ -84,8 +80,7 @@ if (argv.help) {
 }
 
 if (argv.version) {
-  console.log(
-      'Version ' + require(path.join(__dirname, '../package.json')).version);
+  console.log('Version ' + require(path.join(__dirname, '../package.json')).version);
   process.exit(0);
 }
 

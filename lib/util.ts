@@ -2,9 +2,8 @@ import {resolve} from 'path';
 import {Promise, when} from 'q';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
-  'node_modules/jasmine/', 'node_modules/selenium-webdriver', 'at Module.',
-  'at Object.Module.', 'at Function.Module', '(timers.js:',
-  'jasminewd2/index.js', 'protractor/lib/'
+  'node_modules/jasmine/', 'node_modules/selenium-webdriver', 'at Module.', 'at Object.Module.',
+  'at Function.Module', '(timers.js:', 'jasminewd2/index.js', 'protractor/lib/'
 ];
 
 
@@ -35,12 +34,9 @@ export function filterStackTrace(text: string): string {
  * @param {Array.<object>}} args The args to pass into filenameOrFn.
  * @return {q.Promise} A promise that will resolve when filenameOrFn completes.
  */
-export function runFilenameOrFn_(
-    configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
+export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
   return Promise((resolvePromise) => {
-    if (filenameOrFn &&
-        !(typeof filenameOrFn === 'string' ||
-          typeof filenameOrFn === 'function')) {
+    if (filenameOrFn && !(typeof filenameOrFn === 'string' || typeof filenameOrFn === 'function')) {
       throw new Error('filenameOrFn must be a string or function');
     }
 

@@ -38,8 +38,7 @@ export class DebugHelper {
    * @param {number=} opt_debugPort Optional port to use for the debugging
    *     process.
    */
-  init(
-      debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
+  init(debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
     webdriver.promise.ControlFlow.prototype.getControlFlowText = function() {
       let controlFlowText = this.getSchedule(/* opt_includeStackTraces */ true);
       // This filters the entire control flow text, not just the stack trace, so
@@ -81,40 +80,37 @@ export class DebugHelper {
     let debuggerReadyPromise = webdriver.promise.defer();
     flow.execute(() => {
       process['debugPort'] = opt_debugPort || process['debugPort'];
-      this.validatePortAvailability_(process['debugPort'])
-          .then((firstTime: boolean) => {
-            onStartFn(firstTime);
+      this.validatePortAvailability_(process['debugPort']).then((firstTime: boolean) => {
+        onStartFn(firstTime);
 
-            let args = [process.pid, process['debugPort']];
-            if (this.browserUnderDebug_.debuggerServerPort) {
-              args.push(this.browserUnderDebug_.debuggerServerPort);
-            }
-            let nodedebug =
-                require('child_process').fork(debuggerClientPath, args);
-            process.on('exit', function() {
-              nodedebug.kill('SIGTERM');
+        let args = [process.pid, process['debugPort']];
+        if (this.browserUnderDebug_.debuggerServerPort) {
+          args.push(this.browserUnderDebug_.debuggerServerPort);
+        }
+        let nodedebug = require('child_process').fork(debuggerClientPath, args);
+        process.on('exit', function() {
+          nodedebug.kill('SIGTERM');
+        });
+        nodedebug
+            .on('message',
+                (m: string) => {
+                  if (m === 'ready') {
+                    debuggerReadyPromise.fulfill();
+                  }
+                })
+            .on('exit', () => {
+              logger.info('Debugger exiting');
+              // Clear this so that we know it's ok to attach a debugger
+              // again.
+              this.dbgCodeExecutor = null;
             });
-            nodedebug
-                .on('message',
-                    (m: string) => {
-                      if (m === 'ready') {
-                        debuggerReadyPromise.fulfill();
-                      }
-                    })
-                .on('exit', () => {
-                  logger.info('Debugger exiting');
-                  // Clear this so that we know it's ok to attach a debugger
-                  // again.
-                  this.dbgCodeExecutor = null;
-                });
-          });
+      });
     });
 
     let pausePromise = flow.execute(() => {
       return debuggerReadyPromise.then(() => {
         // Necessary for backward compatibility with node < 0.12.0
-        return this.browserUnderDebug_.executeScriptWithDescription(
-            '', 'empty debugger hook');
+        return this.browserUnderDebug_.executeScriptWithDescription('', 'empty debugger hook');
       });
     });
 
@@ -126,7 +122,7 @@ export class DebugHelper {
     // for a result at every run of DeferredExecutor.execute.
     let browserUnderDebug = this.browserUnderDebug_;
     this.dbgCodeExecutor = {
-      execPromise_: pausePromise,  // Promise pointing to current stage of flow.
+      execPromise_: pausePromise,     // Promise pointing to current stage of flow.
       execPromiseResult_: undefined,  // Return value of promise.
       execPromiseError_: undefined,   // Error from promise.
 
@@ -155,8 +151,7 @@ export class DebugHelper {
         // break point can find something to stop at instead of moving on to the
         // next real command.
         this.execPromise_.then(() => {
-          return browserUnderDebug.executeScriptWithDescription(
-              '', 'empty debugger hook');
+          return browserUnderDebug.executeScriptWithDescription('', 'empty debugger hook');
         });
       },
 
@@ -235,8 +230,7 @@ export class DebugHelper {
    *     is done. The promise will resolve to a boolean which represents whether
    *     this is the first time that the debugger is called.
    */
-  private validatePortAvailability_(port: number):
-      webdriver.promise.Promise<any> {
+  private validatePortAvailability_(port: number): webdriver.promise.Promise<any> {
     if (this.debuggerValidated_) {
       return webdriver.promise.fulfilled(false);
     }
@@ -260,8 +254,7 @@ export class DebugHelper {
             .end();
       } else {
         doneDeferred.reject(
-            'Unexpected failure testing for port ' + port + ': ' +
-            JSON.stringify(err));
+            'Unexpected failure testing for port ' + port + ': ' + JSON.stringify(err));
       }
     });
 

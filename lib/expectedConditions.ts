@@ -189,9 +189,7 @@ export class ProtractorExpectedConditions {
    *     representing whether the element is clickable.
    */
   elementToBeClickable(elementFinder: ElementFinder): Function {
-    return this.and(
-        this.visibilityOf(elementFinder),
-        elementFinder.isEnabled.bind(elementFinder));
+    return this.and(this.visibilityOf(elementFinder), elementFinder.isEnabled.bind(elementFinder));
   }
 
   /**
@@ -210,8 +208,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element.
    */
-  textToBePresentInElement(elementFinder: ElementFinder, text: string):
-      Function {
+  textToBePresentInElement(elementFinder: ElementFinder, text: string): Function {
     var hasText = () => {
       return elementFinder.getText().then((actualText: string): boolean => {
         // MSEdge does not properly remove newlines, which causes false
@@ -238,13 +235,11 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element's value.
    */
-  textToBePresentInElementValue(elementFinder: ElementFinder, text: string):
-      Function {
+  textToBePresentInElementValue(elementFinder: ElementFinder, text: string): Function {
     var hasText = () => {
-      return elementFinder.getAttribute('value').then(
-          (actualText: string): boolean => {
-            return actualText.indexOf(text) > -1;
-          });
+      return elementFinder.getAttribute('value').then((actualText: string): boolean => {
+        return actualText.indexOf(text) > -1;
+      });
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -405,9 +400,7 @@ export class ProtractorExpectedConditions {
    *     representing whether the element is visible.
    */
   visibilityOf(elementFinder: ElementFinder): Function {
-    return this.and(
-        this.presenceOf(elementFinder),
-        elementFinder.isDisplayed.bind(elementFinder));
+    return this.and(this.presenceOf(elementFinder), elementFinder.isDisplayed.bind(elementFinder));
   }
 
   /**
@@ -444,8 +437,6 @@ export class ProtractorExpectedConditions {
  *     representing whether the element is selected.
  */
   elementToBeSelected(elementFinder: ElementFinder): Function {
-    return this.and(
-        this.presenceOf(elementFinder),
-        elementFinder.isSelected.bind(elementFinder));
+    return this.and(this.presenceOf(elementFinder), elementFinder.isSelected.bind(elementFinder));
   }
 }
