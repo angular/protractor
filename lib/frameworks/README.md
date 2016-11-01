@@ -28,10 +28,8 @@ Requirements
  - `runner.runTestPreparer` must be called before any tests are run.
 
  - `runner.getConfig().onComplete` must be called when tests are finished.
-   It might return a promise, in which case `exports.run`'s promise should not
-   resolve until after `onComplete`'s promise resolves.
 
- - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults`
+ - The returned promise must be resolved when tests are finished and it should return a results object. This object must have a `failedCount` property and optionally a `specResults` 
  object of the following structure:
  ```
    specResults = [{
@@ -39,7 +37,7 @@ Requirements
      assertions: [{
        passed: boolean,
        errorMsg: string,
-       stackTrace: string
+       stackTrace: string 
      }],
      duration: integer
    }]
@@ -48,20 +46,20 @@ Requirements
 Custom Frameworks
 -----------------
 
-If you have created/adapted a custom framework and want it added to
-Protractor core please send a PR so it can evaluated for addition as an
+If you have created/adapted a custom framework and want it added to 
+Protractor core please send a PR so it can evaluated for addition as an 
 official supported framework. In the meantime you can instruct Protractor
 to use your own framework via the config file:
 
 ```js
 exports.config = {
-  // set to "custom" instead of jasmine/mocha
+  // set to "custom" instead of jasmine/jasmine2/mocha/cucumber.
   framework: 'custom',
   // path relative to the current config file
   frameworkPath: './frameworks/my_custom_jasmine.js',
 };
 ```
 
-More on this at the [configuration](../config.ts).
+More on this at [referenceConf](../../docs/referenceConf.js) "The test framework" section.
 
 **Disclaimer**: current framework interface can change without a major version bump.

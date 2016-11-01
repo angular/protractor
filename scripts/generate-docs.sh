@@ -1,8 +1,6 @@
 #!/bin/sh
-cd "$( dirname "${BASH_SOURCE[0]}" )/.."
-npm run install_testapp
 
-cd website
+cd "$( dirname "${BASH_SOURCE[0]}" )/../website"
 
 # Check that directory is clean
 if [ $(git status --porcelain | wc -l) != "0" ]; then

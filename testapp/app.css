@@ -1,31 +1,47 @@
-body {
-  font-family: Helvetica, Arial, san-sarif;
-  font-size: 2em;
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
 }
 
-h1 {
-  text-align: center;
+.menu:before {
+  content: "[";
 }
 
-ol {
-  position: relative;
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
   padding: 0;
 }
 
-li {
-  width: 25%;
-  padding: 4%;
-  display: block;
-  text-align: center;
-  position: absolute;
-  top: 0;
-  margin: auto;
+.ng-scope {
+  background-color: rgba(0,0,0,.05);
 }
 
-li.left, li.mid {
-  left: 0;
-} 
+.ng-binding {
+  border: 1px solid rgba(50, 200, 50, .8);
+}
 
-li.right, li.mid {
-  right: 0;
-} 
+#chat-box {
+  width: 300px;
+  height: 200px;
+  padding: 25px;
+  border: 2px solid;
+  margin: 25px;
+  overflow: scroll;
+}

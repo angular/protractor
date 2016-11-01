@@ -6,9 +6,9 @@ This is a simple tutorial that shows you how to set up Protractor and start runn
 Prerequisites
 -------------
 
-Protractor is a [Node.js](http://nodejs.org/) program. To run, you will need to have Node.js installed. You will download Protractor package using [npm](https://www.npmjs.org/), which comes with Node.js. Check the version of Node.js you have by running `node --version`. Then, check the [compatibility notes](https://github.com/angular/protractor#compatibility) in the Protractor README to make sure your version of Node.js is compatible with Protractor. 
+Protractor is a [Node.js](http://nodejs.org/) program. To run, you will need to have Node.js installed. You will download Protractor package using [npm](https://www.npmjs.org/), which comes with Node.js. Check the version of Node.js you have by running `node --version`. It should be greater than v0.10.0.
 
-By default, Protractor uses the [Jasmine](http://jasmine.github.io/) test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.4.
+By default, Protractor uses the [Jasmine](http://jasmine.github.io/) test framework for its testing interface. This tutorial assumes some familiarity with Jasmine, and we will use version 2.3.
 
 This tutorial will set up a test using a local standalone Selenium Server to control browsers. You will need to have the [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed to run the standalone Selenium Server. Check this by running `java -version` from the command line.
 
@@ -60,13 +60,13 @@ Now create the configuration file. Copy the following into conf.js:
 ```js
 // conf.js
 exports.config = {
-  framework: 'jasmine',
+  framework: 'jasmine2',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js']
 }
 ```
 
-This configuration tells Protractor where your test files (`specs`) are, and where to talk to your Selenium Server (`seleniumAddress`). It specifies that we will be using Jasmine for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.
+This configuration tells Protractor where your test files (`specs`) are, and where to talk to your Selenium Server (`seleniumAddress`). It specifies that we will be using Jasmine version 2 for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.
 
 Now run the test with
 
@@ -98,7 +98,7 @@ This uses the globals `element` and `by`, which are also created by Protractor. 
 
 `element` takes one parameter, a Locator, which describes how to find the element. The `by` object creates Locators. Here, we're using three types of Locators:
 
-  - `by.model('first')` to find the element with `ng-model="first"`. If you inspect the Calculator page source, you will see this is `<input type="text" ng-model="first">`.
+  - `by.model('first')` to find the element with `ng-model="first"`. If you inspect the Calculator page source, you will see this is `<input type=text ng-model="first">`.
   - `by.id('gobutton')` to find the element with the given id. This finds `<button id="gobutton">`.
   - `by.binding('latest')` to find the element bound to the variable `latest`. This finds the span containing `{{latest}}`
 
@@ -157,7 +157,7 @@ Now that we've written some basic tests, let's take a look at the configuration 
 ```js
 // conf.js
 exports.config = {
-  framework: 'jasmine',
+  framework: 'jasmine2',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   capabilities: {
@@ -166,14 +166,14 @@ exports.config = {
 }
 ```
 
-Try running the tests again. You should see the tests running on Firefox instead of Chrome. The `capabilities` object describes the browser to be tested against. For a full list of options, see [the config file](/lib/config.ts).
+Try running the tests again. You should see the tests running on Firefox instead of Chrome. The `capabilities` object describes the browser to be tested against. For a full list of options, see [the reference config file](/docs/referenceConf.js).
 
 You can also run tests on more than one browser at once. Change conf.js to:
 
 ```js
 // conf.js
 exports.config = {
-  framework: 'jasmine',
+  framework: 'jasmine2',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   multiCapabilities: [{

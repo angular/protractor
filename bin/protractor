@@ -2,4 +2,4 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
-require('../built/cli.js');
+require('../lib/cli.js');

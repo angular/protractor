@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html ng-app="consolePlugin" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Angular.js Example</title>
+    <script src="../../lib/angular/angular.min.js"></script>
+    <script src="../../lib/angular/angular-aria.min.js"></script>
+    <script type="text/javascript">
+        angular.module('consolePlugin', [])
+                .controller('TestCtrl', ['$scope', function($scope) {
+
+                    $scope.logMessage = function() {
+                        console.log('This is a test log');
+                        console.debug('This is a test debug');
+                    };
+
+                    $scope.simulateWarning = function() {
+                        console.warn('This is a test warning');
+                    };
+
+                    $scope.simulateError = function() {
+                        console.error('This is a test error');
+                        console.error('This should be filtered out by string');
+                        console.error('This should be filtered out by regex');
+                    }
+                }]);
+    </script>
+</head>
+<body ng-controller="TestCtrl">
+<button id="log-message" ng-click="logMessage()">Log Message</button>
+<button id="simulate-warning" ng-click="simulateWarning()">Simulate Warning</button>
+<button id="simulate-error" ng-click="simulateError()">Simulate Error</button>
+</body>
+</html>

@@ -16,15 +16,14 @@ Thank you!
 
 
 Issues
-======
+------
 
 If you have a bug or feature request, please file an issue.
 Before submitting an issue, please search the issue archive to help reduce duplicates, and read the
 [FAQ](https://github.com/angular/protractor/blob/master/docs/faq.md).
 
-Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
-
-When submitting an issue, please include a reproducible case that we can actually run. Protractor has a test Angular application available at `http://www.protractortest.org/testapp` which you can use for the reproducible test case. If there's an error, please include the error text.
+When submitting an issue, please include context from your test and
+your application. Include a reproducible case that we can actually run, if possible. If there's an error, please include the error text. Try running with troubleshooting messages (`protractor --troubleshoot`) against your configuration to make sure that there is not an error with your setup.
 
 Please format code and markup in your issue using [github markdown](https://help.github.com/articles/github-flavored-markdown).
 
@@ -37,12 +36,12 @@ Loosely, follow the [Angular contribution rules](https://github.com/angular/angu
  * If your PR changes any behavior or fixes an issue, it should have an associated test.
  * New features should be general and as simple as possible.
  * Breaking changes should be avoided if possible.
- * All pull requests require review. No PR will be merged without a comment from a team member stating LGTM (Looks good to me).
+ * All pull requests require review. No PR will be submitted without a comment from a team member stating LGTM (Looks good to me).
 
 Protractor specific rules
 -------------------------
 
- * JavaScript style should generally follow the [Google JS style guide](https://google.github.io/styleguide/javascriptguide.xml).
+ * JavaScript style should generally follow the [Google JS style guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml).
  * Wrap code at 80 chars.
  * Document public methods with jsdoc.
  * Be consistent with the code around you!
@@ -58,7 +57,7 @@ In summary, this style is
     <BLANK LINE>
     <body>
 
-Where `<type>` is one of [feat, fix, docs, refactor, test, chore, deps] and
+Where `<type>` is one of [feat, fix, docs, style, refactor, test, chore] and
 `<scope>` is a quick descriptor of the location of the change, such as cli, clientSideScripts, element.
 
 Testing your changes

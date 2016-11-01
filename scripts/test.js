@@ -3,48 +3,51 @@
 var Executor = require('./test/test_util').Executor;
 
 var passingTests = [
-  'node built/cli.js spec/basicConf.js',
-  'node built/cli.js spec/multiConf.js',
-  'node built/cli.js spec/altRootConf.js',
-  'node built/cli.js spec/onCleanUpAsyncReturnValueConf.js',
-  'node built/cli.js spec/onCleanUpNoReturnValueConf.js',
-  'node built/cli.js spec/onCleanUpSyncReturnValueConf.js',
-  'node built/cli.js spec/onPrepareConf.js',
-  'node built/cli.js spec/onPrepareFileConf.js',
-  'node built/cli.js spec/onPreparePromiseConf.js',
-  'node built/cli.js spec/onPreparePromiseFileConf.js',
-  'node built/cli.js spec/mochaConf.js',
-  'node built/cli.js spec/withLoginConf.js',
-  'node built/cli.js spec/suitesConf.js --suite okmany',
-  'node built/cli.js spec/suitesConf.js --suite okspec',
-  'node built/cli.js spec/suitesConf.js --suite okmany,okspec',
-  'node built/cli.js spec/plugins/smokeConf.js',
-  'node built/cli.js spec/plugins/multiPluginConf.js',
-  'node built/cli.js spec/plugins/jasminePostTestConf.js',
-  'node built/cli.js spec/plugins/mochaPostTestConf.js',
-  'node built/cli.js spec/plugins/browserGetSyncedConf.js',
-  'node built/cli.js spec/plugins/browserGetUnsyncedConf.js',
-  'node built/cli.js spec/plugins/waitForAngularConf.js',
-  'node built/cli.js spec/interactionConf.js',
-  'node built/cli.js spec/directConnectConf.js',
-  'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
-  'node built/cli.js spec/getCapabilitiesConf.js',
-  'node built/cli.js spec/controlLockConf.js',
-  'node built/cli.js spec/customFramework.js',
-  'node built/cli.js spec/noGlobalsConf.js',
-  'node built/cli.js spec/angular2Conf.js',
-  'node built/cli.js spec/hybridConf.js',
-  'node scripts/attachSession.js',
-  'node scripts/exitCodes.js',
+  'node lib/cli.js spec/basicConf.js',
+  'node lib/cli.js spec/multiConf.js',
+  'node lib/cli.js spec/altRootConf.js',
+  'node lib/cli.js spec/onCleanUpAsyncReturnValueConf.js',
+  'node lib/cli.js spec/onCleanUpNoReturnValueConf.js',
+  'node lib/cli.js spec/onCleanUpSyncReturnValueConf.js',
+  'node lib/cli.js spec/onPrepareConf.js',
+  'node lib/cli.js spec/onPrepareFileConf.js',
+  'node lib/cli.js spec/onPreparePromiseConf.js',
+  'node lib/cli.js spec/onPreparePromiseFileConf.js',
+  'node lib/cli.js spec/mochaConf.js',
+  'node lib/cli.js spec/cucumberConf.js',
+  'node lib/cli.js spec/withLoginConf.js',
+  'node lib/cli.js spec/suitesConf.js --suite okmany',
+  'node lib/cli.js spec/suitesConf.js --suite okspec',
+  'node lib/cli.js spec/suitesConf.js --suite okmany,okspec',
+  'node lib/cli.js spec/plugins/smokeConf.js',
+  'node lib/cli.js spec/plugins/multiPluginConf.js',
+  'node lib/cli.js spec/plugins/jasmine1PostTestConf.js',
+  'node lib/cli.js spec/plugins/jasmine2PostTestConf.js',
+  'node lib/cli.js spec/plugins/mochaPostTestConf.js',
+  'node lib/cli.js spec/plugins/cucumberPostTestConf.js',
+  'node lib/cli.js spec/plugins/browserGetSyncedConf.js',
+  'node lib/cli.js spec/plugins/browserGetUnsyncedConf.js',
+  'node lib/cli.js spec/plugins/waitForAngularConf.js',
+  'node lib/cli.js spec/interactionConf.js',
+  'node lib/cli.js spec/directConnectConf.js',
+  'node lib/cli.js spec/restartBrowserBetweenTestsConf.js',
+  'node lib/cli.js spec/getCapabilitiesConf.js',
+  'node lib/cli.js spec/controlLockConf.js',
+  'node lib/cli.js spec/customFramework.js',
+  'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=scripts/unit_test.json',
   'node scripts/interactive_tests/interactive_test.js',
-  'node scripts/interactive_tests/with_base_url.js',
-  // Unit tests
-  'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
-  // Dependency tests
-  'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
-  // Typings tests
-  'node spec/install/test.js'
+  'node scripts/interactive_tests/with_base_url.js'
 ];
+
+// Plugins
+passingTests.push('node node_modules/minijasminenode/bin/minijn ' +
+    'plugins/timeline/spec/unit.js');
+passingTests.push(
+    'node lib/cli.js plugins/timeline/spec/conf.js',
+    'node lib/cli.js plugins/ngHint/spec/successConfig.js',
+    'node lib/cli.js plugins/accessibility/spec/successConfig.js',
+    'node lib/cli.js plugins/console/spec/consolePassConfig.js'
+);
 
 var executor = new Executor();
 
@@ -58,14 +61,14 @@ passingTests.forEach(function(passing_test) {
  *************************/
 
 // assert stacktrace shows line of failure
-executor.addCommandlineTest('node built/cli.js spec/errorTest/singleFailureConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/singleFailureConf.js')
     .expectExitCode(1)
     .expectErrors({
       stackTrace: 'single_failure_spec1.js:5:32'
     });
 
 // assert timeout works
-executor.addCommandlineTest('node built/cli.js spec/errorTest/timeoutConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/timeoutConf.js')
     .expectExitCode(1)
     .expectErrors({
       message: 'Timeout - Async callback was not invoked within timeout ' +
@@ -73,13 +76,13 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/timeoutConf.js')
     })
     .expectTestDuration(0, 100);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/afterLaunchChangesExitCodeConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/afterLaunchChangesExitCodeConf.js')
     .expectExitCode(11)
     .expectErrors({
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.'
     });
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/multiFailureConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/multiFailureConf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
@@ -89,7 +92,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/multiFailureConf.j
       stacktrace: 'single_failure_spec2.js:5:32'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/shardedFailureConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/shardedFailureConf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
@@ -99,14 +102,14 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/shardedFailureConf
       stacktrace: 'single_failure_spec2.js:5:32'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/mochaFailureConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/mochaFailureConf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'expected \'My AngularJS App\' to equal \'INTENTIONALLY INCORRECT\'',
       stacktrace: 'mocha_failure_spec.js:11:20'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/pluginsFailingConf.js')
     .expectExitCode(1)
     .expectErrors([
       {message: 'Expected true to be false'},
@@ -116,29 +119,76 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf
       {message: 'from teardown'}
     ]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
     .expectExitCode(1)
     .expectErrors([
-      {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-      {message: 'The following tasks were pending[\\s\\S]*' +
-                '\\$timeout: function \\(\\) {[\\s\\S]*' +
-                  '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' +
+      {message: 'The following tasks were pending[\\s\\S]*\\$http: \/slowcall'},
+      {message: 'The following tasks were pending[\\s\\S]*' + 
+                '\\$timeout: function \\(\\) {[\\s\\S]*' + 
+                  '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' + 
                 '*}'}
     ]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
-                            '--untrackOutstandingTimeouts true')
-    .expectExitCode(1)
-    .expectErrors([
-      {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-      {message: 'While waiting for element with locator - ' +
-                'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
-    ]);
+// Check ngHint plugin
 
-executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
+executor.addCommandlineTest(
+    'node lib/cli.js plugins/ngHint/spec/failureConfig.js')
     .expectExitCode(1)
-    .expectErrors([
-      {message: 'Timed out waiting for Protractor to synchronize with the page'},
-    ]);
+    .expectErrors([{
+      message: 'warning -- ngHint plugin cannot be run as ngHint code was ' +
+          'never included into the page'
+    }, {
+      message: 'warning -- ngHint is included on the page, but is not active ' +
+          'because there is no `ng-hint` attribute present'
+    }, {
+      message: 'warning -- Module "xApp" was created but never loaded.'
+    }]);
+
+// Check accessibility plugin
+
+executor.addCommandlineTest(
+    'node lib/cli.js plugins/accessibility/spec/failureConfig.js')
+    .expectExitCode(1)
+    .expectErrors([{
+      message: '3 elements failed:'
+    },
+    {
+      message: '1 element failed:'
+    }]);
+
+// Check console plugin
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test warning'},
+    {message: 'This is a test error'},
+    {message: 'This should be filtered out by string'},
+    {message: 'This should be filtered out by regex'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailErrorConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test error'},
+    {message: 'This should be filtered out by string'},
+    {message: 'This should be filtered out by regex'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailWarningConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test warning'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailFilterConfig.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test error'}
+  ]);
 
 executor.execute();
