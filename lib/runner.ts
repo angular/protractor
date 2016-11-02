@@ -49,8 +49,7 @@ export class Runner extends EventEmitter {
       let flow = webdriver.promise.controlFlow();
 
       flow.execute(() => {
-        let nodedebug =
-            require('child_process').fork('debug', ['localhost:5858']);
+        let nodedebug = require('child_process').fork('debug', ['localhost:5858']);
         process.on('exit', function() {
           nodedebug.kill('SIGTERM');
         });
@@ -130,9 +129,7 @@ export class Runner extends EventEmitter {
    */
   exit_ = function(exitCode: number):
       any {
-        return helper
-            .runFilenameOrFn_(
-                this.config_.configDir, this.config_.onCleanUp, [exitCode])
+        return helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode])
             .then((returned): number | any => {
               if (typeof returned === 'number') {
                 return returned;
@@ -212,8 +209,7 @@ export class Runner extends EventEmitter {
     var driver = this.driverprovider_.getNewDriver();
 
     var browser_ = ProtractorBrowser.wrapDriver(
-        driver, config.baseUrl, config.rootElement,
-        config.untrackOutstandingTimeouts);
+        driver, config.baseUrl, config.rootElement, config.untrackOutstandingTimeouts);
 
     browser_.params = config.params;
     if (plugins) {
@@ -235,26 +231,24 @@ export class Runner extends EventEmitter {
       browser_.ng12Hybrid = config.ng12Hybrid;
     }
 
-    browser_.ready =
-        driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
+    browser_.ready = driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
 
     browser_.getProcessedConfig = () => {
       return webdriver.promise.fulfilled(config);
     };
 
-    browser_.forkNewDriverInstance =
-        (opt_useSameUrl: boolean, opt_copyMockModules: boolean) => {
-          let newBrowser = this.createBrowser(plugins);
-          if (opt_copyMockModules) {
-            newBrowser.mockModules_ = browser_.mockModules_;
-          }
-          if (opt_useSameUrl) {
-            browser_.driver.getCurrentUrl().then((url: string) => {
-              newBrowser.get(url);
-            });
-          }
-          return newBrowser;
-        };
+    browser_.forkNewDriverInstance = (opt_useSameUrl: boolean, opt_copyMockModules: boolean) => {
+      let newBrowser = this.createBrowser(plugins);
+      if (opt_copyMockModules) {
+        newBrowser.mockModules_ = browser_.mockModules_;
+      }
+      if (opt_useSameUrl) {
+        browser_.driver.getCurrentUrl().then((url: string) => {
+          newBrowser.get(url);
+        });
+      }
+      return newBrowser;
+    };
 
     browser_.restart = () => {
       // Note: because tests are not paused at this point, any async
@@ -331,8 +325,7 @@ export class Runner extends EventEmitter {
           // Do the framework setup here so that jasmine and mocha globals are
           // available to the onPrepare function.
           let frameworkPath = '';
-          if (this.config_.framework === 'jasmine' ||
-              this.config_.framework === 'jasmine2') {
+          if (this.config_.framework === 'jasmine' || this.config_.framework === 'jasmine2') {
             frameworkPath = './frameworks/jasmine.js';
           } else if (this.config_.framework === 'mocha') {
             frameworkPath = './frameworks/mocha.js';
@@ -351,8 +344,7 @@ export class Runner extends EventEmitter {
             frameworkPath = this.config_.frameworkPath;
           } else {
             throw new Error(
-                'config.framework (' + this.config_.framework +
-                ') is not a valid framework.');
+                'config.framework (' + this.config_.framework + ') is not a valid framework.');
           }
 
           if (this.config_.restartBrowserBetweenTests) {
@@ -395,10 +387,9 @@ export class Runner extends EventEmitter {
           this.emit('testsDone', results);
           testPassed = results.failedCount === 0;
           if (this.driverprovider_.updateJob) {
-            return this.driverprovider_.updateJob({'passed': testPassed})
-                .then(() => {
-                  return this.driverprovider_.teardownEnv();
-                });
+            return this.driverprovider_.updateJob({'passed': testPassed}).then(() => {
+              return this.driverprovider_.teardownEnv();
+            });
           } else {
             return this.driverprovider_.teardownEnv();
           }

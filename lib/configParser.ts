@@ -64,8 +64,7 @@ export class ConfigParser {
 
     if (patterns) {
       for (let fileName of patterns) {
-        let matches =
-            glob.hasMagic(fileName) ? glob.sync(fileName, {cwd}) : [fileName];
+        let matches = glob.hasMagic(fileName) ? glob.sync(fileName, {cwd}) : [fileName];
         if (!matches.length && !opt_omitWarnings) {
           logger.warn('pattern ' + fileName + ' did not match any files.');
         }
@@ -116,13 +115,10 @@ export class ConfigParser {
   private addConfig_(additionalConfig: any, relativeTo: string): void {
     // All filepaths should be kept relative to the current config location.
     // This will not affect absolute paths.
-    ['seleniumServerJar', 'chromeDriver', 'onPrepare', 'firefoxPath',
-     'frameworkPath']
-        .forEach((name) => {
-          if (additionalConfig[name] &&
-              typeof additionalConfig[name] === 'string') {
-            additionalConfig[name] =
-                path.resolve(relativeTo, additionalConfig[name]);
+    ['seleniumServerJar', 'chromeDriver', 'onPrepare', 'firefoxPath', 'frameworkPath'].forEach(
+        (name) => {
+          if (additionalConfig[name] && typeof additionalConfig[name] === 'string') {
+            additionalConfig[name] = path.resolve(relativeTo, additionalConfig[name]);
           }
         });
 
@@ -144,13 +140,11 @@ export class ConfigParser {
     try {
       fileConfig = require(filePath).config;
     } catch (e) {
-      throw new ConfigError(
-          logger, 'failed loading configuration file ' + filename, e);
+      throw new ConfigError(logger, 'failed loading configuration file ' + filename, e);
     }
     if (!fileConfig) {
       throw new ConfigError(
-          logger,
-          'configuration file ' + filename + ' did not export a config object');
+          logger, 'configuration file ' + filename + ' did not export a config object');
     }
     fileConfig.configDir = path.dirname(filePath);
     this.addConfig_(fileConfig, fileConfig.configDir);

@@ -39,12 +39,9 @@ export class TaskScheduler {
    * @param {Object} config parsed from the config file
    */
   constructor(private config: Config) {
-    let excludes = ConfigParser.resolveFilePatterns(
-        config.exclude, true, config.configDir);
+    let excludes = ConfigParser.resolveFilePatterns(config.exclude, true, config.configDir);
     let allSpecs =
-        ConfigParser
-            .resolveFilePatterns(
-                ConfigParser.getSpecs(config), false, config.configDir)
+        ConfigParser.resolveFilePatterns(ConfigParser.getSpecs(config), false, config.configDir)
             .filter((path: string) => {
               return excludes.indexOf(path) < 0;
             });
@@ -53,14 +50,14 @@ export class TaskScheduler {
     config.multiCapabilities.forEach((capabilities) => {
       let capabilitiesSpecs = allSpecs;
       if (capabilities.specs) {
-        let capabilitiesSpecificSpecs = ConfigParser.resolveFilePatterns(
-            capabilities.specs, false, config.configDir);
+        let capabilitiesSpecificSpecs =
+            ConfigParser.resolveFilePatterns(capabilities.specs, false, config.configDir);
         capabilitiesSpecs = capabilitiesSpecs.concat(capabilitiesSpecificSpecs);
       }
 
       if (capabilities.exclude) {
-        let capabilitiesSpecExcludes = ConfigParser.resolveFilePatterns(
-            capabilities.exclude, true, config.configDir);
+        let capabilitiesSpecExcludes =
+            ConfigParser.resolveFilePatterns(capabilities.exclude, true, config.configDir);
         capabilitiesSpecs = capabilitiesSpecs.filter((path) => {
           return capabilitiesSpecExcludes.indexOf(path) < 0;
         });
@@ -130,8 +127,7 @@ export class TaskScheduler {
   public numTasksOutstanding(): number {
     var count = 0;
     this.taskQueues.forEach((queue) => {
-      count += queue.numRunningInstances +
-          (queue.specLists.length - queue.specsIndex);
+      count += queue.numRunningInstances + (queue.specLists.length - queue.specsIndex);
     });
     return count;
   }

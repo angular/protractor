@@ -30,8 +30,8 @@ export interface RunResults {
  */
 export class TaskRunner extends EventEmitter {
   constructor(
-      private configFile: string, private additionalConfig: Config,
-      private task: any, private runInFork: boolean) {
+      private configFile: string, private additionalConfig: Config, private task: any,
+      private runInFork: boolean) {
     super();
   }
 
@@ -68,8 +68,7 @@ export class TaskRunner extends EventEmitter {
       let deferred = q.defer();
 
       let childProcess = child_process.fork(
-          __dirname + '/runnerCli.js', process.argv.slice(2),
-          {cwd: process.cwd(), silent: true});
+          __dirname + '/runnerCli.js', process.argv.slice(2), {cwd: process.cwd(), silent: true});
       let taskLogger = new TaskLogger(this.task, childProcess.pid);
 
       // stdout pipe

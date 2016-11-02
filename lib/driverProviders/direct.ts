@@ -14,14 +14,11 @@ import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 
-let webdriver = require('selenium-webdriver'),
-    chrome = require('selenium-webdriver/chrome'),
+let webdriver = require('selenium-webdriver'), chrome = require('selenium-webdriver/chrome'),
     firefox = require('selenium-webdriver/firefox');
 let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-let SeleniumChrome =
-    require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-let SeleniumStandAlone =
-    require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
+let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
 
 
 let logger = new Logger('direct');
@@ -64,29 +61,24 @@ export class Direct extends DriverProvider {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         let defaultChromeDriverPath = path.resolve(
-            SeleniumConfig.getSeleniumDir(),
-            new SeleniumChrome().executableFilename());
+            SeleniumConfig.getSeleniumDir(), new SeleniumChrome().executableFilename());
 
         if (process.platform.indexOf('win') === 0) {
           defaultChromeDriverPath += '.exe';
         }
 
-        let chromeDriverFile =
-            this.config_.chromeDriver || defaultChromeDriverPath;
+        let chromeDriverFile = this.config_.chromeDriver || defaultChromeDriverPath;
 
         if (!fs.existsSync(chromeDriverFile)) {
-          throw new BrowserError(
-              logger, 'Could not find chromedriver at ' + chromeDriverFile);
+          throw new BrowserError(logger, 'Could not find chromedriver at ' + chromeDriverFile);
         }
 
         let service = new chrome.ServiceBuilder(chromeDriverFile).build();
-        driver = new chrome.Driver(
-            new webdriver.Capabilities(this.config_.capabilities), service);
+        driver = new chrome.Driver(new webdriver.Capabilities(this.config_.capabilities), service);
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
-          this.config_.capabilities['firefox_binary'] =
-              this.config_.firefoxPath;
+          this.config_.capabilities['firefox_binary'] = this.config_.firefoxPath;
         }
         driver = new firefox.Driver(this.config_.capabilities);
         break;

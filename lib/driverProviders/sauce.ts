@@ -32,13 +32,10 @@ export class Sauce extends DriverProvider {
     var deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
       var deferred = q.defer();
       driver.getSession().then((session: webdriver.Session) => {
-        logger.info(
-            'SauceLabs results available at http://saucelabs.com/jobs/' +
-            session.getId());
+        logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
         this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
           if (err) {
-            throw new Error(
-                'Error updating Sauce pass/fail status: ' + util.inspect(err));
+            throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
           }
           deferred.resolve();
         });
@@ -65,17 +62,14 @@ export class Sauce extends DriverProvider {
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
     this.config_.capabilities['build'] = this.config_.sauceBuild;
-    let auth =
-        'http://' + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
+    let auth = 'http://' + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
     this.config_.seleniumAddress =
-        auth + (this.config_.sauceSeleniumAddress ?
-                    this.config_.sauceSeleniumAddress :
-                    'ondemand.saucelabs.com:80/wd/hub');
+        auth + (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
+                                                    'ondemand.saucelabs.com:80/wd/hub');
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.
-    if (this.config_.capabilities.name &&
-        this.config_.capabilities.shardTestFiles) {
+    if (this.config_.capabilities.name && this.config_.capabilities.shardTestFiles) {
       this.config_.capabilities.name +=
           (':' + this.config_.specs.toString().replace(/^.*[\\\/]/, ''));
     }

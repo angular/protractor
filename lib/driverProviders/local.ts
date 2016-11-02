@@ -18,10 +18,8 @@ import {Logger} from '../logger';
 import {DriverProvider} from './driverProvider';
 
 let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-let SeleniumChrome =
-    require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-let SeleniumStandAlone =
-    require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
+let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
 let remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
@@ -42,8 +40,7 @@ export class Local extends DriverProvider {
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
       this.config_.seleniumServerJar = path.resolve(
-          SeleniumConfig.getSeleniumDir(),
-          new SeleniumStandAlone().executableFilename());
+          SeleniumConfig.getSeleniumDir(), new SeleniumStandAlone().executableFilename());
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
       throw new BrowserError(
@@ -57,8 +54,7 @@ export class Local extends DriverProvider {
             'Attempting to find the chromedriver binary in the default ' +
             'location used by webdriver-manager');
         this.config_.chromeDriver = path.resolve(
-            SeleniumConfig.getSeleniumDir(),
-            new SeleniumChrome().executableFilename());
+            SeleniumConfig.getSeleniumDir(), new SeleniumChrome().executableFilename());
       }
 
       // Check if file exists, if not try .exe or fail accordingly
@@ -67,8 +63,7 @@ export class Local extends DriverProvider {
           this.config_.chromeDriver += '.exe';
         } else {
           throw new BrowserError(
-              logger,
-              'Could not find chromedriver at ' + this.config_.chromeDriver);
+              logger, 'Could not find chromedriver at ' + this.config_.chromeDriver);
         }
       }
     }
@@ -100,12 +95,10 @@ export class Local extends DriverProvider {
 
     // configure server
     if (this.config_.chromeDriver) {
-      serverConf.args.push(
-          '-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
+      serverConf.args.push('-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
     }
 
-    this.server_ =
-        new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
+    this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
     // start local server, grab hosted address, and resolve promise
     this.server_.start().then((url: string) => {

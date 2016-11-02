@@ -12,10 +12,9 @@ let clientSideScripts = require('./clientsidescripts');
 let logger = new Logger('element');
 
 let WEB_ELEMENT_FUNCTIONS = [
-  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText',
-  'getSize', 'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear',
-  'isDisplayed', 'getOuterHtml', 'getInnerHtml', 'getId', 'getRawId',
-  'serialize', 'takeScreenshot'
+  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
+  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
+  'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
 ];
 
 // Explicitly define webdriver.WebElement.
@@ -27,8 +26,7 @@ export class WebdriverWebElement {
   serialize: () => wdpromise.Promise<any>;
   findElement: (subLocator: Locator) => wdpromise.Promise<any>;
   click: () => wdpromise.Promise<void>;
-  sendKeys: (...args: (string|
-                       wdpromise.Promise<string>)[]) => wdpromise.Promise<void>;
+  sendKeys: (...args: (string|wdpromise.Promise<string>)[]) => wdpromise.Promise<void>;
   getTagName: () => wdpromise.Promise<string>;
   getCssValue: (cssStyleProperty: string) => wdpromise.Promise<string>;
   getAttribute: (attributeName: string) => wdpromise.Promise<string>;
@@ -99,8 +97,7 @@ export class WebdriverWebElement {
 export class ElementArrayFinder extends WebdriverWebElement {
   constructor(
       public browser_: ProtractorBrowser,
-      public getWebElements: () => wdpromise.Promise<WebElement[]> = null,
-      public locator_?: any,
+      public getWebElements: () => wdpromise.Promise<WebElement[]> = null, public locator_?: any,
       public actionResults_: wdpromise.Promise<any> = null) {
     super();
 
@@ -171,8 +168,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
         return ptor.waitForAngular('Locator: ' + locator)
             .then((): wdpromise.Promise<webdriver.WebElement[]> => {
               if (locator.findElementsOverride) {
-                return locator.findElementsOverride(
-                    ptor.driver, null, ptor.rootEl);
+                return locator.findElementsOverride(ptor.driver, null, ptor.rootEl);
               } else {
                 return ptor.driver.findElements(locator);
               }
@@ -181,11 +177,10 @@ export class ElementArrayFinder extends WebdriverWebElement {
         return this.getWebElements().then((parentWebElements: WebElement[]) => {
           // For each parent web element, find their children and construct
           // a list of Promise<List<child_web_element>>
-          let childrenPromiseList = parentWebElements.map(
-              (parentWebElement: webdriver.WebElement) => {
+          let childrenPromiseList =
+              parentWebElements.map((parentWebElement: webdriver.WebElement) => {
                 return locator.findElementsOverride ?
-                    locator.findElementsOverride(
-                        ptor.driver, parentWebElement, ptor.rootEl) :
+                    locator.findElementsOverride(ptor.driver, parentWebElement, ptor.rootEl) :
                     parentWebElement.findElements(locator);
               });
 
@@ -236,18 +231,16 @@ export class ElementArrayFinder extends WebdriverWebElement {
   filter(filterFn: Function): ElementArrayFinder {
     let getWebElements = (): wdpromise.Promise<WebElement[]> => {
       return this.getWebElements().then((parentWebElements: WebElement[]) => {
-        let list = parentWebElements.map(
-            (parentWebElement: WebElement, index: number) => {
-              let elementFinder = ElementFinder.fromWebElement_(
-                  this.browser_, parentWebElement, this.locator_);
+        let list = parentWebElements.map((parentWebElement: WebElement, index: number) => {
+          let elementFinder =
+              ElementFinder.fromWebElement_(this.browser_, parentWebElement, this.locator_);
 
-              return filterFn(elementFinder, index);
-            });
+          return filterFn(elementFinder, index);
+        });
         return webdriver.promise.all(list).then((resolvedList: any) => {
-          return parentWebElements.filter(
-              (parentWebElement: WebElement, index: number) => {
-                return resolvedList[index];
-              });
+          return parentWebElements.filter((parentWebElement: WebElement, index: number) => {
+            return resolvedList[index];
+          });
         });
       });
     };
@@ -277,28 +270,25 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   get(index: number): ElementFinder {
     let getWebElements = () => {
-      return webdriver.promise.all([index, this.getWebElements()])
-          .then((results: any) => {
-            let i = results[0];
-            let parentWebElements = results[1];
+      return webdriver.promise.all([index, this.getWebElements()]).then((results: any) => {
+        let i = results[0];
+        let parentWebElements = results[1];
 
-            if (i < 0) {
-              // wrap negative indices
-              i = parentWebElements.length + i;
-            }
-            if (i < 0 || i >= parentWebElements.length) {
-              throw new error.NoSuchElementError(
-                  'Index out of bound. ' +
-                  'Trying to access element at index: ' + index +
-                  ', but there are ' +
-                  'only ' + parentWebElements.length + ' elements that match ' +
-                  'locator ' + this.locator_.toString());
-            }
-            return [parentWebElements[i]];
-          });
+        if (i < 0) {
+          // wrap negative indices
+          i = parentWebElements.length + i;
+        }
+        if (i < 0 || i >= parentWebElements.length) {
+          throw new error.NoSuchElementError(
+              'Index out of bound. ' +
+              'Trying to access element at index: ' + index + ', but there are ' +
+              'only ' + parentWebElements.length + ' elements that match ' +
+              'locator ' + this.locator_.toString());
+        }
+        return [parentWebElements[i]];
+      });
     };
-    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_)
-        .toElementFinder_();
+    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_).toElementFinder_();
   }
 
   /**
@@ -390,8 +380,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
           return arr.length;
         },
         (err: IError) => {
-          if (err.code &&
-              err.code == new webdriver.error.NoSuchElementError()) {
+          if (err.code && err.code == new webdriver.error.NoSuchElementError()) {
             return 0;
           } else {
             throw err;
@@ -430,8 +419,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   // map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?:
   // any): U[];
-  applyAction_(
-      actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
+  applyAction_(actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
       ElementArrayFinder {
     let callerError = new Error();
     let actionResults = this.getWebElements()
@@ -443,16 +431,14 @@ export class ElementArrayFinder extends WebdriverWebElement {
                               let stack: string;
                               if (e instanceof Error) {
                                 noSuchErr = e;
-                                noSuchErr.stack = noSuchErr.stack +
-                                    (callerError as IError).stack;
+                                noSuchErr.stack = noSuchErr.stack + (callerError as IError).stack;
                               } else {
                                 noSuchErr = new Error(e as string);
                                 noSuchErr.stack = (callerError as IError).stack;
                               }
                               throw noSuchErr;
                             });
-    return new ElementArrayFinder(
-        this.browser_, this.getWebElements, this.locator_, actionResults);
+    return new ElementArrayFinder(this.browser_, this.getWebElements, this.locator_, actionResults);
   }
 
   /**
@@ -464,8 +450,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   asElementFinders_(): wdpromise.Promise<any> {
     return this.getWebElements().then((arr: WebElement[]) => {
       return arr.map((webElem: WebElement) => {
-        return ElementFinder.fromWebElement_(
-            this.browser_, webElem, this.locator_);
+        return ElementFinder.fromWebElement_(this.browser_, webElem, this.locator_);
       });
     });
   }
@@ -494,9 +479,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then(
-      fn?: (value: any) => {} | wdpromise.IThenable<{}>,
-      errorFn?: (error: any) => any): wdpromise.Promise<any[]> {
+  then(fn?: (value: any) => {} | wdpromise.IThenable<{}>, errorFn?: (error: any) => any):
+      wdpromise.Promise<any[]> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
     } else {
@@ -530,8 +514,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     function has been called on all the ElementFinders. The promise will
    *     resolve to null.
    */
-  each(fn: (elementFinder?: ElementFinder, index?: number) => any):
-      wdpromise.Promise<any> {
+  each(fn: (elementFinder?: ElementFinder, index?: number) => any): wdpromise.Promise<any> {
     return this.map(fn).then((): any => {
       return null;
     });
@@ -569,8 +552,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
-  map(mapFn: (elementFinder?: ElementFinder, index?: number) => any):
-      wdpromise.Promise<any> {
+  map(mapFn: (elementFinder?: ElementFinder, index?: number) => any): wdpromise.Promise<any> {
     return this.asElementFinders_().then((arr: ElementFinder[]) => {
       let list = arr.map((elementFinder?: ElementFinder, index?: number) => {
         let mapResult = mapFn(elementFinder, index);
@@ -616,13 +598,11 @@ export class ElementArrayFinder extends WebdriverWebElement {
   reduce(reduceFn: Function, initialValue: any): wdpromise.Promise<any> {
     let valuePromise = wdpromise.fulfilled(initialValue);
     return this.asElementFinders_().then((arr: ElementFinder[]) => {
-      return arr.reduce(
-          (valuePromise: any, elementFinder: ElementFinder, index: number) => {
-            return valuePromise.then((value: any) => {
-              return reduceFn(value, elementFinder, index, arr);
-            });
-          },
-          valuePromise);
+      return arr.reduce((valuePromise: any, elementFinder: ElementFinder, index: number) => {
+        return valuePromise.then((value: any) => {
+          return reduceFn(value, elementFinder, index, arr);
+        });
+      }, valuePromise);
     });
   }
 
@@ -647,8 +627,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   evaluate(expression: string): ElementArrayFinder {
     let evaluationFn = (webElem: WebElement) => {
-      return webElem.getDriver().executeScript(
-          clientSideScripts.evaluate, webElem, expression);
+      return webElem.getDriver().executeScript(clientSideScripts.evaluate, webElem, expression);
     };
     return this.applyAction_(evaluationFn);
   }
@@ -666,8 +645,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   allowAnimations(value: boolean): ElementArrayFinder {
     let allowAnimationsTestFn = (webElem: WebElement) => {
-      return webElem.getDriver().executeScript(
-          clientSideScripts.allowAnimations, webElem, value);
+      return webElem.getDriver().executeScript(clientSideScripts.allowAnimations, webElem, value);
     };
     return this.applyAction_(allowAnimationsTestFn);
   }
@@ -723,9 +701,7 @@ export class ElementFinder extends WebdriverWebElement {
   elementArrayFinder_: ElementArrayFinder;
   then: (fn: Function, errorFn?: Function) => wdpromise.Promise<any> = null;
 
-  constructor(
-      public browser_: ProtractorBrowser,
-      elementArrayFinder: ElementArrayFinder) {
+  constructor(public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
     super();
     if (!elementArrayFinder) {
       throw new Error('BUG: elementArrayFinder cannot be empty');
@@ -747,8 +723,7 @@ export class ElementFinder extends WebdriverWebElement {
        *     evaluating fn.
        */
       this.then =
-          (fn: (value: any) => {} | wdpromise.IThenable<{}>,
-           errorFn?: (error: any) => any) => {
+          (fn: (value: any) => {} | wdpromise.IThenable<{}>, errorFn?: (error: any) => any) => {
             return this.elementArrayFinder_.then((actionResults: any) => {
               if (!fn) {
                 return actionResults[0];
@@ -762,22 +737,19 @@ export class ElementFinder extends WebdriverWebElement {
     // elementArrayFinder. It will warn if there are more than 1 element and
     // throw an error if there are no elements.
     let getWebElements = (): wdpromise.Promise<WebElement[]> => {
-      return elementArrayFinder.getWebElements().then(
-          (webElements: WebElement[]) => {
-            if (webElements.length === 0) {
-              throw new error.NoSuchElementError(
-                  'No element found using locator: ' +
-                  elementArrayFinder.locator().toString());
-            } else {
-              if (webElements.length > 1) {
-                logger.warn(
-                    'more than one element found for locator ' +
-                    elementArrayFinder.locator().toString() +
-                    ' - the first result will be used');
-              }
-              return [webElements[0]];
-            }
-          });
+      return elementArrayFinder.getWebElements().then((webElements: WebElement[]) => {
+        if (webElements.length === 0) {
+          throw new error.NoSuchElementError(
+              'No element found using locator: ' + elementArrayFinder.locator().toString());
+        } else {
+          if (webElements.length > 1) {
+            logger.warn(
+                'more than one element found for locator ' +
+                elementArrayFinder.locator().toString() + ' - the first result will be used');
+          }
+          return [webElements[0]];
+        }
+      });
     };
 
     // Store a copy of the underlying elementArrayFinder, but with the more
@@ -796,14 +768,12 @@ export class ElementFinder extends WebdriverWebElement {
   }
   [key: string]: any;
 
-  static fromWebElement_(
-      browser: ProtractorBrowser, webElem: WebElement,
-      locator: Locator): ElementFinder {
+  static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator: Locator):
+      ElementFinder {
     let getWebElements = () => {
       return wdpromise.fulfilled([webElem]);
     };
-    return new ElementArrayFinder(browser, getWebElements, locator)
-        .toElementFinder_();
+    return new ElementArrayFinder(browser, getWebElements, locator).toElementFinder_();
   }
 
   /**
@@ -989,8 +959,7 @@ export class ElementFinder extends WebdriverWebElement {
                 return true;  // is present, whether it is enabled or not
               },
               (err: any) => {
-                if (err.code ==
-                    webdriver.error.ErrorCode.STALE_ELEMENT_REFERENCE) {
+                if (err.code == webdriver.error.ErrorCode.STALE_ELEMENT_REFERENCE) {
                   return false;
                 } else {
                   throw err;

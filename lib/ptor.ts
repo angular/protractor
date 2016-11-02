@@ -32,8 +32,7 @@ export class Ptor {
   ElementFinder = require('./element').ElementFinder;
   ElementArrayFinder = require('./element').ElementArrayFinder;
   ProtractorBy = require('./locators').ProtractorBy;
-  ProtractorExpectedConditions =
-      require('./expectedConditions').ProtractorExpectedConditions;
+  ProtractorExpectedConditions = require('./expectedConditions').ProtractorExpectedConditions;
 
   // Export selenium webdriver.
   ActionSequence = webdriver.ActionSequence;

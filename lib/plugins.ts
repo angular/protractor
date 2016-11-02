@@ -220,9 +220,7 @@ export interface ProtractorPlugin {
    *
    * @throws {Error} Throws an error if called after results have been reported
    */
-  addFailure?:
-      (message?: string,
-       info?: {specName?: string, stackTrace?: string}) => void;
+  addFailure?: (message?: string, info?: {specName?: string, stackTrace?: string}) => void;
 
   /**
    * Adds a passed assertion to the test's results. Note: this is added by the
@@ -270,8 +268,7 @@ export class Plugins {
     pluginConfs.forEach((pluginConf: PluginConfig, i: number) => {
       var path: string;
       if (pluginConf.path) {
-        path = ConfigParser.resolveFilePatterns(
-            pluginConf.path, true, config.configDir)[0];
+        path = ConfigParser.resolveFilePatterns(pluginConf.path, true, config.configDir)[0];
         if (!path) {
           throw new Error('Invalid path to plugin: ' + pluginConf.path);
         }
@@ -302,11 +299,9 @@ export class Plugins {
    *
    * @see docs/plugins.md#provided-properties-and-functions
    */
-  private annotatePluginObj(
-      obj: ProtractorPlugin, conf: PluginConfig, i: number): void {
+  private annotatePluginObj(obj: ProtractorPlugin, conf: PluginConfig, i: number): void {
     let addAssertion =
-        (info: {specName?: string, stackTrace?: string}, passed: boolean,
-         message?: string) => {
+        (info: {specName?: string, stackTrace?: string}, passed: boolean, message?: string) => {
           if (this.resultsReported) {
             throw new Error(
                 'Cannot add new tests results, since they were already ' +
@@ -325,8 +320,7 @@ export class Plugins {
           this.assertions[specName].push(assertion);
         };
 
-    obj.name =
-        obj.name || conf.name || conf.path || conf.package || ('Plugin #' + i);
+    obj.name = obj.name || conf.name || conf.path || conf.package || ('Plugin #' + i);
     obj.config = conf;
     obj.addFailure = (message?, info?) => {
       addAssertion(info, false, message);
@@ -337,9 +331,9 @@ export class Plugins {
     obj.addWarning = (message?, options?) => {
       options = options || {};
       logger.warn(
-          'Warning ' + (options.specName ? 'in ' + options.specName :
-                                           'from "' + obj.name + '" plugin') +
-          ': ' + message);
+          'Warning ' +
+          (options.specName ? 'in ' + options.specName : 'from "' + obj.name + '" plugin') + ': ' +
+          message);
     };
   }
 
@@ -349,9 +343,7 @@ export class Plugins {
     var normalColor = '\x1b[39m';
 
     var printResult = (message: string, pass: boolean) => {
-      logger.info(
-          pass ? green : red, '\t', pass ? 'Pass: ' : 'Fail: ', message,
-          normalColor);
+      logger.info(pass ? green : red, '\t', pass ? 'Pass: ' : 'Fail: ', message, normalColor);
     };
 
     for (var j = 0; j < specResults.length; j++) {
@@ -371,8 +363,7 @@ export class Plugins {
           if (!assertion.passed) {
             logger.error('\t\t' + assertion.errorMsg);
             if (assertion.stackTrace) {
-              logger.error(
-                  '\t\t' + assertion.stackTrace.replace(/\n/g, '\n\t\t'));
+              logger.error('\t\t' + assertion.stackTrace.replace(/\n/g, '\n\t\t'));
             }
           }
         }
@@ -389,11 +380,9 @@ export class Plugins {
    * @return {Object} The results object
    */
   getResults() {
-    var results: {failedCount: number,
-                  specResults: any[]} = {failedCount: 0, specResults: []};
+    var results: {failedCount: number, specResults: any[]} = {failedCount: 0, specResults: []};
     for (var specName in this.assertions) {
-      results.specResults.push(
-          {description: specName, assertions: this.assertions[specName]});
+      results.specResults.push({description: specName, assertions: this.assertions[specName]});
       results.failedCount += this.assertions[specName]
                                  .filter((assertion: any) => {
                                    return !assertion.passed;
@@ -426,12 +415,9 @@ export class Plugins {
   postResults: Function = pluginFunFactory('postResults', PromiseType.Q);
   postTest: Function = pluginFunFactory('postTest', PromiseType.Q);
   onPageLoad: Function = pluginFunFactory('onPageLoad', PromiseType.WEBDRIVER);
-  onPageStable: Function =
-      pluginFunFactory('onPageStable', PromiseType.WEBDRIVER);
-  waitForPromise: Function =
-      pluginFunFactory('waitForPromise', PromiseType.WEBDRIVER);
-  waitForCondition: Function =
-      pluginFunFactory('waitForCondition', PromiseType.WEBDRIVER, true);
+  onPageStable: Function = pluginFunFactory('onPageStable', PromiseType.WEBDRIVER);
+  waitForPromise: Function = pluginFunFactory('waitForPromise', PromiseType.WEBDRIVER);
+  waitForCondition: Function = pluginFunFactory('waitForCondition', PromiseType.WEBDRIVER, true);
 
   /**
    * Calls a function from a plugin safely.  If the plugin's function throws an
@@ -451,10 +437,9 @@ export class Plugins {
    *     function's return value
    */
   safeCallPluginFun(
-      pluginObj: ProtractorPlugin, funName: string, args: IArguments,
-      promiseType: PromiseType, failReturnVal: any): any {
-    var deferred =
-        promiseType == PromiseType.Q ? Q.defer() : webdriver.promise.defer();
+      pluginObj: ProtractorPlugin, funName: string, args: IArguments, promiseType: PromiseType,
+      failReturnVal: any): any {
+    var deferred = promiseType == PromiseType.Q ? Q.defer() : webdriver.promise.defer();
     var logError = (e: any) => {
       if (this.resultsReported) {
         this.printPluginResults([{
@@ -467,8 +452,7 @@ export class Plugins {
         }]);
       } else {
         pluginObj.addFailure(
-            'Failure during ' + funName + ': ' + e.message || e,
-            {stackTrace: e.stack});
+            'Failure during ' + funName + ': ' + e.message || e, {stackTrace: e.stack});
       }
       deferred.fulfill(failReturnVal);
     };
@@ -504,8 +488,7 @@ export class Plugins {
  * @return {Function} The handler
  */
 function pluginFunFactory(
-    funName: string, promiseType: PromiseType,
-    failReturnVal?: boolean): Function {
+    funName: string, promiseType: PromiseType, failReturnVal?: boolean): Function {
   return function() {
     var promises: any[] = [];
     var args = arguments;
@@ -513,8 +496,7 @@ function pluginFunFactory(
 
     self.pluginObjs.forEach((pluginObj: ProtractorPlugin) => {
       if ((<any>pluginObj)[funName]) {
-        promises.push(self.safeCallPluginFun(
-            pluginObj, funName, args, promiseType, failReturnVal));
+        promises.push(self.safeCallPluginFun(pluginObj, funName, args, promiseType, failReturnVal));
       }
     });
 
