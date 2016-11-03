@@ -50,7 +50,7 @@ export interface Config {
     /**
      * Additional command line jvm options to pass to selenium. For example,
      * if you need to change the browser driver, use
-     * seleniumArgs: ['-Dwebdriver.ie.driver=IEDriverServer_Win32_2.53.1.exe']
+     * jvmArgs: ['-Dwebdriver.ie.driver=IEDriverServer_Win32_2.53.1.exe']
      */
     jvmArgs?: any; 
   };
