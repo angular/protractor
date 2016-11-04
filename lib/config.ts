@@ -46,13 +46,13 @@ export interface Config {
      * seleniumArgs: ['-browserTimeout=60']
      */
     args?: any;
-    
+
     /**
      * Additional command line jvm options to pass to selenium. For example,
      * if you need to change the browser driver, use
      * jvmArgs: ['-Dwebdriver.ie.driver=IEDriverServer_Win32_2.53.1.exe']
      */
-    jvmArgs?: any; 
+    jvmArgs?: any;
   };
   /**
    * ChromeDriver location is used to help find the chromedriver binary.
