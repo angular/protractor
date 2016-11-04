@@ -587,6 +587,7 @@ export interface Config {
   ng12Hybrid?: boolean;
 
   seleniumArgs?: Array<any>;
+  jvmArgs?: Array<any>;
   configDir?: string;
   troubleshoot?: boolean;
   seleniumPort?: number;
