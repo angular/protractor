@@ -6,8 +6,9 @@ machine:
   post:
     - npm install -g npm@3
 
-dependencies: 
+dependencies:
   post:
+    - gulp format:enforce
     - ./node_modules/.bin/webdriver-manager update
     - ./node_modules/.bin/webdriver-manager start:
           background: true
