@@ -1,5 +1,4 @@
-// Same process for importing and compiling at ../spec.ts, except you need to
-// pass the `-t ES2015` flag to `tsc`.
+// See README.md for important details.
 import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
 
 describe('async function', function() {
