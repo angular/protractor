@@ -89,13 +89,16 @@ export class Local extends DriverProvider {
     if (serverConf.args === undefined) {
       serverConf.args = this.config_.seleniumArgs || [];
     }
+    if (serverConf.jvmArgs === undefined) {
+      serverConf.jvmArgs = this.config_.jvmArgs || [];
+    }
     if (serverConf.port === undefined) {
       serverConf.port = this.config_.seleniumPort;
     }
 
     // configure server
     if (this.config_.chromeDriver) {
-      serverConf.args.push('-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
+      serverConf.jvmArgs.push('-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
     }
 
     this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
