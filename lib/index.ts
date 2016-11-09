@@ -40,9 +40,8 @@ export declare let protractor: Ptor;
 Object.defineProperty(exports, 'protractor', {get: () => (global as any)['protractor']});
 
 function registerGlobal(name: string) {
-  Object.defineProperty(exports, name, {
-    get: () => exports.protractor ? exports.protractor[name] : undefined
-  });
+  Object.defineProperty(
+      exports, name, {get: () => exports.protractor ? exports.protractor[name] : undefined});
 }
 
 export declare let browser: ProtractorBrowser;
