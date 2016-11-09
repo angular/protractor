@@ -526,7 +526,7 @@ export interface Config {
     /**
      * Set the randomization seed if randomization is turned on
      */
-     seed?: string,
+    seed?: string,
   };
 
   /**
