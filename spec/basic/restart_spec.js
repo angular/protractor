@@ -7,4 +7,8 @@ describe('browser.restart', function() {
     // Get a non-angular page. It shouldn't fail if ignoreSynchronization is on.
     browser.get('https://google.com/');
   });
+
+  afterAll(() => {
+    browser.ignoreSynchronization = false;
+  });
 });
