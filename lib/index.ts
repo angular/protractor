@@ -39,24 +39,24 @@ export let CommandName = require('selenium-webdriver/lib/command').Name;
 export declare let protractor: Ptor;
 Object.defineProperty(exports, 'protractor', {get: () => (global as any)['protractor']});
 
+function registerGlobal(name: string) {
+  Object.defineProperty(exports, name, {
+    get: () => exports.protractor ? exports.protractor[name] : undefined
+  });
+}
+
 export declare let browser: ProtractorBrowser;
-Object.defineProperty(exports, 'browser', {get: () => exports.protractor.browser});
-
 export declare let $: (search: string) => ElementFinder;
-Object.defineProperty(exports, '$', {get: () => exports.protractor.$});
-
 export declare let $$: (search: string) => ElementArrayFinder;
-Object.defineProperty(exports, '$$', {get: () => exports.protractor.$$});
-
 export declare let element: ElementHelper;
-Object.defineProperty(exports, 'element', {get: () => exports.protractor.element});
-
 export declare let By: ProtractorBy;
-Object.defineProperty(exports, 'By', {get: () => exports.protractor.By});
-
 export declare let by: ProtractorBy;
-Object.defineProperty(exports, 'by', {get: () => exports.protractor.by});
-
 export declare let ExpectedConditions: ProtractorExpectedConditions;
-Object.defineProperty(
-    exports, 'ExpectedConditions', {get: () => exports.protractor.ExpectedConditions});
+
+registerGlobal('browser');
+registerGlobal('$');
+registerGlobal('$$');
+registerGlobal('element');
+registerGlobal('By');
+registerGlobal('by');
+registerGlobal('ExpectedConditions');
