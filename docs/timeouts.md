@@ -6,7 +6,7 @@ Because WebDriver tests are asynchronous and involve many components, there are 
 Timeouts from Protractor
 ------------------------
 
-###Waiting for Page to Load
+### Waiting for Page to Load
 
 When navigating to a new page using `browser.get`, Protractor waits for the page to
 be loaded and the new URL to appear before continuing.
@@ -17,7 +17,7 @@ be loaded and the new URL to appear before continuing.
 
  - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
-**Waiting for Page Synchronization**
+### Waiting for Page Synchronization
 
 Before performing any action, Protractor waits until there are no pending asynchronous tasks in your Angular application. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, Protractor will wait indefinitely and time out. You should use the
 [$interval](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3).
@@ -28,7 +28,7 @@ Before performing any action, Protractor waits until there are no pending asynch
 
  - How to change: Add `allScriptsTimeout: timeout_in_millis` to your Protractor configuration file.
 
-**Waiting for Angular**
+### Waiting for Angular
 
 Protractor only works with Angular applications, so it waits for the `angular` variable to be present when it is loading a new page.
 
@@ -38,7 +38,7 @@ Protractor only works with Angular applications, so it waits for the `angular` v
 
  - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
-_*How to disable waiting for Angular*_
+### _How to disable waiting for Angular_
 
 If you need to navigate to a page which does not use Angular, you can turn off waiting for Angular by setting
 `browser.ignoreSynchronization = true`. For example:
