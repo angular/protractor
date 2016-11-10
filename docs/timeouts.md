@@ -22,6 +22,8 @@ be loaded and the new URL to appear before continuing.
 Before performing any action, Protractor waits until there are no pending asynchronous tasks in your Angular application. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, Protractor will wait indefinitely and time out. You should use the
 [$interval](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3).
 
+You can also disable waiting for angular, [see below](#how-to-disable-waiting-for-angular).
+
  - Looks like: an error in your test results - `Timed out waiting for asynchronous Angular tasks to finish after 11 seconds.`
 
  - Default timeout: 11 seconds

@@ -25,7 +25,7 @@ with more info.
 Angular can't be found on my page
 ---------------------------------
 
-Protractor supports angular 1.5.x and higher - check that your version of Angular is upgraded.
+Protractor supports angular 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.
 
 The `angular` variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if `angular` is defined.
 
@@ -35,9 +35,9 @@ How do I deal with my log-in page?
 If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you'll need to interact with it via 
 unwrapped webdriver, which can be accessed like `browser.driver.get()`. You can also use
-`browser.ignoreSynchronization`, as explained in [this StackOverflow answer](http://stackoverflow.com/a/23198865/264229)
+`browser.ignoreSynchronization` as explained [here](/docs/timeouts.md#how-to-disable-waiting-for-angular).
 
-You can also put your log-in code into an `onPrepare` function, which will be run
+Another option is to put your log-in code into an `onPrepare` function, which will be run
 once before any of your tests. See this example ([withLoginConf.js](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js))
 
 Which browsers are supported?
