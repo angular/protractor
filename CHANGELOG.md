@@ -35,7 +35,7 @@
   chore(deps): Downgrade jasmine to 2.4.1 (#3715)
 
   Upgrading to 2.5.2 causes #3606. We'll need to wait on a fix for jasmine/jasmine-npm#95 before
-  upgrading before upgrading
+  upgrading.
 
 # 4.0.10
 
