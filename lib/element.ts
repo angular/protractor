@@ -3,7 +3,7 @@ import {By, error, ILocation, ISize, promise as wdpromise, WebDriver, WebElement
 import {ElementHelper} from './browser';
 import {ProtractorBrowser} from './browser';
 import {IError} from './exitCodes';
-import {Locator, ProtractorBy} from './locators';
+import {Locator} from './locators';
 import {Logger} from './logger';
 
 let webdriver = require('selenium-webdriver');
@@ -1061,7 +1061,7 @@ export class ElementFinder extends WebdriverWebElement {
  * @returns {ElementFinder} which identifies the located
  *     {@link webdriver.WebElement}
  */
-export let build$ = (element: ElementHelper, by: ProtractorBy) => {
+export let build$ = (element: ElementHelper, by: typeof By) => {
   return (selector: string) => {
     return element(by.css(selector));
   };
@@ -1092,7 +1092,7 @@ export let build$ = (element: ElementHelper, by: ProtractorBy) => {
  * @returns {ElementArrayFinder} which identifies the
  *     array of the located {@link webdriver.WebElement}s.
  */
-export let build$$ = (element: ElementHelper, by: ProtractorBy) => {
+export let build$$ = (element: ElementHelper, by: typeof By) => {
   return (selector: string) => {
     return element.all(by.css(selector));
   };

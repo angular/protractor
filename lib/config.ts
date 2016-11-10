@@ -1,3 +1,5 @@
+import {PluginConfig} from './plugins';
+
 export interface Config {
   // ---------------------------------------------------------------------------
   // ----- How to connect to Browser Drivers -----------------------------------
@@ -570,7 +572,7 @@ export interface Config {
   /**
    * See docs/plugins.md
    */
-  plugins?: Array<any>;
+  plugins?: PluginConfig[];
 
   /**
    * Turns off source map support.  Stops protractor from registering global
