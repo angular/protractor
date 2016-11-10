@@ -6,7 +6,7 @@ Because WebDriver tests are asynchronous and involve many components, there are 
 Timeouts from Protractor
 ------------------------
 
-**Waiting for Page to Load**
+### Waiting for Page to Load
 
 When navigating to a new page using `browser.get`, Protractor waits for the page to
 be loaded and the new URL to appear before continuing.
@@ -17,21 +17,22 @@ be loaded and the new URL to appear before continuing.
 
  - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
-**Waiting for Page Synchronization**
+### Waiting for Angular
 
-Before performing any action, Protractor asks Angular to wait until the page is synchronized. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, it will
-never be registered as completely loaded. You should use the
-$interval service ([interval.js](https://github.com/angular/angular.js/blob/master/src/ng/interval.js)) for anything that polls continuously (introduced in Angular 1.2rc3).
+Before performing any action, Protractor waits until there are no pending asynchronous tasks in your Angular application. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, Protractor will wait indefinitely and time out. You should use the
+[$interval](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3).
 
- - Looks like: an error in your test results - `Timed out waiting for Protractor to synchronize with the page after 11 seconds.`
+You can also disable waiting for angular, [see below](#how-to-disable-waiting-for-angular).
+
+ - Looks like: an error in your test results - `Timed out waiting for asynchronous Angular tasks to finish after 11 seconds.`
 
  - Default timeout: 11 seconds
 
  - How to change: Add `allScriptsTimeout: timeout_in_millis` to your Protractor configuration file.
 
-**Waiting for Angular**
+### Waiting for Angular on Page Load
 
-Protractor only works with Angular applications, so it waits for the `angular` variable to be present when it is loading a new page.
+Protractor waits for the `angular` variable to be present when loading a new page.
 
  - Looks like: an error in your test results - `Angular could not be found on the page: retries looking for angular exceeded`
 
@@ -39,26 +40,28 @@ Protractor only works with Angular applications, so it waits for the `angular` v
 
  - How to change: To change globally, add `getPageTimeout: timeout_in_millis` to your Protractor configuration file. For an individual call to `get`, pass an additional parameter: `browser.get(address, timeout_in_millis)`
 
-_*How to disable waiting for Angular*_
+### _How to disable waiting for Angular_
 
 If you need to navigate to a page which does not use Angular, you can turn off waiting for Angular by setting
 `browser.ignoreSynchronization = true`. For example:
 
 ```js
-browser.get('page-containing-angular');
-navigateToVanillaPage.click();
 browser.ignoreSynchronization = true;
-otherButton.click();
-navigateToAngularPage.click();
-browser.ignoreSynchronization = false;
-```
+browser.get('/non-angular-login-page.html');
 
+element(by.id('username')).sendKeys('Jane');
+element(by.id('password')).sendKeys('1234');
+element(by.id('clickme')).click();
+
+browser.ignoreSynchronization = false;
+browser.get('/page-containing-angular.html');
+```
 
 
 Timeouts from WebDriver
 -----------------------
 
-**Asynchronous Script Timeout**
+### Asynchronous Script Timeout
 
 Sets the amount of time to wait for an asynchronous script to finish execution before throwing an error.
 
@@ -72,7 +75,7 @@ Sets the amount of time to wait for an asynchronous script to finish execution b
 Timeouts from Jasmine
 ---------------------
 
-**Spec Timeout**
+### Spec Timeout
 
 If a spec (an 'it' block) takes longer than the Jasmine timeout for any reason, it will fail.
 
@@ -87,7 +90,7 @@ Timeouts from Sauce Labs
 ------------------------
 If you are using Sauce Labs, there are a couple additional ways your test can time out. See [Sauce Labs Timeouts Documentation](https://docs.saucelabs.com/reference/test-configuration/#timeouts) for more information.
 
-**Maximum Test Duration**
+### Maximum Test Duration
 
 Sauce Labs limits the maximum total duration for a test.
 
@@ -97,7 +100,7 @@ Sauce Labs limits the maximum total duration for a test.
 
  - How to change: Edit the "max-duration" key in the capabilities object.
 
-**Command Timeout**
+### Command Timeout
 
 As a safety measure to prevent Selenium crashes from making your tests run indefinitely, Sauce limits how long Selenium can take to run a command in browsers. This is set to 300 seconds by default.
 
@@ -107,7 +110,7 @@ As a safety measure to prevent Selenium crashes from making your tests run indef
 
  - How to change: Edit the "command-timeout" key in the capabilities object.
 
-**Idle Timeout**
+### Idle Timeout
 
 As a safety measure to prevent tests from running too long after something has gone wrong, Sauce limits how long a browser can wait for a test to send a new command. This is set to 90 seconds by default. You can adjust this limit on a per-job basis.
 

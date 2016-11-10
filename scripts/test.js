@@ -138,7 +138,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeout
 executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
     .expectExitCode(1)
     .expectErrors([
-      {message: 'Timed out waiting for Protractor to synchronize with the page'},
+      {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
     ]);
 
 executor.execute();

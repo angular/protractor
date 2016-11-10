@@ -491,9 +491,10 @@ export class ProtractorBrowser extends Webdriver {
                 timeout = /-?[\d\.]*\ ms/.exec(err.message);
               }
               if (timeout) {
-                let errMsg = 'Timed out waiting for Protractor to synchronize with ' +
-                    'the page after ' + timeout + '. Please see ' +
-                    'https://github.com/angular/protractor/blob/master/docs/faq.md';
+                let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
+                    `${timeout}. This may be because the current page is not an Angular ` +
+                    `application. Please see the FAQ for more details: ` +
+                    `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
                 if (description.indexOf(' - Locator: ') == 0) {
                   errMsg += '\nWhile waiting for element with locator' + description;
                 }

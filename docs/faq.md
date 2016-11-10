@@ -34,9 +34,10 @@ How do I deal with my log-in page?
 
 If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you'll need to interact with it via 
-unwrapped webdriver, which can be accessed like `browser.driver.get()`. 
+unwrapped webdriver, which can be accessed like `browser.driver.get()`. You can also use
+`browser.ignoreSynchronization` as explained [here](/docs/timeouts.md#how-to-disable-waiting-for-angular).
 
-You can put your log-in code into an `onPrepare` function, which will be run
+Another option is to put your log-in code into an `onPrepare` function, which will be run
 once before any of your tests. See this example ([withLoginConf.js](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js))
 
 Which browsers are supported?
@@ -164,10 +165,6 @@ If you need to test file upload on a remote server (such as Sauce Labs), [you ne
 var remote = require('selenium-webdriver/remote');
 browser.setFileDetector(new remote.FileDetector());
 ```
-
-Why is browser.debugger(); not pausing the test?
------------------------------------------------
-The most likely reason is that you are not running the test in debug mode. To do this you run: `protractor debug` followed by the path to your protractor configuration file.
 
 I get an error: Page reload detected during async script. What does this mean?
 ------------------------------------------------------------------------------
