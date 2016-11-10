@@ -1,3 +1,42 @@
+# 4.0.11
+
+## Features
+
+- ([6ebee72](https://github.com/angular/protractor/commit/6ebee72088016085e93d268effabcbe0b3d0a70f)) 
+  feat(config): Add 'random' and 'seed' jasmine config options (#3467)
+
+## Bug Fixes
+
+- ([2048182](https://github.com/angular/protractor/commit/2048182206e88dd4cde0e92cfac3ed97cbe38f15)) 
+  docs(timeout): Update timeout error message and docs (#3723)
+
+- ([f3938f9](https://github.com/angular/protractor/commit/f3938f9fcd1b91272f2f11d4d39e458576fb75b0)) 
+  fix(jvmArgs): fixes jvmArgs launching selenium from config (#3698)
+
+  closes #3697
+
+- ([21d534f](https://github.com/angular/protractor/commit/21d534fad28f84e8cef166348119387e49661227)) 
+  fix(types): Make element.then()'s signature more broad. (#3719)
+
+- ([e9061b3](https://github.com/angular/protractor/commit/e9061b30c3673344d776187682d1c735aaad69f7)) 
+  chore(types): make plugins.ts more strongly-typed (#3685)
+
+- ([f42e0b3](https://github.com/angular/protractor/commit/f42e0b3dc824404ac0c86364bf5de4b657cf30ea)) 
+  fix(globals): Resolve exported globals dynamically. (#3716)
+
+  fixes #3677
+
+- ([d7fa744](https://github.com/angular/protractor/commit/d7fa74464709c532d451fdead78bc57b21956784)) 
+  fix(util): Fix adding stack traces to Errors thrown as strings (#3687)
+
+## Dependencies
+
+- ([a1c8a23](https://github.com/angular/protractor/commit/a1c8a23fea3542eabeae6e7bc59f3c2ffa0fda94)) 
+  chore(deps): Downgrade jasmine to 2.4.1 (#3715)
+
+  Upgrading to 2.5.2 causes #3606. We'll need to wait on a fix for jasmine/jasmine-npm#95 before
+  upgrading before upgrading
+
 # 4.0.10
 
 ## Features
