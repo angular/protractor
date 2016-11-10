@@ -19,8 +19,9 @@ with more info.</p>
 <h2 id="how-do-i-deal-with-my-log-in-page-" class="anchored"><div><a href="#{{path}}#how-do-i-deal-with-my-log-in-page-">&#x1f517;</a>How do I deal with my log-in page?</div></h2>
 <p>If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you&#39;ll need to interact with it via 
-unwrapped webdriver, which can be accessed like <code ng-non-bindable>browser.driver.get()</code>. </p>
-<p>You can put your log-in code into an <code ng-non-bindable>onPrepare</code> function, which will be run
+unwrapped webdriver, which can be accessed like <code ng-non-bindable>browser.driver.get()</code>. You can also use
+<code ng-non-bindable>browser.ignoreSynchronization</code> as explained <a href="#/timeouts#how-to-disable-waiting-for-angular">here</a>.</p>
+<p>Another option is to put your log-in code into an <code ng-non-bindable>onPrepare</code> function, which will be run
 once before any of your tests. See this example (<a href="https://github.com/angular/protractor/blob/master/spec/withLoginConf.js">withLoginConf.js</a>)</p>
 <h2 id="which-browsers-are-supported-" class="anchored"><div><a href="#{{path}}#which-browsers-are-supported-">&#x1f517;</a>Which browsers are supported?</div></h2>
 <p>The last two major versions of Chrome, Firefox, IE, and Safari. See details at <a href="#/browser-setup">Setting Up the Browser</a> and <a href="#/browser-support">Browser Support</a>.</p>
@@ -108,8 +109,6 @@ jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
 <pre><code class="lang-js">var remote = require(&#39;selenium-webdriver/remote&#39;);
 browser.setFileDetector(new remote.FileDetector());
 </code></pre>
-<h2 id="why-is-browser-debugger-not-pausing-the-test-" class="anchored"><div><a href="#{{path}}#why-is-browser-debugger-not-pausing-the-test-">&#x1f517;</a>Why is browser.debugger(); not pausing the test?</div></h2>
-<p>The most likely reason is that you are not running the test in debug mode. To do this you run: <code ng-non-bindable>protractor debug</code> followed by the path to your protractor configuration file.</p>
 <h2 id="i-get-an-error-page-reload-detected-during-async-script-what-does-this-mean-" class="anchored"><div><a href="#{{path}}#i-get-an-error-page-reload-detected-during-async-script-what-does-this-mean-">&#x1f517;</a>I get an error: Page reload detected during async script. What does this mean?</div></h2>
 <p>This means that there was a navigation or reload event while a command was pending
 on the browser. Usually, this is because a click action or navigation resulted

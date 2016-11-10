@@ -1,4 +1,4 @@
-// Compiled using typings@0.6.8
+// Compiled using typings@0.6.10
 // Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/4de74cb527395c13ba20b438c3a7a419ad931f1c/es6-shim/es6-shim.d.ts
 // Type definitions for es6-shim v0.31.2
 // Project: https://github.com/paulmillr/es6-shim

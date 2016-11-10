@@ -1,7 +1,7 @@
 <h1 id="timeouts">Timeouts</h1>
 <p>Because WebDriver tests are asynchronous and involve many components, there are several reasons why a timeout could occur in a Protractor test.</p>
 <h2 id="timeouts-from-protractor" class="anchored"><div><a href="#{{path}}#timeouts-from-protractor">&#x1f517;</a>Timeouts from Protractor</div></h2>
-<p><strong>Waiting for Page to Load</strong></p>
+<h3 id="waiting-for-page-to-load">Waiting for Page to Load</h3>
 <p>When navigating to a new page using <code ng-non-bindable>browser.get</code>, Protractor waits for the page to
 be loaded and the new URL to appear before continuing.</p>
 <ul>
@@ -12,20 +12,20 @@ be loaded and the new URL to appear before continuing.</p>
 <li><p>How to change: To change globally, add <code ng-non-bindable>getPageTimeout: timeout_in_millis</code> to your Protractor configuration file. For an individual call to <code ng-non-bindable>get</code>, pass an additional parameter: <code ng-non-bindable>browser.get(address, timeout_in_millis)</code></p>
 </li>
 </ul>
-<p><strong>Waiting for Page Synchronization</strong></p>
-<p>Before performing any action, Protractor asks Angular to wait until the page is synchronized. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, it will
-never be registered as completely loaded. You should use the
-$interval service (<a href="https://github.com/angular/angular.js/blob/master/src/ng/interval.js">interval.js</a>) for anything that polls continuously (introduced in Angular 1.2rc3).</p>
+<h3 id="waiting-for-angular">Waiting for Angular</h3>
+<p>Before performing any action, Protractor waits until there are no pending asynchronous tasks in your Angular application. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, Protractor will wait indefinitely and time out. You should use the
+<a href="https://github.com/angular/angular.js/blob/master/src/ng/interval.js">$interval</a> for anything that polls continuously (introduced in Angular 1.2rc3).</p>
+<p>You can also disable waiting for angular, <a href=#{{path}}#how-to-disable-waiting-for-angular>see below</a>.</p>
 <ul>
-<li><p>Looks like: an error in your test results - <code ng-non-bindable>Timed out waiting for Protractor to synchronize with the page after 11 seconds.</code></p>
+<li><p>Looks like: an error in your test results - <code ng-non-bindable>Timed out waiting for asynchronous Angular tasks to finish after 11 seconds.</code></p>
 </li>
 <li><p>Default timeout: 11 seconds</p>
 </li>
 <li><p>How to change: Add <code ng-non-bindable>allScriptsTimeout: timeout_in_millis</code> to your Protractor configuration file.</p>
 </li>
 </ul>
-<p><strong>Waiting for Angular</strong></p>
-<p>Protractor only works with Angular applications, so it waits for the <code ng-non-bindable>angular</code> variable to be present when it is loading a new page.</p>
+<h3 id="waiting-for-angular-on-page-load">Waiting for Angular on Page Load</h3>
+<p>Protractor waits for the <code ng-non-bindable>angular</code> variable to be present when loading a new page.</p>
 <ul>
 <li><p>Looks like: an error in your test results - <code ng-non-bindable>Angular could not be found on the page: retries looking for angular exceeded</code></p>
 </li>
@@ -34,18 +34,21 @@ $interval service (<a href="https://github.com/angular/angular.js/blob/master/sr
 <li><p>How to change: To change globally, add <code ng-non-bindable>getPageTimeout: timeout_in_millis</code> to your Protractor configuration file. For an individual call to <code ng-non-bindable>get</code>, pass an additional parameter: <code ng-non-bindable>browser.get(address, timeout_in_millis)</code></p>
 </li>
 </ul>
-<p><em><em>How to disable waiting for Angular</em></em></p>
+<h3 id="_how-to-disable-waiting-for-angular_"><em>How to disable waiting for Angular</em></h3>
 <p>If you need to navigate to a page which does not use Angular, you can turn off waiting for Angular by setting
 <code ng-non-bindable>browser.ignoreSynchronization = true</code>. For example:</p>
-<pre><code class="lang-js">browser.get(&#39;page-containing-angular&#39;);
-navigateToVanillaPage.click();
-browser.ignoreSynchronization = true;
-otherButton.click();
-navigateToAngularPage.click();
+<pre><code class="lang-js">browser.ignoreSynchronization = true;
+browser.get(&#39;/non-angular-login-page.html&#39;);
+
+element(by.id(&#39;username&#39;)).sendKeys(&#39;Jane&#39;);
+element(by.id(&#39;password&#39;)).sendKeys(&#39;1234&#39;);
+element(by.id(&#39;clickme&#39;)).click();
+
 browser.ignoreSynchronization = false;
+browser.get(&#39;/page-containing-angular.html&#39;);
 </code></pre>
 <h2 id="timeouts-from-webdriver" class="anchored"><div><a href="#{{path}}#timeouts-from-webdriver">&#x1f517;</a>Timeouts from WebDriver</div></h2>
-<p><strong>Asynchronous Script Timeout</strong></p>
+<h3 id="asynchronous-script-timeout">Asynchronous Script Timeout</h3>
 <p>Sets the amount of time to wait for an asynchronous script to finish execution before throwing an error.</p>
 <ul>
 <li><p>Looks like: an error in your test results - <code ng-non-bindable>ScriptTimeoutError: asynchronous script timeout: result was not received in 11 seconds</code></p>
@@ -56,7 +59,7 @@ browser.ignoreSynchronization = false;
 </li>
 </ul>
 <h2 id="timeouts-from-jasmine" class="anchored"><div><a href="#{{path}}#timeouts-from-jasmine">&#x1f517;</a>Timeouts from Jasmine</div></h2>
-<p><strong>Spec Timeout</strong></p>
+<h3 id="spec-timeout">Spec Timeout</h3>
 <p>If a spec (an &#39;it&#39; block) takes longer than the Jasmine timeout for any reason, it will fail.</p>
 <ul>
 <li><p>Looks like: a failure in your test results - <code ng-non-bindable>timeout: timed out after 30000 msec waiting for spec to complete</code></p>
@@ -68,7 +71,7 @@ browser.ignoreSynchronization = false;
 </ul>
 <h2 id="timeouts-from-sauce-labs" class="anchored"><div><a href="#{{path}}#timeouts-from-sauce-labs">&#x1f517;</a>Timeouts from Sauce Labs</div></h2>
 <p>If you are using Sauce Labs, there are a couple additional ways your test can time out. See <a href="https://docs.saucelabs.com/reference/test-configuration/#timeouts">Sauce Labs Timeouts Documentation</a> for more information.</p>
-<p><strong>Maximum Test Duration</strong></p>
+<h3 id="maximum-test-duration">Maximum Test Duration</h3>
 <p>Sauce Labs limits the maximum total duration for a test.</p>
 <ul>
 <li><p>Looks like: <code ng-non-bindable>Test exceeded maximum duration after 1800 seconds</code></p>
@@ -78,7 +81,7 @@ browser.ignoreSynchronization = false;
 <li><p>How to change: Edit the &quot;max-duration&quot; key in the capabilities object.</p>
 </li>
 </ul>
-<p><strong>Command Timeout</strong></p>
+<h3 id="command-timeout">Command Timeout</h3>
 <p>As a safety measure to prevent Selenium crashes from making your tests run indefinitely, Sauce limits how long Selenium can take to run a command in browsers. This is set to 300 seconds by default.</p>
 <ul>
 <li><p>Looks like: <code ng-non-bindable>Selenium took too long to run your command</code></p>
@@ -88,7 +91,7 @@ browser.ignoreSynchronization = false;
 <li><p>How to change: Edit the &quot;command-timeout&quot; key in the capabilities object.</p>
 </li>
 </ul>
-<p><strong>Idle Timeout</strong></p>
+<h3 id="idle-timeout">Idle Timeout</h3>
 <p>As a safety measure to prevent tests from running too long after something has gone wrong, Sauce limits how long a browser can wait for a test to send a new command. This is set to 90 seconds by default. You can adjust this limit on a per-job basis.</p>
 <ul>
 <li><p>Looks like: <code ng-non-bindable>Test did not see a new command for 90 seconds. Timing out.</code></p>
