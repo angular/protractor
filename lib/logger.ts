@@ -223,7 +223,6 @@ export class Logger {
    * @return The string of the formatted id
    */
   static id_(logLevel: LogLevel, id: string, writeTo: WriteTo): string {
-    let level = LogLevel[logLevel].toString();
     if (writeTo === WriteTo.FILE) {
       return '/' + id;
     } else if (logLevel === LogLevel.ERROR) {

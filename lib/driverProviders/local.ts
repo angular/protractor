@@ -9,7 +9,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as q from 'q';
-import * as util from 'util';
 
 import {Config} from '../config';
 import {BrowserError} from '../exitCodes';

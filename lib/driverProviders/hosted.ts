@@ -4,7 +4,6 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
-import * as util from 'util';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
