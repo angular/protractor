@@ -84,7 +84,7 @@ gulp.task('tsc', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', ['jshint', 'format'], 'tsc',
+  runSequence('checkVersion', 'jshint', 'tsc',
     'built:copy', done);
 });
 
