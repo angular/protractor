@@ -4,7 +4,6 @@
  * server.
  */
 import * as q from 'q';
-import * as util from 'util';
 import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 

@@ -417,24 +417,20 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {ElementArrayFinder}
    * @private
    */
-  // map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?:
-  // any): U[];
-  applyAction_(actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
+  // map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
+  private applyAction_(actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
       ElementArrayFinder {
     let callerError = new Error();
     let actionResults = this.getWebElements()
-                            .then((arr: WebElement[]) => {
-                              return webdriver.promise.all(arr.map(actionFn));
-                            })
+                            .then(arr => webdriver.promise.all(arr.map(actionFn)))
                             .then(null, (e: IError | string) => {
                               let noSuchErr: any;
-                              let stack: string;
                               if (e instanceof Error) {
                                 noSuchErr = e;
-                                noSuchErr.stack = noSuchErr.stack + (callerError as IError).stack;
+                                noSuchErr.stack = noSuchErr.stack + callerError.stack;
                               } else {
                                 noSuchErr = new Error(e as string);
-                                noSuchErr.stack = (callerError as IError).stack;
+                                noSuchErr.stack = callerError.stack;
                               }
                               throw noSuchErr;
                             });
