@@ -720,8 +720,11 @@ export class ProtractorBrowser extends Webdriver {
               let angularVersion = angularTestResult.ver;
               if (!angularVersion) {
                 let message = angularTestResult.message;
+                logger.error(`Could not find Angular on page ${destination} : ${message}`);
                 throw new Error(
-                    'Angular could not be found on the page ' + destination + ' : ' + message);
+                    `Angular could not be found on the page ${destination}. If this is not an ` +
+                    `Angular application, you may need to turn off waiting for Angular. Please ` +
+                    `see https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load`);
               }
               return angularVersion;
             },
