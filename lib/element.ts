@@ -11,35 +11,15 @@ let clientSideScripts = require('./clientsidescripts');
 
 let logger = new Logger('element');
 
-let WEB_ELEMENT_FUNCTIONS = [
+const WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
   'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
   'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
 ];
 
-// Explicitly define webdriver.WebElement.
-// TODO: extend WebElement from selenium-webdriver typings
-export class WebdriverWebElement {
-  getDriver: () => WebDriver;
-  getId: () => wdpromise.Promise<any>;
-  getRawId: () => wdpromise.Promise<string>;
-  serialize: () => wdpromise.Promise<any>;
-  findElement: (subLocator: Locator) => wdpromise.Promise<any>;
-  click: () => wdpromise.Promise<void>;
-  sendKeys: (...args: (string|wdpromise.Promise<string>)[]) => wdpromise.Promise<void>;
-  getTagName: () => wdpromise.Promise<string>;
-  getCssValue: (cssStyleProperty: string) => wdpromise.Promise<string>;
-  getAttribute: (attributeName: string) => wdpromise.Promise<string>;
-  getText: () => wdpromise.Promise<string>;
-  getSize: () => wdpromise.Promise<ISize>;
-  getLocation: () => wdpromise.Promise<ILocation>;
-  isEnabled: () => wdpromise.Promise<boolean>;
-  isSelected: () => wdpromise.Promise<boolean>;
-  submit: () => wdpromise.Promise<void>;
-  clear: () => wdpromise.Promise<void>;
-  isDisplayed: () => wdpromise.Promise<boolean>;
-  takeScreenshot: (opt_scroll?: boolean) => wdpromise.Promise<string>;
-}
+// a workaround for https://github.com/Microsoft/TypeScript/issues/11304
+export const WebdriverWebElement: {new (): WebElement} = function() {} as any;
+WebdriverWebElement.prototype = WebElement.prototype;
 
 /**
  * ElementArrayFinder is used for operations on an array of elements (as opposed
