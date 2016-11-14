@@ -8,7 +8,7 @@ describe('browser.restart', function() {
     browser.get('https://google.com/');
   });
 
-  afterAll(() => {
+  afterAll(function() {
     browser.ignoreSynchronization = false;
   });
 });
