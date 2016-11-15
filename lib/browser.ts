@@ -41,7 +41,7 @@ export class Webdriver {
   controlFlow: () => wdpromise.ControlFlow;
   executeScript: (script: string|Function, ...var_args: any[]) => wdpromise.Promise<any>;
   executeAsyncScript: (script: string|Function, ...var_args: any[]) => wdpromise.Promise<any>;
-  getCapabilities: () => Capabilities;
+  getCapabilities: () => wdpromise.Promise<Capabilities>;
   getCurrentUrl: () => wdpromise.Promise<string>;
   getPageSource: () => wdpromise.Promise<string>;
   getSession: () => wdpromise.Promise<Session>;
