@@ -9,7 +9,7 @@ var sessionId = '';
 
 // 1. Create a new selenium session.
 var postData = JSON.stringify(
-  {'desiredCapabilities': {'browserName': 'firefox'}});
+  {'desiredCapabilities': {'browserName': 'chrome'}});
 var createOptions = {
   hostname: 'localhost',
   port: 4444,
