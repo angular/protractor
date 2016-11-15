@@ -476,7 +476,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
   then(fn?: (value: any) => any | wdpromise.IThenable<any>, errorFn?: (error: any) => any):
-      wdpromise.Promise<any[]> {
+      wdpromise.Promise<any> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
     } else {
