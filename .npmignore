@@ -9,13 +9,18 @@ testapp/
 typings/
 website/
 
+built/spec/
+
+.clang-format
 .gitattributes
 .github/
 .gitignore
+.idea/
 .jshintrc
 .npmignore
 .travis.yml
 chromedriver.log
+circle.yml
 libpeerconnection.log
 npm-debug.log
 xmloutput*
