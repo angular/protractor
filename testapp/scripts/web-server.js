@@ -10,7 +10,7 @@ var env = require('../../spec/environment.js');
 var testApp = express();
 var DEFAULT_PORT = process.env.HTTP_PORT || env.webServerDefaultPort;
 var testAppDir = path.resolve(__dirname, '..');
-var defaultAngular = require(path.join(testAppDir, 'ng1/lib/angular_version.js'));
+var defaultAngular = require(path.resolve(testAppDir, 'ng1/lib/angular_version.js'));
 
 var argv = optimist.describe('port', 'port').
     default('port', DEFAULT_PORT).
@@ -18,7 +18,7 @@ var argv = optimist.describe('port', 'port').
     default('ngversion', defaultAngular).
     argv;
 
-var angularDir = path.join(testAppDir, 'ng1/lib/angular_v' + argv.ngversion);
+var angularDir = path.resolve(testAppDir, 'ng1/lib/angular_v' + argv.ngversion);
 
 var main = function() {
   var port = argv.port;
