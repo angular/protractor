@@ -80,7 +80,7 @@ if (argv.help) {
 }
 
 if (argv.version) {
-  console.log('Version ' + require(path.join(__dirname, '../package.json')).version);
+  console.log('Version ' + require(path.resolve(__dirname, '../package.json')).version);
   process.exit(0);
 }
 
