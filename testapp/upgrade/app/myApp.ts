@@ -7,12 +7,12 @@ function ctrl($scope: any, $timeout: any) {
     }, 1000);
   };
 }
+ctrl.$inject = ['$scope', '$timeout'];
 
-export function myApp() {
+export function RootDirective() {
   return {
     scope: {},
     templateUrl: './html/myApp.html',
-    controller: ctrl,
-    controllerAs: 'ctrl'
+    controller: ctrl
   };
 }

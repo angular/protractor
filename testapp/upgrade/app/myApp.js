@@ -7,13 +7,13 @@ function ctrl($scope, $timeout) {
         }, 1000);
     };
 }
-function ng1Dir() {
+ctrl.$inject = ['$scope', '$timeout'];
+function RootDirective() {
     return {
         scope: {},
-        templateUrl: './html/ng1.html',
-        controller: ctrl,
-        controllerAs: 'ctrl'
+        templateUrl: './html/myApp.html',
+        controller: ctrl
     };
 }
-exports.ng1Dir = ng1Dir;
-//# sourceMappingURL=ng1.js.map
+exports.RootDirective = RootDirective;
+//# sourceMappingURL=myApp.js.map
