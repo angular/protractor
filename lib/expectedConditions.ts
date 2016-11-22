@@ -1,5 +1,5 @@
+import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
-import {Ptor} from './ptor';
 
 let webdriver = require('selenium-webdriver');
 
@@ -47,6 +47,8 @@ declare var global: any;
  * @constructor
  */
 export class ProtractorExpectedConditions {
+  constructor(public browser: ProtractorBrowser){};
+
   /**
    * Negates the result of a promise.
    *
@@ -155,21 +157,18 @@ export class ProtractorExpectedConditions {
    */
   alertIsPresent(): Function {
     return () => {
-      return (<Ptor>global.protractor)
-          .browser.driver.switchTo()
-          .alert()
-          .then(
-              ():
-                  boolean => {
-                    return true;
-                  },
-              (err: any) => {
-                if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
-                  return false;
-                } else {
-                  throw err;
-                }
-              });
+      return this.browser.driver.switchTo().alert().then(
+          ():
+              boolean => {
+                return true;
+              },
+          (err: any) => {
+            if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
+              return false;
+            } else {
+              throw err;
+            }
+          });
     };
   }
 
@@ -261,11 +260,9 @@ export class ProtractorExpectedConditions {
    */
   titleContains(title: string): Function {
     return () => {
-      return (<Ptor>global.protractor)
-          .browser.driver.getTitle()
-          .then((actualTitle: string): boolean => {
-            return actualTitle.indexOf(title) > -1;
-          });
+      return this.browser.driver.getTitle().then((actualTitle: string): boolean => {
+        return actualTitle.indexOf(title) > -1;
+      });
     };
   }
 
@@ -285,11 +282,9 @@ export class ProtractorExpectedConditions {
    */
   titleIs(title: string): Function {
     return () => {
-      return (<Ptor>global.protractor)
-          .browser.driver.getTitle()
-          .then((actualTitle: string): boolean => {
-            return actualTitle === title;
-          });
+      return this.browser.driver.getTitle().then((actualTitle: string): boolean => {
+        return actualTitle === title;
+      });
     };
   }
 
@@ -310,11 +305,9 @@ export class ProtractorExpectedConditions {
    */
   urlContains(url: string): Function {
     return () => {
-      return (<Ptor>global.protractor)
-          .browser.driver.getCurrentUrl()
-          .then((actualUrl: string): boolean => {
-            return actualUrl.indexOf(url) > -1;
-          });
+      return this.browser.driver.getCurrentUrl().then((actualUrl: string): boolean => {
+        return actualUrl.indexOf(url) > -1;
+      });
     };
   }
 
@@ -334,11 +327,9 @@ export class ProtractorExpectedConditions {
    */
   urlIs(url: string): Function {
     return () => {
-      return (<Ptor>global.protractor)
-          .browser.driver.getCurrentUrl()
-          .then((actualUrl: string): boolean => {
-            return actualUrl === url;
-          });
+      return this.browser.driver.getCurrentUrl().then((actualUrl: string): boolean => {
+        return actualUrl === url;
+      });
     };
   }
 
