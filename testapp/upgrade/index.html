@@ -2,7 +2,7 @@
 <html>
   <head>
     <!-- Set the base href -->
-    <base href="/hybrid/">
+    <base href="/upgrade/">
 
     <title>Test ngUpgrade App</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700" rel="stylesheet" type="text/css">
@@ -20,7 +20,11 @@
 
     <script>
       System.import('systemjs.config.js').then(function () {
-        System.import('app/main');
+        if (window.location.search.indexOf('no_static') != -1) {
+          System.import('app/no_static/main');
+        } else {
+          System.import('app/main');
+        }
       }).catch(function(err) {
         console.log('error while importing:');
         console.log(err);

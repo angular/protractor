@@ -13,8 +13,8 @@ ol {
 }
 
 li {
-  width: 25%;
-  padding: 4%;
+  width: 18%;
+  padding: 3%;
   display: block;
   text-align: center;
   position: absolute;
@@ -22,10 +22,18 @@ li {
   margin: auto;
 }
 
-li.left, li.mid {
+li.left {
   left: 0;
 } 
 
-li.right, li.mid {
+li.left.mid {
+  left: 25%;
+}
+
+li.right {
   right: 0;
-} 
+}
+
+li.right.mid {
+  right: 25%;
+}

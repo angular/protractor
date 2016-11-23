@@ -8,26 +8,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var upgrade_1 = require('@angular/upgrade');
-var platform_browser_1 = require('@angular/platform-browser');
 var core_1 = require('@angular/core');
+var platform_browser_1 = require('@angular/platform-browser');
+var static_1 = require('@angular/upgrade/static');
+var myApp_1 = require('./myApp');
 var ng2_1 = require('./ng2');
-exports.adapter = new upgrade_1.UpgradeAdapter(core_1.forwardRef(function () { return Ng2Module; }));
-var Ng2Module = (function () {
-    function Ng2Module() {
+var ng1_1 = require('./ng1');
+var AppModule = (function () {
+    function AppModule() {
     }
-    Ng2Module = __decorate([
+    AppModule.prototype.ngDoBootstrap = function () { };
+    AppModule = __decorate([
         core_1.NgModule({
             imports: [
-                platform_browser_1.BrowserModule
+                platform_browser_1.BrowserModule,
+                static_1.UpgradeModule
             ],
             declarations: [
-                ng2_1.Ng2Component, exports.adapter.upgradeNg1Component('ng1')
+                ng2_1.Ng2Component,
+                ng1_1.Ng1Component,
             ],
+            entryComponents: [
+                ng2_1.Ng2Component
+            ]
         }), 
         __metadata('design:paramtypes', [])
-    ], Ng2Module);
-    return Ng2Module;
+    ], AppModule);
+    return AppModule;
 }());
-exports.Ng2Module = Ng2Module;
-//# sourceMappingURL=upgrader.js.map
+exports.AppModule = AppModule;
+angular.module('upgradeApp', [])
+    .directive('ng1', ng1_1.Ng1Directive)
+    .directive('ng2', static_1.downgradeComponent({
+    component: ng2_1.Ng2Component,
+}))
+    .directive('myApp', myApp_1.RootDirective);
+//# sourceMappingURL=module.js.map

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {adapter} from './upgrader';
 
 @Component({
   selector: 'ng2',
