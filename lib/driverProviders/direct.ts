@@ -73,7 +73,8 @@ export class Direct extends DriverProvider {
         }
 
         let chromeService = new chrome.ServiceBuilder(chromeDriverFile).build();
-        driver = chrome.Driver.createSession(new webdriver.Capabilities(this.config_.capabilities), chromeService);
+        driver = chrome.Driver.createSession(
+            new webdriver.Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
@@ -82,7 +83,8 @@ export class Direct extends DriverProvider {
 
         // TODO(cnishina): Add in a service builder with marionette. Direct connect
         // currently supports FF legacy version 47.
-        driver = firefox.Driver.createSession(new webdriver.Capabilities(this.config_.capabilities));
+        driver =
+            firefox.Driver.createSession(new webdriver.Capabilities(this.config_.capabilities));
         break;
       default:
         throw new BrowserError(
