@@ -94,7 +94,7 @@ describe('Api', function() {
 
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
-      'clone', 'all', 'filter', 'get', 'first', 'last', 'count', 'locator',
+      'clone', 'all', 'filter', 'get', 'first', 'last', '$$', 'count', 'locator',
       'then', 'each', 'map', 'reduce', 'evaluate', 'allowAnimations']);
   });
 
