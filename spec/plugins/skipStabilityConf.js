@@ -1,5 +1,4 @@
-var env = require('../environment.js'),
-    q = require('q');
+var env = require('../environment.js');
 
 // Verifies that plugins can change skipAngularStability on the fly.
 exports.config = {

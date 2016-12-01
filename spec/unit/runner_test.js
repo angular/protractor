@@ -1,5 +1,4 @@
 var Runner = require('../../built/runner').Runner;
-var q = require('q');
 var Logger = require('../../built/logger').Logger,
     WriteTo = require('../../built/logger').WriteTo;
 

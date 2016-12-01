@@ -81,7 +81,8 @@ describe('the config parser', function() {
         getConfig();
 
     expect(config.rootElement).toEqual('.mycontainer');
-    expect(config.onPrepare.indexOf(path.normalize('/spec/unit/data/foo/bar.js'))).not.toEqual(-1);
+    expect(config.onPrepare.indexOf(
+      path.normalize('/spec/unit/data/foo/bar.js'))).not.toEqual(-1);
     expect(config.specs.length).toEqual(1);
     expect(config.specs[0]).toEqual('fakespec[AB].js');
   });
@@ -97,7 +98,8 @@ describe('the config parser', function() {
   });
 
   describe('getSpecs()', function() {
-    it('should return all the specs from "config.suites" if no other sources are provided', function() {
+    it(`should return all the specs from "config.suites" if no other sources
+        are provided`, function() {
       var config = {
         specs: [],
         suites: {
