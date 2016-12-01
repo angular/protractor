@@ -1,6 +1,7 @@
+import {error} from 'selenium-webdriver';
+
 import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
-import {error} from 'selenium-webdriver';
 
 let webdriver = require('selenium-webdriver');
 
