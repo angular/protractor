@@ -10,7 +10,6 @@ var Testing = require('selenium-webdriver/testing');
 var WEBDRIVER = {
   staticFunctions: ['attachToSession', 'createSession'],
 
-  // recently removed: 'isElementPresent'
   instanceFunctions: ['actions', 'wait', 'sleep', 'getCurrentUrl', 'getTitle',
     'takeScreenshot', 'getSession', 'getCapabilities', 'quit', 'touchActions',
     'executeAsyncScript', 'call', 'wait', 'getWindowHandle',
@@ -18,7 +17,6 @@ var WEBDRIVER = {
     'findElements', 'manage', 'navigate', 'switchTo']
 };
 
-// recently removed: getRawId
 var WEBELEMENT = {
   instanceFunctions: ['getDriver', 'getId', 'findElement', 'click', 'sendKeys', 'getTagName',
     'getCssValue', 'getAttribute', 'getText', 'getSize', 'getLocation', 'isEnabled', 'isSelected',
@@ -44,16 +42,16 @@ var TESTING = {
 describe('selenium-webdriver dependency', function() {
   describe('require("selenium-webdriver").WebDriver', function() {
     it('should have static function', function() {
-      for (var pos1 in WEBDRIVER.staticFunctions) {
-        var staticFunc = WEBDRIVER.staticFunctions[pos1];
+      for (var pos in WEBDRIVER.staticFunctions) {
+        var staticFunc = WEBDRIVER.staticFunctions[pos];
         expect(typeof WebDriver[staticFunc] == 'function').toBe(true);
       }
     });
 
     it('should have instance function', function() {
       var webdriver = Setup.getWebDriver();
-      for (var pos2 in WEBDRIVER.instanceFunctions) {
-        var instanceFunc = WEBDRIVER.instanceFunctions[pos2];
+      for (var pos in WEBDRIVER.instanceFunctions) {
+        var instanceFunc = WEBDRIVER.instanceFunctions[pos];
         expect(typeof webdriver[instanceFunc] == 'function').toBe(true);
       }
     });
