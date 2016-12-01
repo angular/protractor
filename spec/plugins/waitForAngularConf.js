@@ -19,7 +19,7 @@ exports.config = {
   // Plugin patterns are relative to this directory.
   plugins: [{
     inline: {
-      waitForPromise: function(oldURL) {
+      waitForPromise: function(/* oldURL */) {
         return q.delay(5000).then(function() {
           protractor.WAIT_FOR_PROMISE = true;
         });

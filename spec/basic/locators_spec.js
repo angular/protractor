@@ -77,7 +77,7 @@ describe('locators', function() {
       expect(element(by.id('shower')).isDisplayed()).
           toBe(true);
 
-      var colors = element(by.model('show')).click();
+      element(by.model('show')).click();  // colors
 
       expect(element(by.id('shower')).isDisplayed()).
           toBe(false);

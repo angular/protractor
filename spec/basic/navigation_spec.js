@@ -1,5 +1,3 @@
-var env = require('../environment.js');
-
 describe('navigation', function() {
   beforeEach(function() {
     browser.get('index.html#/form');

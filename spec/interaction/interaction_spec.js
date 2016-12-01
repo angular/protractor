@@ -1,5 +1,3 @@
-var util = require('util');
-
 describe('Browser', function() {
 
   var newBrowser;
@@ -52,7 +50,6 @@ describe('Browser', function() {
 
     var Person = function(name, browser) {
       var $ = browser.$;
-      var $$ = browser.$$;
       var element = browser.element;
 
       this.openApp = function() {

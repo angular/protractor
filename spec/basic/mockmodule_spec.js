@@ -1,5 +1,3 @@
-var util = require('util');
-
 describe('mock modules', function() {
   // A module to override the 'version' service. This function will be
   // executed in the context of the application under test, so it may
@@ -12,7 +10,7 @@ describe('mock modules', function() {
   // A second module overriding the 'version' service.
   // This module shows the use of a string for the load
   // function.
-  var mockModuleB = "angular.module('moduleB', []).value('version', '3');";
+  var mockModuleB = `angular.module('moduleB', []).value('version', '3');`;
 
   // A third module overriding the 'version' service. This function
   // references the additional arguments provided through addMockModule().

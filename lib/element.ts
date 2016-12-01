@@ -1159,9 +1159,9 @@ export class ElementFinder extends WebdriverWebElement {
    */
   equals(element: ElementFinder|WebElement): wdpromise.Promise<any> {
     return WebElement.equals(
-        this.getWebElement(), (element as any).getWebElement ?
-            (element as ElementFinder).getWebElement() :
-            element as WebElement);
+        this.getWebElement(),
+        (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
+                                         element as WebElement);
   }
 }
 

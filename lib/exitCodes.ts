@@ -16,35 +16,21 @@ export class ProtractorError extends IError {
 
   message: string;  // a one line message
 
-  /**
-   * Captures the stack trace to this.stack from the Error.captureStackTrace.
-   * this allows us to capture the error of this error object. Note:
-   * called with Error set to any to quiet typescript warnings.
-   */
-  captureStackTrace() {
-    (Error as any).captureStackTrace(this, this.constructor);
-  }
-
   constructor(logger: Logger, message: string, code: number, error?: Error) {
     super(message);
     this.message = message;
     this.code = code;
-    this.captureStackTrace();
 
     // replacing the stack trace with the thrown error stack trace.
     if (error) {
       let protractorError = error as ProtractorError;
       this.stack = protractorError.stack;
     }
-    this.logError(logger);
+    ProtractorError.log(logger, this.code, this.message, this.stack);
 
     if (!ProtractorError.SUPRESS_EXIT_CODE) {
       process.exit(this.code);
     }
-  }
-
-  logError(logger: Logger) {
-    ProtractorError.log(logger, this.code, this.message, this.stack);
   }
 
   static log(logger: Logger, code: number, message: string, stack: string) {
