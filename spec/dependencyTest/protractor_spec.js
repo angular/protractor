@@ -42,7 +42,7 @@ describe('require(\'protractor\')', () => {
       });
 
       it('should have static variables defined', () => {
-        var staticVariables = ['By', 'ExpectedConditions'];
+        var staticVariables = ['By'];
         for (var pos in staticVariables) {
           var property = staticVariables[pos];
           expect(typeof protractor.ProtractorBrowser[property]).toEqual('object');

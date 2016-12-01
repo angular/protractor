@@ -131,7 +131,7 @@ export class ProtractorBrowser extends Webdriver {
   /**
    * @type {ExpectedConditions}
    */
-  static ExpectedConditions = new ProtractorExpectedConditions();
+  ExpectedConditions: ProtractorExpectedConditions;
 
   /**
    * The wrapped webdriver instance. Use this to interact with pages that do
@@ -320,6 +320,9 @@ export class ProtractorBrowser extends Webdriver {
     this.trackOutstandingTimeouts_ = !opt_untrackOutstandingTimeouts;
     this.mockModules_ = [];
     this.addBaseMockModules_();
+
+    // set up expected conditions
+    this.ExpectedConditions = new ProtractorExpectedConditions(this);
   }
 
   /**

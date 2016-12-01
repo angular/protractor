@@ -167,7 +167,7 @@ export class Runner extends EventEmitter {
     protractor.element = browser_.element;
     protractor.by = protractor.By = ProtractorBrowser.By;
     protractor.wrapDriver = ProtractorBrowser.wrapDriver;
-    protractor.ExpectedConditions = ProtractorBrowser.ExpectedConditions;
+    protractor.ExpectedConditions = browser_.ExpectedConditions;
 
     if (!this.config_.noGlobals) {
       // Export protractor to the global namespace to be used in tests.

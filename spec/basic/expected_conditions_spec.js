@@ -176,4 +176,23 @@ describe('expected conditions', function() {
     expect(EC.or(valid, EC.and(valid, invalid)).call()).toBe(true);
     expect(EC.or(EC.not(valid), EC.and(valid, invalid)).call()).toBe(false);
   });
+
+  // TODO(cnishina): enable test when local / sauce labs errors
+  // are resolved.
+  xdescribe('for forked browsers', function() {
+    // ensure that we can run EC on forked browser instances
+    it('should have alertIsPresent', function() {
+      var browser2 = browser.forkNewDriverInstance();
+      browser2.get('index.html#/form');
+      var EC2 = browser2.ExpectedConditions;
+      var alertIsPresent = EC2.alertIsPresent();
+      expect(alertIsPresent.call()).toBe(false);
+
+      var alertButton = browser2.$('#alertbutton');
+      alertButton.click();
+      browser2.wait(EC2.alertIsPresent(), 1000);
+
+      browser2.switchTo().alert().accept();
+    });
+  });
 });

@@ -5,7 +5,7 @@ describe('handling timeout errors', function() {
     browser.get('http://dummyUrl', 1).then(function() {
       throw 'did not handle error';
     }, function(err) {
-      expect(err).toBeDefined();
+      expect(err instanceof Error).toBeTruthy();
     });
   });
 });
