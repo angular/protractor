@@ -6,7 +6,7 @@ exports.config = {
   framework: 'jasmine',
 
   specs: [
-    'attachSessionProvider/attachSession_spec.js'
+    'driverProviders/attachSession/*_spec.js'
   ],
 
   capabilities: env.capabilities,

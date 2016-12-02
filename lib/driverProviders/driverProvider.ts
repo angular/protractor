@@ -63,15 +63,19 @@ export class DriverProvider {
     if (driver.getSession() === undefined) {
       deferred.resolve();
     } else {
-      driver.getSession().then((session_) => {
-        if (session_) {
-          driver.quit().then(function() {
+      driver.getSession()
+          .then((session_) => {
+            if (session_) {
+              driver.quit().then(function() {
+                deferred.resolve();
+              });
+            } else {
+              deferred.resolve();
+            }
+          })
+          .catch((err: Error) => {
             deferred.resolve();
           });
-        } else {
-          deferred.resolve();
-        }
-      });
     }
     return deferred.promise;
   }
