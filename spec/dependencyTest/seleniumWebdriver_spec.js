@@ -3,24 +3,24 @@ var By = require('selenium-webdriver').By;
 var Setup = require('./setup');
 var Chrome = require('selenium-webdriver/chrome');
 var Firefox = require('selenium-webdriver/firefox');
-var Executors = require('selenium-webdriver/executors');
 var SeleniumError = require('selenium-webdriver').error;
 var Remote = require('selenium-webdriver/remote');
 var Testing = require('selenium-webdriver/testing');
 
 var WEBDRIVER = {
   staticFunctions: ['attachToSession', 'createSession'],
+
   instanceFunctions: ['actions', 'wait', 'sleep', 'getCurrentUrl', 'getTitle',
     'takeScreenshot', 'getSession', 'getCapabilities', 'quit', 'touchActions',
     'executeAsyncScript', 'call', 'wait', 'getWindowHandle',
     'getAllWindowHandles', 'getPageSource', 'close', 'get', 'findElement',
-    'isElementPresent', 'findElements', 'manage', 'navigate', 'switchTo']
+    'findElements', 'manage', 'navigate', 'switchTo']
 };
+
 var WEBELEMENT = {
-  instanceFunctions: ['getDriver', 'getId', 'getRawId',
-    'findElement', 'click', 'sendKeys', 'getTagName', 'getCssValue',
-    'getAttribute', 'getText', 'getSize', 'getLocation', 'isEnabled',
-    'isSelected', 'submit', 'clear', 'isDisplayed', 'takeScreenshot']
+  instanceFunctions: ['getDriver', 'getId', 'findElement', 'click', 'sendKeys', 'getTagName',
+    'getCssValue', 'getAttribute', 'getText', 'getSize', 'getLocation', 'isEnabled', 'isSelected',
+    'submit', 'clear', 'isDisplayed', 'takeScreenshot']
 };
 var BY = {
   staticFunctions: ['className', 'css', 'id', 'linkText', 'js', 'name',
@@ -35,73 +35,69 @@ var CHROME = {
 var FIREFOX = {
   staticFunction: 'Driver'
 };
-var EXECUTORS = {
-  staticFunction: 'createExecutor'
-};
 var TESTING = {
-  staticFunctions: ['after', 'afterEach', 'before', 'beforeEach',
-      'describe', 'it', 'iit']
+  instanceFunctions: ['after', 'afterEach', 'before', 'beforeEach', 'it', 'xit']
 };
 
 describe('selenium-webdriver dependency', function() {
   describe('require("selenium-webdriver").WebDriver', function() {
-    for (var pos1 in WEBDRIVER.staticFunctions) {
-      var staticFunc = WEBDRIVER.staticFunctions[pos1];
-      it('should have a ' + staticFunc + ' function', function() {
+    it('should have static functions', function() {
+      for (var pos in WEBDRIVER.staticFunctions) {
+        var staticFunc = WEBDRIVER.staticFunctions[pos];
         expect(typeof WebDriver[staticFunc] == 'function').toBe(true);
-      });
-    }
+      }
+    });
 
-    var webdriver = Setup.getWebDriver();
-    for (var pos2 in WEBDRIVER.instanceFunctions) {
-      var instanceFunc = WEBDRIVER.instanceFunctions[pos2];
-      it('should have a ' + instanceFunc + ' function', function() {
+    it('should have instance functions', function() {
+      var webdriver = Setup.getWebDriver();
+      for (var pos in WEBDRIVER.instanceFunctions) {
+        var instanceFunc = WEBDRIVER.instanceFunctions[pos];
         expect(typeof webdriver[instanceFunc] == 'function').toBe(true);
-      });
-    }
+      }
+    });
   });
+
   describe('require("selenium-webdriver").WebElement', function() {
-    var webElement = Setup.getWebElement();
-    for (var pos in WEBELEMENT.instanceFunctions) {
-      var func = WEBELEMENT.instanceFunctions[pos];
-      it('should have a ' + func + ' function', function() {
+    it('should have a instance functions', function() {
+      var webElement = Setup.getWebElement();
+      for (var pos in WEBELEMENT.instanceFunctions) {
+        var func = WEBELEMENT.instanceFunctions[pos];
         expect(typeof webElement[func] == 'function').toBe(true);
-      });
-    }
+      }
+    });
   });
+
   describe('require("selenium-webdriver").By', function() {
-    for (var pos in BY.staticFunctions) {
-      var func = BY.staticFunctions[pos];
-      it('should have a ' + func + ' function', function() {
+    it('should have a static functions', function() {
+      for (var pos in BY.staticFunctions) {
+        var func = BY.staticFunctions[pos];
         expect(typeof By[func] == 'function').toBe(true);
-      });
-    }
+      }
+    });
   });
+
   describe('require("selenium-webdriver").Session', function() {
-    var session = Setup.getSession();
-    for (var pos in SESSION.instanceFunctions) {
-      var func = SESSION.instanceFunctions[pos];
-      it('should have a ' + func + ' function', function() {
+    it('should have a instance functions', function() {
+      var session = Setup.getSession();
+      for (var pos in SESSION.instanceFunctions) {
+        var func = SESSION.instanceFunctions[pos];
         expect(typeof session[func] == 'function').toBe(true);
-      });
-    }
+      }
+    });
   });
+
   describe('require("selenium-webdriver/chrome")', function() {
-    for (var pos in CHROME.staticFunctions) {
-      var func = CHROME.staticFunctions[pos];
-      it('should have a ' + func + ' function', function() {
+    it('should have a static functions', function() {
+      for (var pos in CHROME.staticFunctions) {
+        var func = CHROME.staticFunctions[pos];
         expect(typeof Chrome[func] == 'function').toBe(true);
-      });
-    }
+      }
+    });
   });
+
   describe('require("selenium-webdriver/firefox")', function() {
     it('should have a ' + FIREFOX.staticFunction + ' function', function() {
       expect(typeof Firefox[FIREFOX.staticFunction] == 'function').toBe(true);
-    });
-  });
-  describe('require("selenium-webdriver/executors")', function() {
-    it('should have a ' + EXECUTORS.staticFunction + ' function', function() {
-      expect(typeof Executors[EXECUTORS.staticFunction] == 'function').toBe(true);
     });
   });
   describe('require("selenium-webdriver").error', function() {
@@ -121,11 +117,13 @@ describe('selenium-webdriver dependency', function() {
     });
   });
   describe('require("selenium-webdriver/testing")', function() {
-    for (var pos in TESTING.staticFunctions) {
-      var func = TESTING.staticFunctions[pos];
-      it('should have a ' + func + ' function', function() {
+
+    it('should have functions', function() {
+      for (var pos in TESTING.instanceFunctions) {
+        var func = TESTING.instanceFunctions[pos];
         expect(typeof Testing[func] == 'function').toBe(true);
-      });
-    }
+      }
+    });
+
   });
 });

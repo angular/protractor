@@ -60,19 +60,21 @@ export class DriverProvider {
     }
 
     let deferred = q.defer<webdriver.WebDriver>();
-    if (driver.getSession() === undefined) {
-      deferred.resolve();
-    } else {
-      driver.getSession().then((session_) => {
-        if (session_) {
-          driver.quit().then(function() {
+    driver.getSession()
+        .then((session_) => {
+          if (session_) {
+            driver.quit().then(function() {
+              deferred.resolve();
+            });
+          } else {
             deferred.resolve();
-          });
-        } else {
+          }
+        })
+        .catch((error: Error) => {
+          // when the flow is shutdown, do nothing, and resolve.
           deferred.resolve();
-        }
-      });
-    }
+        });
+
     return deferred.promise;
   }
 

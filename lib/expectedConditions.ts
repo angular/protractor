@@ -1,3 +1,5 @@
+import {error} from 'selenium-webdriver';
+
 import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
 
@@ -163,7 +165,7 @@ export class ProtractorExpectedConditions {
                 return true;
               },
           (err: any) => {
-            if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
+            if (err instanceof error.NoSuchAlertError) {
               return false;
             } else {
               throw err;

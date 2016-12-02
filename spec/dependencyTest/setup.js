@@ -6,7 +6,7 @@ var WebElement = require('selenium-webdriver').WebElement;
 var Session = require('selenium-webdriver/lib/session').Session;
 
 // executors.js
-var Executors = require('selenium-webdriver/executors');
+var Executor = require('selenium-webdriver/lib/command').Executor;
 
 var session = '1234';
 var seleniumAddress = 'http://localhost:4444/wd/hub';
@@ -16,7 +16,7 @@ var capabilities = {
 
 
 var getExecutor = function() {
-  return Executors.createExecutor(seleniumAddress);
+  return new Executor();
 };
 
 var getWebDriver = function() {
