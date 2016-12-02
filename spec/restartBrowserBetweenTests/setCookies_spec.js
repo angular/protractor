@@ -4,7 +4,7 @@ describe('pages with login', function() {
   it('should set a cookie', function() {
     browser.get(env.baseUrl + '/ng1/index.html');
 
-    browser.manage().addCookie('testcookie', 'Jane-1234');
+    browser.manage().addCookie({name:'testcookie', value: 'Jane-1234'});
 
     // Make sure the cookie is set.
     browser.manage().getCookie('testcookie').then(function(cookie) {

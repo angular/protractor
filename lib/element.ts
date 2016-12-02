@@ -14,8 +14,8 @@ export interface WebdriverWebElement extends WebElement {}
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
-  'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
+  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'serialize',
+  'takeScreenshot'
 ] as (keyof WebdriverWebElement)[];
 
 /**
@@ -419,8 +419,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
         (arr: WebElement[]) => {
           return arr.length;
         },
-        (err: IError) => {
-          if (err.code && err.code == (new wderror.NoSuchSessionError() as any).code) {
+        (err: Error) => {
+          if (err instanceof wderror.NoSuchElementError) {
             return 0;
           } else {
             throw err;
@@ -1065,15 +1065,15 @@ export class ElementFinder extends WebdriverWebElement {
                 return true;  // is present, whether it is enabled or not
               },
               (err: any) => {
-                if (err.code == (new wderror.StaleElementReferenceError() as any).code) {
+                if (err instanceof wderror.StaleElementReferenceError) {
                   return false;
                 } else {
                   throw err;
                 }
               });
         },
-        (err: any) => {
-          if (err.code == (new wderror.NoSuchElementError() as any).code) {
+        (err: Error) => {
+          if (err instanceof wderror.NoSuchElementError) {
             return false;
           } else {
             throw err;

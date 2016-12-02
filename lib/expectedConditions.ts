@@ -160,7 +160,7 @@ export class ProtractorExpectedConditions {
                 return true;
               },
           (err: any) => {
-            if (err.code == (new wderror.NoSuchAlertError() as any).code) {
+            if (err instanceof wderror.NoSuchAlertError) {
               return false;
             } else {
               throw err;
