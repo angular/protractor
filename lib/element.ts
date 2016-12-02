@@ -13,8 +13,8 @@ let logger = new Logger('element');
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'getRawId',
-  'serialize', 'takeScreenshot'
+  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'serialize',
+  'takeScreenshot'
 ];
 
 export class WebdriverWebElement {}

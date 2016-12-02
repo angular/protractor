@@ -41,14 +41,14 @@ var TESTING = {
 
 describe('selenium-webdriver dependency', function() {
   describe('require("selenium-webdriver").WebDriver', function() {
-    it('should have static function', function() {
+    it('should have static functions', function() {
       for (var pos in WEBDRIVER.staticFunctions) {
         var staticFunc = WEBDRIVER.staticFunctions[pos];
         expect(typeof WebDriver[staticFunc] == 'function').toBe(true);
       }
     });
 
-    it('should have instance function', function() {
+    it('should have instance functions', function() {
       var webdriver = Setup.getWebDriver();
       for (var pos in WEBDRIVER.instanceFunctions) {
         var instanceFunc = WEBDRIVER.instanceFunctions[pos];
@@ -58,7 +58,7 @@ describe('selenium-webdriver dependency', function() {
   });
 
   describe('require("selenium-webdriver").WebElement', function() {
-    it('should have a instance function', function() {
+    it('should have a instance functions', function() {
       var webElement = Setup.getWebElement();
       for (var pos in WEBELEMENT.instanceFunctions) {
         var func = WEBELEMENT.instanceFunctions[pos];
@@ -68,7 +68,7 @@ describe('selenium-webdriver dependency', function() {
   });
 
   describe('require("selenium-webdriver").By', function() {
-    it('should have a static function', function() {
+    it('should have a static functions', function() {
       for (var pos in BY.staticFunctions) {
         var func = BY.staticFunctions[pos];
         expect(typeof By[func] == 'function').toBe(true);
@@ -77,7 +77,7 @@ describe('selenium-webdriver dependency', function() {
   });
 
   describe('require("selenium-webdriver").Session', function() {
-    it('should have a instance function', function() {
+    it('should have a instance functions', function() {
       var session = Setup.getSession();
       for (var pos in SESSION.instanceFunctions) {
         var func = SESSION.instanceFunctions[pos];
@@ -87,7 +87,7 @@ describe('selenium-webdriver dependency', function() {
   });
 
   describe('require("selenium-webdriver/chrome")', function() {
-    it('should have a static function', function() {
+    it('should have a static functions', function() {
       for (var pos in CHROME.staticFunctions) {
         var func = CHROME.staticFunctions[pos];
         expect(typeof Chrome[func] == 'function').toBe(true);
