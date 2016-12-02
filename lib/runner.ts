@@ -257,11 +257,6 @@ export class Runner extends EventEmitter {
       this.setupGlobals_(browser_);
     };
 
-    browser_.quit =
-        () => {
-          this.driverprovider_.quitDriver(browser_.driver);
-        }
-
     return browser_;
   }
 
