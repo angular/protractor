@@ -11,8 +11,7 @@ describe('expected conditions', function() {
 
     var alertButton = $('#alertbutton');
     alertButton.click();
-    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);
-
+    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 5000);
     browser.switchTo().alert().accept();
   });
 

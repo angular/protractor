@@ -108,7 +108,7 @@ export class DebugHelper {
     });
 
     let pausePromise = flow.execute(() => {
-      return debuggerReadyPromise.then(() => {
+      return debuggerReadyPromise.promise.then(() => {
         // Necessary for backward compatibility with node < 0.12.0
         return this.browserUnderDebug_.executeScriptWithDescription('', 'empty debugger hook');
       });
@@ -258,7 +258,7 @@ export class DebugHelper {
       }
     });
 
-    return doneDeferred.then(
+    return doneDeferred.promise.then(
         () => {
           this.debuggerValidated_ = true;
         },

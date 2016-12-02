@@ -73,14 +73,19 @@ export class Direct extends DriverProvider {
           throw new BrowserError(logger, 'Could not find chromedriver at ' + chromeDriverFile);
         }
 
-        let service = new chrome.ServiceBuilder(chromeDriverFile).build();
-        driver = new chrome.Driver(new webdriver.Capabilities(this.config_.capabilities), service);
+        let chromeService = new chrome.ServiceBuilder(chromeDriverFile).build();
+        driver = chrome.Driver.createSession(
+            new webdriver.Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
           this.config_.capabilities['firefox_binary'] = this.config_.firefoxPath;
         }
-        driver = new firefox.Driver(this.config_.capabilities);
+
+        // TODO(cnishina): Add in a service builder with marionette. Direct connect
+        // currently supports FF legacy version 47.
+        driver =
+            firefox.Driver.createSession(new webdriver.Capabilities(this.config_.capabilities));
         break;
       default:
         throw new BrowserError(

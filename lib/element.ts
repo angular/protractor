@@ -13,8 +13,8 @@ let logger = new Logger('element');
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
-  'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
+  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'serialize',
+  'takeScreenshot'
 ];
 
 export class WebdriverWebElement {}
@@ -427,8 +427,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
         (arr: WebElement[]) => {
           return arr.length;
         },
-        (err: IError) => {
-          if (err.code && err.code == new webdriver.error.NoSuchElementError()) {
+        (err: Error) => {
+          if (err instanceof error.NoSuchElementError) {
             return 0;
           } else {
             throw err;
@@ -1072,15 +1072,15 @@ export class ElementFinder extends WebdriverWebElement {
                 return true;  // is present, whether it is enabled or not
               },
               (err: any) => {
-                if (err.code == webdriver.error.ErrorCode.STALE_ELEMENT_REFERENCE) {
+                if (err instanceof error.StaleElementReferenceError) {
                   return false;
                 } else {
                   throw err;
                 }
               });
         },
-        (err: any) => {
-          if (err.code == webdriver.error.ErrorCode.NO_SUCH_ELEMENT) {
+        (err: Error) => {
+          if (err instanceof error.NoSuchElementError) {
             return false;
           } else {
             throw err;
