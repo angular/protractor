@@ -463,19 +463,19 @@ describe('ElementArrayFinder', function() {
     ]);
   });
 
-  it('should map and resolve multiple promises', function() {
+  fit('should map and resolve multiple promises', function() {
     browser.get('index.html#/form');
     var labels = element.all(by.css('#animals ul li')).map(function(elm) {
       return {
         text: elm.getText(),
-        inner: elm.getInnerHtml()
+        tagName: elm.getTagName()
       };
     });
 
     var newExpected = function(expectedLabel) {
       return {
         text: expectedLabel,
-        inner: expectedLabel
+        tagName: 'li'
       };
     };
 

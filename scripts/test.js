@@ -37,8 +37,9 @@ var passingTests = [
   'node built/cli.js spec/hybridConf.js',
   'node scripts/driverProviderAttachSession.js',
   'node scripts/exitCodes.js',
-  'node scripts/interactive_tests/interactive_test.js',
-  'node scripts/interactive_tests/with_base_url.js',
+  // TODO(cnishina): Enable interactive tests when debugger works.
+  // 'node scripts/interactive_tests/interactive_test.js',
+  // 'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
   // Dependency tests

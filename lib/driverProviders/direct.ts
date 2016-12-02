@@ -75,14 +75,18 @@ export class Direct extends DriverProvider {
                   '. Run \'webdriver-manager update\' to download binaries.');
         }
 
-        let service = new ChromeServiceBuilder(chromeDriverFile).build();
-        driver = new ChromeDriver(new Capabilities(this.config_.capabilities), service);
+        let chromeService = new ChromeServiceBuilder(chromeDriverFile).build();
+        driver = ChromeDriver.createSession(new Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
           this.config_.capabilities['firefox_binary'] = this.config_.firefoxPath;
         }
-        driver = new FirefoxDriver(this.config_.capabilities);
+
+        // TODO(cnishina): Add in a service builder with marionette. Direct connect
+        // currently supports FF legacy version 47.
+        driver =
+            FirefoxDriver.createSession(new Capabilities(this.config_.capabilities));
         break;
       default:
         throw new BrowserError(

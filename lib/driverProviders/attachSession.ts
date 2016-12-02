@@ -5,12 +5,13 @@
  */
 import * as q from 'q';
 import {WebDriver} from 'selenium-webdriver';
-import * as executors from 'selenium-webdriver/executors';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
+
+const http = require('selenium-webdriver/http');
 
 let logger = new Logger('attachSession');
 
@@ -38,8 +39,9 @@ export class AttachSession extends DriverProvider {
    * @return {WebDriver} webdriver instance
    */
   getNewDriver(): WebDriver {
-    let executor = executors.createExecutor(this.config_.seleniumAddress);
-    let newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
+    var httpClient = new http.HttpClient(this.config_.seleniumAddress);
+    var executor = new http.Executor(httpClient);
+    var newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
     this.drivers_.push(newDriver);
     return newDriver;
   }
