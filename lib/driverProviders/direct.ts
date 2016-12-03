@@ -16,8 +16,6 @@ import {DriverProvider} from './driverProvider';
 let webdriver = require('selenium-webdriver'), chrome = require('selenium-webdriver/chrome'),
     firefox = require('selenium-webdriver/firefox');
 let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
 
 
 let logger = new Logger('direct');
@@ -58,15 +56,12 @@ export class Direct extends DriverProvider {
    */
   getNewDriver(): webdriver.WebDriver {
     let driver: webdriver.WebDriver;
+    let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+    let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
-        let defaultChromeDriverPath = path.resolve(
-            SeleniumConfig.getSeleniumDir(), new SeleniumChrome().executableFilename());
-
-        if (process.platform.indexOf('win') === 0) {
-          defaultChromeDriverPath += '.exe';
-        }
-
+        let defaultChromeDriverPath = updateConfig.chrome.last;
         let chromeDriverFile = this.config_.chromeDriver || defaultChromeDriverPath;
 
         if (!fs.existsSync(chromeDriverFile)) {
