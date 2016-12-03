@@ -177,9 +177,7 @@ describe('expected conditions', function() {
     expect(EC.or(EC.not(valid), EC.and(valid, invalid)).call()).toBe(false);
   });
 
-  // TODO(cnishina): enable test when local / sauce labs errors
-  // are resolved.
-  xdescribe('for forked browsers', function() {
+  describe('for forked browsers', function() {
     // ensure that we can run EC on forked browser instances
     it('should have alertIsPresent', function() {
       var browser2 = browser.forkNewDriverInstance();

@@ -51,7 +51,8 @@ var checkSession = function() {
     res.on('end', function() {
       if (state === 'success') {
         var runProtractor = spawn('node',
-            ['bin/protractor', 'spec/attachSession.js', '--seleniumSessionId=' + sessionId]);
+            ['bin/protractor', 'spec/driverProviderAttachSessionConf.js',
+            '--seleniumSessionId=' + sessionId]);
         console.log(runProtractor.stdout.toString());
         if (runProtractor.status !== 0) {
           throw new Error('Protractor did not run properly.');
