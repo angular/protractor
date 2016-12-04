@@ -29,6 +29,13 @@ export interface Config {
   seleniumServerJar?: string;
 
   /**
+   * The timeout milliseconds waiting for a local standalone Selenium Server to start.
+   *
+   * default: 30000ms
+   */
+  seleniumServerStartTimeout?: number;
+
+  /**
    * Can be an object which will be passed to the SeleniumServer class as args.
    * See a full list of options at
    * https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/remote/index.js
