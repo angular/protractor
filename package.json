@@ -12,7 +12,6 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "@types/jasmine": "^2.5.36",
     "@types/node": "^6.0.46",
     "@types/q": "^0.0.32",
     "@types/selenium-webdriver": "2.53.37",
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@types/chalk": "^0.4.28",
     "@types/glob": "^5.0.29",
+    "@types/jasmine": "^2.5.38",
     "@types/minimatch": "^2.0.28",
     "@types/minimist": "^1.1.28",
     "@types/optimist": "^0.0.29",
