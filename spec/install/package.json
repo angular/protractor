@@ -10,8 +10,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@types/jasmine": "^2.5.38",
     "protractor": "file:../../",
     "rimraf": "^2.5.4",
-    "typescript": "^2.0.0"
+    "typescript": "^2.1.1"
   }
 }
