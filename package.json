@@ -62,13 +62,13 @@
   "main": "built/index.js",
   "typings": "built/index.d.ts",
   "scripts": {
+    "format": "gulp format",
+    "install_testapp": "cd testapp && npm install",
     "prepublish": "gulp prepublish",
     "pretest": "gulp pretest",
-    "start": "node testapp/scripts/web-server.js",
+    "start": "cd testapp && npm start",
     "test": "node scripts/test.js",
-    "install_testapp": "cd testapp && npm install",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "tsc:w": "./node_modules/typescript/bin/tsc -w"
+    "website": "cd website && npm start"
   },
   "license": "MIT",
   "engines": {
