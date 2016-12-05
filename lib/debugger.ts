@@ -200,7 +200,7 @@ export class DebugHelper {
 
       // Code finished executing.
       resultReady: function() {
-        return !this.execPromise_.isPending();
+        return !(this.execPromise_.state_ === 'pending');
       },
 
       // Get asynchronous results synchronously.
