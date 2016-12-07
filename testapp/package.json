@@ -2,7 +2,6 @@
   "name": "testapp",
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "npm run tsc",
     "start": "npm install && node scripts/web-server.js",
     "tsc": "tsc"
   },

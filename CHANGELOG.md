@@ -1,37 +1,60 @@
+# 4.0.12
+
+## Bug Fixes
+
+- ([742f264](https://github.com/angular/protractor/commit/742f26465ca926c39bf28f03390a45030c15acf3))
+  fix(driverProviders): quit forked instances w/ local driver provider (#3787)
+
+  - fix driver provider quit session to not throw error and quit
+  - should fix sauce labs test, enabling expected conditions test with forked instance
+  - checked that chromedriver does not persist in the background
+  - add local driver test with forked instance to test suite
+  - organize attach session and local specs to driverProviders directory
+   closes #3780, closes #3779, closes #3772
+- ([7d481d6](https://github.com/angular/protractor/commit/7d481d6886b39cb476b889de5d14186bda6dc066))
+  fix(ExpectedConditions): non-static ExpectedConditions for browser (#3766)
+
+  - Update sauce lab binary to run on travis.
+  - Disable expected conditions test that forks the browser. This issue appears to
+   not be specific to sauce labs. Also can reproduce this with a local driver
+   provider. Additional work is required around driver providers and the runner.
+  - Add TODO to enable test in the future when this is resolved.
+   closes #3761
+
 # 4.0.11
 
 ## Features
 
-- ([6ebee72](https://github.com/angular/protractor/commit/6ebee72088016085e93d268effabcbe0b3d0a70f)) 
+- ([6ebee72](https://github.com/angular/protractor/commit/6ebee72088016085e93d268effabcbe0b3d0a70f))
   feat(config): Add 'random' and 'seed' jasmine config options (#3467)
 
 ## Bug Fixes
 
-- ([2048182](https://github.com/angular/protractor/commit/2048182206e88dd4cde0e92cfac3ed97cbe38f15)) 
+- ([2048182](https://github.com/angular/protractor/commit/2048182206e88dd4cde0e92cfac3ed97cbe38f15))
   docs(timeout): Update timeout error message and docs (#3723)
 
-- ([f3938f9](https://github.com/angular/protractor/commit/f3938f9fcd1b91272f2f11d4d39e458576fb75b0)) 
+- ([f3938f9](https://github.com/angular/protractor/commit/f3938f9fcd1b91272f2f11d4d39e458576fb75b0))
   fix(jvmArgs): fixes jvmArgs launching selenium from config (#3698)
 
   closes #3697
 
-- ([21d534f](https://github.com/angular/protractor/commit/21d534fad28f84e8cef166348119387e49661227)) 
+- ([21d534f](https://github.com/angular/protractor/commit/21d534fad28f84e8cef166348119387e49661227))
   fix(types): Make element.then()'s signature more broad. (#3719)
 
-- ([e9061b3](https://github.com/angular/protractor/commit/e9061b30c3673344d776187682d1c735aaad69f7)) 
+- ([e9061b3](https://github.com/angular/protractor/commit/e9061b30c3673344d776187682d1c735aaad69f7))
   chore(types): make plugins.ts more strongly-typed (#3685)
 
-- ([f42e0b3](https://github.com/angular/protractor/commit/f42e0b3dc824404ac0c86364bf5de4b657cf30ea)) 
+- ([f42e0b3](https://github.com/angular/protractor/commit/f42e0b3dc824404ac0c86364bf5de4b657cf30ea))
   fix(globals): Resolve exported globals dynamically. (#3716)
 
   fixes #3677
 
-- ([d7fa744](https://github.com/angular/protractor/commit/d7fa74464709c532d451fdead78bc57b21956784)) 
+- ([d7fa744](https://github.com/angular/protractor/commit/d7fa74464709c532d451fdead78bc57b21956784))
   fix(util): Fix adding stack traces to Errors thrown as strings (#3687)
 
 ## Dependencies
 
-- ([a1c8a23](https://github.com/angular/protractor/commit/a1c8a23fea3542eabeae6e7bc59f3c2ffa0fda94)) 
+- ([a1c8a23](https://github.com/angular/protractor/commit/a1c8a23fea3542eabeae6e7bc59f3c2ffa0fda94))
   chore(deps): Downgrade jasmine to 2.4.1 (#3715)
 
   Upgrading to 2.5.2 causes #3606. We'll need to wait on a fix for jasmine/jasmine-npm#95 before
