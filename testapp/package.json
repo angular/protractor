@@ -2,10 +2,9 @@
   "name": "testapp",
   "version": "0.0.1",
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "lite": "lite-server"
+    "postinstall": "npm run tsc",
+    "start": "npm install && node scripts/web-server.js",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
