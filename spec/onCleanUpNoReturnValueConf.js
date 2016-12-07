@@ -14,7 +14,7 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
-  onCleanUp: function(exitCode) {
+  onCleanUp: function(/* exitCode */) {
     // no return
   }
 };

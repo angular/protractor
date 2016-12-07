@@ -18,5 +18,11 @@
   "undef": true,
   "quotmark": "single",
   "evil": true,
-  "curly": true
+  "curly": true,
+  "esversion": 6,
+  "predef": ["$", "$$", "angular", "after", "afterAll", "afterEach",
+    "beforeAll", "beforeEach", "browser", "by", "By", "DartObject",
+    "describe", "document", "element", "expect", "ExpectedConditions",
+    "fdescribe", "fit", "it", "jasmine", "protractor", "spyOn",
+    "xdescribe", "xit"]
 }

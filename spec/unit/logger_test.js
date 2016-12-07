@@ -22,7 +22,7 @@ describe('the logger', function() {
       Logger.setWrite(WriteTo.FILE, logFile);
     });
 
-    writeString = function() {
+    var writeString = function() {
       logger.debug('hello debug');
       logger.info('hello info');
       logger.warn('hello warn');

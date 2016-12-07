@@ -1,5 +1,3 @@
-var util = require('util');
-
 describe('no protractor at all', function() {
   it('should still do normal tests', function() {
     expect(true).toBe(true);
@@ -73,7 +71,6 @@ describe('protractor library', function() {
   it('should allow adding custom locators', function() {
     var findMenuItem = function() {
       var itemName = arguments[0];
-      var using = arguments[1]; // unused
       var menu = document.querySelectorAll('.menu li');
       for (var i = 0; i < menu.length; ++i) {
         if (menu[i].textContent == itemName) {
@@ -95,7 +92,6 @@ describe('protractor library', function() {
     var findMenuItemWithName = function() {
       var css = arguments[0];
       var itemName = arguments[1];
-      var using = arguments[2]; // unused
       var menu = document.querySelectorAll(css);
       for (var i = 0; i < menu.length; ++i) {
         if (menu[i].textContent == itemName) {

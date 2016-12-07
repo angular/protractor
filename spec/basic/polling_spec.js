@@ -1,5 +1,3 @@
-var util = require('util');
-
 /**
  * These tests show how to turn off Protractor's synchronization
  * when using applications which poll with $http or $timeout.

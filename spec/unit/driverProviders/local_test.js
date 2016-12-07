@@ -4,6 +4,7 @@ var fs = require('fs'),
 var BrowserError = require('../../../built/exitCodes').BrowserError,
     Logger = require('../../../built/logger2').Logger,
     WriteTo = require('../../../built/logger2').WriteTo;
+var webdriver, file;
 
 describe('local connect', function() {
   beforeEach(function() {
