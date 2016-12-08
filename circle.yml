@@ -10,7 +10,6 @@ dependencies:
   override:
     - npm update
   post:
-    - gulp format:enforce
     - ./node_modules/.bin/webdriver-manager update
     - ./node_modules/.bin/webdriver-manager start:
           background: true
@@ -20,4 +19,5 @@ dependencies:
 
 test:
   override:
+    - gulp format:enforce
     - npm test
