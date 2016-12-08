@@ -787,7 +787,21 @@ export class ElementArrayFinder extends WebdriverWebElement {
 export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
-  then: (fn: Function, errorFn?: Function) => wdpromise.Promise<any> = null;
+
+  /**
+   * Access the underlying actionResult of ElementFinder.
+   *
+   * @alias element(locator).then(thenFunction)
+   * @param {function(webdriver.promise.Promise)} fn Function which takes
+   *     the value of the underlying actionResult.
+   * @param {function(Error)} errorFn
+   *
+   * @returns {webdriver.promise.Promise} Promise which contains the results
+   * of evaluating fn.
+   */
+  then(fn: Function, errorFn?: Function): wdpromise.Promise<any> {
+    return null;
+  }
 
   constructor(public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
     super();
@@ -799,17 +813,6 @@ export class ElementFinder extends WebdriverWebElement {
     // Only have a `then` method if the parent element array finder
     // has action results.
     if (this.parentElementArrayFinder.actionResults_) {
-      /**
-       * Access the underlying actionResult of ElementFinder.
-       *
-       * @param {function(webdriver.promise.Promise)} fn Function which takes
-       *     the value of the underlying actionResult.
-       * @param {function(Error)} errorFn
-       *
-       * @returns {webdriver.promise.Promise} Promise which contains the results
-       * of
-       *     evaluating fn.
-       */
       this.then =
           (fn: (value: any) => {} | wdpromise.IThenable<{}>, errorFn?: (error: any) => any) => {
             return this.elementArrayFinder_.then((actionResults: any) => {
