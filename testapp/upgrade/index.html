@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Set the base href -->
+    <base href="/upgrade/">
+
+    <title>Test ngUpgrade App</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="/ng1/lib/angular/angular.min.js"></script>
+    <script src="/ng1/lib/angular/angular-animate.min.js"></script>
+    <script src="/ng1/lib/angular/angular-route.min.js"></script>
+
+    <!-- IE required polyfills, in this exact order -->
+    <script src="../node_modules/core-js/client/shim.min.js"></script>
+    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="../node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="../node_modules/zone.js/dist/zone.js"></script>
+
+    <script>
+      System.import('systemjs.config.js').then(function () {
+        if (window.location.search.indexOf('no_static') != -1) {
+          System.import('app/no_static/main');
+        } else {
+          System.import('app/main');
+        }
+      }).catch(function(err) {
+        console.log('error while importing:');
+        console.log(err);
+        console.log(err.stack);
+      });
+    </script>
+  </head>
+
+  <body>
+    <my-app>Loading...</my-app>
+  </body>
+
+</html>
+
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

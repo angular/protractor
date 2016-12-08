@@ -8,10 +8,14 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
   },
+  "compileOnSave": true,
   "exclude": [
-    "typings/globals",
-    "node_modules"
+    "node_modules",
+    "**/*-aot.ts"
   ]
 }
