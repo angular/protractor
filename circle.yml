@@ -7,6 +7,8 @@ machine:
     - npm install -g npm@3
 
 dependencies:
+  override:
+    - npm update
   post:
     - gulp format:enforce
     - ./node_modules/.bin/webdriver-manager update
@@ -15,6 +17,7 @@ dependencies:
     - npm run install_testapp
     - npm start:
           background: true
+
 test:
   override:
     - npm test
