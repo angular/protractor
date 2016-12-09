@@ -694,7 +694,13 @@ export class ProtractorBrowser extends Webdriver {
       return 'Protractor.get(' + destination + ') - ' + str;
     };
 
-    if (this.ignoreSynchronization || this.bpClient) {
+    if (this.bpClient) {
+      this.driver.controlFlow().execute(() => {
+        return this.bpClient.setSynchronization(false);
+      });
+    }
+
+    if (this.ignoreSynchronization) {
       this.driver.get(destination);
       return this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()).then(() => {});
     }
@@ -792,6 +798,12 @@ export class ProtractorBrowser extends Webdriver {
               'is not yet supported.');
         }
       }
+    }
+
+    if (this.bpClient) {
+      this.driver.controlFlow().execute(() => {
+        return this.bpClient.setSynchronization(!this.internalIgnoreSynchronization);
+      });
     }
 
     this.driver.controlFlow().execute(() => {
