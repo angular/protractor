@@ -64,11 +64,6 @@ export class TaskRunner extends EventEmitter {
     config.capabilities = this.task.capabilities;
     config.specs = this.task.specs;
 
-    // TODO Get this from bpRunner?
-    if (config.blockingProxyUrl) {
-      config.seleniumAddress = config.blockingProxyUrl;
-    }
-
     if (this.runInFork) {
       let deferred = q.defer();
 
