@@ -4,15 +4,15 @@ import * as q from 'q';
 import {Config} from './config';
 import {Logger} from './logger';
 
-const BP_PATH = 'node_modules/blockingproxy/built/lib/bin.js';
+const BP_PATH = 'node_modules/blocking-proxy/built/lib/bin.js';
 
-let logger = new Logger('bpRunner');
+let logger = new Logger('BlockingProxy');
 
 export class BlockingProxyRunner {
-  constructor(private config: Config) {}
-
   bpProcess: ChildProcess;
   public port: number;
+
+  constructor(private config: Config) {}
 
   start() {
     return q.Promise((resolve, reject) => {
@@ -22,12 +22,11 @@ export class BlockingProxyRunner {
         '--fork', '--seleniumAddress', this.config.seleniumAddress, '--rootElement',
         this.config.rootElement
       ];
-      this.bpProcess = fork(BP_PATH, args);
+      this.bpProcess = fork(BP_PATH, args, {silent: true});
       logger.info('Starting BlockingProxy with args: ' + args.toString());
       this.bpProcess
           .on('message',
               (data) => {
-                logger.info(data);
                 this.port = data['port'];
                 resolve(data['port']);
               })
@@ -40,6 +39,14 @@ export class BlockingProxyRunner {
             logger.error('Exited with ' + code);
             logger.error('signal ' + signal);
           });
+
+      this.bpProcess.stdout.on('data', (msg: Buffer) => {
+        logger.info(msg.toString().trim());
+      });
+
+      this.bpProcess.stderr.on('data', (msg: Buffer) => {
+        logger.error(msg.toString().trim());
+      });
 
       process.on('exit', () => {
         this.bpProcess.kill();

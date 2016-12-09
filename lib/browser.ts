@@ -314,7 +314,7 @@ export class ProtractorBrowser extends Webdriver {
 
     this.driver = webdriverInstance;
     if (opt_blockingProxyUrl) {
-      logger.info('Starting BP client');
+      logger.info('Starting BP client for ' + opt_blockingProxyUrl);
       this.bpClient = new BPClient(opt_blockingProxyUrl);
     }
     this.element = buildElementHelper(this);
