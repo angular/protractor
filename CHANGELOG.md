@@ -1,3 +1,13 @@
+# 4.0.13
+
+## Bug Fix
+
+- ([c3978ec](https://github.com/angular/protractor/commit/c3978ec166760ac07db01e700c4aaaa19d9b5c38))
+  fix(revert): element(locator).then should not appear in the docs and change reverted. (#3808)
+
+  - change comments to not be in JSDoc format
+  - reverts change `element(locator).then`
+
 # 4.0.12
 
 ## Bug Fixes
