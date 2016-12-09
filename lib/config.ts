@@ -101,7 +101,6 @@ export interface Config {
    * and is not meant to be used by end users.
    */
   useBlockingProxy?: string;
-  blockingProxyUrl?: string;
 
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 

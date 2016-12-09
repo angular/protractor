@@ -41,7 +41,7 @@ export class BlockingProxyRunner {
           });
 
       this.bpProcess.stdout.on('data', (msg: Buffer) => {
-        logger.info(msg.toString().trim());
+        logger.debug(msg.toString().trim());
       });
 
       this.bpProcess.stderr.on('data', (msg: Buffer) => {

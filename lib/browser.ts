@@ -145,7 +145,8 @@ export class ProtractorBrowser extends Webdriver {
   driver: WebDriver;
 
   /**
-   * TODO
+   * The client used to control the BlockingProxy. If unset, BlockingProxy is
+   * not being used and Protractor will handle client-side synchronization.
    */
   bpClient: BPClient;
 
@@ -826,7 +827,7 @@ export class ProtractorBrowser extends Webdriver {
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to start.
    */
   refresh(opt_timeout?: number) {
-    if (this.ignoreSynchronization || this.bpClient) {
+    if (this.ignoreSynchronization) {
       return this.driver.navigate().refresh();
     }
 
