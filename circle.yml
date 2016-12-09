@@ -7,14 +7,19 @@ machine:
     - npm install -g npm@3
 
 dependencies:
+  override:
+    - npm update
+  cache_directories:
+    - testapp/node_modules
   post:
-    - gulp format:enforce
+    - ./node_modules/.bin/gulp format:enforce
     - ./node_modules/.bin/webdriver-manager update
     - ./node_modules/.bin/webdriver-manager start:
           background: true
-    - npm run install_testapp
+    - cd testapp && npm update
     - npm start:
           background: true
+
 test:
   override:
     - npm test
