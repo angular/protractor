@@ -121,7 +121,7 @@ export abstract class DriverProvider {
   protected abstract setupDriverEnv():
       q.Promise<any>
 
-      /**
+  /**
    * Teardown and destroy the environment and do any associated cleanup.
    * Shuts down the drivers.
    *
@@ -129,7 +129,7 @@ export abstract class DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment
    *     is down.
    */
-      teardownEnv(): q.Promise<q.Promise<webdriver.WebDriver>[]> {
+  teardownEnv(): q.Promise<q.Promise<webdriver.WebDriver>[]> {
     return q.all<any>(this.drivers_.map((driver: webdriver.WebDriver) => {
       return this.quitDriver(driver);
     }));

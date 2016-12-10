@@ -1,6 +1,4 @@
-// Util from NodeJs
-import {BPClient} from 'blockingproxy';
-import * as net from 'net';
+import {BPClient} from 'blocking-proxy';
 import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
 
