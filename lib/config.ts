@@ -553,7 +553,7 @@ export interface Config {
     /**
      * Require files before executing the features.
      */
-    require?: Array<string>; 
+    require?: string[]; 
     /**
      * Only execute the features or scenarios with tags matching @dev.
      * This may be an array of strings to specify multiple tags to include.
