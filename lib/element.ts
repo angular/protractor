@@ -366,11 +366,15 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * </div>
    *
    * @example
-   * // The following protractor expressions are equivalent.
+   * // The following two blocks of code are equivalent.
    * let list = element.all(by.css('.count span'));
    * expect(list.count()).toBe(2);
+   * expect(list.get(0).getText()).toBe('First');
+   * expect(list.get(1).getText()).toBe('Second');
    *
-   * list = $$('.count span');
+   * // Or using the shortcut $$() notation instead of element.all(by.css()):
+   *
+   * let list = $$('.count span');
    * expect(list.count()).toBe(2);
    * expect(list.get(0).getText()).toBe('First');
    * expect(list.get(1).getText()).toBe('Second');
