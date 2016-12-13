@@ -104,7 +104,7 @@ export class Local extends DriverProvider {
     this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
     // start local server, grab hosted address, and resolve promise
-    this.server_.start().then((url: string) => {
+    this.server_.start(this.config_.seleniumServerStartTimeout).then((url: string) => {
       logger.info('Selenium standalone server started at ' + url);
       this.server_.address().then((address: string) => {
         this.config_.seleniumAddress = address;
