@@ -11,8 +11,8 @@ exports.config.multiCapabilities = [{
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
     'version': '54',
-    'selenium-version': '2.53.1',
-    'chromedriver-version': '2.25',
+    'selenium-version': '3.0.1',
+    'chromedriver-version': '2.26',
     'platform': 'OS X 10.9'
   }];
 exports.config.capabilities = undefined;

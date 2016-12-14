@@ -24,48 +24,39 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '54',
-    'selenium-version': '2.53.1',
-    'chromedriver-version': '2.25',
+    'selenium-version': '3.0.1',
+    'chromedriver-version': '2.26',
     'platform': 'OS X 10.9'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '47',
-    'selenium-version': '2.53.1'
+    'version': '50',
+    'selenium-version': '3.0.1'
   }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '8',
-    'selenium-version': '2.44.0' // Use an old version because Safari has
-                                 // issues loading pages after 2.44.
+    'version': '10',
+    'selenium-version': '3.0.1'
   }, {
-    'browserName': 'safari',
+    'browserName': 'microsoftedge',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '9',
-    'selenium-version': '2.44.0' // Use an old version because Safari has
-                                 // issues loading pages after 2.44.
+    'version': '14',
+    'selenium-version': '3.0.1',
+    'platform': 'Windows 10'
   }, {
     'browserName': 'internet explorer',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '11',
-    'selenium-version': '2.53.1',
-    'platform': 'Windows 7'
-  }, {
-    'browserName': 'internet explorer',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'Protractor smoke tests',
-    'version': '10',
-    'selenium-version': '2.53.1',
-    'platform': 'Windows 7'
+    'selenium-version': '3.0.1',
+    'platform': 'Windows 8'
   }],
 
   baseUrl: env.baseUrl + '/ng1/',
