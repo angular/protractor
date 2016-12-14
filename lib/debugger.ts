@@ -77,8 +77,8 @@ export class DebugHelper {
     }
     let sandbox = vm_.createContext(context);
 
-    let debuggerReadyPromise = webdriver.promise.defer();
     flow.execute(() => {
+      let debuggerReadyPromise = webdriver.promise.defer();
       process['debugPort'] = opt_debugPort || process['debugPort'];
       this.validatePortAvailability_(process['debugPort']).then((firstTime: boolean) => {
         onStartFn(firstTime);
@@ -95,6 +95,7 @@ export class DebugHelper {
             .on('message',
                 (m: string) => {
                   if (m === 'ready') {
+                    console.log('***** Debugger ready');
                     debuggerReadyPromise.fulfill();
                   }
                 })
@@ -105,14 +106,9 @@ export class DebugHelper {
               this.dbgCodeExecutor = null;
             });
       });
-    });
-
-    let pausePromise = flow.execute(() => {
-      return debuggerReadyPromise.promise.then(() => {
-        // Necessary for backward compatibility with node < 0.12.0
-        return this.browserUnderDebug_.executeScriptWithDescription('', 'empty debugger hook');
-      });
-    });
+      return debuggerReadyPromise.promise;
+    }, 'Set up debugger process');
+    let firstPromise = this.browserUnderDebug_.executeScriptWithDescription('var startHook = 1', 'kickoff hook');
 
     // Helper used only by debuggers at './debugger/modes/*.js' to insert code
     // into the control flow.
@@ -122,7 +118,8 @@ export class DebugHelper {
     // for a result at every run of DeferredExecutor.execute.
     let browserUnderDebug = this.browserUnderDebug_;
     this.dbgCodeExecutor = {
-      execPromise_: pausePromise,     // Promise pointing to current stage of flow.
+      execPromise_: firstPromise,     // Promise pointing to current stage of flow.
+      // TODO(juliemr): We might need a pausePromise.then here...
       execPromiseResult_: undefined,  // Return value of promise.
       execPromiseError_: undefined,   // Error from promise.
 
@@ -139,6 +136,14 @@ export class DebugHelper {
       execute_: function(execFn_: Function) {
         this.execPromiseResult_ = this.execPromiseError_ = undefined;
 
+        // this.execPromise_ = this.execPromise_.then(execFn_).then(
+        //     (result: Object) => {
+        //       this.execPromiseResult_ = result;
+        //     },
+        //     (err: Error) => {
+        //       this.execPromiseError_ = err;
+        //     });
+
         this.execPromise_ = this.execPromise_.then(execFn_).then(
             (result: Object) => {
               this.execPromiseResult_ = result;
@@ -147,11 +152,14 @@ export class DebugHelper {
               this.execPromiseError_ = err;
             });
 
-        // This dummy command is necessary so that the DeferredExecutor.execute
-        // break point can find something to stop at instead of moving on to the
+        // This dummy command is necessary so that the executor breakpoint
+        // can find something to stop at instead of moving on to the
         // next real command.
         this.execPromise_.then(() => {
-          return browserUnderDebug.executeScriptWithDescription('', 'empty debugger hook');
+          console.log('**** scheduling another debugger hook');
+          var r = browserUnderDebug.executeScriptWithDescription('var debuggerHook = 1', 'empty debugger hook');
+          console.log(flow.getSchedule());
+          return r;
         });
       },
 
@@ -215,8 +223,6 @@ export class DebugHelper {
         return this.execPromiseResult_;
       }
     };
-
-    return pausePromise;
   }
 
   /**

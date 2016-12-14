@@ -12,6 +12,7 @@ libpeerconnection.log
 xmloutput*
 npm-debug.log
 .idea/
+.vscode/
 
 *.swp
 

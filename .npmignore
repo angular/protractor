@@ -16,6 +16,7 @@ built/spec/
 .github/
 .gitignore
 .idea/
+.vscode/
 .jshintrc
 .npmignore
 .travis.yml
