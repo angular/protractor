@@ -22,9 +22,9 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
-    'version': '55',
+    'version': '54',
     'selenium-version': '3.0.1',
-    'chromedriver-version': '2.25',
+    'chromedriver-version': '2.26',
     'platform': 'OS X 10.9'
   }, {
     'browserName': 'firefox',
