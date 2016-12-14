@@ -553,7 +553,7 @@ export interface Config {
     /**
      * Require files before executing the features.
      */
-    require?: string[]; 
+    require?: string[] | string;
     /**
      * Only execute the features or scenarios with tags matching @dev.
      * This may be an array of strings to specify multiple tags to include.
@@ -562,7 +562,7 @@ export interface Config {
     /**
      * How to format features (default: progress)
      */
-    format?: string;
+    format?: string[] | string;
     // Other options include `coffee`, `noSnippets`, and `dryRun`
     coffee?: any;
     noSnippets?: any;
