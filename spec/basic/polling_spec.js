@@ -30,8 +30,32 @@ describe('synchronizing with pages that poll', function() {
     });
   });
 
+  it('avoids timeouts using waitForAngularEnabled', function() {
+    var startButton = element(by.id('pollstarter'));
+
+    var count = element(by.binding('count'));
+    expect(count.getText()).toEqual('0');
+
+    startButton.click();
+
+    // Turn this off to see timeouts.
+    browser.waitForAngularEnabled(false);
+
+    expect(browser.waitForAngularEnabled()).toBeFalsy();
+
+    count.getText().then(function(text) {
+        expect(text).toBeGreaterThan(-1);
+    });
+
+    browser.sleep(2000);
+
+    count.getText().then(function(text) {
+        expect(text).toBeGreaterThan(1);
+    });
+  });
+
   afterEach(function() {
-    // Remember to turn it off when you're done!
-    browser.ignoreSynchronization = false;
+    // Remember to turn it back on when you're done!
+    browser.waitForAngularEnabled(true);
   });
 });

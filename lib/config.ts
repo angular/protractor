@@ -97,10 +97,10 @@ export interface Config {
 
   /**
    * If specified, connect to webdriver through a proxy that manages client-side
-   * synchronization. This option is intended for testing an  experimental feature
-   * and is not meant to be used by end users.
+   * synchronization. Blocking Proxy is an experimental feature and may change
+   * without notice.
    */
-  useBlockingProxy?: string;
+  useBlockingProxy?: boolean;
 
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 

@@ -118,8 +118,7 @@ export abstract class DriverProvider {
    * Set up environment specific to a particular driver provider. Overridden
    * by each driver provider.
    */
-  protected abstract setupDriverEnv():
-      q.Promise<any>
+  protected abstract setupDriverEnv(): q.Promise<any>;
 
   /**
    * Teardown and destroy the environment and do any associated cleanup.

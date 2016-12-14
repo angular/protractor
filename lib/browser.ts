@@ -193,12 +193,15 @@ export class ProtractorBrowser extends Webdriver {
    * tests to become flaky. This should be used only when necessary, such as
    * when a page continuously polls an API using $timeout.
    *
+   * This property is deprecated - please use waitForAngularEnabled instead.
+   *
+   * @deprecated
    * @type {boolean}
    */
   set ignoreSynchronization(value) {
     this.driver.controlFlow().execute(() => {
       if (this.bpClient) {
-        logger.info('Setting synchronization ' + value);
+        logger.debug('Setting waitForAngular' + value);
         this.bpClient.setSynchronization(!value);
       }
     }, `Set proxy synchronization to ${value}`);
@@ -348,6 +351,22 @@ export class ProtractorBrowser extends Webdriver {
 
     // set up expected conditions
     this.ExpectedConditions = new ProtractorExpectedConditions(this);
+  }
+
+  /**
+   * If set to false, Protractor will not wait for Angular $http and $timeout
+   * tasks to complete before interacting with the browser. This can cause
+   * flaky tests, but should be used if, for instance, your app continuously
+   * polls an API with $timeout.
+   *
+   * Call waitForAngularEnabled() without passing a value to read the current
+   * state without changing it.
+   */
+  waitForAngularEnabled(enabled: boolean = null): boolean {
+    if (enabled != null) {
+      this.ignoreSynchronization = !enabled;
+    }
+    return !this.ignoreSynchronization;
   }
 
   /**

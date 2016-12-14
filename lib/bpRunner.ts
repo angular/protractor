@@ -4,7 +4,7 @@ import * as q from 'q';
 import {Config} from './config';
 import {Logger} from './logger';
 
-const BP_PATH = 'node_modules/blocking-proxy/built/lib/bin.js';
+const BP_PATH = require.resolve('blocking-proxy/built/lib/bin.js');
 
 let logger = new Logger('BlockingProxy');
 
