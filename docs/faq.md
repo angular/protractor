@@ -11,12 +11,12 @@ What's the difference between Karma and Protractor? When do I use which?
 ---------------------------------------------------
 
 [Karma](http://karma-runner.github.io) is a great tool for unit testing, and Protractor is intended for
-end to end or integration testing. This means that small tests for the logic
+end-to-end or integration testing. This means that small tests for the logic
 of your individual controllers, directives, and services should be run using
 Karma. Big tests in which you have a running instance of your entire application
 should be run using Protractor. Protractor is intended to run tests from a
 user's point of view - if your test could be written down as instructions
-for a human interacting with your application, it should be an end to end test
+for a human interacting with your application, it should be an end-to-end test
 written with Protractor.
 
 Here's a [great blog post](http://www.yearofmoo.com/2013/09/advanced-testing-and-debugging-in-angularjs.html)
