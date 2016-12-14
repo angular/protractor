@@ -563,10 +563,8 @@ export interface Config {
      * How to format features (default: progress)
      */
     format?: string[] | string;
-    // Other options include `coffee`, `noSnippets`, and `dryRun`
-    coffee?: any;
-    noSnippets?: any;
-    dryRun?: any;
+    // Other options include `dryRun`
+    dryRun?: boolean;
   };
 
   /**
