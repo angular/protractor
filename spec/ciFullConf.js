@@ -25,7 +25,7 @@ exports.config = {
     'version': '54',
     'selenium-version': '3.0.1',
     'chromedriver-version': '2.26',
-    'platform': 'OS X 10.9'
+    'platform': 'OS X 10.11'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,

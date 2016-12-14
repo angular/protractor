@@ -26,7 +26,7 @@ exports.config = {
     'version': '54',
     'selenium-version': '3.0.1',
     'chromedriver-version': '2.26',
-    'platform': 'OS X 10.9'
+    'platform': 'OS X 10.11'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -40,23 +40,24 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '10',
-    'selenium-version': '3.0.1'
+    'selenium-version': '3.0.1',
+    'platform': 'OS X 10.11'
   }, {
-    'browserName': 'microsoftedge',
+    'browserName': 'MicrosoftEdge',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '14',
+    'version': '14.14393',
     'selenium-version': '3.0.1',
     'platform': 'Windows 10'
   }, {
-    'browserName': 'internet explorer',
+    'browserName': 'Internet Explorer',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '11',
     'selenium-version': '3.0.1',
-    'platform': 'Windows 8'
+    'platform': 'Windows 8.1'
   }],
 
   baseUrl: env.baseUrl + '/ng1/',
