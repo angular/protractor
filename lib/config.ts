@@ -563,7 +563,9 @@ export interface Config {
      * How to format features (default: progress)
      */
     format?: string[] | string;
-    // Other options include `dryRun`
+    /**
+     * Quickly scan your features without actually running them.
+     */
     dryRun?: boolean;
   };
 
