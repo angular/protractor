@@ -25,8 +25,8 @@ exports.config = {
     'name': 'Protractor smoke tests',
     'version': '54',
     'selenium-version': '2.53.1',
-    'chromedriver-version': '2.25',
-    'platform': 'OS X 10.9'
+    'chromedriver-version': '2.26',
+    'platform': 'OS X 10.11'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -35,14 +35,7 @@ exports.config = {
     'version': '47',
     'selenium-version': '2.53.1'
   }, {
-    'browserName': 'safari',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'Protractor smoke tests',
-    'version': '8',
-    'selenium-version': '2.44.0' // Use an old version because Safari has
-                                 // issues loading pages after 2.44.
-  }, {
+    // TODO: Add Safari 10 once Saucelabs gets Selenium 3
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
@@ -51,21 +44,21 @@ exports.config = {
     'selenium-version': '2.44.0' // Use an old version because Safari has
                                  // issues loading pages after 2.44.
   }, {
-    'browserName': 'internet explorer',
+    'browserName': 'MicrosoftEdge',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'Protractor smoke tests',
+    'version': '14.14393',
+    'selenium-version': '2.53.1',
+    'platform': 'Windows 10'
+  }, {
+    'browserName': 'Internet Explorer',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '11',
     'selenium-version': '2.53.1',
-    'platform': 'Windows 7'
-  }, {
-    'browserName': 'internet explorer',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'Protractor smoke tests',
-    'version': '10',
-    'selenium-version': '2.53.1',
-    'platform': 'Windows 7'
+    'platform': 'Windows 8.1'
   }],
 
   baseUrl: env.baseUrl + '/ng1/',
