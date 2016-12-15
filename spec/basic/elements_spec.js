@@ -463,7 +463,7 @@ describe('ElementArrayFinder', function() {
     ]);
   });
 
-  fit('should map and resolve multiple promises', function() {
+  it('should map and resolve multiple promises', function() {
     browser.get('index.html#/form');
     var labels = element.all(by.css('#animals ul li')).map(function(elm) {
       return {
