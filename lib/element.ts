@@ -529,8 +529,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then(fn?: (value: any) => any | wdpromise.IThenable<any>, errorFn?: (error: any) => any):
-      wdpromise.Promise<any> {
+  then(
+      fn?: (value: ElementFinder[]) => any | wdpromise.IThenable<any>,
+      errorFn?: (error: any) => any): wdpromise.Promise<any> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
     } else {
