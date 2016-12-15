@@ -41,7 +41,6 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '9',
-    'platform': 'OS X 10.9',
     'selenium-version': '2.44.0' // Use an old version because Safari has
                                  // issues loading pages after 2.44.
   }, {
