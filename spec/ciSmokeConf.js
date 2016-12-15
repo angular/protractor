@@ -35,13 +35,15 @@ exports.config = {
     'version': '47',
     'selenium-version': '2.53.1'
   }, {
+    // TODO: Add Safari 10 once Saucelabs gets Selenium 3
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '10',
-    'selenium-version': '2.53.1',
-    'platform': 'OS X 10.11'
+    'version': '9',
+    'platform': 'OS X 10.9',
+    'selenium-version': '2.44.0' // Use an old version because Safari has
+                                 // issues loading pages after 2.44.
   }, {
     'browserName': 'MicrosoftEdge',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
