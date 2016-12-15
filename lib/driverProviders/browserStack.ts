@@ -47,7 +47,7 @@ export class BrowserStack extends DriverProvider {
 
         let req = https.request(options, (res) => {
           res.on('data', (data: Buffer) => {
-            var info = JSON.parse(data.toString());
+            let info = JSON.parse(data.toString());
             if (info && info.automation_session && info.automation_session.browser_url) {
               logger.info(
                   'BrowserStack results available at ' + info.automation_session.browser_url);
@@ -95,7 +95,7 @@ export class BrowserStack extends DriverProvider {
    *     ready to test.
    */
   setupEnv(): q.Promise<any> {
-    var deferred = q.defer();
+    let deferred = q.defer();
     this.config_.capabilities['browserstack.user'] = this.config_.browserstackUser;
     this.config_.capabilities['browserstack.key'] = this.config_.browserstackKey;
     this.config_.seleniumAddress = 'http://hub.browserstack.com/wd/hub';

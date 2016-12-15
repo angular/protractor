@@ -58,7 +58,7 @@ export class Ptor {
     firefox: require('selenium-webdriver/firefox'),
     http: require('selenium-webdriver/http'),
     remote: require('selenium-webdriver/remote')
-  }
+  };
 }
 
-export var protractor = new Ptor();
+export let protractor = new Ptor();

@@ -488,7 +488,7 @@ export class Plugins {
 
 export interface SpecResult {
   description: string;
-  assertions: AssertionResult[]
+  assertions: AssertionResult[];
 }
 
 export interface AssertionResult {

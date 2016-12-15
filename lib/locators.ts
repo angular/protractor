@@ -72,7 +72,7 @@ export class ProtractorBy extends WebdriverBy {
    */
   addLocator(name: string, script: Function|string) {
     this[name] = (...args: any[]): Locator => {
-      var locatorArguments = args;
+      let locatorArguments = args;
       return {
         findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
                                   wdpromise.Promise<WebElement[]> => {
@@ -247,7 +247,7 @@ export class ProtractorBy extends WebdriverBy {
 
   // Generate either by.repeater or by.exactRepeater
   private byRepeaterInner(exact: boolean, repeatDescriptor: string): Locator {
-    var name = 'by.' + (exact ? 'exactR' : 'r') + 'epeater';
+    let name = 'by.' + (exact ? 'exactR' : 'r') + 'epeater';
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
                                 wdpromise.Promise<WebElement[]> => {

@@ -74,7 +74,7 @@ export class Webdriver {
  */
 function ptorMixin(to: any, from: any, fnName: string, setupFn?: Function) {
   to[fnName] = function() {
-    for (var i = 0; i < arguments.length; i++) {
+    for (let i = 0; i < arguments.length; i++) {
       if (arguments[i] instanceof ElementFinder) {
         arguments[i] = arguments[i].getWebElement();
       }
@@ -103,10 +103,9 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
     return new ElementArrayFinder(browser).all(locator).toElementFinder_();
   }) as ElementHelper;
 
-  element.all =
-      (locator: Locator) => {
-        return new ElementArrayFinder(browser).all(locator);
-      }
+  element.all = (locator: Locator) => {
+    return new ElementArrayFinder(browser).all(locator);
+  };
 
   return element;
 };

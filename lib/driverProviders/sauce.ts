@@ -30,8 +30,8 @@ export class Sauce extends DriverProvider {
    * @return {q.promise} A promise that will resolve when the update is complete.
    */
   updateJob(update: any): q.Promise<any> {
-    var deferredArray = this.drivers_.map((driver: WebDriver) => {
-      var deferred = q.defer();
+    let deferredArray = this.drivers_.map((driver: WebDriver) => {
+      let deferred = q.defer();
       driver.getSession().then((session: Session) => {
         logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
         this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
