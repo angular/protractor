@@ -166,7 +166,6 @@ export class Runner extends EventEmitter {
     protractor.$$ = browser_.$$;
     protractor.element = browser_.element;
     protractor.by = protractor.By = ProtractorBrowser.By;
-    protractor.wrapDriver = ProtractorBrowser.wrapDriver;
     protractor.ExpectedConditions = browser_.ExpectedConditions;
 
     if (!this.config_.noGlobals) {
@@ -207,7 +206,7 @@ export class Runner extends EventEmitter {
     var config = this.config_;
     var driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = ProtractorBrowser.wrapDriver(
+    var browser_ = new ProtractorBrowser(
         driver, config.baseUrl, config.rootElement, config.untrackOutstandingTimeouts);
 
     browser_.params = config.params;

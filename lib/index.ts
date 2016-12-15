@@ -15,8 +15,6 @@ export {ProtractorExpectedConditions} from './expectedConditions';
 export {ProtractorBy} from './locators';
 export {Ptor} from './ptor';
 
-export let wrapDriver = ProtractorBrowser.wrapDriver;
-
 export let utils = {
   firefox: require('selenium-webdriver/firefox'),
   http: require('selenium-webdriver/http'),
