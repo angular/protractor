@@ -4,6 +4,7 @@ var Executor = require('./test/test_util').Executor;
 
 var passingTests = [
   'node built/cli.js spec/basicConf.js',
+  'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
   'node built/cli.js spec/altRootConf.js',
   'node built/cli.js spec/onCleanUpAsyncReturnValueConf.js',
