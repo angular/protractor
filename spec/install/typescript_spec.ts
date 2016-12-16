@@ -8,7 +8,6 @@ describe('typescript imports', () => {
     expect(protractor.$ === $).toBeTruthy();
     expect(protractor.$$ === $$).toBeTruthy();
     expect(protractor.ExpectedConditions === ExpectedConditions).toBeTruthy();
-    expect(typeof protractor.wrapDriver).toEqual('function');
   });
   it('should have selenium-webdriver components for the protractor namespace', () => {
     expect(typeof protractor.promise.all).toEqual('function');
