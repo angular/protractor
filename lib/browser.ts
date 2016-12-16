@@ -1,3 +1,4 @@
+import {BPClient} from 'blocking-proxy';
 import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
 import * as url from 'url';
 
@@ -143,6 +144,12 @@ export class ProtractorBrowser extends Webdriver {
   driver: WebDriver;
 
   /**
+   * The client used to control the BlockingProxy. If unset, BlockingProxy is
+   * not being used and Protractor will handle client-side synchronization.
+   */
+  bpClient: BPClient;
+
+  /**
    * Helper function for finding elements.
    *
    * @type {function(webdriver.Locator): ElementFinder}
@@ -187,9 +194,26 @@ export class ProtractorBrowser extends Webdriver {
    * tests to become flaky. This should be used only when necessary, such as
    * when a page continuously polls an API using $timeout.
    *
+   * This property is deprecated - please use waitForAngularEnabled instead.
+   *
+   * @deprecated
    * @type {boolean}
    */
-  ignoreSynchronization: boolean;
+  set ignoreSynchronization(value) {
+    this.driver.controlFlow().execute(() => {
+      if (this.bpClient) {
+        logger.debug('Setting waitForAngular' + value);
+        this.bpClient.setSynchronization(!value);
+      }
+    }, `Set proxy synchronization to ${value}`);
+    this.internalIgnoreSynchronization = value;
+  }
+
+  get ignoreSynchronization() {
+    return this.internalIgnoreSynchronization;
+  }
+
+  internalIgnoreSynchronization: boolean;
 
   /**
    * Timeout in milliseconds to wait for pages to load when calling `get`.
@@ -273,7 +297,7 @@ export class ProtractorBrowser extends Webdriver {
 
   constructor(
       webdriverInstance: WebDriver, opt_baseUrl?: string, opt_rootElement?: string,
-      opt_untrackOutstandingTimeouts?: boolean) {
+      opt_untrackOutstandingTimeouts?: boolean, opt_blockingProxyUrl?: string) {
     super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
@@ -292,6 +316,10 @@ export class ProtractorBrowser extends Webdriver {
     });
 
     this.driver = webdriverInstance;
+    if (opt_blockingProxyUrl) {
+      logger.info('Starting BP client for ' + opt_blockingProxyUrl);
+      this.bpClient = new BPClient(opt_blockingProxyUrl);
+    }
     this.element = buildElementHelper(this);
     this.$ = build$(this.element, By);
     this.$$ = build$$(this.element, By);
@@ -340,6 +368,22 @@ export class ProtractorBrowser extends Webdriver {
 
     // set up expected conditions
     this.ExpectedConditions = new ProtractorExpectedConditions(this);
+  }
+
+  /**
+   * If set to false, Protractor will not wait for Angular $http and $timeout
+   * tasks to complete before interacting with the browser. This can cause
+   * flaky tests, but should be used if, for instance, your app continuously
+   * polls an API with $timeout.
+   *
+   * Call waitForAngularEnabled() without passing a value to read the current
+   * state without changing it.
+   */
+  waitForAngularEnabled(enabled: boolean = null): boolean {
+    if (enabled != null) {
+      this.ignoreSynchronization = !enabled;
+    }
+    return !this.ignoreSynchronization;
   }
 
   /**
@@ -462,7 +506,7 @@ export class ProtractorBrowser extends Webdriver {
     }
 
     let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
-      if (this.plugins_.skipAngularStability()) {
+      if (this.plugins_.skipAngularStability() || this.bpClient) {
         return wdpromise.fulfilled();
       } else if (this.rootEl) {
         return this.executeAsyncScript_(
@@ -690,6 +734,12 @@ export class ProtractorBrowser extends Webdriver {
       return 'Protractor.get(' + destination + ') - ' + str;
     };
 
+    if (this.bpClient) {
+      this.driver.controlFlow().execute(() => {
+        return this.bpClient.setSynchronization(false);
+      });
+    }
+
     if (this.ignoreSynchronization) {
       this.driver.get(destination);
       return this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()).then(() => {});
@@ -788,6 +838,12 @@ export class ProtractorBrowser extends Webdriver {
               'is not yet supported.');
         }
       }
+    }
+
+    if (this.bpClient) {
+      this.driver.controlFlow().execute(() => {
+        return this.bpClient.setSynchronization(!this.internalIgnoreSynchronization);
+      });
     }
 
     this.driver.controlFlow().execute(() => {

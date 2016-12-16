@@ -95,6 +95,13 @@ export interface Config {
    */
   webDriverProxy?: string;
 
+  /**
+   * If specified, connect to webdriver through a proxy that manages client-side
+   * synchronization. Blocking Proxy is an experimental feature and may change
+   * without notice.
+   */
+  useBlockingProxy?: boolean;
+
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 
   /**

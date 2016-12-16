@@ -26,11 +26,10 @@ export class Direct extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @public
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         logger.info('Using ChromeDriver directly...');
