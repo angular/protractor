@@ -391,7 +391,15 @@ export class ProtractorExpectedConditions {
    *     representing whether the element is visible.
    */
   visibilityOf(elementFinder: ElementFinder): Function {
-    return this.and(this.presenceOf(elementFinder), elementFinder.isDisplayed.bind(elementFinder));
+    return () => {
+      return elementFinder.isDisplayed().then(() => true, err => {
+        if (err.code == webdriver.error.ErrorCode.NO_SUCH_ELEMENT) {
+          return false;
+        } else {
+          throw err;
+        }
+      });
+    };
   }
 
   /**
