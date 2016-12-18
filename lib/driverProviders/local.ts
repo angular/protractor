@@ -43,7 +43,8 @@ export class Local extends DriverProvider {
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
       throw new BrowserError(
-          logger, 'No selenium server jar found at the specified ' +
+          logger,
+          'No selenium server jar found at the specified ' +
               'location (' + this.config_.seleniumServerJar +
               '). Check that the version number is up to date.');
     }

@@ -42,7 +42,8 @@ export class Direct extends DriverProvider {
         break;
       default:
         throw new BrowserError(
-            logger, 'browserName ' + this.config_.capabilities.browserName +
+            logger,
+            'browserName ' + this.config_.capabilities.browserName +
                 ' is not supported with directConnect.');
     }
     return q.fcall(function() {});
@@ -83,7 +84,8 @@ export class Direct extends DriverProvider {
         break;
       default:
         throw new BrowserError(
-            logger, 'browserName ' + this.config_.capabilities.browserName +
+            logger,
+            'browserName ' + this.config_.capabilities.browserName +
                 ' is not supported with directConnect.');
     }
     this.drivers_.push(driver);
