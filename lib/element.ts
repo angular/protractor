@@ -1188,7 +1188,7 @@ export class ElementFinder extends WebdriverWebElement {
     return WebElement.equals(
         this.getWebElement(),
         (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
-                                          element as WebElement);
+                                         element as WebElement);
   }
 }
 
