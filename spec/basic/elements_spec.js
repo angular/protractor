@@ -408,6 +408,13 @@ describe('ElementArrayFinder', function() {
     expect(colorList.first().getAttribute('value')).toEqual('blue');
   });
 
+  it('should get the second element from an array', function() {
+    var colorList = element.all(by.model('color'));
+    browser.get('index.html#/form');
+
+    expect(colorList.second().getAttribute('value')).toEqual('green');
+  });
+
   it('should get the last element from an array', function() {
     var colorList = element.all(by.model('color'));
     browser.get('index.html#/form');
