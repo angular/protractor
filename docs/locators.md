@@ -110,6 +110,16 @@ element.all(locator).first();
 element.all(locator).last();
 ```
 
+When using CSS Selectors as a locator, you can use the shortcut $$() notation:
+
+```js
+$$('.selector');
+
+// Is the same as
+
+element.all(by.css('.selector'));
+```
+
 
 Finding Sub-Elements
 --------------------
