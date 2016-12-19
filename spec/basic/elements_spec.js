@@ -173,12 +173,10 @@ describe('ElementFinder', function() {
     });
   });
 
-  it('should be usable in WebDriver functions via getWebElement', function() {
-    // TODO(juliemr): should be able to do this without the getWebElement call
+  it('should be usable in WebDriver functions', function() {
     browser.get('index.html#/form');
     var greeting = element(by.binding('greeting'));
-    browser.executeScript(
-        'arguments[0].scrollIntoView', greeting.getWebElement());
+    browser.executeScript('arguments[0].scrollIntoView', greeting);
   });
 
   it('should allow null as success handler', function() {
