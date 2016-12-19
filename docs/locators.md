@@ -18,16 +18,16 @@ Locators
 A locator tells Protractor how to find a certain DOM element. Protractor exports locator factories on the global `by` object. The most common locators are:
 
 ```js
-// find an element using a css selector
+// Find an element using a css selector.
 by.css('.myclass') 
 
-// find an element with the given id
+// Find an element with the given id.
 by.id('myid')
 
-// find an element with a certain ng-model
+// Find an element with a certain ng-model.
 by.model('name')
 
-// find an element bound to the given variable
+// Find an element bound to the given variable.
 by.binding('bindingname')
 ```
 
@@ -46,7 +46,7 @@ When using CSS Selectors as a locator, you can use the shortcut $() notation:
 ```js
 $('my-css');
 
-// Is the same as
+// Is the same as:
 
 element(by.css('my-css'));
 ```
@@ -61,16 +61,16 @@ The most common action methods are:
 ```js
 var el = element(locator);
 
-// Click on the element
+// Click on the element.
 el.click();
 
-// Send keys to the element (usually an input)
+// Send keys to the element (usually an input).
 el.sendKeys('my text');
 
-// Clear the text in an element (usually an input)
+// Clear the text in an element (usually an input).
 el.clear();
 
-// Get the value of an attribute, for example, get the value of an input
+// Get the value of an attribute, for example, get the value of an input.
 el.getAttribute('value');
 ```
 
@@ -108,6 +108,16 @@ element.all(locator).get(index);
 // First and last.
 element.all(locator).first();
 element.all(locator).last();
+```
+
+When using CSS Selectors as a locator, you can use the shortcut $$() notation:
+
+```js
+$$('.selector');
+
+// Is the same as:
+
+element.all(by.css('.selector'));
 ```
 
 
@@ -170,7 +180,7 @@ The browser will not receive any commands until you call an action.
 
 ```js
 myButton.click();
-// Now two commands are sent to the browser - find the element, and then click it
+// Now two commands are sent to the browser - find the element, and then click it.
 ```
 
 ElementFinders also enable chaining to find subelements, such as `element(locator1).element(locator2)`.
