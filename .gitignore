@@ -1,18 +1,19 @@
-built/
-node_modules/
-selenium/
-testapp/inbrowsertest/
-typings/
-website/bower_components/
-website/build/
-website/docgen/build/
+# Shared between .npmignore and .gitignore
 
 chromedriver.log
 libpeerconnection.log
 xmloutput*
 npm-debug.log
 .idea/
-
+.vscode/
 *.DS_Store
 *.swp
+selenium/
 
+# Build artifacts
+
+built/
+node_modules/
+website/bower_components/
+website/build/
+website/docgen/build/
