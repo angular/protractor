@@ -11,6 +11,7 @@ exports.config = {
   specs: [
     'basic/locators_spec.js',
     'basic/mockmodule_spec.js',
+    'basic/navigation_spec.js',
     'basic/synchronize_spec.js'
   ],
 
