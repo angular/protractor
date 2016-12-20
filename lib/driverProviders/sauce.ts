@@ -5,6 +5,7 @@
  */
 
 import * as q from 'q';
+import {Session, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {Config} from '../config';
@@ -12,7 +13,7 @@ import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 
-let SauceLabs = require('saucelabs');
+const SauceLabs = require('saucelabs');
 
 let logger = new Logger('sauce');
 export class Sauce extends DriverProvider {
@@ -29,9 +30,9 @@ export class Sauce extends DriverProvider {
    * @return {q.promise} A promise that will resolve when the update is complete.
    */
   updateJob(update: any): q.Promise<any> {
-    var deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
+    var deferredArray = this.drivers_.map((driver: WebDriver) => {
       var deferred = q.defer();
-      driver.getSession().then((session: webdriver.Session) => {
+      driver.getSession().then((session: Session) => {
         logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
         this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
           if (err) {

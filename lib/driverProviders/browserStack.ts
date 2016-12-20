@@ -5,6 +5,7 @@
  */
 import * as https from 'https';
 import * as q from 'q';
+import {Session, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {Config} from '../config';
@@ -27,9 +28,9 @@ export class BrowserStack extends DriverProvider {
    * @return {q.promise} A promise that will resolve when the update is complete.
    */
   updateJob(update: any): q.Promise<any> {
-    let deferredArray = this.drivers_.map((driver: webdriver.WebDriver) => {
+    let deferredArray = this.drivers_.map((driver: WebDriver) => {
       let deferred = q.defer();
-      driver.getSession().then((session: webdriver.Session) => {
+      driver.getSession().then((session: Session) => {
         let headers: Object = {
           'Content-Type': 'application/json',
           'Authorization': 'Basic ' +

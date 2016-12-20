@@ -1,7 +1,7 @@
 import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
 
-let webdriver = require('selenium-webdriver');
+const webdriver = require('selenium-webdriver');
 
 declare var global: any;
 

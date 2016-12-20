@@ -4,13 +4,12 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
+import {Builder, Session, WebDriver} from 'selenium-webdriver';
 
 import {Config} from '../config';
 
-let webdriver = require('selenium-webdriver');
-
 export class DriverProvider {
-  drivers_: webdriver.WebDriver[];
+  drivers_: WebDriver[];
   config_: Config;
 
   constructor(config: Config) {
@@ -35,7 +34,7 @@ export class DriverProvider {
    * @return webdriver instance
    */
   getNewDriver() {
-    let builder = new webdriver.Builder()
+    let builder = new Builder()
                       .usingServer(this.config_.seleniumAddress)
                       .usingWebDriverProxy(this.config_.webDriverProxy)
                       .withCapabilities(this.config_.capabilities);
@@ -53,18 +52,18 @@ export class DriverProvider {
    * @public
    * @param webdriver instance
    */
-  quitDriver(driver: webdriver.WebDriver): q.Promise<webdriver.WebDriver> {
+  quitDriver(driver: WebDriver): q.Promise<WebDriver> {
     let driverIndex = this.drivers_.indexOf(driver);
     if (driverIndex >= 0) {
       this.drivers_.splice(driverIndex, 1);
     }
 
-    let deferred = q.defer<webdriver.WebDriver>();
+    let deferred = q.defer<WebDriver>();
     if (driver.getSession() === undefined) {
       deferred.resolve();
     } else {
       driver.getSession()
-          .then((session_) => {
+          .then((session_: Session) => {
             if (session_) {
               driver.quit().then(function() {
                 deferred.resolve();
@@ -104,8 +103,8 @@ export class DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment
    *     is down.
    */
-  teardownEnv(): q.Promise<q.Promise<webdriver.WebDriver>[]> {
-    return q.all<any>(this.drivers_.map((driver: webdriver.WebDriver) => {
+  teardownEnv(): q.Promise<q.Promise<WebDriver>[]> {
+    return q.all<any>(this.drivers_.map((driver: WebDriver) => {
       return this.quitDriver(driver);
     }));
   }

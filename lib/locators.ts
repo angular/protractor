@@ -1,6 +1,6 @@
 import {By, promise as wdpromise, WebDriver, WebElement} from 'selenium-webdriver';
 
-let webdriver = require('selenium-webdriver');
+const webdriver = require('selenium-webdriver');
 let clientSideScripts = require('./clientsidescripts');
 
 

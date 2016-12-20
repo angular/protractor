@@ -4,10 +4,15 @@
  * server.
  */
 import * as q from 'q';
+import {Session, WebDriver} from 'selenium-webdriver';
+import * as executors from 'selenium-webdriver/executors';
+
 import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 
-let webdriver = require('selenium-webdriver');
+export class MockExecutor {
+  execute(command: any): any {}
+}
 
 export class Mock extends DriverProvider {
   constructor(config?: Config) {
@@ -39,9 +44,9 @@ export class Mock extends DriverProvider {
    * @override
    * @return webdriver instance
    */
-  getNewDriver(): webdriver.WebDriver {
-    let mockSession = new webdriver.Session('test_session_id', {});
-    let newDriver = new webdriver.WebDriver(mockSession, new Mock());
+  getNewDriver(): WebDriver {
+    let mockSession = new Session('test_session_id', {});
+    let newDriver = new WebDriver(mockSession, new MockExecutor());
     this.drivers_.push(newDriver);
     return newDriver;
   }
