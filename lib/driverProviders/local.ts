@@ -45,9 +45,8 @@ export class Local extends DriverProvider {
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
       throw new BrowserError(
           logger,
-          'No selenium server jar found at the specified ' +
-              'location (' + this.config_.seleniumServerJar +
-              '). Check that the version number is up to date.');
+          'No selenium server jar found at ' + this.config_.seleniumServerJar +
+              '. Run \'webdriver-manager update\' to download binaries.');
     }
     if (this.config_.capabilities.browserName === 'chrome') {
       if (!this.config_.chromeDriver) {
@@ -64,7 +63,9 @@ export class Local extends DriverProvider {
           this.config_.chromeDriver += '.exe';
         } else {
           throw new BrowserError(
-              logger, 'Could not find chromedriver at ' + this.config_.chromeDriver);
+              logger,
+              'Could not find chromedriver at ' + this.config_.chromeDriver +
+                  '. Run \'webdriver-manager update\' to download binaries.'););
         }
       }
     }
