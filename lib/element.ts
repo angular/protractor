@@ -328,6 +328,33 @@ export class ElementArrayFinder extends WebdriverWebElement {
   };
 
   /**
+   * Get the second matching element for the ElementArrayFinder. This does not
+   * actually retrieve the underlying element.
+   *
+   * @alias element.all(locator).second()
+   * @view
+   * <ul class="items">
+   *   <li>First</li>
+   *   <li>Second</li>
+   *   <li>Third</li>
+   * </ul>
+   *
+   * @example
+   * let second = element.all(by.css('.items li')).second();
+   * expect(second.getText()).toBe('Second');
+   *
+   * // Or using the shortcut $$() notation instead of element.all(by.css()):
+   *
+   * let second = $$('.items li').second();
+   * expect(second.getText()).toBe('Second');
+   *
+   * @returns {ElementFinder} finder representing the second matching element
+   */
+  second(): ElementFinder {
+    return this.get(1);
+  };
+
+  /**
    * Get the last matching element for the ElementArrayFinder. This does not
    * actually retrieve the underlying element.
    *
