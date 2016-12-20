@@ -43,9 +43,8 @@ export abstract class DriverProvider {
   getNewDriver() {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
-      builder = new Builder()
-                    .usingServer(this.getBPUrl())
-                    .withCapabilities(this.config_.capabilities);
+      builder =
+          new Builder().usingServer(this.getBPUrl()).withCapabilities(this.config_.capabilities);
     } else {
       builder = new Builder()
                     .usingServer(this.config_.seleniumAddress)
