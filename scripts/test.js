@@ -8,6 +8,7 @@ var passingTests = [
   'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
   'node built/cli.js spec/altRootConf.js',
+  'node built/cli.js spec/inferRootConf.js',
   'node built/cli.js spec/onCleanUpAsyncReturnValueConf.js',
   'node built/cli.js spec/onCleanUpNoReturnValueConf.js',
   'node built/cli.js spec/onCleanUpSyncReturnValueConf.js',

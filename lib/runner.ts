@@ -208,9 +208,6 @@ export class Runner extends EventEmitter {
     if (config.debuggerServerPort) {
       browser_.debuggerServerPort = config.debuggerServerPort;
     }
-    if (config.useAllAngular2AppRoots) {
-      browser_.useAllAngular2AppRoots();
-    }
     if (config.ng12Hybrid) {
       browser_.ng12Hybrid = config.ng12Hybrid;
     }

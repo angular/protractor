@@ -26,10 +26,8 @@ describe('async angular1/2 hybrid using ngUpgrade application', function() {
       expect($$('h4').first().getText()).toBe('Bindings');
       browser.get('/upgrade');
       expect($('h1').getText()).toBe('My App');
-      browser.useAllAngular2AppRoots();
       browser.get('/ng2');
       expect($('h1').getText()).toBe('Test App for Angular 2');
-      browser.rootEl = 'body';
       browser.get('/upgrade');
       expect($('h1').getText()).toBe('My App');
     });
