@@ -9,10 +9,10 @@ import * as path from 'path';
  * Values from command line options override values from the config.
  */
 
-var args: Array<string> = [];
+let args: Array<string> = [];
 
 process.argv.slice(2).forEach(function(arg: string) {
-  var flag: string = arg.split('=')[0];
+  let flag: string = arg.split('=')[0];
 
   switch (flag) {
     case 'debug':
@@ -72,7 +72,7 @@ optimist
       }
     });
 
-var argv: any = optimist.parse(args);
+let argv: any = optimist.parse(args);
 
 if (argv.help) {
   optimist.showHelp();
@@ -105,7 +105,7 @@ if (argv.exclude) {
 }
 
 // Use default configuration, if it exists.
-var configFile: string = argv._[0];
+let configFile: string = argv._[0];
 if (!configFile) {
   if (fs.existsSync('./protractor.conf.js')) {
     configFile = './protractor.conf.js';

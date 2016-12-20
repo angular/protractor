@@ -38,8 +38,8 @@ export class AttachSession extends DriverProvider {
    * @return {WebDriver} webdriver instance
    */
   getNewDriver(): WebDriver {
-    var executor = executors.createExecutor(this.config_.seleniumAddress);
-    var newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
+    let executor = executors.createExecutor(this.config_.seleniumAddress);
+    let newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
     this.drivers_.push(newDriver);
     return newDriver;
   }

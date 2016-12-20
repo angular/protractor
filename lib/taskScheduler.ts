@@ -77,7 +77,7 @@ export class TaskScheduler {
 
       capabilities.count = capabilities.count || 1;
 
-      for (var i = 0; i < capabilities.count; ++i) {
+      for (let i = 0; i < capabilities.count; ++i) {
         taskQueues.push(new TaskQueue(capabilities, specLists));
       }
     });
@@ -92,9 +92,9 @@ export class TaskScheduler {
    * done: function()}}
    */
   public nextTask(): Task {
-    for (var i = 0; i < this.taskQueues.length; ++i) {
-      var rotatedIndex = ((i + this.rotationIndex) % this.taskQueues.length);
-      var queue = this.taskQueues[rotatedIndex];
+    for (let i = 0; i < this.taskQueues.length; ++i) {
+      let rotatedIndex = ((i + this.rotationIndex) % this.taskQueues.length);
+      let queue = this.taskQueues[rotatedIndex];
       if (queue.numRunningInstances < queue.maxInstance &&
           queue.specsIndex < queue.specLists.length) {
         this.rotationIndex = rotatedIndex + 1;
@@ -125,7 +125,7 @@ export class TaskScheduler {
    * @return {number}
    */
   public numTasksOutstanding(): number {
-    var count = 0;
+    let count = 0;
     this.taskQueues.forEach((queue) => {
       count += queue.numRunningInstances + (queue.specLists.length - queue.specsIndex);
     });
@@ -141,7 +141,7 @@ export class TaskScheduler {
     if (this.config.maxSessions && this.config.maxSessions > 0) {
       return this.config.maxSessions;
     } else {
-      var count = 0;
+      let count = 0;
       this.taskQueues.forEach((queue) => {
         count += Math.min(queue.maxInstance, queue.specLists.length);
       });
@@ -155,7 +155,7 @@ export class TaskScheduler {
    * @return {number}
    */
   public countActiveTasks() {
-    var count = 0;
+    let count = 0;
     this.taskQueues.forEach((queue) => {
       count += queue.numRunningInstances;
     });

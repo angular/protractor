@@ -1,6 +1,6 @@
 import * as net from 'net';
 import {promise as wdpromise, WebElement} from 'selenium-webdriver';
-import * as util from 'util'
+import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
 import {Locator} from './locators';

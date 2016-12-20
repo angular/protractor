@@ -5,17 +5,16 @@ import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
-import {AttachSession, BrowserStack, Direct, Hosted, Local, Mock, Sauce} from './driverProviders';
-import {DriverProvider} from './driverProviders';
+import {AttachSession, BrowserStack, Direct, DriverProvider, Hosted, Local, Mock, Sauce} from './driverProviders';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
 import * as helper from './util';
 
-declare var global: any;
-declare var process: any;
+declare let global: any;
+declare let process: any;
 
-var webdriver = require('selenium-webdriver');
+const webdriver = require('selenium-webdriver');
 let logger = new Logger('runner');
 /*
  * Runner is responsible for starting the execution of a test run and triggering
@@ -127,17 +126,16 @@ export class Runner extends EventEmitter {
    * @private
    * @param {int} Standard unix exit code
    */
-  exit_ = function(exitCode: number):
-      any {
-        return helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode])
-            .then((returned): number | any => {
-              if (typeof returned === 'number') {
-                return returned;
-              } else {
-                return exitCode;
-              }
-            });
-      }
+  exit_ = function(exitCode: number): any {
+    return helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode])
+        .then((returned): number | any => {
+          if (typeof returned === 'number') {
+            return returned;
+          } else {
+            return exitCode;
+          }
+        });
+  };
 
   /**
    * Getter for the Runner config object
@@ -205,10 +203,10 @@ export class Runner extends EventEmitter {
    * @public
    */
   createBrowser(plugins: any): any {
-    var config = this.config_;
-    var driver = this.driverprovider_.getNewDriver();
+    let config = this.config_;
+    let driver = this.driverprovider_.getNewDriver();
 
-    var browser_ = ProtractorBrowser.wrapDriver(
+    let browser_ = ProtractorBrowser.wrapDriver(
         driver, config.baseUrl, config.rootElement, config.untrackOutstandingTimeouts);
 
     browser_.params = config.params;
@@ -341,7 +339,7 @@ export class Runner extends EventEmitter {
           }
 
           if (this.config_.restartBrowserBetweenTests) {
-            var restartDriver = () => {
+            let restartDriver = () => {
               browser_.restart();
             };
             this.on('testPass', restartDriver);
@@ -393,7 +391,7 @@ export class Runner extends EventEmitter {
           // 9) Exit process
         })
         .then(() => {
-          var exitCode = testPassed ? 0 : 1;
+          let exitCode = testPassed ? 0 : 1;
           return this.exit_(exitCode);
         })
         .fin(() => {

@@ -12,7 +12,7 @@ dependencies:
   cache_directories:
     - testapp/node_modules
   post:
-    - ./node_modules/.bin/gulp format:enforce
+    - ./node_modules/.bin/gulp lint
     - ./node_modules/.bin/webdriver-manager update
     - ./node_modules/.bin/webdriver-manager start:
           background: true

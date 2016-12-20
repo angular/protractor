@@ -6,6 +6,7 @@ var gulpFormat = require('gulp-clang-format');
 var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
 var spawnSync = require('child_process').spawnSync;
+var tslint = require('gulp-tslint');
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
@@ -34,6 +35,15 @@ var runSpawn = function(done, task, opt_arg, opt_io) {
   });
 };
 
+gulp.task('tslint', function() {
+  return gulp.src(['lib/**/*.ts', 'spec/**/*.ts', '!spec/install/**/*.ts'])
+      .pipe(tslint()).pipe(tslint.report());
+});
+
+gulp.task('lint', function(done) {
+  runSequence('tslint', 'jshint', 'format:enforce', done);
+});
+
 // prevent contributors from using the wrong version of node
 gulp.task('checkVersion', function(done) {
   // read minimum node on package.json
@@ -44,8 +54,8 @@ gulp.task('checkVersion', function(done) {
   if (semver.satisfies(process.version, nodeVersion)) {
     done();
   } else {
-    throw new Error('minimum node version for Protractor ' + protractorVersion +
-      ' is node ' + nodeVersion);
+    throw new Error('minimum node version for Protractor ' +
+        protractorVersion + ' is node ' + nodeVersion);
   }
 });
 
@@ -60,7 +70,8 @@ gulp.task('webdriver:update', function(done) {
 });
 
 gulp.task('jshint', function(done) {
-  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', '-c', '.jshintrc', 'lib', 'spec', 'scripts',
+  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', '-c',
+      '.jshintrc', 'lib', 'spec', 'scripts',
       '--exclude=lib/selenium-webdriver/**/*.js,spec/dependencyTest/*.js,' +
       'spec/install/**/*.js']);
 });
@@ -90,8 +101,7 @@ gulp.task('prepublish', function(done) {
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'format'], 'tsc',
-    'built:copy', done);
+    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);

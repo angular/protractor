@@ -238,7 +238,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
 
         let deferred = q.defer<any>();  // Resolved when all tasks are completed
         let createNextTaskRunner = () => {
-          var task = scheduler.nextTask();
+          let task = scheduler.nextTask();
           if (task) {
             let taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
             taskRunner.run()
@@ -267,7 +267,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         // the beginning. As a worker finishes a task, it will pick up the next
         // task
         // from the scheduler's queue until all tasks are gone.
-        for (var i = 0; i < scheduler.maxConcurrentTasks(); ++i) {
+        for (let i = 0; i < scheduler.maxConcurrentTasks(); ++i) {
           createNextTaskRunner();
         }
         logger.info('Running ' + scheduler.countActiveTasks() + ' instances of WebDriver');

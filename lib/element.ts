@@ -1,7 +1,6 @@
 import {By, error, ILocation, ISize, promise as wdpromise, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 
-import {ElementHelper} from './browser';
-import {ProtractorBrowser} from './browser';
+import {ElementHelper, ProtractorBrowser} from './browser';
 import {IError} from './exitCodes';
 import {Locator} from './locators';
 import {Logger} from './logger';
