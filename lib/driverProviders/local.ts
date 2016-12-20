@@ -65,7 +65,7 @@ export class Local extends DriverProvider {
           throw new BrowserError(
               logger,
               'Could not find chromedriver at ' + this.config_.chromeDriver +
-                  '. Run \'webdriver-manager update\' to download binaries.'););
+                  '. Run \'webdriver-manager update\' to download binaries.');
         }
       }
     }

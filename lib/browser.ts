@@ -10,7 +10,6 @@ import {Logger} from './logger';
 import {Plugins} from './plugins';
 
 const clientSideScripts = require('./clientsidescripts');
-const webdriver = require('selenium-webdriver');
 // TODO: fix the typings for selenium-webdriver/lib/command
 const Command = require('selenium-webdriver/lib/command').Command as typeof WdCommand;
 const CommandName = require('selenium-webdriver/lib/command').Name as ICommandName;
@@ -23,11 +22,14 @@ const DEFAULT_GET_PAGE_TIMEOUT = 10000;
 
 let logger = new Logger('protractor');
 
+// TODO(cnishina): either remove for loop entirely since this does not export anything
+// the user might need since everything is composed (with caveat that this could be a
+// potential breaking change) or export the types with `export * from 'selenium-webdriver'`;
 /*
  * Mix in other webdriver functionality to be accessible via protractor.
  */
-for (let foo in webdriver) {
-  exports[foo] = webdriver[foo];
+for (let foo in require('selenium-webdriver')) {
+  exports[foo] = require('selenium-webdriver')[foo];
 }
 
 // Explicitly define webdriver.WebDriver

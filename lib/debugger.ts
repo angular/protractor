@@ -12,7 +12,6 @@ declare var global: any;
 declare var process: any;
 
 let logger = new Logger('protractor');
-const webdriver = require('selenium-webdriver');
 
 export class DebugHelper {
   /**
@@ -40,7 +39,7 @@ export class DebugHelper {
    *     process.
    */
   init(debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
-    webdriver.promise.ControlFlow.prototype.getControlFlowText = function() {
+    (wdpromise.ControlFlow as any).prototype.getControlFlowText = function() {
       let controlFlowText = this.getSchedule(/* opt_includeStackTraces */ true);
       // This filters the entire control flow text, not just the stack trace, so
       // unless we maintain a good (i.e. non-generic) set of keywords in
@@ -52,8 +51,8 @@ export class DebugHelper {
       return helper.filterStackTrace(controlFlowText);
     };
 
-    let vm_ = require('vm');
-    let flow = webdriver.promise.controlFlow();
+    const vm_ = require('vm');
+    let flow = wdpromise.controlFlow();
 
     interface Context {
       require: any;
@@ -76,7 +75,7 @@ export class DebugHelper {
     }
     let sandbox = vm_.createContext(context);
 
-    let debuggerReadyPromise = webdriver.promise.defer();
+    let debuggerReadyPromise = wdpromise.defer();
     flow.execute(() => {
       process['debugPort'] = opt_debugPort || process['debugPort'];
       this.validatePortAvailability_(process['debugPort']).then((firstTime: boolean) => {
@@ -161,8 +160,8 @@ export class DebugHelper {
           // Run code through vm so that we can maintain a local scope which is
           // isolated from the rest of the execution.
           let res = vm_.runInContext(code, sandbox);
-          if (!webdriver.promise.isPromise(res)) {
-            res = webdriver.promise.fulfilled(res);
+          if (!wdpromise.isPromise(res)) {
+            res = wdpromise.fulfilled(res);
           }
 
           return res.then((res: any) => {
@@ -171,8 +170,7 @@ export class DebugHelper {
             } else {
               // The '' forces res to be expanded into a string instead of just
               // '[Object]'. Then we remove the extra space caused by the ''
-              // using
-              // substring.
+              // using substring.
               return util.format.apply(this, ['', res]).substring(1);
             }
           });
@@ -184,7 +182,7 @@ export class DebugHelper {
       // Result is a JSON representation of the autocomplete response.
       complete: function(line: string) {
         let execFn_ = () => {
-          let deferred = webdriver.promise.defer();
+          let deferred = wdpromise.defer();
           this.replServer_.complete(line, (err: any, res: any) => {
             if (err) {
               deferred.reject(err);
@@ -234,7 +232,7 @@ export class DebugHelper {
       return wdpromise.fulfilled(false);
     }
 
-    let doneDeferred = webdriver.promise.defer();
+    let doneDeferred = wdpromise.defer();
 
     // Resolve doneDeferred if port is available.
     let tester = net.connect({port: port}, () => {

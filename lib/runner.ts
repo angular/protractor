@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
 import * as q from 'q';
-import {Session} from 'selenium-webdriver';
+import {promise as wdpromise, Session} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
@@ -14,7 +14,6 @@ import * as helper from './util';
 declare let global: any;
 declare let process: any;
 
-const webdriver = require('selenium-webdriver');
 let logger = new Logger('runner');
 /*
  * Runner is responsible for starting the execution of a test run and triggering
@@ -45,7 +44,7 @@ export class Runner extends EventEmitter {
 
     if (config.nodeDebug) {
       process['_debugProcess'](process.pid);
-      let flow = webdriver.promise.controlFlow();
+      let flow = wdpromise.controlFlow();
 
       flow.execute(() => {
         let nodedebug = require('child_process').fork('debug', ['localhost:5858']);
@@ -151,7 +150,7 @@ export class Runner extends EventEmitter {
    * @return {Object} WebDriver control flow.
    */
   controlFlow(): any {
-    return webdriver.promise.controlFlow();
+    return wdpromise.controlFlow();
   }
 
   /**
@@ -232,7 +231,7 @@ export class Runner extends EventEmitter {
     browser_.ready = driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
 
     browser_.getProcessedConfig = () => {
-      return webdriver.promise.fulfilled(config);
+      return wdpromise.fulfilled(config);
     };
 
     browser_.forkNewDriverInstance = (opt_useSameUrl: boolean, opt_copyMockModules: boolean) => {
