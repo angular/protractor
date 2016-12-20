@@ -103,11 +103,9 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
     return new ElementArrayFinder(browser).all(locator).toElementFinder_();
   }) as ElementHelper;
 
-  element.all =
-      (locator: Locator) => {
-        return new ElementArrayFinder(browser).all(locator);
-      }
-
+  element.all = (locator: Locator) => {
+    return new ElementArrayFinder(browser).all(locator);
+  };
   return element;
 };
 
@@ -374,6 +372,11 @@ export class ProtractorBrowser extends Webdriver {
     // signal to scripts to not find a root element.
     this.rootEl = '';
   }
+
+  /**
+   * Set the root element manually
+   */
+  setRootElement(tag: string) { this.rootEl = tag; }
 
   /**
    * The same as {@code webdriver.WebDriver.prototype.executeScript},
@@ -900,14 +903,26 @@ export class ProtractorBrowser extends Webdriver {
     let onStartFn = () => {
       logger.info();
       logger.info('------- Element Explorer -------');
+      logger.info('Starting WebDriver debugger in a child process.');
       logger.info(
-          'Starting WebDriver debugger in a child process. Element ' +
-          'Explorer is still beta, please report issues at ' +
+          'Element Explorer is still beta, please report issues at ' +
           'github.com/angular/protractor');
       logger.info();
       logger.info('Type <tab> to see a list of locator strategies.');
       logger.info('Use the `list` helper function to find elements by strategy:');
       logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
+      logger.info();
+      logger.info(
+          'The root element is assumed as \'' + global.browser.rootEl + '\'.');
+      logger.info('Troubleshooting the browser root element:');
+      logger.info(
+          '- to set useAllAngular2AppRoots to true, run `browser.useAllAngular2AppRoots()`.');
+      logger.info(
+          '- if you encounter "Error while waiting for Protractor to sync with the page",');
+      logger.info(
+          '  ensure you are using the correct root element. To override the root element, use:');
+      logger.info(
+          '  `browser.setRootElement(element)`, where element is a string.');
       logger.info();
     };
     this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
