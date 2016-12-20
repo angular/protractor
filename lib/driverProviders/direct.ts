@@ -69,7 +69,10 @@ export class Direct extends DriverProvider {
         let chromeDriverFile = this.config_.chromeDriver || defaultChromeDriverPath;
 
         if (!fs.existsSync(chromeDriverFile)) {
-          throw new BrowserError(logger, 'Could not find chromedriver at ' + chromeDriverFile);
+          throw new BrowserError(
+              logger,
+              'Could not find chromedriver at ' + chromeDriverFile +
+                  '. Run \'webdriver-manager update\' to download binaries.');
         }
 
         let service = new ChromeServiceBuilder(chromeDriverFile).build();
