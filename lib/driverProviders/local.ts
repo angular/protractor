@@ -16,12 +16,13 @@ import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 
-let SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-let SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-let SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
-let remote = require('selenium-webdriver/remote');
+const SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
+const SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
+const SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/stand_alone').StandAlone;
+const remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
+
 export class Local extends DriverProvider {
   server_: any;
   constructor(config: Config) {

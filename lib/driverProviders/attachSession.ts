@@ -4,14 +4,13 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
+import {WebDriver} from 'selenium-webdriver';
+import * as executors from 'selenium-webdriver/executors';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
-
-let webdriver = require('selenium-webdriver');
-let executors = require('selenium-webdriver/executors');
 
 let logger = new Logger('attachSession');
 
@@ -38,9 +37,9 @@ export class AttachSession extends DriverProvider {
    * @public
    * @return {WebDriver} webdriver instance
    */
-  getNewDriver(): webdriver.WebDriver {
+  getNewDriver(): WebDriver {
     var executor = executors.createExecutor(this.config_.seleniumAddress);
-    var newDriver = webdriver.WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
+    var newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
     this.drivers_.push(newDriver);
     return newDriver;
   }
@@ -50,8 +49,8 @@ export class AttachSession extends DriverProvider {
    *
    * @public
    */
-  quitDriver(): q.Promise<webdriver.WebDriver> {
-    let defer = q.defer<webdriver.WebDriver>();
+  quitDriver(): q.Promise<WebDriver> {
+    let defer = q.defer<WebDriver>();
     defer.resolve(null);
     return defer.promise;
   }

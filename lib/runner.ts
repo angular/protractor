@@ -1,5 +1,6 @@
 import {EventEmitter} from 'events';
 import * as q from 'q';
+import {Session} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
@@ -298,7 +299,7 @@ export class Runner extends EventEmitter {
           this.setupGlobals_(browser_);
           return browser_.ready.then(browser_.getSession)
               .then(
-                  (session: webdriver.Session) => {
+                  (session: Session) => {
                     logger.debug(
                         'WebDriver session successfully started with capabilities ' +
                         util.inspect(session.getCapabilities()));

@@ -2,6 +2,7 @@
  * The launcher is responsible for parsing the capabilities from the
  * input configuration and launching test runners.
  */
+import * as fs from 'fs';
 import * as q from 'q';
 
 import {Config} from './config';
@@ -47,7 +48,6 @@ class TaskResults {
     }, []);
 
     let json = JSON.stringify(jsonOutput, null, '  ');
-    let fs = require('fs');
     fs.writeFileSync(filepath, json);
   }
 

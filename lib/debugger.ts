@@ -1,4 +1,5 @@
 import * as net from 'net';
+import {promise as wdpromise, WebElement} from 'selenium-webdriver';
 import * as util from 'util'
 
 import {ProtractorBrowser} from './browser';
@@ -11,7 +12,7 @@ declare var global: any;
 declare var process: any;
 
 let logger = new Logger('protractor');
-let webdriver = require('selenium-webdriver');
+const webdriver = require('selenium-webdriver');
 
 export class DebugHelper {
   /**
@@ -60,17 +61,15 @@ export class DebugHelper {
     }
     let context: Context = {require: require};
     global.list = (locator: Locator) => {
-      return (<Ptor>global.protractor)
-          .browser.findElements(locator)
-          .then((arr: webdriver.WebElement[]) => {
-            let found: string[] = [];
-            for (let i = 0; i < arr.length; ++i) {
-              arr[i].getText().then((text: string) => {
-                found.push(text);
-              });
-            }
-            return found;
+      return (<Ptor>global.protractor).browser.findElements(locator).then((arr: WebElement[]) => {
+        let found: string[] = [];
+        for (let i = 0; i < arr.length; ++i) {
+          arr[i].getText().then((text: string) => {
+            found.push(text);
           });
+        }
+        return found;
+      });
     };
     for (let key in global) {
       context[key] = global[key];
@@ -230,9 +229,9 @@ export class DebugHelper {
    *     is done. The promise will resolve to a boolean which represents whether
    *     this is the first time that the debugger is called.
    */
-  private validatePortAvailability_(port: number): webdriver.promise.Promise<any> {
+  private validatePortAvailability_(port: number): wdpromise.Promise<any> {
     if (this.debuggerValidated_) {
-      return webdriver.promise.fulfilled(false);
+      return wdpromise.fulfilled(false);
     }
 
     let doneDeferred = webdriver.promise.defer();

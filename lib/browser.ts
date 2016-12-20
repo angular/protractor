@@ -562,7 +562,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!webdriver.promise.Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
-  findElements(locator: Locator): webdriver.promise.Promise<any> {
+  findElements(locator: Locator): wdpromise.Promise<any> {
     return this.element.all(locator).getWebElements();
   }
 
@@ -572,8 +572,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!webdriver.promise.Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
-  isElementPresent(locatorOrElement: ProtractorBy|
-                   webdriver.WebElement): webdriver.promise.Promise<any> {
+  isElementPresent(locatorOrElement: ProtractorBy|WebElement): wdpromise.Promise<any> {
     let element =
         ((locatorOrElement as any).isPresent) ? locatorOrElement : this.element(locatorOrElement);
     return (element as any).isPresent();
@@ -823,7 +822,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!webdriver.promise.Promise} A promise that will resolve once
    *    page has been changed.
    */
-  setLocation(url: string): webdriver.promise.Promise<any> {
+  setLocation(url: string): wdpromise.Promise<any> {
     this.waitForAngular();
     return this
         .executeScriptWithDescription(
@@ -845,7 +844,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {webdriver.promise.Promise<string>} The current absolute url from
    * AngularJS.
    */
-  getLocationAbsUrl(): webdriver.promise.Promise<any> {
+  getLocationAbsUrl(): wdpromise.Promise<any> {
     this.waitForAngular();
     return this.executeScriptWithDescription(
         clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', this.rootEl);
@@ -930,7 +929,7 @@ export class ProtractorBrowser extends Webdriver {
    * @param {number=} opt_debugPort Optional port to use for the debugging
    * process
    */
-  pause(opt_debugPort?: number): webdriver.promise.Promise<any> {
+  pause(opt_debugPort?: number): wdpromise.Promise<any> {
     if (this.debugHelper.isAttached()) {
       logger.info('Encountered browser.pause(), but debugger already attached.');
       return wdpromise.fulfilled(true);

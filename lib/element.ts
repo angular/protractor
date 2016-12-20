@@ -161,7 +161,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
       if (this.getWebElements === null) {
         // This is the first time we are looking for an element
         return ptor.waitForAngular('Locator: ' + locator)
-            .then((): wdpromise.Promise<webdriver.WebElement[]> => {
+            .then((): wdpromise.Promise<WebElement[]> => {
               if (locator.findElementsOverride) {
                 return locator.findElementsOverride(ptor.driver, null, ptor.rootEl);
               } else {
@@ -172,20 +172,20 @@ export class ElementArrayFinder extends WebdriverWebElement {
         return this.getWebElements().then((parentWebElements: WebElement[]) => {
           // For each parent web element, find their children and construct
           // a list of Promise<List<child_web_element>>
-          let childrenPromiseList =
-              parentWebElements.map((parentWebElement: webdriver.WebElement) => {
-                return locator.findElementsOverride ?
-                    locator.findElementsOverride(ptor.driver, parentWebElement, ptor.rootEl) :
-                    parentWebElement.findElements(locator);
-              });
+          let childrenPromiseList = parentWebElements.map((parentWebElement: WebElement) => {
+            return locator.findElementsOverride ?
+                locator.findElementsOverride(ptor.driver, parentWebElement, ptor.rootEl) :
+                parentWebElement.findElements(locator);
+          });
 
           // Resolve the list of Promise<List<child_web_elements>> and merge
           // into a single list
-          return wdpromise.all(childrenPromiseList).then((resolved) => {
-            return resolved.reduce((childrenList, resolvedE) => {
-              return childrenList.concat(resolvedE);
-            }, []);
-          });
+          return wdpromise.all<WebElement[]>(childrenPromiseList)
+              .then((resolved: WebElement[][]) => {
+                return resolved.reduce((childrenList, resolvedE) => {
+                  return childrenList.concat(resolvedE);
+                }, []);
+              });
         });
       }
     };
@@ -470,7 +470,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
       ElementArrayFinder {
     let callerError = new Error();
     let actionResults = this.getWebElements()
-                            .then(arr => webdriver.promise.all(arr.map(actionFn)))
+                            .then((arr: any) => wdpromise.all(arr.map(actionFn)))
                             .then(null, (e: IError | string) => {
                               let noSuchErr: any;
                               if (e instanceof Error) {
@@ -899,10 +899,9 @@ export class ElementFinder extends WebdriverWebElement {
    * @returns {webdriver.WebElement}
    */
   getWebElement(): WebElementPromise {
-    let id = this.elementArrayFinder_.getWebElements().then(
-        (parentWebElements: webdriver.WebElement[]) => {
-          return parentWebElements[0];
-        });
+    let id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
+      return parentWebElements[0];
+    });
     return new WebElementPromise(this.browser_.driver, id);
   }
 
