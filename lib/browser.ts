@@ -572,8 +572,7 @@ export class ProtractorBrowser extends Webdriver {
    * @returns {!wdpromise.Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
-  isElementPresent(locatorOrElement: ProtractorBy|
-                   WebElement): wdpromise.Promise<any> {
+  isElementPresent(locatorOrElement: ProtractorBy|WebElement): wdpromise.Promise<any> {
     let element =
         ((locatorOrElement as any).isPresent) ? locatorOrElement : this.element(locatorOrElement);
     return (element as any).isPresent();
