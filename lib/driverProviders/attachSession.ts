@@ -38,9 +38,9 @@ export class AttachSession extends DriverProvider {
    * @return {WebDriver} webdriver instance
    */
   getNewDriver(): WebDriver {
-    var httpClient = new http.HttpClient(this.config_.seleniumAddress);
-    var executor = new http.Executor(httpClient);
-    var newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
+    const httpClient = new http.HttpClient(this.config_.seleniumAddress);
+    const executor = new http.Executor(httpClient);
+    const newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
     this.drivers_.push(newDriver);
     return newDriver;
   }
