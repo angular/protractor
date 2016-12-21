@@ -50,8 +50,8 @@ export class BlockingProxyRunner {
 
       process.on('exit', () => {
         this.bpProcess.kill();
-      })
-    })
+      });
+    });
   }
 
   checkSupportedConfig() {
