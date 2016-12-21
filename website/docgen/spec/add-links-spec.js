@@ -167,6 +167,46 @@ describe('add-links', function() {
         toBe('A promise located [{@code webdriver.WebElement}](webdriver.WebElement)s.');
   });
 
+  it('should add @external links', function() {
+    // Given a doc with a @external annotation.
+    var docs = [
+      {
+        name: 'webdriver.ActionSequence',
+        external: 'webdriver.ActionSequence',
+        see: [ 'http://seleniumhq.github.io/selenium/doc' ],
+      },
+      {
+        name: 'browser.action()',
+        description: 'Creates a new action sequence using the driver.',
+        fileName: 'protractor',
+        fileInfo: {filePath: ''},
+        startingLine: 3,
+        returns: {
+          tagDef: {
+            name: 'returns',
+            aliases: ['return'],
+            canHaveType: true
+          },
+          tagName: 'return',
+          description: 'A new action sequence for this instance.',
+          startingLine: 119,
+          typeExpression: 'webdriver.ActionSequence',
+          type: {
+            type: 'NameExpression',
+            name: 'webdriver.ActionSequence'
+          },
+          typeList: ['webdriver.ActionSequence']
+        }
+      }
+    ];
+
+    // When you add links.
+    addLinks(docs);
+
+    // Then ensure a link was added to the type.
+    expect(docs[1].returnString).toBe('[webdriver.ActionSequence](http://seleniumhq.github.io/selenium/doc)');
+  });
+
   it('should handle {@link type desc} links', function() {
     // Given a doc with a @link annotation.
     var docs = [

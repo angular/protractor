@@ -51,6 +51,13 @@ This is a [webdriver quirk](http://grokbase.com/t/gg/webdriver/12bcmvwhcm/extarc
 `<input>` and `<textarea>` elements always have
 empty `getText` values. Instead, try `element.getAttribute('value')`.
 
+How can I drag and drop elements?
+---------------------------------
+You can specify a sequence of [actions](http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.actions)
+to drag an drop elements.  Note mouse actions do not work on Chrome with the HTML5 Drag and Drop API due to a known
+[Chromedriver issue](https://bugs.chromium.org/p/chromedriver/issues/detail?id=841)
+
+
 How can I interact directly with the JavaScript running in my app?
 ------------------------------------------------------------------
 

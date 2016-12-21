@@ -7,6 +7,12 @@ var _ = require('lodash');
 var typeTable;
 
 /**
+ * A lookup table with links to external types.
+ * @type {Object.<string, string}
+ */
+var externalTypes = {};
+
+/**
  * The hash used to generate the links to the source code.
  */
 var linksHash = require('../../../package.json').version;
@@ -88,6 +94,10 @@ var toMarkdownLinkFormat = function(link, doc, code) {
   }
   desc = desc.replace(new RegExp('\n', 'g'), ' ');
 
+  if (desc in externalTypes) {
+    type = externalTypes[desc];
+  }
+
   if (!type.match(/^https?:\/\//)) {
     // Remove extra '()' at the end of types
     if (type.substr(-2) == '()') {
@@ -145,6 +155,22 @@ var getTypeString = function(param) {
 };
 
 /**
+ * Filters out types with @external annotations and adds their @see link to the
+ * externalTypes table
+ *
+ * @param {Array.<Object>} docs The jsdoc list.
+ */
+var filterExternalDocs = function(docs) {
+  return _.reject(docs, function (doc) {
+    if (!!doc.external) {
+      externalTypes[doc.name] = doc.see[0];
+      return true;
+    }
+    return false;
+  });
+};
+
+/**
  * Add links to the external documents
  */
 module.exports = function addLinks() {
@@ -153,6 +179,8 @@ module.exports = function addLinks() {
     $runBefore: ['tags-extracted'],
     $process: function(docs) {
       typeTable = _.groupBy(docs, 'name');
+
+      docs = filterExternalDocs(docs);
 
       docs.forEach(function(doc) {
         addLinkToSourceCode(doc);
@@ -173,6 +201,8 @@ module.exports = function addLinks() {
           doc.returnString = '';
         }
       });
+
+      return docs;
     }
   };
 };
