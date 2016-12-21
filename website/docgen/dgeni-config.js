@@ -14,6 +14,7 @@ jsDocProcessor.config(function(parseTagsProcessor) {
   tagDefs.push({name: 'deprecated'});
   tagDefs.push({name: 'example'});
   tagDefs.push({name: 'extends'});
+  tagDefs.push({name: 'external'});
   tagDefs.push({name: 'private'});
   tagDefs.push({name: 'type'});
   tagDefs.push({name: 'view'});
