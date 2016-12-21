@@ -39,29 +39,16 @@ export class TaskScheduler {
    * @param {Object} config parsed from the config file
    */
   constructor(private config: Config) {
-    let excludes = ConfigParser.resolveFilePatterns(config.exclude, true, config.configDir);
-    let allSpecs =
-        ConfigParser.resolveFilePatterns(ConfigParser.getSpecs(config), false, config.configDir)
-            .filter((path: string) => {
-              return excludes.indexOf(path) < 0;
-            });
-
     let taskQueues: Array<TaskQueue> = [];
-    config.multiCapabilities.forEach((capabilities) => {
-      let capabilitiesSpecs = allSpecs;
-      if (capabilities.specs) {
-        let capabilitiesSpecificSpecs =
-            ConfigParser.resolveFilePatterns(capabilities.specs, false, config.configDir);
-        capabilitiesSpecs = capabilitiesSpecs.concat(capabilitiesSpecificSpecs);
-      }
-
-      if (capabilities.exclude) {
-        let capabilitiesSpecExcludes =
-            ConfigParser.resolveFilePatterns(capabilities.exclude, true, config.configDir);
-        capabilitiesSpecs = capabilitiesSpecs.filter((path) => {
-          return capabilitiesSpecExcludes.indexOf(path) < 0;
-        });
-      }
+    config.multiCapabilities.forEach((capabilities, capIndex) => {
+      let specInfo = ConfigParser.getSpecInfo(config, capIndex);
+      let capabilitiesSpecs =
+          ConfigParser.resolveFilePatterns(specInfo.specs, false, config.configDir);
+      let capabilitiesExclude =
+          ConfigParser.resolveFilePatterns(specInfo.exclude, false, config.configDir);
+      capabilitiesSpecs = capabilitiesSpecs.filter((path) => {
+        return capabilitiesExclude.indexOf(path) < 0;
+      });
 
       let specLists: Array<Array<string>> = [];
       // If we shard, we return an array of one element arrays, each containing

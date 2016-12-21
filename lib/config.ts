@@ -1,6 +1,10 @@
+import * as q from 'q';
+
 import {PluginConfig} from './plugins';
 
-export interface Config {
+export interface Config extends SpecsSettings {
+  [key: string]: any;
+
   // ---------------------------------------------------------------------------
   // ----- How to connect to Browser Drivers -----------------------------------
   // ---------------------------------------------------------------------------
@@ -170,50 +174,11 @@ export interface Config {
   // ----- What tests to run ---------------------------------------------------
   // ---------------------------------------------------------------------------
 
-  /**
-   * Use default globals: 'protractor', 'browser', '$', '$$', 'element', 'by'.
-   * These also exist as properties of the protractor namespace:
-   * 'protractor.browser', 'protractor.$', 'protractor.$$',
-   * 'protractor.element', 'protractor.by', and 'protractor.By'.
-   *
-   * When no globals is set to true, the only available global variable will be
-   * 'protractor'.
-   */
-  noGlobals?: boolean;
-
-  /**
-   * Required. Spec patterns are relative to the location of this config.
-   *
-   * Example:
-   * specs: [
-   *   'spec/*_spec.js'
-   * ]
-   */
-  specs?: Array<string>;
-
-  /**
-   * Patterns to exclude specs.
-   */
-  exclude?: Array<string>|string;
-
-  /**
-   * Alternatively, suites may be used. When run without a command line
-   * parameter, all suites will run. If run with --suite=smoke or
-   * --suite=smoke,full only the patterns matched by the specified suites will
-   * run.
-   *
-   * Example:
-   * suites: {
-   *   smoke: 'spec/smoketests/*.js',
-   *   full: 'spec/*.js'
-   * }
-   */
-  suites?: any;
-  /**
-   * If you would like protractor to use a specific suite by default instead of
-   * all suites, you can put that in the config file as well.
-   */
-  suite?: string;
+  // See the `SpecsSettings` interface below
+  // specs?: string[];
+  // exclude?: string[];
+  // suites?: {[suiteName: string]: string | string[] | Suite};
+  // suite?: string;
 
   // ---------------------------------------------------------------------------
   // ----- How to set up browsers ----------------------------------------------
@@ -224,9 +189,11 @@ export interface Config {
    * testing on a single browser, use the capabilities option. If you are
    * testing on multiple browsers, use the multiCapabilities array.
    *
-   * For a list of available capabilities, see
+   * For a list of options commonly uses by Protractor users, see the
+   * `Capabilities` interface exported at the bottom of this file.
+   *
+   * For full a list of available capabilities options, see
    * https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
-   * In addition, you may specify count, shardTestFiles, and maxInstances.
    *
    * Example:
    * capabilities: {
@@ -241,73 +208,14 @@ export interface Config {
    *   seleniumAddress: 'http://localhost:4444/wd/hub'
    * }
    */
-  capabilities?: {
-
-    [key: string]: any;
-
-    browserName?: string;
-
-    /**
-     * Name of the process executing this capability.  Not used directly by
-     * protractor or the browser, but instead pass directly to third parties
-     * like BrowserStack and SauceLabs as the name of the job running this
-     * test
-     */
-    name?: string;
-
-    /**
-     * User defined name for the capability that will display in the results
-     * log. Defaults to the browser name
-     */
-    logName?: string;
-
-    /**
-     * Number of times to run this set of capabilities (in parallel, unless
-     * limited by maxSessions). Default is 1.
-     */
-    count?: number;
-
-    /**
-     * If this is set to be true, specs will be sharded by file (i.e. all
-     * files to be run by this set of capabilities will run in parallel).
-     * Default is false.
-     */
-    shardTestFiles?: boolean;
-
-    /**
-     * Maximum number of browser instances that can run in parallel for this
-     * set of capabilities. This is only needed if shardTestFiles is true.
-     * Default is 1.
-     */
-    maxInstances?: number;
-
-    /**
-     * Additional spec files to be run on this capability only.
-     */
-    specs?: string[];
-
-    /**
-     * Spec files to be excluded on this capability only.
-     */
-    exclude?: string[];
-
-    /**
-     * Optional: override global seleniumAddress on this capability only.
-     */
-    seleniumAddress?: string;
-
-    // Optional: Additional third-party specific capabilities can be
-    // specified here.
-    // For a list of BrowserStack specific capabilities, visit
-    // https://www.browserstack.com/automate/capabilities
-  };
+  capabilities?: Capabilities;
 
   /**
    * If you would like to run more than one instance of WebDriver on the same
    * tests, use multiCapabilities, which takes an array of capabilities.
    * If this is specified, capabilities will be ignored.
    */
-  multiCapabilities?: Array<any>;
+  multiCapabilities?: Array<Capabilities>;
 
   /**
    * If you need to resolve multiCapabilities asynchronously (i.e. wait for
@@ -319,7 +227,7 @@ export interface Config {
    * `beforeLaunch` is run, and before any driver is set up. If this is
    * specified, both capabilities and multiCapabilities will be ignored.
    */
-  getMultiCapabilities?: any;
+  getMultiCapabilities?: () => q.IWhenable<Array<Capabilities>>;
 
   /**
    * Maximum number of total browser sessions to run. Tests are queued in
@@ -341,6 +249,17 @@ export interface Config {
   // ----- Global test information
   // ---------------------------------------------
   // ---------------------------------------------------------------------------
+
+  /**
+   * Use default globals: 'protractor', 'browser', '$', '$$', 'element', 'by'.
+   * These also exist as properties of the protractor namespace:
+   * 'protractor.browser', 'protractor.$', 'protractor.$$',
+   * 'protractor.element', 'protractor.by', and 'protractor.By'.
+   *
+   * When no globals is set to true, the only available global variable will be
+   * 'protractor'.
+   */
+  noGlobals?: boolean;
 
   /**
    * A base URL for your application under test. Calls to protractor.get()
@@ -616,4 +535,79 @@ export interface Config {
   frameworkPath?: string;
   elementExplorer?: any;
   debug?: boolean;
+
+
+  /**
+   * Reserved property.  Will be overwritten.
+   */
+  __normalized?: never;
+}
+
+export interface SpecsSettings extends Suite {
+  suites?: {[suiteName: string]: string | string[] | Suite};
+  suite?: string;
+}
+
+export interface Suite {
+  specs?: string|string[];
+  exclude?: string|string[];
+}
+
+export interface Capabilities extends SpecsSettings {
+  [key: string]: any;
+
+  browserName?: string;
+
+  /**
+   * Name of the process executing this capability.  Not used directly by
+   * protractor or the browser, but instead pass directly to third parties
+   * like BrowserStack and SauceLabs as the name of the job running this
+   * test
+   */
+  name?: string;
+
+  /**
+   * User defined name for the capability that will display in the results
+   * log. Defaults to the browser name
+   */
+  logName?: string;
+
+  /**
+   * Number of times to run this set of capabilities (in parallel, unless
+   * limited by maxSessions). Default is 1.
+   */
+  count?: number;
+
+  /**
+   * If this is set to be true, specs will be sharded by file (i.e. all
+   * files to be run by this set of capabilities will run in parallel).
+   * Default is false.
+   */
+  shardTestFiles?: boolean;
+
+  /**
+   * Maximum number of browser instances that can run in parallel for this
+   * set of capabilities. This is only needed if shardTestFiles is true.
+   * Default is 1.
+   */
+  maxInstances?: number;
+
+  /**
+   * Specify additional spec files to be run on this capability only.
+   * Note that specifying `suite` here does *not*
+   */
+  // specs?: string[];
+  // exclude?: string[];
+  // suites?: {[suiteName: string]: string | string[]};
+  // suite?: string;
+
+  /**
+   * Optional: override global seleniumAddress on this capability only.
+   */
+  seleniumAddress?: string;
+
+  // Optional: Additional third-party specific capabilities can be
+  // specified here.
+  // For a list of BrowserStack specific capabilities, visit
+  // https://www.browserstack.com/automate/capabilities
 }
