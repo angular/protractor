@@ -74,9 +74,9 @@ export class Direct extends DriverProvider {
         // driver = ChromeDriver.createSession(new Capabilities(this.config_.capabilities),
         // chromeService);
         // TODO(ralphj): fix typings
-        driver = require('selenium-webdriver/chrome')
-                     .Driver.createSession(
-                         new Capabilities(this.config_.capabilities), chromeService);
+        driver =
+            require('selenium-webdriver/chrome')
+                .Driver.createSession(new Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
         if (this.config_.firefoxPath) {
