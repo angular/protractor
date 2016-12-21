@@ -250,16 +250,18 @@
       // Remove braces from {type}.
       var parentName = item.extends.replace(/[{}]/g, '');
       var nameExpr = new RegExp(parentName + '\\.prototype');
+      var parent = self.itemsByName[parentName];
 
-      // Find all the parent functions.
-      item.base = {
-        name: parentName,
-        items: _.filter(list, function(item) {
-          return item.name && item.name.match(nameExpr);
-        })
-      };
-      if (self.itemsByName[parentName]) {
-        self.itemsByName[parentName].extension = true;
+      if (parent) {
+        item.base = parent;
+        parent.extension = true;
+      } else {
+        item.base = {
+          name: parentName,
+          children: _.filter(list, function(item) {
+            return item.name && item.name.match(nameExpr);
+          }),
+        };
       }
     });
   };

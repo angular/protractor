@@ -173,9 +173,16 @@
 
       <!-- Extends -->
       <div ng-if="currentItem.extends">
-        <h4>Extends {{currentItem.base.name}}</h4>
+        <h4>Extends {{currentItem.base.title}}</h4>
 
-        <div ptor-function-list="currentItem.base.items"></div>
+        <div ptor-function-list="currentItem.base.children"></div>
+
+        <!-- Extension Extends -->
+        <div ng-if="currentItem.base.extends">
+          <h4>Extends {{currentItem.base.base.title}} (via {{currentItem.base.title}})</h4>
+
+          <div ptor-function-list="currentItem.base.base.children"></div>
+        </div>
       </div>
     </div>
   </div>
