@@ -305,7 +305,7 @@ export class ProtractorBrowser extends Webdriver {
     this.resetUrl = DEFAULT_RESET_URL;
     this.debugHelper = new DebugHelper(this);
 
-    var ng12Hybrid_ = false;
+    let ng12Hybrid_ = false;
     Object.defineProperty(this, 'ng12Hybrid', {
       get: function() {
         return ng12Hybrid_;
