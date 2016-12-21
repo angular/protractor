@@ -303,9 +303,25 @@ export class ProtractorBrowser extends Webdriver {
     this.ready = null;
     this.plugins_ = new Plugins({});
     this.resetUrl = DEFAULT_RESET_URL;
-    this.ng12Hybrid = false;
     this.debugHelper = new DebugHelper(this);
 
+    var ng12Hybrid_ = false;
+    Object.defineProperty(this, 'ng12Hybrid', {
+      get: function() {
+        return ng12Hybrid_;
+      },
+      set: function(ng12Hybrid) {
+        if (ng12Hybrid) {
+          logger.warn(
+              'You have set ng12Hybrid.  As of Protractor 4.1.0, ' +
+              'Protractor can automatically infer if you are using an ' +
+              'ngUpgrade app (as long as ng1 is loaded before you call ' +
+              'platformBrowserDynamic()), and this flag is no longer needed ' +
+              'for most users');
+        }
+        ng12Hybrid_ = ng12Hybrid;
+      }
+    });
     this.driver.getCapabilities().then((caps: Capabilities) => {
       // Internet Explorer does not accept data URLs, which are the default
       // reset URL for Protractor.
@@ -451,7 +467,7 @@ export class ProtractorBrowser extends Webdriver {
       } else if (this.rootEl) {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
-            this.rootEl, this.ng12Hybrid);
+            this.rootEl);
       } else {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAllAngular2, 'Protractor.waitForAngular()' + description);

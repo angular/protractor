@@ -1,14 +1,8 @@
 describe('async angular1/2 hybrid using ngUpgrade application', function() {
   describe('@angular/upgrade/static', function() {
-    beforeEach(function() {
-      browser.get('/upgrade');
-    });
-
-    it('should set browser flag via config', function() {
-      expect(browser.ng12Hybrid).toBe(true);
-    });
-
     it('should be able to click buttons and wait for $timeout', function() {
+      browser.get('/upgrade');
+
       var rootBtn = $$('my-app button').first();
       expect(rootBtn.getText()).toEqual('Click Count: 0');
       rootBtn.click();
@@ -25,23 +19,26 @@ describe('async angular1/2 hybrid using ngUpgrade application', function() {
       expect(ng1Btn.getText()).toEqual('Click Count: 1');
     });
 
-    it('should use the flag on the browser object', function() {
-      browser.ng12Hybrid = false;
-      browser.get('/ng2'); // will time out if Protractor expects hybrid
-      browser.ng12Hybrid = true;
+    it('should be able to automatically infer ng1/ng2/ngUpgrade', function() {
+      browser.get('/upgrade');
+      expect($('h1').getText()).toBe('My App');
+      browser.get('/ng1');
+      expect($$('h4').first().getText()).toBe('Bindings');
+      browser.get('/upgrade');
+      expect($('h1').getText()).toBe('My App');
+      browser.useAllAngular2AppRoots();
+      browser.get('/ng2');
+      expect($('h1').getText()).toBe('Test App for Angular 2');
+      browser.rootEl = 'body';
+      browser.get('/upgrade');
+      expect($('h1').getText()).toBe('My App');
     });
   });
 
   describe('@angular/upgrade (not static)', function() {
-    beforeEach(function() {
-      browser.get('/upgrade?no_static');
-    });
-
-    it('should set browser flag via config', function() {
-      expect(browser.ng12Hybrid).toBe(true);
-    });
-
     it('should be able to click buttons and wait for $timeout', function() {
+      browser.get('/upgrade?no_static');
+
       var rootBtn = $$('my-app button').first();
       expect(rootBtn.getText()).toEqual('Click Count: 0');
       rootBtn.click();
