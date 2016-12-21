@@ -1,7 +1,6 @@
+import {error as wderror} from 'selenium-webdriver';
 import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
-
-const webdriver = require('selenium-webdriver');
 
 /**
  * Represents a library of canned expected conditions that are useful for
@@ -161,7 +160,7 @@ export class ProtractorExpectedConditions {
                 return true;
               },
           (err: any) => {
-            if (err.code == webdriver.error.ErrorCode.NO_SUCH_ALERT) {
+            if (err.code == (new wderror.NoSuchAlertError() as any).code) {
               return false;
             } else {
               throw err;
