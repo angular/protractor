@@ -13,8 +13,8 @@ dependencies:
     - testapp/node_modules
   post:
     - ./node_modules/.bin/gulp lint
-    - ./node_modules/.bin/webdriver-manager update --versions.chrome 2.26
-    - ./node_modules/.bin/webdriver-manager start --version.chrome 2.26:
+    - ./node_modules/.bin/webdriver-manager update
+    - ./node_modules/.bin/webdriver-manager start:
           background: true
     - cd testapp && npm update
     - npm start:
