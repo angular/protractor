@@ -53,7 +53,7 @@ empty `getText` values. Instead, try `element.getAttribute('value')`.
 
 How can I drag and drop elements?
 ---------------------------------
-You can specify a sequence of [mouse actions](http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.actions)
+You can specify a sequence of [actions](http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.actions)
 to drag an drop elements.  Note mouse actions do not work on Chrome with the HTML5 Drag and Drop API due to a known
 [Chromedriver issue](https://bugs.chromium.org/p/chromedriver/issues/detail?id=841)
 
