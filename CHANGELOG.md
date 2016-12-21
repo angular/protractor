@@ -1,3 +1,41 @@
+# 4.0.14
+
+## Bug Fixes
+
+- ([83694f5](https://github.com/angular/protractor/commit/83694f5e66592c5e229db98af3733ff73dac8392))
+  fix(types): update for selenium-webdriver types creating transpile errors (#3848)
+
+  - pin package.json to a specific version of @types/selenium-webdriver
+
+- ([ea09be4](https://github.com/angular/protractor/commit/ea09be4ff0750d1d0873677fac9055a9acb630b3))
+  fix(jasmine): Return the full test name in Jasmine test results. (#3842)
+
+  Fixes #3510
+
+- ([76cb4b4](https://github.com/angular/protractor/commit/76cb4b4c2ac892f9785dc1506cbc0b490eea91fe))
+  fix(element): Fix typing of then function (#3785)
+
+- ([5a12d69](https://github.com/angular/protractor/commit/5a12d69f34fd80234455bbe6457e125a27a07e54))
+  fix(config): cucumberOpts.require should be an optional Array of strings (#3817)
+
+  - Both cucumber options require and format now support `string` or `string[]` see #3822 #3817
+  - Remove no longer available options and fix `dryRun` type
+  - Update comment for `dryRun`
+
+## Features
+
+- ([b337a8e](https://github.com/angular/protractor/commit/b337a8e8547af0b90663a35b07fd30b55ff61dd0))
+  feat(config): add seleniumServerStartTimeout (#3791)
+
+## Dependencies
+
+- ([688f5d6](https://github.com/angular/protractor/commit/688f5d6a089275ac99688196cd66f345c64adfec))
+  deps(update): update vrsource-tslint-rules and webdriver-manager (#3856)
+
+- ([c437fd3](https://github.com/angular/protractor/commit/c437fd3315278e7536a8385a9769e4fbd954d0a6))
+  deps(selenium-webdriver): clean up types selenium-webdriver (#3854)
+
+
 # 4.0.13
 
 ## Bug Fix
