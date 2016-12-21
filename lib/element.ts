@@ -785,7 +785,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
 export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
-  then: (fn: Function, errorFn?: Function) => wdpromise.Promise<any> = null;
+  then?:
+      (fn: (value: any) => any | wdpromise.IThenable<any>,
+       errorFn?: (error: any) => any) => wdpromise.Promise<any> = null;
 
   constructor(public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
     super();
@@ -799,7 +801,7 @@ export class ElementFinder extends WebdriverWebElement {
     if (this.parentElementArrayFinder.actionResults_) {
       // Access the underlying actionResult of ElementFinder.
       this.then =
-          (fn: (value: any) => {} | wdpromise.IThenable<{}>, errorFn?: (error: any) => any) => {
+          (fn: (value: any) => any | wdpromise.IThenable<any>, errorFn?: (error: any) => any) => {
             return this.elementArrayFinder_.then((actionResults: any) => {
               if (!fn) {
                 return actionResults[0];
