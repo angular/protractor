@@ -43,7 +43,7 @@ expect(myElement.getText()).to.eventually.equal('some text');
 
 Finally, set the 'framework' property to 'mocha', either by adding `framework: 'mocha'` to the config file or by adding `--framework=mocha` to the command line.
 
-Options for Mocha such as 'reporter' and 'slow' can be given in the [config file](../spec/mochaConf.js) with mochaOpts:
+Options for Mocha such as 'reporter' and 'slow' can be given in the [config file](/spec/mochaConf.js) with mochaOpts:
 
 ```js
 mochaOpts: {
@@ -68,21 +68,45 @@ npm install -g cucumber
 npm install --save-dev protractor-cucumber-framework
 ```
 
-Set the 'framework' property to custom by adding `framework: 'custom'` and `frameworkPath: 'protractor-cucumber-framework'` to the [config file](../spec/cucumberConf.js)
+Set the 'framework' property to custom by adding `framework: 'custom'` and `frameworkPath: 'protractor-cucumber-framework'` to the `config file(cucumberConf.js)`
 
-Options for Cucumber such as 'format' can be given in the config file with cucumberOpts:
+Options for Cucumber such as 'format' can be given in the config file with cucumberOpts, A basic cucumberConf.js file has been provided below:
 
 ```js
+/*
+Basic configuration to run your cucumber
+feature files and step definitions with protractor.
+**/
 exports.config = {
-  // set to "custom" instead of cucumber.
-  framework: 'custom',
 
-  // path relative to the current config file
-  frameworkPath: require.resolve('protractor-cucumber-framework'),
+  seleniumAddress: 'http://localhost:4444/wd/hub',
 
-  // relevant cucumber command line options
+  baseUrl: 'https://angularjs.org/',
+  
+  capabilities: {
+      browserName:'chrome'
+  },
+
+  framework: 'custom',  // set to "custom" instead of cucumber. 
+  
+  frameworkPath: require.resolve('protractor-cucumber-framework'),  // path relative to the current config file
+  
+  specs: [
+    './cucumber/*.feature'     // Specs here are the cucumber feature files
+  ],
+  
+  // cucumber command line options
   cucumberOpts: {
-    format: "summary"
+    require: ['./cucumber/*.js'],  // require step definition files before executing features
+    tags: [],                      // <string[]> (expression) only execute the features or scenarios with tags matching the expression
+    strict: true,                  // <boolean> fail if there are any undefined or pending steps
+    format: ["pretty"],            // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
+    dryRun: false,                 // <boolean> invoke formatters without executing steps
+    compiler: []                   // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
+  },
+
+ onPrepare: function () {
+    browser.manage().window().maximize(); // maximize the browser before executing the feature files
   }
 };
 ```
@@ -90,6 +114,6 @@ exports.config = {
 Using a Custom Framework
 ------------------------
 
-Check section [Framework Adapters for Protractor](../lib/frameworks/README.md) specifically [Custom Frameworks](../lib/frameworks/README.md#custom-frameworks)
+Check section [Framework Adapters for Protractor](/lib/frameworks/README.md) specifically [Custom Frameworks](/lib/frameworks/README.md#custom-frameworks)
 
 
