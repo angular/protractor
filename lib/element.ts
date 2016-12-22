@@ -844,7 +844,7 @@ export class ElementFinder extends WebdriverWebElement {
     });
   }
 
-  static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator: Locator):
+  static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator?: Locator):
       ElementFinder {
     let getWebElements = () => {
       return wdpromise.fulfilled([webElem]);
