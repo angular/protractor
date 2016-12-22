@@ -1,4 +1,4 @@
-import {By, error as wderror, ILocation, ISize, promise as wdpromise, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {By, error as wderror, ILocation, ISize, Key, promise as wdpromise, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {IError} from './exitCodes';
@@ -11,11 +11,13 @@ let logger = new Logger('element');
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
-  'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
+  'getLocation', 'isEnabled', 'isSelected', 'submit', 'isDisplayed', 'getOuterHtml', 'getInnerHtml',
+  'getId', 'getRawId', 'serialize', 'takeScreenshot'
 ];
 
-export class WebdriverWebElement {}
+export class WebdriverWebElement {
+  clear_: () => wdpromise.Promise<void> = WebElement.prototype.clear;
+}
 export interface WebdriverWebElement extends WebElement {}
 
 /**
@@ -97,6 +99,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
     });
   }
   [key: string]: any;
+
 
   /**
    * Create a shallow copy of ElementArrayFinder.
@@ -735,6 +738,27 @@ export class ElementArrayFinder extends WebdriverWebElement {
     };
     return this.applyAction_(allowAnimationsTestFn);
   }
+
+  clear(): wdpromise.Promise<void> {
+    return this.getWebElements().then((arr: WebElement[]) => {
+      arr.forEach((we: WebElement) => {
+        we.getAttribute('type').then(att => {
+          if (att === 'date' || att === 'time') {
+            return this.sendKeys(
+                Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE);
+          } else if (att === 'month' || att === 'week') {
+            return this.sendKeys(Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE);
+          } else if (att === 'datetime-local') {
+            return this.sendKeys(
+                Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE + Key.TAB +
+                Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE + Key.TAB + Key.BACK_SPACE);
+          } else {
+            return this.clear_();
+          }
+        });
+      });
+    });
+  }
 }
 
 /**
@@ -1151,6 +1175,35 @@ export class ElementFinder extends WebdriverWebElement {
         this.getWebElement(),
         (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
                                          element as WebElement);
+  }
+
+  /**
+   * Schedules a command to clear the {@code value} of this element. This command
+   * has no effect if the underlying DOM element is neither a text INPUT element
+   * nor a TEXTAREA element.
+   *
+   * @view
+   * <input id="foo" value="Default Text">
+   * <input id="datetime" type="datetime">
+   *
+   * @example
+   * var foo = element(by.id('foo'));
+   *
+   * expect(foo.getAttribute('value')).toEqual('Default Text');
+   * foo.clear();
+   * expect(foo.getAttribute('value')).toEqual('');
+   *
+   * var datetime = element(by.id('datetime'));
+   * datetime.sendKeys('01/01/1970 ' + protractor.Key.TAB + '02:30AM');
+   * expect(datetime.getAttribute('value')).toEqual('1970-01-01T02:30');
+   * datetime.clear();
+   * expect(datetime.getAttribute('value')).toequal('');
+   *
+   * @returns {!webdriver.promise.Promise.<void>} A promise that will be resolved
+   *     when the element has been cleared.
+   */
+  clear() {
+    return this.elementArrayFinder_.clear();
   }
 }
 
