@@ -32,7 +32,7 @@ for (let foo in require('selenium-webdriver')) {
   exports[foo] = require('selenium-webdriver')[foo];
 }
 
-// Explicitly define webdriver.WebDriver
+// Explicitly define WebDriver
 // TODO: extend WebDriver from selenium-webdriver typings
 export class Webdriver {
   actions: () => ActionSequence;
@@ -98,7 +98,7 @@ export interface ElementHelper extends Function {
  *
  * @private
  * @param {Browser} browser A browser instance.
- * @returns {function(webdriver.Locator): ElementFinder}
+ * @returns {function(Locator): ElementFinder}
  */
 function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
   let element = ((locator: Locator) => {
@@ -115,8 +115,8 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
 /**
  * @alias browser
  * @constructor
- * @extends {webdriver.WebDriver}
- * @param {webdriver.WebDriver} webdriver
+ * @extends {WebDriver}
+ * @param {WebDriver} webdriver
  * @param {string=} opt_baseUrl A base URL to run get requests against.
  * @param {string=} opt_rootElement  Selector element that has an ng-app in
  *     scope.
@@ -138,14 +138,14 @@ export class ProtractorBrowser extends Webdriver {
    * The wrapped webdriver instance. Use this to interact with pages that do
    * not contain Angular (such as a log-in screen).
    *
-   * @type {webdriver.WebDriver}
+   * @type {WebDriver}
    */
   driver: WebDriver;
 
   /**
    * Helper function for finding elements.
    *
-   * @type {function(webdriver.Locator): ElementFinder}
+   * @type {function(Locator): ElementFinder}
    */
   element: ElementHelper;
 
@@ -349,7 +349,7 @@ export class ProtractorBrowser extends Webdriver {
    *
    * Set by the runner.
    *
-   * @returns {webdriver.promise.Promise} A promise which resolves to the
+   * @returns {wdpromise.Promise} A promise which resolves to the
    * capabilities object.
    */
   getProcessedConfig(): wdpromise.Promise<any> {
@@ -393,14 +393,14 @@ export class ProtractorBrowser extends Webdriver {
   }
 
   /**
-   * The same as {@code webdriver.WebDriver.prototype.executeScript},
+   * The same as {@code WebDriver.prototype.executeScript},
    * but with a customized description for debugging.
    *
    * @private
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
-   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
+   * @returns {!wdpromise.Promise.<T>} A promise that will resolve to
    * the scripts return value.
    * @template T
    */
@@ -418,14 +418,14 @@ export class ProtractorBrowser extends Webdriver {
   }
 
   /**
-   * The same as {@code webdriver.WebDriver.prototype.executeAsyncScript},
+   * The same as {@code WebDriver.prototype.executeAsyncScript},
    * but with a customized description for debugging.
    *
    * @private
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description for debugging purposes.
    * @param {...*} var_args The arguments to pass to the script.
-   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
+   * @returns {!wdpromise.Promise.<T>} A promise that will resolve to
    * the
    *    scripts return value.
    * @template T
@@ -450,7 +450,7 @@ export class ProtractorBrowser extends Webdriver {
    *
    * @param {string=} opt_description An optional description to be added
    *     to webdriver logs.
-   * @returns {!webdriver.promise.Promise} A promise that will resolve to the
+   * @returns {!wdpromise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
   waitForAngular(opt_description?: string): wdpromise.Promise<any> {
@@ -565,9 +565,9 @@ export class ProtractorBrowser extends Webdriver {
 
   /**
    * Waits for Angular to finish rendering before searching for elements.
-   * @see webdriver.WebDriver.findElement
-   * @returns {!webdriver.promise.Promise} A promise that will be resolved to
-   *      the located {@link webdriver.WebElement}.
+   * @see WebDriver.findElement
+   * @returns {!wdpromise.Promise} A promise that will be resolved to
+   *      the located {@link WebElement}.
    */
   findElement(locator: Locator): WebElement {
     return this.element(locator).getWebElement();
@@ -575,9 +575,9 @@ export class ProtractorBrowser extends Webdriver {
 
   /**
    * Waits for Angular to finish rendering before searching for elements.
-   * @see webdriver.WebDriver.findElements
-   * @returns {!webdriver.promise.Promise} A promise that will be resolved to an
-   *     array of the located {@link webdriver.WebElement}s.
+   * @see WebDriver.findElements
+   * @returns {!wdpromise.Promise} A promise that will be resolved to an
+   *     array of the located {@link WebElement}s.
    */
   findElements(locator: Locator): wdpromise.Promise<any> {
     return this.element.all(locator).getWebElements();
@@ -585,8 +585,8 @@ export class ProtractorBrowser extends Webdriver {
 
   /**
    * Tests if an element is present on the page.
-   * @see webdriver.WebDriver.isElementPresent
-   * @returns {!webdriver.promise.Promise} A promise that will resolve to whether
+   * @see WebDriver.isElementPresent
+   * @returns {!wdpromise.Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
   isElementPresent(locatorOrElement: ProtractorBy|WebElement): wdpromise.Promise<any> {
@@ -662,7 +662,7 @@ export class ProtractorBrowser extends Webdriver {
   }
 
   /**
-   * @see webdriver.WebDriver.get
+   * @see WebDriver.get
    *
    * Navigate to the given destination and loads mock modules before
    * Angular. Assumes that the page being loaded uses Angular.
@@ -794,7 +794,7 @@ export class ProtractorBrowser extends Webdriver {
   }
 
   /**
-   * @see webdriver.WebDriver.refresh
+   * @see WebDriver.refresh
    *
    * Makes a full reload of the current page and loads mock modules before
    * Angular. Assumes that the page being loaded uses Angular.
@@ -836,7 +836,7 @@ export class ProtractorBrowser extends Webdriver {
    *     .toBe('http://angular.github.io/protractor/#/api');
    *
    * @param {string} url In page URL using the same syntax as $location.url()
-   * @returns {!webdriver.promise.Promise} A promise that will resolve once
+   * @returns {!wdpromise.Promise} A promise that will resolve once
    *    page has been changed.
    */
   setLocation(url: string): wdpromise.Promise<any> {
@@ -858,7 +858,7 @@ export class ProtractorBrowser extends Webdriver {
    * browser.get('http://angular.github.io/protractor/#/api');
    * expect(browser.getLocationAbsUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
-   * @returns {webdriver.promise.Promise<string>} The current absolute url from
+   * @returns {wdpromise.Promise<string>} The current absolute url from
    * AngularJS.
    */
   getLocationAbsUrl(): wdpromise.Promise<any> {
@@ -975,7 +975,7 @@ export class ProtractorBrowser extends Webdriver {
   /**
    * Create a new instance of Browser by wrapping a webdriver instance.
    *
-   * @param {webdriver.WebDriver} webdriver The configured webdriver instance.
+   * @param {WebDriver} webdriver The configured webdriver instance.
    * @param {string=} baseUrl A URL to prepend to relative gets.
    * @param {string=} rootElement The css selector for the element which is the
    *     root of the Angular app.

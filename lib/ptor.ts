@@ -22,7 +22,7 @@ export class Ptor {
   By: ProtractorBy;
   by: ProtractorBy;
   wrapDriver:
-      (webdriver: webdriver.WebDriver, baseUrl?: string, rootElement?: string,
+      (webdriver: WebDriver, baseUrl?: string, rootElement?: string,
        untrackOutstandingTimeouts?: boolean) => ProtractorBrowser;
   ExpectedConditions: ProtractorExpectedConditions;
 
