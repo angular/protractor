@@ -5,7 +5,7 @@ import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
-import {AttachSession, BrowserStack, Direct, DriverProvider, Hosted, Local, Mock, Sauce} from './driverProviders';
+import {buildDriverProvider, DriverProvider} from './driverProviders';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
@@ -99,25 +99,7 @@ export class Runner extends EventEmitter {
    */
   loadDriverProvider_(config: Config) {
     this.config_ = config;
-    if (this.config_.directConnect) {
-      this.driverprovider_ = new Direct(this.config_);
-    } else if (this.config_.seleniumAddress) {
-      if (this.config_.seleniumSessionId) {
-        this.driverprovider_ = new AttachSession(this.config_);
-      } else {
-        this.driverprovider_ = new Hosted(this.config_);
-      }
-    } else if (this.config_.browserstackUser && this.config_.browserstackKey) {
-      this.driverprovider_ = new BrowserStack(this.config_);
-    } else if (this.config_.sauceUser && this.config_.sauceKey) {
-      this.driverprovider_ = new Sauce(this.config_);
-    } else if (this.config_.seleniumServerJar) {
-      this.driverprovider_ = new Local(this.config_);
-    } else if (this.config_.mockSelenium) {
-      this.driverprovider_ = new Mock(this.config_);
-    } else {
-      this.driverprovider_ = new Local(this.config_);
-    }
+    this.driverprovider_ = buildDriverProvider(this.config_);
   }
 
   /**
