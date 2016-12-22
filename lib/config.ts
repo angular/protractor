@@ -120,18 +120,10 @@ export interface Config {
    *
    * To match sauce agent implementation, use
    * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
-   * to generate the agent or use sauceProxy as an alternative. If a
-   * sauceProxy is provided, the sauceAgent will be overridden.
+   * to generate the agent or use webDriverProxy as an alternative. If a
+   * webDriverProxy is provided, the sauceAgent will be overridden.
    */
   sauceAgent?: any;
-  /**
-   * Use sauceProxy if you are behind a corporate proxy to connect to
-   * saucelabs.com.
-   *
-   * The sauceProxy is used to generate an HTTP agent. If a sauceProxy is
-   * provided, the sauceAgent will be overridden.
-   */
-  sauceProxy?: string;
   /**
    * Use sauceBuild if you want to group test capabilites by a build ID
    */
