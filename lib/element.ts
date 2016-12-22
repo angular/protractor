@@ -9,14 +9,14 @@ let clientSideScripts = require('./clientsidescripts');
 
 let logger = new Logger('element');
 
+export class WebdriverWebElement {}
+export interface WebdriverWebElement extends WebElement {}
+
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
   'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getOuterHtml',
   'getInnerHtml', 'getId', 'getRawId', 'serialize', 'takeScreenshot'
-];
-
-export class WebdriverWebElement {}
-export interface WebdriverWebElement extends WebElement {}
+] as (keyof WebdriverWebElement)[];
 
 /**
  * ElementArrayFinder is used for operations on an array of elements (as opposed
@@ -87,7 +87,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
     // wrap each one explicity with its own documentation?
-    WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
+    WEB_ELEMENT_FUNCTIONS.forEach((fnName: keyof WebdriverWebElement) => {
       this[fnName] = (...args: any[]) => {
         let actionFn = (webElem: any) => {
           return webElem[fnName].apply(webElem, args);
@@ -96,7 +96,6 @@ export class ElementArrayFinder extends WebdriverWebElement {
       };
     });
   }
-  [key: string]: any;
 
   /**
    * Create a shallow copy of ElementArrayFinder.
@@ -836,7 +835,7 @@ export class ElementFinder extends WebdriverWebElement {
         this.browser_, getWebElements, elementArrayFinder.locator(),
         elementArrayFinder.actionResults_);
 
-    WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
+    WEB_ELEMENT_FUNCTIONS.forEach((fnName: keyof WebdriverWebElement) => {
       (this)[fnName] = (...args: any[]) => {
         return (this.elementArrayFinder_)[fnName]
             .apply(this.elementArrayFinder_, args)
@@ -844,7 +843,6 @@ export class ElementFinder extends WebdriverWebElement {
       };
     });
   }
-  [key: string]: any;
 
   static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator: Locator):
       ElementFinder {
