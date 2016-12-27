@@ -112,7 +112,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
       .then(() => {
 
         return q
-            .Promise<any>((resolve: Function) => {
+            .Promise<any>((resolve: Function, reject: Function) => {
               // 1) If getMultiCapabilities is set, resolve that as
               // `multiCapabilities`.
               if (config.getMultiCapabilities &&
@@ -123,10 +123,17 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                       'and multiCapabilities');
                 }
                 // If getMultiCapabilities is defined and a function, use this.
-                q.when(config.getMultiCapabilities(), (multiCapabilities) => {
-                   config.multiCapabilities = multiCapabilities;
-                   config.capabilities = null;
-                 }).then(() => resolve());
+                q(config.getMultiCapabilities())
+                    .then((multiCapabilities) => {
+                      config.multiCapabilities = multiCapabilities;
+                      config.capabilities = null;
+                    })
+                    .then(() => {
+                      resolve();
+                    })
+                    .catch(err => {
+                      reject(err);
+                    });
               } else {
                 resolve();
               }

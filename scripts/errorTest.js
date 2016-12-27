@@ -44,3 +44,10 @@ messages = [
   'Cannot run in debug mode with multiCapabilities, count > 1, or sharding',
   'Process exited with error code ' + exitCodes.ConfigError.CODE];
 checkLogs(output, messages);
+
+runProtractor = spawn('node',
+    ['bin/protractor', 'spec/errorTest/getMultiCapabilitiesConf.js']);
+output = runProtractor.stderr.toString();
+messages = [
+  'Error: get multi capabilities failed'];
+checkLogs(output, messages);

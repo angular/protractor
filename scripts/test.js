@@ -36,7 +36,7 @@ var passingTests = [
   'node built/cli.js spec/angular2Conf.js',
   'node built/cli.js spec/hybridConf.js',
   'node scripts/driverProviderAttachSession.js',
-  'node scripts/exitCodes.js',
+  'node scripts/errorTest.js',
   'node scripts/interactive_tests/interactive_test.js',
   'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
