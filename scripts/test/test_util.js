@@ -79,14 +79,17 @@ var CommandlineTest = function(command) {
         test_process = child_process.spawn(args[0], args.slice(1));
 
         test_process.stdout.on('data', function(data) {
+          process.stdout.write('.');
           output += data;
         });
 
         test_process.stderr.on('data', function(data) {
+          process.stdout.write('.');
           output += data;
         });
       } else {
-        test_process = child_process.spawn(args[0], args.slice(1), {stdio: 'inherit'});
+        test_process = child_process
+            .spawn(args[0], args.slice(1), {stdio: 'inherit', stderr: 'inherit'});
       }
 
       test_process.on('error', function(err) {
@@ -209,10 +212,10 @@ exports.Executor = function() {
       if (i < tests.length) {
         console.log('running: ' + tests[i].command_);
         tests[i].run().then(function() {
-          console.log('>>> \033[1;32mpass\033[0m');
+          console.log('\n>>> \033[1;32mpass\033[0m');
         }, function(err) {
           failed = true;
-          console.log('>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
+          console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
         }).fin(function() {
           runTests(i + 1);
         }).done();
