@@ -7,6 +7,7 @@ import {Locator} from './locators';
 import {Logger} from './logger';
 import {Ptor} from './ptor';
 import * as helper from './util';
+let breakpointHook = require('./breakpointhook.js');
 
 declare var global: any;
 declare var process: any;
@@ -25,32 +26,36 @@ export class DebugHelper {
 
   constructor(private browserUnderDebug_: ProtractorBrowser) {}
 
+
+  initBlocking(debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
+    this.init_(debuggerClientPath, true, onStartFn, opt_debugPort);
+  }
+
+  init(debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
+    this.init_(debuggerClientPath, false, onStartFn, opt_debugPort);
+  }
+
   /**
    *  1) Set up helper functions for debugger clients to call on (e.g.
-   *     getControlFlowText, execute code, get autocompletion).
+   *     execute code, get autocompletion).
    *  2) Enter process into debugger mode. (i.e. process._debugProcess).
    *  3) Invoke the debugger client specified by debuggerClientPath.
    *
    * @param {string} debuggerClientPath Absolute path of debugger client to use.
+   * @param {boolean} blockUntilExit Whether to block the flow until process exit or resume
+   *     immediately.
    * @param {Function} onStartFn Function to call when the debugger starts. The
    *     function takes a single parameter, which represents whether this is the
    *     first time that the debugger is called.
    * @param {number=} opt_debugPort Optional port to use for the debugging
    *     process.
+   * 
+   * @return {Promise} If blockUntilExit, a promise resolved when the debugger process
+   *     exits. Otherwise, resolved when the debugger process is ready to begin.
    */
-  init(debuggerClientPath: string, onStartFn: Function, opt_debugPort?: number) {
-    (wdpromise.ControlFlow as any).prototype.getControlFlowText = function() {
-      let controlFlowText = this.getSchedule(/* opt_includeStackTraces */ true);
-      // This filters the entire control flow text, not just the stack trace, so
-      // unless we maintain a good (i.e. non-generic) set of keywords in
-      // STACK_SUBSTRINGS_TO_FILTER, we run the risk of filtering out non stack
-      // trace. The alternative though, which is to reimplement
-      // webdriver.promise.ControlFlow.prototype.getSchedule() here is much
-      // hackier, and involves messing with the control flow's internals /
-      // private variables.
-      return helper.filterStackTrace(controlFlowText);
-    };
-
+  init_(
+      debuggerClientPath: string, blockUntilExit: boolean, onStartFn: Function,
+      opt_debugPort?: number) {
     const vm_ = require('vm');
     let flow = wdpromise.controlFlow();
 
@@ -75,8 +80,11 @@ export class DebugHelper {
     }
     let sandbox = vm_.createContext(context);
 
-    let debuggerReadyPromise = wdpromise.defer();
-    flow.execute(() => {
+    let debuggingDone = wdpromise.defer();
+
+    // We run one flow.execute block for the debugging session. All
+    // subcommands should be scheduled under this task.
+    let executePromise = flow.execute(() => {
       process['debugPort'] = opt_debugPort || process['debugPort'];
       this.validatePortAvailability_(process['debugPort']).then((firstTime: boolean) => {
         onStartFn(firstTime);
@@ -93,34 +101,30 @@ export class DebugHelper {
             .on('message',
                 (m: string) => {
                   if (m === 'ready') {
-                    debuggerReadyPromise.fulfill();
+                    breakpointHook();
+                    if (!blockUntilExit) {
+                      debuggingDone.fulfill();
+                    }
                   }
                 })
             .on('exit', () => {
-              logger.info('Debugger exiting');
               // Clear this so that we know it's ok to attach a debugger
               // again.
               this.dbgCodeExecutor = null;
+              debuggingDone.fulfill();
             });
       });
-    });
-
-    let pausePromise = flow.execute(() => {
-      return debuggerReadyPromise.promise.then(() => {
-        // Necessary for backward compatibility with node < 0.12.0
-        return this.browserUnderDebug_.executeScriptWithDescription('', 'empty debugger hook');
-      });
-    });
+      return debuggingDone.promise;
+    }, 'debugging tasks');
 
     // Helper used only by debuggers at './debugger/modes/*.js' to insert code
-    // into the control flow.
-    // In order to achieve this, we maintain a promise at the top of the control
+    // into the control flow, via debugger 'evaluate' protocol.
+    // In order to achieve this, we maintain a task at the top of the control
     // flow, so that we can insert frames into it.
     // To be able to simulate callback/asynchronous code, we poll this object
-    // for a result at every run of DeferredExecutor.execute.
-    let browserUnderDebug = this.browserUnderDebug_;
+    // whenever `breakpointHook` is called.
     this.dbgCodeExecutor = {
-      execPromise_: pausePromise,     // Promise pointing to current stage of flow.
+      execPromise_: undefined,        // Promise pointing to currently executing command.
       execPromiseResult_: undefined,  // Return value of promise.
       execPromiseError_: undefined,   // Error from promise.
 
@@ -137,20 +141,19 @@ export class DebugHelper {
       execute_: function(execFn_: Function) {
         this.execPromiseResult_ = this.execPromiseError_ = undefined;
 
-        this.execPromise_ = this.execPromise_.then(execFn_).then(
+        this.execPromise_ = execFn_();
+        // Note: This needs to be added after setting execPromise to execFn,
+        // or else we cause this.execPromise_ to get stuck in pending mode
+        // at our next breakpoint.
+        this.execPromise_.then(
             (result: Object) => {
               this.execPromiseResult_ = result;
+              breakpointHook();
             },
             (err: Error) => {
               this.execPromiseError_ = err;
+              breakpointHook();
             });
-
-        // This dummy command is necessary so that the DeferredExecutor.execute
-        // break point can find something to stop at instead of moving on to the
-        // next real command.
-        this.execPromise_.then(() => {
-          return browserUnderDebug.executeScriptWithDescription('', 'empty debugger hook');
-        });
       },
 
       // Execute a piece of code.
@@ -159,7 +162,12 @@ export class DebugHelper {
         let execFn_ = () => {
           // Run code through vm so that we can maintain a local scope which is
           // isolated from the rest of the execution.
-          let res = vm_.runInContext(code, sandbox);
+          let res;
+          try {
+            res = vm_.runInContext(code, sandbox);
+          } catch (e) {
+            res = 'Error while evaluating command: ' + e;
+          }
           if (!wdpromise.isPromise(res)) {
             res = wdpromise.fulfilled(res);
           }
@@ -190,14 +198,14 @@ export class DebugHelper {
               deferred.fulfill(JSON.stringify(res));
             }
           });
-          return deferred;
+          return deferred.promise;
         };
         this.execute_(execFn_);
       },
 
       // Code finished executing.
       resultReady: function() {
-        return !this.execPromise_.isPending();
+        return !(this.execPromise_.state_ === 'pending');
       },
 
       // Get asynchronous results synchronously.
@@ -213,7 +221,7 @@ export class DebugHelper {
       }
     };
 
-    return pausePromise;
+    return executePromise;
   }
 
   /**
@@ -227,7 +235,7 @@ export class DebugHelper {
    *     is done. The promise will resolve to a boolean which represents whether
    *     this is the first time that the debugger is called.
    */
-  private validatePortAvailability_(port: number): wdpromise.Promise<any> {
+  private validatePortAvailability_(port: number): wdpromise.Promise<boolean> {
     if (this.debuggerValidated_) {
       return wdpromise.fulfilled(false);
     }
@@ -256,8 +264,9 @@ export class DebugHelper {
     });
 
     return doneDeferred.promise.then(
-        () => {
+        (firstTime: boolean) => {
           this.debuggerValidated_ = true;
+          return firstTime;
         },
         (err: string) => {
           console.error(err);
