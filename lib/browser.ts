@@ -972,37 +972,46 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   }
 
   /**
-   * Beta (unstable) enterRepl function for entering the repl loop from
-   * any point in the control flow. Use browser.enterRepl() in your test.
+   * See browser.explore().
+   */
+  enterRepl(opt_debugPort?: number) {
+    return this.explore(opt_debugPort);
+  }
+
+  /**
+   * Beta (unstable) explore function for entering the repl loop from
+   * any point in the control flow. Use browser.explore() in your test.
    * Does not require changes to the command line (no need to add 'debug').
    * Note, if you are wrapping your own instance of Protractor, you must
    * expose globals 'browser' and 'protractor' for pause to work.
    *
    * @example
    * element(by.id('foo')).click();
-   * browser.enterRepl();
+   * browser.explore();
    * // Execution will stop before the next click action.
    * element(by.id('bar')).click();
    *
    * @param {number=} opt_debugPort Optional port to use for the debugging
    * process
    */
-  enterRepl(opt_debugPort?: number) {
+  explore(opt_debugPort?: number) {
     let debuggerClientPath = __dirname + '/debugger/clients/explorer.js';
-    let onStartFn = () => {
+    let onStartFn = (firstTime: boolean) => {
       logger.info();
-      logger.info('------- Element Explorer -------');
-      logger.info(
-          'Starting WebDriver debugger in a child process. Element ' +
-          'Explorer is still beta, please report issues at ' +
-          'github.com/angular/protractor');
-      logger.info();
-      logger.info('Type <tab> to see a list of locator strategies.');
-      logger.info('Use the `list` helper function to find elements by strategy:');
-      logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
-      logger.info();
+      if (firstTime) {
+        logger.info('------- Element Explorer -------');
+        logger.info(
+            'Starting WebDriver debugger in a child process. Element ' +
+            'Explorer is still beta, please report issues at ' +
+            'github.com/angular/protractor');
+        logger.info();
+        logger.info('Type <tab> to see a list of locator strategies.');
+        logger.info('Use the `list` helper function to find elements by strategy:');
+        logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
+        logger.info();
+      }
     };
-    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
+    this.debugHelper.initBlocking(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
@@ -1040,8 +1049,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         logger.info();
         logger.info('press c to continue to the next webdriver command');
         logger.info('press ^D to detach debugger and resume code execution');
-        logger.info('type "repl" to enter interactive mode');
-        logger.info('type "exit" to break out of interactive mode');
         logger.info();
       }
     };
