@@ -9,7 +9,7 @@ exports.config = {
   ],
 
   getMultiCapabilities: function() {
-    return new Promise((resolve) => {
+    return new Promise(() => {
       throw new Error('get multi capabilities failed');
     });
   },
