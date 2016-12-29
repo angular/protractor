@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+var path = require('path');
 
 var Executor = require('./test/test_util').Executor;
 
@@ -144,4 +145,9 @@ executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
       {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
     ]);
 
-executor.execute();
+// If we're running on CircleCI, save stdout and stderr from the test run to a log file.
+if (process.env['CIRCLE_ARTIFACTS']) {
+  executor.execute(path.join(process.env['CIRCLE_ARTIFACTS'], 'test_log.txt'));
+} else {
+  executor.execute();
+}

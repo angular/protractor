@@ -8,16 +8,9 @@ var CommandlineTest = function(command) {
   var self = this;
   this.command_ = command;
   this.expectedExitCode_ = 0;
-  this.stdioOnlyOnFailures_ = true;
   this.expectedErrors_ = [];
   this.assertExitCodeOnly_ = false;
-
-  // If stdioOnlyOnFailures_ is true, do not stream stdio unless test failed.
-  // This is to prevent tests with expected failures from polluting the output.
-  this.alwaysEnableStdio = function() {
-    self.stdioOnlyOnFailures_ = false;
-    return self;
-  };
+  this.testLogStream = undefined;
 
   // Only assert the exit code and not failures.
   // This must be true if the command you're running does not support
@@ -25,6 +18,10 @@ var CommandlineTest = function(command) {
   this.assertExitCodeOnly = function() {
     self.assertExitCodeOnly_ = true;
     return self;
+  };
+
+  this.setTestLogFile = function(filename) {
+    self.testLogStream = fs.createWriteStream(filename, {flags: 'a'});
   };
 
   // Set the expected exit code for the test command.
@@ -75,19 +72,18 @@ var CommandlineTest = function(command) {
 
       var test_process;
 
-      if (self.stdioOnlyOnFailures_) {
-        test_process = child_process.spawn(args[0], args.slice(1));
+      test_process = child_process.spawn(args[0], args.slice(1));
 
-        test_process.stdout.on('data', function(data) {
-          output += data;
-        });
+      var processData = function(data) {
+        process.stdout.write('.');
+        output += data;
+        if (self.testLogStream) {
+          self.testLogStream.write(data);
+        }
+      };
 
-        test_process.stderr.on('data', function(data) {
-          output += data;
-        });
-      } else {
-        test_process = child_process.spawn(args[0], args.slice(1), {stdio: 'inherit'});
-      }
+      test_process.stdout.on('data', processData);
+      test_process.stderr.on('data', processData);
 
       test_process.on('error', function(err) {
         reject(err);
@@ -100,6 +96,10 @@ var CommandlineTest = function(command) {
       if (self.expectedExitCode_ !== exitCode) {
         flushAndFail('expecting exit code: ' + self.expectedExitCode_ +
               ', actual: ' + exitCode);
+      }
+
+      if (self.testLogStream) {
+        self.testLogStream.end();
       }
 
       // Skip the rest if we are only verify exit code.
@@ -202,17 +202,20 @@ exports.Executor = function() {
     return test;
   };
 
-  this.execute = function() {
+  this.execute = function(logFile) {
     var failed = false;
 
     (function runTests(i) {
       if (i < tests.length) {
         console.log('running: ' + tests[i].command_);
+        if (logFile) {
+          tests[i].setTestLogFile(logFile);
+        }
         tests[i].run().then(function() {
-          console.log('>>> \033[1;32mpass\033[0m');
+          console.log('\n>>> \033[1;32mpass\033[0m');
         }, function(err) {
           failed = true;
-          console.log('>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
+          console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
         }).fin(function() {
           runTests(i + 1);
         }).done();
