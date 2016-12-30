@@ -3,6 +3,7 @@ import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';
 import {Ptor} from './ptor';
+import {Runner} from './runner';
 
 // Re-export selenium-webdriver types.
 export {ActionSequence, Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
@@ -14,6 +15,7 @@ export {ElementArrayFinder, ElementFinder} from './element';
 export {ProtractorExpectedConditions} from './expectedConditions';
 export {ProtractorBy} from './locators';
 export {Ptor} from './ptor';
+export type Runner = Runner;
 
 export let utils = {
   firefox: require('selenium-webdriver/firefox'),
