@@ -39,8 +39,16 @@ export class Local extends DriverProvider {
       logger.debug(
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
-      this.config_.seleniumServerJar = path.resolve(
-          SeleniumConfig.getSeleniumDir(), new SeleniumStandAlone().executableFilename());
+      try {
+        let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+        let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+        this.config_.seleniumServerJar = updateConfig.standalone.last;
+      } catch (err) {
+        throw new BrowserError(
+            logger,
+            'No update-config.json found.' +
+                ' Run \'webdriver-manager update\' to download binaries.');
+      }
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
       throw new BrowserError(
@@ -53,8 +61,17 @@ export class Local extends DriverProvider {
         logger.debug(
             'Attempting to find the chromedriver binary in the default ' +
             'location used by webdriver-manager');
-        this.config_.chromeDriver = path.resolve(
-            SeleniumConfig.getSeleniumDir(), new SeleniumChrome().executableFilename());
+
+        try {
+          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+          this.config_.chromeDriver = updateConfig.chrome.last;
+        } catch (err) {
+          throw new BrowserError(
+              logger,
+              'No update-config.json found. ' +
+                  'Run \'webdriver-manager update\' to download binaries.');
+        }
       }
 
       // Check if file exists, if not try .exe or fail accordingly
@@ -77,11 +94,10 @@ export class Local extends DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): q.Promise<any> {
+  setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
 
     this.addDefaultBinaryLocs_();
-
     logger.info('Starting selenium standalone server...');
 
     let serverConf = this.config_.localSeleniumStandaloneOpts || {};
