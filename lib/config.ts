@@ -1,6 +1,8 @@
 import {PluginConfig} from './plugins';
 
 export interface Config {
+  [key: string]: any;
+
   // ---------------------------------------------------------------------------
   // ----- How to connect to Browser Drivers -----------------------------------
   // ---------------------------------------------------------------------------
@@ -559,30 +561,6 @@ export interface Config {
    * See the full list at http://mochajs.org/
    */
   mochaOpts?: {[key: string]: any; ui?: string; reporter?: string;};
-
-  /**
-   * Options to be passed to Cucumber (when set up as a custom framework).
-   */
-  cucumberOpts?: {
-    [key: string]: any;
-    /**
-     * Require files before executing the features.
-     */
-    require?: string[] | string;
-    /**
-     * Only execute the features or scenarios with tags matching @dev.
-     * This may be an array of strings to specify multiple tags to include.
-     */
-    tags?: string;
-    /**
-     * How to format features (default: progress)
-     */
-    format?: string[] | string;
-    /**
-     * Quickly scan your features without actually running them.
-     */
-    dryRun?: boolean;
-  };
 
   /**
    * See docs/plugins.md
