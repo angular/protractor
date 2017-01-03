@@ -32,4 +32,5 @@ website/
 .npmignore
 .travis.yml
 circle.yml
+logo.svg
 release.md
