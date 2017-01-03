@@ -1,4 +1,5 @@
 import {ElementHelper, ProtractorBrowser} from './browser';
+import {Config} from './config';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';
@@ -8,13 +9,15 @@ import {Runner} from './runner';
 // Re-export selenium-webdriver types.
 export {ActionSequence, Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 
-// Re-export public types.
-export {ElementHelper, ProtractorBrowser} from './browser';
-export {Config} from './config';
-export {ElementArrayFinder, ElementFinder} from './element';
-export {ProtractorExpectedConditions} from './expectedConditions';
-export {ProtractorBy} from './locators';
-export {Ptor} from './ptor';
+// Export protractor types.
+export type Config = Config;
+export type ElementHelper = ElementHelper;
+export type ProtractorBrowser = ProtractorBrowser;
+export type ElementArrayFinder = ElementArrayFinder;
+export type ElementFinder = ElementFinder;
+export type ProtractorExpectedConditions = ProtractorExpectedConditions;
+export type ProtractorBy = ProtractorBy;
+export type Ptor = Ptor;
 export type Runner = Runner;
 
 export let utils = {
