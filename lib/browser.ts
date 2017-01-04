@@ -191,7 +191,19 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @type {string}
    */
-  rootEl: string;
+  set rootEl(value) {
+    this.driver.controlFlow().execute(() => {
+      // TODO(mgiambalvo): For BlockingProxy, move rootElement from a command-line option to
+      // something that can be changed on the fly.
+      this.internalRootEl = value;
+    });
+  }
+
+  get rootEl() {
+    return this.internalRootEl;
+  }
+
+  private internalRootEl: string;
 
   /**
    * If true, Protractor will not attempt to synchronize with the page before
@@ -219,7 +231,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     return this.internalIgnoreSynchronization;
   }
 
-  internalIgnoreSynchronization: boolean;
+  private internalIgnoreSynchronization: boolean;
 
   /**
    * Timeout in milliseconds to wait for pages to load when calling `get`.
@@ -338,7 +350,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.$ = build$(this.element, By);
     this.$$ = build$$(this.element, By);
     this.baseUrl = opt_baseUrl || '';
-    this.rootEl = opt_rootElement || '';
+    this.internalRootEl = opt_rootElement || '';
     this.ignoreSynchronization = false;
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
