@@ -263,11 +263,12 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   trackOutstandingTimeouts_: boolean;
 
-  /**
-   * If set, will be the universal timeout applied to all tests run by
-   * Protractor.
+  /*
+   * Copy of `config.allScriptsTimeout`.  Used for plugins and nothing else.
+   *
+   * Set by the runner.
    */
-  public allScriptsTimeout: number;
+  allScriptsTimeout: number;
 
   /**
    * Information about mock modules that will be installed during every
