@@ -29,7 +29,7 @@ export class ConfigParser {
       specs: [],
       multiCapabilities: [],
       verboseMultiSessions: false,
-      rootElement: 'body',
+      rootElement: '',
       allScriptsTimeout: 11000,
       getPageTimeout: 10000,
       params: {},

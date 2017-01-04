@@ -348,8 +348,17 @@ export interface Config {
   baseUrl?: string;
 
   /**
-   * CSS Selector for the element housing the angular app - this defaults to
-   * 'body', but is necessary if ng-app is on a descendant of <body>.
+   * A CSS Selector for a DOM element within your Angular application.
+   * Protractor will attempt to automatically find your application, but it is
+   * necessary to set rootElement in certain cases.
+   *
+   * In Angular 1, Protractor will use the element your app bootstrapped to by
+   * default.  If that doesn't work, it will then search for hooks in `body` or
+   * `ng-app` elements (details here: https://git.io/v1b2r).
+   *
+   * In later versions of Angular, Protractor will try to hook into all angular
+   * apps on the page. Use rootElement to limit the scope of which apps
+   * Protractor waits for and searches within.
    */
   rootElement?: string;
 
@@ -611,7 +620,6 @@ export interface Config {
   v8Debug?: any;
   nodeDebug?: boolean;
   debuggerServerPort?: number;
-  useAllAngular2AppRoots?: boolean;
   frameworkPath?: string;
   elementExplorer?: any;
   debug?: boolean;

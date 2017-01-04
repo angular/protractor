@@ -338,7 +338,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.$ = build$(this.element, By);
     this.$$ = build$$(this.element, By);
     this.baseUrl = opt_baseUrl || '';
-    this.rootEl = opt_rootElement || 'body';
+    this.rootEl = opt_rootElement || '';
     this.ignoreSynchronization = false;
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
@@ -522,13 +522,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
         return wdpromise.fulfilled();
-      } else if (this.rootEl) {
+      } else {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
             this.rootEl);
-      } else {
-        return this.executeAsyncScript_(
-            clientSideScripts.waitForAllAngular2, 'Protractor.waitForAngular()' + description);
       }
     };
 
@@ -841,7 +838,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         }
 
         self.executeScriptWithDescription(
-                'angular.resumeBootstrap(arguments[0]);', msg('resume bootstrap'), moduleNames)
+                'window.__TESTABILITY__NG1_APP_ROOT_INJECTOR__ = ' +
+                    'angular.resumeBootstrap(arguments[0]);',
+                msg('resume bootstrap'), moduleNames)
             .then(null, deferred.reject);
       } else {
         // TODO: support mock modules in Angular2. For now, error if someone
