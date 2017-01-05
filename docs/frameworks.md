@@ -82,19 +82,19 @@ exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
   baseUrl: 'https://angularjs.org/',
-  
+
   capabilities: {
       browserName:'chrome'
   },
 
-  framework: 'custom',  // set to "custom" instead of cucumber. 
-  
+  framework: 'custom',  // set to "custom" instead of cucumber.
+
   frameworkPath: require.resolve('protractor-cucumber-framework'),  // path relative to the current config file
-  
+
   specs: [
     './cucumber/*.feature'     // Specs here are the cucumber feature files
   ],
-  
+
   // cucumber command line options
   cucumberOpts: {
     require: ['./cucumber/*.js'],  // require step definition files before executing features
@@ -115,5 +115,3 @@ Using a Custom Framework
 ------------------------
 
 Check section [Framework Adapters for Protractor](/lib/frameworks/README.md) specifically [Custom Frameworks](/lib/frameworks/README.md#custom-frameworks)
-
-
