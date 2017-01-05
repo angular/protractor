@@ -189,6 +189,9 @@ describe('expected conditions', function() {
       alertButton.click();
       browser2.wait(EC2.alertIsPresent(), 1000);
 
+      // TODO: Remove sleep when this is fixed:
+      //    https://bugs.chromium.org/p/chromedriver/issues/detail?id=1500
+      browser2.sleep(250);
       browser2.switchTo().alert().accept();
     });
   });
