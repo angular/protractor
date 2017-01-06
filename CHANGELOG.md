@@ -1,3 +1,286 @@
+# 5.0.0
+
+This version includes big changes around upgrading to selenium-webdriver 3.0.x.
+See the [selenium-webdriver changelog](https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md).
+
+For the 5.0.0 release, we are still using the selenium standalone server 2.53.1
+and recommend using Firefox 47. Firefox 48+ currently is not supported.
+
+## Breaking Changes
+
+- Minimum node version is now 6.9.x.
+- When testing with Firefox 47, use the capability option `marionette: false`
+  to use the legacy Firefox driver.
+
+  Before:
+  ```
+  capabilities: {
+    browserName: 'firefox'
+  }
+  ```
+
+  After:
+  ```
+  capabilities: {
+    browserName: 'firefox',
+    marionette: false
+  }
+  ```
+
+- We moved `@types/jasmine` to a devDependency. This means that Jasmine
+  TypeScript users will need to include the `@types/jasmine` as a project
+  dependency. This is to avoid conflicts for users that prefer mocha typings.
+
+  After:
+  ```
+  "dependencies": {
+    "@types/jasmine": "^2.5.38"
+  }
+  ```
+
+- Selenium-webdriver methods removed: `WebDriver.prototype.isElementPresent`,
+  `WebElement.prototype.getRawId`, `WebElement.prototype.getInnerHtml`, and
+  `WebElement.prototype.getOuterHtml`.
+
+  Before:
+  ```
+  let isPresent = browser.driver.isElementPresent(By.tagName('a'));
+  let i = element(locator).getInnerHtml();
+  let o = element(locator).getOuterHtml();
+  ```
+
+  After:
+  ```
+  let isPresent = element(By.tagName('a')).isPresent();
+  let i = browser.executeScript("return arguments[0].innerHTML;", element(locator));
+  let o = browser.executeScript("return arguments[0].outerHTML;", element(locator));
+  ```
+
+- Selenium-webdriver `ErrorCodes` have been removed.
+- Adding cookies have been changed:
+
+  Before:
+  ```
+  browser.manage().addCookie('testcookie', 'Jane-1234');
+  ```
+
+  After:
+  ```
+  browser.manage().addCookie({name:'testcookie', value: 'Jane-1234'});
+  ```
+- Removed `protractor.wrapDriver()`.
+- You can no longer use `repl` command from within `browser.pause()`. Instead,
+  use `browser.explore()` to directly enter the `repl`.
+- Sending flags that are not recognized by the CLI throws an error. Since flags
+  are a subset of all configuration options, these errors can be silenced with
+  `--disableChecks`.
+- Auto-detection of the root element. This is a breaking change because it
+  changes the default root element behavior and removes the
+  `config.useAllAngular2AppRoots` flag.  Modern angular apps now
+  default to using all app hooks, and ng1 apps now check several places, notably
+  the element the app bootstraps to.
+- `sauceProxy` configuration field has been removed. Use `webDriverProxy`
+  instead.
+
+  Before:
+  ```
+  sauceProxy: 'http://sauceProxy'
+  ```
+
+  After:
+  ```
+  webDriverProxy: 'http://sauceProxy'
+  ```
+
+## Features
+
+- ([ec93c4a](https://github.com/angular/protractor/commit/ec93c4ab882991410ad9d3f52d87c0f5ec947641))
+  chore(cli): **breaking change** throw errors on unknown flags (#3921)
+
+  Unknown flags are options sent that is unrecognized by the CLI. For users that
+  encounter this error but would like to silence it, use: `--disableChecks`.
+
+  closes #3216
+- ([bc58332](https://github.com/angular/protractor/commit/bc583321a233453fc2b89472013b2ec3e1d6b6f9))
+  feat(rootEl): ***breaking change*** auto-detect the root element better (#3928)
+
+  This is a breaking change because it changes the default root element behavior
+ and removes the `config.useAllAngular2AppRoots` flag.  Modern angular apps now
+ default to using all app hooks, and ng1 apps now check several places, notably
+ the element the app bootstraps to.
+
+  closes #1742
+- ([604fdbf](https://github.com/angular/protractor/commit/604fdbf064cc2785a2e745747beeaeb45d27f8ed))
+  cleanup(config): **breaking change** Remove redundant sauceProxy config (#3868)
+
+  Removes the `sauceProxy` config field, and uses `webDriverProxy` when creating
+  the SauceLabs client.
+- ([9465b9f](https://github.com/angular/protractor/commit/9465b9f1e667c9590e05d9ddac16fe5143aa93af))
+  feat(mobile): add extended wd commands for appium (#3860)
+
+  Also had to make some minor changes to the website to handle longer inheritance
+ chains
+   Closes https://github.com/angular/protractor/issues/1940
+- ([0e26b21](https://github.com/angular/protractor/commit/0e26b218d5f385dd9871a40553acc174cfdfe26d))
+  feat(blockingproxy): Add synchronization with BlockingProxy. (#3813)
+
+  This adds support for BlockingProxy behind the flag --useBlockingProxy.
+
+  If set, the driver providers will start a proxy during their setup phase,
+  passing the selenium address to the proxy and starting a webdriver client
+  that talks to the proxy.
+
+  Starting a proxy for each driver provider isn't strictly necessary. However,
+  when we run with multiple capabilities it's easier to handle the logging if
+  each Protractor instance has it's own proxy.
+
+  Known issues:
+
+  - Doesn't work with directConnect. You can get the address of chromedriver by
+  mucking around in Selenium internals, but this probably changed for Selenium
+  3.0 and I doubt it's worth figuring out until we upgrade.
+  - Doesn't yet work with webDriverProxy (but it's an easy fix)
+
+- ([ca4f1ac](https://github.com/angular/protractor/commit/ca4f1acda3672942307d0f102d586c8889dd3d68))
+  chore(driverProviders): add warnings to extra driver provider parameters (#3873)
+
+  - builds the driver provider in lib/driverProviders/index instead of lib/runner
+   closes #1945
+
+- ([681b54a](https://github.com/angular/protractor/commit/681b54a21ee1467d5a95c3693cde148759767d62))
+  refactor(browser): Remove protractor.wrapDriver() **breaking change** (#3827)
+
+  Before:
+
+  Users could create their own selenium driver instance and enable Protractor on
+  it like so:
+
+  ```js
+  let capabilities = webdriver.Capabilities.chrome();
+  let driver = new webdriver.Builder().usingServer(seleniumAddress)
+    .withCapabilities(capabilities).build();
+  let browser = protractor.wrapDriver(driver);
+  ```
+
+  Over the years, wrapDriver() has become increasingly broken as Protractor
+  needs extra configuration options that wrapDriver() doesn't set.
+
+  After:
+
+  This method is removed. If users need a new browser instance, they can
+  use `browser.forkNewDriverInstance()`.
+
+- ([86fd569](https://github.com/angular/protractor/commit/86fd56917f039efbff8e6f323f4d91fa8bc821a4))
+  feat(ngUpgrade): Auto detect ngUpgrade apps and make the ng12Hybrid flag
+  unnecessary for most users (#3847)
+
+
+## Bug fixes
+
+- ([de153e7](https://github.com/angular/protractor/commit/de153e769292f6b9a99b2d5152bd2929ab1c48af))
+  fix(launcher): running getMultiCapabilities should reject on errors (#3876)
+
+  closes #3875
+- ([1345137](https://github.com/angular/protractor/commit/1345137dc5173e868de4b9da6ed16b7928e4c50e))
+  fix(isElementPresent): for un-wrapped `WebElement`s, `browser.isElementPresent`
+  was broken (#3871)
+
+  Closes #3864
+- ([4af3b2e](https://github.com/angular/protractor/commit/4af3b2e30e925ea9d8e47537ea0a7fe8f04b579d))
+  fix(element): Fix typing of ElementFinder.then (#3835)
+
+  Type `then` as optional on ElementFinder.
+
+
+## Dependencies
+- ([4d87c9c](https://github.com/angular/protractor/commit/4d87c9c20d6905189c0e7ea7214cf3e87c8efe91))
+  deps(update): update tslint and @types/selenium-webdriver (#3941)
+
+  - use @types/selenium-webdriver ~2.53.39
+  - fix for tslint
+
+  closes #3939
+- ([7376708](https://github.com/angular/protractor/commit/7376708c723976ef8a0a3ad7c245606bef1221db))
+  deps(tslint): set tslint to ~4.2 (#3938)
+- ([cb38ed0](https://github.com/angular/protractor/commit/cb38ed0a8aae2cb862001e0b6f076aa9972f4489))
+  Refactor element explorer to work with selenium-webdriver 3 (#3828)
+
+  This implementation now relies mostly on promises explicitly, so the control
+  flow is only used to add one large task to the queue. This should pave the way
+  for the eventual removal of the control flow, as well as getting element
+  explorer to work immediately.
+
+  BREAKING CHANGE
+
+  You can no longer use the `repl` command from within `browser.pause()`. Instead,
+ use `browser.explore()` to directly enter the repl.
+- ([8196059](https://github.com/angular/protractor/commit/819605933d2dfef70b4332a727b3b3830e306817))
+  chore(dependency): switch to webdriver-manager 11.1.0 and remove
+  `--versions.chrome 2.26` from circle.yml (#3865)
+- ([397bf65](https://github.com/angular/protractor/commit/397bf65e088b640cf3612f9da678180f49939b84))
+  deps(update): move @types/jasmine to devDependencies (#3795)
+
+  - update outdated dependencies
+  - move @types/jasmine to devDependencies
+   closes #3792
+- ([a3e8b43](https://github.com/angular/protractor/commit/a3e8b4319d3e8b049e55e5c3c64a7fdb5a132ddf))
+  deps(selenium-webdriver): upgrade to selenium 3 (#3781)
+
+  Please see the [selenium-webdriver changelog](https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md)
+
+    - Removed method `WebDriver.prototype.isElementPresent`
+    - Removed method `WebElement.prototype.getRawId`
+    - Removed `getInnerHtml` and `getOutterHtml`
+
+    - Dependency required for upgrade: use `jasminewd2@0.1.0`.
+    - Selenium-webdriver requires node version 6+, updating travis and circle yml
+      to use node 6 and 7.
+
+    - Use `instanceof` selenium-webdriver error instead of error code.
+      Selenium-webdriver error codes have been deprecated.
+
+    - Use executor with selenium-webdriver from `lib/http`. Deferred executor has
+      been deprecated.
+    - Fix quitting `driverProviders`. When calling `webdriver.quit`, the control
+      flow is shutdown and will throw an error.
+    - Driver provider for direct connect has been modified to use `ServiceBuilder`
+      and to call the `Service` to `createSession`
+    - Note: Since this upgrade is still using FF 47, direct connect for Firefox is
+      required to pass "marionette: false" in the capabilities. If you do not pass
+      marionette to false, it will look for gecko driver in the PATH.
+    - Added a TODO to support FF after 48+ with direct connect and gecko driver.
+
+    - Updated `browser.manage().addCookie('testcookie', 'Jane-1234');` to use
+      `browser.manage().addCookie({name:'testcookie', value: 'Jane-1234'});`
+
+    - Updated debug commons for breakpoint updated to selenium-webdriver
+      `lib/http` line 432.
+
+    - For mocha tests, `selenium-webdriver/testing` uses the global `it` and
+      cannot be reassigned as Protractor's global `it`. Some code has been
+      copied / modified to `lib/frameworks/mocha` to make this work.
+
+    - Capabilities for Firefox 47 requires setting marionette to false.
+    - Setup still requires selenium standalone server 2.53.1 for Firefox tests.
+      Firefox version used is 47.
+    - Using selenium standalone server 3, with Firefox 48+ tests fail with gecko
+      driver still do not work.
+    - Selenium standalone 3 + FF 49 + gecko driver 0.11.1 does not work
+    - Selenium standalone 3 + FF 48 + gecko driver 0.11.1 appears to work for a
+      single test but after it quits, selenium standalone no longer works with
+      firefox. When firefox 48 exists, logs show the following:
+
+      ```
+      20:01:14.814 INFO - Executing: [delete session: e353fa1b-e266-4ec3-afb3-88f11a82473a])
+      [GFX1-]: Receive IPC close with reason=AbnormalShutdown
+      [Child 30665] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-rel-m64-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2052
+      [Child 30665] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-rel-m64-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2052
+      ```
+- ([eb31c9c](https://github.com/angular/protractor/commit/eb31c9c7755399bcd01630158d900e0b940e9c31))
+  deps(types): update @types/selenium-webdriver dependency (#3886)
+
+  Fixes issue #3879 and adds the protractor.Key.chord method
+
 # 4.0.14
 
 ## Bug Fixes
