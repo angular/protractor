@@ -1,17 +1,21 @@
 var fs = require('fs'),
     os = require('os'),
     path = require('path');
-var BrowserError = require('../../../built/exitCodes').BrowserError,
-    Logger = require('../../../built/logger2').Logger,
-    WriteTo = require('../../../built/logger2').WriteTo;
+var BrowserError = require('../../../built/exitCodes').BrowserError;
+var ProtractorError = require('../../../built/exitCodes').ProtractorError;
+var Logger = require('../../../built/logger').Logger;
+var WriteTo = require('../../../built/logger').WriteTo;
+var Direct = require('../../../built/driverProviders').Direct;
 var webdriver, file;
 
 describe('direct connect', function() {
   beforeEach(function() {
+    ProtractorError.SUPRESS_EXIT_CODE = true;
     Logger.setWrite(WriteTo.NONE);
   });
 
   afterEach(function() {
+    ProtractorError.SUPRESS_EXIT_CODE = false;
     Logger.setWrite(WriteTo.CONSOLE);
   });
 
@@ -24,7 +28,7 @@ describe('direct connect', function() {
       };
       var errorFound = false;
       try {
-        webdriver = require('../../../built/driverProviders/direct')(config);
+        webdriver = new Direct(config);
         webdriver.getNewDriver();
       } catch(e) {
         errorFound = true;
@@ -49,6 +53,7 @@ describe('direct connect', function() {
       } catch(e) {
       }
     });
+
     it('should throw an error if the driver cannot be used', function() {
       var config = {
         directConnect: true,
@@ -57,7 +62,26 @@ describe('direct connect', function() {
       };
       var errorFound = false;
       try {
-        webdriver = require('../../../built/driverProviders/direct')(config);
+        webdriver = new Direct(config);
+        webdriver.getNewDriver();
+      } catch(e) {
+        errorFound = true;
+        expect(e.code).toBe(BrowserError.CODE);
+      }
+      expect(errorFound).toBe(true);
+    });
+  });
+
+  describe('binary does not exist', () => {
+    it('should throw an error if the update-config.json does not exist', () => {
+      spyOn(fs, 'readFileSync').and.callFake(() => { return null; });
+      var config = {
+        directConnect: true,
+        capabilities: { browserName: 'chrome' },
+      };
+      var errorFound = false;
+      try {
+        webdriver = new Direct(config);
         webdriver.getNewDriver();
       } catch(e) {
         errorFound = true;

@@ -55,13 +55,24 @@ export class Direct extends DriverProvider {
    */
   getNewDriver(): WebDriver {
     let driver: WebDriver;
-    let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-    let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
 
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
-        let defaultChromeDriverPath = updateConfig.chrome.last;
-        let chromeDriverFile = this.config_.chromeDriver || defaultChromeDriverPath;
+        let chromeDriverFile: string;
+        if (this.config_.chromeDriver) {
+          chromeDriverFile = this.config_.chromeDriver;
+        } else {
+          try {
+            let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+            let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+            chromeDriverFile = updateConfig.chrome.last;
+          } catch (e) {
+            throw new BrowserError(
+                logger,
+                'Could not find update-config.json. ' +
+                    'Run \'webdriver-manager update\' to download binaries.');
+          }
+        }
 
         if (!fs.existsSync(chromeDriverFile)) {
           throw new BrowserError(
