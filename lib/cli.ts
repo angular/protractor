@@ -31,46 +31,137 @@ process.argv.slice(2).forEach(function(arg: string) {
   }
 });
 
-optimist
-    .usage(
-        'Usage: protractor [configFile] [options]\n' +
-        'configFile defaults to protractor.conf.js\n' +
-        'The [options] object will override values from the config file.\n' +
-        'See the reference config for a full list of options.')
-    .describe('help', 'Print Protractor help menu')
-    .describe('version', 'Print Protractor version')
-    .describe('browser', 'Browsername, e.g. chrome or firefox')
-    .describe('seleniumAddress', 'A running selenium address to use')
-    .describe('seleniumSessionId', 'Attaching an existing session id')
-    .describe('seleniumServerJar', 'Location of the standalone selenium jar file')
-    .describe('seleniumPort', 'Optional port for the selenium standalone server')
-    .describe('baseUrl', 'URL to prepend to all relative paths')
-    .describe('rootElement', 'Element housing ng-app, if not html or body')
-    .describe('specs', 'Comma-separated list of files to test')
-    .describe('exclude', 'Comma-separated list of files to exclude')
-    .describe('verbose', 'Print full spec names')
-    .describe('stackTrace', 'Print stack trace on error')
-    .describe('params', 'Param object to be passed to the tests')
-    .describe('framework', 'Test framework to use: jasmine, mocha, or custom')
-    .describe('resultJsonOutputFile', 'Path to save JSON test result')
-    .describe('troubleshoot', 'Turn on troubleshooting output')
-    .describe('elementExplorer', 'Interactively test Protractor commands')
-    .describe('debuggerServerPort', 'Start a debugger server at specified port instead of repl')
-    .alias('browser', 'capabilities.browserName')
-    .alias('name', 'capabilities.name')
-    .alias('platform', 'capabilities.platform')
-    .alias('platform-version', 'capabilities.version')
-    .alias('tags', 'capabilities.tags')
-    .alias('build', 'capabilities.build')
-    .alias('grep', 'jasmineNodeOpts.grep')
-    .alias('invert-grep', 'jasmineNodeOpts.invertGrep')
-    .alias('explorer', 'elementExplorer')
-    .string('capabilities.tunnel-identifier')
-    .check(function(arg: any) {
-      if (arg._.length > 1) {
-        throw new Error('Error: more than one config file specified');
-      }
-    });
+// TODO(cnishina): Make cli checks better.
+let allowedNames = [
+  'seleniumServerJar',
+  'seleniumServerStartTimeout',
+  'localSeleniumStandaloneOpts',
+  'chromeDriver',
+  'seleniumAddress',
+  'seleniumSessionId',
+  'webDriverProxy',
+  'useBlockingProxy',
+  'sauceUser',
+  'sauceKey',
+  'sauceAgent',
+  'sauceBuild',
+  'sauceSeleniumAddress',
+  'browserstackUser',
+  'browserstackKey',
+  'directConnect',
+  'firefoxPath',
+  'noGlobals',
+  'specs',
+  'exclude',
+  'suites',
+  'suite',
+  'capabilities',
+  'multiCapabilities',
+  'getMultiCapabilities',
+  'maxSessions',
+  'verboseMultiSessions',
+  'baseUrl',
+  'rootElement',
+  'allScriptsTimeout',
+  'getPageTimeout',
+  'beforeLaunch',
+  'onPrepare',
+  'onComplete',
+  'onCleanUp',
+  'afterLaunch',
+  'params',
+  'resultJsonOutputFile',
+  'restartBrowserBetweenTests',
+  'untrackOutstandingTimeouts',
+  'ignoreUncaughtExceptions',
+  'framework',
+  'jasmineNodeOpts',
+  'mochaOpts',
+  'plugins',
+  'skipSourceMapSupport',
+  'disableEnvironmentOverrides',
+  'ng12Hybrid',
+  'seleniumArgs',
+  'jvmArgs',
+  'configDir',
+  'troubleshoot',
+  'seleniumPort',
+  'mockSelenium',
+  'v8Debug',
+  'nodeDebug',
+  'debuggerServerPort',
+  'useAllAngular2AppRoots',
+  'frameworkPath',
+  'elementExplorer',
+  'debug',
+  'disableChecks',
+  'browser',
+  'name',
+  'platform',
+  'platform-version',
+  'tags',
+  'build',
+  'grep',
+  'invert-grep',
+  'explorer'
+];
+
+let optimistOptions: any = {
+  describes: {
+    help: 'Print Protractor help menu',
+    version: 'Print Protractor version',
+    browser: 'Browsername, e.g. chrome or firefox',
+    seleniumAddress: 'A running selenium address to use',
+    seleniumSessionId: 'Attaching an existing session id',
+    seleniumServerJar: 'Location of the standalone selenium jar file',
+    seleniumPort: 'Optional port for the selenium standalone server',
+    baseUrl: 'URL to prepend to all relative paths',
+    rootElement: 'Element housing ng-app, if not html or body',
+    specs: 'Comma-separated list of files to test',
+    exclude: 'Comma-separated list of files to exclude',
+    verbose: 'Print full spec names',
+    stackTrace: 'Print stack trace on error',
+    params: 'Param object to be passed to the tests',
+    framework: 'Test framework to use: jasmine, mocha, or custom',
+    resultJsonOutputFile: 'Path to save JSON test result',
+    troubleshoot: 'Turn on troubleshooting output',
+    elementExplorer: 'Interactively test Protractor commands',
+    debuggerServerPort: 'Start a debugger server at specified port instead of repl',
+    disableChecks: 'disable cli checks'
+  },
+  aliases: {
+    browser: 'capabilities.browserName',
+    name: 'capabilities.name',
+    platform: 'capabilities.platform',
+    'platform-version': 'capabilities.version',
+    tags: 'capabilities.tags',
+    build: 'capabilities.build',
+    grep: 'jasmineNodeOpts.grep',
+    'invert-grep': 'jasmineNodeOpts.invertGrep',
+    explorer: 'elementExplorer'
+  },
+  strings: {'capabilities.tunnel-identifier': ''}
+};
+
+optimist.usage(
+    'Usage: protractor [configFile] [options]\n' +
+    'configFile defaults to protractor.conf.js\n' +
+    'The [options] object will override values from the config file.\n' +
+    'See the reference config for a full list of options.');
+for (let key of Object.keys(optimistOptions.describes)) {
+  optimist.describe(key, optimistOptions.describes[key]);
+}
+for (let key of Object.keys(optimistOptions.aliases)) {
+  optimist.alias(key, optimistOptions.aliases[key]);
+}
+for (let key of Object.keys(optimistOptions.strings)) {
+  optimist.string(key);
+}
+optimist.check(function(arg: any) {
+  if (arg._.length > 1) {
+    throw new Error('Error: more than one config file specified');
+  }
+});
 
 let argv: any = optimist.parse(args);
 
@@ -82,6 +173,17 @@ if (argv.help) {
 if (argv.version) {
   console.log('Version ' + require(path.resolve(__dirname, '../package.json')).version);
   process.exit(0);
+}
+
+if (!argv.disableChecks) {
+  // Check to see if additional flags were used.
+  let unknownKeys: string[] = Object.keys(argv).filter((element: string) => {
+    return element !== '$0' && element !== '_' && allowedNames.indexOf(element) === -1;
+  });
+
+  if (unknownKeys.length > 0) {
+    throw new Error('Found extra flags: ' + unknownKeys.join(', '));
+  }
 }
 
 /**

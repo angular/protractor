@@ -19,6 +19,12 @@ var checkLogs = function(output, messages) {
  *Below are exit failure tests*
  ******************************/
 
+runProtractor = spawn('node',
+    ['bin/protractor', 'example/conf.js', '--foobar', 'foobar']);
+output = runProtractor.stderr.toString();
+messages = ['Error: Found extra flags: foobar'];
+checkLogs(output, messages);
+
 // assert authentication error for sauce labs
 runProtractor = spawn('node',
     ['bin/protractor', 'spec/errorTest/sauceLabsAuthentication.js']);
