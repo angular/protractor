@@ -2,10 +2,12 @@ var _ = require('lodash');
 var path = require('path');
 var Package = require('dgeni').Package;
 
-var jsDocProcessor = require('dgeni-packages/jsdoc');
+var jsDocPackage = require('dgeni-packages/jsdoc');
+var nunjucksPackage = require('dgeni-packages/nunjucks');
+var typescriptPackage = require('dgeni-packages/typescript');
 
 // Configure the tags that will be parsed from the jsDoc.
-jsDocProcessor.config(function(parseTagsProcessor) {
+jsDocPackage.config(function(parseTagsProcessor) {
   var tagDefs = parseTagsProcessor.tagDefinitions;
 
   // Parse the following annotations.
@@ -32,13 +34,14 @@ jsDocProcessor.config(function(parseTagsProcessor) {
   nameTag.required = false;
 });
 
-var myPackage = new Package('myPackage', [
-  jsDocProcessor,
-  require('dgeni-packages/nunjucks')
+var protractorPackage = new Package('protractorPackage', [
+  jsDocPackage,
+  nunjucksPackage,
+  typescriptPackage
 ]);
 
 // Handle Inline Tags
-myPackage.factory(require('./inline_tags/code'))
+protractorPackage.factory(require('./inline_tags/code'))
     .config(function(inlineTagProcessor, codeTagDef) {
       inlineTagProcessor.inlineTagDefinitions.push(codeTagDef);
     });
@@ -57,25 +60,25 @@ myPackage.factory(require('./inline_tags/code'))
  *     and webdriver.js.
  * add-toc: Generates the table of contents.
  */
-myPackage.processor(require('./processors/tag-fixer'));
-myPackage.processor(require('./processors/these-children'));
-myPackage.processor(require('./processors/filter-jsdoc'));
-myPackage.processor(require('./processors/set-file-name'));
-myPackage.processor(require('./processors/transfer-see'));
-myPackage.processor(require('./processors/add-links'));
-myPackage.processor(require('./processors/filter-promise'));
-myPackage.processor(require('./processors/add-toc'));
+protractorPackage.processor(require('./processors/tag-fixer'));
+protractorPackage.processor(require('./processors/these-children'));
+protractorPackage.processor(require('./processors/filter-jsdoc'));
+protractorPackage.processor(require('./processors/set-file-name'));
+protractorPackage.processor(require('./processors/transfer-see'));
+protractorPackage.processor(require('./processors/add-links'));
+protractorPackage.processor(require('./processors/filter-promise'));
+protractorPackage.processor(require('./processors/add-toc'));
 
-myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcessor) {
+protractorPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcessor) {
 
   // Go to the protractor project root.
   readFilesProcessor.basePath = path.resolve(__dirname, '../..');
 
   readFilesProcessor.sourceFiles = [
-    {include: 'built/browser.js'},
-    {include: 'built/element.js'},
-    {include: 'built/locators.js'},
-    {include: 'built/expectedConditions.js'},
+    {include: 'lib/browser.ts'},
+    {include: 'lib/element.ts'},
+    {include: 'lib/locators.ts'},
+    {include: 'lib/expectedConditions.ts'},
     {include: 'lib/selenium-webdriver/locators.js'},
     {include: 'lib/selenium-webdriver/webdriver.js'},
     {include: 'lib/webdriver-js-extender/index.js'}
@@ -92,4 +95,4 @@ myPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcesso
   writeFilesProcessor.outputFolder = 'website/docgen/build';
 });
 
-module.exports = myPackage;
+module.exports = protractorPackage;
