@@ -90,7 +90,6 @@ let allowedNames = [
   'v8Debug',
   'nodeDebug',
   'debuggerServerPort',
-  'useAllAngular2AppRoots',
   'frameworkPath',
   'elementExplorer',
   'debug',
