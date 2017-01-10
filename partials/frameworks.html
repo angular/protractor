@@ -20,7 +20,7 @@ var expect = chai.expect;
 <pre><code class="lang-js">expect(myElement.getText()).to.eventually.equal(&#39;some text&#39;);
 </code></pre>
 <p>Finally, set the &#39;framework&#39; property to &#39;mocha&#39;, either by adding <code ng-non-bindable>framework: &#39;mocha&#39;</code> to the config file or by adding <code ng-non-bindable>--framework=mocha</code> to the command line.</p>
-<p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="../spec/mochaConf.js">config file</a> with mochaOpts:</p>
+<p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="https://github.com/angular/protractor/blob/master/spec/mochaConf.js">config file</a> with mochaOpts:</p>
 <pre><code class="lang-js">mochaOpts: {
   reporter: &quot;spec&quot;,
   slow: 3000
@@ -32,20 +32,44 @@ var expect = chai.expect;
 <p>If you would  like to use the Cucumber test framework, download the dependencies with npm. Cucumber should be installed in the same place as Protractor - so if protractor was installed globally, install Cucumber with -g.</p>
 <pre><code ng-non-bindable>npm install -g cucumber
 npm install --save-dev protractor-cucumber-framework
-</code></pre><p>Set the &#39;framework&#39; property to custom by adding <code ng-non-bindable>framework: &#39;custom&#39;</code> and <code ng-non-bindable>frameworkPath: &#39;protractor-cucumber-framework&#39;</code> to the <a href="../spec/cucumberConf.js">config file</a></p>
-<p>Options for Cucumber such as &#39;format&#39; can be given in the config file with cucumberOpts:</p>
-<pre><code class="lang-js">exports.config = {
-  // set to &quot;custom&quot; instead of cucumber.
-  framework: &#39;custom&#39;,
+</code></pre><p>Set the &#39;framework&#39; property to custom by adding <code ng-non-bindable>framework: &#39;custom&#39;</code> and <code ng-non-bindable>frameworkPath: &#39;protractor-cucumber-framework&#39;</code> to the <code ng-non-bindable>config file(cucumberConf.js)</code></p>
+<p>Options for Cucumber such as &#39;format&#39; can be given in the config file with cucumberOpts, A basic cucumberConf.js file has been provided below:</p>
+<pre><code class="lang-js">/*
+Basic configuration to run your cucumber
+feature files and step definitions with protractor.
+**/
+exports.config = {
 
-  // path relative to the current config file
-  frameworkPath: require.resolve(&#39;protractor-cucumber-framework&#39;),
+  seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
 
-  // relevant cucumber command line options
+  baseUrl: &#39;https://angularjs.org/&#39;,
+
+  capabilities: {
+      browserName:&#39;chrome&#39;
+  },
+
+  framework: &#39;custom&#39;,  // set to &quot;custom&quot; instead of cucumber.
+
+  frameworkPath: require.resolve(&#39;protractor-cucumber-framework&#39;),  // path relative to the current config file
+
+  specs: [
+    &#39;./cucumber/*.feature&#39;     // Specs here are the cucumber feature files
+  ],
+
+  // cucumber command line options
   cucumberOpts: {
-    format: &quot;summary&quot;
+    require: [&#39;./cucumber/*.js&#39;],  // require step definition files before executing features
+    tags: [],                      // &lt;string[]&gt; (expression) only execute the features or scenarios with tags matching the expression
+    strict: true,                  // &lt;boolean&gt; fail if there are any undefined or pending steps
+    format: [&quot;pretty&quot;],            // &lt;string[]&gt; (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
+    dryRun: false,                 // &lt;boolean&gt; invoke formatters without executing steps
+    compiler: []                   // &lt;string[]&gt; (&quot;extension:module&quot;) require files with the given EXTENSION after requiring MODULE (repeatable)
+  },
+
+ onPrepare: function () {
+    browser.manage().window().maximize(); // maximize the browser before executing the feature files
   }
 };
 </code></pre>
 <h2 id="using-a-custom-framework" class="anchored"><div><a href="#{{path}}#using-a-custom-framework">&#x1f517;</a>Using a Custom Framework</div></h2>
-<p>Check section <a href="../lib/frameworks/README.md">Framework Adapters for Protractor</a> specifically <a href="../lib/frameworks/README.md#custom-frameworks">Custom Frameworks</a></p>
+<p>Check section <a href="/lib/frameworks/README.md">Framework Adapters for Protractor</a> specifically <a href="/lib/frameworks/README.md#custom-frameworks">Custom Frameworks</a></p>
