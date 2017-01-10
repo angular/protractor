@@ -69,20 +69,22 @@ protractorPackage.processor(require('./processors/add-links'));
 protractorPackage.processor(require('./processors/filter-promise'));
 protractorPackage.processor(require('./processors/add-toc'));
 
-protractorPackage.config(function(readFilesProcessor, templateFinder, writeFilesProcessor) {
+protractorPackage.config(function(readFilesProcessor, readTypeScriptModules, templateFinder, writeFilesProcessor) {
+  readTypeScriptModules.sourceFiles = [{
+    include: 'lib/**/*.ts',
+    basePath: 'lib'
+  }];
+
+  readTypeScriptModules.hidePrivateMembers = true;
 
   // Go to the protractor project root.
-  readFilesProcessor.basePath = path.resolve(__dirname, '../..');
-
-  readFilesProcessor.sourceFiles = [
-    {include: 'lib/browser.ts'},
-    {include: 'lib/element.ts'},
-    {include: 'lib/locators.ts'},
-    {include: 'lib/expectedConditions.ts'},
-    {include: 'lib/selenium-webdriver/locators.js'},
-    {include: 'lib/selenium-webdriver/webdriver.js'},
-    {include: 'lib/webdriver-js-extender/index.js'}
-  ];
+  // --- JS
+  readFilesProcessor.basePath = path.resolve(__dirname, '..');
+  readFilesProcessor.sourceFiles = [{
+      include: 'lib/**/*.js',
+      exclude: 'lib/**/node_modules/**/*',
+      basePath: 'lib'
+  }];
 
   // Add a folder to search for our own templates to use when rendering docs
   templateFinder.templateFolders.unshift(path.resolve('docgen/templates'));
