@@ -19,6 +19,12 @@ dependencies:
     - cd testapp && npm update
     - npm start:
           background: true
+    # Install the latest Firefox beta
+    - pip install mozdownload mozinstall
+    - mozdownload --version latest-beta --destination firefox.tar.bz2
+    - mozinstall firefox.tar.bz2
+    - sudo cp -R firefox/* /opt/firefox/
+    # Extra tcp logging for BlockingProxy
     - sudo tcpdump -i lo 'tcp && dst localhost' -w $CIRCLE_ARTIFACTS/localdump.pcap:
           background: true
 
