@@ -45,6 +45,26 @@ describe('expected conditions', function() {
     expect(visibilityOfHideable.call()).toBe(false);
   });
 
+  it('should have visibilityOf (handling race conditions)', function() {
+    var disabledButton = $('#disabledButton[disabled="disabled"]');
+
+    // toggle presence (of .ng-hide) between visibility evaluation to simulate race condition
+    var originalIsDisplayedFn = disabledButton.isDisplayed;
+    disabledButton.isDisplayed = function () {
+      element(by.model('disabled')).click();
+      return originalIsDisplayedFn.call(this);
+    };
+
+    var visibilityOfDisabledButtonWithInterceptor = EC.visibilityOf(disabledButton);
+
+    element(by.model('disabled')).click();
+
+    expect(originalIsDisplayedFn.call(disabledButton)).toBe(true);
+    expect(disabledButton.isPresent()).toBe(true);
+
+    expect(visibilityOfDisabledButtonWithInterceptor.call()).toBe(false);
+  });
+
   it('should have invisibilityOf', function() {
     var invisibilityOfInvalid = EC.invisibilityOf($('#INVALID'));
     var invisibilityOfHideable = EC.invisibilityOf($('#shower'));
