@@ -151,13 +151,12 @@ describe('ElementFinder', function() {
 
   it('should propagate exceptions', function() {
     browser.get('index.html#/form');
-    var successful = protractor.promise.defer();
 
     var invalidElement = element(by.binding('INVALID'));
-    invalidElement.getText().then(function(/* string */) {
-      successful.fulfill(true);
-    }, function(/* error */) {
-      successful.fulfill(false);
+    var successful = invalidElement.getText().then(function() {
+      return true;
+    }, function() {
+      return false;
     });
     expect(successful).toEqual(false);
   });
