@@ -10,7 +10,7 @@ Setting Up Protractor with Appium - Android/Chrome
 
 Use `webdriver-manager` to install `appium` and the Android SDK.  See details
 [on the WebDriver Manager page](
-https://github.com/angular/webdriver-manager/blob/master/mobile.md).
+https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md).
 
 ###### Running Tests
 *   Ensure app is running if testing local app (Skip if testing public website):
@@ -21,7 +21,7 @@ Starting express web server in /workspace/protractor/testapp on port 8000
 ```
 
 *   Start appium and the Android Emulators (details [on the WebDriver Manager
-page](https://github.com/angular/webdriver-manager/blob/master/mobile.md)).
+page](https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md)).
 
 ```shell
 > webdriver-manager start --android
@@ -72,7 +72,7 @@ Setting Up Protractor with Appium - iOS/Safari
 
 Use `webdriver-manager` to install `appium` and the Android SDK.  See details
 [on the WebDriver Manager page](
-https://github.com/angular/webdriver-manager/blob/master/mobile.md).
+https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md).
 
 ###### Running Tests
 *   Ensure app is running if testing local app (Skip if testing public website):
