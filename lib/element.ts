@@ -15,7 +15,7 @@ export interface WebdriverWebElement extends WebElement {}
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'serialize',
+  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId',
   'takeScreenshot'
 ] as (keyof WebdriverWebElement)[];
 
