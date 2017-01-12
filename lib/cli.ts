@@ -181,7 +181,9 @@ if (!argv.disableChecks) {
   });
 
   if (unknownKeys.length > 0) {
-    throw new Error('Found extra flags: ' + unknownKeys.join(', ') + ', please use --disableChecks flag to disable the custom flag check!');
+    throw new Error(
+        'Found extra flags: ' + unknownKeys.join(', ') +
+        ', please use --disableChecks flag to disable the Protractor CLI flag checks.');
   }
 }
 
