@@ -31,6 +31,9 @@ export abstract class DriverProvider {
   }
 
   getBPUrl() {
+    if (this.config_.blockingProxyUrl) {
+      return this.config_.blockingProxyUrl;
+    }
     return `http://localhost:${this.bpRunner.port}`;
   }
 
@@ -105,7 +108,7 @@ export abstract class DriverProvider {
    */
   setupEnv(): q.Promise<any> {
     let driverPromise = this.setupDriverEnv();
-    if (this.config_.useBlockingProxy) {
+    if (this.config_.useBlockingProxy && !this.config_.blockingProxyUrl) {
       // TODO(heathkit): If set, pass the webDriverProxy to BP.
       return q.all([driverPromise, this.bpRunner.start()]);
     }

@@ -41,6 +41,7 @@ let allowedNames = [
   'seleniumSessionId',
   'webDriverProxy',
   'useBlockingProxy',
+  'blockingProxyUrl',
   'sauceUser',
   'sauceKey',
   'sauceAgent',

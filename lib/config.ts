@@ -104,6 +104,13 @@ export interface Config {
    */
   useBlockingProxy?: boolean;
 
+  /**
+   * If specified, Protractor will connect to the Blocking Proxy at the given
+   * url instead of starting it's own. Intended for debugging Protractor
+   * features only.
+   */
+  blockingProxyUrl?: string;
+
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 
   /**
