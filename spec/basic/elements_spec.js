@@ -357,6 +357,13 @@ describe('ElementArrayFinder', function() {
     expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
 
+  it('supports isPresent()', function() {
+    browser.get('index.html#/form');
+
+    expect(element.all(by.model('color')).isPresent()).toBeTruthy();
+    expect(element.all(by.binding('doesnotexist')).isPresent()).toBeFalsy();
+  });
+
   it('should return not present when an element disappears within an array',
       function() {
     browser.get('index.html#/form');
