@@ -4,6 +4,7 @@ import {ElementHelper, ProtractorBrowser} from './browser';
 import {IError} from './exitCodes';
 import {Locator} from './locators';
 import {Logger} from './logger';
+import {falseIfMissing} from './util';
 
 let clientSideScripts = require('./clientsidescripts');
 
@@ -17,6 +18,8 @@ let WEB_ELEMENT_FUNCTIONS = [
   'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'serialize',
   'takeScreenshot'
 ] as (keyof WebdriverWebElement)[];
+let FALSE_IF_MISSING_WEB_ELEMENT_FUNCTIONS =
+    ['isEnabled', 'isSelected', 'isDisplayed'] as (keyof WebdriverWebElement)[];
 
 /**
  * ElementArrayFinder is used for operations on an array of elements (as opposed
@@ -82,7 +85,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
   constructor(
       public browser_: ProtractorBrowser,
       public getWebElements: () => wdpromise.Promise<WebElement[]> = null, public locator_?: any,
-      public actionResults_: wdpromise.Promise<any> = null) {
+      public actionResults_: wdpromise.Promise<any> = null,
+      public falseIfMissing_: boolean = false) {
     super();
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
@@ -92,7 +96,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
         let actionFn = (webElem: any) => {
           return webElem[fnName].apply(webElem, args);
         };
-        return this.applyAction_(actionFn);
+        return this.applyAction_(
+            actionFn, FALSE_IF_MISSING_WEB_ELEMENT_FUNCTIONS.indexOf(fnName) !== -1);
       };
     });
   }
@@ -458,8 +463,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @private
    */
   // map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
-  private applyAction_(actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
-      ElementArrayFinder {
+  private applyAction_(
+      actionFn: (value: WebElement, index: number, array: WebElement[]) => any,
+      falseIfMissing?: boolean): ElementArrayFinder {
     let callerError = new Error();
     let actionResults = this.getWebElements()
                             .then((arr: any) => wdpromise.all(arr.map(actionFn)))
@@ -474,7 +480,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
                               }
                               throw noSuchErr;
                             });
-    return new ElementArrayFinder(this.browser_, this.getWebElements, this.locator_, actionResults);
+    return new ElementArrayFinder(
+        this.browser_, this.getWebElements, this.locator_, actionResults, falseIfMissing);
   }
 
   /**
@@ -801,12 +808,22 @@ export class ElementFinder extends WebdriverWebElement {
       // Access the underlying actionResult of ElementFinder.
       this.then =
           (fn: (value: any) => any | wdpromise.IThenable<any>, errorFn?: (error: any) => any) => {
-            return this.elementArrayFinder_.then((actionResults: any) => {
-              if (!fn) {
-                return actionResults[0];
-              }
-              return fn(actionResults[0]);
-            }, errorFn);
+            return this.elementArrayFinder_
+                .then(
+                    null,
+                    (error) => {
+                      if (this.elementArrayFinder_.falseIfMissing_) {
+                        return falseIfMissing(error);
+                      } else {
+                        throw error;
+                      }
+                    })
+                .then((actionResults: any) => {
+                  if (!fn) {
+                    return actionResults[0];
+                  }
+                  return fn(actionResults[0]);
+                }, errorFn);
           };
     }
 
@@ -1055,30 +1072,14 @@ export class ElementFinder extends WebdriverWebElement {
    *     the element is present on the page.
    */
   isPresent(): wdpromise.Promise<boolean> {
-    return this.parentElementArrayFinder.getWebElements().then(
-        (arr: any[]) => {
-          if (arr.length === 0) {
-            return false;
-          }
-          return arr[0].isEnabled().then(
-              () => {
-                return true;  // is present, whether it is enabled or not
-              },
-              (err: any) => {
-                if (err instanceof wderror.StaleElementReferenceError) {
-                  return false;
-                } else {
-                  throw err;
-                }
-              });
-        },
-        (err: Error) => {
-          if (err instanceof wderror.NoSuchElementError) {
-            return false;
-          } else {
-            throw err;
-          }
-        });
+    return this.parentElementArrayFinder.getWebElements().then((arr: any[]) => {
+      if (arr.length === 0) {
+        return false;
+      }
+      return arr[0].isEnabled().then(() => {
+        return true;  // is present, whether it is enabled or not
+      });
+    }, falseIfMissing);
   }
 
   /**
