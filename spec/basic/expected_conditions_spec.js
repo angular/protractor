@@ -45,26 +45,6 @@ describe('expected conditions', function() {
     expect(visibilityOfHideable.call()).toBe(false);
   });
 
-  it('should have visibilityOf (handling race conditions)', function() {
-    var disabledButton = $('#disabledButton[disabled="disabled"]');
-
-    // toggle presence (of .ng-hide) between visibility evaluation to simulate race condition
-    var originalIsDisplayedFn = disabledButton.isDisplayed;
-    disabledButton.isDisplayed = function () {
-      element(by.model('disabled')).click();
-      return originalIsDisplayedFn.call(this);
-    };
-
-    var visibilityOfDisabledButtonWithInterceptor = EC.visibilityOf(disabledButton);
-
-    element(by.model('disabled')).click();
-
-    expect(originalIsDisplayedFn.call(disabledButton)).toBe(true);
-    expect(disabledButton.isPresent()).toBe(true);
-
-    expect(visibilityOfDisabledButtonWithInterceptor.call()).toBe(false);
-  });
-
   it('should have invisibilityOf', function() {
     var invisibilityOfInvalid = EC.invisibilityOf($('#INVALID'));
     var invisibilityOfHideable = EC.invisibilityOf($('#shower'));
@@ -213,6 +193,63 @@ describe('expected conditions', function() {
       //    https://bugs.chromium.org/p/chromedriver/issues/detail?id=1500
       browser2.sleep(250);
       browser2.switchTo().alert().accept();
+    });
+  });
+
+  describe('race condition handling', function () {
+
+    var disabledButton;
+
+    beforeEach(function () {
+      disabledButton = $('#disabledButton[disabled="disabled"]');
+    });
+
+    function enableButtonBeforeCallToUnmatchSelector(testElement, fnName) {
+      var originalFn = testElement[fnName];
+
+      testElement[fnName] = function () {
+        element(by.model('disabled')).click();
+        return originalFn.apply(this, arguments);
+      };
+
+      // save original fn with _ prefix
+      testElement['_' + fnName] = originalFn;
+    }
+
+    it('can deal with missing elements in visibilityOf', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'isDisplayed');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._isDisplayed()).toBe(true);
+      expect(EC.visibilityOf(disabledButton).call()).toBe(false);
+    });
+
+    it('can deal with missing elements in textToBePresentInElement', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'getText');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._getText()).toBe('Dummy');
+      expect(EC.textToBePresentInElement(disabledButton, 'Dummy').call()).toBe(false);
+    });
+
+    it('can deal with missing elements in textToBePresentInValue', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'getAttribute');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._getAttribute('value')).toBe('');
+      expect(EC.textToBePresentInElementValue(disabledButton, '').call()).toBe(false);
+    });
+
+    it('can deal with missing elements in elementToBeClickable', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'isEnabled');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._isEnabled()).toBe(false);
+      expect(EC.elementToBeClickable(disabledButton).call()).toBe(false);
     });
   });
 });
