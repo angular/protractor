@@ -429,6 +429,22 @@ export class ElementArrayFinder extends WebdriverWebElement {
   }
 
   /**
+   * Returns true if there are any elements present that match the finder.
+   *
+   * @alias element.all(locator).isPresent()
+   *
+   * @example
+   * expect($('.item').isPresent()).toBeTruthy();
+   *
+   * @returns {Promise<boolean>}
+   */
+  isPresent(): wdpromise.Promise<boolean> {
+    return this.count().then((count) => {
+      return count > 0;
+    });
+  }
+
+  /**
    * Returns the most relevant locator.
    *
    * @example
