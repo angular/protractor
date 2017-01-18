@@ -106,8 +106,7 @@ export interface Config {
 
   /**
    * If specified, Protractor will connect to the Blocking Proxy at the given
-   * url instead of starting it's own. Intended for debugging Protractor
-   * features only.
+   * url instead of starting it's own.
    */
   blockingProxyUrl?: string;
 
