@@ -33,6 +33,8 @@ export class Runner extends EventEmitter {
   driverprovider_: DriverProvider;
   o: any;
   plugins_: Plugins;
+  restartPromise: q.Promise<any>;
+  frameworkUsesAfterEach: boolean;
 
   constructor(config: Config) {
     super();
@@ -84,6 +86,26 @@ export class Runner extends EventEmitter {
     return this.plugins_.onPrepare().then(() => {
       return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
     });
+  }
+
+  /**
+   * Called after each test finishes.
+   *
+   * Responsible for `restartBrowserBetweenTests`
+   *
+   * @public
+   * @return {q.Promise} A promise that will resolve when the work here is done
+   */
+  afterEach(): q.Promise<void> {
+    let ret: q.Promise<void>;
+    this.frameworkUsesAfterEach = true;
+    if (this.config_.restartBrowserBetweenTests) {
+      // TODO(sjelin): remove the `|| q()` once `restart()` returns a promise
+      this.restartPromise = this.restartPromise || protractor.browser.restart() || q();
+      ret = this.restartPromise;
+      this.restartPromise = undefined;
+    }
+    return ret || q();
   }
 
   /**
@@ -322,8 +344,12 @@ export class Runner extends EventEmitter {
           }
 
           if (this.config_.restartBrowserBetweenTests) {
+            // TODO(sjelin): replace with warnings once `afterEach` support is required
             let restartDriver = () => {
-              browser_.restart();
+              if (!this.frameworkUsesAfterEach) {
+                // TODO(sjelin): remove the `|| q()` once `restart()` returns a promise
+                this.restartPromise = browser_.restart() || q();
+              }
             };
             this.on('testPass', restartDriver);
             this.on('testFail', restartDriver);
