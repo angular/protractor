@@ -14,11 +14,18 @@ dependencies:
   post:
     - ./node_modules/.bin/gulp lint
     - ./node_modules/.bin/webdriver-manager update
-    - ./node_modules/.bin/webdriver-manager start:
-          background: true
+    - wget http://selenium-release.storage.googleapis.com/3.0-beta4/selenium-server-standalone-3.0.0-beta4.jar -P ./node_modules/webdriver-manager/selenium
+    - ./node_modules/.bin/webdriver-manager start --versions.standalone 3.0.0-beta4:
+        background: true
     - cd testapp && npm update
     - npm start:
           background: true
+    # Install the latest Firefox beta
+    - pip install mozdownload mozinstall
+    - mozdownload --version latest-beta --destination firefox.tar.bz2
+    - mozinstall firefox.tar.bz2
+    - sudo cp -R firefox/* /opt/firefox/
+    # Extra tcp logging for BlockingProxy
     - sudo tcpdump -i lo 'tcp && dst localhost' -w $CIRCLE_ARTIFACTS/localdump.pcap:
           background: true
 

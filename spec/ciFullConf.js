@@ -32,7 +32,6 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor suite tests',
     'version': '47',
-    'selenium-version': '2.53.1'
   }],
 
   baseUrl: env.baseUrl + '/ng1/',

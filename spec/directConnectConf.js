@@ -9,7 +9,6 @@ exports.config = {
     'browserName': 'chrome'
   }, {
     'browserName': 'firefox',
-    'marionette': false
   }],
 
   baseUrl: env.baseUrl + '/ng1/',

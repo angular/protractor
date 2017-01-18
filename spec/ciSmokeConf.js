@@ -23,17 +23,15 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '54',
-    'selenium-version': '2.53.1',
-    'chromedriver-version': '2.26',
+    'version': '55',
+    'chromedriver-version': '2.27',
     'platform': 'OS X 10.11'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '47',
-    'selenium-version': '2.53.1'
+    'version': 'beta'
   }, {
     // TODO: Add Safari 10 once Saucelabs gets Selenium 3
     'browserName': 'safari',
@@ -41,15 +39,12 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '9',
-    'selenium-version': '2.44.0' // Use an old version because Safari has
-                                 // issues loading pages after 2.44.
   }, {
     'browserName': 'MicrosoftEdge',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '14.14393',
-    'selenium-version': '2.53.1',
     'platform': 'Windows 10'
   }, {
     'browserName': 'Internet Explorer',
@@ -57,7 +52,6 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
     'version': '11',
-    'selenium-version': '2.53.1',
     'platform': 'Windows 8.1'
   }],
 
