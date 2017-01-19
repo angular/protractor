@@ -11,7 +11,7 @@ import * as path from 'path';
 import * as q from 'q';
 
 import {Config} from '../config';
-import {BrowserError} from '../exitCodes';
+import {BrowserError, ConfigError} from '../exitCodes';
 import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
@@ -100,6 +100,10 @@ export class Local extends DriverProvider {
 
     let serverConf = this.config_.localSeleniumStandaloneOpts || {};
 
+    if (!Array.isArray(serverConf.jvmArgs)) {
+      throw new ConfigError(logger, 'jvmArgs should be an array.');
+    }
+
     // If args or port is not set use seleniumArgs and seleniumPort
     // for backward compatibility
     if (serverConf.args === undefined) {
@@ -110,10 +114,6 @@ export class Local extends DriverProvider {
     }
     if (serverConf.port === undefined) {
       serverConf.port = this.config_.seleniumPort;
-    }
-    if (!Array.isArray(serverConf.jvmArgs)) {
-      logger.warn('jvmArgs should be an array!');
-      serverConf.jvmArgs = [serverConf.jvmArgs];
     }
 
     // configure server
