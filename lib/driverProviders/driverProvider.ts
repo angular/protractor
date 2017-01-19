@@ -4,7 +4,7 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
-import {Builder, Session, WebDriver} from 'selenium-webdriver';
+import {Builder, promise as wdpromise, Session, WebDriver} from 'selenium-webdriver';
 
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
@@ -65,30 +65,44 @@ export abstract class DriverProvider {
    * @public
    * @param webdriver instance
    */
-  quitDriver(driver: WebDriver): q.Promise<WebDriver> {
+  quitDriver(driver: WebDriver): wdpromise.Promise<void> {
     let driverIndex = this.drivers_.indexOf(driver);
     if (driverIndex >= 0) {
       this.drivers_.splice(driverIndex, 1);
     }
 
-    let deferred = q.defer<WebDriver>();
     if (driver.getSession() === undefined) {
-      deferred.resolve();
+      return wdpromise.when(undefined);
     } else {
-      driver.getSession()
-          .then((session_: Session) => {
+      return driver.getSession()
+          .then<void>((session_: Session) => {
             if (session_) {
-              driver.quit().then(function() {
-                deferred.resolve();
-              });
-            } else {
-              deferred.resolve();
+              return driver.quit();
             }
           })
-          .catch((err: Error) => {
-            deferred.resolve();
-          });
+          .catch<void>(function(err: Error) {});
     }
+  }
+
+
+  /**
+   * Quits an array of drivers and returns a q promise instead of a webdriver one
+   *
+   * @param drivers {webdriver.WebDriver[]} The webdriver instances
+   */
+  static quitDrivers(provider: DriverProvider, drivers: WebDriver[]): q.Promise<void> {
+    let deferred = q.defer<void>();
+    wdpromise
+        .all(drivers.map((driver: WebDriver) => {
+          return provider.quitDriver(driver);
+        }))
+        .then(
+            () => {
+              deferred.resolve();
+            },
+            () => {
+              deferred.resolve();
+            });
     return deferred.promise;
   }
 
@@ -123,12 +137,9 @@ export abstract class DriverProvider {
    * Shuts down the drivers.
    *
    * @public
-   * @return {q.promise} A promise which will resolve when the environment
-   *     is down.
+   * @return {q.Promise<any>} A promise which will resolve when the environment is down.
    */
-  teardownEnv(): q.Promise<q.Promise<WebDriver>[]> {
-    return q.all<any>(this.drivers_.map((driver: WebDriver) => {
-      return this.quitDriver(driver);
-    }));
+  teardownEnv(): q.Promise<any> {
+    return DriverProvider.quitDrivers(this, this.drivers_);
   }
 }

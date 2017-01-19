@@ -270,10 +270,9 @@ export class Runner extends EventEmitter {
    * @return {q.Promise} A promise which resolves on finish.
    * @private
    */
-  shutdown_(): q.Promise<any> {
-    return q.all(this.driverprovider_.getExistingDrivers().map((webdriver) => {
-      return this.driverprovider_.quitDriver(webdriver);
-    }));
+  shutdown_(): q.Promise<void> {
+    return DriverProvider.quitDrivers(
+        this.driverprovider_, this.driverprovider_.getExistingDrivers());
   }
 
   /**

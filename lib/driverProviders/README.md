@@ -25,12 +25,12 @@ DriverProvider.prototype.getNewDriver
 
 /**
  * @param {webdriver.WebDriver} The driver instance to quit.
+ * @return {webdriver.promise.Promise<void>} A promise which resolves when the instance has quit
  */
 DriverProvider.prototype.quitDriver
 
 /**
- * @return {q.promise} A promise which will resolve when the environment
- *     is down.
+ * @return {q.Promise<any>} A promise which will resolve when the environment is down.
  */
 DriverProvider.prototype.teardownEnv
 
