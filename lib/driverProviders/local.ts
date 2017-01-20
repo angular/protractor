@@ -100,10 +100,6 @@ export class Local extends DriverProvider {
 
     let serverConf = this.config_.localSeleniumStandaloneOpts || {};
 
-    if (!Array.isArray(serverConf.jvmArgs)) {
-      throw new ConfigError(logger, 'jvmArgs should be an array.');
-    }
-
     // If args or port is not set use seleniumArgs and seleniumPort
     // for backward compatibility
     if (serverConf.args === undefined) {
@@ -111,6 +107,10 @@ export class Local extends DriverProvider {
     }
     if (serverConf.jvmArgs === undefined) {
       serverConf.jvmArgs = this.config_.jvmArgs || [];
+    } else {
+      if (!Array.isArray(serverConf.jvmArgs)) {
+        throw new ConfigError(logger, 'jvmArgs should be an array.');
+      }
     }
     if (serverConf.port === undefined) {
       serverConf.port = this.config_.seleniumPort;
