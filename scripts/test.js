@@ -76,7 +76,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/timeoutConf.js')
       message: 'Timeout - Async callback was not invoked within timeout ' +
           'specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.'
     })
-    .expectTestDuration(0, 100);
+    .expectTestDuration(0, 1000);
 
 executor.addCommandlineTest('node built/cli.js spec/errorTest/afterLaunchChangesExitCodeConf.js')
     .expectExitCode(11)
