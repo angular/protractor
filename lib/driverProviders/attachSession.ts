@@ -4,7 +4,7 @@
  *  it down, and setting up the driver correctly.
  */
 import * as q from 'q';
-import {WebDriver} from 'selenium-webdriver';
+import {promise as wdpromise, WebDriver} from 'selenium-webdriver';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -50,9 +50,7 @@ export class AttachSession extends DriverProvider {
    *
    * @public
    */
-  quitDriver(): q.Promise<WebDriver> {
-    let defer = q.defer<WebDriver>();
-    defer.resolve(null);
-    return defer.promise;
+  quitDriver(): wdpromise.Promise<void> {
+    return wdpromise.when(undefined);
   }
 }
