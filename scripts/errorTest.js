@@ -21,7 +21,7 @@ var checkLogs = function(output, messages) {
 
 runProtractor = spawn('node',
     ['bin/protractor', 'example/conf.js', '--foobar', 'foobar']);
-output = runProtractor.stderr.toString();
+output = runProtractor.stdout.toString();
 messages = ['Error: Found extra flags: foobar'];
 checkLogs(output, messages);
 
