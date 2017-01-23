@@ -595,7 +595,13 @@ export interface Config {
    */
   ng12Hybrid?: boolean;
 
-  seleniumArgs?: Array<any>;
+  /**
+   * Protractor will exit with an error if it sees any command line flags it doesn't
+   * recognize. Set disableChecks true to disable this check.
+   */
+  disableChecks?: boolean;
+
+  seleniumArgs?: any[];
   jvmArgs?: string[];
   configDir?: string;
   troubleshoot?: boolean;
@@ -607,4 +613,5 @@ export interface Config {
   frameworkPath?: string;
   elementExplorer?: any;
   debug?: boolean;
+  unknownFlags_?: string[];
 }

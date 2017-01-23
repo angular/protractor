@@ -37,7 +37,8 @@ Requirements
 
 - `runner.runTestPreparer` must be called after the framework has been
   initialized but before any spec files are run.  This function returns a
-  promise which should be waited on before executing tests.
+  promise which should be waited on before executing tests. The framework should
+  also pass an array of extra command line flags it accepts, if any.
 
 - `runner.getConfig().onComplete` must be called when tests are finished.
   It might return a promise, in which case `exports.run`'s promise should not

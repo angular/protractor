@@ -6,6 +6,7 @@ import * as util from 'util';
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {buildDriverProvider, DriverProvider} from './driverProviders';
+import {ConfigError} from './exitCodes';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
@@ -79,10 +80,21 @@ export class Runner extends EventEmitter {
   /**
    * Executor of testPreparer
    * @public
+   * @param {string[]=} An optional list of command line arguments the framework will accept.
    * @return {q.Promise} A promise that will resolve when the test preparers
    *     are finished.
    */
-  runTestPreparer(): q.Promise<any> {
+  runTestPreparer(extraFlags?: string[]): q.Promise<any> {
+    let unknownFlags = this.config_.unknownFlags_ || [];
+    if (extraFlags) {
+      unknownFlags = unknownFlags.filter((f) => extraFlags.indexOf(f) === -1);
+    }
+    if (unknownFlags.length > 0 && !this.config_.disableChecks) {
+      throw new ConfigError(
+          logger,
+          'Found extra flags: ' + unknownFlags.join(', ') +
+              ', please use --disableChecks flag to disable the Protractor CLI flag checks. ');
+    }
     return this.plugins_.onPrepare().then(() => {
       return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
     });
