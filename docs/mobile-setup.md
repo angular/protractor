@@ -29,11 +29,6 @@ page](https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md)).
 
 *   Configure protractor:
 
-additional dependencies:
-```shell
-npm install --save-dev wd wd-bridge
-```
-
 Config File:
 ```javascript
 exports.config = {
@@ -49,17 +44,7 @@ exports.config = {
     deviceName: 'Android Emulator',
   },
 
-  baseUrl: 'http://10.0.2.2:8000',
-
-  // configuring wd in onPrepare
-  // wdBridge helps to bridge wd driver with other selenium clients
-  // See https://github.com/sebv/wd-bridge/blob/master/README.md
-  onPrepare: function () {
-    var wd = require('wd'),
-      protractor = require('protractor'),
-      wdBridge = require('wd-bridge')(protractor, wd);
-    wdBridge.initFromProtractor(exports.config);
-  }
+  baseUrl: 'http://10.0.2.2:8000'
 };
 ```
 *Note the following:*
@@ -91,11 +76,6 @@ Starting express web server in /workspace/protractor/testapp on port 8000
 
 *   Configure protractor:
 
-additional dependencies:
-```shell
-npm install --save-dev wd wd-bridge
-```
-
 iPhone:
 ```javascript
 exports.config = {
@@ -113,17 +93,7 @@ exports.config = {
     deviceName: 'iPhone Simulator',
   },
 
-  baseUrl: 'http://localhost:8000',
-
-  // configuring wd in onPrepare
-  // wdBridge helps to bridge wd driver with other selenium clients
-  // See https://github.com/sebv/wd-bridge/blob/master/README.md
-  onPrepare: function () {
-    var wd = require('wd'),
-      protractor = require('protractor'),
-      wdBridge = require('wd-bridge')(protractor, wd);
-    wdBridge.initFromProtractor(exports.config);
-  }
+  baseUrl: 'http://localhost:8000'
 };
 ```
 
@@ -144,17 +114,7 @@ exports.config = {
     deviceName: 'IPad Simulator',
   },
 
-  baseUrl: 'http://localhost:8000',
-
-  // configuring wd in onPrepare
-  // wdBridge helps to bridge wd driver with other selenium clients
-  // See https://github.com/sebv/wd-bridge/blob/master/README.md
-  onPrepare: function () {
-    var wd = require('wd'),
-      protractor = require('protractor'),
-      wdBridge = require('wd-bridge')(protractor, wd);
-    wdBridge.initFromProtractor(exports.config);
-  }
+  baseUrl: 'http://localhost:8000'
 };
 
 ```
@@ -231,3 +191,30 @@ exports.config = {
 *Note the following:*
  - browserName is 'android'
  - baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator
+
+Using `wd` and `wd-bridge`
+-------------------------------------
+
+As of version 5.1.0, Protractor uses `webdriver-js-extender` to provide all the
+mobile commands you should need (see the API page for details).  However, if you
+prefer `wd`, you can access it via `wd-bridge`.  First, install both `wd` and
+`wd-bridge` as `devDependencies`:
+
+```shell
+npm install --save-dev wd wd-bridge
+```
+
+Then, in your config file:
+
+```javascript
+  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require('wd'),
+      protractor = require('protractor'),
+      wdBridge = require('wd-bridge')(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
+```
+
