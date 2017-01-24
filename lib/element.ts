@@ -4,6 +4,7 @@ import {ElementHelper, ProtractorBrowser} from './browser';
 import {IError} from './exitCodes';
 import {Locator} from './locators';
 import {Logger} from './logger';
+import {falseIfMissing} from './util';
 
 let clientSideScripts = require('./clientsidescripts');
 
@@ -1071,30 +1072,14 @@ export class ElementFinder extends WebdriverWebElement {
    *     the element is present on the page.
    */
   isPresent(): wdpromise.Promise<boolean> {
-    return this.parentElementArrayFinder.getWebElements().then(
-        (arr: any[]) => {
-          if (arr.length === 0) {
-            return false;
-          }
-          return arr[0].isEnabled().then(
-              () => {
-                return true;  // is present, whether it is enabled or not
-              },
-              (err: any) => {
-                if (err instanceof wderror.StaleElementReferenceError) {
-                  return false;
-                } else {
-                  throw err;
-                }
-              });
-        },
-        (err: Error) => {
-          if (err instanceof wderror.NoSuchElementError) {
-            return false;
-          } else {
-            throw err;
-          }
-        });
+    return this.parentElementArrayFinder.getWebElements().then((arr: any[]) => {
+      if (arr.length === 0) {
+        return false;
+      }
+      return arr[0].isEnabled().then(() => {
+        return true;  // is present, whether it is enabled or not
+      }, falseIfMissing);
+    }, falseIfMissing);
   }
 
   /**
