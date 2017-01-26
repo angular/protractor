@@ -169,7 +169,7 @@ export class DebugHelper {
             res = 'Error while evaluating command: ' + e;
           }
           if (!wdpromise.isPromise(res)) {
-            res = wdpromise.fulfilled(res);
+            res = wdpromise.when(res);
           }
 
           return res.then((res: any) => {
@@ -237,7 +237,7 @@ export class DebugHelper {
    */
   private validatePortAvailability_(port: number): wdpromise.Promise<boolean> {
     if (this.debuggerValidated_) {
-      return wdpromise.fulfilled(false);
+      return wdpromise.when(false);
     }
 
     let doneDeferred = wdpromise.defer();
