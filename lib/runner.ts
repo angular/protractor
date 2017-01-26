@@ -115,8 +115,7 @@ export class Runner extends EventEmitter {
     let ret: q.Promise<void>;
     this.frameworkUsesAfterEach = true;
     if (this.config_.restartBrowserBetweenTests) {
-      // TODO(sjelin): remove the `|| q()` once `restart()` returns a promise
-      this.restartPromise = this.restartPromise || protractor.browser.restart() || q();
+      this.restartPromise = this.restartPromise || q(protractor.browser.restart());
       ret = this.restartPromise;
       this.restartPromise = undefined;
     }
@@ -249,7 +248,8 @@ export class Runner extends EventEmitter {
       browser_.ng12Hybrid = config.ng12Hybrid;
     }
 
-    browser_.ready = driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
+    browser_.ready =
+        driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout).then(() => browser_);
 
     browser_.getProcessedConfig = () => {
       return wdpromise.fulfilled(config);
@@ -268,12 +268,35 @@ export class Runner extends EventEmitter {
       return newBrowser;
     };
 
+    let replaceBrowser = () => {
+      let newBrowser = browser_.forkNewDriverInstance(false, true);
+      if (browser_ === protractor.browser) {
+        this.setupGlobals_(newBrowser);
+      }
+      return newBrowser;
+    };
+
     browser_.restart = () => {
       // Note: because tests are not paused at this point, any async
       // calls here are not guaranteed to complete before the tests resume.
+
+      // Seperate solutions depending on if the control flow is enabled (see lib/browser.ts)
+      if (browser_.controlFlowIsEnabled()) {
+        return browser_.restartSync().ready;
+      } else {
+        return this.driverprovider_.quitDriver(browser_.driver)
+            .then(replaceBrowser)
+            .then(newBrowser => newBrowser.ready);
+      }
+    };
+
+    browser_.restartSync = () => {
+      if (!browser_.controlFlowIsEnabled()) {
+        throw TypeError('Unable to use `browser.restartSync()` when the control flow is disabled');
+      }
+
       this.driverprovider_.quitDriver(browser_.driver);
-      browser_ = browser_.forkNewDriverInstance(false, true);
-      this.setupGlobals_(browser_);
+      return replaceBrowser();
     };
 
     return browser_;
@@ -365,8 +388,7 @@ export class Runner extends EventEmitter {
             // TODO(sjelin): replace with warnings once `afterEach` support is required
             let restartDriver = () => {
               if (!this.frameworkUsesAfterEach) {
-                // TODO(sjelin): remove the `|| q()` once `restart()` returns a promise
-                this.restartPromise = browser_.restart() || q();
+                this.restartPromise = q(browser_.restart());
               }
             };
             this.on('testPass', restartDriver);

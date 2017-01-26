@@ -317,11 +317,16 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   params: any;
 
   /**
+   * Resolved when the browser is ready for use.  Resolves to the browser, so
+   * you can do:
+   *
+   *   forkedBrowser = await browser.forkNewDriverInstance().ready;
+   *
    * Set by the runner.
    *
-   * @type {q.Promise} Done when the new browser is ready for use
+   * @type {webdriver.promise.Promise.<ProtractorBrowser>}
    */
-  ready: wdpromise.Promise<any>;
+  ready: wdpromise.Promise<ProtractorBrowser>;
 
   /*
    * Set by the runner.
@@ -499,7 +504,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   /**
    * Fork another instance of browser for use in interactive tests.
    *
-   * Set by the runner.
+   * @example
+   * // Running with control flow enabled
+   * var fork = browser.forkNewDriverInstance();
+   * fork.get('page1'); // 'page1' gotten by forked browser
+   *
+   * @example
+   * // Running with control flow disabled
+   * var forked = await browser.forkNewDriverInstance().ready;
+   * await forked.get('page1'); // 'page1' gotten by forked browser
    *
    * @param {boolean} opt_useSameUrl Whether to navigate to current url on
    * creation
@@ -513,11 +526,85 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   }
 
   /**
-   * Restart the browser instance.
+   * Restart the browser.  This is done by closing this browser instance and creating a new one.
+   * A promise resolving to the new instance is returned, and if this function was called on the
+   * global `browser` instance then Protractor will automatically overwrite the global `browser`
+   * variable.
+   *
+   * When restarting a forked browser, it is the caller's job to overwrite references to the old
+   * instance.
+   *
+   * This function behaves slightly differently depending on if the webdriver control flow is
+   * enabled.  If the control flow is enabled, the global `browser` object is synchronously
+   * replaced. If the control flow is disabled, the global `browser` is replaced asynchronously
+   * after the old driver quits.
    *
    * Set by the runner.
+   *
+   * @example
+   * // Running against global browser, with control flow enabled
+   * browser.get('page1');
+   * browser.restart();
+   * browser.get('page2'); // 'page2' gotten by restarted browser
+   *
+   * @example
+   * // Running against global browser, with control flow disabled
+   * await browser.get('page1');
+   * await browser.restart();
+   * await browser.get('page2'); // 'page2' gotten by restarted browser
+   *
+   * @example
+   * // Running against forked browsers, with the control flow enabled
+   * // In this case, you may prefer `restartSync` (documented below)
+   * var forked = browser.forkNewDriverInstance();
+   * fork.get('page1');
+   * fork.restart().then(function(fork) {
+   *   fork.get('page2'); // 'page2' gotten by restarted fork
+   * });
+   *
+   * @example
+   * // Running against forked browsers, with the control flow disabled
+   * var forked = await browser.forkNewDriverInstance().ready;
+   * await fork.get('page1');
+   * fork = await fork.restart();
+   * await fork.get('page2'); // 'page2' gotten by restarted fork
+   *
+   * @example
+   * // Unexpected behavior can occur if you save references to the global `browser`
+   * var savedBrowser = browser;
+   * browser.get('foo').then(function() {
+   *   console.log(browser === savedBrowser); // false
+   * });
+   * browser.restart();
+   *
+   * @returns {webdriver.promise.Promise<ProtractorBrowser>} A promise resolving to the restarted
+   *   browser
    */
-  restart() {
+  restart(): wdpromise.Promise<ProtractorBrowser> {
+    return;
+  }
+
+  /**
+   * Like `restart`, but instead of returning a promise resolving to the new browser instance,
+   * returns the new browser instance directly.  Can only be used when the control flow is enabled.
+   *
+   * @example
+   * // Running against global browser
+   * browser.get('page1');
+   * browser.restartSync();
+   * browser.get('page2'); // 'page2' gotten by restarted browser
+   *
+   * @example
+   * // Running against forked browsers
+   * var forked = browser.forkNewDriverInstance();
+   * fork.get('page1');
+   * fork = fork.restartSync();
+   * fork.get('page2'); // 'page2' gotten by restarted fork
+   *
+   * @throws {TypeError} Will throw an error if the control flow is not enabled 
+   * @returns {ProtractorBrowser} The restarted browser
+   */
+  restartSync(): ProtractorBrowser {
     return;
   }
 
@@ -1137,5 +1224,19 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       }
     };
     this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
+  }
+
+  /**
+   * Determine if the control flow is enabled.
+   *
+   * @returns true if the control flow is enabled, false otherwise.
+   */
+  controlFlowIsEnabled() {
+    if ((wdpromise as any).USE_PROMISE_MANAGER !== undefined) {
+      return (wdpromise as any).USE_PROMISE_MANAGER;
+    } else {
+      // True for old versions of `selenium-webdriver`, probably false in >=5.0.0
+      return !!wdpromise.ControlFlow;
+    }
   }
 }
