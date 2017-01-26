@@ -1,5 +1,5 @@
 import {BPClient} from 'blocking-proxy';
-import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement} from 'selenium-webdriver';
+import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 import * as url from 'url';
 import {extend as extendWD, ExtendedWebDriver} from 'webdriver-js-extender';
 
@@ -34,87 +34,14 @@ for (let foo in require('selenium-webdriver')) {
   exports[foo] = require('selenium-webdriver')[foo];
 }
 
-// Explicitly define webdriver.WebDriver
-// TODO: extend WebDriver from selenium-webdriver typings
-export class AbstractWebDriver {
-  actions: () => ActionSequence;
-  call:
-      (fn: (...var_args: any[]) => any, opt_scope?: any,
-       ...var_args: any[]) => wdpromise.Promise<any>;
-  close: () => void;
-  controlFlow: () => wdpromise.ControlFlow;
-  executeScript: (script: string|Function, ...var_args: any[]) => wdpromise.Promise<any>;
-  executeAsyncScript: (script: string|Function, ...var_args: any[]) => wdpromise.Promise<any>;
-  getCapabilities: () => wdpromise.Promise<Capabilities>;
-  getCurrentUrl: () => wdpromise.Promise<string>;
-  getPageSource: () => wdpromise.Promise<string>;
-  getSession: () => wdpromise.Promise<Session>;
-  getTitle: () => wdpromise.Promise<string>;
-  getWindowHandle: () => wdpromise.Promise<string>;
-  getAllWindowHandles: () => wdpromise.Promise<string[]>;
-  manage: () => Options;
-  quit: () => void;
-  schedule: (command: WdCommand, description: string) => wdpromise.Promise<any>;
-  setFileDetector: (detector: FileDetector) => void;
-  sleep: (ms: number) => wdpromise.Promise<void>;
-  switchTo: () => TargetLocator;
-  takeScreenshot: () => wdpromise.Promise<any>;
-  touchActions: () => TouchSequence;
-  wait:
-      (condition: wdpromise.Promise<any>|until.Condition<any>|Function, opt_timeout?: number,
-       opt_message?: string) => wdpromise.Promise<any>;
-}
 
-export class AbstractExtendedWebDriver extends AbstractWebDriver {
-  getNetworkConnection: () => wdpromise.Promise<0|1|2|3|4|5|6|7>;
-  setNetworkConnection:
-      (typeOrAirplaneMode: 0|1|2|3|4|5|6|7|boolean, wifi?: boolean,
-       data?: boolean) => wdpromise.Promise<void>;
-  toggleAirplaneMode: () => wdpromise.Promise<void>;
-  toggleWiFi: () => wdpromise.Promise<void>;
-  toggleData: () => wdpromise.Promise<void>;
-  toggleLocationServices: () => wdpromise.Promise<void>;
-  getGeolocation: () => wdpromise.Promise<{latitude: number, longitude: number, altitude: number}>;
-  setGeolocation:
-      (latitude?: number, longitude?: number, altitude?: number) => wdpromise.Promise<void>;
-  getCurrentDeviceActivity: () => wdpromise.Promise<string>;
-  startDeviceActivity:
-      (appPackage: string, appActivity: string, appWaitPackage?: string,
-       appWaitActivity?: string) => wdpromise.Promise<void>;
-  getAppiumSettings: () => wdpromise.Promise<{[name: string]: any}>;
-  setAppiumSettings: (settings: {[name: string]: any}) => wdpromise.Promise<void>;
-  getCurrentContext: () => wdpromise.Promise<string>;
-  selectContext: (name: string) => wdpromise.Promise<void>;
-  listContexts: () => wdpromise.Promise<string[]>;
-  getScreenOrientation: () => wdpromise.Promise<'LANDSCAPE'|'PORTRAIT'>;
-  setScreenOrientation: (orientation: string) => wdpromise.Promise<void>;
-  isDeviceLocked: () => wdpromise.Promise<boolean>;
-  lockDevice: (delay?: number) => wdpromise.Promise<void>;
-  unlockDevice: () => wdpromise.Promise<void>;
-  installApp: (appPath: string) => wdpromise.Promise<void>;
-  isAppInstalled: (bundleId: string) => wdpromise.Promise<boolean>;
-  removeApp: (appId: string) => wdpromise.Promise<void>;
-  pullFileFromDevice: (path: string) => wdpromise.Promise<string>;
-  pullFolderFromDevice: (path: string) => wdpromise.Promise<any>;
-  pushFileToDevice: (path: string, base64Data: string) => wdpromise.Promise<void>;
-  uploadFile: (base64Data: string) => wdpromise.Promise<void>;
-  switchToParentFrame: () => wdpromise.Promise<void>;
-  fullscreen: () => wdpromise.Promise<void>;
-  sendAppToBackground: (delay?: number) => wdpromise.Promise<void>;
-  closeApp: () => wdpromise.Promise<void>;
-  getAppStrings: (language?: string) => wdpromise.Promise<string[]>;
-  launchSession: () => wdpromise.Promise<void>;
-  resetApp: () => wdpromise.Promise<void>;
-  hideSoftKeyboard:
-      (strategy?: 'default'|'tapOutside'|'tapOut'|'swipeDown'|'pressKey'|'press',
-       key?: string) => wdpromise.Promise<void>;
-  getDeviceTime: () => wdpromise.Promise<string>;
-  openDeviceNotifications: () => wdpromise.Promise<void>;
-  rotationGesture:
-      (x?: number, y?: number, duration?: number, rotation?: number,
-       touchCount?: 1|2|3|4|5) => wdpromise.Promise<void>;
-  shakeDevice: () => wdpromise.Promise<void>;
-}
+// Explicitly define types for webdriver.WebDriver and ExtendedWebDriver.
+// We do this because we use composition over inheritance to implement polymorphism, and therefore
+// we don't want to inherit WebDriver's constructor.
+export class AbstractWebDriver {}
+export interface AbstractWebDriver extends WebDriver {}
+export class AbstractExtendedWebDriver extends AbstractWebDriver {}
+export interface AbstractExtendedWebDriver extends ExtendedWebDriver {}
 
 /**
  * Mix a function from one object onto another. The function will still be
@@ -808,10 +735,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   /**
    * Waits for Angular to finish rendering before searching for elements.
    * @see webdriver.WebDriver.findElement
-   * @returns {!webdriver.promise.Promise} A promise that will be resolved to
+   * @returns {!webdriver.WebElementPromise} A promise that will be resolved to
    *      the located {@link webdriver.WebElement}.
    */
-  findElement(locator: Locator): WebElement {
+  findElement(locator: Locator): WebElementPromise {
     return this.element(locator).getWebElement();
   }
 
@@ -821,7 +748,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @returns {!webdriver.promise.Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
-  findElements(locator: Locator): wdpromise.Promise<any> {
+  findElements(locator: Locator): wdpromise.Promise<WebElement[]> {
     return this.element.all(locator).getWebElements();
   }
 
