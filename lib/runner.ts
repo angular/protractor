@@ -36,6 +36,7 @@ export class Runner extends EventEmitter {
   plugins_: Plugins;
   restartPromise: q.Promise<any>;
   frameworkUsesAfterEach: boolean;
+  ready_?: wdpromise.Promise<void>;
 
   constructor(config: Config) {
     super();
@@ -49,16 +50,18 @@ export class Runner extends EventEmitter {
       process['_debugProcess'](process.pid);
       let flow = wdpromise.controlFlow();
 
-      flow.execute(() => {
-        let nodedebug = require('child_process').fork('debug', ['localhost:5858']);
-        process.on('exit', function() {
-          nodedebug.kill('SIGTERM');
-        });
-        nodedebug.on('exit', function() {
-          process.exit(1);
-        });
-      }, 'start the node debugger');
-      flow.timeout(1000, 'waiting for debugger to attach');
+      this.ready_ = flow.execute(() => {
+                          let nodedebug =
+                              require('child_process').fork('debug', ['localhost:5858']);
+                          process.on('exit', function() {
+                            nodedebug.kill('SIGTERM');
+                          });
+                          nodedebug.on('exit', function() {
+                            process.exit(1);
+                          });
+                        }, 'start the node debugger').then(() => {
+        return flow.timeout(1000, 'waiting for debugger to attach');
+      });
     }
 
     if (config.capabilities && config.capabilities.seleniumAddress) {
@@ -304,9 +307,13 @@ export class Runner extends EventEmitter {
       throw new Error('Spec patterns did not match any files.');
     }
 
-    // 1) Setup environment
-    // noinspection JSValidateTypes
-    return this.driverprovider_.setupEnv()
+    // 0) Wait for debugger
+    return q(this.ready_)
+        .then(() => {
+          // 1) Setup environment
+          // noinspection JSValidateTypes
+          return this.driverprovider_.setupEnv();
+        })
         .then(() => {
           // 2) Create a browser and setup globals
           browser_ = this.createBrowser(plugins);
