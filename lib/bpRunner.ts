@@ -19,8 +19,9 @@ export class BlockingProxyRunner {
       this.checkSupportedConfig();
 
       let args = [
-        '--fork', '--seleniumAddress', this.config.seleniumAddress, '--rootElement',
-        this.config.rootElement
+        '--fork',
+        '--seleniumAddress',
+        this.config.seleniumAddress,
       ];
       this.bpProcess = fork(BP_PATH, args, {silent: true});
       logger.info('Starting BlockingProxy with args: ' + args.toString());

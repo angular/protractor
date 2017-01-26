@@ -235,9 +235,44 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * 'body' but if your ng-app is on a subsection of the page it may be
    * a subelement.
    *
+   * This property is deprecated - please use angularAppRoot() instead.
+   *
+   * @deprecated
    * @type {string}
    */
-  rootEl: string;
+  set rootEl(value: string) {
+    this.angularAppRoot(value);
+  }
+
+  get rootEl() {
+    return this.internalRootEl;
+  }
+
+  private internalRootEl: string;
+
+  /**
+   * Set the css selector for an element on which to find Angular. This is usually
+   * 'body' but if your ng-app is on a subsection of the page it may be
+   * a subelement.
+   *
+   * The change will be made within WebDriver's control flow, so that commands after
+   * this method is called use the new app root. Pass nothing to get a promise that
+   * resolves to the value of the selector.
+   *
+   * @param {string} The new selector.
+   * @returns A promise that resolves with the value of the selector.
+   */
+  angularAppRoot(value: string = null): wdpromise.Promise<string> {
+    return this.driver.controlFlow().execute(() => {
+      if (value != null) {
+        if (this.bpClient) {
+          return this.bpClient.setWaitParams(value).then(() => this.internalRootEl);
+        }
+        this.internalRootEl = value;
+        return this.internalRootEl;
+      }
+    }, `Set angular root selector to ${value}`);
+  }
 
   /**
    * If true, Protractor will not attempt to synchronize with the page before
@@ -255,7 +290,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.driver.controlFlow().execute(() => {
       if (this.bpClient) {
         logger.debug('Setting waitForAngular' + value);
-        this.bpClient.setSynchronization(!value);
+        return this.bpClient.setWaitEnabled(!value);
       }
     }, `Set proxy synchronization to ${value}`);
     this.internalIgnoreSynchronization = value;
@@ -265,7 +300,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     return this.internalIgnoreSynchronization;
   }
 
-  internalIgnoreSynchronization: boolean;
+  private internalIgnoreSynchronization: boolean;
 
   /**
    * Timeout in milliseconds to wait for pages to load when calling `get`.
@@ -570,9 +605,12 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
         return wdpromise.fulfilled();
       } else {
-        return this.executeAsyncScript_(
-            clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
-            this.rootEl);
+        // Need to wrap this so that we read rootEl in the control flow, not synchronously.
+        return this.angularAppRoot().then((rootEl: string) => {
+          return this.executeAsyncScript_(
+              clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
+              rootEl);
+        });
       }
     };
 
@@ -794,7 +832,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
 
     if (this.bpClient) {
       this.driver.controlFlow().execute(() => {
-        return this.bpClient.setSynchronization(false);
+        return this.bpClient.setWaitEnabled(false);
       });
     }
 
@@ -902,7 +940,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
 
     if (this.bpClient) {
       this.driver.controlFlow().execute(() => {
-        return this.bpClient.setSynchronization(!this.internalIgnoreSynchronization);
+        return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
       });
     }
 
