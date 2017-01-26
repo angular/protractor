@@ -659,7 +659,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
 
     let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
-        return wdpromise.fulfilled();
+        return wdpromise.when(null);
       } else {
         return this.executeAsyncScript_(
             clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
@@ -717,7 +717,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                       'return window.NG_PENDING_TIMEOUTS',
                       'Protractor.waitForAngular() - getting pending timeouts' + description);
                 } else {
-                  pendingTimeoutsPromise = wdpromise.fulfilled({});
+                  pendingTimeoutsPromise = wdpromise.when({});
                 }
                 let pendingHttpsPromise = this.executeScriptWithDescription(
                     clientSideScripts.getPendingHttpRequests,
@@ -1171,7 +1171,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   pause(opt_debugPort?: number): wdpromise.Promise<any> {
     if (this.debugHelper.isAttached()) {
       logger.info('Encountered browser.pause(), but debugger already attached.');
-      return wdpromise.fulfilled(true);
+      return wdpromise.when(true);
     }
     let debuggerClientPath = __dirname + '/debugger/clients/wddebugger.js';
     let onStartFn = (firstTime: boolean) => {
