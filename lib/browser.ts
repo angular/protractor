@@ -134,10 +134,16 @@ function ptorMixin(to: any, from: any, fnName: string, setupFn?: Function) {
         arguments[i] = arguments[i].getWebElement();
       }
     }
+    const run = () => {
+      return from[fnName].apply(from, arguments);
+    };
     if (setupFn) {
-      setupFn();
+      const setupResult = setupFn();
+      if (setupResult && (typeof setupResult.then === 'function')) {
+        return setupResult.then(run);
+      }
     }
-    return from[fnName].apply(from, arguments);
+    return run();
   };
 };
 
@@ -287,13 +293,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @type {boolean}
    */
   set ignoreSynchronization(value) {
-    this.driver.controlFlow().execute(() => {
-      if (this.bpClient) {
-        logger.debug('Setting waitForAngular' + value);
-        return this.bpClient.setWaitEnabled(!value);
-      }
-    }, `Set proxy synchronization to ${value}`);
-    this.internalIgnoreSynchronization = value;
+    this.waitForAngularEnabled(!value);
   }
 
   get ignoreSynchronization() {
@@ -484,11 +484,20 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Call waitForAngularEnabled() without passing a value to read the current
    * state without changing it.
    */
-  waitForAngularEnabled(enabled: boolean = null): boolean {
+  waitForAngularEnabled(enabled: boolean = null): wdpromise.Promise<boolean> {
     if (enabled != null) {
-      this.ignoreSynchronization = !enabled;
+      const ret = this.driver.controlFlow().execute(() => {
+        if (this.bpClient) {
+          logger.debug('Setting waitForAngular' + !enabled);
+          return this.bpClient.setWaitEnabled(enabled).then(() => {
+            return enabled;
+          });
+        }
+      }, `Set proxy synchronization enabled to ${enabled}`);
+      this.internalIgnoreSynchronization = !enabled;
+      return ret;
     }
-    return !this.ignoreSynchronization;
+    return wdpromise.when(!this.ignoreSynchronization);
   }
 
   /**
@@ -694,7 +703,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
 
     let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
-        return wdpromise.when(null);
+        return this.driver.controlFlow().execute(() => {
+          return wdpromise.when(null);
+        }, 'bpClient or plugin stability override');
       } else {
         // Need to wrap this so that we read rootEl in the control flow, not synchronously.
         return this.angularAppRoot().then((rootEl: string) => {
@@ -1091,15 +1102,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *    page has been changed.
    */
   setLocation(url: string): wdpromise.Promise<any> {
-    this.waitForAngular();
-    return this
-        .executeScriptWithDescription(
-            clientSideScripts.setLocation, 'Protractor.setLocation()', this.rootEl, url)
-        .then((browserErr: Error) => {
-          if (browserErr) {
-            throw 'Error while navigating to \'' + url + '\' : ' + JSON.stringify(browserErr);
-          }
-        });
+    return this.waitForAngular().then(
+        () => this.executeScriptWithDescription(
+                      clientSideScripts.setLocation, 'Protractor.setLocation()', this.rootEl, url)
+                  .then((browserErr: Error) => {
+                    if (browserErr) {
+                      throw 'Error while navigating to \'' + url + '\' : ' +
+                          JSON.stringify(browserErr);
+                    }
+                  }));
   }
 
   /**
@@ -1113,9 +1124,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * AngularJS.
    */
   getLocationAbsUrl(): wdpromise.Promise<any> {
-    this.waitForAngular();
-    return this.executeScriptWithDescription(
-        clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', this.rootEl);
+    return this.waitForAngular().then(
+        () => this.executeScriptWithDescription(
+            clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', this.rootEl));
   }
 
   /**
@@ -1140,10 +1151,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   debugger() {
     // jshint debug: true
-    this.driver.executeScript(clientSideScripts.installInBrowser);
-    wdpromise.controlFlow().execute(() => {
-      debugger;
-    }, 'add breakpoint to control flow');
+    return this.driver.executeScript(clientSideScripts.installInBrowser)
+        .then(() => wdpromise.controlFlow().execute(() => {
+          debugger;
+        }, 'add breakpoint to control flow'));
   }
 
   /**
