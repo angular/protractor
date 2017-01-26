@@ -689,7 +689,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     value of the accumulator.
    */
   reduce(reduceFn: Function, initialValue: any): wdpromise.Promise<any> {
-    let valuePromise = wdpromise.fulfilled(initialValue);
+    let valuePromise = wdpromise.when(initialValue);
     return this.asElementFinders_().then((arr: ElementFinder[]) => {
       return arr.reduce((valuePromise: any, elementFinder: ElementFinder, index: number) => {
         return valuePromise.then((value: any) => {
@@ -863,7 +863,7 @@ export class ElementFinder extends WebdriverWebElement {
   static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator?: Locator):
       ElementFinder {
     let getWebElements = () => {
-      return wdpromise.fulfilled([webElem]);
+      return wdpromise.when([webElem]);
     };
     return new ElementArrayFinder(browser, getWebElements, locator).toElementFinder_();
   }

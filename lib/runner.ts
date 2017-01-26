@@ -258,7 +258,7 @@ export class Runner extends EventEmitter {
             });
 
     browser_.getProcessedConfig = () => {
-      return wdpromise.fulfilled(config);
+      return wdpromise.when(config);
     };
 
     browser_.forkNewDriverInstance = (opt_useSameUrl: boolean, opt_copyMockModules: boolean) => {
