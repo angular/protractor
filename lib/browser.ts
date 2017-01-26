@@ -429,7 +429,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.ignoreSynchronization = false;
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
-    this.ready = null;
     this.plugins_ = new Plugins({});
     this.resetUrl = DEFAULT_RESET_URL;
     this.debugHelper = new DebugHelper(this);
@@ -451,17 +450,22 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         ng12Hybrid_ = ng12Hybrid;
       }
     });
-    this.driver.getCapabilities().then((caps: Capabilities) => {
-      // Internet Explorer does not accept data URLs, which are the default
-      // reset URL for Protractor.
-      // Safari accepts data urls, but SafariDriver fails after one is used.
-      // PhantomJS produces a "Detected a page unload event" if we use data urls
-      let browserName = caps.get('browserName');
-      if (browserName === 'internet explorer' || browserName === 'safari' ||
-          browserName === 'phantomjs' || browserName === 'MicrosoftEdge') {
-        this.resetUrl = 'about:blank';
-      }
-    });
+    this.ready = this.driver.controlFlow()
+                     .execute(() => {
+                       return this.driver.getSession();
+                     })
+                     .then((session: Session) => {
+                       // Internet Explorer does not accept data URLs, which are the default
+                       // reset URL for Protractor.
+                       // Safari accepts data urls, but SafariDriver fails after one is used.
+                       // PhantomJS produces a "Detected a page unload event" if we use data urls
+                       let browserName = session.getCapabilities().get('browserName');
+                       if (browserName === 'internet explorer' || browserName === 'safari' ||
+                           browserName === 'phantomjs' || browserName === 'MicrosoftEdge') {
+                         this.resetUrl = 'about:blank';
+                       }
+                       return this;
+                     });
 
     this.trackOutstandingTimeouts_ = !opt_untrackOutstandingTimeouts;
     this.mockModules_ = [];

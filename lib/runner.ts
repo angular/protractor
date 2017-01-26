@@ -249,7 +249,13 @@ export class Runner extends EventEmitter {
     }
 
     browser_.ready =
-        driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout).then(() => browser_);
+        browser_.ready
+            .then(() => {
+              return driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
+            })
+            .then(() => {
+              return browser_;
+            });
 
     browser_.getProcessedConfig = () => {
       return wdpromise.fulfilled(config);
@@ -261,9 +267,16 @@ export class Runner extends EventEmitter {
         newBrowser.mockModules_ = browser_.mockModules_;
       }
       if (opt_useSameUrl) {
-        browser_.driver.getCurrentUrl().then((url: string) => {
-          newBrowser.get(url);
-        });
+        newBrowser.ready = newBrowser.ready
+                               .then(() => {
+                                 return browser_.driver.getCurrentUrl();
+                               })
+                               .then((url: string) => {
+                                 return newBrowser.get(url);
+                               })
+                               .then(() => {
+                                 return newBrowser;
+                               });
       }
       return newBrowser;
     };
