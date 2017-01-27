@@ -93,10 +93,11 @@ export class Runner extends EventEmitter {
       unknownFlags = unknownFlags.filter((f) => extraFlags.indexOf(f) === -1);
     }
     if (unknownFlags.length > 0 && !this.config_.disableChecks) {
-      throw new ConfigError(
-          logger,
-          'Found extra flags: ' + unknownFlags.join(', ') +
-              ', please use --disableChecks flag to disable the Protractor CLI flag checks. ');
+      // TODO: Make this throw a ConfigError in Protractor 6.
+      logger.warn(
+          'Ignoring unknown extra flags: ' + unknownFlags.join(', ') + '. This will be' +
+          ' an error in future versions, please use --disableChecks flag to disable the ' +
+          ' Protractor CLI flag checks. ');
     }
     return this.plugins_.onPrepare().then(() => {
       return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
