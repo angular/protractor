@@ -1,5 +1,6 @@
 import {resolve} from 'path';
 import {Promise, when} from 'q';
+import {error as wderror} from 'selenium-webdriver';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
   'node_modules/jasmine/', 'node_modules/selenium-webdriver', 'at Module.', 'at Object.Module.',
@@ -74,4 +75,32 @@ export function joinTestLogs(log1: any, log2: any): any {
     failedCount: log1.failedCount + log2.failedCount,
     specResults: (log1.specResults || []).concat(log2.specResults || [])
   };
+}
+
+/**
+ * Returns false if an error indicates a missing or stale element, re-throws
+ * the error otherwise
+ *
+ * @param {*} The error to check
+ * @throws {*} The error it was passed if it doesn't indicate a missing or stale
+ *   element
+ * @return {boolean} false, if it doesn't re-throw the error
+ */
+export function falseIfMissing(error: any) {
+  if ((error instanceof wderror.NoSuchElementError) ||
+      (error instanceof wderror.StaleElementReferenceError)) {
+    return false;
+  } else {
+    throw error;
+  }
+}
+
+/**
+ * Return a boolean given boolean value.
+ *
+ * @param {boolean} value
+ * @returns {boolean} given value
+ */
+export function passBoolean(value: boolean) {
+  return value;
 }
