@@ -343,6 +343,10 @@ export class Runner extends EventEmitter {
       throw new Error('Spec patterns did not match any files.');
     }
 
+    if (this.config_.SELENIUM_PROMISE_MANAGER != null) {
+      (wdpromise as any).USE_PROMISE_MANAGER = this.config_.SELENIUM_PROMISE_MANAGER;
+    }
+
     // 0) Wait for debugger
     return q(this.ready_)
         .then(() => {
