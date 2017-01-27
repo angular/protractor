@@ -601,6 +601,29 @@ export interface Config {
    */
   disableChecks?: boolean;
 
+  /**
+   * Enable/disable the WebDriver Control Flow.
+   *
+   * WebDriverJS (and by extention, Protractor) uses a Control Flow to manage the order in which
+   * commands are executed and promises are resolved (see docs/control-flow.md for details).
+   * However, as syntax like `async`/`await` are being introduced, WebDriverJS has decided to
+   * deprecate the control flow, and have users manage the asynchronous activity themselves
+   * (details here: https://github.com/SeleniumHQ/selenium/issues/2969).
+   *
+   * At the moment, the WebDriver Control Flow is still enabled by default. You can disable it by
+   * setting the environment variable `SELENIUM_PROMISE_MANAGER` to `0`.  In a webdriver release in
+   * Q4 2017, the Control Flow will be disabled by default, but you will be able to re-enable it by
+   * setting `SELENIUM_PROMISE_MANAGER` to `1`.  At a later point, the control flow will be removed
+   * for good.
+   *
+   * If you don't like managing environment variables, you can set this option in your config file,
+   * and Protractor will handle enabling/disabling the control flow for you.  Setting this option
+   * is higher priority than the `SELENIUM_PROMISE_MANAGER` environment variable.
+   *
+   * @type {boolean=}
+   */
+  SELENIUM_PROMISE_MANAGER?: boolean;
+
   seleniumArgs?: any[];
   jvmArgs?: string[];
   configDir?: string;

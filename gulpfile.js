@@ -60,7 +60,7 @@ gulp.task('checkVersion', function(done) {
 });
 
 gulp.task('built:copy', function(done) {
-  return gulp.src(['lib/**/*.js','lib/index.d.ts'])
+  return gulp.src(['lib/**/*.js'])
       .pipe(gulp.dest('built/'));
   done();
 });
@@ -94,14 +94,17 @@ gulp.task('tsc', function(done) {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
 
+gulp.task('tsc:spec', function(done) {
+  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-p', 'ts_spec_config.json']);
+});
+
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', 'jshint', 'tsc',
-    'built:copy', done);
+  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', 'tsc:spec', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', done);
+    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec', done);
 });
 
 gulp.task('default',['prepublish']);
