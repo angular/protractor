@@ -1,6 +1,7 @@
 import {error as wderror} from 'selenium-webdriver';
 import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
+import {falseIfMissing} from './util';
 
 /**
  * Represents a library of canned expected conditions that are useful for
@@ -210,7 +211,7 @@ export class ProtractorExpectedConditions {
         // MSEdge does not properly remove newlines, which causes false
         // negatives
         return actualText.replace(/\r?\n|\r/g, '').indexOf(text) > -1;
-      });
+      }, falseIfMissing);
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -235,7 +236,7 @@ export class ProtractorExpectedConditions {
     let hasText = () => {
       return elementFinder.getAttribute('value').then((actualText: string): boolean => {
         return actualText.indexOf(text) > -1;
-      });
+      }, falseIfMissing);
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -388,15 +389,7 @@ export class ProtractorExpectedConditions {
    *     representing whether the element is visible.
    */
   visibilityOf(elementFinder: ElementFinder): Function {
-    return this.and(this.presenceOf(elementFinder), () => {
-      return elementFinder.isDisplayed().then((displayed: boolean) => displayed, (err: any) => {
-        if (err instanceof wderror.NoSuchElementError) {
-          return false;
-        } else {
-          throw err;
-        }
-      });
-    });
+    return this.and(this.presenceOf(elementFinder), elementFinder.isDisplayed.bind(elementFinder));
   }
 
   /**
