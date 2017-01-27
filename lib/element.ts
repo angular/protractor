@@ -229,7 +229,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * array
    *     of element that satisfy the filter function.
    */
-  filter(filterFn: Function): ElementArrayFinder {
+  filter(filterFn: (element: ElementFinder, index?: number) => any): ElementArrayFinder {
     let getWebElements = (): wdpromise.Promise<WebElement[]> => {
       return this.getWebElements().then((parentWebElements: WebElement[]) => {
         let list = parentWebElements.map((parentWebElement: WebElement, index: number) => {
@@ -500,7 +500,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {Array.<ElementFinder>} Return a promise, which resolves to a list
    *     of ElementFinders specified by the locator.
    */
-  asElementFinders_(): wdpromise.Promise<any> {
+  asElementFinders_(): wdpromise.Promise<ElementFinder[]> {
     return this.getWebElements().then((arr: WebElement[]) => {
       return arr.map((webElem: WebElement) => {
         return ElementFinder.fromWebElement_(this.browser_, webElem, this.locator_);
@@ -538,9 +538,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then(
-      fn?: (value: ElementFinder[]) => any | wdpromise.IThenable<any>,
-      errorFn?: (error: any) => any): wdpromise.Promise<any> {
+  then<T>(
+      fn?: (value: ElementFinder[]) => T | wdpromise.IThenable<T>,
+      errorFn?: (error: any) => any): wdpromise.Promise<T> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
     } else {
@@ -636,7 +636,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
-  map(mapFn: (elementFinder?: ElementFinder, index?: number) => any): wdpromise.Promise<any> {
+  map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T): wdpromise.Promise<T> {
     return this.asElementFinders_().then((arr: ElementFinder[]) => {
       let list = arr.map((elementFinder?: ElementFinder, index?: number) => {
         let mapResult = mapFn(elementFinder, index);
