@@ -928,131 +928,137 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   get(destination: string, timeout = this.getPageTimeout) {
     destination = this.baseUrl.indexOf('file://') === 0 ? this.baseUrl + destination :
                                                           url.resolve(this.baseUrl, destination);
+    if (this.ignoreSynchronization) {
+      return this.driver.get(destination)
+          .then(() => this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()))
+          .then(() => null);
+    }
+
     let msg = (str: string) => {
       return 'Protractor.get(' + destination + ') - ' + str;
     };
 
-    if (this.bpClient) {
-      this.driver.controlFlow().execute(() => {
-        return this.bpClient.setWaitEnabled(false);
-      });
-    }
-
-    if (this.ignoreSynchronization) {
-      this.driver.get(destination);
-      return this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()).then(() => {});
-    }
-
-    let deferred = wdpromise.defer<void>();
-
-    this.driver.get(this.resetUrl).then(null, deferred.reject);
-    this.executeScriptWithDescription(
-            'window.name = "' + DEFER_LABEL + '" + window.name;' +
-                'window.location.replace("' + destination + '");',
-            msg('reset url'))
-        .then(null, deferred.reject);
-
-    // We need to make sure the new url has loaded before
-    // we try to execute any asynchronous scripts.
-    this.driver
-        .wait(
-            () => {
-              return this
-                  .executeScriptWithDescription('return window.location.href;', msg('get url'))
-                  .then(
-                      (url: any) => {
-                        return url !== this.resetUrl;
-                      },
-                      (err: IError) => {
-                        if (err.code == 13) {
-                          // Ignore the error, and continue trying. This is
-                          // because IE driver sometimes (~1%) will throw an
-                          // unknown error from this execution. See
-                          // https://github.com/angular/protractor/issues/841
-                          // This shouldn't mask errors because it will fail
-                          // with the timeout anyway.
-                          return false;
-                        } else {
-                          throw err;
-                        }
-                      });
-            },
-            timeout, 'waiting for page to load for ' + timeout + 'ms')
-        .then(null, deferred.reject);
-
-    this.driver.controlFlow().execute(() => {
-      return this.plugins_.onPageLoad();
-    });
-
-    // Make sure the page is an Angular page.
-    this.executeAsyncScript_(
-            clientSideScripts.testForAngular, msg('test for angular'), Math.floor(timeout / 1000),
-            this.ng12Hybrid)
-        .then(
-            (angularTestResult: {ver: number, message: string}) => {
-              let angularVersion = angularTestResult.ver;
-              if (!angularVersion) {
-                let message = angularTestResult.message;
-                logger.error(`Could not find Angular on page ${destination} : ${message}`);
-                throw new Error(
-                    `Angular could not be found on the page ${destination}. If this is not an ` +
-                    `Angular application, you may need to turn off waiting for Angular. Please ` +
-                    `see https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load`);
-              }
-              return angularVersion;
-            },
-            (err: Error) => {
-              throw new Error('Error while running testForAngular: ' + err.message);
-            })
-        .then(loadMocks, deferred.reject);
-
-    let self = this;
-    function loadMocks(angularVersion: number) {
-      if (angularVersion === 1) {
-        // At this point, Angular will pause for us until angular.resumeBootstrap is called.
-        let moduleNames: string[] = [];
-        for (const {name, script, args} of self.mockModules_) {
-          moduleNames.push(name);
-          let executeScriptArgs = [script, msg('add mock module ' + name), ...args];
-          self.executeScriptWithDescription.apply(self, executeScriptArgs)
+    return this.driver.controlFlow()
+        .execute(() => {
+          return wdpromise.when(null);
+        })
+        .then(() => {
+          if (this.bpClient) {
+            return this.driver.controlFlow().execute(() => {
+              return this.bpClient.setWaitEnabled(false);
+            });
+          }
+        })
+        .then(() => {
+          // Go to reset url
+          return this.driver.get(this.resetUrl);
+        })
+        .then(() => {
+          // Set defer label and navigate
+          return this.executeScriptWithDescription(
+              'window.name = "' + DEFER_LABEL + '" + window.name;' +
+                  'window.location.replace("' + destination + '");',
+              msg('reset url'));
+        })
+        .then(() => {
+          // We need to make sure the new url has loaded before
+          // we try to execute any asynchronous scripts.
+          return this.driver.wait(() => {
+            return this.executeScriptWithDescription('return window.location.href;', msg('get url'))
+                .then(
+                    (url: any) => {
+                      return url !== this.resetUrl;
+                    },
+                    (err: IError) => {
+                      if (err.code == 13) {
+                        // Ignore the error, and continue trying. This is
+                        // because IE driver sometimes (~1%) will throw an
+                        // unknown error from this execution. See
+                        // https://github.com/angular/protractor/issues/841
+                        // This shouldn't mask errors because it will fail
+                        // with the timeout anyway.
+                        return false;
+                      } else {
+                        throw err;
+                      }
+                    });
+          }, timeout, 'waiting for page to load for ' + timeout + 'ms');
+        })
+        .then(() => {
+          // Run Plugins
+          return this.driver.controlFlow().execute(() => {
+            return this.plugins_.onPageLoad();
+          });
+        })
+        .then(() => {
+          // Make sure the page is an Angular page.
+          return this
+              .executeAsyncScript_(
+                  clientSideScripts.testForAngular, msg('test for angular'),
+                  Math.floor(timeout / 1000), this.ng12Hybrid)
               .then(
-                  null,
+                  (angularTestResult: {ver: number, message: string}) => {
+                    let angularVersion = angularTestResult.ver;
+                    if (!angularVersion) {
+                      let message = angularTestResult.message;
+                      logger.error(`Could not find Angular on page ${destination} : ${message}`);
+                      throw new Error(
+                          'Angular could not be found on the page ${destination}.' +
+                          `If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load`);
+                    }
+                    return angularVersion;
+                  },
                   (err: Error) => {
-                    throw new Error(
-                        'Error while running module script ' + name + ': ' + err.message);
-                  })
-              .then(null, deferred.reject);
-        }
+                    throw new Error('Error while running testForAngular: ' + err.message);
+                  });
+        })
+        .then((angularVersion) => {
+          // Load Angular Mocks
+          if (angularVersion === 1) {
+            // At this point, Angular will pause for us until angular.resumeBootstrap is called.
+            let moduleNames: string[] = [];
+            let modulePromise: wdpromise.Promise<void> = wdpromise.when(null);
+            for (const {name, script, args} of this.mockModules_) {
+              moduleNames.push(name);
+              let executeScriptArgs = [script, msg('add mock module ' + name), ...args];
+              modulePromise = modulePromise.then(
+                  () => this.executeScriptWithDescription.apply(this, executeScriptArgs)
+                            .then(null, (err: Error) => {
+                              throw new Error(
+                                  'Error while running module script ' + name + ': ' + err.message);
+                            }));
+            }
 
-        self.executeScriptWithDescription(
-                'window.__TESTABILITY__NG1_APP_ROOT_INJECTOR__ = ' +
-                    'angular.resumeBootstrap(arguments[0]);',
-                msg('resume bootstrap'), moduleNames)
-            .then(null, deferred.reject);
-      } else {
-        // TODO: support mock modules in Angular2. For now, error if someone
-        // has tried to use one.
-        if (self.mockModules_.length > 1) {
-          deferred.reject(
-              'Trying to load mock modules on an Angular2 app ' +
-              'is not yet supported.');
-        }
-      }
-    }
-
-    if (this.bpClient) {
-      this.driver.controlFlow().execute(() => {
-        return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
-      });
-    }
-
-    this.driver.controlFlow().execute(() => {
-      return this.plugins_.onPageStable().then(() => {
-        deferred.fulfill();
-      }, deferred.reject);
-    });
-
-    return deferred.promise;
+            return modulePromise.then(
+                () => this.executeScriptWithDescription(
+                    'window.__TESTABILITY__NG1_APP_ROOT_INJECTOR__ = ' +
+                        'angular.resumeBootstrap(arguments[0]);',
+                    msg('resume bootstrap'), moduleNames));
+          } else {
+            // TODO: support mock modules in Angular2. For now, error if someone
+            // has tried to use one.
+            if (this.mockModules_.length > 1) {
+              throw 'Trying to load mock modules on an Angular2 app is not yet supported.';
+            }
+          }
+        })
+        .then(() => {
+          // Reset bpClient sync
+          if (this.bpClient) {
+            return this.driver.controlFlow().execute(() => {
+              return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
+            });
+          }
+        })
+        .then(() => {
+          // Run Plugins
+          return this.driver.controlFlow().execute(() => {
+            return this.plugins_.onPageStable();
+          });
+        })
+        .then(() => null);
   }
 
   /**
