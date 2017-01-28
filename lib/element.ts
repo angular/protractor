@@ -482,18 +482,30 @@ export class ElementArrayFinder extends WebdriverWebElement {
     let callerError = new Error();
     let actionResults = this.getWebElements()
                             .then((arr: any) => wdpromise.all(arr.map(actionFn)))
-                            .then(null, (e: IError | string) => {
-                              let noSuchErr: any;
-                              if (e instanceof Error) {
-                                noSuchErr = e;
-                                noSuchErr.stack = noSuchErr.stack + callerError.stack;
-                              } else {
-                                noSuchErr = new Error(e as string);
-                                noSuchErr.stack = callerError.stack;
-                              }
-                              throw noSuchErr;
-                            });
-    return new ElementArrayFinder(this.browser_, this.getWebElements, this.locator_, actionResults);
+                            .then(
+                                (value: any) => {
+                                  return {passed: true, value: value};
+                                },
+                                (error: any) => {
+                                  return {passed: false, value: error};
+                                });
+    let getWebElements = () => actionResults.then(() => this.getWebElements());
+    actionResults = actionResults.then((result: {passed: boolean, value: any}) => {
+      if (result.passed) {
+        return result.value;
+      } else {
+        let noSuchErr: any;
+        if (result.value instanceof Error) {
+          noSuchErr = result.value;
+          noSuchErr.stack = noSuchErr.stack + callerError.stack;
+        } else {
+          noSuchErr = new Error(result.value as string);
+          noSuchErr.stack = callerError.stack;
+        }
+        throw noSuchErr;
+      }
+    });
+    return new ElementArrayFinder(this.browser_, getWebElements, this.locator_, actionResults);
   }
 
   /**

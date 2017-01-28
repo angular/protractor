@@ -1,13 +1,30 @@
 // Based off of spec/basic/elements_spec.js
-import {promise as ppromise, browser, element, by, By, $, $$, ExpectedConditions, ElementFinder} from '../../..';
+import * as q from 'q';
+
+import {$, $$, browser, by, By, element, ElementArrayFinder, ElementFinder, ExpectedConditions, promise as ppromise, WebElement} from '../../..';
+
+describe('verify control flow is off', function() {
+  it('should have set webdriver.promise.USE_PROMISE_MANAGER', () => {
+    expect((ppromise as any).USE_PROMISE_MANAGER).toBe(false);
+  });
+
+  it('should not wait on one command before starting another', async function() {
+    // Wait forever
+    browser.controlFlow().wait(
+        (browser.controlFlow() as any).promise((): void => undefined) as ppromise.Promise<void>);
+
+    // then return
+    await browser.controlFlow().execute(() => ppromise.when(null));
+  });
+});
 
 describe('ElementFinder', function() {
   it('should return the same result as browser.findElement', async function() {
     await browser.get('index.html#/form');
     const nameByElement = element(by.binding('username'));
 
-    await expect(nameByElement.getText()).toEqual(
-        browser.findElement(by.binding('username')).getText());
+    await expect(nameByElement.getText())
+        .toEqual(browser.findElement(by.binding('username')).getText());
   });
 
   it('should wait to grab the WebElement until a method is called', async function() {
@@ -32,15 +49,44 @@ describe('ElementFinder', function() {
 
     await expect(name.getText()).toEqual('Anon');
 
-    await ((usernameInput.clear() as any) as ElementFinder).sendKeys('Jane');
+    await((usernameInput.clear() as any) as ElementFinder).sendKeys('Jane');
     await expect(name.getText()).toEqual('Jane');
   });
 
-  it('chained call should wait to grab the WebElement until a method is called',
-      async function() {
+  it('should run chained element actions in sequence', function(done: any) {
+    // Testing private methods is bad :(
+    let els = new ElementArrayFinder(browser, () => {
+      return ppromise.when([null as WebElement]);
+    });
+    let applyAction_: (actionFn: (value: WebElement, index: number, array: WebElement[]) => any) =>
+        ElementArrayFinder = (ElementArrayFinder as any).prototype.applyAction_;
+    let order: string[] = [];
+
+    let deferredA = q.defer<void>();
+    els = applyAction_.call(els, () => {
+      return deferredA.promise.then(() => {
+        order.push('a');
+      });
+    });
+    let deferredB = q.defer<void>();
+    els = applyAction_.call(els, () => {
+      return deferredB.promise.then(() => {
+        order.push('b');
+      });
+    });
+
+    deferredB.resolve();
+    setTimeout(async function() {
+      deferredA.resolve();
+      await els;
+      expect(order).toEqual(['a', 'b']);
+      done();
+    }, 100);
+  });
+
+  it('chained call should wait to grab the WebElement until a method is called', async function() {
     // These should throw no error before a page is loaded.
-    const reused = element(by.id('baz')).
-        element(by.binding('item.reusedBinding'));
+    const reused = element(by.id('baz')).element(by.binding('item.reusedBinding'));
 
     await browser.get('index.html#/conflict');
 
@@ -48,22 +94,20 @@ describe('ElementFinder', function() {
     await expect(reused.isPresent()).toBe(true);
   });
 
-  it('should differentiate elements with the same binding by chaining',
-      async function() {
-        await browser.get('index.html#/conflict');
+  it('should differentiate elements with the same binding by chaining', async function() {
+    await browser.get('index.html#/conflict');
 
-        const outerReused = element(by.binding('item.reusedBinding'));
-        const innerReused =
-            element(by.id('baz')).element(by.binding('item.reusedBinding'));
+    const outerReused = element(by.binding('item.reusedBinding'));
+    const innerReused = element(by.id('baz')).element(by.binding('item.reusedBinding'));
 
-        await expect(outerReused.getText()).toEqual('Outer: outer');
-        await expect(innerReused.getText()).toEqual('Inner: inner');
-      });
+    await expect(outerReused.getText()).toEqual('Outer: outer');
+    await expect(innerReused.getText()).toEqual('Inner: inner');
+  });
 
   it('should chain deeper than 2', async function() {
     // These should throw no error before a page is loaded.
-    const reused = element(by.css('body')).element(by.id('baz')).
-        element(by.binding('item.reusedBinding'));
+    const reused =
+        element(by.css('body')).element(by.id('baz')).element(by.binding('item.reusedBinding'));
 
     await browser.get('index.html#/conflict');
 
@@ -108,11 +152,13 @@ describe('ElementFinder', function() {
     await browser.get('index.html#/form');
 
     const invalidElement = element(by.binding('INVALID'));
-    const successful = invalidElement.getText().then(function() {
-      return true;
-    } as any as (() => ppromise.Promise<void>), function() {
-      return false;
-    } as any as (() => ppromise.Promise<void>));
+    const successful = invalidElement.getText().then(
+        function() {
+          return true;
+        } as any as (() => ppromise.Promise<void>),
+        function() {
+          return false;
+        } as any as (() => ppromise.Promise<void>));
     await expect(successful).toEqual(false);
   });
 
@@ -139,9 +185,7 @@ describe('ElementFinder', function() {
     const name = element(by.binding('username'));
 
     await expect(name.getText()).toEqual('Anon');
-    await expect(
-      name.getText().then(null, function() {})
-    ).toEqual('Anon');
+    await expect(name.getText().then(null, function() {})).toEqual('Anon');
 
   });
 
