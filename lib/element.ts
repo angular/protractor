@@ -229,7 +229,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * array
    *     of element that satisfy the filter function.
    */
-  filter(filterFn: (element: ElementFinder, index?: number) => any): ElementArrayFinder {
+  filter(
+      filterFn: (element: ElementFinder, index?: number) => boolean |
+          wdpromise.Promise<boolean>): ElementArrayFinder {
     let getWebElements = (): wdpromise.Promise<WebElement[]> => {
       return this.getWebElements().then((parentWebElements: WebElement[]) => {
         let list = parentWebElements.map((parentWebElement: WebElement, index: number) => {
@@ -539,7 +541,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
   then<T>(
-      fn?: (value: ElementFinder[]) => T | wdpromise.IThenable<T>,
+      fn?: (value: ElementFinder[]|any[]) => T | wdpromise.IThenable<T>,
       errorFn?: (error: any) => any): wdpromise.Promise<T> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn);
@@ -636,8 +638,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
-  map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T): wdpromise.Promise<T> {
-    return this.asElementFinders_().then((arr: ElementFinder[]) => {
+  map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T | any):
+      wdpromise.Promise<T[]> {
+    return this.asElementFinders_().then<T[]>((arr: ElementFinder[]) => {
       let list = arr.map((elementFinder?: ElementFinder, index?: number) => {
         let mapResult = mapFn(elementFinder, index);
         // All nested arrays and objects will also be fully resolved.
