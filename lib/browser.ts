@@ -1120,8 +1120,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   }
 
   /**
-   * Returns the current absolute url from AngularJS.
+   * Deprecated, use `browser.getCurrentUrl()` instead.
    *
+   * Despite its name, this function will generally return `$location.url()`, though in some
+   * cases it will return `$location.absUrl()` instead.  This function is only here for legacy
+   * users, and will probably be removed in Protractor 6.0.
+   *
+   * @deprecated Please use `browser.getCurrentUrl()` 
    * @example
    * browser.get('http://angular.github.io/protractor/#/api');
    * expect(browser.getLocationAbsUrl())
@@ -1130,6 +1135,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * AngularJS.
    */
   getLocationAbsUrl(): wdpromise.Promise<any> {
+    logger.warn(
+        '`browser.getLocationAbsUrl()` is deprecated, please use `browser.getCurrentUrl` instead.');
     return this.waitForAngular().then(
         () => this.executeScriptWithDescription(
             clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', this.rootEl));
