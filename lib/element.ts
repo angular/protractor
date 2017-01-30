@@ -2,7 +2,7 @@ import {By, error as wderror, ILocation, ISize, promise as wdpromise, WebDriver,
 
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {IError} from './exitCodes';
-import {Locator} from './locators';
+import {isProtractorLocator, Locator} from './locators';
 import {Logger} from './logger';
 import {falseIfMissing} from './util';
 
@@ -160,7 +160,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
         // This is the first time we are looking for an element
         return ptor.waitForAngular('Locator: ' + locator)
             .then((): wdpromise.Promise<WebElement[]> => {
-              if (locator.findElementsOverride) {
+              if (isProtractorLocator(locator)) {
                 return locator.findElementsOverride(ptor.driver, null, ptor.rootEl);
               } else {
                 return ptor.driver.findElements(locator);
@@ -171,7 +171,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
           // For each parent web element, find their children and construct
           // a list of Promise<List<child_web_element>>
           let childrenPromiseList = parentWebElements.map((parentWebElement: WebElement) => {
-            return locator.findElementsOverride ?
+            return isProtractorLocator(locator) ?
                 locator.findElementsOverride(ptor.driver, parentWebElement, ptor.rootEl) :
                 parentWebElement.findElements(locator);
           });
@@ -921,7 +921,7 @@ export class ElementFinder extends WebdriverWebElement {
    * browser.driver.findElement(by.css('.parent'));
    * browser.findElement(by.css('.parent'));
    *
-   * @returns {webdriver.WebElement}
+   * @returns {webdriver.WebElementPromise}
    */
   getWebElement(): WebElementPromise {
     let id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
