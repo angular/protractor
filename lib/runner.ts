@@ -214,12 +214,13 @@ export class Runner extends EventEmitter {
    * This is used to set up the initial protractor instances and any
    * future ones.
    *
-   * @param {?Plugin} The plugin functions
+   * @param {Plugin} plugins The plugin functions
+   * @param {ProtractorBrowser=} parentBrowser The browser which spawned this one
    *
    * @return {Protractor} a protractor instance.
    * @public
    */
-  createBrowser(plugins: any): any {
+  createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): any {
     let config = this.config_;
     let driver = this.driverprovider_.getNewDriver();
 
@@ -228,31 +229,53 @@ export class Runner extends EventEmitter {
       blockingProxyUrl = this.driverprovider_.getBPUrl();
     }
 
-    let browser_ = new ProtractorBrowser(
-        driver, config.baseUrl, config.rootElement, config.untrackOutstandingTimeouts,
-        blockingProxyUrl);
+    let initProperties = {
+      baseUrl: config.baseUrl,
+      rootElement: config.rootElement as string | wdpromise.Promise<string>,
+      untrackOutstandingTimeouts: config.untrackOutstandingTimeouts,
+      params: config.params,
+      getPageTimeout: config.getPageTimeout,
+      allScriptsTimeout: config.allScriptsTimeout,
+      debuggerServerPort: config.debuggerServerPort,
+      ng12Hybrid: config.ng12Hybrid
+    };
 
-    browser_.params = config.params;
+    if (parentBrowser) {
+      initProperties.baseUrl = parentBrowser.baseUrl;
+      initProperties.rootElement = parentBrowser.angularAppRoot();
+      initProperties.untrackOutstandingTimeouts = !parentBrowser.trackOutstandingTimeouts_;
+      initProperties.params = parentBrowser.params;
+      initProperties.getPageTimeout = parentBrowser.getPageTimeout;
+      initProperties.allScriptsTimeout = parentBrowser.allScriptsTimeout;
+      initProperties.debuggerServerPort = parentBrowser.debuggerServerPort;
+      initProperties.ng12Hybrid = parentBrowser.ng12Hybrid;
+    }
+
+    let browser_ = new ProtractorBrowser(
+        driver, initProperties.baseUrl, initProperties.rootElement,
+        initProperties.untrackOutstandingTimeouts, blockingProxyUrl);
+
+    browser_.params = initProperties.params;
     if (plugins) {
       browser_.plugins_ = plugins;
     }
-    if (config.getPageTimeout) {
-      browser_.getPageTimeout = config.getPageTimeout;
+    if (initProperties.getPageTimeout) {
+      browser_.getPageTimeout = initProperties.getPageTimeout;
     }
-    if (config.allScriptsTimeout) {
-      browser_.allScriptsTimeout = config.allScriptsTimeout;
+    if (initProperties.allScriptsTimeout) {
+      browser_.allScriptsTimeout = initProperties.allScriptsTimeout;
     }
-    if (config.debuggerServerPort) {
-      browser_.debuggerServerPort = config.debuggerServerPort;
+    if (initProperties.debuggerServerPort) {
+      browser_.debuggerServerPort = initProperties.debuggerServerPort;
     }
-    if (config.ng12Hybrid) {
-      browser_.ng12Hybrid = config.ng12Hybrid;
+    if (initProperties.ng12Hybrid) {
+      browser_.ng12Hybrid = initProperties.ng12Hybrid;
     }
 
     browser_.ready =
         browser_.ready
             .then(() => {
-              return driver.manage().timeouts().setScriptTimeout(config.allScriptsTimeout);
+              return driver.manage().timeouts().setScriptTimeout(initProperties.allScriptsTimeout);
             })
             .then(() => {
               return browser_;
@@ -262,25 +285,26 @@ export class Runner extends EventEmitter {
       return wdpromise.when(config);
     };
 
-    browser_.forkNewDriverInstance = (opt_useSameUrl: boolean, opt_copyMockModules: boolean) => {
-      let newBrowser = this.createBrowser(plugins);
-      if (opt_copyMockModules) {
-        newBrowser.mockModules_ = browser_.mockModules_;
-      }
-      if (opt_useSameUrl) {
-        newBrowser.ready = newBrowser.ready
-                               .then(() => {
-                                 return browser_.driver.getCurrentUrl();
-                               })
-                               .then((url: string) => {
-                                 return newBrowser.get(url);
-                               })
-                               .then(() => {
-                                 return newBrowser;
-                               });
-      }
-      return newBrowser;
-    };
+    browser_.forkNewDriverInstance =
+        (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
+          let newBrowser = this.createBrowser(plugins);
+          if (copyMockModules) {
+            newBrowser.mockModules_ = browser_.mockModules_;
+          }
+          if (useSameUrl) {
+            newBrowser.ready = newBrowser.ready
+                                   .then(() => {
+                                     return browser_.driver.getCurrentUrl();
+                                   })
+                                   .then((url: string) => {
+                                     return newBrowser.get(url);
+                                   })
+                                   .then(() => {
+                                     return newBrowser;
+                                   });
+          }
+          return newBrowser;
+        };
 
     let replaceBrowser = () => {
       let newBrowser = browser_.forkNewDriverInstance(false, true);
