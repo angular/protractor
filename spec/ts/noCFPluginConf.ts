@@ -1,5 +1,6 @@
 import * as q from 'q';
 import {Config, protractor} from '../..';
+import {promise as wdpromise} from 'selenium-webdriver';
 const env = require('../environment.js');
 
 export let config: Config = {
@@ -18,7 +19,8 @@ export let config: Config = {
   plugins: [{
     inline: {
       onPageLoad: function() {
-        return q.delay(100).then(function() {
+        //TODO: remove cast when @types/selenium-webdriver understands disabling the control flow
+        return (q.delay(100) as any as wdpromise.Promise<void>).then(function() {
           (protractor as any).ON_PAGE_LOAD = true;
         });
       }
