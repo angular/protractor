@@ -25,9 +25,11 @@ by.css('.myclass')
 by.id('myid')
 
 // Find an element with a certain ng-model.
+// Note that at the moment, this is only supported for AngularJS apps.
 by.model('name')
 
 // Find an element bound to the given variable.
+// Note that at the moment, this is only supported for AngularJS apps.
 by.binding('bindingname')
 ```
 

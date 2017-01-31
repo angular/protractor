@@ -25,9 +25,11 @@ with more info.
 Angular can't be found on my page
 ---------------------------------
 
-Protractor supports angular 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.
+Protractor supports Angular and AngularJS 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.
 
-The `angular` variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if `angular` is defined.
+For AngularJS apps, the `angular` variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if `angular` is defined.
+
+For Angular apps, you should see a global method `getAllAngularTestabilities`.
 
 How do I deal with my log-in page?
 ----------------------------------
