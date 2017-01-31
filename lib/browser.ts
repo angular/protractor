@@ -359,7 +359,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.ignoreSynchronization = false;
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
-    this.plugins_ = new Plugins({});
     this.resetUrl = DEFAULT_RESET_URL;
     this.debugHelper = new DebugHelper(this);
 

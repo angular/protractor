@@ -4,6 +4,7 @@ import * as webdriver from 'selenium-webdriver';
 import {Config} from './config';
 import {ConfigParser} from './configParser';
 import {Logger} from './logger';
+import {protractor} from './ptor';
 
 let logger = new Logger('plugins');
 
@@ -457,8 +458,13 @@ export class Plugins {
         logError(e);
       }
     };
-    return promiseType == PromiseType.Q ? q.Promise(resolver) :
-                                          new webdriver.promise.Promise(resolver);
+    if (promiseType == PromiseType.Q) {
+      return q.Promise(resolver);
+    } else if (protractor.browser.controlFlowIsEnabled()) {
+      return new webdriver.promise.Promise(resolver);
+    } else {
+      return new Promise(resolver);
+    }
   }
 
   /**
