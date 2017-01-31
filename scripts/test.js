@@ -39,6 +39,7 @@ var passingTests = [
   'node built/cli.js spec/angular2Conf.js',
   'node built/cli.js spec/hybridConf.js',
   'node built/cli.js spec/built/noCFSmokeConf.js',
+  'node built/cli.js spec/built/noCFPluginConf.js',
   'node scripts/driverProviderAttachSession.js',
   'node scripts/errorTest.js',
   // Interactive Element Explorer tasks
