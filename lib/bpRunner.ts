@@ -23,6 +23,12 @@ export class BlockingProxyRunner {
         '--seleniumAddress',
         this.config.seleniumAddress,
       ];
+      if (this.config.webDriverLogDir) {
+        args.push('--logDir', this.config.webDriverLogDir);
+      }
+      if (this.config.highlightDelay) {
+        args.push('--highlightDelay', this.config.highlightDelay.toString());
+      }
       this.bpProcess = fork(BP_PATH, args, {silent: true});
       logger.info('Starting BlockingProxy with args: ' + args.toString());
       this.bpProcess

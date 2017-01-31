@@ -498,6 +498,25 @@ export interface Config {
    */
   ignoreUncaughtExceptions?: boolean;
 
+  /**
+   * If set, will create a log file in the given directory with a readable log of
+   * the webdriver commands it executes.
+   *
+   * This is an experimental feature. Enabling this will also turn on Blocking Proxy
+   * synchronization, which is also experimental.
+   */
+  webDriverLogDir?: string;
+
+  /**
+   * If set, Protractor will pause the specified amount of time (in milliseconds)
+   * before interactions with browser elements (ie, sending keys, clicking). It will
+   * also highlight the element it's about to interact with.
+   *
+   * This is an experimental feature. Enabling this will also turn on Blocking Proxy
+   * synchronization, which is also experimental.
+   */
+  highlightDelay?: number;
+
   // ---------------------------------------------------------------------------
   // ----- The test framework
   // --------------------------------------------------

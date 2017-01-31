@@ -372,6 +372,10 @@ export class Runner extends EventEmitter {
       (wdpromise as any).USE_PROMISE_MANAGER = this.config_.SELENIUM_PROMISE_MANAGER;
     }
 
+    if (this.config_.webDriverLogDir || this.config_.highlightDelay) {
+      this.config_.useBlockingProxy = true;
+    }
+
     // 0) Wait for debugger
     return q(this.ready_)
         .then(() => {
