@@ -967,7 +967,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
             // TODO: support mock modules in Angular2. For now, error if someone
             // has tried to use one.
             if (this.mockModules_.length > 1) {
-              throw 'Trying to load mock modules on an Angular2 app is not yet supported.';
+              throw 'Trying to load mock modules on an Angular v2+ app is not yet supported.';
             }
           }
         })
