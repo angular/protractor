@@ -104,8 +104,8 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
  * @extends {webdriver_extensions.ExtendedWebDriver}
  * @param {webdriver.WebDriver} webdriver
  * @param {string=} opt_baseUrl A base URL to run get requests against.
- * @param {string=} opt_rootElement  Selector element that has an ng-app in
- *     scope.
+ * @param {string|webdriver.promise.Promise<string>=} opt_rootElement  Selector element that has an
+ *     ng-app in scope.
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
@@ -192,17 +192,19 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * this method is called use the new app root. Pass nothing to get a promise that
    * resolves to the value of the selector.
    *
-   * @param {string} The new selector.
+   * @param {string|webdriver.promise.Promise<string>} value The new selector.
    * @returns A promise that resolves with the value of the selector.
    */
-  angularAppRoot(value: string = null): wdpromise.Promise<string> {
+  angularAppRoot(value: string|wdpromise.Promise<string> = null): wdpromise.Promise<string> {
     return this.driver.controlFlow().execute(() => {
       if (value != null) {
-        if (this.bpClient) {
-          return this.bpClient.setWaitParams(value).then(() => this.internalRootEl);
-        }
-        this.internalRootEl = value;
-        return this.internalRootEl;
+        return wdpromise.when(value).then((value: string) => {
+          this.internalRootEl = value;
+          if (this.bpClient) {
+            return this.bpClient.setWaitParams(value).then(() => this.internalRootEl);
+          }
+          return this.internalRootEl;
+        });
       }
     }, `Set angular root selector to ${value}`);
   }
@@ -316,8 +318,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   [key: string]: any;
 
   constructor(
-      webdriverInstance: WebDriver, opt_baseUrl?: string, opt_rootElement?: string,
-      opt_untrackOutstandingTimeouts?: boolean, opt_blockingProxyUrl?: string) {
+      webdriverInstance: WebDriver, opt_baseUrl?: string,
+      opt_rootElement?: string|wdpromise.Promise<string>, opt_untrackOutstandingTimeouts?: boolean,
+      opt_blockingProxyUrl?: string) {
     super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
@@ -352,7 +355,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.$ = build$(this.element, By);
     this.$$ = build$$(this.element, By);
     this.baseUrl = opt_baseUrl || '';
-    this.rootEl = opt_rootElement || '';
+    this.angularAppRoot(opt_rootElement || '');
     this.ignoreSynchronization = false;
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
@@ -454,13 +457,14 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * var forked = await browser.forkNewDriverInstance().ready;
    * await forked.get('page1'); // 'page1' gotten by forked browser
    *
-   * @param {boolean} opt_useSameUrl Whether to navigate to current url on
-   * creation
-   * @param {boolean} opt_copyMockModules Whether to apply same mock modules on
-   * creation
-   * @returns {Browser} A browser instance.
+   * @param {boolean=} useSameUrl Whether to navigate to current url on creation
+   * @param {boolean=} copyMockModules Whether to apply same mock modules on creation
+   * @param {boolean=} copyConfigUpdates Whether to copy over changes to `baseUrl` and similar
+   *   properties initialized to values in the the config.  Defaults to `true`
+   *
+   * @returns {ProtractorBrowser} A browser instance.
    */
-  forkNewDriverInstance(opt_useSameUrl?: boolean, opt_copyMockModules?: boolean):
+  forkNewDriverInstance(useSameUrl?: boolean, copyMockModules?: boolean, copyConfigUpdates = true):
       ProtractorBrowser {
     return null;
   }
@@ -556,7 +560,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   useAllAngular2AppRoots() {
     // The empty string is an invalid css selector, so we use it to easily
     // signal to scripts to not find a root element.
-    this.rootEl = '';
+    this.angularAppRoot('');
   }
 
   /**
@@ -698,7 +702,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                 let pendingHttpsPromise = this.executeScriptWithDescription(
                     clientSideScripts.getPendingHttpRequests,
                     'Protractor.waitForAngular() - getting pending https' + description,
-                    this.rootEl);
+                    this.internalRootEl);
 
                 return wdpromise.all([pendingTimeoutsPromise, pendingHttpsPromise])
                     .then(
@@ -1035,15 +1039,18 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *    page has been changed.
    */
   setLocation(url: string): wdpromise.Promise<any> {
-    return this.waitForAngular().then(
-        () => this.executeScriptWithDescription(
-                      clientSideScripts.setLocation, 'Protractor.setLocation()', this.rootEl, url)
-                  .then((browserErr: Error) => {
-                    if (browserErr) {
-                      throw 'Error while navigating to \'' + url + '\' : ' +
-                          JSON.stringify(browserErr);
-                    }
-                  }));
+    return this.waitForAngular()
+        .then(() => this.angularAppRoot())
+        .then(
+            (rootEl) =>
+                this.executeScriptWithDescription(
+                        clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url)
+                    .then((browserErr: Error) => {
+                      if (browserErr) {
+                        throw 'Error while navigating to \'' + url + '\' : ' +
+                            JSON.stringify(browserErr);
+                      }
+                    }));
   }
 
   /**
@@ -1064,9 +1071,11 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   getLocationAbsUrl(): wdpromise.Promise<any> {
     logger.warn(
         '`browser.getLocationAbsUrl()` is deprecated, please use `browser.getCurrentUrl` instead.');
-    return this.waitForAngular().then(
-        () => this.executeScriptWithDescription(
-            clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', this.rootEl));
+    return this.waitForAngular()
+        .then(() => this.angularAppRoot())
+        .then(
+            (rootEl) => this.executeScriptWithDescription(
+                clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl));
   }
 
   /**
