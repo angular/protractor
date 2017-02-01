@@ -1,3 +1,210 @@
+# 5.1.0
+
+
+#### Blocking proxy
+
+Blocking Proxy is a new experimental feature in Protractor 5 and is behind the
+`--useBlockingProxy` or `blockingProxyUrl`. See the
+[lib/config.ts#L100](https://github.com/angular/protractor/blob/master/lib/config.ts#L100).
+Other ways to start blocking proxy include using the
+`--highlightDelay` and `--webDriverLogDir` flags See [lib/config.ts#L501](https://github.com/angular/protractor/blob/master/lib/config.ts#L501).
+
+This adds two options, both of which are implemented with Blocking
+Proxy. `--webDriverLogDir` will create a readable log with timing
+information of webdriver commands in the specified directory.
+
+`--highlightDelay` will pause before clicking on elements or sending keys.
+While paused, the element that's about to be affected will be
+highlighted.
+
+#### Webdriver-manager
+
+Webdriver-manager will now by default grab the latest versions of all binaries
+(standalone, chromedriver, iedriver, gecko driver). Use the
+`--versions.(binary name)` to pin to a specific version. Selenium standalone
+3.0.1 has a bug which prevents it from working with any version of FireFox.
+We have tested version 3.0.0-beta4 and know that it works with
+FireFox 51, and we expect that the 3.0.2 release will also work.
+
+#### TypeScript support
+
+For jasmine users, in order to get all the type declarations that are used in
+jasminewd2, you'll need to install `@types/jasminewd2` in addition to
+`@types/jasmine` as dev dependencies.
+
+## Features
+
+- ([0cd156d](https://github.com/angular/protractor/commit/0cd156d6829f23f93403d865b7fdb7eab4f45446))
+  feat(debugging): Add webdriver logging and highlight delay. (#4039)
+
+  This adds two options, both of which are implemented with Blocking
+  Proxy. --webDriverLogDir will create a readable log with timing
+  information of webdriver commands in the specified directory.
+
+  --highlightDelay will pause before clicking on elements or sending keys.
+  While paused, the element that's about to be affected will be
+  highlighted.
+
+- ([3d98a16](https://github.com/angular/protractor/commit/3d98a1668138d36681bf305c9ea67dd1eea38899))
+  feat(config): Support setting `SELENIUM_PROMISE_MANAGER` flag via the config (#4023)
+
+  Closes https://github.com/angular/protractor/issues/3691
+- ([4e40fb1](https://github.com/angular/protractor/commit/4e40fb175e64820bbab24efb376dac80fa6ba2b0))
+  feat(browser): chain promises in `browser.get` (#4017)
+
+  Closes https://github.com/angular/protractor/issues/3904
+- ([33393ca](https://github.com/angular/protractor/commit/33393cad633e6cb5ce64b3fc8fa5e8a9cae64edd))
+  feat(browser): chain some promises in `lib/browser.ts` + return promise from
+  `waitForAngularEnabled` (#4021)
+
+  Minor breaking change since `waitForAngularEnabled` no longer returns a boolean
+   Part of angular#3904
+   Chaining `browser.get` has proved surprisingly complex, so I'll do that in a different PR
+   Also fixed a minor bug in `lib/clientsidescripts.js` while debuging
+- ([7cb9739](https://github.com/angular/protractor/commit/7cb9739954bc26f0667d671cdb0083f5bd43f2f6))
+  feat(browser.ready): make `browser.ready` wait for all async setup work (#4015)
+
+  Closes https://github.com/angular/protractor/issues/3900
+- ([b77cb92](https://github.com/angular/protractor/commit/b77cb928301fbe4f77ffcdcace424a490581416e))
+  feat(restart): `browser.restart` should return a promise (#4008)
+
+  Also allows `browser.restart` to work when the control flow is disabled, and
+  fixes it for forked browsers.
+
+  Closes #3899 and #3896
+  https://github.com/angular/protractor/issues/3896
+
+- ([4a59412](https://github.com/angular/protractor/commit/4a59412357eb5df592b06dd282d88d6dbc5e4771))
+  feat(angularAppRoot): Replace rootEl with browser.angularAppRoot() (#3996)
+
+  Replace browser.rootEl with browser.angularAppRoot(), which changes the root element in a promise
+  on the control flow. Note that browser.rootEl will immediately return the current value, but
+  browser.angularAppRoot() will return a promise that resolves during the next step in the control
+  flow.
+
+  Also update to BlockingProxy 0.0.3, which allows changing rootSelector.
+
+- ([879aac6](https://github.com/angular/protractor/commit/879aac6ee6c1c36d005b538472e2754b987b3368))
+  chore(blockingproxy): Allow using a pre-existing Blocking Proxy instance (#3970)
+
+- ([bf123ad](https://github.com/angular/protractor/commit/bf123adafc442440b2ca10725113b47342ebb24f))
+  feat(elements): Add isPresent() to ElementArrayFinder. (#3974)
+
+## Bug Fixes
+
+- ([f9bee84](https://github.com/angular/protractor/commit/f9bee84bc03b6cd6872522b8780327423b789e19)) fix(restart): preserve waitForAngularEnabled on restart and add promise chaining
+
+  I noticed I missed `waitForAngularEnabled` in #4037.  This commit fixed that.
+
+  While I was at it I fixed a minor error where the promises implicitly created by
+  setting `rootEl` and `ignoreSynchronization` weren't getting chained properly.
+
+  Also fixed minor (so minor I think it was impossible to trigger) where
+  browser.plugins_ could be undefined.
+
+- ([0b0c224](https://github.com/angular/protractor/commit/0b0c224e4056368c2c0030064b4ca4235163276b))
+  fix(plugins): do not force ManagedPromise in plugins.ts (#4036)
+
+- ([9c2274d](https://github.com/angular/protractor/commit/9c2274d8f218cabc946dbc6a11d725458c1b4e3a))
+  fix(restart): preserve properties like `browser.baseUrl` upon restart (#4037)
+
+  I also fixed a minor issue where `internalRootEl` wasn't being set when blocking proxy was being
+  used.  I also just cleaned up our internal uses of `this.rootEl`.
+
+  Closes #4032
+
+- ([a20c7a7](https://github.com/angular/protractor/commit/a20c7a7cc1df04f96cb1a9dd971df39883ac173b))
+  fix(element chaining): make element chaining work when the control flow is disabled (#4029)
+
+  Also added some tests to `spec/ts/noCF/smoke_spec.ts` double checking that the control flow is off
+
+- ([7481dee](https://github.com/angular/protractor/commit/7481dee75cab1da9d207909e928eee55a9f5a682))
+  fix(cli): Make unknown flag check a warning instead of an error. (#4028)
+
+- ([40bbeca](https://github.com/angular/protractor/commit/40bbeca003017901760e10831c66d383cf5accf8))
+  fix(expectedConditions): Add tests and fix race conditions around visibility (#4006)
+
+  Add test cases to reproduce the missing element race conditions possible in
+  expected condition methods `visibilityOf`, `textToBePresentInElement`,
+  `textToBePresentInValue` and `elementToBeClickable`.
+
+  Add error handler `falseIfMissing` to all expected conditions that depend
+  on the presence of an element.
+
+  Expected conditions check the presence of an element before other checks,
+  but when an element is removed exactly in the moment after the `isPresent`
+  and before `isDisplayed` in `visibilityOf` the condition used to fail.
+
+  This solution does not handle missing elements in (`isEnable`, `isDisplayed`,
+  `isSelected`) and focused only on expected conditions (see #3972)
+
+  This problem was also referenced in #3578 and #3777
+
+- ([5856037](https://github.com/angular/protractor/commit/5856037368ee8d8a21f11eadbfe93d5f46507f60))
+  fix(cli): Allow frameworks to specify flags they recognize. (#3994)
+
+  Fix for #3978.
+   Our initial plan to allow setting --disableChecks with an environment variable is insufficient,
+  since the custom framework isn't even require()'d until after the config is parsed. This moves the
+  unknown flag check into the runner, and gives frameworks a way to specify extra flags they accept.
+- ([e68dcf1](https://github.com/angular/protractor/commit/e68dcf1bfd7f32c59ebd23fa16ca53e1a53f8ddf))
+  fix(driverProviders): Check config in the right place. (#3991)
+
+- ([eb89920](https://github.com/angular/protractor/commit/eb899208457f83853f043edea5e56b07e87803bc))
+  fix(driverProviders): Handle promise rejection when starting selenium (#3989)
+
+  Fixes #3986. Also error if jvmArgs isn't an array.
+
+- ([8d2fc07](https://github.com/angular/protractor/commit/8d2fc07ed28a1b19c03a9869442f76f2963e40a1))
+    chore(browser): deprecate `browser.getLocationAbsUrl()`. (#3969)
+
+    Closes #3185
+- ([15a1872](https://github.com/angular/protractor/commit/15a187204bb8b87255d5f4622094eabc71206315))
+  fix(firefox): Fix directConnect for Firefox 51+ (#3953)
+
+- ([81f56a4](https://github.com/angular/protractor/commit/81f56a449f8988feba21617ef7533cfa2f06c6f8))
+  fix(cli): display disableChecks option in extra flags error message (#3964)
+
+- ([6a4dc7a](https://github.com/angular/protractor/commit/6a4dc7a6a5b796e0215e5b9abf99494ac13cb647))
+  fix: no longer use es6 let statement (#3963)
+
+  * Currently in Protractor v5 the Angular detection script uses ES6 features like the `let` modifier.
+
+  This can break Protractor on browsers, which doesn't support those statements.
+  > See https://saucelabs.com/beta/tests/275f75091dac40a0a3374d29d912caee/commands#11
+
+- ([528338c](https://github.com/angular/protractor/commit/528338c6722219fdcfc51153b0031a02f0fce046))
+  fix(expectedCondition): fix NoSuchElementError in visibilityOf due to a race condition (#3777)
+
+  Handle NoSuchElementError in the expected condition visibilityOf, which occurred when
+  an element disappears between the isPresent() and isDisplayed() check.
+
+## Dependencies
+
+- ([5899b67](https://github.com/angular/protractor/commit/5899b676bc2db0005506ae2306350e6ffea3c808))
+  deps(update): update webdriver-manager to ^12.0.1 (#4042)
+
+  Running `webdriver-manager update` will now by default grab the latest
+  versions of all binaries (standalone, chromedriver, iedriver, gecko
+  driver). You can continue to pin to a specific versions using the
+  command line option. Example `webdriver-manager update --versions.chrome 2.20`.
+  As of this release the latest versions are:
+
+  - gecko v0.14.0
+  - selenium-standalone 3.0.1 is the latest jar file; however, we recommend 3.0.0-beta4. See note
+  below on Firefox support.
+  - chromedriver 2.27
+  - iedriver 3.0.0
+
+   A note on FireFox support: Selenium standalone 3.0.1 has a bug which prevents it from working
+  with any version of FireFox. We have tested version 3.0.0-beta4 and know that it works with
+  FireFox 51, and we expect that the 3.0.2 release will also work.
+
+   closes #4033
+
+- ([cd084a0](https://github.com/angular/protractor/commit/cd084a0ca29cd73aa3ce1650188adf7ddfdb7962))
+  deps(jasmine): update jasmine to ^2.5.3 (#3960)
+
 # 5.0.0
 
 This version includes big changes around upgrading to selenium-webdriver 3.0.x.
