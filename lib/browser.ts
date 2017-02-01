@@ -216,6 +216,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * tests to become flaky. This should be used only when necessary, such as
    * when a page continuously polls an API using $timeout.
    *
+   * Initialized to `false` by the runner.
+   *
    * This property is deprecated - please use waitForAngularEnabled instead.
    *
    * @deprecated
@@ -355,8 +357,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.$ = build$(this.element, By);
     this.$$ = build$$(this.element, By);
     this.baseUrl = opt_baseUrl || '';
-    this.angularAppRoot(opt_rootElement || '');
-    this.ignoreSynchronization = false;
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
     this.resetUrl = DEFAULT_RESET_URL;
@@ -379,8 +379,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         ng12Hybrid_ = ng12Hybrid;
       }
     });
-    this.ready = this.driver.controlFlow()
-                     .execute(() => {
+    this.ready = this.angularAppRoot(opt_rootElement || '')
+                     .then(() => {
                        return this.driver.getSession();
                      })
                      .then((session: Session) => {
@@ -413,15 +413,18 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Call waitForAngularEnabled() without passing a value to read the current
    * state without changing it.
    */
-  waitForAngularEnabled(enabled: boolean = null): wdpromise.Promise<boolean> {
+  waitForAngularEnabled(enabled: boolean|wdpromise.Promise<boolean> = null):
+      wdpromise.Promise<boolean> {
     if (enabled != null) {
       const ret = this.driver.controlFlow().execute(() => {
-        if (this.bpClient) {
-          logger.debug('Setting waitForAngular' + !enabled);
-          return this.bpClient.setWaitEnabled(enabled).then(() => {
-            return enabled;
-          });
-        }
+        return wdpromise.when(enabled).then((enabled: boolean) => {
+          if (this.bpClient) {
+            logger.debug('Setting waitForAngular' + !enabled);
+            return this.bpClient.setWaitEnabled(enabled).then(() => {
+              return enabled;
+            });
+          }
+        });
       }, `Set proxy synchronization enabled to ${enabled}`);
       this.internalIgnoreSynchronization = !enabled;
       return ret;
