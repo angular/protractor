@@ -237,7 +237,8 @@ export class Runner extends EventEmitter {
       getPageTimeout: config.getPageTimeout,
       allScriptsTimeout: config.allScriptsTimeout,
       debuggerServerPort: config.debuggerServerPort,
-      ng12Hybrid: config.ng12Hybrid
+      ng12Hybrid: config.ng12Hybrid,
+      waitForAngularEnabled: true as boolean | wdpromise.Promise<boolean>
     };
 
     if (parentBrowser) {
@@ -249,6 +250,7 @@ export class Runner extends EventEmitter {
       initProperties.allScriptsTimeout = parentBrowser.allScriptsTimeout;
       initProperties.debuggerServerPort = parentBrowser.debuggerServerPort;
       initProperties.ng12Hybrid = parentBrowser.ng12Hybrid;
+      initProperties.waitForAngularEnabled = parentBrowser.waitForAngularEnabled();
     }
 
     let browser_ = new ProtractorBrowser(
@@ -256,9 +258,7 @@ export class Runner extends EventEmitter {
         initProperties.untrackOutstandingTimeouts, blockingProxyUrl);
 
     browser_.params = initProperties.params;
-    if (plugins) {
-      browser_.plugins_ = plugins;
-    }
+    browser_.plugins_ = plugins || new Plugins({});
     if (initProperties.getPageTimeout) {
       browser_.getPageTimeout = initProperties.getPageTimeout;
     }
@@ -274,6 +274,9 @@ export class Runner extends EventEmitter {
 
     browser_.ready =
         browser_.ready
+            .then(() => {
+              return browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
+            })
             .then(() => {
               return driver.manage().timeouts().setScriptTimeout(initProperties.allScriptsTimeout);
             })
