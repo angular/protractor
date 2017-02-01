@@ -56,13 +56,14 @@ export interface AbstractExtendedWebDriver extends ExtendedWebDriver {}
  */
 function ptorMixin(to: any, from: any, fnName: string, setupFn?: Function) {
   to[fnName] = function() {
-    for (let i = 0; i < arguments.length; i++) {
-      if (arguments[i] instanceof ElementFinder) {
-        arguments[i] = arguments[i].getWebElement();
+    const args = arguments;
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] instanceof ElementFinder) {
+        args[i] = args[i].getWebElement();
       }
     }
     const run = () => {
-      return from[fnName].apply(from, arguments);
+      return from[fnName].apply(from, args);
     };
     if (setupFn) {
       const setupResult = setupFn();
@@ -201,7 +202,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         return wdpromise.when(value).then((value: string) => {
           this.internalRootEl = value;
           if (this.bpClient) {
-            return this.bpClient.setWaitParams(value).then(() => this.internalRootEl);
+            const bpCommandPromise = this.bpClient.setWaitParams(value);
+            // Convert to webdriver promise as best as possible
+            return wdpromise.when(bpCommandPromise as any).then(() => this.internalRootEl);
           }
           return this.internalRootEl;
         });
@@ -420,9 +423,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         return wdpromise.when(enabled).then((enabled: boolean) => {
           if (this.bpClient) {
             logger.debug('Setting waitForAngular' + !enabled);
-            return this.bpClient.setWaitEnabled(enabled).then(() => {
-              return enabled;
-            });
+            const bpCommandPromise = this.bpClient.setWaitEnabled(enabled);
+            // Convert to webdriver promise as best as possible
+            return wdpromise.when(bpCommandPromise as any).then(() => enabled);
           }
         });
       }, `Set proxy synchronization enabled to ${enabled}`);
@@ -454,7 +457,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * var fork = browser.forkNewDriverInstance();
    * fork.get('page1'); // 'page1' gotten by forked browser
    *
-   * @example
    * // Running with control flow disabled
    * var forked = await browser.forkNewDriverInstance().ready;
    * await forked.get('page1'); // 'page1' gotten by forked browser
@@ -493,13 +495,11 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * browser.restart();
    * browser.get('page2'); // 'page2' gotten by restarted browser
    *
-   * @example
    * // Running against global browser, with control flow disabled
    * await browser.get('page1');
    * await browser.restart();
    * await browser.get('page2'); // 'page2' gotten by restarted browser
    *
-   * @example
    * // Running against forked browsers, with the control flow enabled
    * // In this case, you may prefer `restartSync` (documented below)
    * var forked = browser.forkNewDriverInstance();
@@ -508,14 +508,12 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *   fork.get('page2'); // 'page2' gotten by restarted fork
    * });
    *
-   * @example
    * // Running against forked browsers, with the control flow disabled
    * var forked = await browser.forkNewDriverInstance().ready;
    * await fork.get('page1');
    * fork = await fork.restart();
    * await fork.get('page2'); // 'page2' gotten by restarted fork
    *
-   * @example
    * // Unexpected behavior can occur if you save references to the global `browser`
    * var savedBrowser = browser;
    * browser.get('foo').then(function() {
@@ -540,7 +538,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * browser.restartSync();
    * browser.get('page2'); // 'page2' gotten by restarted browser
    *
-   * @example
    * // Running against forked browsers
    * var forked = browser.forkNewDriverInstance();
    * fork.get('page1');

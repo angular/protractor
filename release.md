@@ -17,6 +17,11 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
 
  - Make sure .gitignore and .npmignore are updated with any new files that need to be ignored.
 
+ - Make sure that the website and doc generation still work.  Doing so now, before you update the package.json or CHANGELOG.md, will save you a big headache.
+   - Run `./scripts/generate-docs.sh HEAD` to generate the docs against the current commit.
+   - We have to compile down to es5 to get dgeni to work. `generate-docs.sh` can handle some of this but you may have to make minor changes to the codebase/build infrastructure.
+   - Run the unit and e2e tests for the website.
+
  - Update package.json with a version bump. If the changes are only bug fixes, increment the patch (e.g. 0.0.5 -> 0.0.6), otherwise increment the minor version.
 
  - Update CHANGELOG.md.
@@ -41,9 +46,7 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
 
  - NPM publish
 
- - Update the website. `./scripts/generate-docs.sh`. Run unit and e2e tests. Then switch to the
-   `gh-pages` branch, edit the commit message with `git commit --amend`,
-   and push the new website.
+ - Update the website. Run `./scripts/generate-docs.sh`, then switch to the `gh-pages` branch, edit the commit message with `git commit --amend`, and push the new website.
 
  - Run e2e test against the published website.
 
