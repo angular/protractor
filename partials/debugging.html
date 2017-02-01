@@ -48,8 +48,14 @@ currently pending tasks on the WebDriver control flow.</p>
  |- Protractor.waitForAngular()
  |---    at [object Object].&lt;anonymous&gt; (failure_spec.js:16:59)
 wd-debug&gt;
-</code></pre><p>Enter <code ng-non-bindable>c</code> to move the test forward by one task.
-Enter <code ng-non-bindable>repl</code> to enter interactive mode. In interactive mode, you can send
+</code></pre><p>Enter <code ng-non-bindable>c</code> to move the test forward by one task.</p>
+<p>While the test is paused you may also interact with the browser. Note that
+if you open the Chrome Dev Tools, you must close them before continuing
+the test because ChromeDriver cannot operate when the Dev Tools are open.</p>
+<p>When you finish debugging, exit by pressing <code ng-non-bindable>Ctrl-C</code>. Your tests will continue
+where they left off, using the same browser.</p>
+<p>You can also use <code ng-non-bindable>browser.explore()</code> in your test script to pause and enter
+an interactive repl loop. In this interactive mode, you can send
 WebDriver commands to your browser. The resulting value or error will
 be reported to the terminal.</p>
 <pre><code ng-non-bindable>&gt; element(by.binding(&#39;nopenopenope&#39;)).getText()
@@ -57,12 +63,7 @@ NoSuchElementError: No element found using locator: by.binding(&quot;nopenopenop
 &gt;
 &gt; element(by.binding(&#39;user&#39;)).getText()
 &#39;Anon&#39;
-</code></pre><p>While the test is paused you may also interact with the browser. Note that
-if you open the Chrome Dev Tools, you must close them before continuing
-the test because ChromeDriver cannot operate when the Dev Tools are open.</p>
-<p>When you finish debugging, exit by pressing <code ng-non-bindable>Ctrl-C</code>. Your tests will continue
-where they left off, using the same browser.</p>
-<p><strong>Note:</strong> Since these are asynchronous tasks, you would have to increase the default timeout of your specs else default timeout exception would be thrown!</p>
+</code></pre><p><strong>Note:</strong> Since these are asynchronous tasks, you would have to increase the default timeout of your specs else default timeout exception would be thrown!</p>
 <p><strong>Using debugger</strong></p>
 <p>Insert <code ng-non-bindable>browser.debugger();</code> into your test where you want to break:</p>
 <pre><code class="lang-javascript">it(&#39;should fail to find a non-existent element&#39;, function() {

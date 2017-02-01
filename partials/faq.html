@@ -14,8 +14,9 @@ written with Protractor.</p>
 <p>Here&#39;s a <a href="http://www.yearofmoo.com/2013/09/advanced-testing-and-debugging-in-angularjs.html">great blog post</a>
 with more info.</p>
 <h2 id="angular-can-t-be-found-on-my-page" class="anchored"><div><a href="#{{path}}#angular-can-t-be-found-on-my-page">&#x1f517;</a>Angular can&#39;t be found on my page</div></h2>
-<p>Protractor supports angular 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.</p>
-<p>The <code ng-non-bindable>angular</code> variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if <code ng-non-bindable>angular</code> is defined.</p>
+<p>Protractor supports Angular and AngularJS 1.0.6/1.1.4 and higher - check that your version of Angular is upgraded.</p>
+<p>For AngularJS apps, the <code ng-non-bindable>angular</code> variable is expected to be available in the global context. Try opening chrome devtools or firefox and see if <code ng-non-bindable>angular</code> is defined.</p>
+<p>For Angular apps, you should see a global method <code ng-non-bindable>getAllAngularTestabilities</code>.</p>
 <h2 id="how-do-i-deal-with-my-log-in-page-" class="anchored"><div><a href="#{{path}}#how-do-i-deal-with-my-log-in-page-">&#x1f517;</a>How do I deal with my log-in page?</div></h2>
 <p>If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you&#39;ll need to interact with it via 

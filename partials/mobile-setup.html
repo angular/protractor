@@ -4,7 +4,7 @@ does not yet officially support or run its own tests against a particular config
 <h2 id="setting-up-protractor-with-appium-android-chrome" class="anchored"><div><a href="#{{path}}#setting-up-protractor-with-appium-android-chrome">&#x1f517;</a>Setting Up Protractor with Appium - Android/Chrome</div></h2>
 <h6 id="setup">Setup</h6>
 <p>Use <code ng-non-bindable>webdriver-manager</code> to install <code ng-non-bindable>appium</code> and the Android SDK.  See details
-<a href="https://github.com/angular/webdriver-manager/blob/master/mobile.md">on the WebDriver Manager page</a>.</p>
+<a href="https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md">on the WebDriver Manager page</a>.</p>
 <h6 id="running-tests">Running Tests</h6>
 <ul>
 <li>Ensure app is running if testing local app (Skip if testing public website):</li>
@@ -13,7 +13,7 @@ does not yet officially support or run its own tests against a particular config
 Starting express web server in /workspace/protractor/testapp on port 8000
 </code></pre>
 <ul>
-<li>Start appium and the Android Emulators (details <a href="https://github.com/angular/webdriver-manager/blob/master/mobile.md">on the WebDriver Manager
+<li>Start appium and the Android Emulators (details <a href="https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md">on the WebDriver Manager
 page</a>).</li>
 </ul>
 <pre><code class="lang-shell">&gt; webdriver-manager start --android
@@ -21,9 +21,6 @@ page</a>).</li>
 <ul>
 <li>Configure protractor:</li>
 </ul>
-<p>additional dependencies:</p>
-<pre><code class="lang-shell">npm install --save-dev wd wd-bridge
-</code></pre>
 <p>Config File:</p>
 <pre><code class="lang-javascript">exports.config = {
   seleniumAddress: &#39;http://localhost:4723/wd/hub&#39;,
@@ -38,17 +35,7 @@ page</a>).</li>
     deviceName: &#39;Android Emulator&#39;,
   },
 
-  baseUrl: &#39;http://10.0.2.2:8000&#39;,
-
-  // configuring wd in onPrepare
-  // wdBridge helps to bridge wd driver with other selenium clients
-  // See https://github.com/sebv/wd-bridge/blob/master/README.md
-  onPrepare: function () {
-    var wd = require(&#39;wd&#39;),
-      protractor = require(&#39;protractor&#39;),
-      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
-    wdBridge.initFromProtractor(exports.config);
-  }
+  baseUrl: &#39;http://10.0.2.2:8000&#39;
 };
 </code></pre>
 <p><em>Note the following:</em></p>
@@ -59,7 +46,7 @@ page</a>).</li>
 <h2 id="setting-up-protractor-with-appium-ios-safari" class="anchored"><div><a href="#{{path}}#setting-up-protractor-with-appium-ios-safari">&#x1f517;</a>Setting Up Protractor with Appium - iOS/Safari</div></h2>
 <h6 id="setup">Setup</h6>
 <p>Use <code ng-non-bindable>webdriver-manager</code> to install <code ng-non-bindable>appium</code> and the Android SDK.  See details
-<a href="https://github.com/angular/webdriver-manager/blob/master/mobile.md">on the WebDriver Manager page</a>.</p>
+<a href="https://github.com/angular/webdriver-manager/blob/master/docs/mobile.md">on the WebDriver Manager page</a>.</p>
 <h6 id="running-tests">Running Tests</h6>
 <ul>
 <li>Ensure app is running if testing local app (Skip if testing public website):</li>
@@ -76,9 +63,6 @@ Starting express web server in /workspace/protractor/testapp on port 8000
 <ul>
 <li>Configure protractor:</li>
 </ul>
-<p>additional dependencies:</p>
-<pre><code class="lang-shell">npm install --save-dev wd wd-bridge
-</code></pre>
 <p>iPhone:</p>
 <pre><code class="lang-javascript">exports.config = {
   seleniumAddress: &#39;http://localhost:4723/wd/hub&#39;,
@@ -95,17 +79,7 @@ Starting express web server in /workspace/protractor/testapp on port 8000
     deviceName: &#39;iPhone Simulator&#39;,
   },
 
-  baseUrl: &#39;http://localhost:8000&#39;,
-
-  // configuring wd in onPrepare
-  // wdBridge helps to bridge wd driver with other selenium clients
-  // See https://github.com/sebv/wd-bridge/blob/master/README.md
-  onPrepare: function () {
-    var wd = require(&#39;wd&#39;),
-      protractor = require(&#39;protractor&#39;),
-      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
-    wdBridge.initFromProtractor(exports.config);
-  }
+  baseUrl: &#39;http://localhost:8000&#39;
 };
 </code></pre>
 <p>iPad:</p>
@@ -124,17 +98,7 @@ Starting express web server in /workspace/protractor/testapp on port 8000
     deviceName: &#39;IPad Simulator&#39;,
   },
 
-  baseUrl: &#39;http://localhost:8000&#39;,
-
-  // configuring wd in onPrepare
-  // wdBridge helps to bridge wd driver with other selenium clients
-  // See https://github.com/sebv/wd-bridge/blob/master/README.md
-  onPrepare: function () {
-    var wd = require(&#39;wd&#39;),
-      protractor = require(&#39;protractor&#39;),
-      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
-    wdBridge.initFromProtractor(exports.config);
-  }
+  baseUrl: &#39;http://localhost:8000&#39;
 };
 </code></pre>
 <p><em>Note the following:</em></p>
@@ -206,3 +170,21 @@ HAX is working and emulator runs in fast virt mode
 <li>browserName is &#39;android&#39;</li>
 <li>baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator</li>
 </ul>
+<h2 id="using-wd-and-wd-bridge-" class="anchored"><div><a href="#{{path}}#using-wd-and-wd-bridge-">&#x1f517;</a>Using <code ng-non-bindable>wd</code> and <code ng-non-bindable>wd-bridge</code></div></h2>
+<p>As of version 5.1.0, Protractor uses <code ng-non-bindable>webdriver-js-extender</code> to provide all the
+mobile commands you should need (see the API page for details).  However, if you
+prefer <code ng-non-bindable>wd</code>, you can access it via <code ng-non-bindable>wd-bridge</code>.  First, install both <code ng-non-bindable>wd</code> and
+<code ng-non-bindable>wd-bridge</code> as <code ng-non-bindable>devDependencies</code>:</p>
+<pre><code class="lang-shell">npm install --save-dev wd wd-bridge
+</code></pre>
+<p>Then, in your config file:</p>
+<pre><code class="lang-javascript">  // configuring wd in onPrepare
+  // wdBridge helps to bridge wd driver with other selenium clients
+  // See https://github.com/sebv/wd-bridge/blob/master/README.md
+  onPrepare: function () {
+    var wd = require(&#39;wd&#39;),
+      protractor = require(&#39;protractor&#39;),
+      wdBridge = require(&#39;wd-bridge&#39;)(protractor, wd);
+    wdBridge.initFromProtractor(exports.config);
+  }
+</code></pre>
