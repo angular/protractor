@@ -1,6 +1,12 @@
 #!/bin/sh
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
+# Check number of parameters
+if [ "$#" -gt 1 ]; then
+  echo "Usage: ./scripts/generate-docs.sh [commit_ref]"
+  exit 1
+fi
+
 # Check that directory is clean
 if [ $(git status --porcelain | wc -l) != "0" ]; then
   echo -e "\033[0;31m" 1>&2 # Red
@@ -12,14 +18,25 @@ if [ $(git status --porcelain | wc -l) != "0" ]; then
   exit 1
 fi
 
-echo "Switching to last release..."
-VERSION=$(node scripts/get-version.js)
+# If a commit ref is passed as a command line option, use that.
+# Otherwise, default to the tag corresponding to the version in package.json.
+if [ "$#" -eq 0 ]; then
+  VERSION=$(node scripts/get-version.js)
+else
+  VERSION=$1
+fi
 EXEC_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+echo "Switching to ${VERSION}..."
 git checkout "${VERSION}"
 if [ $? -ne 0 ]; then
   echo -e "\033[0;31m" 1>&2 # Red
-  echo "The package.json file indicates that the current version is" 1>&2
-  echo "\"${VERSION}\", but there is no corresponding git tag." 1>&2
+  if [ "$#" -eq 0 ]; then
+    echo "The package.json file indicates that the current version is" 1>&2
+    echo "\"${VERSION}\", but there is no corresponding git tag." 1>&2
+  else
+    echo "Cannot checkout \"${VERSION}\"." 1>&2
+  fi
   echo -e "\033[0m" 1>&2 # Normal Color
   git checkout "${EXEC_BRANCH}"
   exit 1
@@ -61,6 +78,7 @@ if [ $? -ne 0 ]; then
   echo -e "\033[0;31m" 1>&2 # Red
   echo "Couldn't compile for es5."
   echo -e "\033[0m" 1>&2 # Normal Color
+  npm remove @types/es6-promise
   git checkout "${EXEC_BRANCH}"
   exit 1
 fi
