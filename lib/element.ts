@@ -17,7 +17,7 @@ let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
   'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId',
   'takeScreenshot'
-] as (keyof WebdriverWebElement)[];
+];
 
 /**
  * ElementArrayFinder is used for operations on an array of elements (as opposed

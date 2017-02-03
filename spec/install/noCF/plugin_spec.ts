@@ -1,4 +1,4 @@
-import {browser, protractor} from '../../..';
+import {browser, protractor} from 'protractor';
 
 describe('category', function() {
   it('name', async function() {

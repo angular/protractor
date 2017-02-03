@@ -1,7 +1,7 @@
 // Based off of spec/basic/elements_spec.js
 import * as q from 'q';
 
-import {$, $$, browser, by, By, element, ElementArrayFinder, ElementFinder, ExpectedConditions, promise as ppromise, WebElement} from '../../..';
+import {$, $$, browser, by, By, element, ElementArrayFinder, ElementFinder, ExpectedConditions, promise as ppromise, WebElement} from 'protractor';
 
 describe('verify control flow is off', function() {
   it('should have set webdriver.promise.USE_PROMISE_MANAGER', () => {
