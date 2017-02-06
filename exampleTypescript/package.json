@@ -13,6 +13,9 @@
     "@types/jasmine": "^2.5.38",
     "jasmine": "^2.4.1",
     "protractor": "file:../",
-    "typescript": "^2.1.1"
+    "typescript": "~2.0.0"
+  },
+  "devDependencies": {
+    "@types/jasminewd2": "^2.0.0"
   }
 }

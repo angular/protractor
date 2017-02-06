@@ -1,7 +1,7 @@
 import * as q from 'q';
-import {Config, protractor} from '../..';
+import {Config, protractor} from 'protractor';
 import {promise as wdpromise} from 'selenium-webdriver';
-const env = require('../environment.js');
+const env = require('../../environment');
 
 export let config: Config = {
   seleniumAddress: env.seleniumAddress,

@@ -7,7 +7,7 @@
     "declaration": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "outDir": "spec/built",
+    "outDir": "built",
     "types": [
       "jasmine", "jasminewd2", "node",
       "chalk", "glob", "minimatch",
@@ -16,6 +16,6 @@
     ]
   },
   "include": [
-    "spec/ts"
+    "ts"
   ]
 }

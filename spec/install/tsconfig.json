@@ -6,7 +6,8 @@
     "sourceMap": false,
     "declaration": false,
     "noImplicitAny": false,
-    "types": ["node", "jasmine"]
+    "types": ["node", "jasmine"],
+    "outDir": "tmp"
   },
   "exclude": [
     "node_modules",

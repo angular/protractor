@@ -16,6 +16,6 @@
     "website",
     "scripts",
     "exampleTypescript",
-    "spec"
+    "spec/install"
   ]
 }

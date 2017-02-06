@@ -94,17 +94,14 @@ gulp.task('tsc', function(done) {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
 
-gulp.task('tsc:spec', function(done) {
-  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-p', 'ts_spec_config.json']);
-});
 
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', 'tsc:spec', done);
+  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec', done);
+    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', done);
 });
 
 gulp.task('default',['prepublish']);

@@ -1,7 +1,3 @@
 node_modules
-typings
-conf.js
-browserts_spec.js
-typescript_conf.js
-typescript_spec.js
 npm-debug.log
+tmp/

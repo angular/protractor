@@ -1,5 +1,5 @@
 import {Config} from '../..';
-const env = require('../environment.js');
+const env = require('../../environment');
 
 export let config: Config = {
   seleniumAddress: env.seleniumAddress,
