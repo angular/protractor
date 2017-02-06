@@ -659,12 +659,12 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
               return this.driver.controlFlow()
                   .execute(
                       () => {
-                        return this.plugins_.waitForPromise();
+                        return this.plugins_.waitForPromise(this);
                       },
                       'Plugins.waitForPromise()')
                   .then(() => {
                     return this.driver.wait(() => {
-                      return this.plugins_.waitForCondition().then((results: boolean[]) => {
+                      return this.plugins_.waitForCondition(this).then((results: boolean[]) => {
                         return results.reduce((x, y) => x && y, true);
                       });
                     }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
@@ -860,7 +860,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                                                           url.resolve(this.baseUrl, destination);
     if (this.ignoreSynchronization) {
       return this.driver.get(destination)
-          .then(() => this.driver.controlFlow().execute(() => this.plugins_.onPageLoad()))
+          .then(() => this.driver.controlFlow().execute(() => this.plugins_.onPageLoad(this)))
           .then(() => null);
     }
 
@@ -917,7 +917,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         .then(() => {
           // Run Plugins
           return this.driver.controlFlow().execute(() => {
-            return this.plugins_.onPageLoad();
+            return this.plugins_.onPageLoad(this);
           });
         })
         .then(() => {
@@ -985,7 +985,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         .then(() => {
           // Run Plugins
           return this.driver.controlFlow().execute(() => {
-            return this.plugins_.onPageStable();
+            return this.plugins_.onPageStable(this);
           });
         })
         .then(() => null);

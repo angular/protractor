@@ -1,6 +1,7 @@
 import * as q from 'q';
 import * as webdriver from 'selenium-webdriver';
 
+import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {ConfigParser} from './configParser';
 import {Logger} from './logger';
@@ -105,6 +106,8 @@ export interface ProtractorPlugin {
    * This is called inside browser.get() directly after the page loads, and before
    * angular bootstraps.
    *
+   * @param {ProtractorBrowser} browser The browser instance which is loading a page.
+   *
    * @this {Object} bound to module.exports
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
@@ -114,13 +117,15 @@ export interface ProtractorPlugin {
    *     protractor will wait for the promise to resolve before continuing.  If
    *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageLoad?(): void|webdriver.promise.Promise<void>;
+  onPageLoad?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
 
   /**
    * This is called inside browser.get() directly after angular is done
    * bootstrapping/synchronizing.  If browser.ignoreSynchronization is true, this
    * will not be called.
    *
+   * @param {ProtractorBrowser} browser The browser instance which is loading a page.
+   *
    * @this {Object} bound to module.exports
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
@@ -130,13 +135,15 @@ export interface ProtractorPlugin {
    *     protractor will wait for the promise to resolve before continuing.  If
    *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageStable?(): void|webdriver.promise.Promise<void>;
+  onPageStable?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
    * make sure that Angular has no outstanding $http or $timeout calls.
    * You can use waitForPromise() to have Protractor additionally wait for your
    * custom promise to be resolved inside of browser.waitForAngular().
+   *
+   * @param {ProtractorBrowser} browser The browser instance which needs invoked `waitForAngular`.
    *
    * @this {Object} bound to module.exports
    *
@@ -150,7 +157,7 @@ export interface ProtractorPlugin {
    *     something other than a promise is returned, protractor will continue
    *     onto the next command.
    */
-  waitForPromise?(): webdriver.promise.Promise<void>;
+  waitForPromise?(browser: ProtractorBrowser): webdriver.promise.Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -158,6 +165,8 @@ export interface ProtractorPlugin {
    * You can use waitForCondition() to have Protractor additionally wait for your
    * custom condition to be truthy.  If specified, this function will be called
    * repeatedly until truthy.
+   *
+   * @param {ProtractorBrowser} browser The browser instance which needs invoked `waitForAngular`.
    *
    * @this {Object} bound to module.exports
    *
@@ -170,7 +179,7 @@ export interface ProtractorPlugin {
    *     is returned, a failed assertion is added to the test results, and Protractor
    *     will continue onto the next command.
    */
-  waitForCondition?(): webdriver.promise.Promise<boolean>|boolean;
+  waitForCondition?(browser: ProtractorBrowser): webdriver.promise.Promise<boolean>|boolean;
 
   /**
    * Used to turn off default checks for angular stability
