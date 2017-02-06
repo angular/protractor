@@ -165,3 +165,5 @@ plugins please report them to the corresponding plugin developer.
 * [protractor-fail-fast](https://github.com/Updater/protractor-fail-fast): Allows Protractor to "fail-fast", forcing all test runners to exit if one of them encounters a failing test. For scenarios where a failure means the entire build has failed (e.g. CI), failing fast can save a tremendous amount of time.
 
 * [protractor-numerator](https://github.com/Marketionist/protractor-numerator): This plugin gives you readable functions for getting elements by their numbers inside Protractor tests. Adds functions like `.second()`, `.third()`, etc. instead of `.get(1)`, `.get(2)`, etc.
+
+* [Ng-apimock](https://github.com/mdasberg/ng-apimock): this plugin adds the ability to use scenario based api mocking for local development and protractor testing for both AngularJS 1 and 2 applications.
