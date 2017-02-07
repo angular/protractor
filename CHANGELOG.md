@@ -1,5 +1,25 @@
-# 5.1.0
+# 5.1.1
 
+## Features
+
+- ([3edd62e](https://github.com/angular/protractor/commit/3edd62eccccb67ec7cb71b8c3d8b2c2921a6f7ca))
+  feat(saucelabs): Add Sauce Labs HTTPS Support (#4071)
+
+- ([29f975a](https://github.com/angular/protractor/commit/29f975a34f5885a21525c3746bd3e82d5ae0c51e))
+  feat(plugins): allow plugins to know which browser instance to run against (#4066)
+
+  Closes https://github.com/angular/protractor/issues/4054
+
+## Dependencies
+
+- ([9d69a81](https://github.com/angular/protractor/commit/9d69a819c96e408df2b59589d49811a89af1bc74))
+  deps(typescript): use typescript@~2.0.0 (#4062)
+
+  - move noCF tests to install and fix reference to protractor
+  - changed element.ts to not use keyof
+  - remove gulp task tsc:spec
+
+# 5.1.0
 
 #### Blocking proxy
 
