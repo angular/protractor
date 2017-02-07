@@ -27,7 +27,7 @@ export interface ProtractorPlugin {
    * Sets up plugins before tests are run. This is called after the WebDriver
    * session has been started, but before the test framework has been set up.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -43,7 +43,9 @@ export interface ProtractorPlugin {
    * been set up.  Analogous to a config file's `onPreare`.
    *
    * Very similar to using `setup`, but allows you to access framework-specific
-   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`)
+   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`).
+   *
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -58,7 +60,7 @@ export interface ProtractorPlugin {
    * This is called after the tests have been run, but before the WebDriver
    * session has been terminated.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -73,9 +75,10 @@ export interface ProtractorPlugin {
    * Called after the test results have been finalized and any jobs have been
    * updated (if applicable).
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
-   * @throws {*} If this function throws an error, it is outputted to the console
+   * @throws {*} If this function throws an error, it is outputted to the console.
+   *     It is too late to add a failed assertion to the test results.
    *
    * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before continuing.  If the promise is
@@ -90,7 +93,7 @@ export interface ProtractorPlugin {
    * @param {boolean} passed True if the test passed.
    * @param {Object} testInfo information about the test which just ran.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -108,7 +111,7 @@ export interface ProtractorPlugin {
    *
    * @param {ProtractorBrowser} browser The browser instance which is loading a page.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -121,12 +124,12 @@ export interface ProtractorPlugin {
 
   /**
    * This is called inside browser.get() directly after angular is done
-   * bootstrapping/synchronizing.  If browser.ignoreSynchronization is true, this
-   * will not be called.
+   * bootstrapping/synchronizing.  If `browser.ignoreSynchronization` is `true`,
+   * this will not be called.
    *
    * @param {ProtractorBrowser} browser The browser instance which is loading a page.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -145,7 +148,7 @@ export interface ProtractorPlugin {
    *
    * @param {ProtractorBrowser} browser The browser instance which needs invoked `waitForAngular`.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -168,7 +171,7 @@ export interface ProtractorPlugin {
    *
    * @param {ProtractorBrowser} browser The browser instance which needs invoked `waitForAngular`.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
@@ -188,40 +191,44 @@ export interface ProtractorPlugin {
    * before executing the next command.  This can be disabled using
    * browser.ignoreSynchronization, but that will also disable any
    * <Plugin>.waitForPromise or <Plugin>.waitForCondition checks.  If you want
-   * to
-   * disable synchronization with angular, but leave in tact any custom plugin
+   * to disable synchronization with angular, but leave intact any custom plugin
    * synchronization, this is the option for you.
    *
-   * This is used by users who want to replace Protractor's synchronization code
-   * This is used by users who want to replace Protractor's synchronization code
-   * with their own.
+   * This is used by plugin authors who want to replace Protractor's
+   * synchronization code with their own.
    *
    * @type {boolean}
    */
   skipAngularStability?: boolean;
 
   /**
-   * Used when reporting results.
+   * The name of the plugin.  Used when reporting results.
    *
    * If you do not specify this property, it will be filled in with something
-   * reasonable (e.g. the plugin's path)
+   * reasonable (e.g. the plugin's path) by Protractor at runtime.
    *
    * @type {string}
    */
   name?: string;
 
   /**
-   * The plugin configuration object. Note that this is not the entire
-   * Protractor config object, just the entry in the plugins array for this
-   * plugin.
+   * The plugin's configuration object.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
+   *
+   * Note: that this is not the entire Protractor config object, just the entry
+   * in the `plugins` array for this plugin.
    *
    * @type {Object}
    */
   config?: PluginConfig;
 
   /**
-   * Adds a failed assertion to the test's results. Note: this is added by the
-   * Protractor API, not to be implemented by the plugin author.
+   * Adds a failed assertion to the test's results.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
    *
    * @param {string} message The error message for the failed assertion
    * @param {specName: string, stackTrace: string} options Some optional extra
@@ -236,8 +243,10 @@ export interface ProtractorPlugin {
   addFailure?(message?: string, info?: {specName?: string, stackTrace?: string}): void;
 
   /**
-   * Adds a passed assertion to the test's results. Note: this is added by the
-   * Protractor API, not to be implemented by the plugin author.
+   * Adds a passed assertion to the test's results.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
    *
    * @param {specName: string} options Extra information about the assertion:
    *       - specName The name of the spec which this assertion belongs to.
@@ -249,8 +258,10 @@ export interface ProtractorPlugin {
   addSuccess?(info?: {specName?: string}): void;
 
   /**
-   * Warns the user that something is problematic. Note: this is added by the
-   * Protractor API, not to be implemented by the plugin author.
+   * Warns the user that something is problematic.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
    *
    * @param {string} message The message to warn the user about
    * @param {specName: string} options Extra information about the assertion:
