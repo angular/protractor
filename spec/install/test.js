@@ -62,5 +62,3 @@ install();
 tsc();
 test('tmp/conf.js');
 test('tmp/typescript_conf.js');
-test('tmp/noCFSmokeConf.js');
-test('tmp/noCFPluginConf.js');

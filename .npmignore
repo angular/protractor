@@ -22,6 +22,9 @@ spec/
 stress/
 testapp/
 website/
+exampleTypescript/*.js
+exampleTypescript/node_modules/
+exampleTypescript/tmp/
 
 # Development files
 
