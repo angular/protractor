@@ -65,8 +65,13 @@ export let config: Config = {
 
 ## Ambient typings
 
-Protractor also uses ambient types including jasmine and node. These are brought in via the `tsconfig.json` file, which uses npm module resolution to get types from `node_modules/@types`.
+Protractor also uses ambient types including jasmine, jasminewd2, and node. These are brought in via the `tsconfig.json` file, which uses npm module resolution to get types from `node_modules/@types`.
 
+If you are using the jasmine framework for your tests, make sure to do:
+
+```
+npm install --save-dev @types/jasmine @types/jasminewd2
+```
 
 ## Compiling your code
 
