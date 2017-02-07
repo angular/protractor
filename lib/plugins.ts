@@ -438,7 +438,7 @@ export class Plugins {
    */
   private safeCallPluginFun(
       pluginObj: ProtractorPlugin, funName: string, args: any[], promiseType: PromiseType,
-      failReturnVal: any) {
+      failReturnVal: any): q.Promise<any>|Promise<any>|webdriver.promise.Promise<any> {
     const resolver = (done: (result: any) => void) => {
       const logError = (e: any) => {
         if (this.resultsReported) {

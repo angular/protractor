@@ -11,7 +11,7 @@ let clientSideScripts = require('./clientsidescripts');
 let logger = new Logger('element');
 
 export class WebdriverWebElement {}
-export interface WebdriverWebElement extends WebElement {}
+export interface WebdriverWebElement extends WebElement { [key: string]: any; }
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
@@ -88,7 +88,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
     // wrap each one explicity with its own documentation?
-    WEB_ELEMENT_FUNCTIONS.forEach((fnName: keyof WebdriverWebElement) => {
+    WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
       this[fnName] = (...args: any[]) => {
         let actionFn = (webElem: any) => {
           return webElem[fnName].apply(webElem, args);
@@ -867,7 +867,7 @@ export class ElementFinder extends WebdriverWebElement {
         this.browser_, getWebElements, elementArrayFinder.locator(),
         elementArrayFinder.actionResults_);
 
-    WEB_ELEMENT_FUNCTIONS.forEach((fnName: keyof WebdriverWebElement) => {
+    WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
       (this)[fnName] = (...args: any[]) => {
         return (this.elementArrayFinder_)[fnName]
             .apply(this.elementArrayFinder_, args)

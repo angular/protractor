@@ -162,11 +162,11 @@ export class DebugHelper {
         let execFn_ = () => {
           // Run code through vm so that we can maintain a local scope which is
           // isolated from the rest of the execution.
-          let res;
+          let res: wdpromise.Promise<any>;
           try {
             res = vm_.runInContext(code, sandbox);
           } catch (e) {
-            res = 'Error while evaluating command: ' + e;
+            res = wdpromise.when('Error while evaluating command: ' + e);
           }
           if (!wdpromise.isPromise(res)) {
             res = wdpromise.when(res);
