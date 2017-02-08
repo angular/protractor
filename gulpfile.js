@@ -98,6 +98,14 @@ gulp.task('tsc:spec', function(done) {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-p', 'ts_spec_config.json']);
 });
 
+gulp.task('tsc:es5', function(done) {
+  runSpawn(done, './scripts/compile_to_es5.sh');
+});
+
+gulp.task('compile_to_es5', function(done) {
+  runSequence('checkVersion', 'tsc:es5', 'built:copy', done);
+});
+
 gulp.task('prepublish', function(done) {
   runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', done);
 });

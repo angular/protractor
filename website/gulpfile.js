@@ -30,16 +30,34 @@ gulp.task('clean', function(cb) {
 
 // Generate the table of contents json file using Dgeni. This is output to
 // docgen/build/toc.json
-gulp.task('dgeni', function() {
+gulp.task('dgeni', function(done) {
   var packages = [require('./docgen/dgeni-config')];
   var dgeni = new Dgeni(packages);
 
   dgeni.generate().then(function(docs) {
     console.log(docs.length, 'docs generated');
   }).then(function() {
+    // Check that docs were generated correctly
+    var toc = require('./docgen/build/toc.json');
+    if (!toc || !Array.isArray(toc.items)) {
+      return Promise.reject('Generated toc.json file is malformatted');
+    }
+    var isBrowser = function(item) {
+      return item.alias == 'browser';
+    };
+    if (!toc.items.some(isBrowser)) {
+      return Promise.reject('Generated toc.json missing docs for Protractor function.');
+    }
+
     // Copy files over
     gulp.src(['docgen/build/*.json'])
         .pipe(gulp.dest(paths.outputDir + '/apiDocs'));
+    done();
+  }).catch(function(error) {
+    done(
+        'Could not generate docs.  ' +
+        'Try running `npm run compile_to_es5` from Protractor\'s root folder.\n' +
+        'Origonal Error: ' + error);
   });
 });
 

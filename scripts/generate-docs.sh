@@ -62,29 +62,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "Getting types for es6 promises..."
-npm install @types/es6-promise
+# Compile to es5
+./scripts/compile_to_es5.sh
 if [ $? -ne 0 ]; then
-  echo -e "\033[0;31m" 1>&2 # Red
-  echo "Couldn't get types for es6 promises."
-  echo -e "\033[0m" 1>&2 # Normal Color
   git checkout "${EXEC_BRANCH}"
   exit 1
 fi
-
-echo "Compiling down to es5..."
-node node_modules/typescript/bin/tsc --target es5
-if [ $? -ne 0 ]; then
-  echo -e "\033[0;31m" 1>&2 # Red
-  echo "Couldn't compile for es5."
-  echo -e "\033[0m" 1>&2 # Normal Color
-  npm remove @types/es6-promise
-  git checkout "${EXEC_BRANCH}"
-  exit 1
-fi
-
-# Remove unneeded type
-npm remove @types/es6-promise
 
 echo "Installing the testapp..."
 npm run install_testapp
