@@ -94,8 +94,9 @@ describe('Api', function() {
 
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
-      'clone', 'all', 'filter', 'get', 'first', 'last', '$$', 'count', 'locator',
-      'then', 'each', 'map', 'reduce', 'evaluate', 'allowAnimations']);
+      'clone', 'all', 'filter', 'get', 'first', 'last', '$$', 'count',
+      'isPresent', 'locator', 'then', 'each', 'map', 'reduce', 'evaluate',
+      'allowAnimations']);
   });
 
   it('should show element functions', function() {
@@ -114,12 +115,13 @@ describe('Api', function() {
 
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
-      'getProcessedConfig', 'forkNewDriverInstance', 'restart',
+      'angularAppRoot', 'waitForAngularEnabled', 'getProcessedConfig',
+      'forkNewDriverInstance', 'restart', 'restartSync',
       'useAllAngular2AppRoots', 'waitForAngular', 'findElement', 'findElements',
       'isElementPresent', 'addMockModule', 'clearMockModules',
       'removeMockModule', 'getRegisteredMockModules', 'get', 'refresh',
       'navigate', 'setLocation', 'getLocationAbsUrl', 'debugger', 'enterRepl',
-      'pause', 'wrapDriver']);
+      'explore', 'pause', 'controlFlowIsEnabled']);
   });
 
   it('should view inherited function', function() {
@@ -140,6 +142,9 @@ describe('Api', function() {
       'protractor objects', function() {
         expect(apiPage.getAdultNames().then(function(names) {
           return names[names.indexOf('browser') + 1];
+        })).toBe('ExtendedWebDriver');
+        expect(apiPage.getAdultNames().then(function(names) {
+          return names[names.indexOf('ExtendedWebDriver') + 1];
         })).toBe('webdriver.WebDriver');
   });
 });

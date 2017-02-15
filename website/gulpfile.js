@@ -1,3 +1,4 @@
+var path = require('path');
 var concat = require('gulp-concat');
 var connect = require('gulp-connect');
 var del = require('del');
@@ -30,16 +31,34 @@ gulp.task('clean', function(cb) {
 
 // Generate the table of contents json file using Dgeni. This is output to
 // docgen/build/toc.json
-gulp.task('dgeni', function() {
+gulp.task('dgeni', function(done) {
   var packages = [require('./docgen/dgeni-config')];
   var dgeni = new Dgeni(packages);
 
   dgeni.generate().then(function(docs) {
     console.log(docs.length, 'docs generated');
   }).then(function() {
+    // Check that docs were generated correctly
+    var toc = require('./docgen/build/toc.json');
+    if (!toc || !Array.isArray(toc.items)) {
+      return Promise.reject('Generated toc.json file is malformatted');
+    }
+    var isBrowser = function(item) {
+      return item.alias == 'browser';
+    };
+    if (!toc.items.some(isBrowser)) {
+      return Promise.reject('Generated toc.json missing docs for Protractor function.');
+    }
+
     // Copy files over
     gulp.src(['docgen/build/*.json'])
         .pipe(gulp.dest(paths.outputDir + '/apiDocs'));
+    done();
+  }).catch(function(error) {
+    done(
+        'Could not generate docs.  ' +
+        'Try running `npm run compile_to_es5` from Protractor\'s root folder.\n' +
+        'Origonal Error: ' + error);
   });
 });
 
@@ -93,22 +112,27 @@ gulp.task('watch', function() {
 
 // Transform md files to html.
 gulp.task('markdown', function() {
+  var version = require('../package.json').version
   gulp.src(['../docs/*.md', '!../docs/api.md'])
       // Parse markdown.
       .pipe(markdown())
       // Fix urls which reference files only on github.
       .pipe(replace(
-          /"(?:\/([\-\.\w\/]+)\/)?(\w+\.\w+(?:#.*)?)"/g,
-          function(match, path, file) {
-            var ext = file.match(/\w+\.(\w+)(?:#.*)?/)[1];
+          /(href|src)="(?:([\-\.\w\/]+)\/)?(\w+\.\w+(?:#.*)?)?"/g,
+          function(match, attr, folder, file) {
+            var ext = file ? file.match(/\w+\.(\w+)(?:#.*)?/)[1] : null;
             // Don't process .md and .png files which are on the website
-            if (((ext == 'md') || (ext == 'png')) &&
-                !(path && ((path.substr(0,2) == '..') || (path[0] == '/')))) {
+            if (((ext == 'md') || (ext == 'png')) && (!folder ||
+                (path.resolve('/docs', folder).split('/')[1] == 'docs'))) {
               return match;
             }
-            path = path || 'docs';
-            return '"https://github.com/angular/protractor/blob/master/' +
-                path + '/' + file + '"';
+            if (!folder) {
+              folder = 'docs';
+            } else if (folder[0] == '/') {
+              folder = folder.slice(1);
+            }
+            return attr + '="https://github.com/angular/protractor/blob/' +
+                version + '/' + folder + '/' + (file || '') + '"';
           }
       ))
       // Fix in-page hash paths.

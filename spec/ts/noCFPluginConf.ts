@@ -1,7 +1,7 @@
 import * as q from 'q';
-import {Config, protractor} from 'protractor';
+import {Config, protractor} from '../..';
 import {promise as wdpromise} from 'selenium-webdriver';
-const env = require('../../environment');
+const env = require('../environment.js');
 
 export let config: Config = {
   seleniumAddress: env.seleniumAddress,
@@ -9,12 +9,14 @@ export let config: Config = {
   framework: 'jasmine',
 
   specs: [
-    'noCF/plugin_spec.js'
+    'plugin/plugin_spec.js'
   ],
 
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl + '/ng1/',
+
+  SELENIUM_PROMISE_MANAGER: false,
 
   plugins: [{
     inline: {
@@ -25,7 +27,5 @@ export let config: Config = {
         });
       }
     }
-  }],
-
-  SELENIUM_PROMISE_MANAGER: false
+  }]
 };

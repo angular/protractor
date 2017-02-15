@@ -1,5 +1,5 @@
 import {Config} from '../..';
-const env = require('../../environment');
+const env = require('../environment.js');
 
 export let config: Config = {
   seleniumAddress: env.seleniumAddress,
@@ -7,7 +7,7 @@ export let config: Config = {
   framework: 'jasmine',
 
   specs: [
-    'noCF/smoke_spec.js'
+    'basic/*_spec.js'
   ],
 
   capabilities: env.capabilities,

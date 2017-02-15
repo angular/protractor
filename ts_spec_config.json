@@ -7,15 +7,9 @@
     "declaration": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "outDir": "built",
-    "types": [
-      "jasmine", "jasminewd2", "node",
-      "chalk", "glob", "minimatch",
-      "minimist", "optimist", "q",
-      "selenium-webdriver"
-    ]
+    "outDir": "spec/built"
   },
   "include": [
-    "ts"
+    "spec/ts/**/*"
   ]
 }
