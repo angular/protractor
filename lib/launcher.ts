@@ -3,6 +3,8 @@
  * input configuration and launching test runners.
  */
 import * as fs from 'fs';
+let {mkdirp} = require('mkdirp');
+import * as path from 'path';
 import * as q from 'q';
 
 import {Config} from './config';
@@ -43,6 +45,10 @@ class TaskResults {
   }
 
   saveResults(filepath: string): void {
+    let dirname = path.dirname(filepath);
+    if (!fs.existsSync(dirname)) {
+      mkdirp.sync(dirname);
+    }
     let jsonOutput = this.results_.reduce((jsonOutput, result) => {
       return jsonOutput.concat(result.specResults);
     }, []);
