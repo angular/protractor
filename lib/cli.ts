@@ -203,6 +203,17 @@ if (argv.exclude) {
   argv.exclude = processFilePatterns_(<string>argv.exclude);
 }
 
+if (argv.capabilities && argv.capabilities.chromeOptions) {
+  // ensure that single options (which optimist parses as a string)
+  // are passed in an array in chromeOptions when required:
+  // https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-chromeOptions-object
+  ['args', 'extensions', 'excludeSwitches', 'windowTypes'].forEach((key) => {
+    if (typeof argv.capabilities.chromeOptions[key] === 'string') {
+      argv.capabilities.chromeOptions[key] = [argv.capabilities.chromeOptions[key]];
+    }
+  });
+}
+
 // Use default configuration, if it exists.
 let configFile: string = argv._[0];
 if (!configFile) {
