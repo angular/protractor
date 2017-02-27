@@ -3,7 +3,6 @@
  * requested by the launcher.
  */
 
-import {ConfigParser} from './configParser';
 import {Logger} from './logger';
 import {Runner} from './runner';
 
@@ -15,15 +14,7 @@ process.on('message', (m: any) => {
       if (!m.capabilities) {
         throw new Error('Run message missing capabilities');
       }
-      // Merge in config file options.
-      let configParser = new ConfigParser();
-      if (m.configFile) {
-        configParser.addFileConfig(m.configFile);
-      }
-      if (m.additionalConfig) {
-        configParser.addConfig(m.additionalConfig);
-      }
-      let config = configParser.getConfig();
+      let config = m.config;
       Logger.set(config);
 
       // Grab capabilities to run from launcher.

@@ -21,16 +21,13 @@ export interface RunResults {
  * './runner.js') or from a new process (via './runnerCli.js').
  *
  * @constructor
- * @param {string} configFile Path of test configuration.
- * @param {object} additionalConfig Additional configuration.
+ * @param {object} config Parsed Configuration.
  * @param {object} task Task to run.
  * @param {boolean} runInFork Whether to run test in a forked process.
  * @constructor
  */
 export class TaskRunner extends EventEmitter {
-  constructor(
-      private configFile: string, private additionalConfig: Config, private task: any,
-      private runInFork: boolean) {
+  constructor(private config: Config, private task: any, private runInFork: boolean) {
     super();
   }
 
@@ -52,14 +49,7 @@ export class TaskRunner extends EventEmitter {
       specResults: []
     };
 
-    let configParser = new ConfigParser();
-    if (this.configFile) {
-      configParser.addFileConfig(this.configFile);
-    }
-    if (this.additionalConfig) {
-      configParser.addConfig(this.additionalConfig);
-    }
-    let config = configParser.getConfig();
+    let config = this.config;
     config.capabilities = this.task.capabilities;
     config.specs = this.task.specs;
 
@@ -117,8 +107,7 @@ export class TaskRunner extends EventEmitter {
 
       childProcess.send({
         command: 'run',
-        configFile: this.configFile,
-        additionalConfig: this.additionalConfig,
+        config: config,
         capabilities: this.task.capabilities,
         specs: this.task.specs
       });
