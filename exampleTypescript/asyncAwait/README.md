@@ -26,4 +26,4 @@ using `--target ES2015` or above.  You can also compile it using [regenerator](
 More Examples
 =============
 
-More examples can be found under [`/spec/ts/`](/../../spec/ts).
+More examples can be found under [`/spec/ts/`](/spec/ts).
