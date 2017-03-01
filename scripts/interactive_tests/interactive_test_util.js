@@ -1,5 +1,4 @@
 var child_process = require('child_process'),
-    // q = require('q'),
     net = require('net');
 
 var TIMEOUT = 10000;

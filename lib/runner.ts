@@ -1,5 +1,4 @@
 import {EventEmitter} from 'events';
-import * as q from 'q';
 import {promise as wdpromise, Session} from 'selenium-webdriver';
 import * as util from 'util';
 
@@ -492,13 +491,20 @@ export class Runner extends EventEmitter {
           let exitCode = testPassed ? 0 : 1;
           return this.exit_(exitCode);
         })
-        .then(
-          tap(() => this.shutdown_()),
-          tap(() => this.shutdown_()));
+        .then(tap(() => this.shutdown_()), tapError(() => this.shutdown_()));
 
-    function tap (f: Function) {
-      return (x: any) =>
-        Promise.resolve(f(x)).then(() => x);
+    function tap(runBlock: Function) {
+      return x => {
+        runBlock();
+        return x;
+      };
+    }
+
+    function tapError(runBlock: Function) {
+      return err => {
+        runBlock();
+        throw err;
+      };
     }
   }
 }

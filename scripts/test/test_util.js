@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var child_process = require('child_process'),
-    // q = require('q'),
     fs = require('fs');
 
 var CommandlineTest = function(command) {
