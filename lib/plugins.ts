@@ -10,6 +10,7 @@ import {protractor} from './ptor';
 let logger = new Logger('plugins');
 
 export enum PromiseType {
+  NATIVE,
   Q,
   WEBDRIVER
 }
@@ -420,11 +421,11 @@ export class Plugins {
   /**
    * @see docs/plugins.md#writing-plugins for information on these functions
    */
-  setup = this.pluginFunFactory('setup', PromiseType.Q);
-  onPrepare = this.pluginFunFactory('onPrepare', PromiseType.Q);
-  teardown = this.pluginFunFactory('teardown', PromiseType.Q);
-  postResults = this.pluginFunFactory('postResults', PromiseType.Q);
-  postTest = this.pluginFunFactory('postTest', PromiseType.Q);
+  setup = this.pluginFunFactory('setup', PromiseType.NATIVE);
+  onPrepare = this.pluginFunFactory('onPrepare', PromiseType.NATIVE);
+  teardown = this.pluginFunFactory('teardown', PromiseType.NATIVE);
+  postResults = this.pluginFunFactory('postResults', PromiseType.NATIVE);
+  postTest = this.pluginFunFactory('postTest', PromiseType.NATIVE);
   onPageLoad = this.pluginFunFactory('onPageLoad', PromiseType.WEBDRIVER);
   onPageStable = this.pluginFunFactory('onPageStable', PromiseType.WEBDRIVER);
   waitForPromise = this.pluginFunFactory('waitForPromise', PromiseType.WEBDRIVER);
@@ -444,7 +445,7 @@ export class Plugins {
    * @param {boolean} resultsReported If the results have already been reported
    * @param {*} failReturnVal The value to return if the function fails
    *
-   * @return {webdriver.promise.Promise|Q.Promise} A promise which resolves to the
+   * @return {webdriver.promise.Promise|Q.Promise|Promise} A promise which resolves to the
    *     function's return value
    */
   private safeCallPluginFun(
@@ -508,7 +509,10 @@ export class Plugins {
               .map(
                   pluginObj =>
                       this.safeCallPluginFun(pluginObj, funName, args, promiseType, failReturnVal));
-      return promiseType == PromiseType.Q ? q.all(promises) : webdriver.promise.all(promises);
+      return promiseType == PromiseType.Q ?
+          q.all(promises) :
+          promiseType === PromiseType.NATIVE ? Promise.all(promises) :
+                                               webdriver.promise.all(promises);
     };
   }
 }

@@ -4,7 +4,6 @@
  * it down, and setting up the driver correctly.
  */
 import * as https from 'https';
-import * as q from 'q';
 import {Session, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
@@ -25,11 +24,16 @@ export class BrowserStack extends DriverProvider {
    * Hook to update the BrowserStack job status.
    * @public
    * @param {Object} update
-   * @return {q.promise} A promise that will resolve when the update is complete.
+   * @return {Promise} A promise that will resolve when the update is complete.
    */
-  updateJob(update: any): q.Promise<any> {
+  updateJob(update: any): Promise<any> {
     let deferredArray = this.drivers_.map((driver: WebDriver) => {
-      let deferred = q.defer();
+      let deferredResolve: (x?: any) => void;
+      let deferredReject;
+      let deferred = new Promise((resolve, reject) => {
+        deferredResolve = resolve;
+        deferredReject = reject;
+      });
       driver.getSession().then((session: Session) => {
         let headers: Object = {
           'Content-Type': 'application/json',
@@ -73,7 +77,7 @@ export class BrowserStack extends DriverProvider {
           });
           res.on('end', () => {
             logger.info(responseStr);
-            deferred.resolve();
+            deferredResolve();
           });
           res.on('error', (e: Error) => {
             throw new BrowserError(
@@ -83,18 +87,17 @@ export class BrowserStack extends DriverProvider {
         update_req.write('{"status":"' + jobStatus + '"}');
         update_req.end();
       });
-      return deferred.promise;
+      return deferred;
     });
-    return q.all(deferredArray);
+    return Promise.all(deferredArray);
   }
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): q.Promise<any> {
-    let deferred = q.defer();
+  protected setupDriverEnv(): Promise<any> {
     this.config_.capabilities['browserstack.user'] = this.config_.browserstackUser;
     this.config_.capabilities['browserstack.key'] = this.config_.browserstackKey;
     this.config_.seleniumAddress = 'http://hub.browserstack.com/wd/hub';
@@ -107,7 +110,6 @@ export class BrowserStack extends DriverProvider {
     }
 
     logger.info('Using BrowserStack selenium server at ' + this.config_.seleniumAddress);
-    deferred.resolve();
-    return deferred.promise;
+    return Promise.resolve();
   }
 }

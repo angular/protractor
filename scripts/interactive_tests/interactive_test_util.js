@@ -1,5 +1,4 @@
 var child_process = require('child_process'),
-    q = require('q'),
     net = require('net');
 
 var TIMEOUT = 10000;
@@ -8,7 +7,12 @@ var TIMEOUT = 10000;
 var Server = function(serverStartCmd, port) {
   // Start protractor and its debugger server as a child process.
   this.start = function() {
-    var deferred = q.defer();
+    let deferredResolve;
+    let deferredReject;
+    let deferred = new Promise((resolve, reject) => {
+      deferredResolve = resolve;
+      deferredReject = reject;
+    });
     var received = '';
 
     serverStartCmd += ' --debuggerServerPort ' + port;
@@ -21,7 +25,7 @@ var Server = function(serverStartCmd, port) {
       if (received) {
         errMsg += ' Server startup output: ' + received;
       }
-      deferred.reject(errMsg);
+      deferredReject(errMsg);
     }, TIMEOUT);
     
     test_process.stdout.on('data', function(data) {
@@ -29,7 +33,7 @@ var Server = function(serverStartCmd, port) {
       if (received.indexOf('Server listening on 127.0.0.1:' + port) >= 0) {
         clearTimeout(timeoutObj);
         // Add a small time for browser to get ready
-        setTimeout(deferred.resolve, 2000);
+        setTimeout(deferredResolve, 2000);
       }
     });
 
@@ -37,7 +41,7 @@ var Server = function(serverStartCmd, port) {
       received += data;
     });
 
-    return deferred.promise;
+    return deferred;
   };
 };
 
@@ -47,11 +51,16 @@ var Client = function(port) {
 
   // Connect to the server. 
   this.connect = function() {
-    var deferred = q.defer();
-    socket = net.connect({port: port}, function() {
-      deferred.resolve();
+    let deferredResolve;
+    let deferredReject;
+    let deferred = new Promise((resolve, reject) => {
+      deferredResolve = resolve;
+      deferredReject = reject;
     });
-    return deferred.promise;
+    socket = net.connect({port: port}, function() {
+      deferredResolve();
+    });
+    return deferred;
   };
 
   // Disconnect from the server.
@@ -62,7 +71,12 @@ var Client = function(port) {
   // Send a command to the server and wait for a response. Return response as a 
   // promise. 
   this.sendCommand = function(cmd) {
-    var deferred = q.defer();
+    let deferredResolve;
+    let deferredReject;
+    let deferred = new Promise((resolve, reject) => {
+      deferredResolve = resolve;
+      deferredReject = reject;
+    });
     var received = '';
     var timeoutObj = setTimeout(function() {
       var errMsg = 'Command <' + JSON.stringify(cmd) + 
@@ -70,7 +84,7 @@ var Client = function(port) {
       if (received) {
         errMsg += ' Received messages so far: ' + received;
       }
-      deferred.reject(errMsg);
+      deferredReject(errMsg);
     }, TIMEOUT);
 
     var ondata = function(data) {
@@ -79,22 +93,23 @@ var Client = function(port) {
       if (i >= 0) {
         clearTimeout(timeoutObj);
         var response = received.substring(0, i).trim();
-        deferred.resolve(response);
+        deferredResolve(response);
       }
     };
     socket.on('data', ondata);
 
     var onerror = function(data) {
-      deferred.reject('Received error: ' + data);
+      deferredReject('Received error: ' + data);
     };
     socket.on('error', onerror);
 
     socket.write(cmd + '\r\n');
-    return deferred.promise.fin(function() {
+    function cleanup () {
       clearTimeout(timeoutObj);
       socket.removeListener('data', ondata);
       socket.removeListener('error', onerror);
-    });
+    }
+    return deferred.then(cleanup, cleanup);
   };
 };
 
@@ -124,6 +139,11 @@ exports.InteractiveTest = function(interactiveServerStartCmd, port) {
     var server = new Server(interactiveServerStartCmd, port);
     return server.start().then(function() {
       var client = new Client(port);
+      function cleanup () {
+        // '^]' This is the term signal.
+        client.sendCommand(String.fromCharCode(0x1D)); 
+        client.disconnect();
+      }
       return client.connect().then(function() {
         var verifyAll = function(i) {
           if (i < expectations.length) {
@@ -140,11 +160,7 @@ exports.InteractiveTest = function(interactiveServerStartCmd, port) {
           }
         };
         return verifyAll(0);
-      }).fin(function() {
-        // '^]' This is the term signal.
-        client.sendCommand(String.fromCharCode(0x1D)); 
-        client.disconnect();
-      });
-    }).done();
+      }).then(cleanup, cleanup);
+    }).catch(err => setTimeout(() => { throw err; }));
   };
 };
