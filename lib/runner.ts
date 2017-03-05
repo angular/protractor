@@ -231,11 +231,11 @@ export class Runner extends EventEmitter {
       }
       let _runner = this;
       let retry = async function (_delay: number, times: number) {
-        logger.info('Failed to create a new driver, making a retry.')
+        logger.info('Failed to create a new driver, making a retry.');
         await delay(_delay);
         driver = await _runner.driverprovider_.getNewDriverAsync();
         if(!driver && times > 0){
-          logger.error('Retry failed ... retrying agian.')
+          logger.error('Retry failed ... retrying agian.');
           await retry(_delay, times--);
         }
       }
