@@ -61,7 +61,7 @@ export abstract class DriverProvider {
     return newDriver;
   }
 
-/**
+  /**
  * Create a new driver asynchronously
  * 
  * @public
@@ -84,15 +84,17 @@ export abstract class DriverProvider {
 
     let buildAsync = async function() {
       return builder.build();
-    }
+    };
 
-    return buildAsync().then((newDriver) => {
-        this.drivers_.push(newDriver);
-        return newDriver;
-      })
-      .catch((err) => {
-        // Need to handle this case, for now null. 
-      });
+    return buildAsync()
+        .then((newDriver) => {
+          this.drivers_.push(newDriver);
+          return newDriver;
+        })
+        .catch(
+            (err) => {
+                // Need to handle this case, for now null.
+            });
   }
 
   /**
