@@ -67,7 +67,7 @@ export abstract class DriverProvider {
  * @public
  * @return {Promise<WebDriver>} a Promise resolving a webdriver
  */
-  async getNewDriverAsync() {
+  getNewDriverAsync() {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
       builder =
@@ -86,10 +86,12 @@ export abstract class DriverProvider {
       return builder.build();
     }
 
-    return buildAsync().then(
-      (newDriver) => {
+    return buildAsync().then((newDriver) => {
         this.drivers_.push(newDriver);
         return newDriver;
+      })
+      .catch((err) => {
+        // Need to handle this case, for now null. 
       });
   }
 

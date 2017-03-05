@@ -222,7 +222,7 @@ export class Runner extends EventEmitter {
   async createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): Promise<ProtractorBrowser> {
     let config = this.config_;
     let driver = await this.driverprovider_.getNewDriverAsync();
-
+    
     if(!driver){
       let delay = function(ms: number) {
         return new Promise((resolve, reject) => {
@@ -231,10 +231,12 @@ export class Runner extends EventEmitter {
       }
       let _runner = this;
       let retry = async function (_delay: number, times: number) {
-        await delay(_delay); 
+        logger.info('Failed to create a new driver, making a retry.')
+        await delay(_delay);
         driver = await _runner.driverprovider_.getNewDriverAsync();
         if(!driver && times > 0){
-          retry(_delay, times--);
+          logger.error('Retry failed ... retrying agian.')
+          await retry(_delay, times--);
         }
       }
 
@@ -395,20 +397,23 @@ export class Runner extends EventEmitter {
         })
         .then(() => {
           // 2) Create a browser and setup globals
-          browser_ = this.createBrowser(plugins);
-          this.setupGlobals_(browser_);
-          return browser_.ready.then(browser_.getSession)
-              .then(
-                  (session: Session) => {
-                    logger.debug(
-                        'WebDriver session successfully started with capabilities ' +
-                        util.inspect(session.getCapabilities()));
-                  },
-                  (err: Error) => {
-                    logger.error('Unable to start a WebDriver session.');
-                    throw err;
-                  });
-          // 3) Setup plugins
+          return this.createBrowser(plugins).then(
+            (browser) => {
+              browser_ = browser;
+              this.setupGlobals_(browser_);
+              return browser_.ready.then(browser_.getSession)
+                  .then(
+                      (session: Session) => {
+                        logger.debug(
+                            'WebDriver session successfully started with capabilities ' +
+                            util.inspect(session.getCapabilities()));
+                      },
+                      (err: Error) => {
+                        logger.error('Unable to start a WebDriver session.');
+                        throw err;
+                      });
+              // 3) Setup plugins
+            });
         })
         .then(() => {
           return plugins.setup();
