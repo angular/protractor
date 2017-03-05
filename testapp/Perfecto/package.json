@@ -1,0 +1,22 @@
+{
+  "name": "perfecto_sample_protactor_jasmine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "conf.js",
+  "dependencies": {
+    "perfecto-reporting": "^1.0.0",
+    "protractor": "^4.0.0",
+    "selenium-webdriver": "^2.53.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node node_modules/protractor/bin/protractor conf.js"
+  },
+  "keywords": [
+    "perfecto",
+    "mobile",
+    "protactor"
+  ],
+  "author": "",
+  "license": "ISC"
+}

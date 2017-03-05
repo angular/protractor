@@ -219,9 +219,32 @@ export class Runner extends EventEmitter {
    * @return {Protractor} a protractor instance.
    * @public
    */
-  createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): any {
+  async createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): Promise<ProtractorBrowser> {
     let config = this.config_;
-    let driver = this.driverprovider_.getNewDriver();
+    let driver = await this.driverprovider_.getNewDriverAsync();
+
+    if(!driver){
+      let delay = function(ms: number) {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, ms);
+        });
+      }
+      let _runner = this;
+      let retry = async function (_delay: number, times: number) {
+        await delay(_delay); 
+        driver = await _runner.driverprovider_.getNewDriverAsync();
+        if(!driver && times > 0){
+          retry(_delay, times--);
+        }
+      }
+
+      await retry(15000, 3);
+
+      if(!driver){
+        throw new Error("Could not obtain webdriver instance.");
+      }
+
+    }
 
     let blockingProxyUrl: string;
     if (config.useBlockingProxy) {
@@ -288,8 +311,8 @@ export class Runner extends EventEmitter {
     };
 
     browser_.forkNewDriverInstance =
-        (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
-          let newBrowser = this.createBrowser(plugins);
+        async (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
+          let newBrowser = await this.createBrowser(plugins);
           if (copyMockModules) {
             newBrowser.mockModules_ = browser_.mockModules_;
           }
@@ -308,8 +331,8 @@ export class Runner extends EventEmitter {
           return newBrowser;
         };
 
-    let replaceBrowser = () => {
-      let newBrowser = browser_.forkNewDriverInstance(false, true);
+    let replaceBrowser = async () => {
+      let newBrowser = await browser_.forkNewDriverInstance(false, true);
       if (browser_ === protractor.browser) {
         this.setupGlobals_(newBrowser);
       }
@@ -317,26 +340,11 @@ export class Runner extends EventEmitter {
     };
 
     browser_.restart = () => {
-      // Note: because tests are not paused at this point, any async
-      // calls here are not guaranteed to complete before the tests resume.
-
-      // Seperate solutions depending on if the control flow is enabled (see lib/browser.ts)
-      if (browser_.controlFlowIsEnabled()) {
-        return browser_.restartSync().ready;
-      } else {
-        return this.driverprovider_.quitDriver(browser_.driver)
-            .then(replaceBrowser)
-            .then(newBrowser => newBrowser.ready);
-      }
-    };
-
-    browser_.restartSync = () => {
-      if (!browser_.controlFlowIsEnabled()) {
-        throw TypeError('Unable to use `browser.restartSync()` when the control flow is disabled');
-      }
-
-      this.driverprovider_.quitDriver(browser_.driver);
-      return replaceBrowser();
+      return this.driverprovider_.quitDriver(browser_.driver)
+          .then(replaceBrowser)
+          .then(()=>{
+            return browser_.ready;
+          });
     };
 
     return browser_;

@@ -61,6 +61,38 @@ export abstract class DriverProvider {
     return newDriver;
   }
 
+/**
+ * Create a new driver asynchronously
+ * 
+ * @public
+ * @return {Promise<WebDriver>} a Promise resolving a webdriver
+ */
+  async getNewDriverAsync() {
+    let builder: Builder;
+    if (this.config_.useBlockingProxy) {
+      builder =
+          new Builder().usingServer(this.getBPUrl()).withCapabilities(this.config_.capabilities);
+    } else {
+      builder = new Builder()
+                    .usingServer(this.config_.seleniumAddress)
+                    .usingWebDriverProxy(this.config_.webDriverProxy)
+                    .withCapabilities(this.config_.capabilities);
+    }
+    if (this.config_.disableEnvironmentOverrides === true) {
+      builder.disableEnvironmentOverrides();
+    }
+
+    let buildAsync = async function() {
+      return builder.build();
+    }
+
+    return buildAsync().then(
+      (newDriver) => {
+        this.drivers_.push(newDriver);
+        return newDriver;
+      });
+  }
+
   /**
    * Quit a driver.
    *
