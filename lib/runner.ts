@@ -239,7 +239,7 @@ export class Runner extends EventEmitter {
           await retry(_delay, times--);
         }
       };
-
+      
       await retry(15000, 3);
 
       if (!driver) {
