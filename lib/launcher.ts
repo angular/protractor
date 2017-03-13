@@ -3,7 +3,6 @@
  * input configuration and launching test runners.
  */
 import * as fs from 'fs';
-import * as q from 'q';
 
 import {Config} from './config';
 import {ConfigParser} from './configParser';
@@ -111,33 +110,32 @@ let initFn = function(configFile: string, additionalConfig: Config) {
   helper.runFilenameOrFn_(config.configDir, config.beforeLaunch)
       .then(() => {
 
-        return q
-            .Promise<any>((resolve: Function, reject: Function) => {
-              // 1) If getMultiCapabilities is set, resolve that as
-              // `multiCapabilities`.
-              if (config.getMultiCapabilities &&
-                  typeof config.getMultiCapabilities === 'function') {
-                if (config.multiCapabilities.length || config.capabilities) {
-                  logger.warn(
-                      'getMultiCapabilities() will override both capabilities ' +
-                      'and multiCapabilities');
-                }
-                // If getMultiCapabilities is defined and a function, use this.
-                q(config.getMultiCapabilities())
-                    .then((multiCapabilities) => {
-                      config.multiCapabilities = multiCapabilities;
-                      config.capabilities = null;
-                    })
-                    .then(() => {
-                      resolve();
-                    })
-                    .catch(err => {
-                      reject(err);
-                    });
-              } else {
-                resolve();
-              }
-            })
+        return new Promise<any>((resolve: Function, reject: Function) => {
+                 // 1) If getMultiCapabilities is set, resolve that as
+                 // `multiCapabilities`.
+                 if (config.getMultiCapabilities &&
+                     typeof config.getMultiCapabilities === 'function') {
+                   if (config.multiCapabilities.length || config.capabilities) {
+                     logger.warn(
+                         'getMultiCapabilities() will override both capabilities ' +
+                         'and multiCapabilities');
+                   }
+                   // If getMultiCapabilities is defined and a function, use this.
+                   Promise.resolve(config.getMultiCapabilities())
+                       .then((multiCapabilities) => {
+                         config.multiCapabilities = multiCapabilities;
+                         config.capabilities = null;
+                       })
+                       .then(() => {
+                         resolve();
+                       })
+                       .catch(err => {
+                         reject(err);
+                       });
+                 } else {
+                   resolve();
+                 }
+               })
             .then(() => {
               // 2) Set `multicapabilities` using `capabilities`,
               // `multicapabilities`,
@@ -243,7 +241,13 @@ let initFn = function(configFile: string, additionalConfig: Config) {
           }
         }
 
-        let deferred = q.defer<any>();  // Resolved when all tasks are completed
+        let deferredResolve: () => void;
+        let deferredReject: () => void;
+        let deferred = new Promise((resolve, reject) => {
+          deferredResolve = resolve;
+          deferredReject = reject;
+        });
+
         let createNextTaskRunner = () => {
           let task = scheduler.nextTask();
           if (task) {
@@ -259,7 +263,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
                   createNextTaskRunner();
                   // If all tasks are finished
                   if (scheduler.numTasksOutstanding() === 0) {
-                    deferred.resolve();
+                    deferredResolve();
                   }
                   logger.info(
                       scheduler.countActiveTasks() + ' instance(s) of WebDriver still running');
@@ -280,7 +284,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         logger.info('Running ' + scheduler.countActiveTasks() + ' instances of WebDriver');
 
         // By now all runners have completed.
-        deferred.promise
+        deferred
             .then(function() {
               // Save results if desired
               if (config.resultJsonOutputFile) {
@@ -296,9 +300,13 @@ let initFn = function(configFile: string, additionalConfig: Config) {
               }
               return cleanUpAndExit(exitCode);
             })
-            .done();
+            .catch(err => setTimeout(() => {
+                     throw err;
+                   }));
       })
-      .done();
+      .catch(err => setTimeout(() => {
+               throw err;
+             }));
 };
 
 export let init = initFn;

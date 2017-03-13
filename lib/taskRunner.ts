@@ -1,6 +1,5 @@
 import * as child_process from 'child_process';
 import {EventEmitter} from 'events';
-import * as q from 'q';
 
 import {Config} from './config';
 import {ConfigParser} from './configParser';
@@ -37,12 +36,12 @@ export class TaskRunner extends EventEmitter {
 
   /**
    * Sends the run command.
-   * @return {q.Promise} A promise that will resolve when the task finishes
+   * @return {Promise} A promise that will resolve when the task finishes
    *     running. The promise contains the following parameters representing the
    *     result of the run:
    *       taskId, specs, capabilities, failedCount, exitCode, specResults
    */
-  public run(): q.Promise<any> {
+  public run(): Promise<any> {
     let runResults: RunResults = {
       taskId: this.task.taskId,
       specs: this.task.specs,
@@ -65,7 +64,12 @@ export class TaskRunner extends EventEmitter {
     config.specs = this.task.specs;
 
     if (this.runInFork) {
-      let deferred = q.defer();
+      let deferredResolve: (x?: any) => void;
+      let deferredReject: (err?: any) => void;
+      let deferred = new Promise((resolve, reject) => {
+        deferredResolve = resolve;
+        deferredReject = reject;
+      });
 
       let childProcess = child_process.fork(
           __dirname + '/runnerCli.js', process.argv.slice(2), {cwd: process.cwd(), silent: true});
@@ -103,12 +107,12 @@ export class TaskRunner extends EventEmitter {
           .on('error',
               (err: any) => {
                 taskLogger.flush();
-                deferred.reject(err);
+                deferredReject(err);
               })
           .on('exit', (code: number) => {
             taskLogger.flush();
             runResults.exitCode = code;
-            deferred.resolve(runResults);
+            deferredResolve(runResults);
           });
 
       childProcess.send({
@@ -119,7 +123,7 @@ export class TaskRunner extends EventEmitter {
         specs: this.task.specs
       });
 
-      return deferred.promise;
+      return deferred;
     } else {
       let runner = new Runner(config);
 
