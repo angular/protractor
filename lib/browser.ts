@@ -900,7 +900,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                       return url !== this.resetUrl;
                     },
                     (err: IError) => {
-                      if (err.code == 13) {
+                      if (err.code == 13 || err.name === 'JavascriptError') {
                         // Ignore the error, and continue trying. This is
                         // because IE driver sometimes (~1%) will throw an
                         // unknown error from this execution. See
