@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {Capabilities, WebDriver} from 'selenium-webdriver';
 import {Driver as ChromeDriver, ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
-import {Driver as FirefoxDriver} from 'selenium-webdriver/firefox';
+import {Driver as FirefoxDriver, ServiceBuilder as FirefoxServiceBuilder} from 'selenium-webdriver/firefox';
 
 import {Config} from '../config';
 import {BrowserError} from '../exitCodes';
@@ -81,12 +81,8 @@ export class Direct extends DriverProvider {
         }
 
         let chromeService = new ChromeServiceBuilder(chromeDriverFile).build();
-        // driver = ChromeDriver.createSession(new Capabilities(this.config_.capabilities),
-        // chromeService);
-        // TODO(ralphj): fix typings
         driver =
-            require('selenium-webdriver/chrome')
-                .Driver.createSession(new Capabilities(this.config_.capabilities), chromeService);
+            ChromeDriver.createSession(new Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
         let geckoDriverFile: string;
@@ -101,14 +97,9 @@ export class Direct extends DriverProvider {
                   'Run \'webdriver-manager update\' to download binaries.');
         }
 
-        // TODO (mgiambalvo): Turn this into an import when the selenium typings are updated.
-        const FirefoxServiceBuilder = require('selenium-webdriver/firefox').ServiceBuilder;
-
         let firefoxService = new FirefoxServiceBuilder(geckoDriverFile).build();
-        // TODO(mgiambalvo): Fix typings.
-        driver =
-            require('selenium-webdriver/firefox')
-                .Driver.createSession(new Capabilities(this.config_.capabilities), firefoxService);
+        driver = FirefoxDriver.Driver.createSession(
+            new Capabilities(this.config_.capabilities), firefoxService);
         break;
       default:
         throw new BrowserError(

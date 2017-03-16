@@ -3,7 +3,7 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
-import {Builder, promise as wdpromise, Session, WebDriver} from 'selenium-webdriver';
+import {Builder, promise as wdpromise, Session, ThenableWebDriver, WebDriver} from 'selenium-webdriver';
 
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
@@ -42,7 +42,7 @@ export abstract class DriverProvider {
    * @public
    * @return webdriver instance
    */
-  getNewDriver() {
+  getNewDriver(): ThenableWebDriver {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
       builder =
