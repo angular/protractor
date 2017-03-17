@@ -3,6 +3,7 @@
  * It returns a fake webdriver and never actually contacts a selenium
  * server.
  */
+import * as q from 'q';
 import {Session, WebDriver} from 'selenium-webdriver';
 import * as executors from 'selenium-webdriver/executors';
 
@@ -21,17 +22,19 @@ export class Mock extends DriverProvider {
   /**
    * An execute function that returns a promise with a test value.
    */
-  execute(): Promise<any> {
-    return Promise.resolve({value: 'test_response'});
+  execute(): q.Promise<any> {
+    let deferred = q.defer();
+    deferred.resolve({value: 'test_response'});
+    return deferred.promise;
   }
 
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {Promise} A promise which will resolve immediately.
+   * @return {q.promise} A promise which will resolve immediately.
    */
-  protected setupDriverEnv(): Promise<any> {
-    return Promise.resolve();
+  protected setupDriverEnv(): q.Promise<any> {
+    return q.fcall(function() {});
   }
 
   /**

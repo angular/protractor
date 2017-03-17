@@ -8,6 +8,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
+import * as q from 'q';
 
 import {Config} from '../config';
 import {BrowserError, ConfigError} from '../exitCodes';
@@ -90,10 +91,10 @@ export class Local extends DriverProvider {
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {Promise} A promise which will resolve when the environment is
+   * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupDriverEnv(): Promise<any> {
+  setupDriverEnv(): q.Promise<any> {
     this.addDefaultBinaryLocs_();
     logger.info('Starting selenium standalone server...');
 
@@ -122,12 +123,7 @@ export class Local extends DriverProvider {
 
     this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
-    let deferredResolve: (x?: any) => void;
-    let deferredReject: (err?: any) => void;
-    let deferred = new Promise((resolve, reject) => {
-      deferredResolve = resolve;
-      deferredReject = reject;
-    });
+    let deferred = q.defer();
     // start local server, grab hosted address, and resolve promise
     this.server_.start(this.config_.seleniumServerStartTimeout)
         .then((url: string) => {
@@ -136,13 +132,13 @@ export class Local extends DriverProvider {
         })
         .then((address: string) => {
           this.config_.seleniumAddress = address;
-          deferredResolve();
+          deferred.resolve();
         })
         .catch((err: string) => {
-          deferredReject(err);
+          deferred.reject(err);
         });
 
-    return deferred;
+    return deferred.promise;
   }
 
   /**
@@ -151,10 +147,10 @@ export class Local extends DriverProvider {
    *
    * @public
    * @override
-   * @return {Promise} A promise which will resolve when the environment
+   * @return {q.promise} A promise which will resolve when the environment
    *     is down.
    */
-  teardownEnv(): Promise<any> {
+  teardownEnv(): q.Promise<any> {
     return super.teardownEnv().then(() => {
       logger.info('Shutting down selenium standalone server.');
       return this.server_.stop();

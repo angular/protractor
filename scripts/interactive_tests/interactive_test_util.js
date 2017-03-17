@@ -1,4 +1,5 @@
 var child_process = require('child_process'),
+    q = require('q'),
     net = require('net');
 
 var TIMEOUT = 10000;
@@ -7,12 +8,7 @@ var TIMEOUT = 10000;
 var Server = function(serverStartCmd, port) {
   // Start protractor and its debugger server as a child process.
   this.start = function() {
-    let deferredResolve;
-    let deferredReject;
-    let deferred = new Promise((resolve, reject) => {
-      deferredResolve = resolve;
-      deferredReject = reject;
-    });
+    var deferred = q.defer();
     var received = '';
 
     serverStartCmd += ' --debuggerServerPort ' + port;
@@ -25,7 +21,7 @@ var Server = function(serverStartCmd, port) {
       if (received) {
         errMsg += ' Server startup output: ' + received;
       }
-      deferredReject(errMsg);
+      deferred.reject(errMsg);
     }, TIMEOUT);
     
     test_process.stdout.on('data', function(data) {
@@ -33,7 +29,7 @@ var Server = function(serverStartCmd, port) {
       if (received.indexOf('Server listening on 127.0.0.1:' + port) >= 0) {
         clearTimeout(timeoutObj);
         // Add a small time for browser to get ready
-        setTimeout(deferredResolve, 2000);
+        setTimeout(deferred.resolve, 2000);
       }
     });
 
@@ -41,7 +37,7 @@ var Server = function(serverStartCmd, port) {
       received += data;
     });
 
-    return deferred;
+    return deferred.promise;
   };
 };
 
@@ -51,16 +47,11 @@ var Client = function(port) {
 
   // Connect to the server. 
   this.connect = function() {
-    let deferredResolve;
-    let deferredReject;
-    let deferred = new Promise((resolve, reject) => {
-      deferredResolve = resolve;
-      deferredReject = reject;
-    });
+    var deferred = q.defer();
     socket = net.connect({port: port}, function() {
-      deferredResolve();
+      deferred.resolve();
     });
-    return deferred;
+    return deferred.promise;
   };
 
   // Disconnect from the server.
@@ -71,12 +62,7 @@ var Client = function(port) {
   // Send a command to the server and wait for a response. Return response as a 
   // promise. 
   this.sendCommand = function(cmd) {
-    let deferredResolve;
-    let deferredReject;
-    let deferred = new Promise((resolve, reject) => {
-      deferredResolve = resolve;
-      deferredReject = reject;
-    });
+    var deferred = q.defer();
     var received = '';
     var timeoutObj = setTimeout(function() {
       var errMsg = 'Command <' + JSON.stringify(cmd) + 
@@ -84,7 +70,7 @@ var Client = function(port) {
       if (received) {
         errMsg += ' Received messages so far: ' + received;
       }
-      deferredReject(errMsg);
+      deferred.reject(errMsg);
     }, TIMEOUT);
 
     var ondata = function(data) {
@@ -93,23 +79,22 @@ var Client = function(port) {
       if (i >= 0) {
         clearTimeout(timeoutObj);
         var response = received.substring(0, i).trim();
-        deferredResolve(response);
+        deferred.resolve(response);
       }
     };
     socket.on('data', ondata);
 
     var onerror = function(data) {
-      deferredReject('Received error: ' + data);
+      deferred.reject('Received error: ' + data);
     };
     socket.on('error', onerror);
 
     socket.write(cmd + '\r\n');
-    function cleanup () {
+    return deferred.promise.fin(function() {
       clearTimeout(timeoutObj);
       socket.removeListener('data', ondata);
       socket.removeListener('error', onerror);
-    }
-    return deferred.then(cleanup, cleanup);
+    });
   };
 };
 
@@ -139,11 +124,6 @@ exports.InteractiveTest = function(interactiveServerStartCmd, port) {
     var server = new Server(interactiveServerStartCmd, port);
     return server.start().then(function() {
       var client = new Client(port);
-      function cleanup () {
-        // '^]' This is the term signal.
-        client.sendCommand(String.fromCharCode(0x1D)); 
-        client.disconnect();
-      }
       return client.connect().then(function() {
         var verifyAll = function(i) {
           if (i < expectations.length) {
@@ -160,7 +140,11 @@ exports.InteractiveTest = function(interactiveServerStartCmd, port) {
           }
         };
         return verifyAll(0);
-      }).then(cleanup, cleanup);
-    }).catch(err => setTimeout(() => { throw err; }));
+      }).fin(function() {
+        // '^]' This is the term signal.
+        client.sendCommand(String.fromCharCode(0x1D)); 
+        client.disconnect();
+      });
+    }).done();
   };
 };

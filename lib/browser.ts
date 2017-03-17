@@ -1046,8 +1046,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                         clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url)
                     .then((browserErr: Error) => {
                       if (browserErr) {
-                        const message = `Error while navigating to '${url}'`;
-                        throw `${message} : ${JSON.stringify(browserErr)}`;
+                        throw 'Error while navigating to \'' + url + '\' : ' +
+                            JSON.stringify(browserErr);
                       }
                     }));
   }
