@@ -353,7 +353,7 @@ export interface Config {
   /**
    * Use this option with createBrowserAsync: true, enables to queuing real devices
    * or retry create driver on driver creation failure.
-   * 
+   *
    * example:
    * retryMechanismConf: {
    *    enabled: true, // enable retry driver creation
