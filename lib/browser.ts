@@ -474,6 +474,22 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   }
 
   /**
+   * Same as forkNewDriverInstance just asynchronously
+   * 
+   * @param {boolean=} useSameUrl Whether to navigate to current url on creation
+   * @param {boolean=} copyMockModules Whether to apply same mock modules on creation
+   * @param {boolean=} copyConfigUpdates Whether to copy over changes to `baseUrl` and similar
+   *   properties initialized to values in the the config.  Defaults to `true`
+   *
+   * @returns {Promise<ProtractorBrowser>} A browser instance.
+   */
+  forkNewDriverInstanceAsync(
+      useSameUrl?: boolean, copyMockModules?: boolean,
+      copyConfigUpdates = true): Promise<ProtractorBrowser> {
+    return null;
+  }
+
+  /**
    * Restart the browser.  This is done by closing this browser instance and creating a new one.
    * A promise resolving to the new instance is returned, and if this function was called on the
    * global `browser` instance then Protractor will automatically overwrite the global `browser`
@@ -1046,8 +1062,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                         clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url)
                     .then((browserErr: Error) => {
                       if (browserErr) {
-                        throw 'Error while navigating to \'' + url + '\' : ' +
-                            JSON.stringify(browserErr);
+                        throw 'Error while navigating to \'' + url +
+                            '\' : ' + JSON.stringify(browserErr);
                       }
                     }));
   }
