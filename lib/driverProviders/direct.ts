@@ -5,6 +5,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
+import * as q from 'q';
 import {Capabilities, WebDriver} from 'selenium-webdriver';
 import {Driver as ChromeDriver, ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
 import {Driver as FirefoxDriver} from 'selenium-webdriver/firefox';
@@ -25,10 +26,10 @@ export class Direct extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @return {Promise} A promise which will resolve when the environment is
+   * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         logger.info('Using ChromeDriver directly...');
@@ -42,7 +43,7 @@ export class Direct extends DriverProvider {
             'browserName ' + this.config_.capabilities.browserName +
                 ' is not supported with directConnect.');
     }
-    return Promise.resolve();
+    return q.fcall(function() {});
   }
 
   /**

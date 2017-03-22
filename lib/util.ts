@@ -1,4 +1,5 @@
 import {resolve} from 'path';
+import {Promise, when} from 'q';
 import {error as wderror} from 'selenium-webdriver';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
@@ -32,10 +33,10 @@ export function filterStackTrace(text: string): string {
  * Internal helper for abstraction of polymorphic filenameOrFn properties.
  * @param {object} filenameOrFn The filename or function that we will execute.
  * @param {Array.<object>}} args The args to pass into filenameOrFn.
- * @return {Promise} A promise that will resolve when filenameOrFn completes.
+ * @return {q.Promise} A promise that will resolve when filenameOrFn completes.
  */
 export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
-  return new Promise((resolvePromise) => {
+  return Promise((resolvePromise) => {
     if (filenameOrFn && !(typeof filenameOrFn === 'string' || typeof filenameOrFn === 'function')) {
       throw new Error('filenameOrFn must be a string or function');
     }
@@ -44,7 +45,7 @@ export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: an
       filenameOrFn = require(resolve(configDir, filenameOrFn));
     }
     if (typeof filenameOrFn === 'function') {
-      let results = Promise.resolve(filenameOrFn.apply(null, args)).catch((err) => {
+      let results = when(filenameOrFn.apply(null, args), null, (err) => {
         if (typeof err === 'string') {
           err = new Error(err);
         } else {

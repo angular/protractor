@@ -900,7 +900,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                       return url !== this.resetUrl;
                     },
                     (err: IError) => {
-                      if (err.code == 13) {
+                      if (err.code == 13 || err.name === 'JavascriptError') {
                         // Ignore the error, and continue trying. This is
                         // because IE driver sometimes (~1%) will throw an
                         // unknown error from this execution. See
@@ -1046,8 +1046,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                         clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url)
                     .then((browserErr: Error) => {
                       if (browserErr) {
-                        const message = `Error while navigating to '${url}'`;
-                        throw `${message} : ${JSON.stringify(browserErr)}`;
+                        throw 'Error while navigating to \'' + url + '\' : ' +
+                            JSON.stringify(browserErr);
                       }
                     }));
   }

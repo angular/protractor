@@ -3,6 +3,7 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
+import * as q from 'q';
 import {Builder, promise as wdpromise, Session, WebDriver} from 'selenium-webdriver';
 
 import {BlockingProxyRunner} from '../bpRunner';
@@ -88,38 +89,42 @@ export abstract class DriverProvider {
 
 
   /**
-   * Quits an array of drivers and returns a native promise instead of a webdriver one
+   * Quits an array of drivers and returns a q promise instead of a webdriver one
    *
    * @param drivers {webdriver.WebDriver[]} The webdriver instances
    */
-  static quitDrivers(provider: DriverProvider, drivers: WebDriver[]): Promise<void> {
-    let deferredResolve: (x?: any) => void;
-    let deferredReject: (x?: any) => void;
-    let deferred = new Promise<void>((resolve, reject) => {
-      deferredResolve = resolve;
-      deferredReject = reject;
-    });
-    wdpromise.all(drivers.map((driver: WebDriver) => provider.quitDriver(driver)))
-        .then(() => deferredResolve(), () => deferredReject());
-    return deferred;
+  static quitDrivers(provider: DriverProvider, drivers: WebDriver[]): q.Promise<void> {
+    let deferred = q.defer<void>();
+    wdpromise
+        .all(drivers.map((driver: WebDriver) => {
+          return provider.quitDriver(driver);
+        }))
+        .then(
+            () => {
+              deferred.resolve();
+            },
+            () => {
+              deferred.resolve();
+            });
+    return deferred.promise;
   }
 
   /**
    * Default update job method.
    * @return a promise
    */
-  updateJob(update: any): Promise<any> {
-    return Promise.resolve();
+  updateJob(update: any): q.Promise<any> {
+    return q.fcall(function() {});
   };
 
   /**
    * Default setup environment method, common to all driver providers.
    */
-  setupEnv(): Promise<any> {
+  setupEnv(): q.Promise<any> {
     let driverPromise = this.setupDriverEnv();
     if (this.config_.useBlockingProxy && !this.config_.blockingProxyUrl) {
       // TODO(heathkit): If set, pass the webDriverProxy to BP.
-      return Promise.all([driverPromise, this.bpRunner.start()]);
+      return q.all([driverPromise, this.bpRunner.start()]);
     }
     return driverPromise;
   };
@@ -128,16 +133,16 @@ export abstract class DriverProvider {
    * Set up environment specific to a particular driver provider. Overridden
    * by each driver provider.
    */
-  protected abstract setupDriverEnv(): Promise<any>;
+  protected abstract setupDriverEnv(): q.Promise<any>;
 
   /**
    * Teardown and destroy the environment and do any associated cleanup.
    * Shuts down the drivers.
    *
    * @public
-   * @return {Promise<any>} A promise which will resolve when the environment is down.
+   * @return {q.Promise<any>} A promise which will resolve when the environment is down.
    */
-  teardownEnv(): Promise<any> {
+  teardownEnv(): q.Promise<any> {
     return DriverProvider.quitDrivers(this, this.drivers_);
   }
 }

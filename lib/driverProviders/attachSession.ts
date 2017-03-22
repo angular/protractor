@@ -22,13 +22,13 @@ export class AttachSession extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @return {Promise} A promise which will resolve when the environment is
+   * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     logger.info('Using the selenium server at ' + this.config_.seleniumAddress);
     logger.info('Using session id - ' + this.config_.seleniumSessionId);
-    return Promise.resolve(undefined);
+    return q(undefined);
   }
 
   /**

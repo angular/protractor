@@ -1,4 +1,5 @@
 import {EventEmitter} from 'events';
+import * as q from 'q';
 import {promise as wdpromise, Session} from 'selenium-webdriver';
 import * as util from 'util';
 
@@ -33,7 +34,7 @@ export class Runner extends EventEmitter {
   driverprovider_: DriverProvider;
   o: any;
   plugins_: Plugins;
-  restartPromise: Promise<any>;
+  restartPromise: q.Promise<any>;
   frameworkUsesAfterEach: boolean;
   ready_?: wdpromise.Promise<void>;
 
@@ -83,10 +84,10 @@ export class Runner extends EventEmitter {
    * Executor of testPreparer
    * @public
    * @param {string[]=} An optional list of command line arguments the framework will accept.
-   * @return {Promise} A promise that will resolve when the test preparers
+   * @return {q.Promise} A promise that will resolve when the test preparers
    *     are finished.
    */
-  runTestPreparer(extraFlags?: string[]): Promise<any> {
+  runTestPreparer(extraFlags?: string[]): q.Promise<any> {
     let unknownFlags = this.config_.unknownFlags_ || [];
     if (extraFlags) {
       unknownFlags = unknownFlags.filter((f) => extraFlags.indexOf(f) === -1);
@@ -109,17 +110,17 @@ export class Runner extends EventEmitter {
    * Responsible for `restartBrowserBetweenTests`
    *
    * @public
-   * @return {Promise} A promise that will resolve when the work here is done
+   * @return {q.Promise} A promise that will resolve when the work here is done
    */
-  afterEach(): Promise<void> {
-    let ret: Promise<void>;
+  afterEach(): q.Promise<void> {
+    let ret: q.Promise<void>;
     this.frameworkUsesAfterEach = true;
     if (this.config_.restartBrowserBetweenTests) {
-      this.restartPromise = this.restartPromise || Promise.resolve(protractor.browser.restart());
+      this.restartPromise = this.restartPromise || q(protractor.browser.restart());
       ret = this.restartPromise;
       this.restartPromise = undefined;
     }
-    return ret || Promise.resolve();
+    return ret || q();
   }
 
   /**
@@ -345,10 +346,10 @@ export class Runner extends EventEmitter {
   /**
    * Final cleanup on exiting the runner.
    *
-   * @return {Promise} A promise which resolves on finish.
+   * @return {q.Promise} A promise which resolves on finish.
    * @private
    */
-  shutdown_(): Promise<void> {
+  shutdown_(): q.Promise<void> {
     return DriverProvider.quitDrivers(
         this.driverprovider_, this.driverprovider_.getExistingDrivers());
   }
@@ -356,10 +357,10 @@ export class Runner extends EventEmitter {
   /**
    * The primary workhorse interface. Kicks off the test running process.
    *
-   * @return {Promise} A promise which resolves to the exit code of the tests.
+   * @return {q.Promise} A promise which resolves to the exit code of the tests.
    * @public
    */
-  run(): Promise<any> {
+  run(): q.Promise<any> {
     let testPassed: boolean;
     let plugins = this.plugins_ = new Plugins(this.config_);
     let pluginPostTestPromises: any;
@@ -379,7 +380,7 @@ export class Runner extends EventEmitter {
     }
 
     // 0) Wait for debugger
-    return Promise.resolve(this.ready_)
+    return q(this.ready_)
         .then(() => {
           // 1) Setup environment
           // noinspection JSValidateTypes
@@ -436,7 +437,7 @@ export class Runner extends EventEmitter {
             // TODO(sjelin): replace with warnings once `afterEach` support is required
             let restartDriver = () => {
               if (!this.frameworkUsesAfterEach) {
-                this.restartPromise = Promise.resolve(browser_.restart());
+                this.restartPromise = q(browser_.restart());
               }
             };
             this.on('testPass', restartDriver);
@@ -463,7 +464,7 @@ export class Runner extends EventEmitter {
         })
         .then((testResults: any) => {
           results = testResults;
-          return Promise.all(pluginPostTestPromises);
+          return q.all(pluginPostTestPromises);
           // 6) Teardown plugins
         })
         .then(() => {
@@ -491,20 +492,8 @@ export class Runner extends EventEmitter {
           let exitCode = testPassed ? 0 : 1;
           return this.exit_(exitCode);
         })
-        .then(tap(() => this.shutdown_()), tapError(() => this.shutdown_()));
-
-    function tap(runBlock: Function) {
-      return x => {
-        runBlock();
-        return x;
-      };
-    }
-
-    function tapError(runBlock: Function) {
-      return err => {
-        runBlock();
-        throw err;
-      };
-    }
+        .fin(() => {
+          return this.shutdown_();
+        });
   }
 }

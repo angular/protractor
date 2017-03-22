@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var child_process = require('child_process'),
+    q = require('q'),
     fs = require('fs');
 
 var CommandlineTest = function(command) {
@@ -63,7 +64,7 @@ var CommandlineTest = function(command) {
       throw new Error(errorMsg);
     };
 
-    return new Promise(function(resolve, reject) {
+    return q.promise(function(resolve, reject) {
       if (!self.assertExitCodeOnly_) {
         self.command_ = self.command_ + ' --resultJsonOutputFile ' + testOutputPath;
       }
@@ -176,14 +177,13 @@ var CommandlineTest = function(command) {
             flushAndFail('expecting test max duration: ' +
                 self.expectedMaxTestDuration_ + ', actual: ' + duration);
       }
-    }).then(cleanup, cleanup);
-    function cleanup () {
+    }).fin(function() {
       try {
         fs.unlinkSync(testOutputPath);
       } catch (err) {
         // don't do anything
       }
-    }
+    });
   };
 };
 
@@ -206,9 +206,6 @@ exports.Executor = function() {
     var failed = false;
 
     (function runTests(i) {
-      function runNext () { runTests(i + 1); }
-      function throwOnNextTick (err) { setTimeout(function () { throw err; }); }
-
       if (i < tests.length) {
         console.log('running: ' + tests[i].command_);
         if (logFile) {
@@ -219,7 +216,9 @@ exports.Executor = function() {
         }, function(err) {
           failed = true;
           console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
-        }).then(runNext, runNext).catch(throwOnNextTick);
+        }).fin(function() {
+          runTests(i + 1);
+        }).done();
       } else {
         console.log('Summary: ' + (failed ? 'fail' : 'pass'));
         process.exit(failed ? 1 : 0);
