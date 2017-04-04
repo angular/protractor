@@ -60,6 +60,7 @@ let allowedNames = [
   'multiCapabilities',
   'getMultiCapabilities',
   'maxSessions',
+  'verbose',
   'verboseMultiSessions',
   'baseUrl',
   'rootElement',
