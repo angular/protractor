@@ -120,7 +120,7 @@ Setting up PhantomJS
 --------------------
 _Note: We recommend against using PhantomJS for tests with Protractor. There are many reported issues with PhantomJS crashing and behaving differently from real browsers._
 
-In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For local install run: `npm install phantomjs`.
+In order to test locally with [PhantomJS](http://phantomjs.org/), you'll need to either have it installed globally, or relative to your project. For global install see the [PhantomJS download page](http://phantomjs.org/download.html). For local install run: `npm install phantomjs-prebuilt`.
 
 Add phantomjs to the driver capabilities, and include a path to the binary if using local installation:
 ```javascript
