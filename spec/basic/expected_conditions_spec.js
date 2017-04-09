@@ -182,7 +182,7 @@ describe('expected conditions', function() {
 
       expect(EC.attributeContains(invalid, 'value', 'shouldnt throw').call()).toBe(false);
       expect(EC.attributeContains(about, 'value', 'text box').call()).toBe(true);
-      expect(EC.attributeContains(about, 'value', 'text').call()).toBe(true);
+      expect(EC.attributeContains(about, 'value', 'This is a text box').call()).toBe(true);
   });
 
   it('should have attributeIs', function() {
@@ -190,8 +190,8 @@ describe('expected conditions', function() {
       var about = element(by.model('aboutbox'));
 
       expect(EC.attributeIs(invalid, 'value', 'shouldnt throw').call()).toBe(false);
-      expect(EC.attributeIs(about, 'value', 'text box').call()).toBe(true);
-      expect(EC.attributeIs(about, 'value', 'text').call()).toBe(false);
+      expect(EC.attributeIs(about, 'value', 'This is a text box').call()).toBe(true);
+      expect(EC.attributeIs(about, 'value', 'text box').call()).toBe(false);
   });
 
   describe('for forked browsers', function() {
