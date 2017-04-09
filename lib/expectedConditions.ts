@@ -235,12 +235,7 @@ export class ProtractorExpectedConditions {
    *     representing whether the text is present in the element's value.
    */
   textToBePresentInElementValue(elementFinder: ElementFinder, text: string): Function {
-    let hasText = () => {
-      return elementFinder.getAttribute('value').then((actualText: string): boolean => {
-        return actualText.indexOf(text) > -1;
-      }, falseIfMissing);
-    };
-    return this.and(this.presenceOf(elementFinder), hasText);
+    return this.attributeContains(elementFinder, 'value', text);
   }
 
   /**
@@ -416,22 +411,72 @@ export class ProtractorExpectedConditions {
   }
 
   /**
- * An expectation for checking the selection is selected.
- *
- * @example
- * var EC = protractor.ExpectedConditions;
- * // Waits for the element with id 'myCheckbox' to be selected.
- * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
- *
- * @alias ExpectedConditions.elementToBeSelected
- * @param {!ElementFinder} elementFinder The element to check
- *
- * @returns {!function} An expected condition that returns a promise
- *     representing whether the element is selected.
- */
+   * An expectation for checking the selection is selected.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'myCheckbox' to be selected.
+   * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
+   *
+   * @alias ExpectedConditions.elementToBeSelected
+   * @param {!ElementFinder} elementFinder The element to check
+   *
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the element is selected.
+   */
   elementToBeSelected(elementFinder: ElementFinder): Function {
     return this.and(this.presenceOf(elementFinder), () => {
       return elementFinder.isSelected().then(passBoolean, falseIfMissing);
     });
+  }
+
+  /**
+   * An expectation for checking if the given text is present in a given element’s
+   * attribute. Returns false if the elementFinder does not find an element.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'myInput' to contain the input 'foo' in attribute 'value'.
+   * browser.wait(EC.attributeContains($('#myInput'), 'value', 'foo'), 5000);
+   *
+   * @alias ExpectedConditions.attributeContains
+   * @param {!ElementFinder} elementFinder The element to check
+   * @param {!string} attribute The attribute to check text
+   * @param {!string} text The text to verify against
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the text is present in an element's attribute.
+   */
+  attributeContains(elementFinder: ElementFinder, attribute: string, text: string): Function {
+    let hasText = () => {
+      return elementFinder.getAttribute(attribute).then((actualText: string): boolean => {
+        return actualText.indexOf(text) > -1;
+      }, falseIfMissing);
+    };
+    return this.and(this.presenceOf(elementFinder), hasText);
+  }
+
+  /**
+   * An expectation for checking if the given element’s attribute has specific text.
+   * Returns false if the elementFinder does not find an element.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'myInput' to be the input 'foo' in attribute 'value'.
+   * browser.wait(EC.attributeIs($('#myInput'), 'value', 'foo'), 5000);
+   *
+   * @alias ExpectedConditions.attributeIs
+   * @param {!ElementFinder} elementFinder The element to check
+   * @param {!string} attribute The attribute to check text
+   * @param {!string} text The text to verify against
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the given element’s attribute has specific text.
+   */
+  attributeIs(elementFinder: ElementFinder, attribute: string, text: string): Function {
+    let hasText = () => {
+      return elementFinder.getAttribute(attribute).then((actualText: string): boolean => {
+        return actualText === text;
+      }, falseIfMissing);
+    };
+    return this.and(this.presenceOf(elementFinder), hasText);
   }
 }
