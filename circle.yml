@@ -22,9 +22,14 @@ dependencies:
           background: true
     # Install the latest Firefox beta
     - pip install mozdownload mozinstall
-    - mozdownload --version latest-beta --destination firefox.tar.bz2
+    - mozdownload --version latest --destination firefox.tar.bz2
     - mozinstall firefox.tar.bz2
     - sudo cp -R firefox/* /opt/firefox/
+    # Install the latest Chrome
+    - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - sudo dpkg -i google-chrome.deb
+    - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+    - rm google-chrome.deb
     # Extra tcp logging for BlockingProxy
     - sudo tcpdump -i lo 'tcp && dst localhost' -w $CIRCLE_ARTIFACTS/localdump.pcap:
           background: true
