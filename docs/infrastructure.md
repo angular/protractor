@@ -30,11 +30,11 @@ With Protractor, the test script is run using Node.js. Protractor runs an extra 
 
 This will result in three commands being sent to the Browser Driver
 
- - [/session/:sessionId/execute_async](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#/session/:sessionId/execute_async) - First, Protractor tells the browser to run a snippet of JavaScript. This is a custom command which asks Angular to respond when the application is done with all timeouts and asynchronous requests, and ready for the test to resume.
+ - [/session/:sessionId/execute_async](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidexecute_async) - First, Protractor tells the browser to run a snippet of JavaScript. This is a custom command which asks Angular to respond when the application is done with all timeouts and asynchronous requests, and ready for the test to resume.
 
- - [/session/:sessionId/element](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element) - Then, the command to find the element is sent.
+ - [/session/:sessionId/element](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelement) - Then, the command to find the element is sent.
 
- - [/session/:sessionId/element/:id/click](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click) - Finally the command to perform a click action is sent.
+ - [/session/:sessionId/element/:id/click](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidclick) - Finally the command to perform a click action is sent.
 
 
 
