@@ -19,16 +19,37 @@ be loaded and the new URL to appear before continuing.
 
 ### Waiting for Angular
 
-Before performing any action, Protractor waits until there are no pending asynchronous tasks in your Angular application. This means that all timeouts and http requests are finished. If your application continuously polls $timeout or $http, Protractor will wait indefinitely and time out. You should use the
-[$interval](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3).
-
-You can also disable waiting for angular, [see below](#how-to-disable-waiting-for-angular).
+Before performing any action, Protractor waits until there are no pending asynchronous tasks in your Angular application. This means that all timeouts and http requests are finished. 
 
  - Looks like: an error in your test results - `Timed out waiting for asynchronous Angular tasks to finish after 11 seconds.`
 
  - Default timeout: 11 seconds
 
  - How to change: Add `allScriptsTimeout: timeout_in_millis` to your Protractor configuration file.
+
+You may also need to fix this problem with a change to your application. 
+
+#### AngularJS
+
+If your AngularJS application continuously polls $timeout or $http, Protractor will wait indefinitely and time out. You should use the
+[$interval](https://github.com/angular/angular.js/blob/master/src/ng/interval.js) for anything that polls continuously (introduced in Angular 1.2rc3).
+
+#### Angular
+
+For Angular apps, Protractor will wait until the [Angular Zone](https://medium.com/@MertzAlertz/what-the-hell-is-zone-js-and-why-is-it-in-my-angular-2-6ff28bcf943e) stabilizes. This means long running async operations will block your test from continuing. To work around this, run these tasks outside the Angular zone. For example:
+
+```ts
+this.ngZone.runOutsideAngular(() => {
+  setTimeout(() => {
+    // Changes here will not propagate into your view.
+    this.ngZone.run(() => {
+      // Run inside the ngZone to trigger change detection.
+    });
+  }, REALLY_LONG_DELAY);
+});
+```
+
+As an alternative to either of these options, you could disable waiting for Angular, [see below](#how-to-disable-waiting-for-angular).
 
 ### Waiting for Angular on Page Load
 
