@@ -104,7 +104,8 @@ let allowedNames = [
   'build',
   'grep',
   'invert-grep',
-  'explorer'
+  'explorer',
+  'stackTrace'
 ];
 
 let optimistOptions: any = {
