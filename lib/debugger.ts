@@ -49,7 +49,7 @@ export class DebugHelper {
    *     first time that the debugger is called.
    * @param {number=} opt_debugPort Optional port to use for the debugging
    *     process.
-   * 
+   *
    * @return {Promise} If blockUntilExit, a promise resolved when the debugger process
    *     exits. Otherwise, resolved when the debugger process is ready to begin.
    */

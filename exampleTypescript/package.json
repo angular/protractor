@@ -7,7 +7,8 @@
   "scripts": {
     "tsc": "tsc",
     "pretest": "npm run tsc",
-    "test": "protractor tmp/conf.js"
+    "test": "protractor tmp/conf.js",
+    "debug": "node --inspect --debug-brk ./node_modules/.bin/protractor asyncAwait/conf.js"
   },
   "dependencies": {
     "@types/jasmine": "2.5.41",
@@ -17,6 +18,7 @@
     "typescript": "~2.0.0"
   },
   "devDependencies": {
-    "@types/jasminewd2": "^2.0.0"
+    "@types/jasminewd2": "^2.0.0",
+    "ts-node": "^3.0.2"
   }
 }

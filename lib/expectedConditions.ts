@@ -416,19 +416,19 @@ export class ProtractorExpectedConditions {
   }
 
   /**
- * An expectation for checking the selection is selected.
- *
- * @example
- * var EC = protractor.ExpectedConditions;
- * // Waits for the element with id 'myCheckbox' to be selected.
- * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
- *
- * @alias ExpectedConditions.elementToBeSelected
- * @param {!ElementFinder} elementFinder The element to check
- *
- * @returns {!function} An expected condition that returns a promise
- *     representing whether the element is selected.
- */
+   * An expectation for checking the selection is selected.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'myCheckbox' to be selected.
+   * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
+   *
+   * @alias ExpectedConditions.elementToBeSelected
+   * @param {!ElementFinder} elementFinder The element to check
+   *
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the element is selected.
+   */
   elementToBeSelected(elementFinder: ElementFinder): Function {
     return this.and(this.presenceOf(elementFinder), () => {
       return elementFinder.isSelected().then(passBoolean, falseIfMissing);
