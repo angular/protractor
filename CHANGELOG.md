@@ -1626,7 +1626,7 @@ _This release contains updates which fix some issues with dependencies that had 
   fix(cucumber): process no-snippets param for cucumber framework
 
 # 2.0.0
-
+ 
 _Why is this change version 2.0? Protractor is following semver, and there's some breaking changes here._
 
 ## Dependency Version Upgrades
