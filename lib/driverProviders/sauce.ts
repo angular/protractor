@@ -63,7 +63,8 @@ export class Sauce extends DriverProvider {
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
     this.config_.capabilities['build'] = this.config_.sauceBuild;
-    let auth = 'https://' + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
+    let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
+    let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
     this.config_.seleniumAddress = auth +
         (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
                                              'ondemand.saucelabs.com:443/wd/hub');
