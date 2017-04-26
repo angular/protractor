@@ -344,6 +344,25 @@ export interface Config {
    */
   verboseMultiSessions?: boolean;
 
+  /**
+   * Choose wether or not to create protractor browser asynchronously.
+   * In practicular this option must be enabled in order to use the queuing mechanism.
+   */
+  createBrowserAsync?: boolean;
+
+  /**
+   * Use this option with createBrowserAsync: true, enables to queuing real devices
+   * or retry create driver on driver creation failure.
+   *
+   * example:
+   * retryMechanismConf: {
+   *    enabled: true, // enable retry driver creation
+   *    retries: 3, // times to retry
+   *    delay: 50000 // delay between each retry
+   * }
+   */
+  retryMechanismConf?: any;
+
   // ---------------------------------------------------------------------------
   // ----- Global test information
   // ---------------------------------------------

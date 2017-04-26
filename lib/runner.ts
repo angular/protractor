@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
 import * as q from 'q';
-import {promise as wdpromise, Session} from 'selenium-webdriver';
+import {promise as wdpromise, Session, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
@@ -344,6 +344,160 @@ export class Runner extends EventEmitter {
   }
 
   /**
+   * Create a new protractor browser asynchronously from a driverProvider
+   * using asynchronously driver creation. Then set up a
+   * new protractor instance using this driver.
+   * This is used to set up the initial protractor instances and any
+   * future ones.
+   *
+   * @param {Plugin} plugins The plugin functions
+   * @param {ProtractorBrowser=} parentBrowser The browser which spawned this one
+   *
+   * @return {Promise<ProtractorBrowser>} a protractor instance.
+   * @public
+   */
+  async createBrowserAsync(plugins: any, parentBrowser?: ProtractorBrowser):
+      Promise<ProtractorBrowser> {
+    let config = this.config_;
+    let driver = <WebDriver>await this.driverprovider_.getNewDriverAsync();
+
+    if (!driver && config.retryMechanismConf.enabled) {
+      let _numberOfRetries = config.retryMechanismConf.retries;
+      let _delay = config.retryMechanismConf.delay;
+
+      let delay = function(ms: number) {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, ms);
+        });
+      };
+
+      let _runner = this;
+      let retry = async function(delay_: number, times_: number) {
+        if (times_ == _numberOfRetries) {
+          logger.info('Making a first retry to create webdriver instance ...');
+        } else {
+          logger.info(
+              'Retry number ' + (_numberOfRetries - times_) + ' to create webdriver instance ...');
+        }
+        await delay(_delay);
+        driver = <WebDriver>await _runner.driverprovider_.getNewDriverAsync();
+        if (!driver && times_ > 0) {
+          logger.error('Retry failed ...');
+          await retry(_delay, --times_);
+        }
+      };
+
+      await retry(_delay, _numberOfRetries);
+      if (!driver) {
+        throw new Error('Reached max number of retries! could not create a webdriver instance.');
+      }
+    }
+
+    let blockingProxyUrl: string;
+    if (config.useBlockingProxy) {
+      blockingProxyUrl = this.driverprovider_.getBPUrl();
+    }
+
+    let initProperties = {
+      baseUrl: config.baseUrl,
+      rootElement: config.rootElement as string | wdpromise.Promise<string>,
+      untrackOutstandingTimeouts: config.untrackOutstandingTimeouts,
+      params: config.params,
+      getPageTimeout: config.getPageTimeout,
+      allScriptsTimeout: config.allScriptsTimeout,
+      debuggerServerPort: config.debuggerServerPort,
+      ng12Hybrid: config.ng12Hybrid,
+      waitForAngularEnabled: true as boolean | wdpromise.Promise<boolean>
+    };
+
+    if (parentBrowser) {
+      initProperties.baseUrl = parentBrowser.baseUrl;
+      initProperties.rootElement = parentBrowser.angularAppRoot();
+      initProperties.untrackOutstandingTimeouts = !parentBrowser.trackOutstandingTimeouts_;
+      initProperties.params = parentBrowser.params;
+      initProperties.getPageTimeout = parentBrowser.getPageTimeout;
+      initProperties.allScriptsTimeout = parentBrowser.allScriptsTimeout;
+      initProperties.debuggerServerPort = parentBrowser.debuggerServerPort;
+      initProperties.ng12Hybrid = parentBrowser.ng12Hybrid;
+      initProperties.waitForAngularEnabled = parentBrowser.waitForAngularEnabled();
+    }
+
+    let browser_ = new ProtractorBrowser(
+        driver, initProperties.baseUrl, initProperties.rootElement,
+        initProperties.untrackOutstandingTimeouts, blockingProxyUrl);
+
+    browser_.params = initProperties.params;
+    browser_.plugins_ = plugins || new Plugins({});
+    if (initProperties.getPageTimeout) {
+      browser_.getPageTimeout = initProperties.getPageTimeout;
+    }
+    if (initProperties.allScriptsTimeout) {
+      browser_.allScriptsTimeout = initProperties.allScriptsTimeout;
+    }
+    if (initProperties.debuggerServerPort) {
+      browser_.debuggerServerPort = initProperties.debuggerServerPort;
+    }
+    if (initProperties.ng12Hybrid) {
+      browser_.ng12Hybrid = initProperties.ng12Hybrid;
+    }
+
+    browser_.ready =
+        browser_.ready
+            .then(() => {
+              return browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
+            })
+            .then(() => {
+              return driver.manage().timeouts().setScriptTimeout(initProperties.allScriptsTimeout);
+            })
+            .then(() => {
+              return browser_;
+            });
+
+    browser_.getProcessedConfig = () => {
+      return wdpromise.when(config);
+    };
+
+    browser_.forkNewDriverInstanceAsync =
+        async(useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
+      let newBrowser = await this.createBrowserAsync(plugins);
+      if (copyMockModules) {
+        newBrowser.mockModules_ = browser_.mockModules_;
+      }
+      if (useSameUrl) {
+        newBrowser.ready = newBrowser.ready
+                               .then(() => {
+                                 return browser_.driver.getCurrentUrl();
+                               })
+                               .then((url: string) => {
+                                 return newBrowser.get(url);
+                               })
+                               .then(() => {
+                                 return newBrowser;
+                               });
+      }
+      return newBrowser;
+    };
+
+    let replaceBrowser = async() => {
+      let newBrowser = await browser_.forkNewDriverInstanceAsync(false, true);
+      if (browser_ === protractor.browser) {
+        this.setupGlobals_(newBrowser);
+      }
+      return newBrowser;
+    };
+
+    browser_.restart = () => {
+      return this.driverprovider_.quitDriver(browser_.driver).then(() => {
+        return replaceBrowser().then((newBrowser) => {
+          return newBrowser.ready();
+        });
+      });
+    };
+
+    return browser_;
+  }
+
+  /**
    * Final cleanup on exiting the runner.
    *
    * @return {q.Promise} A promise which resolves on finish.
@@ -386,9 +540,13 @@ export class Runner extends EventEmitter {
           // noinspection JSValidateTypes
           return this.driverprovider_.setupEnv();
         })
-        .then(() => {
+        .then(async() => {
           // 2) Create a browser and setup globals
-          browser_ = this.createBrowser(plugins);
+          if (this.config_.createBrowserAsync) {
+            browser_ = await this.createBrowserAsync(plugins);
+          } else {
+            browser_ = this.createBrowser(plugins);
+          }
           this.setupGlobals_(browser_);
           return browser_.ready.then(browser_.getSession)
               .then(

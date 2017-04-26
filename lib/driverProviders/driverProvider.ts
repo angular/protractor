@@ -8,6 +8,9 @@ import {Builder, promise as wdpromise, Session, WebDriver} from 'selenium-webdri
 
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
+import {Logger} from '../logger';
+
+let logger = new Logger('driverProvider');
 
 export abstract class DriverProvider {
   drivers_: WebDriver[];
@@ -44,6 +47,38 @@ export abstract class DriverProvider {
    * @return webdriver instance
    */
   getNewDriver() {
+    let newDriver = this.getDriverBuilder().build();
+    this.drivers_.push(newDriver);
+    return newDriver;
+  }
+
+  /**
+   * Create a new driver instance asynchronously.
+   *
+   * @public
+   * @return Promise<WebDriver> instance
+   */
+  async getNewDriverAsync() {
+    let _driverProvider = this;
+    let getDriverAsync = async function(): Promise<WebDriver> {
+      return _driverProvider.getDriverBuilder().build();
+    };
+    return getDriverAsync()
+        .then((newDriver) => {
+          return newDriver;
+        })
+        .catch((err: Error) => {
+          logger.error(err.message);
+        });
+  }
+
+  /**
+  * Create a driver builder instance 
+  *
+  * @public
+  * @return webdriver builder instance
+  */
+  getDriverBuilder() {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
       builder =
@@ -57,9 +92,7 @@ export abstract class DriverProvider {
     if (this.config_.disableEnvironmentOverrides === true) {
       builder.disableEnvironmentOverrides();
     }
-    let newDriver = builder.build();
-    this.drivers_.push(newDriver);
-    return newDriver;
+    return builder;
   }
 
   /**
