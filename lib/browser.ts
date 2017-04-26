@@ -209,6 +209,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
           return this.internalRootEl;
         });
       }
+      return wdpromise.when(this.internalRootEl);
     }, `Set angular root selector to ${value}`);
   }
 
