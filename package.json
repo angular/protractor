@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/chalk": "^0.4.28",
     "@types/glob": "^5.0.29",
-    "@types/jasmine": "^2.5.38",
+    "@types/jasmine": "2.5.41",
     "@types/jasminewd2": "^2.0.0",
     "@types/minimatch": "^2.0.28",
     "@types/minimist": "^1.1.28",
