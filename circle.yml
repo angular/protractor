@@ -19,7 +19,7 @@ dependencies:
     - cd testapp && npm update
     - npm start:
           background: true
-    # Install the latest Firefox beta
+    # Install the latest Firefox stable
     - pip install mozdownload mozinstall
     - mozdownload --version latest --destination firefox.tar.bz2
     - mozinstall firefox.tar.bz2
