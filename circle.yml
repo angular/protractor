@@ -14,8 +14,7 @@ dependencies:
   post:
     - ./node_modules/.bin/gulp lint
     - ./node_modules/.bin/webdriver-manager update
-    - wget http://selenium-release.storage.googleapis.com/3.0-beta4/selenium-server-standalone-3.0.0-beta4.jar -P ./node_modules/webdriver-manager/selenium
-    - ./node_modules/.bin/webdriver-manager start --versions.standalone 3.0.0-beta4:
+    - ./node_modules/.bin/webdriver-manager start:
         background: true
     - cd testapp && npm update
     - npm start:
