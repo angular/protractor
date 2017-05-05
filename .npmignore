@@ -1,5 +1,6 @@
 # Shared between .npmignore and .gitignore
 
+yarn.lock
 chromedriver.log
 libpeerconnection.log
 xmloutput*
