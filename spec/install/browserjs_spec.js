@@ -7,7 +7,7 @@ describe('browser', () => {
   });
 
   it('should load a browser session', (done) => {
-    browser.get('http://angularjs.org');
+    browser.get('https://angularjs.org');
     browser.getSession().then(session => {
       session1 = session.getId();
       expect(session1).not.toBeUndefined();
@@ -17,7 +17,7 @@ describe('browser', () => {
     done();
   });
   it('should have a new browser session', (done) => {
-    browser.get('http://angularjs.org');
+    browser.get('https://angularjs.org');
     browser.getSession().then(session => {
       session2 = session.getId();
       expect(session2).not.toBeUndefined();
