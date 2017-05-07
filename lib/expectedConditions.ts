@@ -479,5 +479,4 @@ export class ProtractorExpectedConditions {
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
-
 }
