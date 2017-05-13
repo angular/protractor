@@ -163,3 +163,5 @@ plugins please report them to the corresponding plugin developer.
 * [Protractor testability plugin](https://github.com/alfonso-presa/protractor-testability-plugin): this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.
 
 * [protractor-fail-fast](https://github.com/Updater/protractor-fail-fast): Allows Protractor to "fail-fast", forcing all test runners to exit if one of them encounters a failing test. For scenarios where a failure means the entire build has failed (e.g. CI), failing fast can save a tremendous amount of time.
+
+* [protractor-numerator](https://github.com/Marketionist/protractor-numerator): This plugin gives you readable functions for getting elements by their numbers inside Protractor tests. Adds functions like `.second()`, `.third()`, etc. instead of `.get(1)`, `.get(2)`, etc.
