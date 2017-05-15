@@ -17,10 +17,10 @@
 <pre><code ng-non-bindable>element(by.css(&#39;button.myclass&#39;)).click();
 </code></pre><p>This will result in three commands being sent to the Browser Driver</p>
 <ul>
-<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#/session/:sessionId/execute_async">/session/:sessionId/execute_async</a> - First, Protractor tells the browser to run a snippet of JavaScript. This is a custom command which asks Angular to respond when the application is done with all timeouts and asynchronous requests, and ready for the test to resume.</p>
+<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidexecute_async">/session/:sessionId/execute_async</a> - First, Protractor tells the browser to run a snippet of JavaScript. This is a custom command which asks Angular to respond when the application is done with all timeouts and asynchronous requests, and ready for the test to resume.</p>
 </li>
-<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element">/session/:sessionId/element</a> - Then, the command to find the element is sent.</p>
+<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelement">/session/:sessionId/element</a> - Then, the command to find the element is sent.</p>
 </li>
-<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click">/session/:sessionId/element/:id/click</a> - Finally the command to perform a click action is sent.</p>
+<li><p><a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#post-sessionsessionidelementidclick">/session/:sessionId/element/:id/click</a> - Finally the command to perform a click action is sent.</p>
 </li>
 </ul>

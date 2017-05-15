@@ -30,11 +30,6 @@ exports.config = {
   }]
 };
 </code></pre>
-<p>An example of using the &#39;ngHint&#39; plugin is shown below.</p>
-<pre><code class="lang-javascript">  plugins: [{
-    path: &#39;node_modules/protractor/plugins/ngHint&#39;,
-  }]
-</code></pre>
 <p>If your plugin is a node module, you may use it with the <code ng-non-bindable>package</code> option. For
 example, if you did <code ng-non-bindable>npm install example-protractor-plugin</code> your config would
 look like:</p>
@@ -42,8 +37,8 @@ look like:</p>
     package: &#39;example-protractor-plugin&#39;,
   }]
 </code></pre>
-<p>Finally, if you are writing a small plugin which will only be used by one config
-file, you can write the plugin inline into the config:</p>
+<p>If you are writing a small plugin which will only be used by one config file,
+you can write the plugin inline into the config:</p>
 <pre><code class="lang-javascript">  plugins: [{
     inline: {
       setup: function() { ... },
@@ -52,242 +47,18 @@ file, you can write the plugin inline into the config:</p>
     }
   }]
 </code></pre>
+<p>When using plugins, you should specify exactly one of <code ng-non-bindable>path</code>, <code ng-non-bindable>package</code>, or
+<code ng-non-bindable>inline</code>.</p>
 <h2 id="writing-plugins" class="anchored"><div><a href="#{{path}}#writing-plugins">&#x1f517;</a>Writing Plugins</div></h2>
 <p>Plugins are designed to work with any test framework (Jasmine, Mocha, etc),
 so they use generic hooks which Protractor provides. Plugins may change
 the output of Protractor by returning a results object.</p>
-<p>Plugins are node modules which export an object with the following API:</p>
-<pre><code class="lang-js">/**
- * Sets up plugins before tests are run. This is called after the WebDriver
- * session has been started, but before the test framework has been set up.
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, a failed assertion is added to the test results.
- */
-exports.setup = function() {};
-
-/**
- * This is called before the test have been run but after the test framework has
- * been set up.  Analogous to a config file&#39;s `onPreare`.
- *
- * Very similar to using `setup`, but allows you to access framework-specific
- * variables/funtions (e.g. `jasmine.getEnv().addReporter()`)
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {Q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, a failed assertion is added to the test results.
- */
-exports.onPrepare = function() {};
-
-/**
- * This is called after the tests have been run, but before the WebDriver
- * session has been terminated.
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, a failed assertion is added to the test results.
- */
-exports.teardown = function() {};
-
-/**
- * Called after the test results have been finalized and any jobs have been
- * updated (if applicable).
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, it is outputted to the console
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, an error is logged to the console.
- */
-exports.postResults = function() {};
-
-/**
- * Called after each test block (in Jasmine, this means an `it` block)
- * completes.
- *
- * @param {boolean} passed True if the test passed.
- * @param {Object} testInfo information about the test which just ran.
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before outputting test results.  Protractor
- *     will *not* wait before executing the next test, however.  If the promise
- *     is rejected, a failed assertion is added to the test results.
- */
-exports.postTest = function(passed, testInfo) {};
-
-/**
- * This is called inside browser.get() directly after the page loads, and before
- * angular bootstraps.
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, a failed assertion is added to the test results.
- */
-exports.onPageLoad = function() {};
-
-/**
- * This is called inside browser.get() directly after angular is done
- * bootstrapping/synchronizing.  If browser.ignoreSynchronization is true, this
- * will not be called.
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, a failed assertion is added to the test results.
- */
-exports.onPageStable = function() {};
-
-/**
- * Between every webdriver action, Protractor calls browser.waitForAngular() to
- * make sure that Angular has no outstanding $http or $timeout calls.
- * You can use waitForPromise() to have Protractor additionally wait for your
- * custom promise to be resolved inside of browser.waitForAngular().
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise=} Can return a promise, in which case protractor will wait
- *     for the promise to resolve before continuing.  If the promise is
- *     rejected, a failed assertion is added to the test results, and protractor
- *     will continue onto the next command.  If nothing is returned or something
- *     other than a promise is returned, protractor will continue onto the next
- *     command.
- */
-exports.waitForPromise = function() {};
-
-/**
- * Between every webdriver action, Protractor calls browser.waitForAngular() to
- * make sure that Angular has no outstanding $http or $timeout calls.
- * You can use waitForCondition() to have Protractor additionally wait for your
- * custom condition to be truthy.
- *
- * @this {Object} bound to module.exports
- *
- * @throws {*} If this function throws an error, a failed assertion is added to
- *     the test results.
- *
- * @return {q.Promise&lt;boolean&gt;|boolean} If truthy, Protractor will continue onto
- *     the next command.  If falsy, webdriver will continuously re-run this
- *     function until it is truthy.  If a rejected promise is returned, a failed
- *     assertion is added to the test results, and protractor will continue onto
- *     the next command.
- */
-exports.waitForCondition = function() {};
-
-/**
- * Used when reporting results.
- *
- * If you do not specify this property, it will be filled in with something
- * reasonable (e.g. the plugin&#39;s path)
- *
- * @type {string}
- */
-exports.name = &#39;&#39;;
-
-
-/**
- * Used to turn off default checks for angular stability
- *
- * Normally Protractor waits for all $timeout and $http calls to be processed
- * before executing the next command.  This can be disabled using
- * browser.ignoreSynchronization, but that will also disable any
- * &lt;Plugin&gt;.waitForPromise or &lt;Plugin&gt;.waitForCondition checks.  If you want to
- * disable synchronization with angular, but leave in tact any custom plugin
- * synchronization, this is the option for you.
- *
- * This is used by users who want to replace Protractor&#39;s synchronization code
- * with their own.
- *
- * @type {boolean}
- */
-exports.skipAngularStability
-</code></pre>
-<p>Each of these exported properties are optional.</p>
-<h3 id="provided-properties-and-functions">Provided properties and functions</h3>
+<p>Plugins are node modules that export an object implementing the
+<code ng-non-bindable>ProtractorPlugin</code> interface.  Please see <a href="https://github.com/angular/protractor/blob/5.1.2/lib/plugins.ts#L25"><code ng-non-bindable>/lib/plugins.ts</code></a> for a list of hooks that are available to plugins.</p>
+<h5 id="provided-properties-and-functions">Provided properties and functions</h5>
 <p>Extra properties are added to your <code ng-non-bindable>module.exports</code> when Protractor loads your
 plugin.  These allow your plugin to do things like access its configuration
-block or add test results.  They are as follows:</p>
-<pre><code class="lang-js">/**
- * The plugin configuration object. Note that this is not the entire
- * Protractor config object, just the entry in the plugins array for this
- * plugin.
- *
- * @type {Object}
- */
-exports.config;
-
-/**
- * Adds a failed assertion to the test&#39;s results.
- *
- * @param {string} message The error message for the failed assertion
- * @param {specName: string, stackTrace: string} options Some optional extra
- *     information about the assertion:
- *       - specName The name of the spec which this assertion belongs to.
- *            Defaults to `PLUGIN_NAME + &#39; Plugin Tests&#39;`.
- *       - stackTrace The stack trace for the failure.  Defaults to undefined.
- *     Defaults to `{}`.
- *
- * @throws {Error} Throws an error if called after results have been reported
- */
-exports.addFailure(message, options);
-
-/**
- * Adds a passed assertion to the test&#39;s results.
- *
- * @param {specName: string} options Extra information about the assertion:
- *       - specName The name of the spec which this assertion belongs to.
- *            Defaults to `PLUGIN_NAME + &#39; Plugin Tests&#39;`.
- *     Defaults to `{}`.
- *
- * @throws {Error} Throws an error if called after results have been reported
- */
-exports.addSuccess(options);
-
-/**
- * Warns the user that something is problematic.
- *
- * @param {string} message The message to warn the user about
- * @param {specName: string} options Extra information about the assertion:
- *       - specName The name of the spec which this assertion belongs to.
- *            Defaults to `PLUGIN_NAME + &#39; Plugin Tests&#39;`.
- *     Defaults to `{}`.
- */
-exports.addWarning(message, options);
-</code></pre>
-<p>If you specify any of these properties in your plugin file, they will be
-overwritten.</p>
+block or add test results.  See <code ng-non-bindable>/lib/plugins.ts</code> for the full list.</p>
 <h3 id="writing-plugins-in-typescript">Writing Plugins in TypeScript</h3>
 <p>The simplest way to write plugins in TypeScript is to mirror the javascript
 syntax:</p>
@@ -331,14 +102,6 @@ issues are in tests.  It is published at the npm module
 github repo [angular/protractor-timeline-plugin]
 (<a href="https://github.com/angular/protractor-timeline-plugin">https://github.com/angular/protractor-timeline-plugin</a>).</p>
 </li>
-<li><p>ngHint Plugin</p>
-<p>The ngHint plugin uses <a href="https://github.com/angular/angular-hint">Angular Hint</a>
-to generate run-time hinting and then turns these hints into Protractor tests.
-It is published at the npm module [<code ng-non-bindable>protractor-ng-hint-plugin</code>]
-(<a href="https://www.npmjs.com/package/protractor-ng-hint-plugin">https://www.npmjs.com/package/protractor-ng-hint-plugin</a>) and stored at the
-github repo [angular/protractor-ng-hint-plugin]
-(<a href="https://github.com/angular/protractor-ng-hint-plugin">https://github.com/angular/protractor-ng-hint-plugin</a>).</p>
-</li>
 <li><p>Console Plugin (Chrome Only)</p>
 <p>The console plugin checks the browser log after each test for warnings and
 errors.  It is published at the npm module [<code ng-non-bindable>protractor-console-plugin</code>]
@@ -346,11 +109,22 @@ errors.  It is published at the npm module [<code ng-non-bindable>protractor-con
 github repo [angular/protractor-console-plugin]
 (<a href="https://github.com/angular/protractor-console-plugin">https://github.com/angular/protractor-console-plugin</a>).</p>
 </li>
+<li><p>ngHint Plugin (NOT MAINTAINED)</p>
+<p>The ngHint plugin uses <a href="https://github.com/angular/angular-hint">Angular Hint</a>
+to generate run-time hinting and then turns these hints into Protractor tests.
+It is published at the npm module [<code ng-non-bindable>protractor-ng-hint-plugin</code>]
+(<a href="https://www.npmjs.com/package/protractor-ng-hint-plugin">https://www.npmjs.com/package/protractor-ng-hint-plugin</a>) and stored at the
+github repo [angular/protractor-ng-hint-plugin]
+(<a href="https://github.com/angular/protractor-ng-hint-plugin">https://github.com/angular/protractor-ng-hint-plugin</a>).</p>
+</li>
 </ul>
 <h2 id="community-plugins" class="anchored"><div><a href="#{{path}}#community-plugins">&#x1f517;</a>Community Plugins</div></h2>
 <p>This list is here for reference and the plugins included are not developed or
 mantained by protractor&#39;s team by any means. If you find any issues with this
 plugins please report them to the corresponding plugin developer.</p>
 <ul>
-<li><a href="https://github.com/alfonso-presa/protractor-testability-plugin">Protractor testability plugin</a>: this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.</li>
+<li><p><a href="https://github.com/alfonso-presa/protractor-testability-plugin">Protractor testability plugin</a>: this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.</p>
+</li>
+<li><p><a href="https://github.com/Updater/protractor-fail-fast">protractor-fail-fast</a>: Allows Protractor to &quot;fail-fast&quot;, forcing all test runners to exit if one of them encounters a failing test. For scenarios where a failure means the entire build has failed (e.g. CI), failing fast can save a tremendous amount of time.</p>
+</li>
 </ul>
