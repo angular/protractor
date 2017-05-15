@@ -1,3 +1,59 @@
+# 5.1.2
+
+## Features
+
+- ([dd2ccbb](https://github.com/angular/protractor/commit/dd2ccbb1b73b7c90647837cd1c4f6b16b3f6b0ac))
+  feat(saucelabs): Add Sauce Labs protocol customization support
+
+## Fixes
+
+- ([1a47076](https://github.com/angular/protractor/commit/1a47076875395648038a39fcd258a77bfcabe05c)) 
+  fix(ci): Use latest pip on CircleCI
+
+- ([fd59c78](https://github.com/angular/protractor/commit/fd59c78407ced4f17e1b4ed4451ce463439aa3c9)) 
+  fix(elementexplorer): Set script breakpoints with cross-platform safe paths.
+
+  Fixes #4011
+
+- ([1250278](https://github.com/angular/protractor/commit/12502784b306cbedca8684486c31eeb361da5897)) 
+  fix(cli): Correctly parse list chromeOptions
+
+  Chromedriver requires that certain options always be passed as an array. Optimist passes
+  --single-option as a string instead of an array which is invalid. This ensures that we always pass
+  an array, even if a single option is passed via the cli.
+
+  Fixes #4050
+
+- ([183cd80](https://github.com/angular/protractor/commit/183cd803254f7a3ccb3a8650e8ef06b4fff03446)) 
+  fix(browser): Fix browser.angularAppRoot()
+
+  By default, it wasn't returning anything. Now it returns a promise that resolves to
+  internalAngularAppRoot. Fixes #4233
+
+- ([bd534fb](https://github.com/angular/protractor/commit/bd534fb8b2dfaca9072914dc84ad662891a8c7b2)) 
+  fix: Add "stackTrace" option to allowedNames in cli.ts
+
+  This fixes a problem I encountered similar to #4196 - where `stackTrace` is listed as an option
+  but an error is given saying it's an "unknown extra flag"
+
+- ([8249167](https://github.com/angular/protractor/commit/82491678de71b43311ea68d496ff807e1c72ee5e)) 
+  fix: export Runner, not just its type. (#4227)
+
+- ([0eb5b76](https://github.com/angular/protractor/commit/0eb5b7608e4bfb770878fe443d97ed9aa426c070)) 
+  fix(navigation): ignore unknown JS errors in IE (#4149)
+
+  The `err` object doesn't have the `code` property any more (Selenium Server Standalone 3.3.1 +
+  IEDriver win32 3.3.0), so we need a new way to detect those errors. See #841
+- ([4752ad1](https://github.com/angular/protractor/commit/4752ad1287af536c6dd442dd8c74546f978627d9)) 
+  chore(examples): Fix TSC issues with exampleTypescript (#4132)
+
+
+## Dependencies
+
+- ([a0a1fac](https://github.com/angular/protractor/commit/a0a1fac8568f2bfbd6d5721db438aed390e30d23)) 
+  chore(deps): Updating webdriver-manager and jasminewd2
+
+
 # 5.1.1
 
 ## Features
