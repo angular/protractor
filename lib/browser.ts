@@ -48,7 +48,6 @@ export interface AbstractExtendedWebDriver extends ExtendedWebDriver {}
  * called in the context of the original object.  Any arguments of type
  * `ElementFinder` will be unwrapped to their underlying `WebElement` instance
  *
- * @private
  * @param {Object} to
  * @param {Object} from
  * @param {string} fnName
@@ -83,7 +82,6 @@ export interface ElementHelper extends Function {
 /**
  * Build the helper 'element' function for a given instance of Browser.
  *
- * @private
  * @param {Browser} browser A browser instance.
  * @returns {function(webdriver.Locator): ElementFinder}
  */
