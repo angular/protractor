@@ -220,9 +220,33 @@ export class Runner extends EventEmitter {
    * @return {Protractor} a protractor instance.
    * @public
    */
-  createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): any {
+  async createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): Promise<ProtractorBrowser> {
     let config = this.config_;
-    let driver = this.driverprovider_.getNewDriver();
+    let driver = await this.driverprovider_.getNewDriverAsync();
+
+    if (!driver) {
+      let delay = function(ms: number) {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, ms);
+        });
+      };
+      let _runner = this;
+      let retry = async function(_delay: number, times: number) {
+        logger.info('Failed to create a new driver, making a retry.');
+        await delay(_delay);
+        driver = await _runner.driverprovider_.getNewDriverAsync();
+        if (!driver && times > 0) {
+          logger.error('Retry failed ... retrying agian.');
+          await retry(_delay, times--);
+        }
+      };
+      
+      await retry(15000, 3);
+
+      if (!driver) {
+        throw new Error('Could not obtain webdriver instance.');
+      }
+    }
 
     let blockingProxyUrl: string;
     if (config.useBlockingProxy) {
@@ -289,28 +313,28 @@ export class Runner extends EventEmitter {
     };
 
     browser_.forkNewDriverInstance =
-        (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
-          let newBrowser = this.createBrowser(plugins);
-          if (copyMockModules) {
-            newBrowser.mockModules_ = browser_.mockModules_;
-          }
-          if (useSameUrl) {
-            newBrowser.ready = newBrowser.ready
-                                   .then(() => {
-                                     return browser_.driver.getCurrentUrl();
-                                   })
-                                   .then((url: string) => {
-                                     return newBrowser.get(url);
-                                   })
-                                   .then(() => {
-                                     return newBrowser;
-                                   });
-          }
-          return newBrowser;
-        };
+        async(useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
+      let newBrowser = await this.createBrowser(plugins);
+      if (copyMockModules) {
+        newBrowser.mockModules_ = browser_.mockModules_;
+      }
+      if (useSameUrl) {
+        newBrowser.ready = newBrowser.ready
+                               .then(() => {
+                                 return browser_.driver.getCurrentUrl();
+                               })
+                               .then((url: string) => {
+                                 return newBrowser.get(url);
+                               })
+                               .then(() => {
+                                 return newBrowser;
+                               });
+      }
+      return newBrowser;
+    };
 
-    let replaceBrowser = () => {
-      let newBrowser = browser_.forkNewDriverInstance(false, true);
+    let replaceBrowser = async() => {
+      let newBrowser = await browser_.forkNewDriverInstance(false, true);
       if (browser_ === protractor.browser) {
         this.setupGlobals_(newBrowser);
       }
@@ -318,26 +342,9 @@ export class Runner extends EventEmitter {
     };
 
     browser_.restart = () => {
-      // Note: because tests are not paused at this point, any async
-      // calls here are not guaranteed to complete before the tests resume.
-
-      // Seperate solutions depending on if the control flow is enabled (see lib/browser.ts)
-      if (browser_.controlFlowIsEnabled()) {
-        return browser_.restartSync().ready;
-      } else {
-        return this.driverprovider_.quitDriver(browser_.driver)
-            .then(replaceBrowser)
-            .then(newBrowser => newBrowser.ready);
-      }
-    };
-
-    browser_.restartSync = () => {
-      if (!browser_.controlFlowIsEnabled()) {
-        throw TypeError('Unable to use `browser.restartSync()` when the control flow is disabled');
-      }
-
-      this.driverprovider_.quitDriver(browser_.driver);
-      return replaceBrowser();
+      return this.driverprovider_.quitDriver(browser_.driver).then(replaceBrowser).then(() => {
+        return browser_.ready;
+      });
     };
 
     return browser_;
@@ -388,20 +395,22 @@ export class Runner extends EventEmitter {
         })
         .then(() => {
           // 2) Create a browser and setup globals
-          browser_ = this.createBrowser(plugins);
-          this.setupGlobals_(browser_);
-          return browser_.ready.then(browser_.getSession)
-              .then(
-                  (session: Session) => {
-                    logger.debug(
-                        'WebDriver session successfully started with capabilities ' +
-                        util.inspect(session.getCapabilities()));
-                  },
-                  (err: Error) => {
-                    logger.error('Unable to start a WebDriver session.');
-                    throw err;
-                  });
-          // 3) Setup plugins
+          return this.createBrowser(plugins).then((browser) => {
+            browser_ = browser;
+            this.setupGlobals_(browser_);
+            return browser_.ready.then(browser_.getSession)
+                .then(
+                    (session: Session) => {
+                      logger.debug(
+                          'WebDriver session successfully started with capabilities ' +
+                          util.inspect(session.getCapabilities()));
+                    },
+                    (err: Error) => {
+                      logger.error('Unable to start a WebDriver session.');
+                      throw err;
+                    });
+            // 3) Setup plugins
+          });
         })
         .then(() => {
           return plugins.setup();

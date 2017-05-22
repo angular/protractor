@@ -467,10 +467,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @param {boolean=} copyConfigUpdates Whether to copy over changes to `baseUrl` and similar
    *   properties initialized to values in the the config.  Defaults to `true`
    *
-   * @returns {ProtractorBrowser} A browser instance.
+   * @returns {Promise<ProtractorBrowser>} A browser instance.
    */
   forkNewDriverInstance(useSameUrl?: boolean, copyMockModules?: boolean, copyConfigUpdates = true):
-      ProtractorBrowser {
+      Promise<ProtractorBrowser> {
     return null;
   }
 
