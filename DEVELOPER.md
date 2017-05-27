@@ -6,7 +6,7 @@ the repository layout.
 ## Prerequisite software
 
 The prerequisite software (Node.js, npm, git, jdk) are the same as for angular. See
-https://github.com/angular/angular/blob/master/DEVELOPER.md#prerequisite-software
+https://github.com/angular/angular/blob/master/docs/DEVELOPER.md#prerequisite-software
 
 ## Getting the sources
 
@@ -148,4 +148,4 @@ the browsers it needs locally. Circle CI runs unit tests and a set of e2e tests 
 
 ## Releasing
 
-See `release.md` for full instructions.
+See [release.md](https://github.com/angular/protractor/blob/master/release.md) for full instructions.

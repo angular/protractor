@@ -45,4 +45,4 @@ in Node v6, but do work in Node v7 (due to https://github.com/nodejs/node/issues
 More Examples
 =============
 
-More examples can be found under [`/spec/ts/`](/../../spec/ts).
+More examples can be found under [`/spec/ts/`](/spec/ts).

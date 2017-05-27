@@ -5,11 +5,18 @@ exports.config = {
   directConnect: true,
 
   framework: 'jasmine',
+
+  // Disabled until https://github.com/angular/protractor/issues/4253 is resolved
+  /*
   multiCapabilities: [{
     'browserName': 'chrome'
   }, {
     'browserName': 'firefox',
   }],
+  */
+  capabilities: {
+    browserName: 'chrome',
+  },
 
   baseUrl: env.baseUrl + '/ng1/',
 
