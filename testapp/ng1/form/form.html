@@ -106,3 +106,12 @@
   <div id="textlowercase" style="text-transform: lowercase;">Lowercase</div>
   <div id="textcapitalize" style="text-transform: capitalize;">capitalize</div>
 </div>
+
+<div id="oddhtml">
+  <h4>Odd HTML</h4>
+  <!-- CSS escaping requires \31z234 or \31 z234 to select this id -->
+  <div id="1z234">An element's <strong>id</strong> can start with a number in HTML5.</div>
+  <!-- However, when the 2nd character is a valid hex-digit, the space is required.
+  Escape: \31 234 -->
+  <div id="1234">This id starts with a digit followed by a character that is not a hex-digit.</div>
+</div>
