@@ -101,7 +101,7 @@ exports.config = {
     tags: [],                      // <string[]> (expression) only execute the features or scenarios with tags matching the expression
     strict: true,                  // <boolean> fail if there are any undefined or pending steps
     format: ["pretty"],            // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
-    dryRun: false,                 // <boolean> invoke formatters without executing steps
+    'dry-run': false,                 // <boolean> invoke formatters without executing steps
     compiler: []                   // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
   },
 
