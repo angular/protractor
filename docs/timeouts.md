@@ -64,17 +64,17 @@ Protractor waits for the `angular` variable to be present when loading a new pag
 ### _How to disable waiting for Angular_
 
 If you need to navigate to a page which does not use Angular, you can turn off waiting for Angular by setting
-`browser.ignoreSynchronization = true`. For example:
+`browser.waitForAngularEnabled(false). For example:
 
 ```js
-browser.ignoreSynchronization = true;
+browser.waitForAngularEnabled(false);
 browser.get('/non-angular-login-page.html');
 
 element(by.id('username')).sendKeys('Jane');
 element(by.id('password')).sendKeys('1234');
 element(by.id('clickme')).click();
 
-browser.ignoreSynchronization = false;
+browser.waitForAngularEnabled(true);
 browser.get('/page-containing-angular.html');
 ```
 

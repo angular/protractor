@@ -1100,7 +1100,7 @@ export class ElementFinder extends WebdriverWebElement {
   /**
    * Same as ElementFinder.isPresent(), except this checks whether the element
    * identified by the subLocator is present, rather than the current element
-   * finder. i.e. `element(by.css('#abc')).element(by.css('#def')).isPresent()`
+   * finder, i.e.: `element(by.css('#abc')).element(by.css('#def')).isPresent()`
    * is identical to `element(by.css('#abc')).isElementPresent(by.css('#def'))`.
    *
    * // Or using the shortcut $() notation instead of element(by.css()):

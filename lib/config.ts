@@ -137,6 +137,13 @@ export interface Config {
    */
   sauceBuild?: string;
   /**
+   * If true, Protractor will use http:// protocol instead of https:// to
+   * connect to Sauce Labs defined by sauceSeleniumAddress.
+   *
+   * default: false
+   */
+  sauceSeleniumUseHttp?: boolean;
+  /**
    * Use sauceSeleniumAddress if you need to customize the URL Protractor
    * uses to connect to sauce labs (for example, if you are tunneling selenium
    * traffic through a sauce connect tunnel). Default is
