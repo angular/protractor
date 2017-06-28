@@ -124,7 +124,7 @@ export abstract class DriverProvider {
     let driverPromise = this.setupDriverEnv();
     if (this.config_.useBlockingProxy && !this.config_.blockingProxyUrl) {
       // TODO(heathkit): If set, pass the webDriverProxy to BP.
-      return q.all([driverPromise, this.bpRunner.start()]);
+      return driverPromise.then(() => this.bpRunner.start());
     }
     return driverPromise;
   };
