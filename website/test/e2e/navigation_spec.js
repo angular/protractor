@@ -67,6 +67,8 @@ describe('Navigation', function() {
         'Plugins',
         'Timeouts',
         'The WebDriver Control Flow',
+        'Using TypeScript',
+        'Using async/await',
         'How It Works',
         'Upgrading to Jasmine 2.x',
         'Mobile Setup',

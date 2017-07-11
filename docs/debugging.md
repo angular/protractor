@@ -76,7 +76,16 @@ wd-debug>
 ```
 
 Enter `c` to move the test forward by one task.
-Enter `repl` to enter interactive mode. In interactive mode, you can send
+
+While the test is paused you may also interact with the browser. Note that
+if you open the Chrome Dev Tools, you must close them before continuing
+the test because ChromeDriver cannot operate when the Dev Tools are open.
+
+When you finish debugging, exit by pressing `Ctrl-C`. Your tests will continue
+where they left off, using the same browser.
+
+You can also use `browser.explore()` in your test script to pause and enter
+an interactive repl loop. In this interactive mode, you can send
 WebDriver commands to your browser. The resulting value or error will
 be reported to the terminal.
 
@@ -87,13 +96,6 @@ NoSuchElementError: No element found using locator: by.binding("nopenopenope")
 > element(by.binding('user')).getText()
 'Anon'
 ```
-
-While the test is paused you may also interact with the browser. Note that
-if you open the Chrome Dev Tools, you must close them before continuing
-the test because ChromeDriver cannot operate when the Dev Tools are open.
-
-When you finish debugging, exit by pressing `Ctrl-C`. Your tests will continue
-where they left off, using the same browser.
 
 **Note:** Since these are asynchronous tasks, you would have to increase the default timeout of your specs else default timeout exception would be thrown!
 

@@ -17,7 +17,6 @@ import {Logger} from '../logger';
 import {DriverProvider} from './driverProvider';
 
 const SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-const SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
 
 let logger = new Logger('direct');
 export class Direct extends DriverProvider {
@@ -27,11 +26,10 @@ export class Direct extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @public
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         logger.info('Using ChromeDriver directly...');
@@ -57,16 +55,24 @@ export class Direct extends DriverProvider {
    */
   getNewDriver(): WebDriver {
     let driver: WebDriver;
+
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
-        let defaultChromeDriverPath = path.resolve(
-            SeleniumConfig.getSeleniumDir(), new SeleniumChrome().executableFilename());
-
-        if (process.platform.indexOf('win') === 0) {
-          defaultChromeDriverPath += '.exe';
+        let chromeDriverFile: string;
+        if (this.config_.chromeDriver) {
+          chromeDriverFile = this.config_.chromeDriver;
+        } else {
+          try {
+            let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+            let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+            chromeDriverFile = updateConfig.chrome.last;
+          } catch (e) {
+            throw new BrowserError(
+                logger,
+                'Could not find update-config.json. ' +
+                    'Run \'webdriver-manager update\' to download binaries.');
+          }
         }
-
-        let chromeDriverFile = this.config_.chromeDriver || defaultChromeDriverPath;
 
         if (!fs.existsSync(chromeDriverFile)) {
           throw new BrowserError(
@@ -75,14 +81,35 @@ export class Direct extends DriverProvider {
                   '. Run \'webdriver-manager update\' to download binaries.');
         }
 
-        let service = new ChromeServiceBuilder(chromeDriverFile).build();
-        driver = new ChromeDriver(new Capabilities(this.config_.capabilities), service);
+        let chromeService = new ChromeServiceBuilder(chromeDriverFile).build();
+        // driver = ChromeDriver.createSession(new Capabilities(this.config_.capabilities),
+        // chromeService);
+        // TODO(ralphj): fix typings
+        driver =
+            require('selenium-webdriver/chrome')
+                .Driver.createSession(new Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
-        if (this.config_.firefoxPath) {
-          this.config_.capabilities['firefox_binary'] = this.config_.firefoxPath;
+        let geckoDriverFile: string;
+        try {
+          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+          geckoDriverFile = updateConfig.gecko.last;
+        } catch (e) {
+          throw new BrowserError(
+              logger,
+              'Could not find update-config.json. ' +
+                  'Run \'webdriver-manager update\' to download binaries.');
         }
-        driver = new FirefoxDriver(this.config_.capabilities);
+
+        // TODO (mgiambalvo): Turn this into an import when the selenium typings are updated.
+        const FirefoxServiceBuilder = require('selenium-webdriver/firefox').ServiceBuilder;
+
+        let firefoxService = new FirefoxServiceBuilder(geckoDriverFile).build();
+        // TODO(mgiambalvo): Fix typings.
+        driver =
+            require('selenium-webdriver/firefox')
+                .Driver.createSession(new Capabilities(this.config_.capabilities), firefoxService);
         break;
       default:
         throw new BrowserError(

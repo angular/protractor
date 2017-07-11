@@ -52,21 +52,22 @@ export class Sauce extends DriverProvider {
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
     this.sauceServer_ = new SauceLabs({
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent,
-      proxy: this.config_.sauceProxy
+      proxy: this.config_.webDriverProxy
     });
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
     this.config_.capabilities['build'] = this.config_.sauceBuild;
-    let auth = 'http://' + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
-    this.config_.seleniumAddress =
-        auth + (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
-                                                    'ondemand.saucelabs.com:80/wd/hub');
+    let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
+    let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
+    this.config_.seleniumAddress = auth +
+        (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
+                                             'ondemand.saucelabs.com:443/wd/hub');
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.

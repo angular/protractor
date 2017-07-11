@@ -1,9 +1,11 @@
 import * as q from 'q';
 import * as webdriver from 'selenium-webdriver';
 
+import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {ConfigParser} from './configParser';
 import {Logger} from './logger';
+import {protractor} from './ptor';
 
 let logger = new Logger('plugins');
 
@@ -25,61 +27,64 @@ export interface ProtractorPlugin {
    * Sets up plugins before tests are run. This is called after the WebDriver
    * session has been started, but before the test framework has been set up.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+   * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  setup?: () => q.Promise<any>;
+  setup?(): void|Promise<void>;
 
   /**
    * This is called before the test have been run but after the test framework has
    * been set up.  Analogous to a config file's `onPreare`.
    *
    * Very similar to using `setup`, but allows you to access framework-specific
-   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`)
+   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`).
+   *
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+   * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  onPrepare?: () => q.Promise<any>;
+  onPrepare?(): void|Promise<void>;
 
   /**
    * This is called after the tests have been run, but before the WebDriver
    * session has been terminated.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+   * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, a failed assertion is added to the test results.
    */
-  teardown?: () => q.Promise<any>;
+  teardown?(): void|Promise<void>;
 
   /**
    * Called after the test results have been finalized and any jobs have been
    * updated (if applicable).
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
-   * @throws {*} If this function throws an error, it is outputted to the console
+   * @throws {*} If this function throws an error, it is outputted to the console.
+   *     It is too late to add a failed assertion to the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+   * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before continuing.  If the promise is
    *     rejected, an error is logged to the console.
    */
-  postResults?: () => q.Promise<any>;
+  postResults?(): void|Promise<void>;
 
   /**
    * Called after each test block (in Jasmine, this means an `it` block)
@@ -88,48 +93,52 @@ export interface ProtractorPlugin {
    * @param {boolean} passed True if the test passed.
    * @param {Object} testInfo information about the test which just ran.
    *
-   * @this {Object} bound to module.exports
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
+   * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before outputting test results.  Protractor
    *     will *not* wait before executing the next test, however.  If the promise
    *     is rejected, a failed assertion is added to the test results.
    */
-  postTest?: (passed: boolean, testInfo: any) => q.Promise<any>;
+  postTest?(passed: boolean, testInfo: any): void|Promise<void>;
 
   /**
    * This is called inside browser.get() directly after the page loads, and before
    * angular bootstraps.
    *
-   * @this {Object} bound to module.exports
+   * @param {ProtractorBrowser} browser The browser instance which is loading a page.
+   *
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
-   *     for the promise to resolve before continuing.  If the promise is
-   *     rejected, a failed assertion is added to the test results.
+   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   *     protractor will wait for the promise to resolve before continuing.  If
+   *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageLoad?: () => q.Promise<any>;
+  onPageLoad?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
 
   /**
    * This is called inside browser.get() directly after angular is done
-   * bootstrapping/synchronizing.  If browser.ignoreSynchronization is true, this
-   * will not be called.
+   * bootstrapping/synchronizing.  If `browser.ignoreSynchronization` is `true`,
+   * this will not be called.
    *
-   * @this {Object} bound to module.exports
+   * @param {ProtractorBrowser} browser The browser instance which is loading a page.
+   *
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
-   *     for the promise to resolve before continuing.  If the promise is
-   *     rejected, a failed assertion is added to the test results.
+   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   *     protractor will wait for the promise to resolve before continuing.  If
+   *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageStable?: () => q.Promise<any>;
+  onPageStable?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -137,38 +146,43 @@ export interface ProtractorPlugin {
    * You can use waitForPromise() to have Protractor additionally wait for your
    * custom promise to be resolved inside of browser.waitForAngular().
    *
-   * @this {Object} bound to module.exports
+   * @param {ProtractorBrowser} browser The browser instance which needs invoked `waitForAngular`.
+   *
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise=} Can return a promise, in which case protractor will wait
-   *     for the promise to resolve before continuing.  If the promise is
-   *     rejected, a failed assertion is added to the test results, and protractor
-   *     will continue onto the next command.  If nothing is returned or something
-   *     other than a promise is returned, protractor will continue onto the next
-   *     command.
+   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   *     protractor will wait for the promise to resolve before continuing. If the
+   *     promise is rejected, a failed assertion is added to the test results, and
+   *     protractor will continue onto the next command. If nothing is returned or
+   *     something other than a promise is returned, protractor will continue
+   *     onto the next command.
    */
-  waitForPromise?: () => q.Promise<any>;
+  waitForPromise?(browser: ProtractorBrowser): webdriver.promise.Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
    * make sure that Angular has no outstanding $http or $timeout calls.
    * You can use waitForCondition() to have Protractor additionally wait for your
-   * custom condition to be truthy.
+   * custom condition to be truthy.  If specified, this function will be called
+   * repeatedly until truthy.
    *
-   * @this {Object} bound to module.exports
+   * @param {ProtractorBrowser} browser The browser instance which needs invoked `waitForAngular`.
+   *
+   * @this {Object} bound to module.exports.
    *
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {Q.Promise<boolean>|boolean} If truthy, Protractor will continue onto
-   *     the next command.  If falsy, webdriver will continuously re-run this
-   *     function until it is truthy.  If a rejected promise is returned, a failed
-   *     assertion is added to the test results, and protractor will continue onto
-   *     the next command.
+   * @return {webdriver.promise.Promise<boolean>|boolean} If truthy, Protractor
+   *     will continue onto the next command. If falsy, webdriver will
+   *     continuously re-run this function until it is truthy.  If a rejected promise
+   *     is returned, a failed assertion is added to the test results, and Protractor
+   *     will continue onto the next command.
    */
-  waitForCondition?: () => q.Promise<any>;
+  waitForCondition?(browser: ProtractorBrowser): webdriver.promise.Promise<boolean>|boolean;
 
   /**
    * Used to turn off default checks for angular stability
@@ -177,40 +191,44 @@ export interface ProtractorPlugin {
    * before executing the next command.  This can be disabled using
    * browser.ignoreSynchronization, but that will also disable any
    * <Plugin>.waitForPromise or <Plugin>.waitForCondition checks.  If you want
-   * to
-   * disable synchronization with angular, but leave in tact any custom plugin
+   * to disable synchronization with angular, but leave intact any custom plugin
    * synchronization, this is the option for you.
    *
-   * This is used by users who want to replace Protractor's synchronization code
-   * This is used by users who want to replace Protractor's synchronization code
-   * with their own.
+   * This is used by plugin authors who want to replace Protractor's
+   * synchronization code with their own.
    *
    * @type {boolean}
    */
   skipAngularStability?: boolean;
 
   /**
-   * Used when reporting results.
+   * The name of the plugin.  Used when reporting results.
    *
    * If you do not specify this property, it will be filled in with something
-   * reasonable (e.g. the plugin's path)
+   * reasonable (e.g. the plugin's path) by Protractor at runtime.
    *
    * @type {string}
    */
   name?: string;
 
   /**
-   * The plugin configuration object. Note that this is not the entire
-   * Protractor config object, just the entry in the plugins array for this
-   * plugin.
+   * The plugin's configuration object.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
+   *
+   * Note: that this is not the entire Protractor config object, just the entry
+   * in the `plugins` array for this plugin.
    *
    * @type {Object}
    */
   config?: PluginConfig;
 
   /**
-   * Adds a failed assertion to the test's results. Note: this is added by the
-   * Protractor API, not to be implemented by the plugin author.
+   * Adds a failed assertion to the test's results.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
    *
    * @param {string} message The error message for the failed assertion
    * @param {specName: string, stackTrace: string} options Some optional extra
@@ -222,11 +240,13 @@ export interface ProtractorPlugin {
    *
    * @throws {Error} Throws an error if called after results have been reported
    */
-  addFailure?: (message?: string, info?: {specName?: string, stackTrace?: string}) => void;
+  addFailure?(message?: string, info?: {specName?: string, stackTrace?: string}): void;
 
   /**
-   * Adds a passed assertion to the test's results. Note: this is added by the
-   * Protractor API, not to be implemented by the plugin author.
+   * Adds a passed assertion to the test's results.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
    *
    * @param {specName: string} options Extra information about the assertion:
    *       - specName The name of the spec which this assertion belongs to.
@@ -235,11 +255,13 @@ export interface ProtractorPlugin {
    *
    * @throws {Error} Throws an error if called after results have been reported
    */
-  addSuccess?: (info?: {specName?: string}) => void;
+  addSuccess?(info?: {specName?: string}): void;
 
   /**
-   * Warns the user that something is problematic. Note: this is added by the
-   * Protractor API, not to be implemented by the plugin author.
+   * Warns the user that something is problematic.
+   *
+   * Note: this property is added by Protractor at runtime.  Any pre-existing
+   * value will be overwritten.
    *
    * @param {string} message The message to warn the user about
    * @param {specName: string} options Extra information about the assertion:
@@ -247,7 +269,7 @@ export interface ProtractorPlugin {
    *            Defaults to `PLUGIN_NAME + ' Plugin Tests'`.
    *     Defaults to `{}`.
    */
-  addWarning?: (message?: string, info?: {specName?: string}) => void;
+  addWarning?(message?: string, info?: {specName?: string}): void;
 }
 
 /**
@@ -427,7 +449,7 @@ export class Plugins {
    */
   private safeCallPluginFun(
       pluginObj: ProtractorPlugin, funName: string, args: any[], promiseType: PromiseType,
-      failReturnVal: any) {
+      failReturnVal: any): q.Promise<any>|Promise<any>|webdriver.promise.Promise<any> {
     const resolver = (done: (result: any) => void) => {
       const logError = (e: any) => {
         if (this.resultsReported) {
@@ -456,8 +478,13 @@ export class Plugins {
         logError(e);
       }
     };
-    return promiseType == PromiseType.Q ? q.Promise(resolver) :
-                                          new webdriver.promise.Promise(resolver);
+    if (promiseType == PromiseType.Q) {
+      return q.Promise(resolver);
+    } else if (protractor.browser.controlFlowIsEnabled()) {
+      return new webdriver.promise.Promise(resolver);
+    } else {
+      return new Promise(resolver);
+    }
   }
 
   /**

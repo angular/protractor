@@ -11,8 +11,7 @@ describe('expected conditions', function() {
 
     var alertButton = $('#alertbutton');
     alertButton.click();
-    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);
-
+    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 5000);
     browser.switchTo().alert().accept();
   });
 
@@ -190,7 +189,67 @@ describe('expected conditions', function() {
       alertButton.click();
       browser2.wait(EC2.alertIsPresent(), 1000);
 
+      // TODO: Remove sleep when this is fixed:
+      //    https://bugs.chromium.org/p/chromedriver/issues/detail?id=1500
+      browser2.sleep(250);
       browser2.switchTo().alert().accept();
+    });
+  });
+
+  describe('race condition handling', function () {
+
+    var disabledButton;
+
+    beforeEach(function () {
+      disabledButton = $('#disabledButton[disabled="disabled"]');
+    });
+
+    function enableButtonBeforeCallToUnmatchSelector(testElement, fnName) {
+      var originalFn = testElement[fnName];
+
+      testElement[fnName] = function () {
+        element(by.model('disabled')).click();
+        return originalFn.apply(this, arguments);
+      };
+
+      // save original fn with _ prefix
+      testElement['_' + fnName] = originalFn;
+    }
+
+    it('can deal with missing elements in visibilityOf', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'isDisplayed');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._isDisplayed()).toBe(true);
+      expect(EC.visibilityOf(disabledButton).call()).toBe(false);
+    });
+
+    it('can deal with missing elements in textToBePresentInElement', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'getText');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._getText()).toBe('Dummy');
+      expect(EC.textToBePresentInElement(disabledButton, 'Dummy').call()).toBe(false);
+    });
+
+    it('can deal with missing elements in textToBePresentInValue', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'getAttribute');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._getAttribute('value')).toBe('');
+      expect(EC.textToBePresentInElementValue(disabledButton, '').call()).toBe(false);
+    });
+
+    it('can deal with missing elements in elementToBeClickable', function() {
+      enableButtonBeforeCallToUnmatchSelector(disabledButton, 'isEnabled');
+
+      element(by.model('disabled')).click();
+
+      expect(disabledButton._isEnabled()).toBe(false);
+      expect(EC.elementToBeClickable(disabledButton).call()).toBe(false);
     });
   });
 });

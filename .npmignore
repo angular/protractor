@@ -1,5 +1,6 @@
 # Shared between .npmignore and .gitignore
 
+yarn.lock
 chromedriver.log
 libpeerconnection.log
 xmloutput*
@@ -22,6 +23,9 @@ spec/
 stress/
 testapp/
 website/
+exampleTypescript/*.js
+exampleTypescript/node_modules/
+exampleTypescript/tmp/
 
 # Development files
 
@@ -32,4 +36,5 @@ website/
 .npmignore
 .travis.yml
 circle.yml
+logo.svg
 release.md

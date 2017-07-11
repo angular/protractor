@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": false,
+    "inlineSourceMap": true,
     "declaration": false,
     "noImplicitAny": false,
-    "outDir": "tmp",
-    "types": ["node", "jasmine"]
+    "outDir": "tmp"
   },
   "exclude": [
     "node_modules",

@@ -16,6 +16,4 @@ exports.config = {
   capabilities: env.capabilities,
 
   baseUrl: env.baseUrl,
-
-  useAllAngular2AppRoots: true
 };

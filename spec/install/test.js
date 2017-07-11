@@ -60,5 +60,5 @@ function test(file) {
 
 install();
 tsc();
-test('conf.js');
-test('typescript_conf.js');
+test('tmp/conf.js');
+test('tmp/typescript_conf.js');

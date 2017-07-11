@@ -6,6 +6,22 @@ which are managed by a [control flow](https://github.com/SeleniumHQ/selenium/wik
 and adapted for [Jasmine](http://jasmine.github.io/2.3/introduction.html).
 A short summary about how Protractor interacts with the control flow is presented below.
 
+Disabling the Control Flow
+--------------------------
+
+In the future, the control flow is being removed (see
+[SeleniumHQ's github issue](https://github.com/SeleniumHQ/selenium/issues/2969)
+for details).  To disable the control flow in your tests, you can use the
+`SELENIUM_PROMISE_MANAGER: false` [config option](/lib/config.ts#L644).
+
+Instead of the control flow, you can synchronize your commands
+with promise chaining or the upcoming ES7 feature `async`/`await`.  See
+[`/spec/ts/`](/spec/ts/) for examples of tests with the control flow disabled.
+
+Because `async`/`await` uses native promises, it will make the Control Flow
+unreliable.  As such, if you're writing a library or plugin which needs to work
+whether or not the Control Flow is enabled, you'll need to handle
+synchronization using promise chaining.
 
 Promises and the Control Flow
 -----------------------------

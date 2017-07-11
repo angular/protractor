@@ -82,19 +82,19 @@ exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
 
   baseUrl: 'https://angularjs.org/',
-  
+
   capabilities: {
       browserName:'chrome'
   },
 
-  framework: 'custom',  // set to "custom" instead of cucumber. 
-  
+  framework: 'custom',  // set to "custom" instead of cucumber.
+
   frameworkPath: require.resolve('protractor-cucumber-framework'),  // path relative to the current config file
-  
+
   specs: [
     './cucumber/*.feature'     // Specs here are the cucumber feature files
   ],
-  
+
   // cucumber command line options
   cucumberOpts: {
     require: ['./cucumber/*.js'],  // require step definition files before executing features
@@ -111,9 +111,35 @@ exports.config = {
 };
 ```
 
+Using Serenity/JS
+-----------------
+
+[Serenity/JS](http://serenity-js.org) is an acceptance testing library which can be integrated as a drop-in replacement of [Mocha](http://serenity-js.org/mocha/readme.html) or [Cucumber](http://serenity-js.org/cucumber/readme.html) framework adapters to provide advanced [scalability and reporting capabilities](http://serenity-js.org/overview/readme.html).
+
+To use it, [install](http://serenity-js.org/overview/installation.html) and [configure](http://serenity-js.org/overview/configuration.html) your test framework of choice.
+
+Next, [install Serenity/JS](http://serenity-js.org/overview/installation.html):
+
+```
+npm install serenity-js --save-dev
+```
+
+and instruct Protractor to use the Serenity/JS adapter:
+
+```js
+exports.config = {
+  framework: 'custom',
+  frameworkPath: require.resolve('serenity-js')
+
+  // ...
+};
+```
+
+Specifying either `cucumberOpts` or `mochaOpts` in your Protractor configuration will make Serenity/JS infer that it should delegate the execution to [Cucumber](https://github.com/cucumber/cucumber-js) or [Mocha](https://mochajs.org/), respectively.
+
+To learn more, [visit the project website](http://serenity-js.org/) or [follow the tutorial](http://serenity-js.org/from-scripts-to-serenity/readme.html).
+
 Using a Custom Framework
 ------------------------
 
 Check section [Framework Adapters for Protractor](/lib/frameworks/README.md) specifically [Custom Frameworks](/lib/frameworks/README.md#custom-frameworks)
-
-

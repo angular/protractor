@@ -6,6 +6,7 @@ Generates the documentation for the protractor website.
 ## How to run
 
 ```shell
+npm run compile_to_es5
 cd website/
 npm install
 npm run build

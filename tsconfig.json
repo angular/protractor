@@ -1,19 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "outDir": "built/",
-    "types": [
-      "jasmine", "node",
-      "chalk", "glob", "minimatch",
-      "minimist", "optimist", "q",
-      "selenium-webdriver"
-    ]
+    "outDir": "built/"
   },
   "exclude": [
     "built",
@@ -22,6 +16,6 @@
     "website",
     "scripts",
     "exampleTypescript",
-    "spec"
+    "spec/**/*"
   ]
 }

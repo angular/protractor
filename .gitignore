@@ -1,5 +1,6 @@
 # Shared between .npmignore and .gitignore
 
+yarn.lock
 chromedriver.log
 libpeerconnection.log
 xmloutput*
@@ -13,6 +14,7 @@ selenium/
 # Build artifacts
 
 built/
+spec/built/
 node_modules/
 website/bower_components/
 website/build/

@@ -90,11 +90,10 @@ export class BrowserStack extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @public
    * @return {q.promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupEnv(): q.Promise<any> {
+  protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
     this.config_.capabilities['browserstack.user'] = this.config_.browserstackUser;
     this.config_.capabilities['browserstack.key'] = this.config_.browserstackKey;

@@ -2,11 +2,11 @@ import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';
+import {PluginConfig, ProtractorPlugin} from './plugins';
 import {Ptor} from './ptor';
 
 // Re-export selenium-webdriver types.
 export {ActionSequence, Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
-
 // Re-export public types.
 export {ElementHelper, ProtractorBrowser} from './browser';
 export {Config} from './config';
@@ -14,8 +14,10 @@ export {ElementArrayFinder, ElementFinder} from './element';
 export {ProtractorExpectedConditions} from './expectedConditions';
 export {ProtractorBy} from './locators';
 export {Ptor} from './ptor';
+export {Runner} from './runner';
 
-export let wrapDriver = ProtractorBrowser.wrapDriver;
+export type PluginConfig = PluginConfig;
+export type ProtractorPlugin = ProtractorPlugin;
 
 export let utils = {
   firefox: require('selenium-webdriver/firefox'),

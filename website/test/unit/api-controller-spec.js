@@ -203,7 +203,7 @@ describe('ApiCtrl', function() {
       var item = scope.items[0];
       expect(item.title).toBe('name2');
       expect(item.base.name).toBe('name1');
-      expect(item.base.items.length).toBe(1);
+      expect(item.base.children.length).toBe(1);
     });
   });
 

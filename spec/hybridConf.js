@@ -12,7 +12,5 @@ exports.config = {
 
   capabilities: env.capabilities,
 
-  baseUrl: env.baseUrl,
-
-  rootElement: 'body'
+  baseUrl: env.baseUrl
 };

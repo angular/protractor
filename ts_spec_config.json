@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "outDir": "spec/built"
+  },
+  "include": [
+    "spec/ts/**/*"
+  ]
+}

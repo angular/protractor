@@ -1,6 +1,7 @@
 import {error as wderror} from 'selenium-webdriver';
 import {ProtractorBrowser} from './browser';
 import {ElementFinder} from './element';
+import {falseIfMissing, passBoolean} from './util';
 
 /**
  * Represents a library of canned expected conditions that are useful for
@@ -160,7 +161,7 @@ export class ProtractorExpectedConditions {
                 return true;
               },
           (err: any) => {
-            if (err.code == (new wderror.NoSuchAlertError() as any).code) {
+            if (err instanceof wderror.NoSuchAlertError) {
               return false;
             } else {
               throw err;
@@ -185,7 +186,9 @@ export class ProtractorExpectedConditions {
    *     representing whether the element is clickable.
    */
   elementToBeClickable(elementFinder: ElementFinder): Function {
-    return this.and(this.visibilityOf(elementFinder), elementFinder.isEnabled.bind(elementFinder));
+    return this.and(this.visibilityOf(elementFinder), () => {
+      return elementFinder.isEnabled().then(passBoolean, falseIfMissing);
+    });
   }
 
   /**
@@ -210,7 +213,7 @@ export class ProtractorExpectedConditions {
         // MSEdge does not properly remove newlines, which causes false
         // negatives
         return actualText.replace(/\r?\n|\r/g, '').indexOf(text) > -1;
-      });
+      }, falseIfMissing);
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -235,7 +238,7 @@ export class ProtractorExpectedConditions {
     let hasText = () => {
       return elementFinder.getAttribute('value').then((actualText: string): boolean => {
         return actualText.indexOf(text) > -1;
-      });
+      }, falseIfMissing);
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -388,7 +391,9 @@ export class ProtractorExpectedConditions {
    *     representing whether the element is visible.
    */
   visibilityOf(elementFinder: ElementFinder): Function {
-    return this.and(this.presenceOf(elementFinder), elementFinder.isDisplayed.bind(elementFinder));
+    return this.and(this.presenceOf(elementFinder), () => {
+      return elementFinder.isDisplayed().then(passBoolean, falseIfMissing);
+    });
   }
 
   /**
@@ -411,20 +416,22 @@ export class ProtractorExpectedConditions {
   }
 
   /**
- * An expectation for checking the selection is selected.
- *
- * @example
- * var EC = protractor.ExpectedConditions;
- * // Waits for the element with id 'myCheckbox' to be selected.
- * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
- *
- * @alias ExpectedConditions.elementToBeSelected
- * @param {!ElementFinder} elementFinder The element to check
- *
- * @returns {!function} An expected condition that returns a promise
- *     representing whether the element is selected.
- */
+   * An expectation for checking the selection is selected.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'myCheckbox' to be selected.
+   * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
+   *
+   * @alias ExpectedConditions.elementToBeSelected
+   * @param {!ElementFinder} elementFinder The element to check
+   *
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the element is selected.
+   */
   elementToBeSelected(elementFinder: ElementFinder): Function {
-    return this.and(this.presenceOf(elementFinder), elementFinder.isSelected.bind(elementFinder));
+    return this.and(this.presenceOf(elementFinder), () => {
+      return elementFinder.isSelected().then(passBoolean, falseIfMissing);
+    });
   }
 }

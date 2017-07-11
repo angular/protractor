@@ -60,7 +60,7 @@ gulp.task('checkVersion', function(done) {
 });
 
 gulp.task('built:copy', function(done) {
-  return gulp.src(['lib/**/*.js','lib/index.d.ts'])
+  return gulp.src(['lib/**/*.js'])
       .pipe(gulp.dest('built/'));
   done();
 });
@@ -72,8 +72,8 @@ gulp.task('webdriver:update', function(done) {
 gulp.task('jshint', function(done) {
   runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', '-c',
       '.jshintrc', 'lib', 'spec', 'scripts',
-      '--exclude=lib/selenium-webdriver/**/*.js,spec/dependencyTest/*.js,' +
-      'spec/install/**/*.js']);
+      '--exclude=lib/selenium-webdriver/**/*.js,lib/webdriver-js-extender/**/*.js,' +
+      'spec/dependencyTest/*.js,spec/install/**/*.js']);
 });
 
 gulp.task('format:enforce', function() {
@@ -94,14 +94,25 @@ gulp.task('tsc', function(done) {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
 
+gulp.task('tsc:spec', function(done) {
+  runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-p', 'ts_spec_config.json']);
+});
+
+gulp.task('tsc:es5', function(done) {
+  runSpawn(done, './scripts/compile_to_es5.sh');
+});
+
+gulp.task('compile_to_es5', function(done) {
+  runSequence('checkVersion', 'tsc:es5', 'built:copy', done);
+});
+
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', 'jshint', 'tsc',
-    'built:copy', done);
+  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', done);
+    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec',  done);
 });
 
 gulp.task('default',['prepublish']);

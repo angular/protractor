@@ -63,7 +63,7 @@ describe('the config parser', function() {
   it('should have a default config', function() {
     var config = new ConfigParser().getConfig();
     expect(config.specs).toEqual([]);
-    expect(config.rootElement).toEqual('body');
+    expect(config.rootElement).toEqual('');
   });
 
   it('should merge in config from an object', function() {

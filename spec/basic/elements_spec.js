@@ -151,13 +151,12 @@ describe('ElementFinder', function() {
 
   it('should propagate exceptions', function() {
     browser.get('index.html#/form');
-    var successful = protractor.promise.defer();
 
     var invalidElement = element(by.binding('INVALID'));
-    invalidElement.getText().then(function(/* string */) {
-      successful.fulfill(true);
-    }, function(/* error */) {
-      successful.fulfill(false);
+    var successful = invalidElement.getText().then(function() {
+      return true;
+    }, function() {
+      return false;
     });
     expect(successful).toEqual(false);
   });
@@ -358,6 +357,13 @@ describe('ElementArrayFinder', function() {
     expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
 
+  it('supports isPresent()', function() {
+    browser.get('index.html#/form');
+
+    expect(element.all(by.model('color')).isPresent()).toBeTruthy();
+    expect(element.all(by.binding('doesnotexist')).isPresent()).toBeFalsy();
+  });
+
   it('should return not present when an element disappears within an array',
       function() {
     browser.get('index.html#/form');
@@ -468,14 +474,14 @@ describe('ElementArrayFinder', function() {
     var labels = element.all(by.css('#animals ul li')).map(function(elm) {
       return {
         text: elm.getText(),
-        inner: elm.getInnerHtml()
+        tagName: elm.getTagName()
       };
     });
 
     var newExpected = function(expectedLabel) {
       return {
         text: expectedLabel,
-        inner: expectedLabel
+        tagName: 'li'
       };
     };
 

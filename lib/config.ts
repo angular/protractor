@@ -1,6 +1,8 @@
 import {PluginConfig} from './plugins';
 
 export interface Config {
+  [key: string]: any;
+
   // ---------------------------------------------------------------------------
   // ----- How to connect to Browser Drivers -----------------------------------
   // ---------------------------------------------------------------------------
@@ -95,6 +97,19 @@ export interface Config {
    */
   webDriverProxy?: string;
 
+  /**
+   * If specified, connect to webdriver through a proxy that manages client-side
+   * synchronization. Blocking Proxy is an experimental feature and may change
+   * without notice.
+   */
+  useBlockingProxy?: boolean;
+
+  /**
+   * If specified, Protractor will connect to the Blocking Proxy at the given
+   * url instead of starting it's own.
+   */
+  blockingProxyUrl?: string;
+
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 
   /**
@@ -113,22 +128,21 @@ export interface Config {
    *
    * To match sauce agent implementation, use
    * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
-   * to generate the agent or use sauceProxy as an alternative. If a
-   * sauceProxy is provided, the sauceAgent will be overridden.
+   * to generate the agent or use webDriverProxy as an alternative. If a
+   * webDriverProxy is provided, the sauceAgent will be overridden.
    */
   sauceAgent?: any;
-  /**
-   * Use sauceProxy if you are behind a corporate proxy to connect to
-   * saucelabs.com.
-   *
-   * The sauceProxy is used to generate an HTTP agent. If a sauceProxy is
-   * provided, the sauceAgent will be overridden.
-   */
-  sauceProxy?: string;
   /**
    * Use sauceBuild if you want to group test capabilites by a build ID
    */
   sauceBuild?: string;
+  /**
+   * If true, Protractor will use http:// protocol instead of https:// to
+   * connect to Sauce Labs defined by sauceSeleniumAddress.
+   *
+   * default: false
+   */
+  sauceSeleniumUseHttp?: boolean;
   /**
    * Use sauceSeleniumAddress if you need to customize the URL Protractor
    * uses to connect to sauce labs (for example, if you are tunneling selenium
@@ -349,8 +363,17 @@ export interface Config {
   baseUrl?: string;
 
   /**
-   * CSS Selector for the element housing the angular app - this defaults to
-   * 'body', but is necessary if ng-app is on a descendant of <body>.
+   * A CSS Selector for a DOM element within your Angular application.
+   * Protractor will attempt to automatically find your application, but it is
+   * necessary to set rootElement in certain cases.
+   *
+   * In Angular 1, Protractor will use the element your app bootstrapped to by
+   * default.  If that doesn't work, it will then search for hooks in `body` or
+   * `ng-app` elements (details here: https://git.io/v1b2r).
+   *
+   * In later versions of Angular, Protractor will try to hook into all angular
+   * apps on the page. Use rootElement to limit the scope of which apps
+   * Protractor waits for and searches within.
    */
   rootElement?: string;
 
@@ -482,6 +505,25 @@ export interface Config {
    */
   ignoreUncaughtExceptions?: boolean;
 
+  /**
+   * If set, will create a log file in the given directory with a readable log of
+   * the webdriver commands it executes.
+   *
+   * This is an experimental feature. Enabling this will also turn on Blocking Proxy
+   * synchronization, which is also experimental.
+   */
+  webDriverLogDir?: string;
+
+  /**
+   * If set, Protractor will pause the specified amount of time (in milliseconds)
+   * before interactions with browser elements (ie, sending keys, clicking). It will
+   * also highlight the element it's about to interact with.
+   *
+   * This is an experimental feature. Enabling this will also turn on Blocking Proxy
+   * synchronization, which is also experimental.
+   */
+  highlightDelay?: number;
+
   // ---------------------------------------------------------------------------
   // ----- The test framework
   // --------------------------------------------------
@@ -553,30 +595,6 @@ export interface Config {
   mochaOpts?: {[key: string]: any; ui?: string; reporter?: string;};
 
   /**
-   * Options to be passed to Cucumber (when set up as a custom framework).
-   */
-  cucumberOpts?: {
-    [key: string]: any;
-    /**
-     * Require files before executing the features.
-     */
-    require?: string[] | string;
-    /**
-     * Only execute the features or scenarios with tags matching @dev.
-     * This may be an array of strings to specify multiple tags to include.
-     */
-    tags?: string;
-    /**
-     * How to format features (default: progress)
-     */
-    format?: string[] | string;
-    /**
-     * Quickly scan your features without actually running them.
-     */
-    dryRun?: boolean;
-  };
-
-  /**
    * See docs/plugins.md
    */
   plugins?: PluginConfig[];
@@ -603,7 +621,36 @@ export interface Config {
    */
   ng12Hybrid?: boolean;
 
-  seleniumArgs?: Array<any>;
+  /**
+   * Protractor will exit with an error if it sees any command line flags it doesn't
+   * recognize. Set disableChecks true to disable this check.
+   */
+  disableChecks?: boolean;
+
+  /**
+   * Enable/disable the WebDriver Control Flow.
+   *
+   * WebDriverJS (and by extention, Protractor) uses a Control Flow to manage the order in which
+   * commands are executed and promises are resolved (see docs/control-flow.md for details).
+   * However, as syntax like `async`/`await` are being introduced, WebDriverJS has decided to
+   * deprecate the control flow, and have users manage the asynchronous activity themselves
+   * (details here: https://github.com/SeleniumHQ/selenium/issues/2969).
+   *
+   * At the moment, the WebDriver Control Flow is still enabled by default. You can disable it by
+   * setting the environment variable `SELENIUM_PROMISE_MANAGER` to `0`.  In a webdriver release in
+   * Q4 2017, the Control Flow will be disabled by default, but you will be able to re-enable it by
+   * setting `SELENIUM_PROMISE_MANAGER` to `1`.  At a later point, the control flow will be removed
+   * for good.
+   *
+   * If you don't like managing environment variables, you can set this option in your config file,
+   * and Protractor will handle enabling/disabling the control flow for you.  Setting this option
+   * is higher priority than the `SELENIUM_PROMISE_MANAGER` environment variable.
+   *
+   * @type {boolean=}
+   */
+  SELENIUM_PROMISE_MANAGER?: boolean;
+
+  seleniumArgs?: any[];
   jvmArgs?: string[];
   configDir?: string;
   troubleshoot?: boolean;
@@ -612,8 +659,8 @@ export interface Config {
   v8Debug?: any;
   nodeDebug?: boolean;
   debuggerServerPort?: number;
-  useAllAngular2AppRoots?: boolean;
   frameworkPath?: string;
   elementExplorer?: any;
   debug?: boolean;
+  unknownFlags_?: string[];
 }

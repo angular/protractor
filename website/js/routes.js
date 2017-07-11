@@ -97,6 +97,14 @@ angular.module('protractorApp').config(function($routeProvider) {
         templateUrl: 'partials/mobile-setup.html',
         controller: 'MarkdownCtrl'
       }).
+      when('/typescript', {
+        templateUrl: 'partials/typescript.html',
+        controller: 'MarkdownCtrl'
+      }).
+      when('/async-await', {
+        templateUrl: 'partials/async-await.html',
+        controller: 'MarkdownCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });
