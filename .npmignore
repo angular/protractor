@@ -15,6 +15,7 @@ selenium/
 
 .github/
 built/spec/
+built/**/*.map
 debugging/
 docs/
 lib/
