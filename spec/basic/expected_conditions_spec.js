@@ -176,6 +176,24 @@ describe('expected conditions', function() {
     expect(EC.or(EC.not(valid), EC.and(valid, invalid)).call()).toBe(false);
   });
 
+  it('should have attributeContains', function() {
+      var invalid = $('#INVALID');
+      var about = element(by.model('aboutbox'));
+
+      expect(EC.attributeContains(invalid, 'value', 'shouldnt throw').call()).toBe(false);
+      expect(EC.attributeContains(about, 'value', 'text box').call()).toBe(true);
+      expect(EC.attributeContains(about, 'value', 'This is a text box').call()).toBe(true);
+  });
+
+  it('should have attributeIs', function() {
+      var invalid = $('#INVALID');
+      var about = element(by.model('aboutbox'));
+
+      expect(EC.attributeIs(invalid, 'value', 'shouldnt throw').call()).toBe(false);
+      expect(EC.attributeIs(about, 'value', 'This is a text box').call()).toBe(true);
+      expect(EC.attributeIs(about, 'value', 'text box').call()).toBe(false);
+  });
+
   describe('for forked browsers', function() {
     // ensure that we can run EC on forked browser instances
     it('should have alertIsPresent', function() {
