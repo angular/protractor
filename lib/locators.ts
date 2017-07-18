@@ -493,6 +493,8 @@ export class ProtractorBy extends WebdriverBy {
   /**
    * Find an element throughout the Shadow DOM by extended css selector.
    * In order to go into the shadow tree of the element, use a special selector `::sr`.
+   * As compatible with both Shadow DOM v1 and prior specification, `::sr` will be ignored
+   * for the browser with no support of Shadow DOM, so the result will be same.
    *
    * @alias by.shadowRoot(selector)
    * @view
