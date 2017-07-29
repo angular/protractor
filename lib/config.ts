@@ -66,15 +66,21 @@ export interface Config {
     jvmArgs?: string[];
   };
   /**
-   * ChromeDriver location is used to help find the chromedriver binary.
-   * This will be passed to the Selenium jar as the system property
-   * webdriver.chrome.driver. If null, Selenium will attempt to find
-   * ChromeDriver using PATH.
+   * ChromeDriver location is used to help find the chromedriver binary. This will be passed to the
+   * Selenium jar as the system property webdriver.chrome.driver. If the value is not set when
+   * launching locally, it will use the default values downloaded from webdriver-manager.
    *
    * example:
    * chromeDriver: './node_modules/webdriver-manager/selenium/chromedriver_2.20'
    */
   chromeDriver?: string;
+
+  /**
+   * geckoDriver location is used to help find the gecko binary. This will be passed to the Selenium
+   * jar as the system property webdriver.gecko.driver. If the value is not set when launching
+   * locally, it will use the default values downloaded from webdriver-manager.
+   */
+  geckoDriver?: string;
 
   // ---- 2. To connect to a Selenium Server which is already running ----------
 
