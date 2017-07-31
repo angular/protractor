@@ -25,6 +25,7 @@ export interface ProtractorLocator {
        rootSelector: string) => wdpromise.Promise<WebElement[]>;
   row?: (index: number) => Locator;
   column?: (index: string) => Locator;
+  toString?: () => string;
 }
 export type Locator = ProtractorLocator | WebDriverLocator;
 

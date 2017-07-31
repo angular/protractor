@@ -86,6 +86,37 @@ export class Local extends DriverProvider {
         }
       }
     }
+
+    if (this.config_.capabilities.browserName === 'firefox') {
+      if (!this.config_.geckoDriver) {
+        logger.debug(
+            'Attempting to find the gecko driver binary in the default ' +
+            'location used by webdriver-manager');
+
+        try {
+          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
+          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
+          this.config_.geckoDriver = updateConfig.gecko.last;
+        } catch (err) {
+          throw new BrowserError(
+              logger,
+              'No update-config.json found. ' +
+                  'Run \'webdriver-manager update\' to download binaries.');
+        }
+      }
+
+      // Check if file exists, if not try .exe or fail accordingly
+      if (!fs.existsSync(this.config_.geckoDriver)) {
+        if (fs.existsSync(this.config_.geckoDriver + '.exe')) {
+          this.config_.geckoDriver += '.exe';
+        } else {
+          throw new BrowserError(
+              logger,
+              'Could not find gecko driver at ' + this.config_.geckoDriver +
+                  '. Run \'webdriver-manager update\' to download binaries.');
+        }
+      }
+    }
   }
 
   /**
