@@ -58,7 +58,7 @@ export class Sauce extends DriverProvider {
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent,
-      proxy: this.config_.webDriverProxy
+      proxy: this.config_.sauceProxy
     });
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
