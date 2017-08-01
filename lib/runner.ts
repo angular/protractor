@@ -290,7 +290,7 @@ export class Runner extends EventEmitter {
 
     browser_.forkNewDriverInstance =
         (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
-          let newBrowser = this.createBrowser(plugins);
+          let newBrowser = this.createBrowser(plugins, browser_);
           if (copyMockModules) {
             newBrowser.mockModules_ = browser_.mockModules_;
           }
