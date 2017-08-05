@@ -54,7 +54,7 @@
     "semver": "^5.3.0",
     "tslint": "^4.1.1",
     "tslint-eslint-rules": "^3.1.0",
-    "typescript": "^2.1.5",
+    "typescript": "~2.4.1",
     "vrsource-tslint-rules": "^4.0.1"
   },
   "repository": {
