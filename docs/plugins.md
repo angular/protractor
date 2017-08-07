@@ -7,7 +7,7 @@ execution to gather more data and potentially modify the test output.
 The Protractor API and available plugins are *BETA* and may change
 without a major version bump.
 
-##In this document:
+## Table of contents
 * [Using Plugins](/docs/plugins.md#using-plugins)
 * [Writing Plugins](/docs/plugins.md#writing-plugins)
 * [First Party Plugins](/docs/plugins.md#first-party-plugins)
