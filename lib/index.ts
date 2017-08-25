@@ -24,7 +24,7 @@ export let utils = {
   http: require('selenium-webdriver/http'),
   remote: require('selenium-webdriver/remote')
 };
-// noop
+
 export let Command = require('selenium-webdriver/lib/command').Command;
 export let CommandName = require('selenium-webdriver/lib/command').Name;
 
