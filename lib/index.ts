@@ -1,7 +1,7 @@
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
-import {Locator, ProtractorBy} from './locators';// rerun
+import {Locator, ProtractorBy} from './locators';
 import {PluginConfig, ProtractorPlugin} from './plugins';
 import {Ptor} from './ptor';
 
