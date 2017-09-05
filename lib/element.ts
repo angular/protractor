@@ -251,8 +251,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
   }
 
   /**
-   * Get an element within the ElementArrayFinder by index. The index starts at
-   * 0\. Negative indices are wrapped (i.e. -i means ith element from last)
+   * Get an element within the ElementArrayFinder by index. The index starts at 0.
+   * Negative indices are wrapped (i.e. -i means ith element from last)
    * This does not actually retrieve the underlying element.
    *
    * @alias element.all(locator).get(index)
