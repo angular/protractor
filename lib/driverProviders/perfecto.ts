@@ -27,8 +27,6 @@ export class Perfecto extends DriverProvider {
    */
   protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
-         console.log("In Perfectot "+this.config_.perfectoUser)
-
     this.config_.capabilities['user'] = this.config_.perfectoUser;
     this.config_.capabilities['password'] = this.config_.perfectoPassword;
     this.config_.capabilities['securityToken'] = this.config_.perfectoToken;
