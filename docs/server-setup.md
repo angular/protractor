@@ -89,11 +89,11 @@ To run the Protractor scripts on real devices and browswer in Perfecto Lab.
 Add the following parameters to your config file:
 
 Mandatory Parameters 
- - `PerfectoUser` -  The username for your Perfecto account.
- - `PerfectoPassword` -  The Password for Perfecto account.
- - `PerfectoToken` - The token to execute Perfecto web
+ - `perfectoUser` -  The username for your Perfecto account.
+ - `perfectoPassword` -  The Password for Perfecto account.
+ - `perfectoToken` - The token to execute Perfecto web
   
-Please note that if you set `PerfectoUser` and `PerfectoPassword`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` , `browserstackKey` ,`sauceUser` and `sauceKey` will be ignored.
+Please note that if you set `perfectoUser` and `perfectoPassword`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` , `browserstackKey` ,`sauceUser` and `sauceKey` will be ignored.
 
  
 Connecting Directly to Browser Drivers
