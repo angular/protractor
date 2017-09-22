@@ -17,8 +17,6 @@ import {Logger} from '../logger';
 import {DriverProvider} from './driverProvider';
 
 const SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-const SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-const SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/standalone').StandAlone;
 const remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
@@ -150,6 +148,9 @@ export class Local extends DriverProvider {
     // configure server
     if (this.config_.chromeDriver) {
       serverConf.jvmArgs.push('-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
+    }
+    if (this.config_.geckoDriver) {
+      serverConf.jvmArgs.push('-Dwebdriver.gecko.driver=' + this.config_.geckoDriver);
     }
 
     this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
