@@ -24,16 +24,21 @@ li {
 
 li.left {
   left: 0;
-} 
-
-li.left.mid {
-  left: 25%;
 }
 
-li.right {
-  right: 0;
+li.left.mid {
+  left: 20%;
+}
+
+li.mid{
+  left : 40%;
 }
 
 li.right.mid {
-  right: 25%;
+  left: 60%;
 }
+
+li.right {
+  left: 80%;
+}
+
