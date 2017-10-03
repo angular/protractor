@@ -5,7 +5,7 @@ var Executor = require('./test/test_util').Executor;
 
 var passingTests = [
   'node built/cli.js spec/basicConf.js',
-  'node built/cli.js spec/basicConf.js --useBlockingProxy',
+  //'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
   'node built/cli.js spec/altRootConf.js',
   'node built/cli.js spec/inferRootConf.js',
@@ -32,7 +32,7 @@ var passingTests = [
   'node built/cli.js spec/directConnectConf.js',
   'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
   'node built/cli.js spec/driverProviderLocalConf.js',
-  'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
+  //'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
   'node built/cli.js spec/getCapabilitiesConf.js',
   'node built/cli.js spec/controlLockConf.js',
   'node built/cli.js spec/customFramework.js',
@@ -40,9 +40,9 @@ var passingTests = [
   'node built/cli.js spec/angular2Conf.js',
   'node built/cli.js spec/hybridConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js',
-  'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
+  //'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
   'node built/cli.js spec/built/noCFPluginConf.js',
-  'node scripts/driverProviderAttachSession.js',
+  //'node scripts/driverProviderAttachSession.js',
   'node scripts/errorTest.js',
   // Interactive Element Explorer tasks
   'node scripts/interactive_tests/interactive_test.js',
