@@ -415,10 +415,11 @@ export class ProtractorBy extends WebdriverBy {
    * var dog = element(by.cssContainingText('.pet', 'Dog'));
    *
    * @param {string} cssSelector css selector
-   * @param {string} searchString text search
+   * @param {string|RegExp} searchString text search
    * @returns {ProtractorLocator} location strategy
    */
-  cssContainingText(cssSelector: string, searchText: string): ProtractorLocator {
+  cssContainingText(cssSelector: string, searchText: string|RegExp): ProtractorLocator {
+    searchText = (searchText instanceof RegExp) ? '__REGEXP__' + searchText.toString() : searchText;
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
                                 wdpromise.Promise<WebElement[]> => {

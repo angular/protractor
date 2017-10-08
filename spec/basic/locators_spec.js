@@ -353,6 +353,16 @@ describe('locators', function() {
       expect(element(by.cssContainingText('#transformedtext div', 'capitalize'))
           .getAttribute('id')).toBe('textcapitalize');
     });
+
+    it('should find elements with a regex', function() {
+      element.all(by.cssContainingText('#transformedtext div', /(upper|lower)case/i))
+        .then(function(found) {
+          expect(found.length).toEqual(2);
+          expect(found[0].getText()).toBe('UPPERCASE');
+          expect(found[1].getText()).toBe('lowercase');
+        });
+    });
+
   });
 
   describe('by options', function() {
