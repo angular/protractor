@@ -278,7 +278,8 @@ export class Runner extends EventEmitter {
               return browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
             })
             .then(() => {
-              return driver.manage().timeouts().setScriptTimeout(initProperties.allScriptsTimeout);
+              return driver.manage().timeouts().setScriptTimeout(
+                  initProperties.allScriptsTimeout || 0);
             })
             .then(() => {
               return browser_;
