@@ -89,8 +89,8 @@ export interface ElementHelper extends Function {
  */
 function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
   let element = ((locator: Locator) => {
-    return new ElementArrayFinder(browser).all(locator).toElementFinder_();
-  }) as ElementHelper;
+                  return new ElementArrayFinder(browser).all(locator).toElementFinder_();
+                }) as ElementHelper;
 
   element.all = (locator: Locator) => {
     return new ElementArrayFinder(browser).all(locator);
@@ -209,6 +209,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
           return this.internalRootEl;
         });
       }
+      return wdpromise.when(this.internalRootEl);
     }, `Set angular root selector to ${value}`);
   }
 
@@ -544,7 +545,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * fork = fork.restartSync();
    * fork.get('page2'); // 'page2' gotten by restarted fork
    *
-   * @throws {TypeError} Will throw an error if the control flow is not enabled 
+   * @throws {TypeError} Will throw an error if the control flow is not enabled
    * @returns {ProtractorBrowser} The restarted browser
    */
   restartSync(): ProtractorBrowser {
@@ -900,7 +901,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                       return url !== this.resetUrl;
                     },
                     (err: IError) => {
-                      if (err.code == 13) {
+                      if (err.code == 13 || err.name === 'JavascriptError') {
                         // Ignore the error, and continue trying. This is
                         // because IE driver sometimes (~1%) will throw an
                         // unknown error from this execution. See
@@ -1063,8 +1064,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                         clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url)
                     .then((browserErr: Error) => {
                       if (browserErr) {
-                        throw 'Error while navigating to \'' + url + '\' : ' +
-                            JSON.stringify(browserErr);
+                        throw 'Error while navigating to \'' + url +
+                            '\' : ' + JSON.stringify(browserErr);
                       }
                     }));
   }
@@ -1076,7 +1077,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * cases it will return `$location.absUrl()` instead.  This function is only here for legacy
    * users, and will probably be removed in Protractor 6.0.
    *
-   * @deprecated Please use `browser.getCurrentUrl()` 
+   * @deprecated Please use `browser.getCurrentUrl()`
    * @example
    * browser.get('http://angular.github.io/protractor/#/api');
    * expect(browser.getLocationAbsUrl())

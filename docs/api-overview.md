@@ -1,7 +1,7 @@
 Working with Spec and Config Files
 ==================================
 
-Protractor needs two files to run, the test or spec file, and the configuration file.
+Protractor needs two files to run: the test or spec file and the configuration file.
 
 Spec files
 ==========
@@ -10,7 +10,7 @@ Protractor tests  are written using the syntax of your test framework, for examp
 
 Example Spec File
 -----------------
-This simple script ([example_spec.js](/example/example_spec.js)) tests the 'The Basics' example on the [angularjs.org](http://www.angularjs.org) homepage.
+This simple script ([example_spec.js](/example/example_spec.js)) tests the 'The Basics' example on the [angularjs.org](http://www.angularjs.org) homepage:
 
 ```js
 describe('angularjs homepage', function() {
@@ -42,7 +42,7 @@ Protractor exports these global variables to your spec (test) file:
 
  - `browser` - A wrapper around an instance of WebDriver, used for navigation and page-wide information. The `browser.get` method loads a page. Protractor expects Angular to be present on a page, so it will throw an error if the page it is attempting to load does not contain the Angular library. (If you need to interact with a non-Angular page, you may access the wrapped webdriver instance directly with `browser.driver`).
 
- - `element` - A helper function for finding and interacting with DOM elements on the page you are testing. The `element` function searches for an element on the page. It requires one parameter, a locator strategy for locating the element. See [Using Locators](/docs/locators.md) for more information. See Protractor's findelements test suite ([elements_spec.js](/spec/basic/elements_spec.js)) for more examples.
+ - `element` - A helper function for finding and interacting with DOM elements on the page you are testing. The `element` function searches for an element on the page. It requires one parameter, a locator strategy for locating the element. See [Using Locators](/docs/locators.md) for more information. See Protractor's ElementFinder test suite ([elements_spec.js](/spec/basic/elements_spec.js)) for more examples.
 
  - `by` - A collection of element locator strategies. For example, elements can be found by CSS selector, by ID, or by the attribute they are bound to with ng-model. See [Using Locators](/docs/locators.md).
 
@@ -57,7 +57,8 @@ The configuration file tells Protractor how to set up the Selenium Server, which
 Example Config File
 -------------------
 
-A simple configuration ([conf.js](https://github.com/angular/protractor/tree/master/example)) is shown below.
+A simple configuration ([conf.js](/example/conf.js)) is shown below:
+
 ```js
 // An example configuration file
 exports.config = {
@@ -66,7 +67,7 @@ exports.config = {
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome'
   },
 
   // Spec patterns are relative to the configuration file location passed
@@ -84,7 +85,7 @@ exports.config = {
 Config File
 -----------
 
-The [config file](/lib/config.ts) file provides explanations for all of the Protractor configuration options. Default settings include the standalone Selenium Server, the Chrome browser, and the Jasmine test framework. Additional information about various configuration options is available here:
+The [config file](/lib/config.ts) provides explanations for all of the Protractor configuration options. Default settings include the standalone Selenium Server, the Chrome browser, and the Jasmine test framework. Additional information about various configuration options is available here:
 
  - [Setting Up the Selenium Server](/docs/server-setup.md)
  - [Setting Up the Browser](/docs/browser-setup.md)

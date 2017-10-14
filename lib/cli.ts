@@ -46,6 +46,7 @@ let allowedNames = [
   'sauceKey',
   'sauceAgent',
   'sauceBuild',
+  'sauceSeleniumUseHttp',
   'sauceSeleniumAddress',
   'browserstackUser',
   'browserstackKey',
@@ -60,6 +61,7 @@ let allowedNames = [
   'multiCapabilities',
   'getMultiCapabilities',
   'maxSessions',
+  'verbose',
   'verboseMultiSessions',
   'baseUrl',
   'rootElement',
@@ -103,7 +105,8 @@ let allowedNames = [
   'build',
   'grep',
   'invert-grep',
-  'explorer'
+  'explorer',
+  'stackTrace'
 ];
 
 let optimistOptions: any = {
@@ -198,6 +201,17 @@ if (argv.specs) {
 }
 if (argv.exclude) {
   argv.exclude = processFilePatterns_(<string>argv.exclude);
+}
+
+if (argv.capabilities && argv.capabilities.chromeOptions) {
+  // ensure that single options (which optimist parses as a string)
+  // are passed in an array in chromeOptions when required:
+  // https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-chromeOptions-object
+  ['args', 'extensions', 'excludeSwitches', 'windowTypes'].forEach((key) => {
+    if (typeof argv.capabilities.chromeOptions[key] === 'string') {
+      argv.capabilities.chromeOptions[key] = [argv.capabilities.chromeOptions[key]];
+    }
+  });
 }
 
 // Use default configuration, if it exists.

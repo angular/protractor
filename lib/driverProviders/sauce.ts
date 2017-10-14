@@ -58,15 +58,16 @@ export class Sauce extends DriverProvider {
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent,
-      proxy: this.config_.webDriverProxy
+      proxy: this.config_.sauceProxy
     });
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
     this.config_.capabilities['build'] = this.config_.sauceBuild;
-    let auth = 'https://' + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
-    this.config_.seleniumAddress =
-        auth + (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
-                                                    'ondemand.saucelabs.com:443/wd/hub');
+    let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
+    let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
+    this.config_.seleniumAddress = auth +
+        (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
+                                             'ondemand.saucelabs.com:443/wd/hub');
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.
