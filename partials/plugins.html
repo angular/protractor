@@ -3,7 +3,7 @@
 execution to gather more data and potentially modify the test output.</p>
 <p>The Protractor API and available plugins are <em>BETA</em> and may change
 without a major version bump.</p>
-<p>##In this document:</p>
+<h2 id="table-of-contents" class="anchored"><div><a href="#{{path}}#table-of-contents">&#x1f517;</a>Table of contents</div></h2>
 <ul>
 <li><a href="#/plugins#using-plugins">Using Plugins</a></li>
 <li><a href="#/plugins#writing-plugins">Writing Plugins</a></li>
@@ -54,7 +54,7 @@ you can write the plugin inline into the config:</p>
 so they use generic hooks which Protractor provides. Plugins may change
 the output of Protractor by returning a results object.</p>
 <p>Plugins are node modules that export an object implementing the
-<code ng-non-bindable>ProtractorPlugin</code> interface.  Please see <a href="https://github.com/angular/protractor/blob/5.1.2/lib/plugins.ts#L25"><code ng-non-bindable>/lib/plugins.ts</code></a> for a list of hooks that are available to plugins.</p>
+<code ng-non-bindable>ProtractorPlugin</code> interface.  Please see <a href="https://github.com/angular/protractor/blob/5.2.0/lib/plugins.ts#L25"><code ng-non-bindable>/lib/plugins.ts</code></a> for a list of hooks that are available to plugins.</p>
 <h5 id="provided-properties-and-functions">Provided properties and functions</h5>
 <p>Extra properties are added to your <code ng-non-bindable>module.exports</code> when Protractor loads your
 plugin.  These allow your plugin to do things like access its configuration
@@ -88,34 +88,26 @@ module.exports = myPlugin;
 <ul>
 <li><p>Accessibility Plugin</p>
 <p>The accessibility plugin runs a set of accessibility audits on your webapp.
-It is published at the npm module [<code ng-non-bindable>protractor-accessibility-plugin</code>]
-(<a href="https://www.npmjs.com/package/protractor-accessibility-plugin">https://www.npmjs.com/package/protractor-accessibility-plugin</a>) and stored at
-the github repo [angular/protractor-accessibility-plugin]
-(<a href="https://github.com/angular/protractor-accessibility-plugin">https://github.com/angular/protractor-accessibility-plugin</a>).</p>
+It is published at the npm module <a href="https://www.npmjs.com/package/protractor-accessibility-plugin"><code ng-non-bindable>protractor-accessibility-plugin</code></a> and stored at
+the github repo <a href="https://github.com/angular/protractor-accessibility-plugin">angular/protractor-accessibility-plugin</a>.</p>
 </li>
 <li><p>Timeline Plugin</p>
 <p>The timeline plugin gathers test timeline information from various sources and
 presents the output visually.  This improves understanding of where latency
 issues are in tests.  It is published at the npm module
-[<code ng-non-bindable>protractor-timeline-plugin</code>]
-(<a href="https://www.npmjs.com/package/protractor-timeline-plugin">https://www.npmjs.com/package/protractor-timeline-plugin</a>) and stored at the
-github repo [angular/protractor-timeline-plugin]
-(<a href="https://github.com/angular/protractor-timeline-plugin">https://github.com/angular/protractor-timeline-plugin</a>).</p>
+<a href="https://www.npmjs.com/package/protractor-timeline-plugin"><code ng-non-bindable>protractor-timeline-plugin</code></a> and stored at the
+github repo <a href="https://github.com/angular/protractor-timeline-plugin">angular/protractor-timeline-plugin</a>.</p>
 </li>
 <li><p>Console Plugin (Chrome Only)</p>
 <p>The console plugin checks the browser log after each test for warnings and
-errors.  It is published at the npm module [<code ng-non-bindable>protractor-console-plugin</code>]
-(<a href="https://www.npmjs.com/package/protractor-console-plugin">https://www.npmjs.com/package/protractor-console-plugin</a>) and stored at the
-github repo [angular/protractor-console-plugin]
-(<a href="https://github.com/angular/protractor-console-plugin">https://github.com/angular/protractor-console-plugin</a>).</p>
+errors.  It is published at the npm module <a href="https://www.npmjs.com/package/protractor-console-plugin"><code ng-non-bindable>protractor-console-plugin</code></a> and stored at the
+github repo <a href="https://github.com/angular/protractor-console-plugin">angular/protractor-console-plugin</a>.</p>
 </li>
 <li><p>ngHint Plugin (NOT MAINTAINED)</p>
 <p>The ngHint plugin uses <a href="https://github.com/angular/angular-hint">Angular Hint</a>
 to generate run-time hinting and then turns these hints into Protractor tests.
-It is published at the npm module [<code ng-non-bindable>protractor-ng-hint-plugin</code>]
-(<a href="https://www.npmjs.com/package/protractor-ng-hint-plugin">https://www.npmjs.com/package/protractor-ng-hint-plugin</a>) and stored at the
-github repo [angular/protractor-ng-hint-plugin]
-(<a href="https://github.com/angular/protractor-ng-hint-plugin">https://github.com/angular/protractor-ng-hint-plugin</a>).</p>
+It is published at the npm module <a href="https://www.npmjs.com/package/protractor-ng-hint-plugin"><code ng-non-bindable>protractor-ng-hint-plugin</code></a> and stored at the
+github repo <a href="https://github.com/angular/protractor-ng-hint-plugin">angular/protractor-ng-hint-plugin</a>.</p>
 </li>
 </ul>
 <h2 id="community-plugins" class="anchored"><div><a href="#{{path}}#community-plugins">&#x1f517;</a>Community Plugins</div></h2>
@@ -126,5 +118,9 @@ plugins please report them to the corresponding plugin developer.</p>
 <li><p><a href="https://github.com/alfonso-presa/protractor-testability-plugin">Protractor testability plugin</a>: this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.</p>
 </li>
 <li><p><a href="https://github.com/Updater/protractor-fail-fast">protractor-fail-fast</a>: Allows Protractor to &quot;fail-fast&quot;, forcing all test runners to exit if one of them encounters a failing test. For scenarios where a failure means the entire build has failed (e.g. CI), failing fast can save a tremendous amount of time.</p>
+</li>
+<li><p><a href="https://github.com/Marketionist/protractor-numerator">protractor-numerator</a>: This plugin gives you readable functions for getting elements by their numbers inside Protractor tests. Adds functions like <code ng-non-bindable>.second()</code>, <code ng-non-bindable>.third()</code>, etc. instead of <code ng-non-bindable>.get(1)</code>, <code ng-non-bindable>.get(2)</code>, etc.</p>
+</li>
+<li><p><a href="https://github.com/mdasberg/ng-apimock">Ng-apimock</a>: this plugin adds the ability to use scenario based api mocking for local development and protractor testing for both AngularJS and Angular applications.</p>
 </li>
 </ul>
