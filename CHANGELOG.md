@@ -1,3 +1,51 @@
+# 5.2.0
+
+## Fixes
+- ([f7e17f3](https://github.com/angular/protractor/commit/f7e17f348e738e1a594870d7ff735f2b7ea1853f)) 
+  fix(clientSideScripts): change protractor to support waiting for hybrid app (#4512)
+
+- ([4b7cada](https://github.com/angular/protractor/commit/4b7cada1317079c20ddf1bb105303e21adba6e32)) 
+  fix(sauce): bring back sauceProxy as a configuration option (#4419)
+
+- ([b87159b](https://github.com/angular/protractor/commit/b87159b3fcb379b85727a1beb6fd41a914235cf8)) 
+  fix(website): fix all locator examples to use `element` over `browser.findElement` (#4413)
+
+- ([768fd39](https://github.com/angular/protractor/commit/768fd393d1084a8da0ec6eeaa57508bf17519a3f)) 
+  fix(local): allow local driver provider to use gecko driver from config (#4412)
+
+- ([c0b8770](https://github.com/angular/protractor/commit/c0b8770ff1a508205b5cf38b5611918e20028fe3)) 
+  docs(website): fix issue 4246
+
+- ([f79938e](https://github.com/angular/protractor/commit/f79938e3d138c7bedc66f8c6748704402ea721c4)) 
+  docs(plugins): add ng-apimock plugin to plugins.md
+
+- ([ab1afb0](https://github.com/angular/protractor/commit/ab1afb093107f3a63f6e15f8f315e33576bb414d)) 
+  fix(blockingproxy): Start bpRunner strictly after setupDriverEnv
+
+- ([b85e7ee](https://github.com/angular/protractor/commit/b85e7ee1c53cdc4cfb23dc3d06d40317a27e50e7)) 
+  fix(npmignore): .map files in built directory cause stacktrace lines to nowhere Fixes #4371
+
+- ([299fc8d](https://github.com/angular/protractor/commit/299fc8d96b3e5daf632a1c584728214ababcebf8)) 
+  docs(browser-support): Fixed incorrect example
+
+- ([e5a5d59](https://github.com/angular/protractor/commit/e5a5d59fcabe15860b30944e714bbd8e81ceaeae)) 
+  docs(frameworks) align cucumberOpts comments
+
+- ([fe8c480](https://github.com/angular/protractor/commit/fe8c480bd860209cc68768de884d050cbf1a5b27)) 
+  docs(frameworks) update cucumber dry run option
+
+- ([2e9acf5](https://github.com/angular/protractor/commit/2e9acf58b76b553c558f56b6a38c161ad50324de)) 
+  docs(plugins) add protractor-numerator plugin to plugins.md
+
+- ([3f861ae](https://github.com/angular/protractor/commit/3f861ae069df98a06cfa1ede89f56a8d0ec9d5d2)) 
+  By.js locator should accept functions
+
+## Dependencies
+
+- ([0fbc2c0](https://github.com/angular/protractor/commit/0fbc2c0ac12992bd61712188a96aef6684bef0c1)) 
+  chore(release): update selenium-webdriverjs
+
+
 # 5.1.2
 
 ## Features
