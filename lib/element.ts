@@ -650,8 +650,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
-  map<T>(mapFn: (elementFinder: ElementFinder, index: number) => T | any):
-      wdpromise.Promise<T[]> {
+  map<T>(mapFn: (elementFinder: ElementFinder, index: number) => T | any): wdpromise.Promise<T[]> {
     return this.asElementFinders_().then<T[]>((arr: ElementFinder[]) => {
       let list = arr.map((elementFinder: ElementFinder, index: number) => {
         let mapResult = mapFn(elementFinder, index);
