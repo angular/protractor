@@ -54,6 +54,19 @@ capabilities: {
 },
 ```
 
+Adding Firefox-Specific Options
+------------------------------
+
+Firefox options are nested in the `moz:firefoxOptions` object. A full list of options is at the [GeckoDriver](https://github.com/mozilla/geckodriver#firefox-capabilities) Github page. For example, to run in safe mode, your configuration would look like this:
+
+```javascript
+capabilities: {
+  'browserName': 'firefox',
+  'moz:firefoxOptions': {
+    'args': ['--safe-mode']
+  }
+},
+```
 
 Testing Against Multiple Browsers
 ---------------------------------
