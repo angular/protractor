@@ -100,18 +100,17 @@ export class Direct extends DriverProvider {
             geckoDriverFile = updateConfig.gecko.last;
           } catch (e) {
             throw new BrowserError(
-              logger,
-              'Could not find update-config.json. ' +
-              'Run \'webdriver-manager update\' to download binaries.'
-            );
+                logger,
+                'Could not find update-config.json. ' +
+                    'Run \'webdriver-manager update\' to download binaries.');
           }
         }
 
         if (!fs.existsSync(geckoDriverFile)) {
           throw new BrowserError(
-            logger,
-            'Could not find geckodriver at ' + geckoDriverFile +
-            '. Run \'webdriver-manager update\' to download binaries.');
+              logger,
+              'Could not find geckodriver at ' + geckoDriverFile +
+                  '. Run \'webdriver-manager update\' to download binaries.');
         }
 
         // TODO (mgiambalvo): Turn this into an import when the selenium typings are updated.
