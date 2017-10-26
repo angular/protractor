@@ -1193,9 +1193,12 @@ export class ElementFinder extends WebdriverWebElement {
     let webElem = this.getWebElement();
     return webElem.getText().then((text) => {
       if (text) {
-        return text;
+        return text.trim();
       }
-      return webElem.getAttribute('value').then((value) => value || '');
+      return webElem.getAttribute('value').then((value) => {
+        value = value || '';
+        return value.trim();
+      });
     });
   }
 }
