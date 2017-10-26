@@ -54,6 +54,19 @@ capabilities: {
 },
 ```
 
+Adding Firefox-Specific Options
+------------------------------
+
+Firefox options are nested in the `moz:firefoxOptions` object. A full list of options is at the [GeckoDriver](https://github.com/mozilla/geckodriver#firefox-capabilities) Github page. For example, to run in safe mode, your configuration would look like this:
+
+```javascript
+capabilities: {
+  'browserName': 'firefox',
+  'moz:firefoxOptions': {
+    'args': ['--safe-mode']
+  }
+},
+```
 
 Testing Against Multiple Browsers
 ---------------------------------
@@ -118,7 +131,10 @@ browser2.$('.css').click();
 
 Setting up PhantomJS
 --------------------
-PhantomJS is [no longer officially supported](https://groups.google.com/forum/#!topic/phantomjs/9aI5d-LDuNE). Instead, we recommend either [running Chrome in Xvfb](http://www.tothenew.com/blog/protractor-with-jenkins-and-headless-chrome-xvfb-setup/) or using Chrome's [headless mode](https://developers.google.com/web/updates/2017/04/headless-chrome).
+PhantomJS is [no longer officially supported](https://groups.google.com/forum/#!topic/phantomjs/9aI5d-LDuNE). Instead, we recommend to use one of the following alternatives:
+1. Chrome with [headless mode](https://developers.google.com/web/updates/2017/04/headless-chrome). Available in Chrome 59+ on Linux/Mac OS X, and in Chrome 60+ on Windows.
+2. Firefox with [headless mode](https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options#-headless). Available in Firefox 55+ on Linux, and in Firefox 56+ on Windows/Mac OS X.
+3. Chrome with [Xvfb](http://www.tothenew.com/blog/protractor-with-jenkins-and-headless-chrome-xvfb-setup/).
 
 
 Using headless Chrome
@@ -135,6 +151,20 @@ capabilities: {
 
   chromeOptions: {
      args: [ "--headless", "--disable-gpu", "--window-size=800,600" ]
+   }
+}
+```
+
+Using headless Firefox
+---------------------
+To start Firefox in headless mode, start Firefox with the [`--headless` flag](https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options#-headless).
+
+```javascript
+capabilities: {
+  browserName: 'firefox',
+  
+  'moz:firefoxOptions': {
+     args: [ "--headless" ]
    }
 }
 ```
