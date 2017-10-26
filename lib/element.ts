@@ -1191,17 +1191,12 @@ export class ElementFinder extends WebdriverWebElement {
    */
   getText(): wdpromise.Promise<string> {
     let webElem = this.getWebElement();
-    return webElem.getText()
-        .then((text) => {
-          if (text) {
-            return text;
-          }
-          return webElem.getAttribute('value');
-        })
-        .then((value) => {
-          value = value || '';
-          return value;
-        });
+    return webElem.getText().then((text) => {
+      if (text) {
+        return text;
+      }
+      return webElem.getAttribute('value').then((value) => value || '');
+    });
   }
 }
 
