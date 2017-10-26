@@ -174,7 +174,7 @@ To set up WebStorm for Protractor, do the following:
 3. On the Configuration tab set:
  - **Node Interpreter**: path to node executable
  - **Working directory**: your project base path
- - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\lib\cli.js*)
+ - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\built\cli.js*)
  - **Application parameters**: path to your Protractor configuration file (e.g.
  *protractorConfig.js*)
 4. Click OK, place some breakpoints, and start debugging.
