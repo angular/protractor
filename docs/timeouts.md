@@ -64,7 +64,7 @@ Protractor waits for the `angular` variable to be present when loading a new pag
 ### _How to disable waiting for Angular_
 
 If you need to navigate to a page which does not use Angular, you can turn off waiting for Angular by setting
-`browser.waitForAngularEnabled(false). For example:
+`browser.waitForAngularEnabled(false)`. For example:
 
 ```js
 browser.waitForAngularEnabled(false);
