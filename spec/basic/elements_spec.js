@@ -593,3 +593,26 @@ describe('shortcut css notation', function() {
     expect(withoutShortcutCount).toEqual(withShortcutCount);
   });
 });
+
+describe('should get the text of input fields', function() {
+  beforeEach(function() {
+    browser.get('index.html#/form');
+  });
+
+  it('should get the text of an input', function() {
+    var usernameInput = element(by.model('username'));
+    var textExpect = 'Jane';
+    usernameInput.clear();
+    usernameInput.sendKeys(textExpect);
+    expect(usernameInput.getText()).toEqual(textExpect);
+  });
+
+  it('should get the text of a text area', function(){
+    var textArea = element(by.model('aboutbox'));
+    var textExpect = 'Text area';
+    textArea.clear();
+    textArea.sendKeys(textExpect);
+    expect(textArea.getText()).toEqual(textExpect);
+  });
+
+});

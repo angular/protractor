@@ -14,9 +14,8 @@ export class WebdriverWebElement {}
 export interface WebdriverWebElement extends WebElement { [key: string]: any; }
 
 let WEB_ELEMENT_FUNCTIONS = [
-  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId',
-  'takeScreenshot'
+  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getSize', 'getLocation',
+  'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'takeScreenshot'
 ];
 
 /**
@@ -434,7 +433,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   /**
    * Returns true if there are any elements present that match the finder.
    *
-   * @alias element.all(locator).isPresent()
+   * @alias element.all(locator).isnpm run formatPresent()
    *
    * @example
    * expect($('.item').isPresent()).toBeTruthy();
@@ -444,6 +443,14 @@ export class ElementArrayFinder extends WebdriverWebElement {
   isPresent(): wdpromise.Promise<boolean> {
     return this.count().then((count) => {
       return count > 0;
+    });
+  }
+
+  getText(): wdpromise.Promise<any> {
+    return this.asElementFinders_().then((parentWebElements: WebElement[]) => {
+      let childList =
+          parentWebElements.map((parentWebElement: WebElement) => parentWebElement.getText());
+      return wdpromise.all(childList);
     });
   }
 
@@ -1165,6 +1172,34 @@ export class ElementFinder extends WebdriverWebElement {
         this.getWebElement(),
         (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
                                          element as WebElement);
+  }
+
+  /**
+   * Get the visible innerText of this element, including sub-elements, without
+   * any leading or trailing whitespace. Visible elements are not hidden by CSS.
+   * Works also for input fields
+   *
+   * @view
+   * <div id="foo" class="bar">Inner text</div>
+   *
+   * @example
+   * var foo = element(by.id('foo'));
+   * expect(foo.getText()).toEqual('Inner text');
+   *
+   * @returns {!webdriver.promise.Promise.<string>} A promise that will be
+   *     resolved with the element's visible text.
+   */
+  getText(): wdpromise.Promise<string> {
+    let webElem = this.getWebElement();
+    return webElem.getText().then((text) => {
+      if (text) {
+        return text.trim();
+      }
+      return webElem.getAttribute('value').then((value) => {
+        value = value || '';
+        return value.trim();
+      });
+    });
   }
 }
 
