@@ -96,7 +96,7 @@ describe('Api', function() {
     expect(apiPage.getChildFunctionNames()).toEqual([
       'clone', 'all', 'filter', 'get', 'first', 'last', '$$', 'count',
       'isPresent', 'locator', 'then', 'each', 'map', 'reduce', 'evaluate',
-      'allowAnimations', 'getText']);
+      'allowAnimations']);
   });
 
   it('should show element functions', function() {
@@ -106,7 +106,7 @@ describe('Api', function() {
     // Then ensure the child functions are shown.
     expect(apiPage.getChildFunctionNames()).toEqual([
       'clone', 'locator', 'getWebElement', 'all', 'element', '$$',
-      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations', 'equals', 'getText']);
+      '$', 'isPresent', 'isElementPresent', 'evaluate', 'allowAnimations', 'equals']);
   });
 
   it('should show browser functions', function() {
