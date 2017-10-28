@@ -144,10 +144,16 @@ describe('Protractor Demo App', function() {
     // Fill this in.
     expect(latestResult.getText()).toEqual('10');
   });
+  
+  it('should read the value from an input', function() {
+    firstNumber.sendKeys(1);
+    expect(firstNumber.getAttribute('value')).toEqual('1');
+  });
 });
 ```
 
 Here, we've pulled the navigation out into a `beforeEach` function which is run before every `it` block. We've also stored the ElementFinders for the first and second input in nice variables that can be reused. Fill out the second test using those variables, and run the tests again to ensure they pass.
+In the last assertion we set a value in the input field `firstNumber` and then read it and compare the value. Input fields does not have text, instead they have values. To read a value from an input, we cannot therefore use `firstNumber.getText()`. Instead we can obtain the value with `firstNumber.getAttribute('value')`.
 
 Step 3 - changing the configuration
 -----------------------------------
