@@ -363,6 +363,16 @@ describe('locators', function() {
         });
     });
 
+    it('should find elements with a regex with no flags', function() {
+      // this test matches the non-transformed text.
+      // the text is actually transformed with css,
+      // so you can't match the Node innerText or textContent.
+      element.all(by.cssContainingText('#transformedtext div', /Uppercase/))
+        .then(function(found) {
+          expect(found.length).toEqual(1);
+          expect(found[0].getText()).toBe('UPPERCASE');
+        });
+    });
   });
 
   describe('by options', function() {
