@@ -17,7 +17,7 @@ import {Hosted} from './hosted';
 import {Local} from './local';
 import {Mock} from './mock';
 import {Sauce} from './sauce';
-import {TestObject} from "./testObject";
+import {TestObject} from './testObject';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -39,11 +39,11 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
       logWarnings('hosted', config);
     }
   } else if (config.testobjectUser && config.testobjectKey) {
-      driverProvider = new TestObject(config);
-      logWarnings('testObject', config);
+    driverProvider = new TestObject(config);
+    logWarnings('testObject', config);
   } else if (config.browserstackUser && config.browserstackKey) {
-      driverProvider = new BrowserStack(config);
-      logWarnings('browserStack', config);
+    driverProvider = new BrowserStack(config);
+    logWarnings('browserStack', config);
   } else if (config.sauceUser && config.sauceKey) {
     driverProvider = new Sauce(config);
     logWarnings('sauce', config);
