@@ -50,6 +50,8 @@ let allowedNames = [
   'sauceSeleniumAddress',
   'browserstackUser',
   'browserstackKey',
+  'testobjectUser',
+  'testobjectKey',
   'directConnect',
   'firefoxPath',
   'noGlobals',
