@@ -43,9 +43,9 @@ var AngularHomepage = function() {
 };
 module.exports = new AngularHomepage();
 ```
-The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the _functionality_ of the test script itself does not change (nothing is added or deleted).
+The next thing you need to do is modify the test script to use the Page Object and its properties. Note that the _functionality_ of the test script itself does not change (nothing is added or deleted).
 
-In the spec, you'll `require` Page Object. The path to the Page Object _will be relative_ to your spec, so adjust accordingly.
+In the test script, you'll `require` the Page Object as presented above. The path to the Page Object _will be relative_ to your spec, so adjust accordingly.
 
 ```js
 var angularHomepage = require('./AngularHomepage');
