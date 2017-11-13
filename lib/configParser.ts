@@ -187,6 +187,8 @@ let merge_ = function(into: any, from: any): any {
     if (into[key] instanceof Object && !(into[key] instanceof Array) &&
         !(into[key] instanceof Function)) {
       merge_(into[key], from[key]);
+    } else if (into[key] instanceof Array && from[key] instanceof Array) {
+      into[key] = into[key].concat(from[key]);
     } else {
       into[key] = from[key];
     }
