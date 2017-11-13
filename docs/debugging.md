@@ -148,6 +148,20 @@ used from the browser's console.
 // You can also limit the scope of the locator
 > window.clientSideScripts.findInputs('username', document.getElementById('#myEl'));
 ```
+
+**Debugging with the control flow disabled**
+
+If you've set the `SELENIUM_PROMISE_MANAGER` config value to false to [disable the control flow](https://github.com/angular/protractor/blob/master/docs/control-flow.md),
+the above methods will not work. Instead, you can now use native `debugger` statements to pause your code. However, you
+will need to start your tests using Node's `--inspect-brk` option:
+
+```
+node --inspect-brk node_modules/.bin/protractor <config_file>
+```
+
+You will then be able to use the Chrome devtools at chrome://inspect to connect to the tests.
+
+
 Setting Up VSCode for Debugging
 -------------------------------
 VS Code has built-in [debugging](https://code.visualstudio.com/docs/editor/debugging) support for the Node.js runtime and can debug JavaScript, TypeScript, and any other language that gets transpiled to JavaScript.
@@ -174,7 +188,7 @@ To set up WebStorm for Protractor, do the following:
 3. On the Configuration tab set:
  - **Node Interpreter**: path to node executable
  - **Working directory**: your project base path
- - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\lib\cli.js*)
+ - **JavaScript file**: path to Protractor cli.js file (e.g. *node_modules\protractor\built\cli.js*)
  - **Application parameters**: path to your Protractor configuration file (e.g.
  *protractorConfig.js*)
 4. Click OK, place some breakpoints, and start debugging.
