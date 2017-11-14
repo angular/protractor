@@ -19,7 +19,7 @@ describe('angularjs homepage', function() {
 });
 ```
 
-With PageObjects
+With Page Objects
 ----------------
 
 To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:
@@ -41,13 +41,16 @@ var AngularHomepage = function() {
     return greeting.getText();
   };
 };
+module.exports = new AngularHomepage();
 ```
-The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the _functionality_ of the test script itself does not change (nothing is added or deleted).
+The next thing you need to do is modify the test script to use the Page Object and its properties. Note that the _functionality_ of the test script itself does not change (nothing is added or deleted).
+
+In the test script, you'll `require` the Page Object as presented above. The path to the Page Object _will be relative_ to your spec, so adjust accordingly.
 
 ```js
+var angularHomepage = require('./AngularHomepage');
 describe('angularjs homepage', function() {
   it('should greet the named user', function() {
-    var angularHomepage = new AngularHomepage();
     angularHomepage.get();
 
     angularHomepage.setName('Julie');
