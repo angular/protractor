@@ -934,7 +934,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                       let message = angularTestResult.message;
                       logger.error(`Could not find Angular on page ${destination} : ${message}`);
                       throw new Error(
-                          `Angular could not be found on the page ${destination}.` +
+                          `Angular could not be found on the page ${destination}. ` +
                           `If this is not an Angular application, you may need to turn off waiting for Angular.
                           Please see 
                           https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load`);
