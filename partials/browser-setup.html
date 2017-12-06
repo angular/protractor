@@ -5,7 +5,7 @@
 <p>Please see <a href="#/browser-support">Browser Support</a> for a full list of
 supported browsers and known issues.</p>
 <h2 id="configuring-browsers" class="anchored"><div><a href="#{{path}}#configuring-browsers">&#x1f517;</a>Configuring Browsers</div></h2>
-<p>In your Protractor config file (see <a href="https://github.com/angular/protractor/blob/5.2.0/lib/config.ts">config.ts</a>), all browser setup is done within the <code ng-non-bindable>capabilities</code> object. This object is passed directly to the WebDriver builder (<a href="https://code.google.com/p/selenium/source/browse/javascript/webdriver/builder.js">builder.js</a>). </p>
+<p>In your Protractor config file (see <a href="https://github.com/angular/protractor/blob/5.2.1/lib/config.ts">config.ts</a>), all browser setup is done within the <code ng-non-bindable>capabilities</code> object. This object is passed directly to the WebDriver builder (<a href="https://code.google.com/p/selenium/source/browse/javascript/webdriver/builder.js">builder.js</a>). </p>
 <p>See <a href="https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities">DesiredCapabilities</a> for full information on which properties are available.</p>
 <h2 id="using-mobile-browsers" class="anchored"><div><a href="#{{path}}#using-mobile-browsers">&#x1f517;</a>Using Mobile Browsers</div></h2>
 <p>Please see the <a href="#/mobile-setup">Mobile Setup</a> documentation for information on mobile browsers.</p>
@@ -22,6 +22,15 @@ supported browsers and known issues.</p>
   &#39;browserName&#39;: &#39;chrome&#39;,
   &#39;chromeOptions&#39;: {
     &#39;args&#39;: [&#39;show-fps-counter=true&#39;]
+  }
+},
+</code></pre>
+<h2 id="adding-firefox-specific-options" class="anchored"><div><a href="#{{path}}#adding-firefox-specific-options">&#x1f517;</a>Adding Firefox-Specific Options</div></h2>
+<p>Firefox options are nested in the <code ng-non-bindable>moz:firefoxOptions</code> object. A full list of options is at the <a href="https://github.com/mozilla/geckodriver#firefox-capabilities">GeckoDriver</a> Github page. For example, to run in safe mode, your configuration would look like this:</p>
+<pre><code class="lang-javascript">capabilities: {
+  &#39;browserName&#39;: &#39;firefox&#39;,
+  &#39;moz:firefoxOptions&#39;: {
+    &#39;args&#39;: [&#39;--safe-mode&#39;]
   }
 },
 </code></pre>
@@ -69,7 +78,12 @@ element(by.model(...)).click();
 browser2.$(&#39;.css&#39;).click();
 </code></pre>
 <h2 id="setting-up-phantomjs" class="anchored"><div><a href="#{{path}}#setting-up-phantomjs">&#x1f517;</a>Setting up PhantomJS</div></h2>
-<p>PhantomJS is <a href="https://groups.google.com/forum/#!topic/phantomjs/9aI5d-LDuNE">no longer officially supported</a>. Instead, we recommend either <a href="http://www.tothenew.com/blog/protractor-with-jenkins-and-headless-chrome-xvfb-setup/">running Chrome in Xvfb</a> or using Chrome&#39;s <a href="https://developers.google.com/web/updates/2017/04/headless-chrome">headless mode</a>.</p>
+<p>PhantomJS is <a href="https://groups.google.com/forum/#!topic/phantomjs/9aI5d-LDuNE">no longer officially supported</a>. Instead, we recommend to use one of the following alternatives:</p>
+<ol>
+<li>Chrome with <a href="https://developers.google.com/web/updates/2017/04/headless-chrome">headless mode</a>. Available in Chrome 59+ on Linux/Mac OS X, and in Chrome 60+ on Windows.</li>
+<li>Firefox with <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options#-headless">headless mode</a>. Available in Firefox 55+ on Linux, and in Firefox 56+ on Windows/Mac OS X.</li>
+<li>Chrome with <a href="http://www.tothenew.com/blog/protractor-with-jenkins-and-headless-chrome-xvfb-setup/">Xvfb</a>.</li>
+</ol>
 <h2 id="using-headless-chrome" class="anchored"><div><a href="#{{path}}#using-headless-chrome">&#x1f517;</a>Using headless Chrome</div></h2>
 <p>To start Chrome in headless mode, start Chrome with the <code ng-non-bindable>--headless</code> flag.</p>
 <p>As of Chrome 58 you also need to set <code ng-non-bindable>--disable-gpu</code>, though this may change in future versions. 
@@ -80,6 +94,16 @@ on the commandline like this <code ng-non-bindable>--window-size=800,600</code>.
 
   chromeOptions: {
      args: [ &quot;--headless&quot;, &quot;--disable-gpu&quot;, &quot;--window-size=800,600&quot; ]
+   }
+}
+</code></pre>
+<h2 id="using-headless-firefox" class="anchored"><div><a href="#{{path}}#using-headless-firefox">&#x1f517;</a>Using headless Firefox</div></h2>
+<p>To start Firefox in headless mode, start Firefox with the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options#-headless"><code ng-non-bindable>--headless</code> flag</a>.</p>
+<pre><code class="lang-javascript">capabilities: {
+  browserName: &#39;firefox&#39;,
+
+  &#39;moz:firefoxOptions&#39;: {
+     args: [ &quot;--headless&quot; ]
    }
 }
 </code></pre>
