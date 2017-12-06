@@ -26,7 +26,7 @@ to create a breakpoint.  Note that sourcemaps don't work in the inspector
 in Node v6, but do work in Node v7 (due to https://github.com/nodejs/node/issues/8369).
 
 More detail about how to use [chrome
-    inspector](../../docs/debugging.md#disabled-control-flow)
+    inspector](/docs/debugging.md#disabled-control-flow)
 
 More Examples
 =============
