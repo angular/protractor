@@ -1,7 +1,7 @@
 <h1 id="using-page-objects-to-organize-tests">Using Page Objects to Organize Tests</h1>
 <p>When writing end-to-end tests, a common pattern is to use <a href="https://github.com/SeleniumHQ/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.</p>
 <h2 id="without-page-objects" class="anchored"><div><a href="#{{path}}#without-page-objects">&#x1f517;</a>Without Page Objects</div></h2>
-<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/5.2.0/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
+<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/5.2.1/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
 <pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, function() {
     browser.get(&#39;http://www.angularjs.org&#39;);
@@ -11,7 +11,7 @@
   });
 });
 </code></pre>
-<h2 id="with-pageobjects" class="anchored"><div><a href="#{{path}}#with-pageobjects">&#x1f517;</a>With PageObjects</div></h2>
+<h2 id="with-page-objects" class="anchored"><div><a href="#{{path}}#with-page-objects">&#x1f517;</a>With Page Objects</div></h2>
 <p>To switch to Page Objects, the first thing you need to do is create a Page Object. A Page Object for ‘The Basics’ example on the angularjs.org homepage could look like this:</p>
 <pre><code class="lang-js">var AngularHomepage = function() {
   var nameInput = element(by.model(&#39;yourName&#39;));
@@ -29,11 +29,13 @@
     return greeting.getText();
   };
 };
+module.exports = new AngularHomepage();
 </code></pre>
-<p>The next thing you need to do is modify the test script to use the PageObject and its properties. Note that the <em>functionality</em> of the test script itself does not change (nothing is added or deleted).</p>
-<pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
+<p>The next thing you need to do is modify the test script to use the Page Object and its properties. Note that the <em>functionality</em> of the test script itself does not change (nothing is added or deleted).</p>
+<p>In the test script, you&#39;ll <code ng-non-bindable>require</code> the Page Object as presented above. The path to the Page Object <em>will be relative</em> to your spec, so adjust accordingly.</p>
+<pre><code class="lang-js">var angularHomepage = require(&#39;./AngularHomepage&#39;);
+describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, function() {
-    var angularHomepage = new AngularHomepage();
     angularHomepage.get();
 
     angularHomepage.setName(&#39;Julie&#39;);

@@ -1,2 +1,77 @@
 <h1 id="-async-await-"><code ng-non-bindable>async</code>/<code ng-non-bindable>await</code></h1>
-<p>Please see <a href="https://github.com/angular/protractor/blob/5.2.0/exampleTypescript/asyncAwait/">our TypeScript examples which use <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code></a>.</p>
+<p><strong>Background</strong></p>
+<ul>
+<li><p>The Web Driver Control Flow is used to synchronize your commands so they reach
+the browser in the correct order (see
+<a href="#/control-flow">/docs/control-flow.md</a> for details).  In the future, the
+control flow is being removed (see <a href="https://github.com/SeleniumHQ/selenium/issues/2969">SeleniumHQ&#39;s github issue</a> for details). Instead of the
+control flow, you can synchronize your commands with promise chaining or the
+upcoming ES7 feature <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code>.</p>
+</li>
+<li><p>Previously, we have Typescript support for <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code>: Please see <a href="https://github.com/angular/protractor/blob/5.2.1/exampleTypescript/asyncAwait/README.md">TypeScript examples which use <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code></a>.</p>
+</li>
+<li><p>The latest <a href="https://nodejs.org/en/">Node.js</a> provides native async/await,
+which means we can get stable e2e test without using control flow in javascript test.</p>
+<p><strong>Note</strong>: To write and run native async/await test, the node.js version should be greater than or equal to 8.0, and Jasmine version should be greater than or equal to 2.7</p>
+</li>
+<li><p>If we disable control flow and use async/await to write tests, we can get a
+better debugging experience by using <a href="./debugging.md#disabled-control-flow">chrome
+inspector</a></p>
+</li>
+</ul>
+<p><strong>How to use native async/await in test</strong></p>
+<p>We have a simple example to show how to use async/await in test.</p>
+<p>You can find the whole example in
+<a href="https://github.com/angular/protractor/blob/5.2.1/debugging/async_await.js">here</a></p>
+<pre><code class="lang-javascript">describe(&#39;angularjs homepage&#39;, function() {
+  it(&#39;should greet the named user&#39;, async function() {
+    await browser.get(&#39;http://www.angularjs.org&#39;);
+
+    await element(by.model(&#39;yourName&#39;)).sendKeys(&#39;Julie&#39;);
+
+    var greeting = element(by.binding(&#39;yourName&#39;));
+
+    expect(await greeting.getText()).toEqual(&#39;Hello Julie!&#39;);
+  });
+</code></pre>
+<p>As you can see, the syntax is almost the same with TypeScript async/await.</p>
+<ol>
+<li>We need wrap our asynchronous function with “async”.</li>
+<li><p>We can add “await” keyword to each operation that we want our program to
+wait for.</p>
+<p><strong>Note:</strong> Never forget to add “await” keyword in an async function, it
+may bring some unexpected problem (e.g. your test might fail silently and
+always be reported as passed).</p>
+</li>
+<li>Don’t forget to turn off control_flow, you cannot use a mix of <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code> and the control flow:
+<code ng-non-bindable>async</code>/<code ng-non-bindable>await</code> causes the control flow to become unreliable (see
+<a href="https://github.com/SeleniumHQ/selenium/issues/3037">github issue</a>).  So if you
+<code ng-non-bindable>async</code>/<code ng-non-bindable>await</code> anywhere in a spec, you should use the
+<code ng-non-bindable>SELENIUM_PROMISE_MANAGER: false</code></li>
+</ol>
+<pre><code class="lang-javascript">// An example configuration file for debugging test using async/await.
+exports.config = {
+  directConnect: true,
+
+  // Capabilities to be passed to the webdriver instance.
+  capabilities: {
+    &#39;browserName&#39;: &#39;chrome&#39;
+  },
+
+  seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
+
+  // Framework to use. Jasmine is recommended.
+  framework: &#39;jasmine&#39;,
+
+  // Spec patterns are relative to the current working directory when
+  // protractor is called.
+  specs: [&#39;async_await.js&#39;],
+
+  SELENIUM_PROMISE_MANAGER: false,
+
+  // Options to be passed to Jasmine.
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 30000
+  }
+};
+</code></pre>
