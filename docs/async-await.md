@@ -20,7 +20,7 @@ upcoming ES7 feature `async`/`await`.
 
 -   If we disable control flow and use async/await to write tests, we can get a
     better debugging experience by using [chrome
-    inspector](./debugging.md#disabled-control-flow)
+    inspector](/docs/debugging.md#disabled-control-flow)
 
 **How to use native async/await in test**
 

@@ -37,7 +37,7 @@ reference for full documentation.
 
 The latest [Node.js](https://nodejs.org/en/) provides native async/await, which
 means we can get stable e2e test easily without using control flow. Furthermore,
-if we write our test by using async/await[(how to?)](./async-await.md), we can
+if we write our test by using async/await[(how to?)](/docs/async-await.md), we can
 use chrome development tool and chrome inspector together to debug the new
 tests, which will give a nicer debugging experience.
 
@@ -48,7 +48,7 @@ inspector and the debugging process is almost the same.
 
 We have a simple example to show how to debug async/await in test. You can find
 the whole example in
-[here](../debugging/async_await.js)
+[here](/debugging/async_await.js)
 
 -   Add “debugger” keyword to the test case that we want to debug.
 
@@ -78,23 +78,23 @@ the whole example in
 -   Open chrome inspector: Enter "chrome://inspect/#devices" in browser, find
     the current running target and click “Inspect”
 
-    ![screenshot](./inspector.png)
+    ![screenshot](/docs/inspector.png)
 
 -   The test will start and pause at the beginning.
 
-    ![screenshot](./firstBreak.png)
+    ![screenshot](/docs/firstBreak.png)
 
 -   We can click F8 (resume script execution), and the test will pause at the
     first line that has our “debugger” keyword. We can then add breakpoints and
     debug tests.
 
-    ![screenshot](./breakpoint.png)
+    ![screenshot](/docs/breakpoint.png)
 
 -   We can also open chrome development tool on the webdriver controlled browser
     to check the html elements and do some queries while the test execution is
     pausing.
 
-    ![screenshot](./chromeDevTool.png)
+    ![screenshot](/docs/chromeDevTool.png)
 
 -   Known Issues
 
