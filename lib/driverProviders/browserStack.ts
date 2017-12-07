@@ -31,7 +31,7 @@ export class BrowserStack extends DriverProvider {
     let deferredArray = this.drivers_.map((driver: WebDriver) => {
       let deferred = q.defer();
       driver.getSession().then((session: Session) => {
-        let headers: Object = {
+        let headers = {
           'Content-Type': 'application/json',
           'Authorization': 'Basic ' +
               new Buffer(this.config_.browserstackUser + ':' + this.config_.browserstackKey)
