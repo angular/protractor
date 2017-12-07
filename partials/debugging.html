@@ -24,15 +24,14 @@ reference for full documentation.</p>
 <h2 id="disabled-control-flow" class="anchored"><div><a href="#{{path}}#disabled-control-flow">&#x1f517;</a>Disabled Control Flow</div></h2>
 <p>The latest <a href="https://nodejs.org/en/">Node.js</a> provides native async/await, which
 means we can get stable e2e test easily without using control flow. Furthermore,
-if we write our test by using async/await<a href="./async-await.md">(how to?)</a>, we can
+if we write our test by using async/await<a href="#/async-await">(how to?)</a>, we can
 use chrome development tool and chrome inspector together to debug the new
 tests, which will give a nicer debugging experience.</p>
 <p><strong>Debuging tests in chrome inspector</strong></p>
 <p>We can debug both javascript and TypeScript async/await tests in chrome
 inspector and the debugging process is almost the same.</p>
 <p>We have a simple example to show how to debug async/await in test. You can find
-the whole example in
-<a href="https://github.com/angular/protractor/blob/5.2.1/../debugging/async_await.js">here</a></p>
+the whole example in <a href="https://github.com/angular/protractor/blob/5.2.1/debugging/async_await.js">here</a></p>
 <ul>
 <li><p>Add “debugger” keyword to the test case that we want to debug.</p>
 <pre><code class="lang-javascript">it(&#39;should greet the named user&#39;, async function() {
@@ -55,20 +54,20 @@ break before user code starts</p>
 </code></pre></li>
 <li><p>Open chrome inspector: Enter &quot;chrome://inspect/#devices&quot; in browser, find
 the current running target and click “Inspect”</p>
-<p><img src="./inspector.png" alt="screenshot"></p>
+<p><img src="img/inspector.png" alt="screenshot"></p>
 </li>
 <li><p>The test will start and pause at the beginning.</p>
-<p><img src="./firstBreak.png" alt="screenshot"></p>
+<p><img src="img/firstBreak.png" alt="screenshot"></p>
 </li>
 <li><p>We can click F8 (resume script execution), and the test will pause at the
 first line that has our “debugger” keyword. We can then add breakpoints and
 debug tests.</p>
-<p><img src="./breakpoint.png" alt="screenshot"></p>
+<p><img src="img/breakpoint.png" alt="screenshot"></p>
 </li>
 <li><p>We can also open chrome development tool on the webdriver controlled browser
 to check the html elements and do some queries while the test execution is
 pausing.</p>
-<p><img src="./chromeDevTool.png" alt="screenshot"></p>
+<p><img src="img/chromeDevTool.png" alt="screenshot"></p>
 </li>
 <li><p>Known Issues</p>
 </li>
