@@ -18,7 +18,7 @@ export class TestObject extends DriverProvider {
   /**
    * Configure and launch (if applicable) the object's environment.
    * @return {q.promise} A promise which will resolve when the environment is
-   *     ready to test.
+   *      ready to test.
    */
   protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
