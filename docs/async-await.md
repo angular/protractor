@@ -60,8 +60,6 @@ As you can see, the syntax is almost the same with TypeScript async/await.
 ```javascript
 // An example configuration file for debugging test using async/await.
 exports.config = {
-  directConnect: true,
-
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
     'browserName': 'chrome'
