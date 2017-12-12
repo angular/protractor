@@ -1,3 +1,13 @@
+ # 5.2.2
+ ## Fixes
+- ([b3c7404](https://github.com/angular/protractor/commit/b3c7404258db55a71e7bc4520973c0665cb0ff06))
+  Revert "fix(jasmine): Update Jasmine to support Node8 async/await (#4608)"
+  This reverts commit 5d13b00bca651227eb55616363f7d7eb8a91f8e8.
+  This commit is unnecessary now, revert this commit to avoid breaking changes in 5.2.1
+
+- ([8e5ad1f](https://github.com/angular/protractor/commit/8e5ad1f9b01ec4629fa079609aa8bedee52f0722))
+  fix(doc): remove unnecessary config in debugging doc/example (#4622)
+
 # 5.2.1
 ## Features
 - ([a62efc6](https://github.com/angular/protractor/commit/a62efc6e401bc1aa7408e3008ccdaa219b528636))
