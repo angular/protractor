@@ -1,7 +1,7 @@
 <h1 id="using-page-objects-to-organize-tests">Using Page Objects to Organize Tests</h1>
 <p>When writing end-to-end tests, a common pattern is to use <a href="https://github.com/SeleniumHQ/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.</p>
 <h2 id="without-page-objects" class="anchored"><div><a href="#{{path}}#without-page-objects">&#x1f517;</a>Without Page Objects</div></h2>
-<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/5.2.1/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
+<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/5.2.2/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
 <pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, function() {
     browser.get(&#39;http://www.angularjs.org&#39;);
