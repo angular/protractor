@@ -8,8 +8,8 @@ describe('ElementFinder', function() {
     await browser.get('index.html#/form');
     const nameByElement = element(by.binding('username'));
 
-    expect(await nameByElement.getText())
-        .toEqual(await browser.findElement(by.binding('username')).getText());
+    await expect(nameByElement.getText())
+        .toEqual(browser.findElement(by.binding('username')).getText());
   });
 
   it('should wait to grab the WebElement until a method is called', async function() {
@@ -19,11 +19,11 @@ describe('ElementFinder', function() {
 
     await browser.get('index.html#/form');
 
-    expect(await name.getText()).toEqual('Anon');
+    await expect(name.getText()).toEqual('Anon');
 
     await usernameInput.clear();
     await usernameInput.sendKeys('Jane');
-    expect(await name.getText()).toEqual('Jane');
+    await expect(name.getText()).toEqual('Jane');
   });
 
   it('should chain element actions', async function() {
@@ -32,10 +32,10 @@ describe('ElementFinder', function() {
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
 
-    expect(await name.getText()).toEqual('Anon');
+    await expect(name.getText()).toEqual('Anon');
 
     await((usernameInput.clear() as any) as ElementFinder).sendKeys('Jane');
-    expect(await name.getText()).toEqual('Jane');
+    await expect(name.getText()).toEqual('Jane');
   });
 
   it('should run chained element actions in sequence', function(done: any) {
@@ -75,8 +75,8 @@ describe('ElementFinder', function() {
 
     await browser.get('index.html#/conflict');
 
-    expect(await reused.getText()).toEqual('Inner: inner');
-    expect(await reused.isPresent()).toBe(true);
+    await expect(reused.getText()).toEqual('Inner: inner');
+    await expect(reused.isPresent()).toBe(true);
   });
 
   it('should differentiate elements with the same binding by chaining', async function() {
@@ -85,8 +85,8 @@ describe('ElementFinder', function() {
     const outerReused = element(by.binding('item.reusedBinding'));
     const innerReused = element(by.id('baz')).element(by.binding('item.reusedBinding'));
 
-    expect(await outerReused.getText()).toEqual('Outer: outer');
-    expect(await innerReused.getText()).toEqual('Inner: inner');
+    await expect(outerReused.getText()).toEqual('Outer: outer');
+    await expect(innerReused.getText()).toEqual('Inner: inner');
   });
 
   it('should chain deeper than 2', async function() {
@@ -96,7 +96,7 @@ describe('ElementFinder', function() {
 
     await browser.get('index.html#/conflict');
 
-    expect(await reused.getText()).toEqual('Inner: inner');
+    await expect(reused.getText()).toEqual('Inner: inner');
   });
 
   it('should allow handling errors', async function() {
@@ -129,8 +129,8 @@ describe('ElementFinder', function() {
     const byCss = by.css('body');
     const byBinding = by.binding('greet');
 
-    expect(await element(byCss).locator()).toEqual(byCss);
-    expect(await element(byBinding).locator()).toEqual(byBinding);
+    await expect(element(byCss).locator()).toEqual(byCss);
+    await expect(element(byBinding).locator()).toEqual(byBinding);
   });
 
   it('should propagate exceptions', async function() {
@@ -144,7 +144,7 @@ describe('ElementFinder', function() {
         function() {
           return false;
         } as any as (() => ppromise.Promise<void>));
-    expect(await successful).toEqual(false);
+    await expect(successful).toEqual(false);
   });
 
   it('should be returned from a helper without infinite loops', async function() {
@@ -154,7 +154,7 @@ describe('ElementFinder', function() {
     });
 
     await helperPromise.then(async function(finalResult: ElementFinder) {
-      expect(await finalResult.getText()).toEqual('Hiya');
+      await expect(finalResult.getText()).toEqual('Hiya');
     } as any as (() => ppromise.Promise<void>));
   });
 
@@ -169,8 +169,8 @@ describe('ElementFinder', function() {
 
     const name = element(by.binding('username'));
 
-    expect(await name.getText()).toEqual('Anon');
-    expect(await name.getText().then(null, function() {})).toEqual('Anon');
+    await expect(name.getText()).toEqual('Anon');
+    await expect(name.getText().then(null, function() {})).toEqual('Anon');
 
   });
 
@@ -180,7 +180,7 @@ describe('ElementFinder', function() {
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
 
-    expect(await usernameInput.equals(usernameInput)).toEqual(true);
-    expect(await usernameInput.equals(name)).toEqual(false);
+    await expect(usernameInput.equals(usernameInput)).toEqual(true);
+    await expect(usernameInput.equals(name)).toEqual(false);
   });
 });
