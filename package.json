@@ -79,7 +79,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=6.9.x"
+    "node": ">=6.9.x <8"
   },
   "version": "5.2.2"
 }
