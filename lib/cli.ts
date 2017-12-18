@@ -50,6 +50,8 @@ let allowedNames = [
   'sauceSeleniumAddress',
   'browserstackUser',
   'browserstackKey',
+  'kobitonUser',
+  'kobitonKey',
   'testobjectUser',
   'testobjectKey',
   'directConnect',

@@ -69,7 +69,15 @@ In your config file, set these options:
  - `testobjectUser` -  The username for your TestObject account.
  - `testobjectKey` -  The key for your TestObject account.
 
-Please note that if you set `testobjectUser` and `testobjectKey`, the settings for `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set `testobjectUser` and `testobjectKey`, the settings for `kobitonUser`, `kobitonKey`, `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+
+**Using Kobiton as remote Selenium Server**
+
+In your config file, set these options:
+ - `kobitonUser` -  The username for your Kobiton account.
+ - `kobitonKey` -  The API key from your Kobiton account.
+
+Please note that if you set `kobitonUser` and `kobitonKey`, the settings for `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
 
 **Using BrowserStack as remote Selenium Server**
 
