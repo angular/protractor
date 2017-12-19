@@ -22,9 +22,10 @@ export class Kobiton extends DriverProvider {
    */
   protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
-    this.config_.capabilities['kobitonUser'] = this.config_.testobjectUser;
-    this.config_.capabilities['kobitonKey'] = this.config_.testobjectKey;
-    this.config_.seleniumAddress = 'https://' + this.config_.testobjectUser + ':' + this.config_.testobjectKey + '@api.kobiton.com/wd/hub';
+    this.config_.capabilities['kobitonUser'] = this.config_.kobitonUser;
+    this.config_.capabilities['kobitonKey'] = this.config_.kobitonKey;
+    this.config_.seleniumAddress = 'https://' + this.config_.kobitonUser + ':' +
+        this.config_.kobitonKey + '@api.kobiton.com/wd/hub';
 
     logger.info('Using Kobiton selenium server at ' + this.config_.seleniumAddress);
     deferred.resolve();
