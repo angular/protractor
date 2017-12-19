@@ -1,5 +1,5 @@
 /*
- * This is an implementation of the TestObject Driver Provider.
+ * This is an implementation of the Kobiton Driver Provider.
  * It is responsible for setting up the account object, tearing
  * it down, and setting up the driver correctly.
  */

@@ -175,7 +175,7 @@ export interface Config {
    */
   testobjectKey?: string;
 
-  // ---- 5. To use remote browsers via TestObject ---------------------------
+  // ---- 5. To use remote browsers via Kobiton ---------------------------
 
   /**
    * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserstackUser, browserStackKey and
