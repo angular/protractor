@@ -165,26 +165,30 @@ export interface Config {
   // ---- 4. To use remote browsers via TestObject ---------------------------
 
   /**
-   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserstackUser, browserStackKey and
-   * seleniumServerJar will be ignored. The tests will be run remotely using TestObject.
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
    */
   testobjectUser?: string;
   /**
-   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserStackUser, browserStackKey and
-   * seleniumServerJar will be ignored. The tests will be run remotely using TestObject.
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
    */
   testobjectKey?: string;
 
   // ---- 5. To use remote browsers via Kobiton ---------------------------
 
   /**
-   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserstackUser, browserStackKey and
-   * seleniumServerJar will be ignored. The tests will be run remotely using TestObject.
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
    */
   kobitonUser?: string;
   /**
-   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserStackUser, browserStackKey and
-   * seleniumServerJar will be ignored. The tests will be run remotely using TestObject.
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
    */
   kobitonKey?: string;
 

@@ -19,7 +19,7 @@ import {Local} from './local';
 import {Mock} from './mock';
 import {Sauce} from './sauce';
 import {TestObject} from './testObject';
-import {Kobiton} from "./kobiton";
+import {Kobiton} from './kobiton';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -43,7 +43,7 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
   } else if (config.testobjectUser && config.testobjectKey) {
     driverProvider = new TestObject(config);
     logWarnings('testObject', config);
-  } else if (config.kobitonUser && config.kobitonKey ) {
+  } else if (config.kobitonUser && config.kobitonKey) {
     driverProvider = new Kobiton(config);
     logWarnings('kobiton', config);
   } else if (config.browserstackUser && config.browserstackKey) {
@@ -86,10 +86,10 @@ export let logWarnings = (providerType: string, config: Config): void => {
     warnList.push('testobjectKey');
   }
   if ('kobitonUser' !== providerType && config.kobitonUser) {
-      warnList.push('kobitonUser');
+    warnList.push('kobitonUser');
   }
   if ('kobitonKey' !== providerType && config.kobitonKey) {
-      warnList.push('kobitonKey');
+    warnList.push('kobitonKey');
   }
   if ('browserStack' !== providerType && config.browserstackUser) {
     warnList.push('browserstackUser');
