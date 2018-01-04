@@ -191,6 +191,24 @@ export interface Config {
    */
   firefoxPath?: string;
 
+   // ---- 6. To use remote browsers via Perfecto ---------------------------
+
+    /**
+     * If Perfecto user need to provide the credential
+     * user
+     */
+    perfectoUser ?: string;
+    /**
+     * PerfectoPassword
+     */
+    perfectoPassword?: string;
+
+     /**
+     * PerfectoToken
+     */
+    perfectoToken?: string;
+
+
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
   // ---------------------------------------------------------------------------

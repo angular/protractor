@@ -6,6 +6,7 @@ export * from './hosted';
 export * from './local';
 export * from './mock';
 export * from './sauce';
+export * from './perfecto';
 
 
 import {AttachSession} from './attachSession';
@@ -16,6 +17,7 @@ import {Hosted} from './hosted';
 import {Local} from './local';
 import {Mock} from './mock';
 import {Sauce} from './sauce';
+import {Perfecto} from './perfecto';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -42,6 +44,9 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
   } else if (config.sauceUser && config.sauceKey) {
     driverProvider = new Sauce(config);
     logWarnings('sauce', config);
+  } else if (config.perfectoUser && config.perfectoPassword) {
+    driverProvider = new Perfecto(config);
+    logWarnings('perfecto', config);
   } else if (config.seleniumServerJar) {
     driverProvider = new Local(config);
     logWarnings('local', config);
@@ -80,6 +85,15 @@ export let logWarnings = (providerType: string, config: Config): void => {
   }
   if ('sauce' !== providerType && config.sauceKey) {
     warnList.push('sauceKey');
+  }
+  if ('perfecto' !== providerType && config.perfectoUser) {
+      warnList.push('perfectoUser');
+  }
+  if ('perfecto' !== providerType && config.perfectoPassword) {
+      warnList.push('perfectoPassword');
+  }
+  if ('perfecto' !== providerType && config.PerfectoToken) {
+          warnList.push('perfectoToken');
   }
   if ('local' !== providerType && config.seleniumServerJar) {
     warnList.push('seleniumServerJar');

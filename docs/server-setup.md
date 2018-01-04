@@ -61,7 +61,7 @@ Please note that if you set seleniumAddress, the settings for `seleniumServerJar
 Remote Selenium Server
 ----------------------
 
-To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) and [Sauce Labs](http://www.saucelabs.com).
+To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) , [Sauce Labs](http://www.saucelabs.com) and [Perfecto](http://www.perfecto.io).
 
 **Using BrowserStack as remote Selenium Server**
 
@@ -83,7 +83,19 @@ Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleni
 
 You can optionally set the `name` property in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
 
+**Using Perfecto as remote Selenium Server**
 
+To run the Protractor scripts on real devices and browswer in Perfecto Lab.
+Add the following parameters to your config file:
+
+Mandatory Parameters 
+ - `perfectoUser` -  The username for your Perfecto account.
+ - `perfectoPassword` -  The Password for Perfecto account.
+ - `perfectoToken` - The token to execute Perfecto web
+  
+Please note that if you set `perfectoUser` and `perfectoPassword`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` , `browserstackKey` ,`sauceUser` and `sauceKey` will be ignored.
+
+ 
 Connecting Directly to Browser Drivers
 --------------------------------------
 
