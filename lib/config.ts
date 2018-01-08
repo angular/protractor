@@ -162,7 +162,37 @@ export interface Config {
    */
   sauceSeleniumAddress?: string;
 
-  // ---- 4. To use remote browsers via BrowserStack ---------------------------
+  // ---- 4. To use remote browsers via TestObject ---------------------------
+
+  /**
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  testobjectUser?: string;
+  /**
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  testobjectKey?: string;
+
+  // ---- 5. To use remote browsers via Kobiton ---------------------------
+
+  /**
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  kobitonUser?: string;
+  /**
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  kobitonKey?: string;
+
+  // ---- 6. To use remote browsers via BrowserStack ---------------------------
 
   /**
    * If browserstackUser and browserstackKey are specified, seleniumServerJar
@@ -175,7 +205,7 @@ export interface Config {
    */
   browserstackKey?: string;
 
-  // ---- 5. To connect directly to Drivers ------------------------------------
+  // ---- 7. To connect directly to Drivers ------------------------------------
 
   /**
    * If true, Protractor will connect directly to the browser Drivers
