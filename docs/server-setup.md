@@ -61,7 +61,23 @@ Please note that if you set seleniumAddress, the settings for `seleniumServerJar
 Remote Selenium Server
 ----------------------
 
-To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) and [Sauce Labs](http://www.saucelabs.com).
+To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) , [Sauce Labs](http://www.saucelabs.com) and [TestObject](https://www.testobject.com).
+
+**Using TestObject as remote Selenium Server**
+
+In your config file, set these options:
+ - `testobjectUser` -  The username for your TestObject account.
+ - `testobjectKey` -  The key for your TestObject account.
+
+Please note that if you set `testobjectUser` and `testobjectKey`, the settings for `kobitonUser`, `kobitonKey`, `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+
+**Using Kobiton as remote Selenium Server**
+
+In your config file, set these options:
+ - `kobitonUser` -  The username for your Kobiton account.
+ - `kobitonKey` -  The API key from your Kobiton account.
+
+Please note that if you set `kobitonUser` and `kobitonKey`, the settings for `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
 
 **Using BrowserStack as remote Selenium Server**
 
