@@ -437,18 +437,18 @@ export class ProtractorExpectedConditions {
     });
   }
 
-    /**
-     * An expectation for checking the number of elements with given locator
-     *
-     * @example
-     * var EC = protractor.ExpectedConditions;
-     * browser.wait(EC.numberOfElementsToBe(by.repeater('cat in pets'), 3), 5000);
-     *
-     * @param {Locator} locator The locator to be used
-     * @param {number} numberElem The expected number of elements
-     * @returns {!function} An expected condition that returns a promise
-     *     representing whether the size of elements list is equal to defined.
-     */
+  /**
+   * An expectation for checking the number of elements with given locator
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * browser.wait(EC.numberOfElementsToBe(by.repeater('cat in pets'), 3), 5000);
+   *
+   * @param {Locator} locator The locator to be used
+   * @param {number} numberElem The expected number of elements
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the size of elements list is equal to defined.
+   */
   numberOfElementsToBe(locator: Locator, numberElem: number): Function {
     return () => {
       let elemArray: ElementArrayFinder = element.all(locator);
