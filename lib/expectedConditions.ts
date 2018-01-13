@@ -449,10 +449,10 @@ export class ProtractorExpectedConditions {
      * @returns {!function} An expected condition that returns a promise
      *     representing whether the size of elements list is equal to defined.
      */
-  numberOfElementsToBe(locator: Locator, numberElem: number): Function{
+  numberOfElementsToBe(locator: Locator, numberElem: number): Function {
     return () => {
       let elemArray: ElementArrayFinder = element.all(locator);
-      return elemArray.count().then(count => count === numberElem);
+      return elemArray.count().then((count) => count === numberElem);
     };
   }
 }
