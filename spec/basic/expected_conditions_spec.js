@@ -176,6 +176,12 @@ describe('expected conditions', function() {
     expect(EC.or(EC.not(valid), EC.and(valid, invalid)).call()).toBe(false);
   });
 
+  it('should have numberOfElementsToBe', function() {
+    var loc = by.model('username');
+    expect(EC.numberOfElementsToBe(loc, 1).call()).toBe(true);
+    expect(EC.numberOfElementsToBe(loc, 0).call()).toBe(false);
+  });
+
   describe('for forked browsers', function() {
     // ensure that we can run EC on forked browser instances
     it('should have alertIsPresent', function() {

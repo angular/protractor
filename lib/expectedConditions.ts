@@ -1,7 +1,9 @@
 import {error as wderror} from 'selenium-webdriver';
 import {ProtractorBrowser} from './browser';
-import {ElementFinder} from './element';
+import {ElementArrayFinder, ElementFinder} from './element';
 import {falseIfMissing, passBoolean} from './util';
+import {Locator} from "./locators";
+import {element} from "./index";
 
 /**
  * Represents a library of canned expected conditions that are useful for
@@ -433,5 +435,24 @@ export class ProtractorExpectedConditions {
     return this.and(this.presenceOf(elementFinder), () => {
       return elementFinder.isSelected().then(passBoolean, falseIfMissing);
     });
+  }
+
+    /**
+     * An expectation for checking the number of elements with given locator
+     *
+     * @example
+     * var EC = protractor.ExpectedConditions;
+     * browser.wait(EC.numberOfElementsToBe(by.repeater('cat in pets'), 3), 5000);
+     *
+     * @param {Locator} locator The locator to be used
+     * @param {number} numberElem The expected number of elements
+     * @returns {!function} An expected condition that returns a promise
+     *     representing whether the size of elements list is equal to defined.
+     */
+  numberOfElementsToBe(locator: Locator, numberElem: number): Function{
+    return () => {
+      let elemArray: ElementArrayFinder = element.all(locator);
+      return elemArray.count().then(count => count === numberElem);
+    };
   }
 }
