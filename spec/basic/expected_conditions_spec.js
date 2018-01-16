@@ -130,6 +130,17 @@ describe('expected conditions', function() {
        validityOfTitle, presenceOfInvalidElement).call()).toBe(false);
   });
 
+  it('should have numberOfWindowsToBe', function() {
+    browser.executeScript('window.open("http://localhost:8081/ng1/#/form");'); //new tab
+    expect(EC.numberOfWindowsToBe(2).call()).toEqual(true);
+    browser.getAllWindowHandles().then(function(handles) {
+      browser.driver.switchTo().window(handles[1]);
+      browser.driver.close();
+      browser.driver.switchTo().window(handles[0]);
+      expect(EC.numberOfWindowsToBe(1).call()).toEqual(true);
+    });
+  });
+
   it('and should shortcircuit', function() {
     var invalidElem = $('#INVALID');
 

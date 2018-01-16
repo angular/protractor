@@ -434,4 +434,21 @@ export class ProtractorExpectedConditions {
       return elementFinder.isSelected().then(passBoolean, falseIfMissing);
     });
   }
+
+  /**
+   * An expectation for checking the number of windows.
+   *
+   * @alias ExpectedConditions.numberOfWindowsToBe
+   * @param {number} expectedNumberOfWindows The number to verify against.
+   *
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the number of windows is equal to defined.
+   */
+  numberOfWindowsToBe(expectedNumberOfWindows: number): Function {
+    return () => {
+      return this.browser.driver.getAllWindowHandles().then((windowHandles) => {
+        return windowHandles.length === expectedNumberOfWindows;
+      });
+    };
+  }
 }
