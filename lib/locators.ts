@@ -489,41 +489,4 @@ export class ProtractorBy extends WebdriverBy {
     // When that is supported, switch it here.
     return By.css('* /deep/ ' + selector);
   };
-
-  /**
-   * Find an element throughout the Shadow DOM by extended css selector.
-   * In order to go into the shadow tree of the element, use a special selector `::sr`.
-   * As compatible with both Shadow DOM v1 and prior specification, `::sr` will be ignored
-   * for the browser with no support of Shadow DOM, so the result will be same.
-   *
-   * @alias by.shadowRoot(selector)
-   * @view
-   * <div>
-   *   <span id="outerspan">
-   *   <"shadow tree">
-   *     <span id="span1"></span>
-   *     <"shadow tree">
-   *       <span id="span2"></span>
-   *     </>
-   *   </>
-   * </div>
-   * @example
-   * var span1 = element(by.shadowRoot('#outerspan::sr #span1'));
-   * var span2 = element(by.shadowRoot('#outerspan::sr #span1::sr #span2'));
-   *
-   * @param {string} selector an extended css selector, each `::sr` in which will go into the shadow root of the element
-   * @returns {Locator} location strategy
-   */
-  shadowRoot(selector: string): Locator {
-    return {
-      findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findByShadowRoot, selector, using, rootSelector));
-      },
-      toString: (): string => {
-        return 'by.shadowRoot("' + selector + '")';
-      }
-    };
-  };
 }
