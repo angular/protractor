@@ -42,7 +42,7 @@ var passingTests = [
   'node built/cli.js spec/built/noCFBasicConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
   'node built/cli.js spec/built/noCFPluginConf.js',
-  'node scripts/driverProviderAttachSession.js',
+  //'node scripts/driverProviderAttachSession.js',
   'node scripts/errorTest.js',
   // Interactive Element Explorer tasks
   'node scripts/interactive_tests/interactive_test.js',

@@ -14,6 +14,13 @@ try {
   // Intentionally blank - ignore if coffee-script is not available.
 }
 
+// CoffeeScript lost the hyphen in the module name a long time ago, all new version are named this:
+try {
+  require('coffeescript').register();
+} catch (e) {
+  // Intentionally blank - ignore if coffeescript is not available.
+}
+
 // LiveScript is required here to enable config files written in LiveScript.
 try {
   require('LiveScript');
@@ -55,9 +62,8 @@ export class ConfigParser {
    * @return {Array} The resolved file paths.
    */
   public static resolveFilePatterns(
-      patterns: Array<string>|string, opt_omitWarnings?: boolean,
-      opt_relativeTo?: string): Array<string> {
-    let resolvedFiles: Array<string> = [];
+      patterns: string[]|string, opt_omitWarnings?: boolean, opt_relativeTo?: string): string[] {
+    let resolvedFiles: string[] = [];
     let cwd = opt_relativeTo || process.cwd();
 
     patterns = (typeof patterns === 'string') ? [patterns] : patterns;
@@ -82,8 +88,8 @@ export class ConfigParser {
    *
    * @return {Array} An array of globs locating the spec files
    */
-  static getSpecs(config: Config): Array<string> {
-    let specs: Array<string> = [];
+  static getSpecs(config: Config): string[] {
+    let specs: string[] = [];
     if (config.suite) {
       config.suite.split(',').forEach((suite) => {
         let suiteList = config.suites ? config.suites[suite] : null;
@@ -115,8 +121,9 @@ export class ConfigParser {
   private addConfig_(additionalConfig: any, relativeTo: string): void {
     // All filepaths should be kept relative to the current config location.
     // This will not affect absolute paths.
-    ['seleniumServerJar', 'chromeDriver', 'onPrepare', 'firefoxPath', 'frameworkPath'].forEach(
-        (name) => {
+    ['seleniumServerJar', 'chromeDriver', 'firefoxPath', 'frameworkPath', 'geckoDriver',
+     'onPrepare']
+        .forEach((name: string) => {
           if (additionalConfig[name] && typeof additionalConfig[name] === 'string') {
             additionalConfig[name] = path.resolve(relativeTo, additionalConfig[name]);
           }
@@ -206,10 +213,10 @@ let makeArray = function(item: any): any {
  * Adds to an array all the elements in another array without adding any
  * duplicates
  *
- * @param {Array<string>} dest The array to add to
- * @param {Array<string>} src The array to copy from
+ * @param {string[]} dest The array to add to
+ * @param {string[]} src The array to copy from
  */
-let union = function(dest: Array<string>, src: Array<string>): void {
+let union = function(dest: string[], src: string[]): void {
   let elems: any = {};
   for (let key in dest) {
     elems[dest[key]] = true;

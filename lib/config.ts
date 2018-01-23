@@ -66,15 +66,21 @@ export interface Config {
     jvmArgs?: string[];
   };
   /**
-   * ChromeDriver location is used to help find the chromedriver binary.
-   * This will be passed to the Selenium jar as the system property
-   * webdriver.chrome.driver. If null, Selenium will attempt to find
-   * ChromeDriver using PATH.
+   * ChromeDriver location is used to help find the chromedriver binary. This will be passed to the
+   * Selenium jar as the system property webdriver.chrome.driver. If the value is not set when
+   * launching locally, it will use the default values downloaded from webdriver-manager.
    *
    * example:
    * chromeDriver: './node_modules/webdriver-manager/selenium/chromedriver_2.20'
    */
   chromeDriver?: string;
+
+  /**
+   * geckoDriver location is used to help find the gecko binary. This will be passed to the Selenium
+   * jar as the system property webdriver.gecko.driver. If the value is not set when launching
+   * locally, it will use the default values downloaded from webdriver-manager.
+   */
+  geckoDriver?: string;
 
   // ---- 2. To connect to a Selenium Server which is already running ----------
 
@@ -91,9 +97,14 @@ export interface Config {
    */
   seleniumSessionId?: string;
   /**
-   * The address of a proxy server to use for the connection to the
-   * Selenium Server. If not specified no proxy is configured. Looks like
-   * webDriverProxy: 'http://localhost:3128'
+   * The address of a proxy server to use for communicating to Sauce Labs rest APIs via the
+   * saucelabs node module. For example, the Sauce Labs Proxy can be setup with: sauceProxy:
+   * 'http://localhost:3128'
+   */
+  sauceProxy?: string;
+
+  /**
+   * The proxy address that browser traffic will go through which is tied to the browser session.
    */
   webDriverProxy?: string;
 
@@ -151,7 +162,37 @@ export interface Config {
    */
   sauceSeleniumAddress?: string;
 
-  // ---- 4. To use remote browsers via BrowserStack ---------------------------
+  // ---- 4. To use remote browsers via TestObject ---------------------------
+
+  /**
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  testobjectUser?: string;
+  /**
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  testobjectKey?: string;
+
+  // ---- 5. To use remote browsers via Kobiton ---------------------------
+
+  /**
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  kobitonUser?: string;
+  /**
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  kobitonKey?: string;
+
+  // ---- 6. To use remote browsers via BrowserStack ---------------------------
 
   /**
    * If browserstackUser and browserstackKey are specified, seleniumServerJar
@@ -164,7 +205,7 @@ export interface Config {
    */
   browserstackKey?: string;
 
-  // ---- 5. To connect directly to Drivers ------------------------------------
+  // ---- 7. To connect directly to Drivers ------------------------------------
 
   /**
    * If true, Protractor will connect directly to the browser Drivers

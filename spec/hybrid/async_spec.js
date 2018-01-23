@@ -54,3 +54,18 @@ describe('async angular1/2 hybrid using ngUpgrade application', function() {
     });
   });
 });
+describe('async angular1/2 hybrid using downgrade application', function() {
+  it('should be able to click buttons and wait for $timeout', function() {
+      browser.get('/upgrade?downgrade');
+
+      var rootBtn = $$('my-app button').first();
+      expect(rootBtn.getText()).toEqual('Click Count: 0');
+      rootBtn.click();
+      expect(rootBtn.getText()).toEqual('Click Count: 1');
+
+      var ng2Btn = $$('ng2 button').first();
+      expect(ng2Btn.getText()).toEqual('Click Count: 0');
+      ng2Btn.click();
+      expect(ng2Btn.getText()).toEqual('Click Count: 1');
+  });
+});
