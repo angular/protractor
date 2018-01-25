@@ -21,7 +21,7 @@ with more info.</p>
 <p>If your app needs log-in, there are a couple ways to deal with it. If your login
 page is not written with Angular, you&#39;ll need to interact with it via 
 unwrapped webdriver, which can be accessed like <code ng-non-bindable>browser.driver.get()</code>. You can also use
-<code ng-non-bindable>browser.ignoreSynchronization</code> as explained <a href="#/timeouts#how-to-disable-waiting-for-angular">here</a>.</p>
+<code ng-non-bindable>browser.waitForAngularEnabled(false)</code> as explained <a href="#/timeouts#how-to-disable-waiting-for-angular">here</a>.</p>
 <p>Another option is to put your log-in code into an <code ng-non-bindable>onPrepare</code> function, which will be run
 once before any of your tests. See this example (<a href="https://github.com/angular/protractor/blob/master/spec/withLoginConf.js">withLoginConf.js</a>)</p>
 <h2 id="which-browsers-are-supported-" class="anchored"><div><a href="#{{path}}#which-browsers-are-supported-">&#x1f517;</a>Which browsers are supported?</div></h2>

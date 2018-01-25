@@ -2,7 +2,7 @@
 <p>When working with Protractor, you need to specify how to connect to the browser drivers which will start up and control the browsers you are testing on. You will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols).</p>
 <p>The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations.</p>
 <pre><code ng-non-bindable>     [Test Scripts] &lt; ------------ &gt; [Selenium Server] &lt; ------------ &gt; [Browser Drivers]
-</code></pre><p>The <a href="https://github.com/angular/protractor/blob/5.2.2/lib/config.ts">config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
+</code></pre><p>The <a href="https://github.com/angular/protractor/blob/5.3.0/lib/config.ts">config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
 <h2 id="standalone-selenium-server" class="anchored"><div><a href="#{{path}}#standalone-selenium-server">&#x1f517;</a>Standalone Selenium Server</div></h2>
 <p>To run the Selenium Server on your local machine, use the standalone Selenium Server. </p>
 <p><strong>JDK</strong></p>
@@ -42,7 +42,21 @@
 </ul>
 <p>Please note that if you set seleniumAddress, the settings for <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>browserstackUser</code>, <code ng-non-bindable>browserstackKey</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
 <h2 id="remote-selenium-server" class="anchored"><div><a href="#{{path}}#remote-selenium-server">&#x1f517;</a>Remote Selenium Server</div></h2>
-<p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="https://www.browserstack.com">BrowserStack</a> and <a href="http://www.saucelabs.com">Sauce Labs</a>.</p>
+<p>To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for <a href="https://www.browserstack.com">BrowserStack</a> , <a href="http://www.saucelabs.com">Sauce Labs</a> and <a href="https://www.testobject.com">TestObject</a>.</p>
+<p><strong>Using TestObject as remote Selenium Server</strong></p>
+<p>In your config file, set these options:</p>
+<ul>
+<li><code ng-non-bindable>testobjectUser</code> -  The username for your TestObject account.</li>
+<li><code ng-non-bindable>testobjectKey</code> -  The key for your TestObject account.</li>
+</ul>
+<p>Please note that if you set <code ng-non-bindable>testobjectUser</code> and <code ng-non-bindable>testobjectKey</code>, the settings for <code ng-non-bindable>kobitonUser</code>, <code ng-non-bindable>kobitonKey</code>, <code ng-non-bindable>browserstackUser</code>, <code ng-non-bindable>browserstackKey</code>, <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
+<p><strong>Using Kobiton as remote Selenium Server</strong></p>
+<p>In your config file, set these options:</p>
+<ul>
+<li><code ng-non-bindable>kobitonUser</code> -  The username for your Kobiton account.</li>
+<li><code ng-non-bindable>kobitonKey</code> -  The API key from your Kobiton account.</li>
+</ul>
+<p>Please note that if you set <code ng-non-bindable>kobitonUser</code> and <code ng-non-bindable>kobitonKey</code>, the settings for <code ng-non-bindable>browserstackUser</code>, <code ng-non-bindable>browserstackKey</code>, <code ng-non-bindable>seleniumServerJar</code>, <code ng-non-bindable>seleniumPort</code>, <code ng-non-bindable>seleniumArgs</code>, <code ng-non-bindable>sauceUser</code> and <code ng-non-bindable>sauceKey</code> will be ignored.</p>
 <p><strong>Using BrowserStack as remote Selenium Server</strong></p>
 <p>In your config file, set these options:</p>
 <ul>

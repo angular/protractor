@@ -8,7 +8,7 @@ control flow is being removed (see <a href="https://github.com/SeleniumHQ/seleni
 control flow, you can synchronize your commands with promise chaining or the
 upcoming ES7 feature <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code>.</p>
 </li>
-<li><p>Previously, we have Typescript support for <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code>: Please see <a href="https://github.com/angular/protractor/blob/5.2.2/exampleTypescript/asyncAwait/README.md">TypeScript examples which use <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code></a>.</p>
+<li><p>Previously, we have Typescript support for <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code>: Please see <a href="https://github.com/angular/protractor/blob/5.3.0/exampleTypescript/asyncAwait/README.md">TypeScript examples which use <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code></a>.</p>
 </li>
 <li><p>The latest <a href="https://nodejs.org/en/">Node.js</a> provides native async/await,
 which means we can get stable e2e test without using control flow in javascript test.</p>
@@ -22,7 +22,7 @@ inspector</a></p>
 <p><strong>How to use native async/await in test</strong></p>
 <p>We have a simple example to show how to use async/await in test.</p>
 <p>You can find the whole example in
-<a href="https://github.com/angular/protractor/blob/5.2.2/debugging/async_await.js">here</a></p>
+<a href="https://github.com/angular/protractor/blob/5.3.0/debugging/async_await.js">here</a></p>
 <pre><code class="lang-javascript">describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, async function() {
     await browser.get(&#39;http://www.angularjs.org&#39;);

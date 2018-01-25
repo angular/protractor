@@ -7,10 +7,13 @@
 <h2 id="locators" class="anchored"><div><a href="#{{path}}#locators">&#x1f517;</a>Locators</div></h2>
 <p>A locator tells Protractor how to find a certain DOM element. Protractor exports locator factories on the global <code ng-non-bindable>by</code> object. The most common locators are:</p>
 <pre><code class="lang-js">// Find an element using a css selector.
-by.css(&#39;.myclass&#39;) 
+by.css(&#39;.myclass&#39;)
 
 // Find an element with the given id.
 by.id(&#39;myid&#39;)
+
+// Find an element using an input name selector.
+by.name(&#39;field_name&#39;)
 
 // Find an element with a certain ng-model.
 // Note that at the moment, this is only supported for AngularJS apps.
