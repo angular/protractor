@@ -50,9 +50,9 @@
 - ([335680f](https://github.com/angular/protractor/commit/335680f10ab3c5d1de1eab92868c7b30fb7e3d23))
   fix(circleCI): lock the currect version of all dependencies (#4669)
   CircleCI was broken by the new release of gulp-clang-format and jasmine
-  1.pin the version of gulp-clang-format to 1.0.23
-  2.pin jasmine version to 2.8.0
-  3.add lock file
+  1. pin the version of gulp-clang-format to 1.0.23
+  2. pin jasmine version to 2.8.0
+  3. add lock file
 
 # 5.2.2
  ## Fixes
