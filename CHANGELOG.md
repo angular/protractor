@@ -1,4 +1,60 @@
- # 5.2.2
+# 5.3.0
+
+## Features
+
+- ([9d87982](https://github.com/angular/protractor/commit/9d8798243d23dd9d338c2eabd11d5a43ab3c31d9))
+  feat(config): allow to use newer versions of CoffeeScript (#4567)
+  CoffeeScript lost the hyphen in the module name about 9 months ago, all the new versions are
+  going to be released as coffeescript not the coffee-script
+
+- ([6ba30e0](https://github.com/angular/protractor/commit/6ba30e0b356fdb980cf1f2870ef0b5c6bb22ec4e))
+  feat(driverProviders): Add TestObject and Kobiton as driverProviders
+  Add TestObject and Kobiton as driverProviders
+  1. Add testObject and kobiton to driverProviders
+  2. Add testObject and kobiton items to cli, config and index
+  3. Add instructions for using testObject and kobiton to server-setup
+
+## Fixes
+
+- ([a62a154](https://github.com/angular/protractor/commit/a62a15417d559346a75fb6e208359ffa5b6b65f1))
+  fix(script): fix compile-to-es5 script (#4676)
+  make compile-to-es5 script rely on native es6-promise typing
+
+- ([964baba](https://github.com/angular/protractor/commit/964baba5eac52452350bf1d29a191558595c5f1b))
+  fix(clientsidescript): avoid returning the value of test callback in waitForAngular (#4667)
+  The return value could be interpreted as an error by mistake in some situation
+  Also fix a wrong if-condition in error reporting
+
+- ([83e2ba8](https://github.com/angular/protractor/commit/83e2ba878257e9c85775cd52bf70960f0c45917b))
+  fix(website): Locator by.name('field_name') (#4653)
+
+- ([02746dd](https://github.com/angular/protractor/commit/02746dd37726b2647f8f8dbeb1152cd7f902acb0))
+  fix(browser): Add space after full stop in error message. (#4594)
+  Linkifiers interpret the ".If" at the end of the URL as part of the URL.
+)
+
+- ([7f968e0](https://github.com/angular/protractor/commit/7f968e022a7f7ebcda8955651f2907c1a25ecc22))
+  fix(direct): Use config's geckoDriver when specified (#4554)
+  This change makes the `firefox` capability more closely match `chrome`'s. The `firefox`
+  capability was not looking for `config_.geckoDriver` like `chrome` was.
+
+- ([f9df456](https://github.com/angular/protractor/commit/f9df45619b1744e6615e183965fe093f0e4526e6))
+  docs(element): fix minor typo in element.ts (#4471)
+
+- ([65f206e](https://github.com/angular/protractor/commit/65f206e70a2d13762c841da247557b0ebb7fde7d))
+  docs(website): updated reference from ignoreSynchronization to waitForAngularEnabled(false).
+  (#4632)
+
+## Dependencies
+
+- ([335680f](https://github.com/angular/protractor/commit/335680f10ab3c5d1de1eab92868c7b30fb7e3d23))
+  fix(circleCI): lock the currect version of all dependencies (#4669)
+  CircleCI was broken by the new release of gulp-clang-format and jasmine
+  1. pin the version of gulp-clang-format to 1.0.23
+  2. pin jasmine version to 2.8.0
+  3. add lock file
+
+# 5.2.2
  ## Fixes
 - ([b3c7404](https://github.com/angular/protractor/commit/b3c7404258db55a71e7bc4520973c0665cb0ff06))
   Revert "fix(jasmine): Update Jasmine to support Node8 async/await (#4608)"
