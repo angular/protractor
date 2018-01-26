@@ -1,9 +1,10 @@
 import {error as wderror} from 'selenium-webdriver';
+
 import {ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
+import {element} from './index';
+import {Locator} from './locators';
 import {falseIfMissing, passBoolean} from './util';
-import {Locator} from "./locators";
-import {element} from "./index";
 
 /**
  * Represents a library of canned expected conditions that are useful for
