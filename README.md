@@ -8,7 +8,7 @@ Compatibility
 
 Protractor 5 is compatible with nodejs v6 and newer.
 
-Protractor works with AngularJS versions greater than 1.0.6/1.1.4, and is compatible with Angular applications. Note that for Angular apps, the `binding` and `model` locators are not supported. We recommend using `by.css`.
+Protractor works with AngularJS versions greater than 1.0.6/1.1.4, and is compatible with Angular applications. Note that for Angular 2 apps, the `binding` and `model` locators are not supported. We recommend using `by.css`.
 
 
 Getting Started
