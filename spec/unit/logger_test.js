@@ -125,4 +125,29 @@ describe('the logger', function() {
       expect(linesSplit[1]).toContain('{"foo":"bar"} ["foo","bar","foobar"] foobar');
     });
   });
+
+  describe('default log level is configurable', function () {
+    beforeEach(function() {
+      Logger.logLevel = LogLevel.ERROR;
+    });
+
+    afterEach(function() {
+      Logger.logLevel = LogLevel.DEBUG;
+    });
+
+    it('should be configurable statically', function () {
+      Logger.logLevel = LogLevel.WARN;
+      expect(Logger.logLevel).toBe(LogLevel.WARN);
+    });
+
+    it('should be configurable with "troubleshoot" property', function () {
+      Logger.set({ troubleshoot: true });
+      expect(Logger.logLevel).toBe(LogLevel.DEBUG);
+    });
+
+    it('should be configurable with "logLevel" property', function () {
+      Logger.set({ logLevel: 'WARN' });
+      expect(Logger.logLevel).toBe(LogLevel.WARN);
+    });
+  });
 });
