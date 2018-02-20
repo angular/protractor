@@ -151,7 +151,7 @@ let optimistOptions: any = {
   },
   strings: {'capabilities.tunnel-identifier': ''},
   boolean: [
-    'directConnect', 'useBlockingProxy', 'sauceSeleniumUseHttp', 'noGlobals',
+    'useBlockingProxy', 'sauceSeleniumUseHttp', 'noGlobals', 'directConnect',
     'verboseMultiSessions', 'restartBrowserBetweenTests', 'untrackOutstandingTimeouts',
     'ignoreUncaughtExceptions', 'invertGrep', 'skipSourceMapSupport', 'disableEnvironmentOverrides',
     'ng12Hybrid', 'disableChecks', 'troubleshoot', 'mockSelenium', 'nodeDebug', 'debug'
