@@ -149,7 +149,13 @@ let optimistOptions: any = {
     'invert-grep': 'jasmineNodeOpts.invertGrep',
     explorer: 'elementExplorer'
   },
-  strings: {'capabilities.tunnel-identifier': ''}
+  strings: {'capabilities.tunnel-identifier': ''},
+  boolean: [
+    'directConnect', 'useBlockingProxy', 'sauceSeleniumUseHttp', 'noGlobals',
+    'verboseMultiSessions', 'restartBrowserBetweenTests', 'untrackOutstandingTimeouts',
+    'ignoreUncaughtExceptions', 'invertGrep', 'skipSourceMapSupport', 'disableEnvironmentOverrides',
+    'ng12Hybrid', 'disableChecks', 'troubleshoot', 'mockSelenium', 'nodeDebug', 'debug'
+  ]
 };
 
 optimist.usage(
@@ -171,6 +177,7 @@ optimist.check(function(arg: any) {
     throw new Error('Error: more than one config file specified');
   }
 });
+optimist.boolean(optimistOptions.boolean);
 
 let argv: any = optimist.parse(args);
 
