@@ -159,3 +159,5 @@ plugins please report them to the corresponding plugin developer.
 * [protractor-numerator](https://github.com/Marketionist/protractor-numerator): This plugin gives you readable functions for getting elements by their numbers inside Protractor tests. Adds functions like `.second()`, `.third()`, etc. instead of `.get(1)`, `.get(2)`, etc.
 
 * [Ng-apimock](https://github.com/mdasberg/ng-apimock): this plugin adds the ability to use scenario based api mocking for local development and protractor testing for both AngularJS and Angular applications.
+
+* [protractor-cucumber-steps](https://github.com/Marketionist/protractor-cucumber-steps): This plugin provides Cucumber steps (step definitions) written with Protractor for end-to-end tests.
