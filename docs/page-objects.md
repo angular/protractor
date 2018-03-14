@@ -61,7 +61,7 @@ var AngularHomepage = function() {
   };
 
   this.getGreetingText = async function() {
-    return await greeting.getText();
+    return greeting.getText();
   };
 
   // Not async, returns the element
