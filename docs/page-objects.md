@@ -60,7 +60,7 @@ var AngularHomepage = function() {
     await nameInput.sendKeys(name);
   };
 
-  this.getGreetingText = async function() {
+  this.getGreetingText = function() {
     return greeting.getText();
   };
 
