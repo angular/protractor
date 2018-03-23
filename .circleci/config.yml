@@ -1,0 +1,79 @@
+version: 2
+jobs:
+    build:
+        docker:
+          - image: circleci/node:8.0
+        environment:
+          DBUS_SESSION_BUS_ADDRESS: /dev/null     # Fix issue with selenium-server in containers. See http://github.com/SeleniumHQ/docker-selenium/issues/87
+        steps:
+          - checkout
+          - run:
+              name: Initialize NPM
+              command: npm install
+          - save_cache:
+              key: modules_cache
+              paths: 
+                - testapp/node_modules
+          - run:
+              name: Linting
+              command: ./node_modules/.bin/gulp lint
+          - run:
+              name: Update Webdriver-Manager
+              command: ./node_modules/.bin/webdriver-manager update
+          - run:
+              name: Start Webdriver-Manager
+              command: ./node_modules/.bin/webdriver-manager start
+              background: true
+          - run:
+              name: Install TestApp
+              command: cd testapp && npm install
+          - run:
+              name: Start TestApp
+              command: npm start
+              background: true
+          - run:
+              name: Update OS Packages
+              command: sudo apt-get update
+          - run:
+              name: Install Pip
+              command: sudo apt install -y python-pip
+          - run:
+              name: Update Pip
+              command: sudo pip install --upgrade pip
+          - run:
+              name: Install Firefox Tools
+              command: sudo pip install mozdownload mozinstall
+          - run:
+              name: Download Latest Firefox Beta
+              command: mozdownload --version latest --destination firefox.tar.bz2
+          - run:
+              name: Install Latest Firefox Beta
+              command: mozinstall firefox.tar.bz2
+          - run:
+              name: Create Firefox Directory
+              command: sudo mkdir -p /opt/firefox
+          - run:
+              name: Relocate firefox binaries
+              command: sudo cp -R firefox/* /opt/firefox/
+          - run:
+              name: Download Chrome Signing Key
+              command: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          - run:
+              name: Configure Chrome Repository
+              command: echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          - run:
+              name: Install Latest Stable Chrome
+              command: sudo apt-get update && sudo apt install -y google-chrome-stable
+          - run:
+              name: Configure Chrome
+              command: sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+          - run:
+              name: Install tcpdump
+              command: sudo apt install -y tcpdump
+          - run:
+              name: Add extra tcp logging for BlockingProxy
+              command: sudo tcpdump -i lo 'tcp && dst localhost' -w $CIRCLE_ARTIFACTS/localdump.pcap
+              background: true
+          - run:
+              name: Run Tests
+              command: npm test
