@@ -36,13 +36,42 @@ var AngularHomepage = function() {
   this.setName = function(name) {
     nameInput.sendKeys(name);
   };
-  
-  this.getGreeting = function() {
+
+  this.getGreetingText = function() {
     return greeting.getText();
   };
 };
 module.exports = new AngularHomepage();
 ```
+
+Or, if using `async / await`, something like this: (Note that functions
+that don't use `await` shouldn't have the `async` prefix.)
+
+```js
+var AngularHomepage = function() {
+  var nameInput = element(by.model('yourName'));
+  var greeting = element(by.binding('yourName'));
+
+  this.get = async function() {
+    await browser.get('http://www.angularjs.org');
+  };
+
+  this.setName = async function(name) {
+    await nameInput.sendKeys(name);
+  };
+
+  this.getGreetingText = function() {
+    return greeting.getText();
+  };
+
+  // Not async, returns the element
+  this.getGreeting = function() {
+    return greeting;
+  };
+};
+module.exports = new AngularHomepage();
+```
+
 The next thing you need to do is modify the test script to use the Page Object and its properties. Note that the _functionality_ of the test script itself does not change (nothing is added or deleted).
 
 In the test script, you'll `require` the Page Object as presented above. The path to the Page Object _will be relative_ to your spec, so adjust accordingly.
@@ -55,7 +84,22 @@ describe('angularjs homepage', function() {
 
     angularHomepage.setName('Julie');
 
-    expect(angularHomepage.getGreeting()).toEqual('Hello Julie!');
+    expect(angularHomepage.getGreetingText()).toEqual('Hello Julie!');
+  });
+});
+```
+
+If using `async / await`, that would turn into something like:
+
+```js
+var angularHomepage = require('./AngularHomepage');
+describe('angularjs homepage', function() {
+  it('should greet the named user', async function() {
+    await angularHomepage.get();
+
+    await angularHomepage.setName('Julie');
+
+    expect(await angularHomepage.getGreetingText()).toEqual('Hello Julie!');
   });
 });
 ```
@@ -63,7 +107,7 @@ describe('angularjs homepage', function() {
 Configuring Test Suites
 -----------------------
 
-It is possible to separate your tests into various test suites. In your config file, you could setup  the suites option as shown below. 
+It is possible to separate your tests into various test suites. In your config file, you could setup the suites option as shown below:
 
 ```js
 exports.config = {
