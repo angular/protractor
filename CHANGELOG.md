@@ -1,3 +1,25 @@
+# 5.3.1
+
+## Features
+
+- ([cc2234c](https://github.com/angular/protractor/commit/cc2234c762268acab85b6e5d1c13b6480738651b))
+  feat(logger): Add log level configuration (#1451) (#4068)
+
+## Fixes
+
+- ([c63b99e](https://github.com/angular/protractor/commit/c63b99ee029b6730e4b0702ac7c22b4076049e2a))
+  fix(grep): change excluded tests to disabled instead of pending (#4673)
+
+- ([9348ccf](https://github.com/angular/protractor/commit/9348ccfe65a0488d2929f624e70aef585f72e3ab))
+  docs(page_objects): Remove unnecessary "await" and "async" (#4732)
+
+- ([4898db0](https://github.com/angular/protractor/commit/4898db0940e0c0084e7c538a40986f94dc21e7ec))
+  docs(plugins) add protractor-cucumber-steps plugin to plugins.md (#4721)
+
+- ([a7411b6](https://github.com/angular/protractor/commit/a7411b6a156d45ec2e61f1b6ec951a19d854f5b2))
+  docs(page_objects): Add async / await example (#4675)
+
+
 # 5.3.0
 
 ## Features
