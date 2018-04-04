@@ -1,7 +1,7 @@
 <h1 id="using-page-objects-to-organize-tests">Using Page Objects to Organize Tests</h1>
 <p>When writing end-to-end tests, a common pattern is to use <a href="https://github.com/SeleniumHQ/selenium/wiki/PageObjects">Page Objects</a>. Page Objects help you write cleaner tests by encapsulating information about the elements on your application page. A Page Object can be reused across multiple tests, and if the template of your application changes, you only need to update the Page Object.</p>
 <h2 id="without-page-objects" class="anchored"><div><a href="#{{path}}#without-page-objects">&#x1f517;</a>Without Page Objects</div></h2>
-<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/5.3.0/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
+<p>Here’s a simple test script (<a href="https://github.com/angular/protractor/blob/5.3.1/example/example_spec.js">example_spec.js</a>) for ‘The Basics’ example on the <a href="http://www.angularjs.org">angularjs.org</a> homepage.</p>
 <pre><code class="lang-js">describe(&#39;angularjs homepage&#39;, function() {
   it(&#39;should greet the named user&#39;, function() {
     browser.get(&#39;http://www.angularjs.org&#39;);
@@ -25,8 +25,33 @@
     nameInput.sendKeys(name);
   };
 
-  this.getGreeting = function() {
+  this.getGreetingText = function() {
     return greeting.getText();
+  };
+};
+module.exports = new AngularHomepage();
+</code></pre>
+<p>Or, if using <code ng-non-bindable>async / await</code>, something like this: (Note that functions
+that don&#39;t use <code ng-non-bindable>await</code> shouldn&#39;t have the <code ng-non-bindable>async</code> prefix.)</p>
+<pre><code class="lang-js">var AngularHomepage = function() {
+  var nameInput = element(by.model(&#39;yourName&#39;));
+  var greeting = element(by.binding(&#39;yourName&#39;));
+
+  this.get = async function() {
+    await browser.get(&#39;http://www.angularjs.org&#39;);
+  };
+
+  this.setName = async function(name) {
+    await nameInput.sendKeys(name);
+  };
+
+  this.getGreetingText = function() {
+    return greeting.getText();
+  };
+
+  // Not async, returns the element
+  this.getGreeting = function() {
+    return greeting;
   };
 };
 module.exports = new AngularHomepage();
@@ -40,12 +65,24 @@ describe(&#39;angularjs homepage&#39;, function() {
 
     angularHomepage.setName(&#39;Julie&#39;);
 
-    expect(angularHomepage.getGreeting()).toEqual(&#39;Hello Julie!&#39;);
+    expect(angularHomepage.getGreetingText()).toEqual(&#39;Hello Julie!&#39;);
+  });
+});
+</code></pre>
+<p>If using <code ng-non-bindable>async / await</code>, that would turn into something like:</p>
+<pre><code class="lang-js">var angularHomepage = require(&#39;./AngularHomepage&#39;);
+describe(&#39;angularjs homepage&#39;, function() {
+  it(&#39;should greet the named user&#39;, async function() {
+    await angularHomepage.get();
+
+    await angularHomepage.setName(&#39;Julie&#39;);
+
+    expect(await angularHomepage.getGreetingText()).toEqual(&#39;Hello Julie!&#39;);
   });
 });
 </code></pre>
 <h2 id="configuring-test-suites" class="anchored"><div><a href="#{{path}}#configuring-test-suites">&#x1f517;</a>Configuring Test Suites</div></h2>
-<p>It is possible to separate your tests into various test suites. In your config file, you could setup  the suites option as shown below. </p>
+<p>It is possible to separate your tests into various test suites. In your config file, you could setup the suites option as shown below:</p>
 <pre><code class="lang-js">exports.config = {
   // The address of a running selenium server.
   seleniumAddress: &#39;http://localhost:4444/wd/hub&#39;,
