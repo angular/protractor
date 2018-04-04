@@ -54,7 +54,7 @@ you can write the plugin inline into the config:</p>
 so they use generic hooks which Protractor provides. Plugins may change
 the output of Protractor by returning a results object.</p>
 <p>Plugins are node modules that export an object implementing the
-<code ng-non-bindable>ProtractorPlugin</code> interface.  Please see <a href="https://github.com/angular/protractor/blob/5.3.0/lib/plugins.ts#L25"><code ng-non-bindable>/lib/plugins.ts</code></a> for a list of hooks that are available to plugins.</p>
+<code ng-non-bindable>ProtractorPlugin</code> interface.  Please see <a href="https://github.com/angular/protractor/blob/5.3.1/lib/plugins.ts#L25"><code ng-non-bindable>/lib/plugins.ts</code></a> for a list of hooks that are available to plugins.</p>
 <h5 id="provided-properties-and-functions">Provided properties and functions</h5>
 <p>Extra properties are added to your <code ng-non-bindable>module.exports</code> when Protractor loads your
 plugin.  These allow your plugin to do things like access its configuration
@@ -115,12 +115,14 @@ github repo <a href="https://github.com/angular/protractor-ng-hint-plugin">angul
 mantained by protractor&#39;s team by any means. If you find any issues with this
 plugins please report them to the corresponding plugin developer.</p>
 <ul>
-<li><p><a href="https://github.com/alfonso-presa/protractor-testability-plugin">Protractor testability plugin</a>: this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.</p>
+<li><p><a href="https://github.com/alfonso-presa/protractor-testability-plugin">Protractor testability plugin</a>: this plugin enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.</p>
 </li>
 <li><p><a href="https://github.com/Updater/protractor-fail-fast">protractor-fail-fast</a>: Allows Protractor to &quot;fail-fast&quot;, forcing all test runners to exit if one of them encounters a failing test. For scenarios where a failure means the entire build has failed (e.g. CI), failing fast can save a tremendous amount of time.</p>
 </li>
 <li><p><a href="https://github.com/Marketionist/protractor-numerator">protractor-numerator</a>: This plugin gives you readable functions for getting elements by their numbers inside Protractor tests. Adds functions like <code ng-non-bindable>.second()</code>, <code ng-non-bindable>.third()</code>, etc. instead of <code ng-non-bindable>.get(1)</code>, <code ng-non-bindable>.get(2)</code>, etc.</p>
 </li>
 <li><p><a href="https://github.com/mdasberg/ng-apimock">Ng-apimock</a>: this plugin adds the ability to use scenario based api mocking for local development and protractor testing for both AngularJS and Angular applications.</p>
+</li>
+<li><p><a href="https://github.com/Marketionist/protractor-cucumber-steps">protractor-cucumber-steps</a>: This plugin provides Cucumber steps (step definitions) written with Protractor for end-to-end tests.</p>
 </li>
 </ul>
