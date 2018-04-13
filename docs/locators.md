@@ -19,10 +19,13 @@ A locator tells Protractor how to find a certain DOM element. Protractor exports
 
 ```js
 // Find an element using a css selector.
-by.css('.myclass') 
+by.css('.myclass')
 
 // Find an element with the given id.
 by.id('myid')
+
+// Find an element using an input name selector.
+by.name('field_name')
 
 // Find an element with a certain ng-model.
 // Note that at the moment, this is only supported for AngularJS apps.

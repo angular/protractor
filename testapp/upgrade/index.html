@@ -22,7 +22,11 @@
       System.import('systemjs.config.js').then(function () {
         if (window.location.search.indexOf('no_static') != -1) {
           System.import('app/no_static/main');
-        } else {
+        }
+        else if (window.location.search.indexOf('downgrade') != -1) {
+          System.import('app/downgrade/main');
+        }
+        else {
           System.import('app/main');
         }
       }).catch(function(err) {

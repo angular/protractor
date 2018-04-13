@@ -8,7 +8,7 @@ machine:
 
 dependencies:
   override:
-    - npm update
+    - npm i
   cache_directories:
     - testapp/node_modules
   post:
@@ -16,7 +16,7 @@ dependencies:
     - ./node_modules/.bin/webdriver-manager update
     - ./node_modules/.bin/webdriver-manager start:
         background: true
-    - cd testapp && npm update
+    - cd testapp && npm i
     - npm start:
           background: true
     - sudo apt-get update

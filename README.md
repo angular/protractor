@@ -34,4 +34,4 @@ Please ask usage and debugging questions on [StackOverflow](http://stackoverflow
 
 For Contributors
 ----------------
-See DEVELOPER.md
+See [DEVELOPER.md](https://github.com/angular/protractor/blob/master/DEVELOPER.md)
