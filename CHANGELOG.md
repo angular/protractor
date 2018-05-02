@@ -53,7 +53,6 @@
 - ([02746dd](https://github.com/angular/protractor/commit/02746dd37726b2647f8f8dbeb1152cd7f902acb0))
   fix(browser): Add space after full stop in error message. (#4594)
   Linkifiers interpret the ".If" at the end of the URL as part of the URL.
-)
 
 - ([7f968e0](https://github.com/angular/protractor/commit/7f968e022a7f7ebcda8955651f2907c1a25ecc22))
   fix(direct): Use config's geckoDriver when specified (#4554)
@@ -77,7 +76,7 @@
   3. add lock file
 
 # 5.2.2
- ## Fixes
+## Fixes
 - ([b3c7404](https://github.com/angular/protractor/commit/b3c7404258db55a71e7bc4520973c0665cb0ff06))
   Revert "fix(jasmine): Update Jasmine to support Node8 async/await (#4608)"
   This reverts commit 5d13b00bca651227eb55616363f7d7eb8a91f8e8.
@@ -107,6 +106,7 @@
   Update to the latest blocking proxy (#4546)
 
 ## Breaking Changes
+
 - ([5d13b00](https://github.com/angular/protractor/commit/5d13b00bca651227eb55616363f7d7eb8a91f8e8))
   fix(jasmine): Update Jasmine to support Node8 async/await (#4608)
 
@@ -185,6 +185,9 @@
 - ([dd2ccbb](https://github.com/angular/protractor/commit/dd2ccbb1b73b7c90647837cd1c4f6b16b3f6b0ac))
   feat(saucelabs): Add Sauce Labs protocol customization support
 
+  New option `sauceSeleniumUseHttp` available in `protractor.conf.js`
+  If true, uses 'http' instead of 'https' to connect to Sauce Labs defined by `sauceSeleniumAddress`
+
 ## Fixes
 
 - ([1a47076](https://github.com/angular/protractor/commit/1a47076875395648038a39fcd258a77bfcabe05c))
@@ -254,6 +257,12 @@
   - move noCF tests to install and fix reference to protractor
   - changed element.ts to not use keyof
   - remove gulp task tsc:spec
+
+## Breaking Changes
+
+- The protocol for a Sauce Labs selenium relay (sauceSeleniumAddress in protractor.conf.js)
+  is 'https' (previously used 'http'). The protocol is not configurable in this version.
+
 
 # 5.1.0
 
