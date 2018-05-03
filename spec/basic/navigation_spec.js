@@ -55,4 +55,11 @@ describe('navigation', function() {
     expect(browser.getCurrentUrl()).
       toEqual(browser.baseUrl + 'index.html#/repeater');
   });
+
+  it('should work for "get()" without parameters as well', function () {
+    browser.get('index.html#/repeater');
+
+    browser.get();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + '#/form');
+  });
 });
