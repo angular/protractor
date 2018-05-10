@@ -1,3 +1,36 @@
+# 5.3.2
+
+## Fixes
+
+- ([4e0a57c](https://github.com/angular/protractor/commit/4e0a57cff88b470dc5d05698a1341040f65dceb4))
+  fix(test): fix async tests
+
+  Increase the scripts timeout
+
+- ([c6703a5](https://github.com/angular/protractor/commit/c6703a5ea8ce7a837193ecf478c2096d8c6e99e9))
+  fix(doc): Spelling updates to comments in plugin.ts(#4797)
+
+  Updated some of the spelling errors/ punctuation mistakes for clearer understanding.
+- ([76324b8](https://github.com/angular/protractor/commit/76324b80063152ce67c164b6f048682e71771bb6))
+  fix(cli): add more verbose warning if '_debugger' module cannot be found. (#4800)
+
+
+- ([f8f490a](https://github.com/angular/protractor/commit/f8f490a82d0ed6965248e1f78bd2ac7ca91548d9))
+  updated CHANGELOG based on sauceSeleniumAddress and sauceSeleniumUseHttp (#4793)
+
+
+- ([6290f27](https://github.com/angular/protractor/commit/6290f27720816dd574ff7a1eccfec6ade1539b71))
+  fix(generate-docs): fix generate-docs.sh. (#4765)
+
+  Ignore generated unstaged files before checking out to new branch; otherwise, the git checkout
+  will fail.
+
+## Dependencies
+
+- ([948c7f2](https://github.com/angular/protractor/commit/948c7f267feebfd4c6997d8bc02485b573100197))
+  fix(deps): Update saucelabs for security issue. (#4805)
+
+
 # 5.3.1
 
 ## Features
