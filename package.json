@@ -22,7 +22,7 @@
     "jasminewd2": "^2.1.0",
     "optimist": "~0.6.0",
     "q": "1.4.1",
-    "saucelabs": "~1.3.0",
+    "saucelabs": "^1.5.0",
     "selenium-webdriver": "3.6.0",
     "source-map-support": "~0.4.0",
     "webdriver-js-extender": "^1.0.0",
