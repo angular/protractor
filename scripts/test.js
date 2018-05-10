@@ -130,7 +130,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeout
     .expectErrors([
       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
       {message: 'The following tasks were pending[\\s\\S]*' +
-                '\\$timeout: function \\(\\) {[\\s\\S]*' +
+                '- \\$timeout: function \\(\\) {[\\s\\S]*' +
                   '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' +
                 '*}'}
     ]);

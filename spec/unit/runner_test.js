@@ -65,6 +65,6 @@ describe('the Protractor runner', function() {
     var runner = new Runner(config);
     runner.run().then(function() {
       done.fail('expected error when no custom framework is defined');
-    }, done);
+    }, function() { return done(); });
   });
 });
