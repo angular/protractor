@@ -301,13 +301,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   mockModules_: {name: string, script: string|Function, args: any[]}[];
 
   /**
-   * If specified, start a debugger server at specified port instead of repl
-   * when running element explorer.
-   * @public {number}
-   */
-  public debuggerServerPort: number;
-
-  /**
    * If true, Protractor will interpret any angular apps it comes across as
    * hybrid angular1/angular2 apps.
    *
@@ -1076,118 +1069,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         .then(
             (rootEl) => this.executeScriptWithDescription(
                 clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl));
-  }
-
-  /**
-   * Adds a task to the control flow to pause the test and inject helper
-   * functions
-   * into the browser, so that debugging may be done in the browser console.
-   *
-   * This should be used under node in debug mode, i.e. with
-   * protractor debug <configuration.js>
-   *
-   * @example
-   * While in the debugger, commands can be scheduled through webdriver by
-   * entering the repl:
-   *   debug> repl
-   *   > element(by.input('user')).sendKeys('Laura');
-   *   > browser.debugger();
-   *   Press Ctrl + c to leave debug repl
-   *   debug> c
-   *
-   * This will run the sendKeys command as the next task, then re-enter the
-   * debugger.
-   */
-  debugger() {
-    // jshint debug: true
-    return this.driver.executeScript(clientSideScripts.installInBrowser)
-        .then(() => wdpromise.controlFlow().execute(() => {
-          debugger;
-        }, 'add breakpoint to control flow'));
-  }
-
-  /**
-   * See browser.explore().
-   */
-  enterRepl(opt_debugPort?: number) {
-    return this.explore(opt_debugPort);
-  }
-
-  /**
-   * Beta (unstable) explore function for entering the repl loop from
-   * any point in the control flow. Use browser.explore() in your test.
-   * Does not require changes to the command line (no need to add 'debug').
-   * Note, if you are wrapping your own instance of Protractor, you must
-   * expose globals 'browser' and 'protractor' for pause to work.
-   *
-   * @example
-   * element(by.id('foo')).click();
-   * browser.explore();
-   * // Execution will stop before the next click action.
-   * element(by.id('bar')).click();
-   *
-   * @param {number=} opt_debugPort Optional port to use for the debugging
-   * process
-   */
-  explore(opt_debugPort?: number) {
-    let debuggerClientPath = __dirname + '/debugger/clients/explorer.js';
-    let onStartFn = (firstTime: boolean) => {
-      logger.info();
-      if (firstTime) {
-        logger.info('------- Element Explorer -------');
-        logger.info(
-            'Starting WebDriver debugger in a child process. Element ' +
-            'Explorer is still beta, please report issues at ' +
-            'github.com/angular/protractor');
-        logger.info();
-        logger.info('Type <tab> to see a list of locator strategies.');
-        logger.info('Use the `list` helper function to find elements by strategy:');
-        logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
-        logger.info();
-      }
-    };
-    this.debugHelper.initBlocking(debuggerClientPath, onStartFn, opt_debugPort);
-  }
-
-  /**
-   * Beta (unstable) pause function for debugging webdriver tests. Use
-   * browser.pause() in your test to enter the protractor debugger from that
-   * point in the control flow.
-   * Does not require changes to the command line (no need to add 'debug').
-   * Note, if you are wrapping your own instance of Protractor, you must
-   * expose globals 'browser' and 'protractor' for pause to work.
-   *
-   * @example
-   * element(by.id('foo')).click();
-   * browser.pause();
-   * // Execution will stop before the next click action.
-   * element(by.id('bar')).click();
-   *
-   * @param {number=} opt_debugPort Optional port to use for the debugging
-   * process
-   */
-  pause(opt_debugPort?: number): wdpromise.Promise<any> {
-    if (this.debugHelper.isAttached()) {
-      logger.info('Encountered browser.pause(), but debugger already attached.');
-      return wdpromise.when(true);
-    }
-    let debuggerClientPath = __dirname + '/debugger/clients/wddebugger.js';
-    let onStartFn = (firstTime: boolean) => {
-      logger.info();
-      logger.info('Encountered browser.pause(). Attaching debugger...');
-      if (firstTime) {
-        logger.info();
-        logger.info('------- WebDriver Debugger -------');
-        logger.info(
-            'Starting WebDriver debugger in a child process. Pause is ' +
-            'still beta, please report issues at github.com/angular/protractor');
-        logger.info();
-        logger.info('press c to continue to the next webdriver command');
-        logger.info('press ^D to detach debugger and resume code execution');
-        logger.info();
-      }
-    };
-    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
