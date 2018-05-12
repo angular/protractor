@@ -236,7 +236,6 @@ export class Runner extends EventEmitter {
       params: config.params,
       getPageTimeout: config.getPageTimeout,
       allScriptsTimeout: config.allScriptsTimeout,
-      debuggerServerPort: config.debuggerServerPort,
       ng12Hybrid: config.ng12Hybrid,
       waitForAngularEnabled: true as boolean | wdpromise.Promise<boolean>
     };
@@ -248,7 +247,6 @@ export class Runner extends EventEmitter {
       initProperties.params = parentBrowser.params;
       initProperties.getPageTimeout = parentBrowser.getPageTimeout;
       initProperties.allScriptsTimeout = parentBrowser.allScriptsTimeout;
-      initProperties.debuggerServerPort = parentBrowser.debuggerServerPort;
       initProperties.ng12Hybrid = parentBrowser.ng12Hybrid;
       initProperties.waitForAngularEnabled = parentBrowser.waitForAngularEnabled();
     }
@@ -264,9 +262,6 @@ export class Runner extends EventEmitter {
     }
     if (initProperties.allScriptsTimeout) {
       browser_.allScriptsTimeout = initProperties.allScriptsTimeout;
-    }
-    if (initProperties.debuggerServerPort) {
-      browser_.debuggerServerPort = initProperties.debuggerServerPort;
     }
     if (initProperties.ng12Hybrid) {
       browser_.ng12Hybrid = initProperties.ng12Hybrid;

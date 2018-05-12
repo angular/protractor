@@ -96,7 +96,6 @@ let allowedNames = [
   'mockSelenium',
   'v8Debug',
   'nodeDebug',
-  'debuggerServerPort',
   'frameworkPath',
   'debug',
   'logLevel',
@@ -132,7 +131,6 @@ let optimistOptions: any = {
     framework: 'Test framework to use: jasmine, mocha, or custom',
     resultJsonOutputFile: 'Path to save JSON test result',
     troubleshoot: 'Turn on troubleshooting output',
-    debuggerServerPort: 'Start a debugger server at specified port instead of repl',
     disableChecks: 'Disable cli checks',
     logLevel: 'Define Protractor log level [ERROR, WARN, INFO, DEBUG]'
   },
