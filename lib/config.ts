@@ -708,7 +708,6 @@ export interface Config {
   nodeDebug?: boolean;
   debuggerServerPort?: number;
   frameworkPath?: string;
-  elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];
 }

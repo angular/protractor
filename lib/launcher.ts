@@ -159,28 +159,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
             });
       })
       .then(() => {
-        // 3) If we're in `elementExplorer` mode, run only that.
-        if (config.elementExplorer || config.framework === 'explorer') {
-          if (config.multiCapabilities.length != 1) {
-            throw new Error('Must specify only 1 browser while using elementExplorer');
-          } else {
-            config.capabilities = config.multiCapabilities[0];
-          }
-          config.framework = 'explorer';
-
-          let runner = new Runner(config);
-          return runner.run().then(
-              (exitCode: number) => {
-                process.exit(exitCode);
-              },
-              (err: Error) => {
-                logger.error(err);
-                process.exit(1);
-              });
-        }
-      })
-      .then(() => {
-        // 4) Run tests.
+        // 3) Run tests.
         let scheduler = new TaskScheduler(config);
 
         process.on('uncaughtException', (exc: (Error|string)) => {
