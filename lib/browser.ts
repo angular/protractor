@@ -1203,4 +1203,29 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       return !!wdpromise.ControlFlow;
     }
   }
+
+  /**
+   * Clicks on the specified element, provided it's visible.
+   * 
+   * @template T 
+   * @param {ElementFinder} element 
+   * @returns {wdpromise.Promise<T>} 
+   * @memberof ProtractorBrowser
+   */
+  click<T>(element: ElementFinder): wdpromise.Promise<T> {
+    return this.driver.executeScript('argments[0].click();', element);
+  }
+
+  /**
+   * Scrolls to the specified element.
+   * 
+   * @template T 
+   * @param {ElementFinder} element 
+   * @returns {wdpromise.Promise<T>} 
+   * @memberof ProtractorBrowser
+   */
+  scroll<T>(element: ElementFinder): wdpromise.Promise<T> {
+    return this.driver.executeScript('arguments[0].scrollIntoView();', element);
+  }
+
 }
