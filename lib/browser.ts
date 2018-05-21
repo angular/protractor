@@ -1224,7 +1224,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @returns {wdpromise.Promise<T>} 
    * @memberof ProtractorBrowser
    */
-  scroll<T>(element: ElementFinder): wdpromise.Promise<T> {
+  scrollIntoView<T>(element: ElementFinder): wdpromise.Promise<T> {
     return this.driver.executeScript('arguments[0].scrollIntoView();', element);
   }
 
