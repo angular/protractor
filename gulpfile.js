@@ -59,10 +59,9 @@ gulp.task('checkVersion', function(done) {
   }
 });
 
-gulp.task('built:copy', function(done) {
-  return gulp.src(['lib/**/*.js'])
+gulp.task('built:copy', function() {
+  return gulp.src(['lib/**/*','!lib/**/*.ts'])
       .pipe(gulp.dest('built/'));
-  done();
 });
 
 gulp.task('webdriver:update', function(done) {
@@ -107,7 +106,8 @@ gulp.task('compile_to_es5', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', done);
+  runSequence(['typings', 'jshint', 'format'], 'tsc', 'tsc:globals', 'types',
+    'ambient', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
