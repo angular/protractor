@@ -1224,7 +1224,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @returns {wdpromise.Promise<T>}
    * @memberof ProtractorBrowser
    */
-  scrollIntoView<T>(element: ElementFinder): wdpromise.Promise<T> {
-    return this.driver.executeScript('arguments[0].scrollIntoView();', element);
+  scrollIntoView<T>(element: ElementFinder): wdpromise.Promise<T>;
+  scrollIntoView<T>(element: ElementFinder, alignToTop?: boolean): wdpromise.Promise<T>;
+  scrollIntoView<T>(element: ElementFinder, scrollIntoViewOptions?: Object): wdpromise.Promise<T>;
+  scrollIntoView<T>(element: ElementFinder, alignToTopOrViewOptions?: boolean | Object): wdpromise.Promise<T> {  
+    //TypeScript overloads should cover the syntax: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+    if (alignToTopOrViewOptions) {
+      return this.driver.executeScript('arguments[0].scrollIntoView(alignToTopOrViewOptions);', element);
+    } else {
+      return this.driver.executeScript('arguments[0].scrollIntoView();', element);
+    }
   }
 }
