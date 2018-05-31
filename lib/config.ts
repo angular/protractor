@@ -1,5 +1,7 @@
 import {PluginConfig} from './plugins';
 
+export type SpecScheduler = () => (specs: Array<string>, capabilities: any) => Array<Array<string>>;
+
 export interface Config {
   [key: string]: any;
 
@@ -325,9 +327,12 @@ export interface Config {
     /**
      * If this is set to be true, specs will be sharded by file (i.e. all
      * files to be run by this set of capabilities will run in parallel).
+     * By default each test file will run in separeted browser instance.
      * Default is false.
+     * You can also provide custom spec scheduler function
+     * that can change default behaviour and run many specs in one browser instance.
      */
-    shardTestFiles?: boolean;
+    shardTestFiles: boolean | SpecScheduler;
 
     /**
      * Maximum number of browser instances that can run in parallel for this

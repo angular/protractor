@@ -258,4 +258,52 @@ describe('the task scheduler', function() {
     expect(scheduler.numTasksOutstanding()).toEqual(0);
   });
 
+  it('should use custom shard scheduler when provided', function() {
+    var toAdd = {
+      specs: [
+        'spec/unit/data/fakespecA.js',
+        'spec/unit/data/fakespecB.js',
+        'spec/unit/data/fakespecC.js'
+      ],
+      multiCapabilities: [{
+        shardTestFiles: shardScheduler,
+        browserName: 'chrome',
+        maxInstances: 2,
+      }]
+    };
+    var config = new ConfigParser().addConfig(toAdd).getConfig();
+    var scheduler = new TaskScheduler(config);
+
+    var task1 = scheduler.nextTask();
+    expect(task1.capabilities.browserName).toEqual('chrome');
+    expect(task1.specs.length).toEqual(2);
+
+    var task2 = scheduler.nextTask();
+    expect(task2.capabilities.browserName).toEqual('chrome');
+    expect(task2.specs.length).toEqual(1);
+
+    task1.done();
+    task2.done();
+    expect(scheduler.numTasksOutstanding()).toEqual(0);
+  });
+
+  function shardScheduler(specs, capabilities) {
+    const numberOfShards = capabilities.maxInstances;
+    if(numberOfShards > 1) {
+        const bucketSize = Math.ceil(specs.length/numberOfShards);
+        const shards = [];
+        let start = 0;
+        while (start < specs.length) {
+            let end = start + bucketSize;
+            if ( end > specs.length) {
+                end = specs.length;
+            }
+            shards.push(specs.slice(start,end));
+            start = end;
+        }
+        return shards;
+    }
+    return [specs];
+  }
+
 });
