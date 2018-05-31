@@ -63,17 +63,19 @@ export class TaskScheduler {
         });
       }
 
-      let specLists: Array<Array<string>> = [];
-      // If we shard, we return an array of one element arrays, each containing
-      // the spec file. If we don't shard, we return an one element array
-      // containing an array of all the spec files
-      if (capabilities.shardTestFiles) {
-        capabilitiesSpecs.forEach((spec) => {
-          specLists.push([spec]);
-        });
-      } else {
-        specLists.push(capabilitiesSpecs);
+      let shardScheduler = capabilities.shardTestFiles;
+      if (typeof shardScheduler !== 'function') {
+        // If we shard, we return an array of one element arrays, each containing
+        // the spec file. If we don't shard, we return an one element array
+        // containing an array of all the spec files
+        shardScheduler = function(specs: Array<string>, capabilities: any): Array<Array<string>> {
+          if (capabilities.shardTestFiles) {
+            return specs.map(spec => [spec]);
+          }
+          return [specs];
+        };
       }
+      const specLists = shardScheduler(capabilitiesSpecs, capabilities);
 
       capabilities.count = capabilities.count || 1;
 
