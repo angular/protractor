@@ -38,7 +38,7 @@ describe('local connect', function() {
   });
 
   describe('with the selenium standalone jar', function() {
-    it('should throw an error if the jar file does not work', function() {
+    describe('should throw an error if the jar file does not work', function() {
       var jarFile = '';
       beforeEach(function() {
         // add files to selenium folder
@@ -65,7 +65,6 @@ describe('local connect', function() {
           webdriver.getNewDriver();
         } catch(e) {
           errorFound = true;
-          expect(e.code).toBe(BrowserError.CODE);
         }
         expect(errorFound).toBe(true);
       });
