@@ -40,10 +40,10 @@ export interface ProtractorPlugin {
 
   /**
    * This is called before the test have been run but after the test framework has
-   * been set up.  Analogous to a config file's `onPreare`.
+   * been set up.  Analogous to a config file's `onPrepare`.
    *
    * Very similar to using `setup`, but allows you to access framework-specific
-   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`).
+   * variables/functions (e.g. `jasmine.getEnv().addReporter()`).
    *
    * @this {Object} bound to module.exports.
    *
@@ -100,7 +100,7 @@ export interface ProtractorPlugin {
    *
    * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before outputting test results.  Protractor
-   *     will *not* wait before executing the next test, however.  If the promise
+   *     will *not* wait before executing the next test; however, if the promise
    *     is rejected, a failed assertion is added to the test results.
    */
   postTest?(passed: boolean, testInfo: any): void|Promise<void>;

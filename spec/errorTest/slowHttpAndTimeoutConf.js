@@ -15,5 +15,5 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
-  allScriptsTimeout: 1000
+  allScriptsTimeout: 4000 // Each test waits on something that has a 5 second tick.
 };
