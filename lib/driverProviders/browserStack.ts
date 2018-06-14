@@ -14,9 +14,13 @@ import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 
+const BrowserstackClient = require('browserstack');
+
 let logger = new Logger('browserstack');
 
 export class BrowserStack extends DriverProvider {
+  browserstackClient: any;
+
   constructor(config: Config) {
     super(config);
   }
@@ -30,58 +34,41 @@ export class BrowserStack extends DriverProvider {
   updateJob(update: any): q.Promise<any> {
     let deferredArray = this.drivers_.map((driver: WebDriver) => {
       let deferred = q.defer();
-      driver.getSession().then((session: Session) => {
-        let headers = {
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' +
-              new Buffer(this.config_.browserstackUser + ':' + this.config_.browserstackKey)
-                  .toString('base64')
-        };
-        let options = {
-          hostname: 'www.browserstack.com',
-          port: 443,
-          path: '/automate/sessions/' + session.getId() + '.json',
-          method: 'GET',
-          headers: headers
-        };
 
-        let req = https.request(options, (res) => {
-          res.on('data', (data: Buffer) => {
-            let info = JSON.parse(data.toString());
-            if (info && info.automation_session && info.automation_session.browser_url) {
-              logger.info(
-                  'BrowserStack results available at ' + info.automation_session.browser_url);
-            } else {
-              logger.info(
-                  'BrowserStack results available at ' +
-                  'https://www.browserstack.com/automate');
-            }
-          });
-        });
-        req.end();
-        req.on('error', (e: Error) => {
-          logger.info(
-              'BrowserStack results available at ' +
-              'https://www.browserstack.com/automate');
-        });
+      driver.getSession().then((session: Session) => {
+
+        // Fetching BrowserStack session details.
+        this.browserstackClient.getSession(
+            session.getId(), function(error: Error, automate_session: any) {
+              if (error) {
+                logger.info(
+                    'BrowserStack results available at ' +
+                    'https://www.browserstack.com/automate');
+              } else {
+                if (automate_session && automate_session.browser_url) {
+                  logger.info('BrowserStack results available at ' + automate_session.browser_url);
+                } else {
+                  logger.info(
+                      'BrowserStack results available at ' +
+                      'https://www.browserstack.com/automate');
+                }
+              }
+            });
+
         let jobStatus = update.passed ? 'completed' : 'error';
-        options.method = 'PUT';
-        let update_req = https.request(options, (res) => {
-          let responseStr = '';
-          res.on('data', (data: Buffer) => {
-            responseStr += data.toString();
-          });
-          res.on('end', () => {
-            logger.info(responseStr);
-            deferred.resolve();
-          });
-          res.on('error', (e: Error) => {
-            throw new BrowserError(
-                logger, 'Error updating BrowserStack pass/fail status: ' + util.inspect(e));
-          });
-        });
-        update_req.write('{"status":"' + jobStatus + '"}');
-        update_req.end();
+        let statusObj = {status: jobStatus};
+
+        // Updating status of BrowserStack session.
+        this.browserstackClient.updateSession(
+            session.getId(), statusObj, function(error: Error, automate_session: any) {
+              if (error) {
+                throw new BrowserError(
+                    logger, 'Error updating BrowserStack pass/fail status: ' + util.inspect(error));
+              } else {
+                logger.info(automate_session);
+                deferred.resolve();
+              }
+            });
       });
       return deferred.promise;
     });
@@ -98,6 +85,12 @@ export class BrowserStack extends DriverProvider {
     this.config_.capabilities['browserstack.user'] = this.config_.browserstackUser;
     this.config_.capabilities['browserstack.key'] = this.config_.browserstackKey;
     this.config_.seleniumAddress = 'http://hub.browserstack.com/wd/hub';
+
+    this.browserstackClient = BrowserstackClient.createAutomateClient({
+      username: this.config_.browserstackUser,
+      password: this.config_.browserstackKey,
+      proxy: this.config_.browserstackProxy
+    });
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.

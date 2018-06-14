@@ -205,6 +205,13 @@ export interface Config {
    */
   browserstackKey?: string;
 
+  /**
+   * Proxy server to be used for connecting to BrowserStack APIs
+   * e.g. "http://proxy.example.com:1234".
+   * This should be used when you are behind a proxy server.
+   */
+  browserstackProxy?: string;
+
   // ---- 7. To connect directly to Drivers ------------------------------------
 
   /**
