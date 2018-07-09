@@ -23,7 +23,7 @@ var checkLogs = function(output, messages) {
 runProtractor = spawn('node',
     ['bin/protractor', 'spec/errorTest/sauceLabsAuthentication.js']);
 output = runProtractor.stdout.toString();
-messages = ['WebDriverError: Sauce Labs Authentication Error.',
+messages = ['WebDriverError: Misconfigured -- Sauce Labs Authentication Error.',
     'Process exited with error code ' + exitCodes.BrowserError.CODE];
 checkLogs(output, messages);
 
