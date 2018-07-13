@@ -6,7 +6,8 @@
  * - selenium jar and chromedriver in protractor/selenium, where
  *   webdriver-manager stores them.
  * - if you want to test saucelabs, test with --sauceUser and --sauceKey
- *
+ * - if you want to test browserstack driverProvider, test with 
+     --browserstackUser and --browserstackKey
  * You should verify that there are no lingering processes when these tests
  * complete.
  */
@@ -19,6 +20,7 @@ var Direct = require('../built/driverProviders/direct').Direct;
 var Hosted = require('../built/driverProviders/hosted').Hosted;
 var Local = require('../built/driverProviders/local').Local;
 var Sauce = require('../built/driverProviders/sauce').Sauce;
+var BrowserStack = require('../built/driverProviders/browserStack').BrowserStack;
 
 var testDriverProvider = function(driverProvider) {
   return driverProvider.setupEnv().then(function() {
@@ -122,5 +124,23 @@ if (argv.sauceUser && argv.sauceKey) {
         console.log('sauce.dp working!');
       }, function(err) {
         console.log('sauce.dp failed with ' + err);
+      });
+}
+
+if (argv.browserstackUser && argv.browserstackKey) {
+  var browserStackConfig = {
+    browserstackUser: argv.browserstackUser,
+    browserstackKey: argv.browserstackKey,
+    capabilities: {
+      'build': 'protractor-browserstack-spec',
+      'name': 'protractor-browserstack-spec',
+      'browserName': 'chrome',
+    }
+  };
+  testDriverProvider(new BrowserStack(browserStackConfig)).
+      then(function() {
+        console.log('browserstack.dp working!');
+      }, function(err) {
+        console.log('browserstack.dp failed with ' + err);
       });
 }
