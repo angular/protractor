@@ -270,7 +270,7 @@ export class DebugHelper {
         },
         (err: string) => {
           console.error(err);
-          process.exit(1);
+          return process.exit(1) as never;
         });
   }
 

@@ -5,7 +5,6 @@
  */
 import * as q from 'q';
 import {Session, WebDriver} from 'selenium-webdriver';
-import * as executors from 'selenium-webdriver/executors';
 
 import {Config} from '../config';
 import {DriverProvider} from './driverProvider';

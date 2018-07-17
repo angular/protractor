@@ -31,12 +31,12 @@ describe('async angular2 application', function() {
     // still be 0.
     expect(timeout.$('.val').getText()).toEqual('0');
 
-    browser.ignoreSynchronization = true;
+    browser.waitForAngularEnabled(false);
 
     timeout.$('.action').click();
     timeout.$('.cancel').click();
 
-    browser.ignoreSynchronization = false;
+    browser.waitForAngularEnabled(true);
 
     // whenStable should be called since the async action is cancelled. The
     // count should still be 0;
