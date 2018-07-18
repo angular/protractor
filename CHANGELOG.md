@@ -1,3 +1,30 @@
+# 5.4.0
+
+## Features
+
+- ([03e2209](https://github.com/angular/protractor/commit/03e22092557240217bbbcf641476db08cc35df77))
+  feat(driverProvider) Adding browserstackProxy param in BrowserStack driverProvider (#4852)
+
+## Fixes
+
+- ([492230a](https://github.com/angular/protractor/commit/492230ab3445ca3aea3e60f55d27cb9825018ef9))
+  fix(generate_doc.sh): Use ES6 lib to compile down to ES5 (#4884)
+
+- ([ed955e5](https://github.com/angular/protractor/commit/ed955e56a839d7f69da43acb6755763220d3681d))
+  fix(travisCI): Update Node versions (#4847)
+
+- ([3702a70](https://github.com/angular/protractor/commit/3702a709fe251fed1de9ee1eab38593c2c371e94))
+  fix(local): Ensure webdriver.gecko.driver path is passed to Selenium (#4502)
+
+- ([1c6a1a8](https://github.com/angular/protractor/commit/1c6a1a82f03f2bd5911dfc37f365329d6f5acb60))
+  fix(circleci): Switch to using circleci v2 syntax and fix build errors (#4837)
+
+## Dependencies
+- ([056eec2](https://github.com/angular/protractor/commit/056eec23a7d1534d5e8624d42a6c9d1f3106cf5d))
+  deps(webdriver_js_extender): update webdriver_js_extender to 2.0 (#4882)
+  1. update webdriver_js_extender to 2.0
+  2. update selenium typing to 3.0.10
+
 # 5.3.2
 
 ## Fixes
