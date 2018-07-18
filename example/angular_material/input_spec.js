@@ -13,4 +13,3 @@ describe('angular-material input component page', function() {
     expect($('mat-error').isPresent()).toBe(true);
   });
 });
-  
