@@ -7,10 +7,10 @@ A short summary about how Protractor interacts with the control flow is presente
 <p>In the future, the control flow is being removed (see
 <a href="https://github.com/SeleniumHQ/selenium/issues/2969">SeleniumHQ&#39;s github issue</a>
 for details).  To disable the control flow in your tests, you can use the
-<code ng-non-bindable>SELENIUM_PROMISE_MANAGER: false</code> <a href="https://github.com/angular/protractor/blob/5.3.2/lib/config.ts#L644">config option</a>.</p>
+<code ng-non-bindable>SELENIUM_PROMISE_MANAGER: false</code> <a href="https://github.com/angular/protractor/blob/5.4.0/lib/config.ts#L644">config option</a>.</p>
 <p>Instead of the control flow, you can synchronize your commands
 with promise chaining or the upcoming ES7 feature <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code>.  See
-<a href="https://github.com/angular/protractor/blob/5.3.2/spec/ts/"><code ng-non-bindable>/spec/ts/</code></a> for examples of tests with the control flow disabled.</p>
+<a href="https://github.com/angular/protractor/blob/5.4.0/spec/ts/"><code ng-non-bindable>/spec/ts/</code></a> for examples of tests with the control flow disabled.</p>
 <p>Because <code ng-non-bindable>async</code>/<code ng-non-bindable>await</code> uses native promises, it will make the Control Flow
 unreliable.  As such, if you&#39;re writing a library or plugin which needs to work
 whether or not the Control Flow is enabled, you&#39;ll need to handle
