@@ -17,8 +17,8 @@ exports.config = {
         'mat_paginator_spec.js'
     ],
 	
-	// Disable promise manager because we are going to use async/await
-	SELENIUM_PROMISE_MANAGER: false,
+    // Disable promise manager because we are going to use async/await
+    SELENIUM_PROMISE_MANAGER: false,
   
     // Options to be passed to Jasmine.
     jasmineNodeOpts: {
