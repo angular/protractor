@@ -65,7 +65,7 @@ export class Sauce extends DriverProvider {
     this.config_.capabilities['build'] = this.config_.sauceBuild;
 
     if (this.config_.sauceAgent) {
-      this.config_.httpAgent = this.config_.httpAgent;
+      this.config_.httpAgent = this.config_.sauceAgent;
     }
 
     let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
