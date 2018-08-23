@@ -1,5 +1,5 @@
 import {BPClient} from 'blocking-proxy';
-import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Navigation, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 import * as url from 'url';
 import {extend as extendWD, ExtendedWebDriver} from 'webdriver-js-extender';
 
@@ -1019,7 +1019,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Mixin navigation methods back into the navigation object so that
    * they are invoked as before, i.e. driver.navigate().refresh()
    */
-  navigate(): any {
+  navigate(): Navigation {
     let nav = this.driver.navigate();
     ptorMixin(nav, this, 'refresh');
     return nav;
