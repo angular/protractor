@@ -227,7 +227,7 @@ export class ProtractorExpectedConditions {
    * // Waits for the element with id 'myInput' to contain the input 'foo'.
    * browser.wait(EC.textToBePresentInElementValue($('#myInput'), 'foo'), 5000);
    *
-   * @alias ExpectedConditions.textToBePresentInElement
+   * @alias ExpectedConditions.textToBePresentInElementValue
    * @param {!ElementFinder} elementFinder The element to check
    * @param {!string} text The text to verify against
    *
