@@ -2,7 +2,7 @@
 <p>When working with Protractor, you need to specify how to connect to the browser drivers which will start up and control the browsers you are testing on. You will most likely use the Selenium Server. The server acts as proxy between your test script (written with the WebDriver API) and the browser driver (controlled by the WebDriver protocols).</p>
 <p>The server forwards commands from your script to the driver and returns responses from the driver to your script. The server can handle multiple scripts in different languages. The server can startup and manage multiple browsers in different versions and implementations.</p>
 <pre><code ng-non-bindable>     [Test Scripts] &lt; ------------ &gt; [Selenium Server] &lt; ------------ &gt; [Browser Drivers]
-</code></pre><p>The <a href="https://github.com/angular/protractor/blob/5.4.0/lib/config.ts">config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
+</code></pre><p>The <a href="https://github.com/angular/protractor/blob/5.4.1/lib/config.ts">config file</a> includes several options for the Selenium Server, which are explained in the sections below.</p>
 <h2 id="standalone-selenium-server" class="anchored"><div><a href="#{{path}}#standalone-selenium-server">&#x1f517;</a>Standalone Selenium Server</div></h2>
 <p>To run the Selenium Server on your local machine, use the standalone Selenium Server. </p>
 <p><strong>JDK</strong></p>
@@ -79,3 +79,30 @@
 <li><code ng-non-bindable>directConnect: true</code> -  Your test script communicates directly Chrome Driver or Firefox Driver, bypassing any Selenium Server. If this is true, settings for <code ng-non-bindable>seleniumAddress</code> and <code ng-non-bindable>seleniumServerJar</code> will be ignored. If you attempt to use a browser other than Chrome or Firefox an error will be thrown.</li>
 </ul>
 <p>The advantage of directly connecting to browser drivers is that your test scripts may start up and run faster.</p>
+<h2 id="re-using-an-existing-webdriver" class="anchored"><div><a href="#{{path}}#re-using-an-existing-webdriver">&#x1f517;</a>Re-using an Existing WebDriver</div></h2>
+<p>The use case for re-using an existing WebDriver is when you have existing
+<code ng-non-bindable>selenium-webdriver</code> code and are already in control of how the WebDriver is
+created, but would also like Protractor to use the same browser, so you can
+use protractor&#39;s element locators and the rest of its API. This could be
+done with the <code ng-non-bindable>attachSession</code> driver provider, but the <code ng-non-bindable>attachSession</code> API is
+being removed in <code ng-non-bindable>selenium-webdriver</code> 4.0.0.</p>
+<p>Instead of a protractor config file, you create a config object in your test
+setup code, and add your already-created WebDriver object and base URL.</p>
+<pre><code class="lang-javascript">const ProtractorConfigParser = require(&#39;protractor/built/configParser&#39;).ConfigParser;
+const ProtractorRunner = require(&#39;protractor/built/runner&#39;).Runner;
+
+const ptorConfig = new ProtractorConfigParser().config_;
+ptorConfig.baseUrl = myExistingBaseUrl;
+ptorConfig.seleniumWebDriver = myExistingWebDriver;
+ptorConfig.noGlobals = true; // local preference
+
+// looks similar to protractor/built/runner.js run()
+const ptorRunner = new ProtractorRunner(ptorConfig);
+ptorRunner.driverProvider_.setupEnv();
+const browser = ptorRunner.createBrowser();
+ptorRunner.setupGlobals_(browser); // now you can access protractor.$, etc.
+</code></pre>
+<p>Note that this driver provider leaves you in control of quitting the driver,
+but that also means Protractor API calls that expect the driver to properly
+quit and/or restart the browser, e.g. <code ng-non-bindable>restart</code>, <code ng-non-bindable>restartSync</code>, and
+<code ng-non-bindable>forkNewDriverInstance</code>, will not behave as documented.</p>
