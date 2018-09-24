@@ -60,13 +60,13 @@ Now create the configuration file. Copy the following into conf.js:
 ```js
 // conf.js
 exports.config = {
-  framework: 'jasmine2',
+  framework: 'jasmine',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js']
 }
 ```
 
-This configuration tells Protractor where your test files (`specs`) are, and where to talk to your Selenium Server (`seleniumAddress`). It specifies that we will be using Jasmine version 2 for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.
+This configuration tells Protractor where your test files (`specs`) are, and where to talk to your Selenium Server (`seleniumAddress`). It specifies that we will be using Jasmine for the test framework. It will use the defaults for all other configuration. Chrome is the default browser.
 
 Now run the test with
 
@@ -157,7 +157,7 @@ Now that we've written some basic tests, let's take a look at the configuration 
 ```js
 // conf.js
 exports.config = {
-  framework: 'jasmine2',
+  framework: 'jasmine',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   capabilities: {
@@ -173,7 +173,7 @@ You can also run tests on more than one browser at once. Change conf.js to:
 ```js
 // conf.js
 exports.config = {
-  framework: 'jasmine2',
+  framework: 'jasmine',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: ['spec.js'],
   multiCapabilities: [{

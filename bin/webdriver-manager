@@ -251,11 +251,8 @@ for (name in binaries) {
   bin = binaries[name];
   bin.cdn = argv.alternate_cdn || bin.cdn;
   var exists = fs.existsSync(path.join(argv.out_dir, bin.filename));
-  var outOfDateExists = false;
-  existingFiles.forEach(function(file) {
-    if (file.indexOf(bin.prefix) != -1 && file != bin.filename) {
-      outOfDateExists = true;
-    }
+  var outOfDateExists = existingFiles.some(function(file) {
+    return file.indexOf(bin.prefix) !== -1 && file !== bin.filename;
   });
   bin.exists = exists;
   bin.outOfDateExists = outOfDateExists;

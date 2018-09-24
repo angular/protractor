@@ -192,7 +192,7 @@ var CommandlineTest = function(command) {
  *   exitCode, test durations, expected errors, and expected stackTrace
  * Note, this will work with any commandline tests, but only if it supports
  *   the flag '--resultJsonOutputFile', unless only exitCode is being tested.
- *   For now, this means protractor tests (jasmine/mocha/cucumber).
+ *   For now, this means protractor tests (jasmine/mocha).
  */
 exports.Executor = function() {
   var tests = [];

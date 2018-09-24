@@ -97,21 +97,27 @@ gulp.task('markdown', function() {
   gulp.src(['../docs/*.md', '!../docs/api.md'])
       // Parse markdown.
       .pipe(markdown())
+      // Fix urls which reference files only on github.
+      .pipe(replace(
+          /"(?:\/([\-\.\w\/]+)\/)?(\w+\.\w+(?:#.*)?)"/g,
+          function(match, path, file) {
+            var ext = file.match(/\w+\.(\w+)(?:#.*)?/)[1];
+            // Don't process .md and .png files which are on the website
+            if (((ext == 'md') || (ext == 'png')) &&
+                !(path && ((path.substr(0,2) == '..') || (path[0] == '/')))) {
+              return match;
+            }
+            path = path || 'docs';
+            return '"https://github.com/angular/protractor/blob/master/' +
+                path + '/' + file + '"';
+          }
+      ))
       // Fix in-page hash paths.
       .pipe(replace(/"#([^ ]*?)"/g, '#{{path}}#$1'))
       // Fix md urls.
       .pipe(replace(/"(?:\/docs\/)?([\w\-]+)\.md/g, '"#/$1'))
       // Fix png urls.
       .pipe(replace(/"(?:\/docs\/)?([\w\-]+\.png)"/g, '"img/$1"'))
-      // Fix urls to reference js & feature files.
-      .pipe(replace(
-          /"(?:\/([\-\.\w\/]+)\/)?(\w+\.(?:js|feature)(?:#\w*)?)"/g,
-          function(match, path, file) {
-            path = path || 'docs';
-            return '"https://github.com/angular/protractor/blob/master/' +
-                path + '/' + file + '"';
-          }
-      ))
       // Add anchor links
       .pipe(replace(/<h2 id="([^"]*)">(.*?)<\/h2>/g, '<h2 id="$1" class="' +
           'anchored"><div><a href="#{{path}}#$1">&#x1f517;</a>$2</div></h2>'))
@@ -125,6 +131,22 @@ gulp.task('markdown', function() {
       .pipe(gulp.dest('./build/partials'));
 });
 
+// Make version of testapp for github page
+gulp.task('testapp', function() {
+  var stream = gulp.src('../testapp/**/*').
+      pipe(gulp.dest('build/testapp'));
+  gulp.src('testapp/*').
+      pipe(gulp.dest('build/testapp'));
+  var angular_version = require('../testapp/lib/angular_version.js');
+  gulp.src('../testapp/lib/angular_v' + angular_version + '/**/*').
+      pipe(gulp.dest('build/testapp/lib/angular'));
+  return stream;
+});
+
+gulp.task('cleanup_testapp', ['testapp'], function() {
+  del('build/testapp/lib/angular_v*');
+});
+
 // Start a server and watch for changes.
 gulp.task('liveReload', [
   'default',
@@ -133,6 +155,8 @@ gulp.task('liveReload', [
 ]);
 
 gulp.task('default', [
+  'testapp',
+  'cleanup_testapp',
   'dgeni',
   'less',
   'markdown',

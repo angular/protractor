@@ -7,8 +7,7 @@ var scripts = [];
 
 // Dgeni tests.
 scripts.push(
-    'node node_modules/.bin/minijasminenode ' +
-    glob('docgen/spec/*.js').join(' '));
+  'node node_modules/.bin/jasmine JASMINE_CONFIG_PATH=unit_test.json');
 
 // Karma tests.
 scripts.push('node_modules/karma/bin/karma start --singleRun true');

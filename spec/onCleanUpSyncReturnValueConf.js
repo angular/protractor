@@ -4,7 +4,7 @@ var env = require('./environment.js');
 exports.config = {
   mockSelenium: true,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   specs: [
     'onCleanUp/*_spec.js'

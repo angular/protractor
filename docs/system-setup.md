@@ -8,4 +8,8 @@ There are a couple of things to watch out for!
 
 **If your page uses `$timeout` for polling** Protractor will not be able to tell when your page is ready. Consider using `$interval` instead of `$timeout`.
 
-If you need to do global preparation for your tests (for example, logging in), you can put this into the config in the `onPrepare` property. This property can be either a function or a filename. If a filename, Protractor will load that file with Node.js and run its contents. See the [login tests](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js) for an example.
+**If you need to do global preparation for your tests** (for example, logging in), you can put this into the config in the `onPrepare` property. This property can be either a function or a filename. If a filename, Protractor will load that file with Node.js and run its contents.
+
+`onPrepare` can optionally return a promise, which Protractor will wait for before continuing execution. This can be used if the preparation involves any asynchronous calls, e.g. interacting with the browser. Otherwise Protractor cannot guarantee order of execution and may start the tests before preparation finishes.
+
+See the [login tests](https://github.com/angular/protractor/blob/master/spec/withLoginConf.js) for an example.

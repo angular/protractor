@@ -7,8 +7,7 @@ module.exports = function(framework) {
     framework: framework,
 
     specs: [
-      framework != 'cucumber' ? 'specs/simple_spec.js' :
-          'features/simple.feature'
+      'specs/simple_spec.js'
     ],
 
     capabilities: env.capabilities,

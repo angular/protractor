@@ -2,7 +2,7 @@ How It Works
 ============
 
 
-Protractor is an end-to-end test framework for AngularJS applications. Protractor is a Node.js program that supports the Jasmine, Mocha, and Cucumber test frameworks.
+Protractor is an end-to-end test framework for AngularJS applications. Protractor is a Node.js program that supports the Jasmine and Mocha test frameworks.
 
 Selenium is a browser automation framework. Selenium includes the Selenium Server, the WebDriver APIs, and the WebDriver browser drivers.
 

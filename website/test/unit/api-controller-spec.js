@@ -1,15 +1,16 @@
 'use strict';
 
 describe('ApiCtrl', function() {
-  var $controller_, $httpBackend, $location, $rootScope_, ctrl, scope;
+  var $controller_, $httpBackend, $location, $sce, $rootScope_, ctrl, scope;
 
   beforeEach(module('protractorApp'));
 
   beforeEach(inject(
-      function($controller, $rootScope, _$httpBackend_, _$location_) {
+      function($controller, $rootScope, _$httpBackend_, _$location_, _$sce_) {
         $controller_ = $controller;
         $httpBackend = _$httpBackend_;
         $location = _$location_;
+        $sce = _$sce_;
         $rootScope_ = $rootScope;
       }));
 
@@ -203,6 +204,21 @@ describe('ApiCtrl', function() {
       expect(item.title).toBe('name2');
       expect(item.base.name).toBe('name1');
       expect(item.base.items.length).toBe(1);
+    });
+  });
+
+  describe('trustHTML', function() {
+    it('should reject falsy html', function() {
+      expect(trustHTML($sce, false)).toBe(undefined);
+    });
+
+    it('should run truster', function() {
+      expect($sce.getTrustedHtml(trustHTML($sce, 'html'))).toBe('html');
+    });
+
+    it('should expand links', function() {
+      expect($sce.getTrustedHtml(trustHTML($sce, '[description](type)'))).toBe(
+          '<a href="#/api?view=type">description</a>');
     });
   });
 });

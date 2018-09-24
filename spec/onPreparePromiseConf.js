@@ -7,7 +7,7 @@ var q = require('q');
 exports.config = {
   mockSelenium: true,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   specs: [
     'onPrepare/*_spec.js'

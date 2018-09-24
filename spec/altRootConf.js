@@ -4,7 +4,7 @@ var env = require('./environment.js');
 exports.config = {
   seleniumAddress: env.seleniumAddress,
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   // Spec patterns are relative to this config.
   specs: [

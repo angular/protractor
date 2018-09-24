@@ -3,7 +3,7 @@ The WebDriver Control Flow
 
 The [WebDriverJS API](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#understanding_the_api) is based on [promises](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#promises),
 which are managed by a [control flow](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs#control-flows)
-and adapted for [Jasmine](http://jasmine.github.io/1.3/introduction.html).
+and adapted for [Jasmine](http://jasmine.github.io/2.3/introduction.html).
 A short summary about how Protractor interacts with the control flow is presented below.
 
 
@@ -42,8 +42,7 @@ Protractor Adaptations
 ----------------------
 
 Protractor adapts Jasmine so that each spec automatically waits until the
-control flow is empty before exiting. This means you don't need to worry
-about calling runs() and waitsFor() blocks. 
+control flow is empty before exiting.
 
 Jasmine expectations are also adapted to understand promises. That's why this
 line works - the code actually adds an expectation task to the control flow,
