@@ -214,6 +214,15 @@ export interface Config {
    */
   browserstackProxy?: string;
 
+  /**
+   * If true, Protractor will use http:// protocol instead of https:// to
+   * connect to BrowserStack defined by seleniumAddress.
+   *
+   * default: false
+   */
+  browserstackUseHttp?: boolean;
+  /**
+
   // ---- 7. To connect directly to Drivers ------------------------------------
 
   /**

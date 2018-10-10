@@ -51,6 +51,7 @@ let allowedNames = [
   'browserstackUser',
   'browserstackKey',
   'browserstackProxy',
+  'browserstackUseHttp',
   'kobitonUser',
   'kobitonKey',
   'testobjectUser',
