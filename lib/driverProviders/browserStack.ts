@@ -84,7 +84,8 @@ export class BrowserStack extends DriverProvider {
     let deferred = q.defer();
     this.config_.capabilities['browserstack.user'] = this.config_.browserstackUser;
     this.config_.capabilities['browserstack.key'] = this.config_.browserstackKey;
-    this.config_.seleniumAddress = 'http://hub.browserstack.com/wd/hub';
+    let protocol = this.config_.browserstackUseHttp ? 'http://' : 'https://';
+    this.config_.seleniumAddress = protocol + 'hub.browserstack.com/wd/hub';
 
     this.browserstackClient = BrowserstackClient.createAutomateClient({
       username: this.config_.browserstackUser,
