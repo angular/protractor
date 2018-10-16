@@ -323,6 +323,11 @@ export class ProtractorBy extends WebdriverBy {
 
   /**
    * Find elements inside an ng-repeat.
+   * Note: filters('|'), 'orderBy' or 'track by' parts are not required to be
+   * included in the repeatDescriptor.for eg: To locate
+   * <div ng-repeat="customer in customers | orderBy: 'id' track by $index">
+   * the following would be enough
+   * element.all(by.repeater("customer in customers"));
    *
    * @view
    * <div ng-repeat="cat in pets">
