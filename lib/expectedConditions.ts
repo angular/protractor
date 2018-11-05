@@ -261,7 +261,7 @@ export class ProtractorExpectedConditions {
    *     representing whether the text is present in the element's value.
    */
   textToBePresentInElementValue(elementFinder: ElementFinder, text: string): Function {
-    return this.textToBePresentInElementValue(elementFinder, text, 'value');
+    return this.textToBePresentInElementAttribute(elementFinder, text, 'value');
   }
 
   /**
