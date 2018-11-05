@@ -24,7 +24,7 @@
     "optimist": "~0.6.0",
     "q": "1.4.1",
     "saucelabs": "^1.5.0",
-    "selenium-webdriver": "3.6.0",
+    "selenium-webdriver": "^4.0.0-alpha.1",
     "source-map-support": "~0.4.0",
     "webdriver-js-extender": "2.1.0",
     "webdriver-manager": "^12.0.6"
@@ -75,6 +75,7 @@
     "pretest": "gulp pretest",
     "start": "cd testapp && npm start",
     "test": "node scripts/test.js",
+    "tsc": "tsc",
     "website": "cd website && npm start",
     "compile_to_es5": "gulp compile_to_es5"
   },
