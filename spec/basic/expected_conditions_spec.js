@@ -97,6 +97,14 @@ describe('expected conditions', function() {
     expect(hideableHasText.call()).toBe(false);
   });
 
+  it('should have textToBePresentInElementAttribute', function() {
+    var invalid = $('#INVALID');
+    var about = element(by.model('aboutbox'));
+
+    expect(EC.textToBePresentInElementAttribute(invalid, 'shouldnt throw', 'value').call()).toBe(false);
+    expect(EC.textToBePresentInElementAttribute(about, 'text box', 'value').call()).toBe(true);
+  });
+
   it('should have textToBePresentInElementValue', function() {
     var invalid = $('#INVALID');
     var about = element(by.model('aboutbox'));
