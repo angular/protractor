@@ -11,15 +11,17 @@ export interface Config {
   //
   // Protractor needs to know how to connect to Drivers for the browsers
   // it is testing on. This is usually done through a Selenium Server.
-  // There are five options - specify one of the following:
+  // There are seven options - specify one of the following:
   //
-  // 1. seleniumServerJar - to start a standalone Selenium Server locally.
-  // 2. seleniumAddress - to connect to a Selenium Server which is already
+  // 1. seleniumServerJar - To start a standalone Selenium Server locally.
+  // 2. seleniumAddress - To connect to a Selenium Server which is already
   //    running.
-  // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
-  // 4. browserstackUser/browserstackKey - to use remote Selenium Servers via
+  // 3. sauceUser/sauceKey - To use remote Selenium Servers via Sauce Labs.
+  // 4. testobjectUser/testobjectKey - To use remote browsers via TestObject.
+  // 5. kobitonUser/kobitonKey - To use remote browsers via Kobiton.
+  // 6. browserstackUser/browserstackKey - To use remote Selenium Servers via
   // BrowserStack.
-  // 5. directConnect - to connect directly to the browser Drivers.
+  // 7. directConnect - To connect directly to the browser Drivers.
   //    This option is only available for Firefox and Chrome.
   //
   // ---- 1. To start a standalone Selenium Server locally ---------------------
