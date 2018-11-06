@@ -235,7 +235,8 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element's attribute.
    */
-  textToBePresentInElementAttribute(elementFinder: ElementFinder, text: string, attribute: string): Function {
+  textToBePresentInElementAttribute(elementFinder: ElementFinder, text: string, attribute: string):
+      Function {
     let hasText = () => {
       return elementFinder.getAttribute(attribute).then((actualText: string): boolean => {
         return actualText.indexOf(text) > -1;
