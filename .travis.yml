@@ -1,7 +1,6 @@
 language: node_js
 sudo: false
 node_js:
-  - "6"
   - "8"
 
 env:
@@ -24,9 +23,9 @@ matrix:
     - env: "JOB=bstack"
   exclude:
     - env: JOB=smoke
-      node_js: "7"
+      node_js: "8"
     - env: JOB=bstack
-      node_js: "7"
+      node_js: "8"
 
 addons:
   apt:
