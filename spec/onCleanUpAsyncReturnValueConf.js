@@ -1,9 +1,9 @@
-var env = require('./environment.js');
-var q = require('q');
+const env = require('./environment.js');
 
 // Test that onCleanUp actions are performed.
 exports.config = {
   mockSelenium: true,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -15,11 +15,9 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
-  onCleanUp: function(exitCode) {
-    var deferred = q.defer();
-    setTimeout(function() {
-      deferred.resolve(exitCode);
-    }, 500);
-    return deferred.promise;
+  onCleanUp: async(exitCode) => {
+    return await new Promise(resolve => {
+      setTimeout(resolve(exitCode), 500);
+    });
   }
 };

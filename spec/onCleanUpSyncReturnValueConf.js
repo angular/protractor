@@ -1,8 +1,9 @@
-var env = require('./environment.js');
+const env = require('./environment.js');
 
 // Test that onCleanUp actions are performed.
 exports.config = {
   mockSelenium: true,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -14,7 +15,7 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
-  onCleanUp: function(exitCode) {
+  onCleanUp: (exitCode) => {
     return exitCode;
   }
 };
