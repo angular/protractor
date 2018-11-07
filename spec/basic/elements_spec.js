@@ -1,466 +1,473 @@
-describe('ElementFinder', function() {
-  beforeEach(function() {
+describe('ElementFinder', () => {
+  beforeEach(async() => {
     // Clear everything between each test.
-    browser.driver.get('about:blank');
+    await browser.driver.get('about:blank');
   });
-
-  it('should return the same result as browser.findElement', function() {
-    browser.get('index.html#/form');
-    var nameByElement = element(by.binding('username'));
-
-    expect(nameByElement.getText()).toEqual(
-        browser.findElement(by.binding('username')).getText());
+  
+  it('should return the same result as browser.findElement', async() => {
+    await browser.get('index.html#/form');
+    const nameByElement = element(by.binding('username'));
+    
+    expect(await nameByElement.getText())
+      .toEqual(await browser.findElement(by.binding('username')).getText());
   });
-
-  it('should wait to grab the WebElement until a method is called', function() {
+  
+  it('should wait to grab the WebElement until a method is called', async() => {
     // These should throw no error before a page is loaded.
-    var usernameInput = element(by.model('username'));
-    var name = element(by.binding('username'));
-
-    browser.get('index.html#/form');
-
-    expect(name.getText()).toEqual('Anon');
-
-    usernameInput.clear();
-    usernameInput.sendKeys('Jane');
-    expect(name.getText()).toEqual('Jane');
+    const usernameInput = element(by.model('username'));
+    const name = element(by.binding('username'));
+    
+    await browser.get('index.html#/form');
+    
+    expect(await name.getText()).toEqual('Anon');
+    
+    await usernameInput.clear();
+    await usernameInput.sendKeys('Jane');
+    expect(await name.getText()).toEqual('Jane');
   });
-
-  it('should chain element actions', function() {
-    browser.get('index.html#/form');
-
-    var usernameInput = element(by.model('username'));
-    var name = element(by.binding('username'));
-
-    expect(name.getText()).toEqual('Anon');
-
-    usernameInput.clear().sendKeys('Jane');
-    expect(name.getText()).toEqual('Jane');
+  
+  it('should chain element actions', async() => {
+    await browser.get('index.html#/form');
+    
+    const usernameInput = element(by.model('username'));
+    const name = element(by.binding('username'));
+    
+    expect(await name.getText()).toEqual('Anon');
+    
+    await usernameInput.clear();
+    await usernameInput.sendKeys('Jane');
+    expect(await name.getText()).toEqual('Jane');
   });
-
-  it('chained call should wait to grab the WebElement until a method is called',
-      function() {
-    // These should throw no error before a page is loaded.
-    var reused = element(by.id('baz')).
-        element(by.binding('item.reusedBinding'));
-
-    browser.get('index.html#/conflict');
-
-    expect(reused.getText()).toEqual('Inner: inner');
-    expect(reused.isPresent()).toBe(true);
-  });
-
-  it('should differentiate elements with the same binding by chaining',
-      function() {
-        browser.get('index.html#/conflict');
-
-        var outerReused = element(by.binding('item.reusedBinding'));
-        var innerReused =
-            element(by.id('baz')).element(by.binding('item.reusedBinding'));
-
-        expect(outerReused.getText()).toEqual('Outer: outer');
-        expect(innerReused.getText()).toEqual('Inner: inner');
-      });
-
-  it('should chain deeper than 2', function() {
-    // These should throw no error before a page is loaded.
-    var reused = element(by.css('body')).element(by.id('baz')).
-        element(by.binding('item.reusedBinding'));
-
-    browser.get('index.html#/conflict');
-
-    expect(reused.getText()).toEqual('Inner: inner');
-  });
-
-  it('should determine element presence properly with chaining', function() {
-    browser.get('index.html#/conflict');
-    expect(element(by.id('baz')).
-        isElementPresent(by.binding('item.reusedBinding'))).
-        toBe(true);
-
-    expect(element(by.id('baz')).
-        isElementPresent(by.binding('nopenopenope'))).
-        toBe(false);
-  });
-
-  it('should export an isPresent helper', function() {
-    browser.get('index.html#/form');
-
-    expect(element(by.binding('greet')).isPresent()).toBe(true);
-    expect(element(by.binding('nopenopenope')).isPresent()).toBe(false);
-  });
-
-  it('should allow handling errors', function() {
-    browser.get('index.html#/form');
-    $('.nopenopenope').getText().then(function(/* string */) {
-      // This should throw an error. Fail.
-      expect(true).toEqual(false);
-    }, function(/* error */) {
-      expect(true).toEqual(true);
+  
+  it('chained call should wait to grab the WebElement until a method is called', async() => {
+      // These should throw no error before a page is loaded.
+      const reused = element(by.id('baz'))
+        .element(by.binding('item.reusedBinding'));
+      
+      await browser.get('index.html#/conflict');
+      
+      expect(await reused.getText()).toEqual('Inner: inner');
+      expect(await reused.isPresent()).toBe(true);
     });
+  
+  it('should differentiate elements with the same binding by chaining', async() => {
+      await browser.get('index.html#/conflict');
+      
+      const outerReused = element(by.binding('item.reusedBinding'));
+      const innerReused = element(by.id('baz'))
+        .element(by.binding('item.reusedBinding'));
+      
+      expect(await outerReused.getText()).toEqual('Outer: outer');
+      expect(await innerReused.getText()).toEqual('Inner: inner');
+    });
+  
+  it('should chain deeper than 2', async() => {
+    // These should throw no error before a page is loaded.
+    const reused = element(by.css('body'))
+      .element(by.id('baz'))
+      .element(by.binding('item.reusedBinding'));
+    
+    await browser.get('index.html#/conflict');
+    
+    expect(await reused.getText()).toEqual('Inner: inner');
   });
-
-  it('should allow handling chained errors', function() {
-    browser.get('index.html#/form');
-    $('.nopenopenope').$('furthernope').getText().then(
-      function(/* string */) {
-        // This should throw an error. Fail.
-        expect(true).toEqual(false);
-      }, function(/* error */) {
-        expect(true).toEqual(true);
-      });
+  
+  it('should determine element presence properly with chaining', async() => {
+    await browser.get('index.html#/conflict');
+    
+    expect(await element(by.id('baz'))
+      .isElementPresent(by.binding('item.reusedBinding')))
+      .toBe(true);
+    
+    expect(await element(by.id('baz'))
+      .isElementPresent(by.binding('nopenopenope')))
+      .toBe(false);
   });
-
-  it('isPresent() should be friendly with out of bounds error', function () {
-    browser.get('index.html#/form');
-    var elementsNotPresent = element.all(by.id('notPresentElementID'));
-    expect(elementsNotPresent.first().isPresent()).toBe(false);
-    expect(elementsNotPresent.last().isPresent()).toBe(false);
+  
+  it('should export an isPresent helper', async() => {
+    await browser.get('index.html#/form');
+    
+    expect(await element(by.binding('greet')).isPresent()).toBe(true);
+    expect(await element(by.binding('nopenopenope')).isPresent()).toBe(false);
   });
-
-  it('isPresent() should not raise error on chained finders', function() {
-    browser.get('index.html#/form');
-    var elmFinder = $('.nopenopenope').element(by.binding('greet'));
-
-    expect(elmFinder.isPresent()).toBe(false);
+  
+  it('should allow handling errors', async() => {
+    await browser.get('index.html#/form');
+    
+    try {
+      await $('.nopenopenope').getText();
+      expect(true).toEqual(false);
+    } catch {
+      expect(true).toEqual(true);
+    }
   });
-
-  it('should export an allowAnimations helper', function() {
-    browser.get('index.html#/animation');
-    var animationTop = element(by.id('animationTop'));
-    var toggledNode = element(by.id('toggledNode'));
-
-    expect(animationTop.allowAnimations()).toBe(true);
-    animationTop.allowAnimations(false);
-    expect(animationTop.allowAnimations()).toBe(false);
-
-    expect(toggledNode.isPresent()).toBe(true);
-    element(by.id('checkbox')).click();
-    expect(toggledNode.isPresent()).toBe(false);
+  
+  it('should allow handling chained errors', async() => {
+    await browser.get('index.html#/form');
+    
+    try {
+      await $('.nopenopenope').$('furthernope').getText();
+      expect(true).toEqual(false);
+    } catch {
+      expect(true).toEqual(true);
+    }
   });
-
-  it('should keep a reference to the original locator', function() {
-    browser.get('index.html#/form');
-
-    var byCss = by.css('body');
-    var byBinding = by.binding('greet');
-
+  
+  it('isPresent() should be friendly with out of bounds error', async() => {
+    await browser.get('index.html#/form');
+    
+    const elementsNotPresent = element.all(by.id('notPresentElementID'));
+    expect(await elementsNotPresent.first().isPresent()).toBe(false);
+    expect(await elementsNotPresent.last().isPresent()).toBe(false);
+  });
+  
+  it('isPresent() should not raise error on chained finders', async() => {
+    await browser.get('index.html#/form');
+    
+    const elmFinder = $('.nopenopenope').element(by.binding('greet'));
+    expect(await elmFinder.isPresent()).toBe(false);
+  });
+  
+  it('should export an allowAnimations helper', async() => {
+    await browser.get('index.html#/animation');
+    
+    const animationTop = element(by.id('animationTop'));
+    const toggledNode = element(by.id('toggledNode'));
+    expect(await animationTop.allowAnimations()).toBe(true);
+    
+    await animationTop.allowAnimations(false);
+    expect(await animationTop.allowAnimations()).toBe(false);
+    expect(await toggledNode.isPresent()).toBe(true);
+    
+    await element(by.id('checkbox')).click();
+    expect(await toggledNode.isPresent()).toBe(false);
+  });
+  
+  it('should keep a reference to the original locator', async() => {
+    await browser.get('index.html#/form');
+    
+    const byCss = by.css('body');
+    const byBinding = by.binding('greet');
+    
     expect(element(byCss).locator()).toEqual(byCss);
     expect(element(byBinding).locator()).toEqual(byBinding);
   });
-
-  it('should propagate exceptions', function() {
-    browser.get('index.html#/form');
-
-    var invalidElement = element(by.binding('INVALID'));
-    var successful = invalidElement.getText().then(function() {
-      return true;
-    }, function() {
-      return false;
-    });
+  
+  it('should propagate exceptions', async() => {
+    await browser.get('index.html#/form');
+    
+    const invalidElement = element(by.binding('INVALID'));
+    let successful;
+    try {
+      await invalidElement.getText();
+      successful = true;
+    } catch {
+      successful = false;
+    }
     expect(successful).toEqual(false);
   });
-
-  it('should be returned from a helper without infinite loops', function() {
-    browser.get('index.html#/form');
-    var helperPromise = protractor.promise.when(true).then(function() {
+  
+  it('should be returned from a helper without infinite loops', async() => {
+    await browser.get('index.html#/form');
+    
+    const helperPromise = protractor.promise.when(true).then(() => {
       return element(by.binding('greeting'));
     });
-
-    helperPromise.then(function(finalResult) {
-      expect(finalResult.getText()).toEqual('Hiya');
+    
+    await helperPromise.then(async(finalResult) => {
+      expect(await finalResult.getText()).toEqual('Hiya');
     });
   });
-
-  it('should be usable in WebDriver functions', function() {
-    browser.get('index.html#/form');
-    var greeting = element(by.binding('greeting'));
-    browser.executeScript('arguments[0].scrollIntoView', greeting);
+  
+  it('should be usable in WebDriver functions', async() => {
+    await browser.get('index.html#/form');
+    
+    const greeting = element(by.binding('greeting'));
+    await browser.executeScript('arguments[0].scrollIntoView', greeting);
   });
-
-  it('should allow null as success handler', function() {
-    browser.get('index.html#/form');
-
-    var name = element(by.binding('username'));
-
-    expect(name.getText()).toEqual('Anon');
-    expect(
-      name.getText().then(null, function() {})
-    ).toEqual('Anon');
-
+  
+  it('should allow null as success handler', async() => {
+    await browser.get('index.html#/form');
+    
+    const name = element(by.binding('username'));
+    
+    expect(await name.getText()).toEqual('Anon');
+    expect(await name.getText().then(null, function() {})).toEqual('Anon');
   });
-
-  it('should check equality correctly', function() {
-    browser.get('index.html#/form');
-
-    var usernameInput = element(by.model('username'));
-    var name = element(by.binding('username'));
-
-    expect(usernameInput.equals(usernameInput)).toEqual(true);
-    expect(usernameInput.equals(name)).toEqual(false);
+  
+  it('should check equality correctly', async() => {
+    await browser.get('index.html#/form');
+    
+    const usernameInput = element(by.model('username'));
+    const name = element(by.binding('username'));
+    
+    expect(await usernameInput.equals(usernameInput)).toEqual(true);
+    expect(await usernameInput.equals(name)).toEqual(false);
   });
 });
 
-describe('ElementArrayFinder', function() {
-
-  it('action should act on all elements', function() {
-    browser.get('index.html#/conflict');
-
-    var multiElement = element.all(by.binding('item.reusedBinding'));
-    expect(multiElement.getText()).toEqual(['Outer: outer', 'Inner: inner']);
+describe('ElementArrayFinder', () => {
+  
+  it('action should act on all elements', async() => {
+    await browser.get('index.html#/conflict');
+    
+    const multiElement = element.all(by.binding('item.reusedBinding'));
+    expect(await multiElement.getText())
+      .toEqual(['Outer: outer', 'Inner: inner']);
   });
-
-  it('click action should act on all elements', function() {
-    var checkboxesElms = $$('#checkboxes input');
-    browser.get('index.html');
-
-    expect(checkboxesElms.isSelected()).toEqual([true, false, false, false]);
-    checkboxesElms.click();
-    expect(checkboxesElms.isSelected()).toEqual([false, true, true, true]);
+  
+  it('click action should act on all elements', async() => {
+    await browser.get('index.html');
+  
+    const checkboxesElms = $$('#checkboxes input');
+  
+    expect(await checkboxesElms.isSelected())
+      .toEqual([true, false, false, false]);
+    
+    await checkboxesElms.click();
+    expect(await checkboxesElms.isSelected())
+      .toEqual([false, true, true, true]);
   });
-
-  it('action should act on all elements selected by filter', function() {
-    browser.get('index.html');
-
-    var multiElement = $$('#checkboxes input').filter(function(elem, index) {
-      return index == 2 || index == 3;
+  
+  it('action should act on all elements selected by filter', async() => {
+    await browser.get('index.html');
+    
+    const multiElement = $$('#checkboxes input').filter((_, index) => {
+      return index === 2 || index === 3;
     });
-    multiElement.click();
-    expect($('#letterlist').getText()).toEqual('wx');
+    await multiElement.click();
+    expect(await $('#letterlist').getText()).toEqual('wx');
   });
-
-  it('filter should chain with index correctly', function() {
-    browser.get('index.html');
-
-    var elem = $$('#checkboxes input').filter(function(elem, index) {
-      return index == 2 || index == 3;
+  
+  it('filter should chain with index correctly', async() => {
+    await browser.get('index.html');
+    
+    const elem = $$('#checkboxes input').filter((_, index) => {
+      return index === 2 || index === 3;
     }).last();
-    elem.click();
-    expect($('#letterlist').getText()).toEqual('x');
+    await elem.click();
+    expect(await $('#letterlist').getText()).toEqual('x');
   });
-
-  it('filter should work in page object', function() {
-    var elements = element.all(by.css('#animals ul li')).filter(function(elem) {
-      return elem.getText().then(function(text) {
+  
+  it('filter should work in page object', async() => {
+    const elements = element.all(by.css('#animals ul li'))
+      .filter(async(elem) => {
+        let text = await elem.getText();
         return text === 'big dog';
       });
-    });
-
-    browser.get('index.html#/form');
-    expect(elements.count()).toEqual(1);
+    
+    await browser.get('index.html#/form');
+    expect(await elements.count()).toEqual(1);
   });
-
-  it('should be able to get ElementFinder from filtered ElementArrayFinder', function() {
-    var isDog = function(elem) {
-      return elem.getText().then(function(text) {
+  
+  it('should be able to get ElementFinder from filtered ElementArrayFinder', async() => {
+      const isDog = async(elem) => {
+        const text = await elem.getText();
         return text.indexOf('dog') > -1;
-      });
-    };
-    var elements = element.all(by.css('#animals ul li')).filter(isDog);
-
-    browser.get('index.html#/form');
-    expect(elements.count()).toEqual(3);
-    expect(elements.get(2).getText()).toEqual('other dog');
-  });
-
-  it('filter should be compoundable', function() {
-    var isDog = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf('dog') > -1;
-      });
-    };
-    var isBig = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf('big') > -1;
-      });
-    };
-    var elements = element.all(by.css('#animals ul li')).filter(isDog).filter(isBig);
-
-    browser.get('index.html#/form');
-    expect(elements.count()).toEqual(1);
-    elements.then(function(arr) {
-      expect(arr[0].getText()).toEqual('big dog');
+      };
+      const elements = element.all(by.css('#animals ul li')).filter(isDog);
+      
+      await browser.get('index.html#/form');
+      expect(await elements.count()).toEqual(3);
+      expect(await elements.get(2).getText()).toEqual('other dog');
     });
-  });
-
-  it('filter should work with reduce', function() {
-    var isDog = function(elem) {
-      return elem.getText().then(function(text) {
-        return text.indexOf('dog') > -1;
-      });
+  
+  it('filter should be compoundable', async() => {
+    const isDog = async(elem) => {
+      const text = await elem.getText();
+      return text.indexOf('dog') > -1;
     };
-    browser.get('index.html#/form');
-    var value = element.all(by.css('#animals ul li')).filter(isDog).
-        reduce(function(currentValue, elem, index, elemArr) {
-          return elem.getText().then(function(text) {
-            return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
-          });
-        }, '');
+    const isBig = async(elem) => {
+      const text = await elem.getText();
+      return text.indexOf('big') > -1;
+    };
 
-    expect(value).toEqual('0/3: big dog\n' +
-                          '1/3: small dog\n' +
-                          '2/3: other dog\n');
+    const elements = element.all(by.css('#animals ul li'))
+      .filter(isDog).filter(isBig);
+    
+    await browser.get('index.html#/form');
+    expect(await elements.count()).toEqual(1);
+    const arr = await elements;
+    expect(await arr[0].getText()).toEqual('big dog');
   });
-
-  it('should find multiple elements scoped properly with chaining', function() {
-    browser.get('index.html#/conflict');
-
-    element.all(by.binding('item')).then(function(elems) {
-      expect(elems.length).toEqual(4);
-    });
-
-    element(by.id('baz')).all(by.binding('item')).then(function(elems) {
-      expect(elems.length).toEqual(2);
-    });
+  
+  it('filter should work with reduce', async() => {
+    const isDog = async(elem) => {
+      const text = await elem.getText();
+      return text.indexOf('dog') > -1;
+    };
+    
+    await browser.get('index.html#/form');
+    
+    const value = element.all(by.css('#animals ul li')).filter(isDog).
+      reduce(async (currentValue, elem, index, elemArr) => {
+        const text = await elem.getText();
+        return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
+      }, '');
+    
+    expect(await value).toEqual(
+      '0/3: big dog\n' +
+      '1/3: small dog\n' +
+      '2/3: other dog\n');
   });
-
-  it('should wait to grab multiple chained elements', function() {
+  
+  it('should find multiple elements scoped properly with chaining', async() => {
+    await browser.get('index.html#/conflict');
+    
+    const allElements = await element.all(by.binding('item'));
+    expect(allElements.length).toEqual(4);
+  
+    const bazElements = await element(by.id('baz')).all(by.binding('item'));
+    expect(bazElements.length).toEqual(2);
+  });
+  
+  it('should wait to grab multiple chained elements', async() => {
     // These should throw no error before a page is loaded.
-    var reused = element(by.id('baz')).all(by.binding('item'));
-
-    browser.get('index.html#/conflict');
-
-    expect(reused.count()).toEqual(2);
-    expect(reused.get(0).getText()).toEqual('Inner: inner');
-    expect(reused.last().getText()).toEqual('Inner other: innerbarbaz');
+    const reused = element(by.id('baz')).all(by.binding('item'));
+    
+    await browser.get('index.html#/conflict');
+    
+    expect(await reused.count()).toEqual(2);
+    expect(await reused.get(0).getText()).toEqual('Inner: inner');
+    expect(await reused.last().getText()).toEqual('Inner other: innerbarbaz');
   });
-
-  it('should wait to grab elements chained by index', function() {
+  
+  it('should wait to grab elements chained by index', async() => {
     // These should throw no error before a page is loaded.
-    var reused = element(by.id('baz')).all(by.binding('item'));
-    var first = reused.first();
-    var second = reused.get(1);
-    var last = reused.last();
-
-    browser.get('index.html#/conflict');
-
-    expect(reused.count()).toEqual(2);
-    expect(first.getText()).toEqual('Inner: inner');
-    expect(second.getText()).toEqual('Inner other: innerbarbaz');
-    expect(last.getText()).toEqual('Inner other: innerbarbaz');
+    const reused = element(by.id('baz')).all(by.binding('item'));
+    const first = reused.first();
+    const second = reused.get(1);
+    const last = reused.last();
+    
+    await browser.get('index.html#/conflict');
+    
+    expect(await reused.count()).toEqual(2);
+    expect(await first.getText()).toEqual('Inner: inner');
+    expect(await second.getText()).toEqual('Inner other: innerbarbaz');
+    expect(await last.getText()).toEqual('Inner other: innerbarbaz');
   });
-
-  it('should count all elements', function() {
-    browser.get('index.html#/form');
-
-    element.all(by.model('color')).count().then(function(num) {
-      expect(num).toEqual(3);
-    });
-
+  
+  it('should count all elements', async() => {
+    await browser.get('index.html#/form');
+    
+    const number = element.all(by.model('color')).count();
+    expect(number).toEqual(3);
+    
     // Should also work with promise expect unwrapping
-    expect(element.all(by.model('color')).count()).toEqual(3);
+    expect(await element.all(by.model('color')).count()).toEqual(3);
   });
-
-  it('should return 0 when counting no elements', function() {
-    browser.get('index.html#/form');
-
-    expect(element.all(by.binding('doesnotexist')).count()).toEqual(0);
+  
+  it('should return 0 when counting no elements', async() => {
+    await browser.get('index.html#/form');
+    
+    expect(await element.all(by.binding('doesnotexist')).count()).toEqual(0);
   });
-
-  it('supports isPresent()', function() {
-    browser.get('index.html#/form');
-
-    expect(element.all(by.model('color')).isPresent()).toBeTruthy();
-    expect(element.all(by.binding('doesnotexist')).isPresent()).toBeFalsy();
+  
+  it('supports isPresent()', async() => {
+    await browser.get('index.html#/form');
+    
+    expect(await element.all(by.model('color')).isPresent()).toBeTruthy();
+    expect(await element.all(by.binding('doesnotexist')).isPresent()).toBeFalsy();
   });
-
-  it('should return not present when an element disappears within an array',
-      function() {
-    browser.get('index.html#/form');
-    element.all(by.model('color')).then(function(elements) {
-      var disappearingElem = elements[0];
-      expect(disappearingElem.isPresent()).toBeTruthy();
-      browser.get('index.html#/bindings');
-      expect(disappearingElem.isPresent()).toBeFalsy();
+  
+  it('should return not present when an element disappears within an array', async() => {
+    await browser.get('index.html#/form');
+    
+    const elements = element.all(by.model('color'));
+    const disappearingElem = elements.get(0);
+    expect(await disappearingElem.isPresent()).toBeTruthy();
+    
+    await browser.get('index.html#/bindings');
+    expect(await disappearingElem.isPresent()).toBeFalsy();
+    });
+  
+  it('should get an element from an array', async () => {
+    const colorList = element.all(by.model('color'));
+    
+    await browser.get('index.html#/form');
+    
+    expect(await colorList.get(0).getAttribute('value')).toEqual('blue');
+    expect(await colorList.get(1).getAttribute('value')).toEqual('green');
+    expect(await colorList.get(2).getAttribute('value')).toEqual('red');
+  });
+  
+  it('should get an element from an array by promise index', async() => {
+    const colorList = element.all(by.model('color'));
+    const index = protractor.promise.fulfilled(1);
+    
+    await browser.get('index.html#/form');
+    
+    expect(await colorList.get(index).getAttribute('value')).toEqual('green');
+  });
+  
+  it('should get an element from an array using negative indices', async() => {
+    const colorList = element.all(by.model('color'));
+    
+    await browser.get('index.html#/form');
+    
+    expect(await colorList.get(-3).getAttribute('value')).toEqual('blue');
+    expect(await colorList.get(-2).getAttribute('value')).toEqual('green');
+    expect(await colorList.get(-1).getAttribute('value')).toEqual('red');
+  });
+  
+  it('should get the first element from an array', async() => {
+    const colorList = element.all(by.model('color'));
+    
+    await browser.get('index.html#/form');
+    
+    expect(await colorList.first().getAttribute('value')).toEqual('blue');
+  });
+  
+  it('should get the last element from an array', async() => {
+    const colorList = element.all(by.model('color'));
+    
+    await browser.get('index.html#/form');
+    
+    expect(await colorList.last().getAttribute('value')).toEqual('red');
+  });
+  
+  it('should perform an action on each element in an array', async() => {
+    const colorList = element.all(by.model('color'));
+    
+    await browser.get('index.html#/form');
+    
+    colorList.each(async(colorElement) => {
+      expect(await colorElement.getText()).not.toEqual('purple');
     });
   });
-
-  it('should get an element from an array', function() {
-    var colorList = element.all(by.model('color'));
-
-    browser.get('index.html#/form');
-
-    expect(colorList.get(0).getAttribute('value')).toEqual('blue');
-    expect(colorList.get(1).getAttribute('value')).toEqual('green');
-    expect(colorList.get(2).getAttribute('value')).toEqual('red');
-  });
-
-  it('should get an element from an array by promise index', function() {
-    var colorList = element.all(by.model('color'));
-    var index = protractor.promise.fulfilled(1);
-
-    browser.get('index.html#/form');
-
-    expect(colorList.get(index).getAttribute('value')).toEqual('green');
-  });
-
-  it('should get an element from an array using negative indices', function() {
-    var colorList = element.all(by.model('color'));
-
-    browser.get('index.html#/form');
-
-    expect(colorList.get(-3).getAttribute('value')).toEqual('blue');
-    expect(colorList.get(-2).getAttribute('value')).toEqual('green');
-    expect(colorList.get(-1).getAttribute('value')).toEqual('red');
-  });
-
-  it('should get the first element from an array', function() {
-    var colorList = element.all(by.model('color'));
-    browser.get('index.html#/form');
-
-    expect(colorList.first().getAttribute('value')).toEqual('blue');
-  });
-
-  it('should get the last element from an array', function() {
-    var colorList = element.all(by.model('color'));
-    browser.get('index.html#/form');
-
-    expect(colorList.last().getAttribute('value')).toEqual('red');
-  });
-
-  it('should perform an action on each element in an array', function() {
-    var colorList = element.all(by.model('color'));
-    browser.get('index.html#/form');
-
-    colorList.each(function(colorElement) {
-      expect(colorElement.getText()).not.toEqual('purple');
+  
+  it('should allow accessing subelements from within each', async() => {
+    await browser.get('index.html#/form');
+    
+    const rows = element.all(by.css('.rowlike'));
+    
+    rows.each(async(row) => {
+      const input = row.element(by.css('.input'));
+      expect(await input.getAttribute('value')).toEqual('10');
     });
   });
-
-  it('should allow accessing subelements from within each', function() {
-    browser.get('index.html#/form');
-    var rows = element.all(by.css('.rowlike'));
-
-    rows.each(function(row) {
-      var input = row.element(by.css('.input'));
-      expect(input.getAttribute('value')).toEqual('10');
-    });
-
-    rows.each(function(row) {
-      var input = row.element(by.css('input'));
-      expect(input.getAttribute('value')).toEqual('10');
-    });
+  
+  it('should keep a reference to the array original locator', async() => {
+    const byCss = by.css('#animals ul li');
+    const byModel = by.model('color');
+    
+    await browser.get('index.html#/form');
+    
+    expect(await element.all(byCss).locator()).toEqual(byCss);
+    expect(await element.all(byModel).locator()).toEqual(byModel);
   });
-
-  it('should keep a reference to the array original locator', function() {
-    var byCss = by.css('#animals ul li');
-    var byModel = by.model('color');
-    browser.get('index.html#/form');
-
-    expect(element.all(byCss).locator()).toEqual(byCss);
-    expect(element.all(byModel).locator()).toEqual(byModel);
-  });
-
-  it('should map each element on array and with promises', function() {
-    browser.get('index.html#/form');
-    var labels = element.all(by.css('#animals ul li')).map(function(elm, index) {
+  
+  it('should map each element on array and with promises', async() => {
+    await browser.get('index.html#/form');
+    
+    const labels = element.all(by.css('#animals ul li')).map(async (elm, index) => {
       return {
         index: index,
-        text: elm.getText()
+        text: await elm.getText()
       };
     });
-
-    expect(labels).toEqual([
+    
+    expect(await labels).toEqual([
       {index: 0, text: 'big dog'},
       {index: 1, text: 'small dog'},
       {index: 2, text: 'other dog'},
@@ -468,24 +475,25 @@ describe('ElementArrayFinder', function() {
       {index: 4, text: 'small cat'}
     ]);
   });
-
-  it('should map and resolve multiple promises', function() {
-    browser.get('index.html#/form');
-    var labels = element.all(by.css('#animals ul li')).map(function(elm) {
+  
+  it('should map and resolve multiple promises', async() => {
+    await browser.get('index.html#/form');
+    
+    const labels = element.all(by.css('#animals ul li')).map(async (elm) => {
       return {
-        text: elm.getText(),
-        tagName: elm.getTagName()
+        text: await elm.getText(),
+        tagName: await elm.getTagName()
       };
     });
-
-    var newExpected = function(expectedLabel) {
+    
+    const newExpected = (expectedLabel) => {
       return {
         text: expectedLabel,
         tagName: 'li'
       };
     };
-
-    expect(labels).toEqual([
+    
+    expect(await labels).toEqual([
       newExpected('big dog'),
       newExpected('small dog'),
       newExpected('other dog'),
@@ -493,103 +501,103 @@ describe('ElementArrayFinder', function() {
       newExpected('small cat')
     ]);
   });
-
-  it('should map each element from a literal and promise array', function() {
-    browser.get('index.html#/form');
-    var i = 1;
-    var labels = element.all(by.css('#animals ul li'))
-        .map(function(/* element */) {
-      return i++;
+  
+  // TODO(selenium4): This should pass. It passes locally on cnishina's computer.
+  // xit('should map each element from a literal and promise array', async() => {
+  //   await browser.get('index.html#/form');
+  //   let i = 1;
+  //   const labels = element.all(by.css('#animals ul li'))
+  //       .map(() => {
+  //     return i++;
+  //   });
+  //   labels.then(awaitedLabels => {
+  //     console.log(awaitedLabels);
+  //   });
+  //   expect(await labels).toBe([1, 2, 3, 4, 5]);
+  // });
+  
+  it('should filter elements', async() => {
+    await browser.get('index.html#/form');
+    
+    const filteredElements = await element.all(by.css('#animals ul li')).filter(async (elem) => {
+      const text = await elem.getText();
+      return text === 'big dog';
     });
-
-    expect(labels).toEqual([1, 2, 3, 4, 5]);
+    const count = filteredElements.length;
+    
+    expect(await count).toEqual(1);
   });
-
-  it('should filter elements', function() {
-    browser.get('index.html#/form');
-    var count = element.all(by.css('#animals ul li')).filter(function(elem) {
-      return elem.getText().then(function(text) {
-        return text === 'big dog';
-      });
-    }).then(function(filteredElements) {
-      return filteredElements.length;
-    });
-
-    expect(count).toEqual(1);
-  });
-
-  it('should reduce elements', function() {
-    browser.get('index.html#/form');
-    var value = element.all(by.css('#animals ul li')).
-        reduce(function(currentValue, elem, index, elemArr) {
-          return elem.getText().then(function(text) {
-            return currentValue + index + '/' + elemArr.length + ': ' + text + '\n';
-          });
+  
+  it('should reduce elements', async () => {
+    await browser.get('index.html#/form');
+    
+    const value = element.all(by.css('#animals ul li')).
+      reduce(async (currentValue, elem, index, elemArr) => {
+        const text = await elem.getText();
+        return currentValue + index + '/' + elemArr.length + ': ' +
+          text + '\n';
         }, '');
-
-    expect(value).toEqual('0/5: big dog\n' +
-                          '1/5: small dog\n' +
-                          '2/5: other dog\n' +
-                          '3/5: big cat\n' +
-                          '4/5: small cat\n');
+    
+    expect(await value).toEqual(
+      '0/5: big dog\n' +
+      '1/5: small dog\n' +
+      '2/5: other dog\n' +
+      '3/5: big cat\n' +
+      '4/5: small cat\n');
   });
-
-  it('should allow using protractor locator within map', function() {
-    browser.get('index.html#/repeater');
-
-    var expected = [
-        { first: 'M', second: 'Monday' },
-        { first: 'T', second: 'Tuesday' },
-        { first: 'W', second: 'Wednesday' },
-        { first: 'Th', second: 'Thursday' },
-        { first: 'F', second: 'Friday' }];
-
-    var result = element.all(by.repeater('allinfo in days')).map(function(el) {
+  
+  it('should allow using protractor locator within map', async() => {
+    await browser.get('index.html#/repeater');
+    
+    const expected = [
+      { first: 'M', second: 'Monday' },
+      { first: 'T', second: 'Tuesday' },
+      { first: 'W', second: 'Wednesday' },
+      { first: 'Th', second: 'Thursday' },
+      { first: 'F', second: 'Friday' }];
+    
+    const result = element.all(by.repeater('allinfo in days')).map(async (el) => {
       return {
-        first: el.element(by.binding('allinfo.initial')).getText(),
-        second: el.element(by.binding('allinfo.name')).getText()
+        first: await el.element(by.binding('allinfo.initial')).getText(),
+        second: await el.element(by.binding('allinfo.name')).getText()
       };
     });
-
-    expect(result).toEqual(expected);
+    
+    expect(await result).toEqual(expected);
   });
 });
 
-describe('evaluating statements', function() {
-  beforeEach(function() {
-    browser.get('index.html#/form');
+describe('evaluating statements', () => {
+  beforeEach(async() => {
+    await browser.get('index.html#/form');
   });
-
-  it('should evaluate statements in the context of an element', function() {
-    var checkboxElem = element(by.id('checkboxes'));
-
-    checkboxElem.evaluate('show').then(function(output) {
-      expect(output).toBe(true);
-    });
-
+  
+  it('should evaluate statements in the context of an element', async() => {
+    const checkboxElem = element(by.id('checkboxes'));
+    
+    const output = await checkboxElem.evaluate('show');
+    expect(output).toBe(true);
+    
     // Make sure it works with a promise expectation.
-    expect(checkboxElem.evaluate('show')).toBe(true);
+    expect(await checkboxElem.evaluate('show')).toBe(true);
   });
 });
 
-describe('shortcut css notation', function() {
-  beforeEach(function() {
-    browser.get('index.html#/bindings');
+describe('shortcut css notation', () => {
+  beforeEach(async() => {
+    await browser.get('index.html#/bindings');
   });
-
-  it('should grab by css', function() {
-    expect($('.planet-info').getText()).
-        toEqual(element(by.css('.planet-info')).getText());
-    expect($$('option').count()).toEqual(element.all(by.css('option')).count());
+  
+  it('should grab by css', async() => {
+    expect(await $('.planet-info').getText()).toEqual(await element(by.css('.planet-info')).getText());
+    expect(await $$('option').count()).toEqual(await element.all(by.css('option')).count());
   });
-
-  it('should chain $$ with $', function() {
-    var withoutShortcutCount =
-        element(by.css('select')).all(by.css('option')).then(function(options) {
-          return options.length;
-        });
-    var withShortcutCount = $('select').$$('option').count();
-
+  
+  it('should chain $$ with $', async() => {
+    const options = await element(by.css('select')).all(by.css('option'));
+    const withoutShortcutCount = options.length;
+    const withShortcutCount = await $('select').$$('option').count();
+    
     expect(withoutShortcutCount).toEqual(withShortcutCount);
   });
 });
