@@ -270,10 +270,9 @@ describe('ElementArrayFinder', () => {
       const text = await elem.getText();
       return text.indexOf('dog') > -1;
     };
-    const isBig = (elem) => {
-      return elem.getText().then((text) => {
-        return text.indexOf('big') > -1;
-      });
+    const isBig = async(elem) => {
+      const text = await elem.getText();
+      return text.indexOf('big') > -1;
     };
     const elements = element.all(by.css('#animals ul li'))
         .filter(isDog).filter(isBig);
@@ -285,18 +284,16 @@ describe('ElementArrayFinder', () => {
   });
 
   it('filter should work with reduce', async() => {
-    const isDog = (elem) => {
-      return elem.getText().then((text) => {
-        return text.indexOf('dog') > -1;
-      });
+    const isDog = async(elem) => {
+      const text = await elem.getText();
+      return text.indexOf('dog') > -1;
     };
     await browser.get('index.html#/form');
     const value = element.all(by.css('#animals ul li')).filter(isDog).
-        reduce((currentValue, elem, index, elemArr) => {
-          return elem.getText().then((text) => {
-            return currentValue + index + '/' + elemArr.length + ': ' +
-                text + '\n';
-          });
+        reduce(async(currentValue, elem, index, elemArr) => {
+          const text = await elem.getText();
+          return currentValue + index + '/' + elemArr.length + ': ' +
+              text + '\n';
         }, '');
 
     expect(await value).toEqual(
@@ -308,13 +305,11 @@ describe('ElementArrayFinder', () => {
   it('should find multiple elements scoped properly with chaining', async() => {
     await browser.get('index.html#/conflict');
 
-    element.all(by.binding('item')).then((elems) => {
-      expect(elems.length).toEqual(4);
-    });
+    let elems = await element.all(by.binding('item'));
+    expect(elems.length).toEqual(4);
 
-    element(by.id('baz')).all(by.binding('item')).then((elems) => {
-      expect(elems.length).toEqual(2);
-    });
+    elems = await element(by.id('baz')).all(by.binding('item'));
+    expect(elems.length).toEqual(2);
   });
 
   it('should wait to grab multiple chained elements', async() => {
@@ -371,12 +366,11 @@ describe('ElementArrayFinder', () => {
   it('should return not present when an element disappears within an array',
       async() => {
     await browser.get('index.html#/form');
-    element.all(by.model('color')).then(async(elements) => {
-      const disappearingElem = elements[0];
-      expect(await disappearingElem.isPresent()).toBeTruthy();
-      await browser.get('index.html#/bindings');
-      expect(await disappearingElem.isPresent()).toBeFalsy();
-    });
+    const elements = await element.all(by.model('color'))
+    const disappearingElem = elements[0];
+    expect(await disappearingElem.isPresent()).toBeTruthy();
+    await browser.get('index.html#/bindings');
+    expect(await disappearingElem.isPresent()).toBeFalsy();
   });
 
   it('should get an element from an array', async () => {
@@ -523,11 +517,10 @@ describe('ElementArrayFinder', () => {
   it('should reduce elements', async () => {
     await browser.get('index.html#/form');
     const value = element.all(by.css('#animals ul li')).
-        reduce((currentValue, elem, index, elemArr) => {
-          return elem.getText().then((text) => {
-            return currentValue + index + '/' + elemArr.length + ': ' +
-                text + '\n';
-          });
+        reduce(async(currentValue, elem, index, elemArr) => {
+          const text = await elem.getText();
+          return currentValue + index + '/' + elemArr.length + ': ' +
+              text + '\n';
         }, '');
 
     expect(await value).toEqual(
