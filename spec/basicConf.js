@@ -11,6 +11,7 @@ exports.config = {
   specs: [
     'basic/elements_spec.js',
     'basic/lib_spec.js',
+    'basic/navigation_spec.js',
     'basic/handling_spec.js'
   ],
 
