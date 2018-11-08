@@ -14,8 +14,7 @@ exports.config = {
     'basic/lib_spec.js',
     'basic/handling_spec.js',
     'basic/restart_spec.js',
-    'basic/navigation_spec.js',
-    'basic/handling_spec.js'
+    'basic/navigation_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
