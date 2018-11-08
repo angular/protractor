@@ -11,7 +11,8 @@ exports.config = {
   // TODO(selenium4): revert back to basic/*_spec.js
   specs: [
     'basic/elements_spec.js',
-    'basic/lib_spec.js'
+    'basic/lib_spec.js',
+    'basic/polling_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
