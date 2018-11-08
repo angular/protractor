@@ -13,7 +13,8 @@ exports.config = {
     'basic/elements_spec.js',
     'basic/lib_spec.js',
     'basic/handling_spec.js',
-    'basic/synchronize_spec.js'
+    'basic/synchronize_spec.js',
+    'basic/navigation_spec.js',
   ],
 
   // Exclude patterns are relative to this directory.
