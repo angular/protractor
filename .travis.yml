@@ -13,9 +13,10 @@ env:
     - LOGS_DIR=/tmp/protractor-build/logs
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
     - CXX=g++-4.8
+# TODO(selenium4): revert comments
   matrix:
-    - JOB=full
-    - JOB=smoke
+#    - JOB=full
+#    - JOB=smoke
     - JOB=bstack
 
 matrix:
@@ -44,10 +45,10 @@ before_script:
   - mkdir -p $LOGS_DIR
   - ./scripts/travis_setup.sh
 
-# TODO(selenium4): revert comments
+
 script:
- # - ./scripts/testserver.sh
- # - ./scripts/test_on_travis.sh
+  - ./scripts/testserver.sh
+  - ./scripts/test_on_travis.sh
 
 after_script:
   - ./scripts/print_logs.sh
