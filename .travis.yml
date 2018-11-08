@@ -13,7 +13,6 @@ env:
     - LOGS_DIR=/tmp/protractor-build/logs
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
     - CXX=g++-4.8
-# TODO(selenium4): revert comments
   matrix:
     - JOB=full
     - JOB=smoke

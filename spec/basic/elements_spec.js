@@ -544,7 +544,7 @@ describe('ElementArrayFinder', () => {
         { first: 'F', second: 'Friday' }];
 
     const result = await element.all(by.repeater('allinfo in days'))
-        .map((el) => {
+        .map(async(el) => {
       return {
         first: await el.element(by.binding('allinfo.initial')).getText(),
         second: await el.element(by.binding('allinfo.name')).getText()
