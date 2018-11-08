@@ -60,7 +60,8 @@ var passingTests = [
 var executor = new Executor();
 
 passingTests.forEach(function(passing_test) {
-  executor.addCommandlineTest(passing_test).assertExitCodeOnly();
+  executor.addCommandlineTest(passing_test)
+    .assertExitCodeOnly();
 });
 
 /*************************

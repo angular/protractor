@@ -6,8 +6,8 @@ describe('expected conditions', () => {
   });
 
   it('should have alertIsPresent', async () => {
-    const alertIsPresent = await EC.alertIsPresent();
-    expect(alertIsPresent.call()).toBe(false);
+    const alertIsPresent = EC.alertIsPresent();
+    expect(await alertIsPresent.call()).toBe(false);
 
     const alertButton = $('#alertbutton');
     await alertButton.click();
