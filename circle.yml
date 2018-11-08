@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:10.13-browsers
+      - image: circleci/node:8.11-browsers
         environment:
           # Fix issue with selenium-server in containers.
           # See http://github.com/SeleniumHQ/docker-selenium/issues/87
