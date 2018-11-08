@@ -4,6 +4,7 @@ var env = require('./environment.js');
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
