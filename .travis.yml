@@ -44,6 +44,7 @@ before_script:
   - mkdir -p $LOGS_DIR
   - ./scripts/travis_setup.sh
 
+
 script:
   - ./scripts/testserver.sh
   - ./scripts/test_on_travis.sh
