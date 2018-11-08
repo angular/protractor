@@ -16,43 +16,43 @@ describe('expected conditions', () => {
   });
 
   it('should have presenceOf', async () => {
-    const presenceOfInvalid = await EC.presenceOf($('#INVALID'));
-    const presenceOfHideable = await EC.presenceOf($('#shower'));
+    const presenceOfInvalid = EC.presenceOf($('#INVALID'));
+    const presenceOfHideable = EC.presenceOf($('#shower'));
 
-    expect(presenceOfInvalid.call()).toBe(false);
-    expect(presenceOfHideable.call()).toBe(true);
+    expect(await presenceOfInvalid.call()).toBe(false);
+    expect(await presenceOfHideable.call()).toBe(true);
     await element(by.model('show')).click();
-    expect(presenceOfHideable.call()).toBe(true); // Should be able to reuse.
+    expect(await presenceOfHideable.call()).toBe(true); // Should be able to reuse.
   });
 
   it('should have stalenessOf', async () => {
-    const stalenessOfInvalid = await EC.stalenessOf($('#INVALID'));
-    const stalenessOfHideable = await EC.stalenessOf($('#shower'));
+    const stalenessOfInvalid = EC.stalenessOf($('#INVALID'));
+    const stalenessOfHideable = EC.stalenessOf($('#shower'));
 
-    expect(stalenessOfInvalid.call()).toBe(true);
-    expect(stalenessOfHideable.call()).toBe(false);
+    expect(await stalenessOfInvalid.call()).toBe(true);
+    expect(await stalenessOfHideable.call()).toBe(false);
     await element(by.model('show')).click();
-    expect(stalenessOfHideable.call()).toBe(false);
+    expect(await stalenessOfHideable.call()).toBe(false);
   });
 
   it('should have visibilityOf', async () => {
-    const visibilityOfInvalid = await EC.visibilityOf($('#INVALID'));
-    const visibilityOfHideable = await EC.visibilityOf($('#shower'));
+    const visibilityOfInvalid = EC.visibilityOf($('#INVALID'));
+    const visibilityOfHideable = EC.visibilityOf($('#shower'));
 
-    expect(visibilityOfInvalid.call()).toBe(false);
-    expect(visibilityOfHideable.call()).toBe(true);
+    expect(await visibilityOfInvalid.call()).toBe(false);
+    expect(await visibilityOfHideable.call()).toBe(true);
     await element(by.model('show')).click();
-    expect(visibilityOfHideable.call()).toBe(false);
+    expect(await visibilityOfHideable.call()).toBe(false);
   });
 
   it('should have invisibilityOf', async () => {
-    const invisibilityOfInvalid = await EC.invisibilityOf($('#INVALID'));
-    const invisibilityOfHideable = await EC.invisibilityOf($('#shower'));
+    const invisibilityOfInvalid = EC.invisibilityOf($('#INVALID'));
+    const invisibilityOfHideable = EC.invisibilityOf($('#shower'));
 
-    expect(invisibilityOfInvalid.call()).toBe(true);
-    expect(invisibilityOfHideable.call()).toBe(false);
+    expect(await invisibilityOfInvalid.call()).toBe(true);
+    expect(await invisibilityOfHideable.call()).toBe(false);
     await element(by.model('show')).click();
-    expect(invisibilityOfHideable.call()).toBe(true);
+    expect(await invisibilityOfHideable.call()).toBe(true);
   });
 
   it('should have titleContains', async () => {
@@ -78,23 +78,23 @@ describe('expected conditions', () => {
   });
 
   it('should have elementToBeClickable', async () => {
-    const invalidIsClickable = await EC.elementToBeClickable($('#INVALID'));
-    const buttonIsClickable = await EC.elementToBeClickable($('#disabledButton'));
+    const invalidIsClickable = EC.elementToBeClickable($('#INVALID'));
+    const buttonIsClickable = EC.elementToBeClickable($('#disabledButton'));
 
-    expect(invalidIsClickable.call()).toBe(false);
-    expect(buttonIsClickable.call()).toBe(true);
+    expect(await invalidIsClickable.call()).toBe(false);
+    expect(await buttonIsClickable.call()).toBe(true);
     await element(by.model('disabled')).click();
-    expect(buttonIsClickable.call()).toBe(false);
+    expect(await buttonIsClickable.call()).toBe(false);
   });
 
   it('should have textToBePresentInElement', async () => {
-    const invalidHasText = await EC.textToBePresentInElement($('#INVALID'), 'shouldnt throw');
-    const hideableHasText = await EC.textToBePresentInElement($('#shower'), 'Shown');
+    const invalidHasText = EC.textToBePresentInElement($('#INVALID'), 'shouldnt throw');
+    const hideableHasText = EC.textToBePresentInElement($('#shower'), 'Shown');
 
-    expect(invalidHasText.call()).toBe(false);
-    expect(hideableHasText.call()).toBe(true);
+    expect(await invalidHasText.call()).toBe(false);
+    expect(await hideableHasText.call()).toBe(true);
     await element(by.model('show')).click();
-    expect(hideableHasText.call()).toBe(false);
+    expect(await hideableHasText.call()).toBe(false);
   });
 
   it('should have textToBePresentInElementValue', async () => {
@@ -114,15 +114,15 @@ describe('expected conditions', () => {
   });
 
   it('should have not', async () => {
-    const presenceOfValidElement = await EC.presenceOf($('#shower'));
-    expect(presenceOfValidElement.call()).toBe(true);
+    const presenceOfValidElement = EC.presenceOf($('#shower'));
+    expect(await presenceOfValidElement.call()).toBe(true);
     expect(await EC.not(presenceOfValidElement).call()).toBe(false);
   });
 
   it('should have and', async () => {
-    const presenceOfValidElement = await EC.presenceOf($('#shower'));
-    const presenceOfInvalidElement = await EC.presenceOf($('#INVALID'));
-    const validityOfTitle = await EC.titleIs('My AngularJS App');
+    const presenceOfValidElement = EC.presenceOf($('#shower'));
+    const presenceOfInvalidElement = EC.presenceOf($('#INVALID'));
+    const validityOfTitle = EC.titleIs('My AngularJS App');
 
     expect(await EC.and(presenceOfValidElement, validityOfTitle).call()).toBe(true);
     // support multiple conditions
@@ -132,20 +132,20 @@ describe('expected conditions', () => {
   it('and should shortcircuit', async () => {
     const invalidElem = $('#INVALID');
 
-    const presenceOfInvalidElement = await EC.presenceOf(invalidElem);
-    const isDisplayed = await invalidElem.isDisplayed.bind(invalidElem);
+    const presenceOfInvalidElement = EC.presenceOf(invalidElem);
+    const isDisplayed = invalidElem.isDisplayed.bind(invalidElem);
 
     // check isDisplayed on invalid element
-    const condition = await EC.and(presenceOfInvalidElement, isDisplayed);
+    const condition = EC.and(presenceOfInvalidElement, isDisplayed);
 
     // Should short circuit after the first condition is false, and not throw error
-    expect(condition.call()).toBe(false);
+    expect(await condition.call()).toBe(false);
   });
 
   it('should have or', async () => {
-    const presenceOfValidElement = await EC.presenceOf($('#shower'));
-    const presenceOfInvalidElement = await EC.presenceOf($('#INVALID'));
-    const presenceOfInvalidElement2 = await EC.presenceOf($('#INVALID2'));
+    const presenceOfValidElement = EC.presenceOf($('#shower'));
+    const presenceOfInvalidElement = EC.presenceOf($('#INVALID'));
+    const presenceOfInvalidElement2 = EC.presenceOf($('#INVALID2'));
 
     expect(await EC.or(presenceOfInvalidElement, presenceOfInvalidElement2).call()).toBe(false);
     // support multiple conditions
@@ -156,22 +156,22 @@ describe('expected conditions', () => {
     const validElem = $('#shower');
     const invalidElem = $('#INVALID');
 
-    const presenceOfValidElement = await EC.presenceOf(validElem);
-    const isDisplayed = await invalidElem.isDisplayed.bind(invalidElem);
+    const presenceOfValidElement = EC.presenceOf(validElem);
+    const isDisplayed = invalidElem.isDisplayed.bind(invalidElem);
 
     // check isDisplayed on invalid element
-    const condition = await EC.or(presenceOfValidElement, isDisplayed);
+    const condition = EC.or(presenceOfValidElement, isDisplayed);
 
     // Should short circuit after the first condition is true, and not throw error
-    expect(condition.call()).toBe(true);
+    expect(await condition.call()).toBe(true);
   });
 
   it('should be able to mix conditions', async () => {
-    const valid = await EC.presenceOf($('#shower'));
-    const invalid = await EC.presenceOf($('#INVALID'));
+    const valid = EC.presenceOf($('#shower'));
+    const invalid = EC.presenceOf($('#INVALID'));
 
     expect(await EC.or(valid, await EC.and(valid, invalid)).call()).toBe(true);
-    expect(await EC.or(await EC.not(valid), await EC.and(valid, invalid)).call()).toBe(false);
+    expect(await EC.or(EC.not(valid), EC.and(valid, invalid)).call()).toBe(false);
   });
 
   describe('for forked browsers', () => {
@@ -180,8 +180,8 @@ describe('expected conditions', () => {
       const browser2 = browser.forkNewDriverInstance();
       await browser2.get('index.html#/form');
       const EC2 = browser2.ExpectedConditions;
-      const alertIsPresent = await EC2.alertIsPresent();
-      expect(alertIsPresent.call()).toBe(false);
+      const alertIsPresent = EC2.alertIsPresent();
+      expect(await alertIsPresent.call()).toBe(false);
 
       const alertButton = browser2.$('#alertbutton');
       await alertButton.click();
@@ -225,7 +225,7 @@ describe('expected conditions', () => {
 
       await element(by.model('disabled')).click();
 
-      expect(disabledButton._getText()).toBe('Dummy');
+      expect(await disabledButton._getText()).toBe('Dummy');
       expect(await EC.textToBePresentInElement(disabledButton, 'Dummy').call()).toBe(false);
     });
 
@@ -234,7 +234,7 @@ describe('expected conditions', () => {
 
       await element(by.model('disabled')).click();
 
-      expect(disabledButton._getAttribute('value')).toBe('');
+      expect(await disabledButton._getAttribute('value')).toBe('');
       expect(await EC.textToBePresentInElementValue(disabledButton, '').call()).toBe(false);
     });
 
@@ -243,7 +243,7 @@ describe('expected conditions', () => {
 
       await element(by.model('disabled')).click();
 
-      expect(disabledButton._isEnabled()).toBe(false);
+      expect(await disabledButton._isEnabled()).toBe(false);
       expect(await EC.elementToBeClickable(disabledButton).call()).toBe(false);
     });
   });
