@@ -11,7 +11,7 @@ exports.config = {
   // TODO(selenium4): revert back to basic/*_spec.js
   specs: [
     'basic/elements_spec.js',
-    'basic/expected_conditions_spec.js'
+    'basic/expected_conditions_spec.js',
     'basic/lib_spec.js'
   ],
 
