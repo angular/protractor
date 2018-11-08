@@ -12,6 +12,7 @@ exports.config = {
   specs: [
     'basic/elements_spec.js',
     'basic/expected_conditions_spec.js'
+    'basic/lib_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
