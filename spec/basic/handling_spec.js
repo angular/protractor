@@ -1,11 +1,10 @@
-
-describe('handling timeout errors', function() {
-
-  it('should call error handler on a timeout', function() {
-    browser.get('http://dummyUrl', 1).then(function() {
+describe('handling timeout errors', () => {
+  it('should call error handler on a timeout', async () => {
+    try {
+      await browser.get('http://dummyUrl', 1);
       throw 'did not handle error';
-    }, function(err) {
+    } catch (err) {
       expect(err instanceof Error).toBeTruthy();
-    });
+    }
   });
 });
