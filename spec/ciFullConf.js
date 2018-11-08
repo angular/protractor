@@ -12,7 +12,8 @@ exports.config = {
   specs: [
     'basic/elements_spec.js',
     'basic/lib_spec.js',
-    'basic/polling_spec.js'
+    'basic/polling_spec.js',
+    'basic/handling_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
