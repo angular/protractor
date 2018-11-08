@@ -1,95 +1,77 @@
-describe('synchronizing with slow pages', function() {
-  beforeEach(function() {
-    browser.get('index.html#/async');
+describe('synchronizing with slow pages', () => {
+  beforeEach(async () => {
+    await browser.get('index.html#/async');
   });
 
-  it('waits for http calls', function() {
-    var status = element(by.binding('slowHttpStatus'));
-    var button = element(by.css('[ng-click="slowHttp()"]'));
+  it('waits for http calls', async () => {
+    const status = element(by.binding('slowHttpStatus'));
+    const button = element(by.css('[ng-click="slowHttp()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(status.getText()).toEqual('done');
+    await button.click();
+    expect(await status.getText()).toEqual('done');
   });
 
-  it('waits for long javascript execution', function() {
-    var status = element(by.binding('slowFunctionStatus'));
-    var button = element(by.css('[ng-click="slowFunction()"]'));
+  it('waits for long javascript execution', async () => {
+    const status = element(by.binding('slowFunctionStatus'));
+    const button = element(by.css('[ng-click="slowFunction()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(status.getText()).toEqual('done');
+    await button.click();
+    expect(await status.getText()).toEqual('done');
   });
 
-  it('DOES NOT wait for timeout', function() {
-    var status = element(by.binding('slowTimeoutStatus'));
-    var button = element(by.css('[ng-click="slowTimeout()"]'));
+  it('DOES NOT wait for timeout', async () => {
+    const status = element(by.binding('slowTimeoutStatus'));
+    const button = element(by.css('[ng-click="slowTimeout()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(status.getText()).toEqual('pending...');
+    await button.click();
+    expect(await status.getText()).toEqual('pending...');
   });
 
-  it('waits for $timeout', function() {
-    var status = element(by.binding('slowAngularTimeoutStatus'));
-    var button = element(by.css('[ng-click="slowAngularTimeout()"]'));
+  it('waits for $timeout', async () => {
+    const status = element(by.binding('slowAngularTimeoutStatus'));
+    const button = element(by.css('[ng-click="slowAngularTimeout()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(status.getText()).toEqual('done');
+    await button.click();
+    expect(await status.getText()).toEqual('done');
   });
 
-  it('waits for $timeout then a promise', function() {
-    var status = element(by.binding(
-          'slowAngularTimeoutPromiseStatus'));
-    var button = element(by.css(
-          '[ng-click="slowAngularTimeoutPromise()"]'));
+  it('waits for $timeout then a promise', async () => {
+    const status = element(by.binding('slowAngularTimeoutPromiseStatus'));
+    const button = element(by.css('[ng-click="slowAngularTimeoutPromise()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(status.getText()).toEqual('done');
+    await button.click();
+    expect(await status.getText()).toEqual('done');
   });
 
-  it('waits for long http call then a promise', function() {
-    var status = element(by.binding('slowHttpPromiseStatus'));
-    var button = element(by.css('[ng-click="slowHttpPromise()"]'));
+  it('waits for long http call then a promise', async () => {
+    const status = element(by.binding('slowHttpPromiseStatus'));
+    const button = element(by.css('[ng-click="slowHttpPromise()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(status.getText()).toEqual('done');
+    await button.click();
+    expect(await status.getText()).toEqual('done');
   });
 
-  it('waits for slow routing changes', function() {
-    var status = element(by.binding('routingChangeStatus'));
-    var button = element(by.css('[ng-click="routingChange()"]'));
+  it('waits for slow routing changes', async () => {
+    const status = element(by.binding('routingChangeStatus'));
+    const button = element(by.css('[ng-click="routingChange()"]'));
+    expect(await status.getText()).toEqual('not started');
 
-    expect(status.getText()).toEqual('not started');
-
-    button.click();
-
-    expect(browser.getPageSource()).toMatch('polling mechanism');
+    await button.click();
+    expect(await browser.getPageSource()).toMatch('polling mechanism');
   });
 
-  it('waits for slow ng-include templates to load', function() {
-    var status = element(by.css('.included'));
-    var button = element(by.css('[ng-click="changeTemplateUrl()"]'));
+  it('waits for slow ng-include templates to load', async () => {
+    const status = element(by.css('.included'));
+    const button = element(by.css('[ng-click="changeTemplateUrl()"]'));
+    expect(await status.getText()).toEqual('fast template contents');
 
-    expect(status.getText()).toEqual('fast template contents');
-
-    button.click();
-
-    expect(status.getText()).toEqual('slow template contents');
+    await button.click();
+    expect(await status.getText()).toEqual('slow template contents');
   });
 });
