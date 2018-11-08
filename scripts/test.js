@@ -33,7 +33,7 @@ var passingTests = [
   // 'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
   'node built/cli.js spec/driverProviderLocalConf.js',
   'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
-  // 'node built/cli.js spec/getCapabilitiesConf.js',
+  'node built/cli.js spec/getCapabilitiesConf.js',
   // 'node built/cli.js spec/controlLockConf.js',
   // 'node built/cli.js spec/customFramework.js',
   // 'node built/cli.js spec/noGlobalsConf.js',
