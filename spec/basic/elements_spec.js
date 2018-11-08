@@ -242,7 +242,7 @@ describe('ElementArrayFinder', () => {
   });
 
   it('filter should work in page object', async() => {
-    const elements = element.all(by.css('#animals ul li'))
+    const elements = await element.all(by.css('#animals ul li'))
         .filter(async(elem) => {
       let text = await elem.getText();
       return text === 'big dog';
@@ -258,7 +258,7 @@ describe('ElementArrayFinder', () => {
       const text = await elem.getText();
       return text.indexOf('dog') > -1;
     };
-    const elements = element.all(by.css('#animals ul li')).filter(isDog);
+    const elements = await element.all(by.css('#animals ul li')).filter(isDog);
 
     await browser.get('index.html#/form');
     expect(await elements.count()).toEqual(3);
@@ -274,7 +274,7 @@ describe('ElementArrayFinder', () => {
       const text = await elem.getText();
       return text.indexOf('big') > -1;
     };
-    const elements = element.all(by.css('#animals ul li'))
+    const elements = await element.all(by.css('#animals ul li'))
         .filter(isDog).filter(isBig);
 
     await browser.get('index.html#/form');
@@ -289,7 +289,7 @@ describe('ElementArrayFinder', () => {
       return text.indexOf('dog') > -1;
     };
     await browser.get('index.html#/form');
-    const value = element.all(by.css('#animals ul li')).filter(isDog).
+    const value = await element.all(by.css('#animals ul li')).filter(isDog).
         reduce(async(currentValue, elem, index, elemArr) => {
           const text = await elem.getText();
           return currentValue + index + '/' + elemArr.length + ': ' +
@@ -451,7 +451,8 @@ describe('ElementArrayFinder', () => {
 
   it('should map each element on array and with promises', async() => {
     await browser.get('index.html#/form');
-    var labels = await element.all(by.css('#animals ul li')).map(async(elm, index) => {
+    var labels = await element.all(by.css('#animals ul li'))
+        .map(async(elm, index) => {
       return {
         index: index,
         text: await elm.getText()
@@ -469,7 +470,8 @@ describe('ElementArrayFinder', () => {
 
   it('should map and resolve multiple promises', async() => {
     await browser.get('index.html#/form');
-    const labels = await element.all(by.css('#animals ul li')).map(async (elm) => {
+    const labels = await element.all(by.css('#animals ul li'))
+        .map(async (elm) => {
       return {
         text: await elm.getText(),
         tagName: await elm.getTagName()
@@ -541,10 +543,11 @@ describe('ElementArrayFinder', () => {
         { first: 'Th', second: 'Thursday' },
         { first: 'F', second: 'Friday' }];
 
-    const result = element.all(by.repeater('allinfo in days')).map((el) => {
+    const result = await element.all(by.repeater('allinfo in days'))
+        .map((el) => {
       return {
-        first: el.element(by.binding('allinfo.initial')).getText(),
-        second: el.element(by.binding('allinfo.name')).getText()
+        first: await el.element(by.binding('allinfo.initial')).getText(),
+        second: await el.element(by.binding('allinfo.name')).getText()
       };
     });
 
