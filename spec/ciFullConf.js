@@ -8,8 +8,10 @@ exports.config = {
   framework: 'jasmine',
 
   // Spec patterns are relative to this directory.
+  // TODO(selenium4): revert back to basic/*_spec.js
   specs: [
-    'basic/*_spec.js'
+    'basic/elements_spec.js',
+    'basic/lib_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
