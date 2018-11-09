@@ -46,9 +46,9 @@ var passingTests = [
   // 'node built/cli.js spec/driverProviderUseExistingWebDriver.js',
   // 'node built/cli.js spec/driverProviderUseExistingWebDriver.js --useBlockingProxy',
   // 'node scripts/errorTest.js',
-  // // Interactive Element Explorer tasks
-  // 'node scripts/interactive_tests/interactive_test.js',
-  // 'node scripts/interactive_tests/with_base_url.js',
+  // Interactive Element Explorer tasks
+  'node scripts/interactive_tests/interactive_test.js',
+  'node scripts/interactive_tests/with_base_url.js',
   // // Unit tests
   // 'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
   // // Dependency tests
