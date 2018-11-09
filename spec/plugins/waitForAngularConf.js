@@ -1,9 +1,9 @@
-var env = require('../environment.js'),
-    q = require('q');
+var env = require('../environment.js');
 
 // A small suite to make sure that the plugin hooks for waitForAngular work
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -19,9 +19,12 @@ exports.config = {
   // Plugin patterns are relative to this directory.
   plugins: [{
     inline: {
-      waitForPromise: function(/* oldURL */) {
-        return q.delay(5000).then(function() {
-          protractor.WAIT_FOR_PROMISE = true;
+      waitForPromise: async function() {
+        return await new Promise(resolve => {
+          setTimeout(() => {
+            protractor.WAIT_FOR_PROMISE = true;
+            resolve();
+          }, 5000);
         });
       },
       waitForCondition: function() {
