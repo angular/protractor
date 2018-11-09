@@ -1,8 +1,9 @@
-var env = require('./environment.js');
+const env = require('./environment.js');
 
 // The main suite of Protractor tests.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 

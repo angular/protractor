@@ -30,7 +30,7 @@ var passingTests = [
   'node built/cli.js spec/plugins/waitForAngularConf.js',
   // 'node built/cli.js spec/interactionConf.js',
   // 'node built/cli.js spec/directConnectConf.js',
-  // 'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
+  'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
   // 'node built/cli.js spec/driverProviderLocalConf.js',
   // 'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
   // 'node built/cli.js spec/getCapabilitiesConf.js',
