@@ -28,7 +28,7 @@ var passingTests = [
   'node built/cli.js spec/plugins/browserGetSyncedConf.js',
   'node built/cli.js spec/plugins/browserGetUnsyncedConf.js',
   'node built/cli.js spec/plugins/waitForAngularConf.js',
-  // 'node built/cli.js spec/interactionConf.js',
+  'node built/cli.js spec/interactionConf.js',
   // 'node built/cli.js spec/directConnectConf.js',
   'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
   // 'node built/cli.js spec/driverProviderLocalConf.js',
