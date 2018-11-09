@@ -1,4 +1,4 @@
-describe('category', function() {
-  it('name', function() {
+describe('category', () => {
+  it('name', () => {
   });
 });
