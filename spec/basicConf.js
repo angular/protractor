@@ -18,6 +18,7 @@ exports.config = {
     // 'basic/navigation_spec.js',
     // 'basic/polling_spec.js',
     // 'basic/restart_spec.js',
+    // 'basic/synchronize_spec.js',
   ],
 
   // Exclude patterns are relative to this directory.
