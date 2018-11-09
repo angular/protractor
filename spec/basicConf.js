@@ -12,8 +12,9 @@ exports.config = {
     'basic/lib_spec.js',
     'basic/locators_spec.js'
     // 'basic/elements_spec.js',
-    // 'basic/navigation_spec.js',
     // 'basic/handling_spec.js',
+    // 'basic/mockmodule_spec.js',
+    // 'basic/navigation_spec.js',
   ],
 
   // Exclude patterns are relative to this directory.
