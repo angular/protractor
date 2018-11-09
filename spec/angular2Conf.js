@@ -3,6 +3,7 @@ var env = require('./environment');
 // This is the configuration for a smoke test for an Angular TypeScript application.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
