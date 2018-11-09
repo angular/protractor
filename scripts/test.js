@@ -17,7 +17,7 @@ var passingTests = [
   'node built/cli.js spec/onPreparePromiseConf.js',
   'node built/cli.js spec/onPreparePromiseFileConf.js',
   // 'node built/cli.js spec/mochaConf.js',
-  // 'node built/cli.js spec/withLoginConf.js',
+  'node built/cli.js spec/withLoginConf.js',
   'node built/cli.js spec/suitesConf.js --suite okmany',
   'node built/cli.js spec/suitesConf.js --suite okspec',
   'node built/cli.js spec/suitesConf.js --suite okmany,okspec',
