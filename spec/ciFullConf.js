@@ -11,11 +11,12 @@ exports.config = {
   // Spec patterns are relative to this directory.
   // TODO(selenium4): revert back to basic/*_spec.js
   specs: [
+    'basic/lib_spec.js',
+    'basic/locators_spec.js'
     // 'basic/elements_spec.js',
-    'basic/lib_spec.js'
-    // ,
     // 'basic/navigation_spec.js',
     // 'basic/handling_spec.js'
+    // 'basic/elements_spec.js',
   ],
 
   // Exclude patterns are relative to this directory.
