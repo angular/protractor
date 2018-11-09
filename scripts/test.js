@@ -146,11 +146,11 @@ passingTests.forEach(function(passing_test) {
 //                 'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
 //     ]);
 
-// executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
-//     .expectExitCode(1)
-//     .expectErrors([
-//       {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
-//     ]);
+executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
+    ]);
 
 // If we're running on CircleCI, save stdout and stderr from the test run to a log file.
 if (process.env['CIRCLE_ARTIFACTS']) {
