@@ -1,10 +1,11 @@
-var env = require('./environment.js');
-var webdriver = require('selenium-webdriver');
+const env = require('./environment.js');
+const webdriver = require('selenium-webdriver');
 
 // Tests for cases that have caused WebDriver promise locks in
 // the past.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -16,15 +17,15 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
-  onPrepare: function() {
-
+  onPrepare: async function() {
     // This is a reasonable use case - do some promise that takes some time,
     // and then do a wait until something is set up correctly.
-    return webdriver.promise.delayed(100).then(function() {
-      // This could also be replaced by an 'execute' to see the same behavior.
-      return browser.driver.wait(function() {
-        return true;
-      }, 10000, 'onPrepare wait');
+    await new Promise(resolve => {
+      setTimeout(resolve, 100);
     });
+    // This could also be replaced by an 'execute' to see the same behavior.
+    return await browser.driver.wait(function() {
+      return true;
+    }, 10000, 'onPrepare wait');
   }
 };
