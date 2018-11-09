@@ -4,12 +4,15 @@ var env = require('./environment.js');
 exports.config = {
   browserstackUser: process.env.BROWSER_STACK_USERNAME,
   browserstackKey: process.env.BROWSER_STACK_ACCESS_KEY,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
   // Spec patterns are relative to this directory.
   specs: [
-    'basic/*_spec.js'
+    // TODO(selenium4): revert back to 'basic/*_spec.js', for now just use lib_spec
+    // 'basic/*_spec.js'
+    'basic/lib_spec.js'
   ],
 
   // Exclude patterns are relative to this directory.
