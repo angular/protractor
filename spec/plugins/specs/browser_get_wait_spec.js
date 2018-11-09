@@ -1,6 +1,6 @@
-describe('category', function() {
-  it('name', function() {
-    browser.get('index.html');
-    browser.waitForAngular();
+describe('category', () => {
+  it('name', async() => {
+    await browser.get('index.html');
+    await browser.waitForAngular();
   });
 });
