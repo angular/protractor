@@ -1,8 +1,9 @@
-var env = require('./environment');
+const env = require('./environment');
 
 // This is the configuration for a smoke test for a hybrid ng1/ng2 application.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
