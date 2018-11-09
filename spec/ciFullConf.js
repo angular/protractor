@@ -4,17 +4,20 @@ var env = require('./environment.js');
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
   // Spec patterns are relative to this directory.
   // TODO(selenium4): revert back to basic/*_spec.js
   specs: [
-    'basic/elements_spec.js',
     'basic/lib_spec.js',
-    'basic/handling_spec.js',
     'basic/synchronize_spec.js',
-    'basic/navigation_spec.js',
+    // 'basic/elements_spec.js',
+    // 'basic/handling_spec.js'
+    // 'basic/mockmodule_spec.js',
+    // 'basic/navigation_spec.js',
+    // 'basic/synchronize_spec.js',
   ],
 
   // Exclude patterns are relative to this directory.

@@ -1,5 +1,6 @@
-var q = require('q');
-
-module.exports = q.fcall(function() {
+module.exports = async() => {
   browser.params.password = '12345';
-}).delay(1000);
+  return await new Promise((resolve, _) => {
+    setTimeout(resolve, 1000);
+  });
+}

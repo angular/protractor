@@ -9,11 +9,13 @@ exports.config = {
 
   // Spec patterns are relative to this directory.
   specs: [
-    'basic/elements_spec.js',
     'basic/lib_spec.js',
-    'basic/handling_spec.js',
-    'basic/synchronize_spec.js',
-    'basic/navigation_spec.js'
+    'basic/locators_spec.js'
+    // 'basic/elements_spec.js',
+    // 'basic/handling_spec.js',
+    // 'basic/mockmodule_spec.js',
+    // 'basic/navigation_spec.js',
+    // 'basic/synchronize_spec.js',
   ],
 
   // Exclude patterns are relative to this directory.
