@@ -68,8 +68,9 @@ describe('async angular2 application', () => {
       // Waits for the val to count 2.
       const EC = protractor.ExpectedConditions;
       await timeout.$('.action').click();
+      // Increase waiting time from 4s to 7s due to slow connection during SauceLabs tests
       await browser.wait(EC.textToBePresentInElement(timeout.$('.val'), '1'),
-          4000);
+          7000);
       await timeout.$('.cancel').click();
 
       const text = timeout.$('.val').getText();
