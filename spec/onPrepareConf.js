@@ -1,10 +1,11 @@
 // Configuration using a function in onPrepare to set a parameter before
 // testing.
-var env = require('./environment.js');
+const env = require('./environment.js');
 
 // The main suite of Protractor tests.
 exports.config = {
   mockSelenium: true,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -16,7 +17,7 @@ exports.config = {
 
   baseUrl: env.baseUrl + '/ng1/',
 
-  onPrepare: function() {
+  onPrepare: () => {
     browser.params.password = '12345';
   }
 };
