@@ -451,14 +451,15 @@ describe('ElementArrayFinder', () => {
 
   it('should map each element on array and with promises', async() => {
     await browser.get('index.html#/form');
-    var labels = await element.all(by.css('#animals ul li')).map(async(elm, index) => {
+    const labels = element.all(by.css('#animals ul li'))
+        .map(async(elm, index) => {
       return {
         index: index,
         text: await elm.getText()
       };
     });
 
-    expect(labels).toEqual([
+    expect(await labels).toEqual([
       {index: 0, text: 'big dog'},
       {index: 1, text: 'small dog'},
       {index: 2, text: 'other dog'},
@@ -469,7 +470,8 @@ describe('ElementArrayFinder', () => {
 
   it('should map and resolve multiple promises', async() => {
     await browser.get('index.html#/form');
-    const labels = await element.all(by.css('#animals ul li')).map(async (elm) => {
+    const labels = element.all(by.css('#animals ul li'))
+        .map(async (elm) => {
       return {
         text: await elm.getText(),
         tagName: await elm.getTagName()
@@ -483,7 +485,7 @@ describe('ElementArrayFinder', () => {
       };
     };
 
-    expect(labels).toEqual([
+    expect(await labels).toEqual([
       newExpected('big dog'),
       newExpected('small dog'),
       newExpected('other dog'),
@@ -541,10 +543,11 @@ describe('ElementArrayFinder', () => {
         { first: 'Th', second: 'Thursday' },
         { first: 'F', second: 'Friday' }];
 
-    const result = element.all(by.repeater('allinfo in days')).map((el) => {
+    const result = element.all(by.repeater('allinfo in days'))
+        .map(async(el) => {
       return {
-        first: el.element(by.binding('allinfo.initial')).getText(),
-        second: el.element(by.binding('allinfo.name')).getText()
+        first: await el.element(by.binding('allinfo.initial')).getText(),
+        second: await el.element(by.binding('allinfo.name')).getText()
       };
     });
 
