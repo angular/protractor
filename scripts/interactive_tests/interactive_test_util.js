@@ -8,8 +8,13 @@ const Server = function(serverStartCmd, port) {
   // Start protractor and its debugger server as a child process. Return promise.
   this.start = () => {
     return new Promise((resolve, reject) => {
-      const command = serverStartCmd;
-      const arguments = ['--debuggerServerPort', port];
+      // serverStartCmd += ' --debuggerServerPort ' + port;
+      // serverStartCmd = serverStartCmd.split(/\s/);
+      // var test_process = child_process.spawn(serverStartCmd[0], serverStartCmd.slice(1));
+
+      const commands = `${serverStartCmd} --debuggerServerPort ${port}`.split(/\s/);
+      const command = commands[0];
+      const arguments = commands.slice(1);
       const test_process = child_process.spawn(command, arguments);
       let received = '';
 
@@ -58,8 +63,8 @@ const Client = function(port) {
   // Send a command to the server and wait for a response. Return response as a
   // promise.
   this.sendCommand = (command) => {
-    let ondata;
-    let onerror;
+    let ondata = '';
+    let onerror ='';
 
     return new Promise((resolve, reject) => {
       let received = '';

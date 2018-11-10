@@ -46,4 +46,3 @@ test.addCommandExpectation('br\t', '[["break","","browser"],"br"]');
 test.addCommandExpectation('li\t', '[["list"],"li"]');
 
 test.run();
-

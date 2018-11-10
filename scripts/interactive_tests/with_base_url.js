@@ -9,4 +9,4 @@ const test = new InteractiveTest(
 test.addCommandExpectation(
     'browser.driver.getCurrentUrl()',
     'http://localhost:' + env.webServerDefaultPort + '/ng1/#/form');
-test.run();
+test.run()
