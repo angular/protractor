@@ -3,6 +3,7 @@ var env = require('./environment.js');
 // A configuration file running a simple direct connect spec
 exports.config = {
   directConnect: true,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
