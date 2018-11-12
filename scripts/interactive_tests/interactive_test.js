@@ -45,4 +45,4 @@ test.addCommandExpectation('br\t', '[["break","","browser"],"br"]');
 // Make sure the global 'list' we added shows up.
 test.addCommandExpectation('li\t', '[["list"],"li"]');
 
-test.run();
+test.run().then(() => {});

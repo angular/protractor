@@ -7,6 +7,7 @@ const TIMEOUT = 10000;
 const Server = function(serverStartCmd, port) {
   // Start protractor and its debugger server as a child process. Return promise.
   this.start = () => {
+    throw new Error('Give me an error');
     return new Promise((resolve, reject) => {
       // serverStartCmd += ' --debuggerServerPort ' + port;
       // serverStartCmd = serverStartCmd.split(/\s/);
@@ -48,6 +49,7 @@ const Client = function(port) {
 
   // Connect to the server. Return promise.
   this.connect = () => {
+    throw new Error('Give me an error');
     return new Promise(resolve => {
       socket = net.connect({port: port}, () => {
         resolve();
@@ -63,6 +65,7 @@ const Client = function(port) {
   // Send a command to the server and wait for a response. Return response as a
   // promise.
   this.sendCommand = (command) => {
+    throw new Error('Give me an error');
     let ondata = '';
     let onerror ='';
 
@@ -125,6 +128,7 @@ exports.InteractiveTest = function(command, port) {
   // send the queue of commands against the server sequentially and verify the
   // response from the server if needed.
   this.run = async () => {
+    throw new Error('Give me an error');
     const server = new Server(command, port);
     await server.start();
     const client = new Client(port);

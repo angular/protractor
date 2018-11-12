@@ -8,5 +8,5 @@ const test = new InteractiveTest(
 // Check we automatically go to to baseUrl.
 test.addCommandExpectation(
     'browser.driver.getCurrentUrl()',
-    'http://localhost:' + env.webServerDefaultPort + '/ng1/#/form');
-test.run()
+    'Should be some error');
+test.run().then(() => {});
