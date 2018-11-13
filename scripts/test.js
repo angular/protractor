@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var path = require('path');
+const path = require('path');
 
-var Executor = require('./test/test_util').Executor;
+const Executor = require('./test/test_util');
 
-var passingTests = [
+const passingTests = [
   'node built/cli.js spec/basicConf.js',
   // 'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
@@ -57,9 +57,9 @@ var passingTests = [
   // 'node spec/install/test.js'
 ];
 
-var executor = new Executor();
+const executor = new Executor();
 
-passingTests.forEach(function(passing_test) {
+passingTests.forEach((passing_test) => {
   executor.addCommandlineTest(passing_test)
       .assertExitCodeOnly();
 });
