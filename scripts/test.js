@@ -154,7 +154,7 @@ passingTests.forEach(function(passing_test) {
 
 // If we're running on CircleCI, save stdout and stderr from the test run to a log file.
 if (process.env['CIRCLE_ARTIFACTS']) {
-  executor.execute(path.join(process.env['CIRCLE_ARTIFACTS'], 'test_log.txt'));
+  executor.execute(path.join(process.env['CIRCLE_ARTIFACTS'], 'test_log.txt')).then();
 } else {
-  executor.execute();
+  executor.execute().then();
 }

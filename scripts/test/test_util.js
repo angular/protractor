@@ -1,41 +1,43 @@
 #!/usr/bin/env node
 
-var child_process = require('child_process'),
-    q = require('q'),
-    fs = require('fs');
+const child_process = require('child_process');
 
-var CommandlineTest = function(command) {
-  var self = this;
-  this.command_ = command;
-  this.expectedExitCode_ = 0;
-  this.expectedErrors_ = [];
-  this.assertExitCodeOnly_ = false;
-  this.testLogStream = undefined;
+class CommandlineTest {
+  constructor(command) {
+    this.command = command;
+    this.expectedExitCode = 0;
+    this.expectedErrors = [];
+    this.isExitCode = false;
+    this.testLogStream = undefined;
+    this.expectedMinTestDuration = undefined;
+    this.expectedMaxTestDuration = undefined;
+  }
+
 
   // Only assert the exit code and not failures.
   // This must be true if the command you're running does not support
   //   the flag '--resultJsonOutputFile'.
-  this.assertExitCodeOnly = function() {
-    self.assertExitCodeOnly_ = true;
-    return self;
-  };
+  assertExitCodeOnly() {
+    this.isExitCode = true;
+    return this;
+  }
 
-  this.setTestLogFile = function(filename) {
-    self.testLogStream = fs.createWriteStream(filename, {flags: 'a'});
-  };
+  setTestLogFile(filename) {
+    this.testLogStream = fs.createWriteStream(filename, {flags: 'a'});
+  }
 
   // Set the expected exit code for the test command.
-  this.expectExitCode = function(exitCode) {
-    self.expectedExitCode_ = exitCode;
-    return self;
-  };
+  expectExitCode(exitCode) {
+    this.expectedExitCode = exitCode;
+    return this;
+  }
 
   // Set the expected total test duration in milliseconds.
-  this.expectTestDuration = function(min, max) {
-    self.expectedMinTestDuration_ = min;
-    self.expectedMaxTestDuration_ = max;
-    return self;
-  };
+  expectTestDuration(min, max) {
+    this.expectedMinTestDuration = min;
+    this.expectedMaxTestDuration = max;
+    return this;
+  }
 
   /**
    * Add expected error(s) for the test command.
@@ -45,102 +47,102 @@ var CommandlineTest = function(command) {
    *   stackTrace: string, //optional regex
    * }
    */
-  this.expectErrors = function(expectedErrors) {
+  expectErrors(expectedErrors) {
     if (expectedErrors instanceof Array) {
-      self.expectedErrors_ = self.expectedErrors_.concat(expectedErrors);
+      this.expectedErrors = this.expectedErrors.concat(expectedErrors);
     } else {
-      self.expectedErrors_.push(expectedErrors);
+      this.expectedErrors.push(expectedErrors);
     }
-    return self;
-  };
+    return this;
+  }
 
-  this.run = function() {
-    var start = new Date().getTime();
-    var testOutputPath = 'test_output_' + start + '.tmp';
-    var output = '';
+  async run() {
+    const start = new Date().getTime();
+    const testOutputPath = `test_output_${start}.tmp`;
+    let output = '';
 
-    var flushAndFail = function(errorMsg) {
+    const flushAndFail = (errorMsg) => {
       process.stdout.write(output);
       throw new Error(errorMsg);
     };
 
-    return q.promise(function(resolve, reject) {
-      if (!self.assertExitCodeOnly_) {
-        self.command_ = self.command_ + ' --resultJsonOutputFile ' + testOutputPath;
+    return new Promise((resolve, reject) => {
+      if (!this.isExitCode) {
+        this.command = this.command + ' --resultJsonOutputFile ' + testOutputPath;
       }
-      var args = self.command_.split(/\s/);
-
-      var test_process;
+      let args = this.command.split(/\s/);
+      let test_process;
 
       test_process = child_process.spawn(args[0], args.slice(1));
 
-      var processData = function(data) {
+      const processData = (data) => {
         process.stdout.write('.');
         output += data;
-        if (self.testLogStream) {
-          self.testLogStream.write(data);
+        if (this.testLogStream) {
+          this.testLogStream.write(data);
         }
       };
 
       test_process.stdout.on('data', processData);
       test_process.stderr.on('data', processData);
 
-      test_process.on('error', function(err) {
+      test_process.on('error', (err) => {
         reject(err);
       });
 
-      test_process.on('exit', function(exitCode) {
+      test_process.on('exit', (exitCode) => {
         resolve(exitCode);
       });
-    }).then(function(exitCode) {
-      if (self.expectedExitCode_ !== exitCode) {
-        flushAndFail('expecting exit code: ' + self.expectedExitCode_ +
-              ', actual: ' + exitCode);
+    }).then((exitCode) => {
+      if (this.expectedExitCode !== exitCode) {
+        flushAndFail('expecting exit code: ' + this.expectedExitCode +
+          ', actual: ' + exitCode);
       }
 
-      if (self.testLogStream) {
-        self.testLogStream.end();
+      if (this.testLogStream) {
+        this.testLogStream.end();
       }
 
       // Skip the rest if we are only verify exit code.
       // Note: we're expecting a file populated by '--resultJsonOutputFile' after
       //   this point.
-      if (self.assertExitCodeOnly_) {
+      if (this.isExitCode) {
         return;
       }
 
-      var raw_data = fs.readFileSync(testOutputPath);
-      var testOutput = JSON.parse(raw_data);
+      const raw_data = fs.readFileSync(testOutputPath);
+      const testOutput = JSON.parse(raw_data);
 
-      var actualErrors = [];
-      var duration = 0;
-      testOutput.forEach(function(specResult) {
+      let actualErrors = [];
+      let duration = 0;
+      testOutput.forEach((specResult) => {
         duration += specResult.duration;
-        specResult.assertions.forEach(function(assertion) {
+        specResult.assertions.forEach((assertion) => {
           if (!assertion.passed) {
             actualErrors.push(assertion);
           }
         });
       });
 
-      self.expectedErrors_.forEach(function(expectedError) {
-        var found = false;
-        for (var i = 0; i < actualErrors.length; ++i) {
-          var actualError = actualErrors[i];
+      this.expectedErrors.forEach((expectedError) => {
+        let found = false;
+        let i;
+        for (i = 0; i < actualErrors.length; ++i) {
+          const actualError = actualErrors[i];
 
           // if expected message is defined and messages don't match
           if (expectedError.message) {
             if (!actualError.errorMsg ||
-                !actualError.errorMsg.match(new RegExp(expectedError.message))) {
-                  continue;
-                }
+              !actualError.errorMsg.match(new RegExp(expectedError.message))) {
+              continue;
+            }
           }
           // if expected stackTrace is defined and stackTraces don't match
           if (expectedError.stackTrace) {
             if (!actualError.stackTrace ||
-                !actualError.stackTrace.match(new RegExp(expectedError.stackTrace))) {
-                  continue;
-                }
+              !actualError.stackTrace.match(new RegExp(expectedError.stackTrace))) {
+              continue;
+            }
           }
           found = true;
           break;
@@ -167,25 +169,21 @@ var CommandlineTest = function(command) {
         flushAndFail('failed with ' + actualErrors.length + ' unexpected failures');
       }
 
-      if (self.expectedMinTestDuration_
-          && duration < self.expectedMinTestDuration_) {
-            flushAndFail('expecting test min duration: ' +
-                self.expectedMinTestDuration_ + ', actual: ' + duration);
+      if (this.expectedMinTestDuration && duration < this.expectedMinTestDuration) {
+        flushAndFail('expecting test min duration: ' + this.expectedMinTestDuration + ', actual: ' + duration);
       }
-      if (self.expectedMaxTestDuration_
-          && duration > self.expectedMaxTestDuration_) {
-            flushAndFail('expecting test max duration: ' +
-                self.expectedMaxTestDuration_ + ', actual: ' + duration);
+      if (this.expectedMaxTestDuration && duration > this.expectedMaxTestDuration) {
+        flushAndFail('expecting test max duration: ' + this.expectedMaxTestDuration + ', actual: ' + duration);
       }
-    }).fin(function() {
+    }).finally(() => {
       try {
         fs.unlinkSync(testOutputPath);
       } catch (err) {
         // don't do anything
       }
     });
-  };
-};
+  }
+}
 
 /**
  * Util for running tests and testing functionalities including:
@@ -194,35 +192,39 @@ var CommandlineTest = function(command) {
  *   the flag '--resultJsonOutputFile', unless only exitCode is being tested.
  *   For now, this means protractor tests (jasmine/mocha).
  */
-exports.Executor = function() {
-  var tests = [];
-  this.addCommandlineTest = function(command) {
-    var test = new CommandlineTest(command);
-    tests.push(test);
+module.exports = class Executor {
+  constructor() {
+    this.tests = [];
+  }
+
+  addCommandlineTest(command) {
+    const test = new CommandlineTest(command);
+    this.tests.push(test);
     return test;
-  };
+  }
 
-  this.execute = function(logFile) {
-    var failed = false;
+  async execute(logFile) {
+    let failed = false;
+    const number = parseInt('033', 8);
 
-    (function runTests(i) {
-      if (i < tests.length) {
-        console.log('running: ' + tests[i].command_);
+    for (let test of this.tests) {
+      try {
+        console.log('running: ' + test.command);
         if (logFile) {
-          tests[i].setTestLogFile(logFile);
+          test.setTestLogFile(logFile);
         }
-        tests[i].run().then(function() {
-          console.log('\n>>> \033[1;32mpass\033[0m');
-        }, function(err) {
-          failed = true;
-          console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
-        }).fin(function() {
-          runTests(i + 1);
-        }).done();
-      } else {
-        console.log('Summary: ' + (failed ? 'fail' : 'pass'));
-        process.exit(failed ? 1 : 0);
+        await test.run();
+        // Octal literals are not allowed in strict mode
+        //console.log('\n>>> \033[1;32mpass\033[0m');
+      } catch (error) {
+        failed = true;
+        // Octal literals are not allowed in strict mode
+        // console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
       }
-    }(0));
-  };
+
+    }
+
+    console.log('Summary: ' + (failed ? 'fail' : 'pass'));
+    process.exit(failed ? 1 : 0);
+  }
 };
