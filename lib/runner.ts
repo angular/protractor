@@ -272,18 +272,20 @@ export class Runner extends EventEmitter {
       browser_.ng12Hybrid = initProperties.ng12Hybrid;
     }
 
-    browser_.ready =
-        browser_.ready
-            .then(() => {
-              return browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
-            })
-            .then(() => {
-              return driver.manage().timeouts().setScriptTimeout(
-                  initProperties.allScriptsTimeout || 0);
-            })
-            .then(() => {
-              return browser_;
-            });
+    browser_.ready = browser_.ready
+                         .then(() => {
+                           return initProperties.waitForAngularEnabled;
+                         })
+                         .then((waitForAngularEnabled) => {
+                           return browser_.waitForAngularEnabled(waitForAngularEnabled);
+                         })
+                         .then(() => {
+                           return driver.manage().timeouts().setScriptTimeout(
+                               initProperties.allScriptsTimeout || 0);
+                         })
+                         .then(() => {
+                           return browser_;
+                         });
 
     browser_.getProcessedConfig = () => {
       return wdpromise.when(config);
@@ -291,7 +293,7 @@ export class Runner extends EventEmitter {
 
     browser_.forkNewDriverInstance =
         (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
-          let newBrowser = this.createBrowser(plugins);
+          let newBrowser = this.createBrowser(plugins, copyConfigUpdates ? browser_ : null);
           if (copyMockModules) {
             newBrowser.mockModules_ = browser_.mockModules_;
           }
