@@ -218,11 +218,10 @@ module.exports = class Executor {
         //console.log('\n>>> \033[1;32mpass\033[0m');
       } catch (error) {
         failed = true;
-        console.log('test was failed\n');
+        console.log(`test was failed. Error: ${error}\n`);
         // Octal literals are not allowed in strict mode
         // console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
       }
-
     }
 
     console.log('Summary: ' + (failed ? 'fail' : 'pass'));
