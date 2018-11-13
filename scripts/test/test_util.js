@@ -205,7 +205,6 @@ module.exports = class Executor {
 
   async execute(logFile) {
     let failed = false;
-    const number = parseInt('033', 8);
 
     for (let test of this.tests) {
       try {
@@ -214,10 +213,12 @@ module.exports = class Executor {
           test.setTestLogFile(logFile);
         }
         await test.run();
+        console.log('test was passed\n');
         // Octal literals are not allowed in strict mode
         //console.log('\n>>> \033[1;32mpass\033[0m');
       } catch (error) {
         failed = true;
+        console.log('test was failed\n');
         // Octal literals are not allowed in strict mode
         // console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
       }
