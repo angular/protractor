@@ -93,6 +93,5 @@ export class BrowserStack extends DriverProvider {
     }
 
     logger.info(`Using BrowserStack selenium server at ${this.config_.seleniumAddress}`);
-    return Promise.resolve();
   }
 }

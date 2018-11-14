@@ -20,8 +20,7 @@ export class Hosted extends DriverProvider {
    * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): Promise<any> {
+  protected async setupDriverEnv(): Promise<any> {
     logger.info('Using the selenium server at ' + this.config_.seleniumAddress);
-    return Promise.resolve();
   }
 }

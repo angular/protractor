@@ -49,7 +49,7 @@ export class Sauce extends DriverProvider {
    * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): Promise<any> {
+  protected async setupDriverEnv(): Promise<any> {
     this.sauceServer_ = new SauceLabs({
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
@@ -75,6 +75,5 @@ export class Sauce extends DriverProvider {
     logger.info(
         'Using SauceLabs selenium server at ' +
         this.config_.seleniumAddress.replace(/\/\/.+@/, '//'));
-    return Promise.resolve();
   }
 }

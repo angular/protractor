@@ -161,22 +161,4 @@ export class Local extends DriverProvider {
     const address = await this.server_.address();
     this.config_.seleniumAddress = address;
   }
-
-  /**
-   * Teardown and destroy the environment and do any associated cleanup.
-   * Shuts down the drivers and server.
-   *
-   * @public
-   * @override
-   * @return {q.promise} A promise which will resolve when the environment
-   *     is down.
-   */
-  async teardownEnv(): Promise<any> {
-    try {
-      await super.teardownEnv();
-      logger.info('Shutting down selenium standalone server.');
-      await this.server_.stop();
-    } catch (_) {
-    }
-  }
 }

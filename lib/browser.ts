@@ -198,7 +198,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   async angularAppRoot(valuePromise: string|wdpromise.Promise<string> = null): Promise<string> {
     if (valuePromise != null) {
-      const value = await Promise.resolve(valuePromise);
+      const value = await valuePromise;
       this.internalRootEl = value;
       if (this.bpClient) {
         await this.bpClient.setWaitParams(value);
@@ -414,7 +414,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   async waitForAngularEnabled(enabledPromise: boolean|wdpromise.Promise<boolean> = null):
       Promise<boolean> {
     if (enabledPromise != null) {
-      const enabled = await Promise.resolve(enabledPromise);
+      const enabled = await enabledPromise;
       if (this.bpClient) {
         logger.debug('Setting waitForAngular' + !enabled);
         await this.bpClient.setWaitEnabled(enabled);
@@ -615,99 +615,87 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   async waitForAngular(opt_description?: string): Promise<any> {
     let description = opt_description ? ' - ' + opt_description : '';
     if (this.ignoreSynchronization) {
-      return Promise.resolve(true);
+      return true;
     }
 
     let runWaitForAngularScript = async(): Promise<any> => {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
-        return Promise.resolve(null);
+        return null;
       } else {
-        // Need to wrap this so that we read rootEl in the control flow, not synchronously.
         let rootEl = await this.angularAppRoot();
         return this.executeAsyncScript_(
-            clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description, rootEl);
+            clientSideScripts.waitForAngular, `Protractor.waitForAngular() ${description}`, rootEl);
       }
     };
 
-    return runWaitForAngularScript()
-        .then((browserErr: Function) => {
-          if (browserErr) {
-            throw new Error(
-                'Error while waiting for Protractor to ' +
-                'sync with the page: ' + JSON.stringify(browserErr));
+    try {
+      let browserErr = await runWaitForAngularScript();
+      if (browserErr) {
+        throw new Error(
+            'Error while waiting for Protractor to ' +
+            'sync with the page: ' + JSON.stringify(browserErr));
+      }
+      await this.plugins_.waitForPromise(this);
+
+      await this.driver.wait(async () => {
+        let results = await this.plugins_.waitForCondition(this);
+        return results.reduce((x, y) => x && y, true);
+      }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
+    } catch (err) {
+      let timeout: RegExpExecArray;
+      if (/asynchronous script timeout/.test(err.message)) {
+        // Timeout on Chrome
+        timeout = /-?[\d\.]*\ seconds/.exec(err.message);
+      } else if (/Timed out waiting for async script/.test(err.message)) {
+        // Timeout on Firefox
+        timeout = /-?[\d\.]*ms/.exec(err.message);
+      } else if (/Timed out waiting for an asynchronous script/.test(err.message)) {
+        // Timeout on Safari
+        timeout = /-?[\d\.]*\ ms/.exec(err.message);
+      }
+      if (timeout) {
+        let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
+            `${timeout}. This may be because the current page is not an Angular ` +
+            `application. Please see the FAQ for more details: ` +
+            `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
+        if (description.indexOf(' - Locator: ') == 0) {
+          errMsg += '\nWhile waiting for element with locator' + description;
+        }
+        let pendingTimeoutsPromise: wdpromise.Promise<any>;
+        if (this.trackOutstandingTimeouts_) {
+          pendingTimeoutsPromise = this.executeScriptWithDescription(
+              'return window.NG_PENDING_TIMEOUTS',
+              'Protractor.waitForAngular() - getting pending timeouts' + description);
+        } else {
+          pendingTimeoutsPromise = wdpromise.when({});
+        }
+        let pendingHttpsPromise = this.executeScriptWithDescription(
+            clientSideScripts.getPendingHttpRequests,
+            'Protractor.waitForAngular() - getting pending https' + description,
+            this.internalRootEl);
+
+        let arr = await Promise.all([pendingTimeoutsPromise, pendingHttpsPromise]);
+
+        let pendingTimeouts = arr[0] || [];
+        let pendingHttps = arr[1] || [];
+
+        let key: string, pendingTasks: string[] = [];
+        for (key in pendingTimeouts) {
+          if (pendingTimeouts.hasOwnProperty(key)) {
+            pendingTasks.push(' - $timeout: ' + pendingTimeouts[key]);
           }
-        })
-        .then(
-            async () => {
-              await this.plugins_.waitForPromise(this);
-              return this.driver.wait(async () => {
-                let results = await this.plugins_.waitForCondition(this);
-                return results.reduce((x, y) => x && y, true);
-              }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
-            },
-            (err: Error) => {
-              let timeout: RegExpExecArray;
-              if (/asynchronous script timeout/.test(err.message)) {
-                // Timeout on Chrome
-                timeout = /-?[\d\.]*\ seconds/.exec(err.message);
-              } else if (/Timed out waiting for async script/.test(err.message)) {
-                // Timeout on Firefox
-                timeout = /-?[\d\.]*ms/.exec(err.message);
-              } else if (/Timed out waiting for an asynchronous script/.test(err.message)) {
-                // Timeout on Safari
-                timeout = /-?[\d\.]*\ ms/.exec(err.message);
-              }
-              if (timeout) {
-                let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
-                    `${timeout}. This may be because the current page is not an Angular ` +
-                    `application. Please see the FAQ for more details: ` +
-                    `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
-                if (description.indexOf(' - Locator: ') == 0) {
-                  errMsg += '\nWhile waiting for element with locator' + description;
-                }
-                let pendingTimeoutsPromise: wdpromise.Promise<any>;
-                if (this.trackOutstandingTimeouts_) {
-                  pendingTimeoutsPromise = this.executeScriptWithDescription(
-                      'return window.NG_PENDING_TIMEOUTS',
-                      'Protractor.waitForAngular() - getting pending timeouts' + description);
-                } else {
-                  pendingTimeoutsPromise = wdpromise.when({});
-                }
-                let pendingHttpsPromise = this.executeScriptWithDescription(
-                    clientSideScripts.getPendingHttpRequests,
-                    'Protractor.waitForAngular() - getting pending https' + description,
-                    this.internalRootEl);
-
-                return wdpromise.all([pendingTimeoutsPromise, pendingHttpsPromise])
-                    .then(
-                        (arr: any[]) => {
-                          let pendingTimeouts = arr[0] || [];
-                          let pendingHttps = arr[1] || [];
-
-                          let key: string, pendingTasks: string[] = [];
-                          for (key in pendingTimeouts) {
-                            if (pendingTimeouts.hasOwnProperty(key)) {
-                              pendingTasks.push(' - $timeout: ' + pendingTimeouts[key]);
-                            }
-                          }
-                          for (key in pendingHttps) {
-                            pendingTasks.push(' - $http: ' + pendingHttps[key].url);
-                          }
-                          if (pendingTasks.length) {
-                            errMsg += '. \nThe following tasks were pending:\n';
-                            errMsg += pendingTasks.join('\n');
-                          }
-                          err.message = errMsg;
-                          throw err;
-                        },
-                        () => {
-                          err.message = errMsg;
-                          throw err;
-                        });
-              } else {
-                throw err;
-              }
-            });
+        }
+        for (key in pendingHttps) {
+          pendingTasks.push(' - $http: ' + pendingHttps[key].url);
+        }
+        if (pendingTasks.length) {
+          errMsg += '. \nThe following tasks were pending:\n';
+          errMsg += pendingTasks.join('\n');
+        }
+        err.message = errMsg;
+      }
+      throw err;
+    }
   }
 
   /**

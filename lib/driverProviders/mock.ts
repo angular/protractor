@@ -20,18 +20,16 @@ export class Mock extends DriverProvider {
   /**
    * An execute function that returns a promise with a test value.
    */
-  execute(): Promise<any> {
-    return Promise.resolve({value: 'test_response'});
+  async execute(): Promise<any> {
+    return {value: 'test_response'};
   }
 
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {q.promise} A promise which will resolve immediately.
+   * @return {Promise} A promise which will resolve immediately.
    */
-  protected setupDriverEnv(): Promise<any> {
-    return Promise.resolve();
-  }
+  protected async setupDriverEnv(): Promise<any> {}
 
   /**
    * Create a new driver.

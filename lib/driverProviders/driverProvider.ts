@@ -71,19 +71,15 @@ export abstract class DriverProvider {
     let driverIndex = this.drivers_.indexOf(driver);
     if (driverIndex >= 0) {
       this.drivers_.splice(driverIndex, 1);
-    }
-
-    try {
-      if (driver.getSession() !== undefined) {
-        const session = await driver.getSession();
-        if (session) {
-          return await driver.quit();
-        }
+      try {
+        await driver.quit();
+      } catch (err) {
+        // This happens when Protractor keeps track of all the webdrivers
+        // created and calls quit. If a user calls driver.quit, then this will
+        // throw an error. This catch will swallow the error.
       }
-    } catch (_) {
     }
   }
-
 
   /**
    * Quits an array of drivers and returns a q promise instead of a webdriver one
@@ -91,8 +87,8 @@ export abstract class DriverProvider {
    * @param drivers {webdriver.WebDriver[]} The webdriver instances
    */
   static async quitDrivers(provider: DriverProvider, drivers: WebDriver[]): Promise<void> {
-    await Promise.all(drivers.map(async (driver: WebDriver) => {
-      await provider.quitDriver(driver);
+    await Promise.all(drivers.map((driver: WebDriver) => {
+      return provider.quitDriver(driver);
     }));
   }
 
@@ -100,9 +96,7 @@ export abstract class DriverProvider {
    * Default update job method.
    * @return a promise
    */
-  updateJob(update: any): Promise<any> {
-    return Promise.resolve();
-  };
+  async updateJob(update: any): Promise<any>{};
 
   /**
    * Default setup environment method, common to all driver providers.

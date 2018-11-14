@@ -19,13 +19,12 @@ export class Kobiton extends DriverProvider {
    * @return {Promise} A promise which will resolve when the environment is
    *      ready to test.
    */
-  protected setupDriverEnv(): Promise<any> {
+  protected async setupDriverEnv(): Promise<any> {
     this.config_.capabilities['kobitonUser'] = this.config_.kobitonUser;
     this.config_.capabilities['kobitonKey'] = this.config_.kobitonKey;
     this.config_.seleniumAddress = 'https://' + this.config_.kobitonUser + ':' +
         this.config_.kobitonKey + '@api.kobiton.com/wd/hub';
 
     logger.info('Using Kobiton selenium server at ' + this.config_.seleniumAddress);
-    return Promise.resolve();
   }
 }

@@ -25,7 +25,7 @@ export class Direct extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
   protected async setupDriverEnv(): Promise<any> {
@@ -42,7 +42,6 @@ export class Direct extends DriverProvider {
             'browserName ' + this.config_.capabilities.browserName +
                 ' is not supported with directConnect.');
     }
-    return Promise.resolve(function() {});
   }
 
   /**
