@@ -77,7 +77,7 @@ export abstract class DriverProvider {
       if (driver.getSession() !== undefined) {
         const session = await driver.getSession();
         if (session) {
-          return driver.quit();
+          return await driver.quit();
         }
       }
     } catch (_) {
