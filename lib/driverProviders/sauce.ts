@@ -31,33 +31,29 @@ export class Sauce extends DriverProvider {
    * Hook to update the sauce job.
    * @public
    * @param {Object} update
-   * @return {q.promise} A promise that will resolve when the update is complete.
+   * @return {Promise} A promise that will resolve when the update is complete.
    */
-  updateJob(update: any): q.Promise<any> {
-    let deferredArray = this.drivers_.map((driver: WebDriver) => {
-      let deferred = q.defer();
+  updateJob(update: any): Promise<any> {
+    let mappedDrivers = this.drivers_.map((driver: WebDriver) => {
       driver.getSession().then((session: Session) => {
         logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
         this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
           if (err) {
             throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
           }
-          deferred.resolve();
         });
       });
-      return deferred.promise;
     });
-    return q.all(deferredArray);
+    return Promise.all(mappedDrivers);
   }
 
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): q.Promise<any> {
-    let deferred = q.defer();
+  protected async setupDriverEnv(): Promise<any> {
     this.sauceServer_ = new SauceLabs({
       hostname: this.getSauceEndpoint(this.config_.sauceRegion),
       username: this.config_.sauceUser,
@@ -85,8 +81,6 @@ export class Sauce extends DriverProvider {
     logger.info(
         'Using SauceLabs selenium server at ' +
         this.config_.seleniumAddress.replace(/\/\/.+@/, '//'));
-    deferred.resolve();
-    return deferred.promise;
   }
 
   /**
