@@ -8,7 +8,6 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import * as q from 'q';
 
 import {Config} from '../config';
 import {BrowserError, ConfigError} from '../exitCodes';
@@ -120,10 +119,10 @@ export class Local extends DriverProvider {
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupDriverEnv(): q.Promise<any> {
+  async setupDriverEnv(): Promise<any> {
     this.addDefaultBinaryLocs_();
     logger.info('Starting selenium standalone server...');
 
@@ -155,37 +154,11 @@ export class Local extends DriverProvider {
 
     this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
-    let deferred = q.defer();
     // start local server, grab hosted address, and resolve promise
-    this.server_.start(this.config_.seleniumServerStartTimeout)
-        .then((url: string) => {
-          logger.info('Selenium standalone server started at ' + url);
-          return this.server_.address();
-        })
-        .then((address: string) => {
-          this.config_.seleniumAddress = address;
-          deferred.resolve();
-        })
-        .catch((err: string) => {
-          deferred.reject(err);
-        });
+    const url = await this.server_.start(this.config_.seleniumServerStartTimeout);
 
-    return deferred.promise;
-  }
-
-  /**
-   * Teardown and destroy the environment and do any associated cleanup.
-   * Shuts down the drivers and server.
-   *
-   * @public
-   * @override
-   * @return {q.promise} A promise which will resolve when the environment
-   *     is down.
-   */
-  teardownEnv(): q.Promise<any> {
-    return super.teardownEnv().then(() => {
-      logger.info('Shutting down selenium standalone server.');
-      return this.server_.stop();
-    });
+    logger.info('Selenium standalone server started at ' + url);
+    const address = await this.server_.address();
+    this.config_.seleniumAddress = address;
   }
 }
