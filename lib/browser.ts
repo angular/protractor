@@ -193,24 +193,18 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * this method is called use the new app root. Pass nothing to get a promise that
    * resolves to the value of the selector.
    *
-   * @param {string|webdriver.promise.Promise<string>} value The new selector.
+   * @param {string|webdriver.promise.Promise<string>} valuePromise The new selector.
    * @returns A promise that resolves with the value of the selector.
    */
-  angularAppRoot(value: string|wdpromise.Promise<string> = null): wdpromise.Promise<string> {
-    return this.driver.controlFlow().execute(() => {
-      if (value != null) {
-        return wdpromise.when(value).then((value: string) => {
-          this.internalRootEl = value;
-          if (this.bpClient) {
-            const bpCommandPromise = this.bpClient.setWaitParams(value);
-            // Convert to webdriver promise as best as possible
-            return wdpromise.when(bpCommandPromise as any).then(() => this.internalRootEl);
-          }
-          return this.internalRootEl;
-        });
+  async angularAppRoot(valuePromise: string|wdpromise.Promise<string> = null): Promise<string> {
+    if (valuePromise != null) {
+      const value = await valuePromise;
+      this.internalRootEl = value;
+      if (this.bpClient) {
+        await this.bpClient.setWaitParams(value);
       }
-      return wdpromise.when(this.internalRootEl);
-    }, `Set angular root selector to ${value}`);
+    }
+    return this.internalRootEl;
   }
 
   /**
@@ -417,23 +411,17 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Call waitForAngularEnabled() without passing a value to read the current
    * state without changing it.
    */
-  waitForAngularEnabled(enabled: boolean|wdpromise.Promise<boolean> = null):
-      wdpromise.Promise<boolean> {
-    if (enabled != null) {
-      const ret = this.driver.controlFlow().execute(() => {
-        return wdpromise.when(enabled).then((enabled: boolean) => {
-          if (this.bpClient) {
-            logger.debug('Setting waitForAngular' + !enabled);
-            const bpCommandPromise = this.bpClient.setWaitEnabled(enabled);
-            // Convert to webdriver promise as best as possible
-            return wdpromise.when(bpCommandPromise as any).then(() => enabled);
-          }
-        });
-      }, `Set proxy synchronization enabled to ${enabled}`);
+  async waitForAngularEnabled(enabledPromise: boolean|wdpromise.Promise<boolean> = null):
+      Promise<boolean> {
+    if (enabledPromise != null) {
+      const enabled = await enabledPromise;
+      if (this.bpClient) {
+        logger.debug('Setting waitForAngular' + !enabled);
+        await this.bpClient.setWaitEnabled(enabled);
+      }
       this.internalIgnoreSynchronization = !enabled;
-      return ret;
     }
-    return wdpromise.when(!this.ignoreSynchronization);
+    return !this.ignoreSynchronization;
   }
 
   /**
@@ -602,15 +590,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @template T
    */
   private executeAsyncScript_(script: string|Function, description: string, ...scriptArgs: any[]):
-      wdpromise.Promise<any> {
+      Promise<any> {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
     return this.driver.schedule(
-        new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
-            .setParameter('script', script)
-            .setParameter('args', scriptArgs),
-        description);
+               new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
+                   .setParameter('script', script)
+                   .setParameter('args', scriptArgs),
+               description) as Promise<any>;
   }
 
   /**
@@ -624,116 +612,90 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @returns {!webdriver.promise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
-  waitForAngular(opt_description?: string): wdpromise.Promise<any> {
+  async waitForAngular(opt_description?: string): Promise<any> {
     let description = opt_description ? ' - ' + opt_description : '';
     if (this.ignoreSynchronization) {
-      return this.driver.controlFlow().execute(() => {
-        return true;
-      }, 'Ignore Synchronization Protractor.waitForAngular()');
+      return true;
     }
 
-    let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
+    let runWaitForAngularScript = async(): Promise<any> => {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
-        return this.driver.controlFlow().execute(() => {
-          return wdpromise.when(null);
-        }, 'bpClient or plugin stability override');
+        return null;
       } else {
-        // Need to wrap this so that we read rootEl in the control flow, not synchronously.
-        return this.angularAppRoot().then((rootEl: string) => {
-          return this.executeAsyncScript_(
-              clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
-              rootEl);
-        });
+        let rootEl = await this.angularAppRoot();
+        return this.executeAsyncScript_(
+            clientSideScripts.waitForAngular, `Protractor.waitForAngular() ${description}`, rootEl);
       }
     };
 
-    return runWaitForAngularScript()
-        .then((browserErr: Function) => {
-          if (browserErr) {
-            throw new Error(
-                'Error while waiting for Protractor to ' +
-                'sync with the page: ' + JSON.stringify(browserErr));
+    try {
+      let browserErr = await runWaitForAngularScript();
+      if (browserErr) {
+        throw new Error(
+            'Error while waiting for Protractor to ' +
+            'sync with the page: ' + JSON.stringify(browserErr));
+      }
+      await this.plugins_.waitForPromise(this);
+
+      await this.driver.wait(async () => {
+        let results = await this.plugins_.waitForCondition(this);
+        return results.reduce((x, y) => x && y, true);
+      }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
+    } catch (err) {
+      let timeout: RegExpExecArray;
+      if (/asynchronous script timeout/.test(err.message)) {
+        // Timeout on Chrome
+        timeout = /-?[\d\.]*\ seconds/.exec(err.message);
+      } else if (/Timed out waiting for async script/.test(err.message)) {
+        // Timeout on Firefox
+        timeout = /-?[\d\.]*ms/.exec(err.message);
+      } else if (/Timed out waiting for an asynchronous script/.test(err.message)) {
+        // Timeout on Safari
+        timeout = /-?[\d\.]*\ ms/.exec(err.message);
+      }
+      if (timeout) {
+        let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
+            `${timeout}. This may be because the current page is not an Angular ` +
+            `application. Please see the FAQ for more details: ` +
+            `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
+        if (description.indexOf(' - Locator: ') == 0) {
+          errMsg += '\nWhile waiting for element with locator' + description;
+        }
+        let pendingTimeoutsPromise: wdpromise.Promise<any>;
+        if (this.trackOutstandingTimeouts_) {
+          pendingTimeoutsPromise = this.executeScriptWithDescription(
+              'return window.NG_PENDING_TIMEOUTS',
+              'Protractor.waitForAngular() - getting pending timeouts' + description);
+        } else {
+          pendingTimeoutsPromise = wdpromise.when({});
+        }
+        let pendingHttpsPromise = this.executeScriptWithDescription(
+            clientSideScripts.getPendingHttpRequests,
+            'Protractor.waitForAngular() - getting pending https' + description,
+            this.internalRootEl);
+
+        let arr = await Promise.all([pendingTimeoutsPromise, pendingHttpsPromise]);
+
+        let pendingTimeouts = arr[0] || [];
+        let pendingHttps = arr[1] || [];
+
+        let key: string, pendingTasks: string[] = [];
+        for (key in pendingTimeouts) {
+          if (pendingTimeouts.hasOwnProperty(key)) {
+            pendingTasks.push(' - $timeout: ' + pendingTimeouts[key]);
           }
-        })
-        .then(
-            () => {
-              return this.driver.controlFlow()
-                  .execute(
-                      () => {
-                        return this.plugins_.waitForPromise(this);
-                      },
-                      'Plugins.waitForPromise()')
-                  .then(() => {
-                    return this.driver.wait(() => {
-                      return this.plugins_.waitForCondition(this).then((results: boolean[]) => {
-                        return results.reduce((x, y) => x && y, true);
-                      });
-                    }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
-                  });
-            },
-            (err: Error) => {
-              let timeout: RegExpExecArray;
-              if (/asynchronous script timeout/.test(err.message)) {
-                // Timeout on Chrome
-                timeout = /-?[\d\.]*\ seconds/.exec(err.message);
-              } else if (/Timed out waiting for async script/.test(err.message)) {
-                // Timeout on Firefox
-                timeout = /-?[\d\.]*ms/.exec(err.message);
-              } else if (/Timed out waiting for an asynchronous script/.test(err.message)) {
-                // Timeout on Safari
-                timeout = /-?[\d\.]*\ ms/.exec(err.message);
-              }
-              if (timeout) {
-                let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
-                    `${timeout}. This may be because the current page is not an Angular ` +
-                    `application. Please see the FAQ for more details: ` +
-                    `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
-                if (description.indexOf(' - Locator: ') == 0) {
-                  errMsg += '\nWhile waiting for element with locator' + description;
-                }
-                let pendingTimeoutsPromise: wdpromise.Promise<any>;
-                if (this.trackOutstandingTimeouts_) {
-                  pendingTimeoutsPromise = this.executeScriptWithDescription(
-                      'return window.NG_PENDING_TIMEOUTS',
-                      'Protractor.waitForAngular() - getting pending timeouts' + description);
-                } else {
-                  pendingTimeoutsPromise = wdpromise.when({});
-                }
-                let pendingHttpsPromise = this.executeScriptWithDescription(
-                    clientSideScripts.getPendingHttpRequests,
-                    'Protractor.waitForAngular() - getting pending https' + description,
-                    this.internalRootEl);
-
-                return wdpromise.all([pendingTimeoutsPromise, pendingHttpsPromise])
-                    .then(
-                        (arr: any[]) => {
-                          let pendingTimeouts = arr[0] || [];
-                          let pendingHttps = arr[1] || [];
-
-                          let key: string, pendingTasks: string[] = [];
-                          for (key in pendingTimeouts) {
-                            if (pendingTimeouts.hasOwnProperty(key)) {
-                              pendingTasks.push(' - $timeout: ' + pendingTimeouts[key]);
-                            }
-                          }
-                          for (key in pendingHttps) {
-                            pendingTasks.push(' - $http: ' + pendingHttps[key].url);
-                          }
-                          if (pendingTasks.length) {
-                            errMsg += '. \nThe following tasks were pending:\n';
-                            errMsg += pendingTasks.join('\n');
-                          }
-                          err.message = errMsg;
-                          throw err;
-                        },
-                        () => {
-                          err.message = errMsg;
-                          throw err;
-                        });
-              } else {
-                throw err;
-              }
-            });
+        }
+        for (key in pendingHttps) {
+          pendingTasks.push(' - $http: ' + pendingHttps[key].url);
+        }
+        if (pendingTasks.length) {
+          errMsg += '. \nThe following tasks were pending:\n';
+          errMsg += pendingTasks.join('\n');
+        }
+        err.message = errMsg;
+      }
+      throw err;
+    }
   }
 
   /**
@@ -978,16 +940,14 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         .then(() => {
           // Reset bpClient sync
           if (this.bpClient) {
-            return this.driver.controlFlow().execute(() => {
-              return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
-            });
+            return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
           }
         })
         .then(() => {
           // Run Plugins
-          return this.driver.controlFlow().execute(() => {
+          if (!this.ignoreSynchronization) {
             return this.plugins_.onPageStable(this);
-          });
+          }
         })
         .then(() => null);
   }
