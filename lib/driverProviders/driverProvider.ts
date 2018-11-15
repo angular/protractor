@@ -57,6 +57,9 @@ export abstract class DriverProvider {
     if (this.config_.disableEnvironmentOverrides === true) {
       builder.disableEnvironmentOverrides();
     }
+    if (this.config_.httpAgent) {
+      builder.usingHttpAgent(this.config_.httpAgent);
+    }
     let newDriver = builder.build() as WebDriver;
     this.drivers_.push(newDriver);
     return newDriver;

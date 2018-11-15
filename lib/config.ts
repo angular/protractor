@@ -123,6 +123,15 @@ export interface Config {
    */
   blockingProxyUrl?: string;
 
+  /**
+   * If specified, Protractor will configure Selenium-Webdriver to use this
+   * httpAgent.
+   *
+   * Only functions for Selenium-Webdriver 3.0.0-beta-1 and up:
+   * (https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md#v300-beta-1)
+   */
+  httpAgent?: any;
+
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 
   /**
@@ -136,13 +145,15 @@ export interface Config {
    */
   sauceKey?: string;
   /**
-   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com.
+   * Use sauceAgent if you need a custom HTTP agent to connect to saucelabs.com.
    * This is needed if your computer is behind a corporate proxy.
    *
    * To match sauce agent implementation, use
    * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
    * to generate the agent or use webDriverProxy as an alternative. If a
    * webDriverProxy is provided, the sauceAgent will be overridden.
+   *
+   * Setting sauceAgent will override httpAgent.
    */
   sauceAgent?: any;
   /**
