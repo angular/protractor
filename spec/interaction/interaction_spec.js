@@ -75,9 +75,6 @@ describe('Browser', () => {
 
 
   describe('Multiple browsers', () => {
-
-    
-
     let p0, p1;
 
     beforeEach(async() => {
