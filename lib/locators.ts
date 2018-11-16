@@ -21,8 +21,7 @@ export type WebDriverLocator = By | ByHash | Function;
 // Protractor locator strategy
 export interface ProtractorLocator {
   findElementsOverride:
-      (driver: WebDriver, using: WebElement,
-       rootSelector: string) => wdpromise.Promise<WebElement[]>;
+      (driver: WebDriver, using: WebElement, rootSelector: string) => Promise<WebElement[]>;
   row?: (index: number) => Locator;
   column?: (index: string) => Locator;
   toString?: () => string;
@@ -79,19 +78,21 @@ export class ProtractorBy extends WebdriverBy {
    */
   addLocator(name: string, script: Function|string) {
     this[name] = (...args: any[]): ProtractorLocator => {
-      let locatorArguments = args;
+      const locatorArguments = args;
       return {
         findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                  wdpromise.Promise<WebElement[]> => {
-          let findElementArguments: any[] = [script];
-          for (let i = 0; i < locatorArguments.length; i++) {
-            findElementArguments.push(locatorArguments[i]);
-          }
-          findElementArguments.push(using);
-          findElementArguments.push(rootSelector);
+            Promise<WebElement[]> => {
+              let findElementArguments: any[] = [script];
+              for (let i = 0; i < locatorArguments.length; i++) {
+                findElementArguments.push(locatorArguments[i]);
+              }
+              findElementArguments.push(using);
+              findElementArguments.push(rootSelector);
 
-          return driver.findElements(By.js.apply(By, findElementArguments));
-        },
+              // TODO(selenium4): clean up cast to native Promise.
+              return driver.findElements(By.js.apply(By, findElementArguments)) as
+                  Promise<WebElement[]>;
+            },
         toString: (): string => {
           return 'by.' + name + '("' + Array.prototype.join.call(locatorArguments, '", "') + '")';
         }
@@ -132,10 +133,12 @@ export class ProtractorBy extends WebdriverBy {
   binding(bindingDescriptor: string): ProtractorLocator {
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findBindings, bindingDescriptor, false, using, rootSelector));
-      },
+          Promise<WebElement[]> => {
+            // TODO(selenium4): clean up cast to native Promise.
+            return driver.findElements(By.js(
+                       clientSideScripts.findBindings, bindingDescriptor, false, using,
+                       rootSelector)) as Promise<WebElement[]>;
+          },
       toString: (): string => {
         return 'by.binding("' + bindingDescriptor + '")';
       }
@@ -163,10 +166,12 @@ export class ProtractorBy extends WebdriverBy {
    */
   exactBinding(bindingDescriptor: string): ProtractorLocator {
     return {
-      findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findBindings, bindingDescriptor, true, using, rootSelector));
+      findElementsOverride: (
+          driver: WebDriver, using: WebElement, rootSelector: string): Promise<WebElement[]> => {
+        // TODO(selenium4): clean up cast to native Promise.
+        return driver.findElements(By.js(
+                   clientSideScripts.findBindings, bindingDescriptor, true, using, rootSelector)) as
+            Promise<WebElement[]>;
       },
       toString: (): string => {
         return 'by.exactBinding("' + bindingDescriptor + '")';
@@ -192,10 +197,12 @@ export class ProtractorBy extends WebdriverBy {
   model(model: string): ProtractorLocator {
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findByModel, model, using, rootSelector));
-      },
+          Promise<WebElement[]> => {
+            // TODO(selenium4): clean up cast to native Promise.
+            return driver.findElements(
+                       By.js(clientSideScripts.findByModel, model, using, rootSelector)) as
+                Promise<WebElement[]>;
+          },
       toString: (): string => {
         return 'by.model("' + model + '")';
       }
@@ -217,10 +224,12 @@ export class ProtractorBy extends WebdriverBy {
   buttonText(searchText: string): ProtractorLocator {
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findByButtonText, searchText, using, rootSelector));
-      },
+          Promise<WebElement[]> => {
+            // TODO(selenium4): clean up cast to native Promise.
+            return driver.findElements(By.js(
+                       clientSideScripts.findByButtonText, searchText, using, rootSelector)) as
+                Promise<WebElement[]>;
+          },
       toString: (): string => {
         return 'by.buttonText("' + searchText + '")';
       }
@@ -241,10 +250,12 @@ export class ProtractorBy extends WebdriverBy {
    */
   partialButtonText(searchText: string): ProtractorLocator {
     return {
-      findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findByPartialButtonText, searchText, using, rootSelector));
+      findElementsOverride: (
+          driver: WebDriver, using: WebElement, rootSelector: string): Promise<WebElement[]> => {
+        // TODO(selenium4): clean up cast to native Promise.
+        return driver.findElements(By.js(
+                   clientSideScripts.findByPartialButtonText, searchText, using, rootSelector)) as
+            Promise<WebElement[]>;
       },
       toString: (): string => {
         return 'by.partialButtonText("' + searchText + '")';
@@ -257,32 +268,35 @@ export class ProtractorBy extends WebdriverBy {
     let name = 'by.' + (exact ? 'exactR' : 'r') + 'epeater';
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(By.js(
-            clientSideScripts.findAllRepeaterRows, repeatDescriptor, exact, using, rootSelector));
-      },
+          Promise<WebElement[]> => {
+            // TODO(selenium4): clean up cast to native Promise.
+            return driver.findElements(By.js(
+                       clientSideScripts.findAllRepeaterRows, repeatDescriptor, exact, using,
+                       rootSelector)) as Promise<WebElement[]>;
+          },
       toString: (): string => {
         return name + '("' + repeatDescriptor + '")';
       },
       row: (index: number): ProtractorLocator => {
         return {
           findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                    wdpromise.Promise<WebElement[]> => {
-            return driver.findElements(By.js(
-                clientSideScripts.findRepeaterRows, repeatDescriptor, exact, index, using,
-                rootSelector));
-          },
+              Promise<WebElement[]> => {
+                return driver.findElements(By.js(
+                           clientSideScripts.findRepeaterRows, repeatDescriptor, exact, index,
+                           using, rootSelector)) as Promise<WebElement[]>;
+              },
           toString: (): string => {
             return name + '(' + repeatDescriptor + '").row("' + index + '")"';
           },
           column: (binding: string): ProtractorLocator => {
             return {
               findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                        wdpromise.Promise<WebElement[]> => {
-                return driver.findElements(By.js(
-                    clientSideScripts.findRepeaterElement, repeatDescriptor, exact, index, binding,
-                    using, rootSelector));
-              },
+                  Promise<WebElement[]> => {
+                    // TODO(selenium4): clean up cast to native Promise.
+                    return driver.findElements(By.js(
+                               clientSideScripts.findRepeaterElement, repeatDescriptor, exact,
+                               index, binding, using, rootSelector)) as Promise<WebElement[]>;
+                  },
               toString: (): string => {
                 return name + '("' + repeatDescriptor + '").row("' + index + '").column("' +
                     binding + '")';
@@ -294,22 +308,24 @@ export class ProtractorBy extends WebdriverBy {
       column: (binding: string): ProtractorLocator => {
         return {
           findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                    wdpromise.Promise<WebElement[]> => {
-            return driver.findElements(By.js(
-                clientSideScripts.findRepeaterColumn, repeatDescriptor, exact, binding, using,
-                rootSelector));
-          },
+              Promise<WebElement[]> => {
+                // TODO(selenium4): clean up cast to native Promise.
+                return driver.findElements(By.js(
+                           clientSideScripts.findRepeaterColumn, repeatDescriptor, exact, binding,
+                           using, rootSelector)) as Promise<WebElement[]>;
+              },
           toString: (): string => {
             return name + '("' + repeatDescriptor + '").column("' + binding + '")';
           },
           row: (index: number): ProtractorLocator => {
             return {
               findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                        wdpromise.Promise<WebElement[]> => {
-                return driver.findElements(By.js(
-                    clientSideScripts.findRepeaterElement, repeatDescriptor, exact, index, binding,
-                    using, rootSelector));
-              },
+                  Promise<WebElement[]> => {
+                    // TODO(selenium4): clean up cast to native Promise.
+                    return driver.findElements(By.js(
+                               clientSideScripts.findRepeaterElement, repeatDescriptor, exact,
+                               index, binding, using, rootSelector)) as Promise<WebElement[]>;
+                  },
               toString: (): string => {
                 return name + '("' + repeatDescriptor + '").column("' + binding + '").row("' +
                     index + '")';
@@ -422,11 +438,12 @@ export class ProtractorBy extends WebdriverBy {
     searchText = (searchText instanceof RegExp) ? '__REGEXP__' + searchText.toString() : searchText;
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(By.js(
-            clientSideScripts.findByCssContainingText, cssSelector, searchText, using,
-            rootSelector));
-      },
+          Promise<WebElement[]> => {
+            // TODO(selenium4): clean up cast to native Promise.
+            return driver.findElements(By.js(
+                       clientSideScripts.findByCssContainingText, cssSelector, searchText, using,
+                       rootSelector)) as Promise<WebElement[]>;
+          },
       toString: (): string => {
         return 'by.cssContainingText("' + cssSelector + '", "' + searchText + '")';
       }
@@ -455,10 +472,12 @@ export class ProtractorBy extends WebdriverBy {
   options(optionsDescriptor: string): ProtractorLocator {
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
-                                wdpromise.Promise<WebElement[]> => {
-        return driver.findElements(
-            By.js(clientSideScripts.findByOptions, optionsDescriptor, using, rootSelector));
-      },
+          Promise<WebElement[]> => {
+            // TODO(selenium4): clean up cast to native Promise.
+            return driver.findElements(By.js(
+                       clientSideScripts.findByOptions, optionsDescriptor, using, rootSelector)) as
+                Promise<WebElement[]>;
+          },
       toString: (): string => {
         return 'by.option("' + optionsDescriptor + '")';
       }
