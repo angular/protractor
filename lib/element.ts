@@ -472,7 +472,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
                             .then((arr: any) => Promise.all(arr.map(actionFn)))
                             .then(
                                 (value: any) => {
-                                  return {passed: true, value: value};
+                                  return {passed: true, value};
                                 },
                                 (error: any) => {
                                   return {passed: false, value: error};
@@ -1065,15 +1065,15 @@ export class ElementFinder extends WebdriverWebElement {
    *     the element is present on the page.
    */
   async isPresent(): Promise<boolean> {
-    const arr = await this.parentElementArrayFinder.getWebElements();
-    if (arr.length === 0) {
-      return false;
-    }
     try {
+      const arr = await this.parentElementArrayFinder.getWebElements();
+      if (arr.length === 0) {
+        return false;
+      }
       // is present, whether it is enabled or not
       return await arr[0].isEnabled();
     } catch (err) {
-      falseIfMissing(err);
+      return falseIfMissing(err);
     }
   }
 

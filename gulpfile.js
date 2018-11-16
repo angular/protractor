@@ -112,7 +112,7 @@ gulp.task('prepublish', function(done) {
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec',  done);
+    'tsc', 'built:copy', 'tsc:spec',  done);
 });
 
 gulp.task('default',['prepublish']);

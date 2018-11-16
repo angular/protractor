@@ -52,6 +52,7 @@ jobs:
           name: Selenium Start
           background: true
           command: |
+            ./node_modules/webdriver-manager/bin/webdriver-manager update
             ./node_modules/.bin/webdriver-manager-replacement update --gecko false
             ./node_modules/.bin/webdriver-manager-replacement start --gecko false
 
