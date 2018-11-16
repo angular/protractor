@@ -1,4 +1,4 @@
-import {By, error as wderror, promise as wdpromise, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {By, error as wderror, WebElement, WebElementPromise} from 'selenium-webdriver';
 
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {isProtractorLocator, Locator} from './locators';
@@ -81,7 +81,7 @@ let WEB_ELEMENT_FUNCTIONS = [
 export class ElementArrayFinder extends WebdriverWebElement {
   constructor(
       public browser_: ProtractorBrowser, public getWebElements: () => Promise<WebElement[]> = null,
-      public locator_?: any, public actionResults_: wdpromise.Promise<any> = null) {
+      public locator_?: any, public actionResults_: Promise<any> = null) {
     super();
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
@@ -539,9 +539,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {!Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then<T>(
-      fn?: (value: ElementFinder[]|any[]) => T | wdpromise.IThenable<T>,
-      errorFn?: (error: any) => any): Promise<T> {
+  then<T>(fn?: (value: ElementFinder[]|any[]) => T | Promise<T>, errorFn?: (error: any) => any):
+      Promise<T> {
     if (this.actionResults_) {
       return this.actionResults_.then(fn, errorFn) as Promise<T>;
     } else {
@@ -798,8 +797,8 @@ export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
   then?:
-      (fn: (value: any) => any | wdpromise.IThenable<any>,
-       errorFn?: (error: any) => any) => wdpromise.Promise<any> = null;
+      (fn: (value: any) => any | Promise<any>,
+       errorFn?: (error: any) => any) => Promise<any> = null;
 
   constructor(public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
     super();
@@ -812,15 +811,14 @@ export class ElementFinder extends WebdriverWebElement {
     // has action results.
     if (this.parentElementArrayFinder.actionResults_) {
       // Access the underlying actionResult of ElementFinder.
-      this.then =
-          (fn: (value: any) => any | wdpromise.IThenable<any>, errorFn?: (error: any) => any) => {
-            return this.elementArrayFinder_.then((actionResults: any) => {
-              if (!fn) {
-                return actionResults[0];
-              }
-              return fn(actionResults[0]);
-            }, errorFn);
-          };
+      this.then = (fn: (value: any) => any | Promise<any>, errorFn?: (error: any) => any) => {
+        return this.elementArrayFinder_.then((actionResults: any) => {
+          if (!fn) {
+            return actionResults[0];
+          }
+          return fn(actionResults[0]);
+        }, errorFn);
+      };
     }
 
     // This filter verifies that there is only 1 element returned by the
