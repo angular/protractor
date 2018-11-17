@@ -42,12 +42,6 @@ describe('protractor library', () => {
     expect(await browser.driver.getCurrentUrl()).toMatch('#/form');
   });
 
-  it('should unwrap WebElements', async() => {
-    await browser.get('index.html');
-    const ptorEl = element(by.binding('greet'));
-    await browser.executeScript('', ptorEl); // Will crash if element isn't unwrapped
-  });
-
   it('should have access to the processed config block', async() => {
     let containsMatching = (arr, string) => {
       let contains = false;

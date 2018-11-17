@@ -76,6 +76,7 @@
     "pretest": "gulp pretest",
     "start": "cd testapp && npm start",
     "test": "node scripts/test.js",
+    "tsc": "tsc",
     "website": "cd website && npm start",
     "compile_to_es5": "gulp compile_to_es5"
   },

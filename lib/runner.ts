@@ -347,10 +347,10 @@ export class Runner extends EventEmitter {
   /**
    * Final cleanup on exiting the runner.
    *
-   * @return {q.Promise} A promise which resolves on finish.
+   * @return {Promise} A promise which resolves on finish.
    * @private
    */
-  shutdown_(): q.Promise<void> {
+  shutdown_(): Promise<void> {
     return DriverProvider.quitDrivers(
         this.driverprovider_, this.driverprovider_.getExistingDrivers());
   }
