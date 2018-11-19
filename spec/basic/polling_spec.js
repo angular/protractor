@@ -8,7 +8,7 @@ describe('synchronizing with pages that poll', () => {
     await browser.get('index.html#/polling');
   });
 
-  it('avoids timeouts using ignoreSynchronization', async () => {
+  it('avoids timeouts using waitForAngularEnabled set to false', async () => {
     const startButton = element(by.id('pollstarter'));
     
     const count = element(by.binding('count'));
@@ -17,7 +17,7 @@ describe('synchronizing with pages that poll', () => {
     await startButton.click();
 
     // Turn this on to see timeouts.
-    browser.ignoreSynchronization = true;
+    await browser.waitForAngularEnabled(false);
 
     const textBefore = await count.getText();
     expect(textBefore).toBeGreaterThan(-1);
