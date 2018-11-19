@@ -152,8 +152,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {ElementArrayFinder}
    */
   all(locator: Locator): ElementArrayFinder {
-    let ptor = this.browser_;
-    let getWebElements = async(): Promise<WebElement[]> => {
+    const ptor = this.browser_;
+    const getWebElements = async(): Promise<WebElement[]> => {
       if (this.getWebElements === null) {
         // This is the first time we are looking for an element
         await ptor.waitForAngular('Locator: ' + locator);
@@ -225,7 +225,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   filter(filterFn: (element: ElementFinder, index?: number) => boolean | Promise<boolean>):
       ElementArrayFinder {
-    let getWebElements = async(): Promise<WebElement[]> => {
+    const getWebElements = async(): Promise<WebElement[]> => {
       const parentWebElements = await this.getWebElements();
       const list = parentWebElements.map((parentWebElement: WebElement, index: number) => {
         let elementFinder =
@@ -268,7 +268,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {ElementFinder} finder representing element at the given index.
    */
   get(indexPromise: number|Promise<number>): ElementFinder {
-    let getWebElements = async(): Promise<WebElement[]> => {
+    const getWebElements = async(): Promise<WebElement[]> => {
       let index = await indexPromise;
       const parentWebElements = await this.getWebElements();
       if (index < 0) {
@@ -467,7 +467,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   // map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
   private applyAction_(actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
       ElementArrayFinder {
-    let callerError = new Error();
+    const callerError = new Error();
     let actionResults = this.getWebElements()
                             .then((arr: any) => Promise.all(arr.map(actionFn)))
                             .then(
@@ -477,7 +477,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
                                 (error: any) => {
                                   return {passed: false, value: error};
                                 });
-    let getWebElements = () => actionResults.then(() => this.getWebElements());
+    const getWebElements = () => actionResults.then(() => this.getWebElements());
     actionResults = actionResults.then((result: {passed: boolean, value: any}) => {
       if (result.passed) {
         return result.value;
@@ -637,7 +637,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
   async map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T | any): Promise<T[]> {
     const arr = await this.asElementFinders_();
 
-    let list = arr.map(async (elementFinder?: ElementFinder, index?: number) => {
+    const list = arr.map(async (elementFinder?: ElementFinder, index?: number) => {
       let mapResult = mapFn(elementFinder, index);
       // All nested arrays and objects will also be fully resolved.
       return await mapResult;
@@ -719,7 +719,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     will be returned as a WebElement.
    */
   evaluate(expression: string): ElementArrayFinder {
-    let evaluationFn = (webElem: WebElement) => {
+    const evaluationFn = (webElem: WebElement) => {
       return webElem.getDriver().executeScript(clientSideScripts.evaluate, webElem, expression);
     };
     return this.applyAction_(evaluationFn);
@@ -741,7 +741,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * allowed.
    */
   allowAnimations(value: boolean): ElementArrayFinder {
-    let allowAnimationsTestFn = (webElem: WebElement) => {
+    const allowAnimationsTestFn = (webElem: WebElement) => {
       return webElem.getDriver().executeScript(clientSideScripts.allowAnimations, webElem, value);
     };
     return this.applyAction_(allowAnimationsTestFn);
@@ -824,7 +824,7 @@ export class ElementFinder extends WebdriverWebElement {
     // This filter verifies that there is only 1 element returned by the
     // elementArrayFinder. It will warn if there are more than 1 element and
     // throw an error if there are no elements.
-    let getWebElements = async(): Promise<WebElement[]> => {
+    const getWebElements = async(): Promise<WebElement[]> => {
       const webElements = await elementArrayFinder.getWebElements();
       if (webElements.length === 0) {
         throw new wderror.NoSuchElementError(
@@ -856,7 +856,7 @@ export class ElementFinder extends WebdriverWebElement {
 
   static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator?: Locator):
       ElementFinder {
-    let getWebElements = () => {
+    const getWebElements = () => {
       return Promise.resolve([webElem]);
     };
     return new ElementArrayFinder(browser, getWebElements, locator).toElementFinder_();
@@ -902,7 +902,7 @@ export class ElementFinder extends WebdriverWebElement {
    * @returns {webdriver.WebElement}
    */
   getWebElement(): WebElementPromise {
-    let id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
+    const id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
       return parentWebElements[0];
     });
     return new WebElementPromise(this.browser_.driver, id);
@@ -1167,7 +1167,7 @@ export class ElementFinder extends WebdriverWebElement {
  * @returns {ElementFinder} which identifies the located
  *     {@link webdriver.WebElement}
  */
-export let build$ = (element: ElementHelper, by: typeof By) => {
+export const build$ = (element: ElementHelper, by: typeof By) => {
   return (selector: string) => {
     return element(by.css(selector));
   };
@@ -1198,7 +1198,7 @@ export let build$ = (element: ElementHelper, by: typeof By) => {
  * @returns {ElementArrayFinder} which identifies the
  *     array of the located {@link webdriver.WebElement}s.
  */
-export let build$$ = (element: ElementHelper, by: typeof By) => {
+export const build$$ = (element: ElementHelper, by: typeof By) => {
   return (selector: string) => {
     return element.all(by.css(selector));
   };
