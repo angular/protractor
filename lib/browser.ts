@@ -818,13 +818,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to
    *     start.
    */
-  get(destination: string, timeout = this.getPageTimeout) {
+  async get(destination: string, timeout = this.getPageTimeout) {
     destination = this.baseUrl.indexOf('file://') === 0 ? this.baseUrl + destination :
                                                           url.resolve(this.baseUrl, destination);
-    if (this.ignoreSynchronization) {
-      return this.driver.get(destination)
-          .then(() => this.driver.controlFlow().execute(() => this.plugins_.onPageLoad(this)))
-          .then(() => null);
+    if (!await this.waitForAngularEnabled()) {
+      await this.driver.get(destination);
+      await this.plugins_.onPageLoad(this);
+      return;
     }
 
     let msg = (str: string) => {
