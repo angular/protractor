@@ -12,10 +12,10 @@ import {ProtractorBy} from './locators';
 export class Ptor {
   // Variables tied to the global namespace.
   browser: ProtractorBrowser;
-  $ = function(search: string): ElementFinder {
+  $ = function(_: string): ElementFinder {
     return null;
   };
-  $$ = function(search: string): ElementArrayFinder {
+  $$ = function(_: string): ElementArrayFinder {
     return null;
   };
   element: ElementHelper;

@@ -1,5 +1,4 @@
-import {resolve} from 'path';
-import {Promise, when} from 'q';
+import * as path from 'path';
 import {error as wderror} from 'selenium-webdriver';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
@@ -36,16 +35,19 @@ export function filterStackTrace(text: string): string {
  * @return {q.Promise} A promise that will resolve when filenameOrFn completes.
  */
 export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
-  return Promise((resolvePromise) => {
+  return new Promise(async (resolve) => {
     if (filenameOrFn && !(typeof filenameOrFn === 'string' || typeof filenameOrFn === 'function')) {
       throw new Error('filenameOrFn must be a string or function');
     }
 
     if (typeof filenameOrFn === 'string') {
-      filenameOrFn = require(resolve(configDir, filenameOrFn));
+      filenameOrFn = require(path.resolve(configDir, filenameOrFn));
     }
+    let results;
     if (typeof filenameOrFn === 'function') {
-      let results = when(filenameOrFn.apply(null, args), null, (err) => {
+      try {
+        results = await filenameOrFn.apply(null, args);
+      } catch (err) {
         if (typeof err === 'string') {
           err = new Error(err);
         } else {
@@ -56,10 +58,10 @@ export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: an
         }
         err.stack = exports.filterStackTrace(err.stack);
         throw err;
-      });
-      resolvePromise(results);
+      }
+      resolve(results);
     } else {
-      resolvePromise(undefined);
+      resolve(0);
     }
   });
 }

@@ -6,13 +6,11 @@ import {ProtractorBrowser} from './browser';
 import {Locator} from './locators';
 import {Logger} from './logger';
 import {Ptor} from './ptor';
-import * as helper from './util';
 let breakpointHook = require('./breakpointhook.js');
 
 declare var global: any;
 declare var process: any;
 
-let logger = new Logger('protractor');
 
 export class DebugHelper {
   /**
