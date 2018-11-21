@@ -143,16 +143,17 @@ export class Runner extends EventEmitter {
    * @private
    * @param {int} Standard unix exit code
    */
-  exit_ = function(exitCode: number): any {
-    return helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode])
-        .then((returned): number | any => {
-          if (typeof returned === 'number') {
-            return returned;
-          } else {
-            return exitCode;
-          }
-        });
-  };
+  async exit_(exitCode: number): Promise<number> {
+    console.log('exit_', exitCode);
+    let returned = await helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode]);
+    console.log('exit_', returned);
+    if (typeof returned === 'number') {
+      return returned;
+    } else {
+      console.log('exit_ returns', exitCode);
+      return exitCode;
+    }
+  }
 
   /**
    * Getter for the Runner config object
@@ -161,14 +162,6 @@ export class Runner extends EventEmitter {
    */
   getConfig(): Config {
     return this.config_;
-  }
-
-  /**
-   * Get the control flow used by this runner.
-   * @return {Object} WebDriver control flow.
-   */
-  controlFlow(): any {
-    return wdpromise.controlFlow();
   }
 
   /**
@@ -320,24 +313,9 @@ export class Runner extends EventEmitter {
     browser_.restart = () => {
       // Note: because tests are not paused at this point, any async
       // calls here are not guaranteed to complete before the tests resume.
-
-      // Seperate solutions depending on if the control flow is enabled (see lib/browser.ts)
-      if (browser_.controlFlowIsEnabled()) {
-        return browser_.restartSync().ready;
-      } else {
-        return this.driverprovider_.quitDriver(browser_.driver)
-            .then(replaceBrowser)
-            .then(newBrowser => newBrowser.ready);
-      }
-    };
-
-    browser_.restartSync = () => {
-      if (!browser_.controlFlowIsEnabled()) {
-        throw TypeError('Unable to use `browser.restartSync()` when the control flow is disabled');
-      }
-
-      this.driverprovider_.quitDriver(browser_.driver);
-      return replaceBrowser();
+      return this.driverprovider_.quitDriver(browser_.driver)
+          .then(replaceBrowser)
+          .then(newBrowser => newBrowser.ready);
     };
 
     return browser_;
@@ -357,10 +335,10 @@ export class Runner extends EventEmitter {
   /**
    * The primary workhorse interface. Kicks off the test running process.
    *
-   * @return {q.Promise} A promise which resolves to the exit code of the tests.
+   * @return {Promise} A promise which resolves to the exit code of the tests.
    * @public
    */
-  run(): Promise<any> {
+  async run(): Promise<number> {
     let testPassed: boolean;
     let plugins = this.plugins_ = new Plugins(this.config_);
     let pluginPostTestPromises: any;
@@ -380,120 +358,108 @@ export class Runner extends EventEmitter {
     }
 
     // 0) Wait for debugger
-    return Promise.resolve(this.ready_)
-        .then(() => {
-          // 1) Setup environment
-          // noinspection JSValidateTypes
-          return this.driverprovider_.setupEnv();
-        })
-        .then(() => {
-          // 2) Create a browser and setup globals
-          browser_ = this.createBrowser(plugins);
-          this.setupGlobals_(browser_);
-          return browser_.ready.then(browser_.getSession)
-              .then(
-                  (session: Session) => {
-                    logger.debug(
-                        'WebDriver session successfully started with capabilities ' +
-                        util.inspect(session.getCapabilities()));
-                  },
-                  (err: Error) => {
-                    logger.error('Unable to start a WebDriver session.');
-                    throw err;
-                  });
-          // 3) Setup plugins
-        })
-        .then(() => {
-          return plugins.setup();
-          // 4) Execute test cases
-        })
-        .then(() => {
-          // Do the framework setup here so that jasmine and mocha globals are
-          // available to the onPrepare function.
-          let frameworkPath = '';
-          if (this.config_.framework === 'jasmine' || this.config_.framework === 'jasmine2') {
-            frameworkPath = './frameworks/jasmine.js';
-          } else if (this.config_.framework === 'mocha') {
-            frameworkPath = './frameworks/mocha.js';
-          } else if (this.config_.framework === 'debugprint') {
-            // Private framework. Do not use.
-            frameworkPath = './frameworks/debugprint.js';
-          } else if (this.config_.framework === 'explorer') {
-            // Private framework. Do not use.
-            frameworkPath = './frameworks/explorer.js';
-          } else if (this.config_.framework === 'custom') {
-            if (!this.config_.frameworkPath) {
-              throw new Error(
-                  'When config.framework is custom, ' +
-                  'config.frameworkPath is required.');
-            }
-            frameworkPath = this.config_.frameworkPath;
-          } else {
-            throw new Error(
-                'config.framework (' + this.config_.framework + ') is not a valid framework.');
-          }
+    await Promise.resolve(this.ready_);
+        
+    // 1) Setup environment
+    // noinspection JSValidateTypes
+    await this.driverprovider_.setupEnv();
 
-          if (this.config_.restartBrowserBetweenTests) {
-            // TODO(sjelin): replace with warnings once `afterEach` support is required
-            let restartDriver = () => {
-              if (!this.frameworkUsesAfterEach) {
-                this.restartPromise = Promise.resolve(browser_.restart());
-              }
-            };
-            this.on('testPass', restartDriver);
-            this.on('testFail', restartDriver);
-          }
+    // 2) Create a browser and setup globals
+    browser_ = this.createBrowser(plugins);
+    this.setupGlobals_(browser_);
+    try {
+      let session = await browser_.ready.then(browser_.getSession);
+      logger.debug(
+        'WebDriver session successfully started with capabilities ' +
+        util.inspect(session.getCapabilities()));
+    } catch (err) {
+      logger.error('Unable to start a WebDriver session.');
+      throw err;
+    }
+             
+    // 3) Setup plugins
+    await plugins.setup();
 
-          // We need to save these promises to make sure they're run, but we
-          // don't
-          // want to delay starting the next test (because we can't, it's just
-          // an event emitter).
-          pluginPostTestPromises = [];
+    // 4) Execute test cases
+    // Do the framework setup here so that jasmine and mocha globals are
+    // available to the onPrepare function.
+    let frameworkPath = '';
+    if (this.config_.framework === 'jasmine' || this.config_.framework === 'jasmine2') {
+      frameworkPath = './frameworks/jasmine.js';
+    } else if (this.config_.framework === 'mocha') {
+      frameworkPath = './frameworks/mocha.js';
+    } else if (this.config_.framework === 'debugprint') {
+      // Private framework. Do not use.
+      frameworkPath = './frameworks/debugprint.js';
+    } else if (this.config_.framework === 'explorer') {
+      // Private framework. Do not use.
+      frameworkPath = './frameworks/explorer.js';
+    } else if (this.config_.framework === 'custom') {
+      if (!this.config_.frameworkPath) {
+        throw new Error(
+            'When config.framework is custom, ' +
+            'config.frameworkPath is required.');
+      }
+      frameworkPath = this.config_.frameworkPath;
+    } else {
+      throw new Error(
+          'config.framework (' + this.config_.framework + ') is not a valid framework.');
+    }
 
-          this.on('testPass', (testInfo: any) => {
-            pluginPostTestPromises.push(plugins.postTest(true, testInfo));
-          });
-          this.on('testFail', (testInfo: any) => {
-            pluginPostTestPromises.push(plugins.postTest(false, testInfo));
-          });
+    if (this.config_.restartBrowserBetweenTests) {
+      // TODO(sjelin): replace with warnings once `afterEach` support is required
+      let restartDriver = () => {
+        if (!this.frameworkUsesAfterEach) {
+          this.restartPromise = Promise.resolve(browser_.restart());
+        }
+      };
+      this.on('testPass', restartDriver);
+      this.on('testFail', restartDriver);
+    }
 
-          logger.debug('Running with spec files ' + this.config_.specs);
+    // We need to save these promises to make sure they're run, but we
+    // don't
+    // want to delay starting the next test (because we can't, it's just
+    // an event emitter).
+    pluginPostTestPromises = [];
 
-          return require(frameworkPath).run(this, this.config_.specs);
-          // 5) Wait for postTest plugins to finish
-        })
-        .then((testResults: any) => {
-          results = testResults;
-          return Promise.all(pluginPostTestPromises);
-          // 6) Teardown plugins
-        })
-        .then(() => {
-          return plugins.teardown();
-          // 7) Teardown
-        })
-        .then(() => {
-          results = helper.joinTestLogs(results, plugins.getResults());
-          this.emit('testsDone', results);
-          testPassed = results.failedCount === 0;
-          if (this.driverprovider_.updateJob) {
-            return this.driverprovider_.updateJob({'passed': testPassed}).then(() => {
-              return this.driverprovider_.teardownEnv();
-            });
-          } else {
-            return this.driverprovider_.teardownEnv();
-          }
-          // 8) Let plugins do final cleanup
-        })
-        .then(() => {
-          return plugins.postResults();
-          // 9) Exit process
-        })
-        .then(() => {
-          let exitCode = testPassed ? 0 : 1;
-          return this.exit_(exitCode);
-        })
-        .then(() => {
-          return this.shutdown_();
-        });
+    this.on('testPass', (testInfo: any) => {
+      pluginPostTestPromises.push(plugins.postTest(true, testInfo));
+    });
+    this.on('testFail', (testInfo: any) => {
+      pluginPostTestPromises.push(plugins.postTest(false, testInfo));
+    });
+    logger.debug('Running with spec files ' + this.config_.specs);
+    let testResults = await require(frameworkPath).run(this, this.config_.specs);
+    
+    // 5) Wait for postTest plugins to finish
+    results = testResults;
+    await Promise.all(pluginPostTestPromises);
+
+    // 6) Teardown plugins
+    await plugins.teardown();
+
+    // 7) Teardown
+    results = helper.joinTestLogs(results, plugins.getResults());
+    this.emit('testsDone', results);
+    testPassed = results.failedCount === 0;
+    if (this.driverprovider_.updateJob) {
+      await this.driverprovider_.updateJob({'passed': testPassed});
+      await this.driverprovider_.teardownEnv();
+    } else {
+      await this.driverprovider_.teardownEnv();
+    }
+
+    // 8) Let plugins do final cleanup
+    await plugins.postResults();
+    
+    // 9) Exit process
+    console.log('testpassed', testPassed);
+    const exitCode = testPassed ? 0 : 1;
+    console.log('exitCode', exitCode);
+
+    await this.shutdown_();
+    
+    return this.exit_(exitCode);
   }
 }

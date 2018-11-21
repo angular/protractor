@@ -61,7 +61,8 @@ export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: an
       }
       resolve(results);
     } else {
-      resolve(0);
+      console.log('we are returning undefined from runFilenameOrFn_');
+      resolve(undefined);
     }
   });
 }

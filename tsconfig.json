@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "outDir": "built/"
+    "outDir": "built/",
+    "lib": ["es2017"]
   },
   "exclude": [
     "built",

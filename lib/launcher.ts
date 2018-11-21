@@ -149,14 +149,15 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
       config.framework = 'explorer';
 
       let runner = new Runner(config);
-      return runner.run().then(
-          (exitCode: number) => {
-            process.exit(exitCode);
-          },
-          (err: Error) => {
-            logger.error(err);
-            process.exit(1);
-          });
+
+      try {
+        let exitCode = await runner.run(); 
+        console.log('runner', exitCode);
+        process.exit(exitCode);
+      } catch (err) {
+        logger.error(err);
+        process.exit(1);
+      }
     }
 
     // 4) Run tests.
@@ -171,7 +172,6 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
         logger.warn('Ignoring uncaught error ' + exc);
         return;
       }
-
       let errorCode = ErrorHandler.parseError(e);
       if (errorCode) {
         let protractorError = e as ProtractorError;
@@ -185,9 +185,11 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
     });
 
     process.on('exit', (code: number) => {
+      console.log(code);
       if (code) {
         logger.error('Process exited with error code ' + code);
       } else if (scheduler.numTasksOutstanding() > 0) {
+        console.log('scheduler num task outstanding: ', scheduler.numTasksOutstanding());
         logger.error(
             'BUG: launcher exited with ' + scheduler.numTasksOutstanding() + ' tasks remaining');
         process.exit(RUNNERS_FAILED_EXIT_CODE);
@@ -196,12 +198,15 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
 
     // Run afterlaunch and exit
     let cleanUpAndExit = (exitCode: number) => {
+      console.log('cleanUpAndExit');
       return helper.runFilenameOrFn_(config.configDir, config.afterLaunch, [exitCode])
           .then(
               (returned) => {
                 if (typeof returned === 'number') {
+                  console.log('returned:', returned);
                   process.exit(returned);
                 } else {
+                  console.log('exitCode:', exitCode);
                   process.exit(exitCode);
                 }
               },
@@ -221,13 +226,13 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
       }
     }
 
-    const createNextTaskRunner = () => {
+    const createNextTaskRunner = async () => {
       return new Promise(resolve => {
         let task = scheduler.nextTask();
         if (task) {
           let taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
           taskRunner.run()
-              .then((result) => {
+              .then(async (result) => {
                 if (result.exitCode && !result.failedCount) {
                   logger.error(
                       'Runner process exited unexpectedly with error code: ' + result.exitCode);
