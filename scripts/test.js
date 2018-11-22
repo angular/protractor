@@ -4,47 +4,47 @@ var path = require('path');
 var Executor = require('./test/test_util').Executor;
 
 var passingTests = [
-  'node built/cli.js spec/basicConf.js',
-  'node built/cli.js spec/basicConf.js --useBlockingProxy',
-  'node built/cli.js spec/multiConf.js',
-  'node built/cli.js spec/altRootConf.js',
-  'node built/cli.js spec/inferRootConf.js',
-  'node built/cli.js spec/onCleanUpAsyncReturnValueConf.js',
-  'node built/cli.js spec/onCleanUpNoReturnValueConf.js',
-  'node built/cli.js spec/onCleanUpSyncReturnValueConf.js',
-  'node built/cli.js spec/onPrepareConf.js',
-  'node built/cli.js spec/onPrepareFileConf.js',
-  'node built/cli.js spec/onPreparePromiseConf.js',
-  'node built/cli.js spec/onPreparePromiseFileConf.js',
-  'node built/cli.js spec/mochaConf.js',
-  'node built/cli.js spec/withLoginConf.js',
-  'node built/cli.js spec/suitesConf.js --suite okmany',
-  'node built/cli.js spec/suitesConf.js --suite okspec',
-  'node built/cli.js spec/suitesConf.js --suite okmany,okspec',
-  'node built/cli.js spec/plugins/smokeConf.js',
-  'node built/cli.js spec/plugins/multiPluginConf.js',
-  'node built/cli.js spec/plugins/jasminePostTestConf.js',
-  'node built/cli.js spec/plugins/mochaPostTestConf.js',
-  'node built/cli.js spec/plugins/browserGetSyncedConf.js',
-  'node built/cli.js spec/plugins/browserGetUnsyncedConf.js',
-  'node built/cli.js spec/plugins/waitForAngularConf.js',
-  'node built/cli.js spec/interactionConf.js',
-  'node built/cli.js spec/directConnectConf.js',
-  'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
-  'node built/cli.js spec/driverProviderLocalConf.js',
-  'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
-  'node built/cli.js spec/getCapabilitiesConf.js',
-  'node built/cli.js spec/controlLockConf.js',
-  'node built/cli.js spec/customFramework.js',
-  'node built/cli.js spec/noGlobalsConf.js',
-  // 'node built/cli.js spec/angular2Conf.js',
-  'node built/cli.js spec/hybridConf.js',
-  'node built/cli.js spec/built/noCFBasicConf.js',
-  'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
-  'node built/cli.js spec/built/noCFPluginConf.js',
-  // //'node scripts/driverProviderAttachSession.js',
-  // 'node scripts/errorTest.js',
-  // // Interactive Element Explorer tasks
+  'node built/cli.js spec/basic.conf.js',
+  'node built/cli.js spec/basic.conf.js --useBlockingProxy',
+  'node built/cli.js spec/multi.conf.js',
+  'node built/cli.js spec/altRoot.conf.js',
+  'node built/cli.js spec/inferRoot.conf.js',
+  'node built/cli.js spec/onCleanUpAsyncReturnValue.conf.js',
+  'node built/cli.js spec/onCleanUpNoReturnValue.conf.js',
+  'node built/cli.js spec/onCleanUpSyncReturnValue.conf.js',
+  'node built/cli.js spec/onPrepare.conf.js',
+  'node built/cli.js spec/onPrepareFile.conf.js',
+  'node built/cli.js spec/onPreparePromise.conf.js',
+  'node built/cli.js spec/onPreparePromiseFile.conf.js',
+  'node built/cli.js spec/mocha.conf.js',
+  'node built/cli.js spec/withLogin.conf.js',
+  'node built/cli.js spec/suites.conf.js --suite okmany',
+  'node built/cli.js spec/suites.conf.js --suite okspec',
+  'node built/cli.js spec/suites.conf.js --suite okmany,okspec',
+  'node built/cli.js spec/plugins/smoke.conf.js',
+  'node built/cli.js spec/plugins/multiPlugin.conf.js',
+  'node built/cli.js spec/plugins/jasminePostTest.conf.js',
+  'node built/cli.js spec/plugins/mochaPostTest.conf.js',
+  'node built/cli.js spec/plugins/browserGetSynced.conf.js',
+  'node built/cli.js spec/plugins/browserGetUnsynced.conf.js',
+  'node built/cli.js spec/plugins/waitForAngular.conf.js',
+  'node built/cli.js spec/interaction.conf.js',
+  'node built/cli.js spec/directConnect.conf.js',
+  'node built/cli.js spec/restartBrowserBetweenTests.conf.js',
+  'node built/cli.js spec/driverProviderLocal.conf.js',
+  'node built/cli.js spec/driverProviderLocal.conf.js --useBlockingProxy',
+  'node built/cli.js spec/getCapabilities.conf.js',
+  'node built/cli.js spec/controlLock.conf.js',
+  'node built/cli.js spec/customFramework.conf.js',
+  'node built/cli.js spec/noGlobals.conf.js',
+  'node built/cli.js spec/angular2.conf.js',
+  'node built/cli.js spec/hybrid.conf.js',
+  'node built/cli.js spec/built/noCFBasic.conf.js',
+  'node built/cli.js spec/built/noCFBasic.conf.js --useBlockingProxy',
+  'node built/cli.js spec/built/noCFPlugin.conf.js',
+  'node scripts/driverProviderAttachSession.js',
+  'node scripts/errorTest.js',
+  // Interactive Element Explorer tasks
   // 'node scripts/interactive_tests/interactive_test.js',
   // 'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
@@ -67,14 +67,14 @@ passingTests.forEach(function(passing_test) {
  *************************/
 
 // assert stacktrace shows line of failure
-executor.addCommandlineTest('node built/cli.js spec/errorTest/singleFailureConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/singleFailure.conf.js')
     .expectExitCode(1)
     .expectErrors({
       stackTrace: 'single_failure_spec1.js:5:38'
     });
 
 // assert timeout works
-executor.addCommandlineTest('node built/cli.js spec/errorTest/timeoutConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/timeout.conf.js')
     .expectExitCode(1)
     .expectErrors({
       message: 'Timeout - Async callback was not invoked within timeout ' +
@@ -82,13 +82,13 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/timeoutConf.js')
     })
     .expectTestDuration(0, 1000);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/afterLaunchChangesExitCodeConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/afterLaunchChangesExitCode.conf.js')
     .expectExitCode(11)
     .expectErrors({
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.'
     });
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/multiFailureConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/multiFailure.conf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
@@ -98,7 +98,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/multiFailureConf.j
       stacktrace: 'single_failure_spec2.js:5:32'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/shardedFailureConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/shardedFailure.conf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
@@ -108,14 +108,14 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/shardedFailureConf
       stacktrace: 'single_failure_spec2.js:5:32'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/mochaFailureConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/mochaFailure.conf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'expected \'My AngularJS App\' to equal \'INTENTIONALLY INCORRECT\'',
       stacktrace: 'mocha_failure_spec.js:11:20'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf.js')
+executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailing.conf.js')
     .expectExitCode(1)
     .expectErrors([
       {message: 'Expected true to be false'},
@@ -126,7 +126,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf
     ]);
 
 // TODO(selenium4): turn these on when we figure out the correct error message handling.
-// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
+// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeout.conf.js')
 //     .expectExitCode(1)
 //     .expectErrors([
 //       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
@@ -137,7 +137,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf
 //     ]);
 
 // TODO(selenium4): turn these on when we figure out the correct error message handling.
-// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
+// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeout.conf.js ' +
 //                             '--untrackOutstandingTimeouts true')
 //     .expectExitCode(1)
 //     .expectErrors([
@@ -147,7 +147,7 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf
 //     ]);
 
 // TODO(selenium4): turn these on when we figure out the correct error message handling.
-// executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
+// executor.addCommandlineTest('node built/cli.js spec/angular2Timeout.conf.js')
 //     .expectExitCode(1)
 //     .expectErrors([
 //       {message: 'Timed out waiting for asynchronous Angular tasks to finish'},

@@ -4,7 +4,7 @@ var webServerDefaultPort = 8081;
 module.exports = {
   // The address of a running selenium server.
   seleniumAddress:
-    (process.env.SELENIUM_URL || 'http://localhost:4444/wd/hub'),
+    (process.env.SELENIUM_URL || 'http://127.0.0.1:4444/wd/hub'),
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
@@ -22,7 +22,7 @@ module.exports = {
 
   // A base URL for your application under test.
   baseUrl:
-    'http://' + (process.env.HTTP_HOST || 'localhost') +
+    'http://' + (process.env.HTTP_HOST || '127.0.0.1') +
           ':' + (process.env.HTTP_PORT || webServerDefaultPort)
 
 };

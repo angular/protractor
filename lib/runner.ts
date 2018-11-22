@@ -144,13 +144,11 @@ export class Runner extends EventEmitter {
    * @param {int} Standard unix exit code
    */
   async exit_(exitCode: number): Promise<number> {
-    console.log('exit_', exitCode);
-    let returned = await helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode]);
-    console.log('exit_', returned);
+    let returned =
+        await helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode]);
     if (typeof returned === 'number') {
       return returned;
     } else {
-      console.log('exit_ returns', exitCode);
       return exitCode;
     }
   }
@@ -359,7 +357,7 @@ export class Runner extends EventEmitter {
 
     // 0) Wait for debugger
     await Promise.resolve(this.ready_);
-        
+
     // 1) Setup environment
     // noinspection JSValidateTypes
     await this.driverprovider_.setupEnv();
@@ -370,13 +368,13 @@ export class Runner extends EventEmitter {
     try {
       let session = await browser_.ready.then(browser_.getSession);
       logger.debug(
-        'WebDriver session successfully started with capabilities ' +
-        util.inspect(session.getCapabilities()));
+          'WebDriver session successfully started with capabilities ' +
+          util.inspect(session.getCapabilities()));
     } catch (err) {
       logger.error('Unable to start a WebDriver session.');
       throw err;
     }
-             
+
     // 3) Setup plugins
     await plugins.setup();
 
@@ -431,7 +429,7 @@ export class Runner extends EventEmitter {
     });
     logger.debug('Running with spec files ' + this.config_.specs);
     let testResults = await require(frameworkPath).run(this, this.config_.specs);
-    
+
     // 5) Wait for postTest plugins to finish
     results = testResults;
     await Promise.all(pluginPostTestPromises);
@@ -452,14 +450,12 @@ export class Runner extends EventEmitter {
 
     // 8) Let plugins do final cleanup
     await plugins.postResults();
-    
+
     // 9) Exit process
-    console.log('testpassed', testPassed);
     const exitCode = testPassed ? 0 : 1;
-    console.log('exitCode', exitCode);
 
     await this.shutdown_();
-    
+
     return this.exit_(exitCode);
   }
 }

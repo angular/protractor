@@ -585,13 +585,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         return null;
       } else {
         try {
-        const rootEl = await this.angularAppRoot();
-        return this.executeAsyncScript_(
-            clientSideScripts.waitForAngular, `Protractor.waitForAngular() ${description}`, rootEl);
-          }
-          catch (err) {
-            console.log('something wrong happened here');
-          }
+          const rootEl = await this.angularAppRoot();
+          return this.executeAsyncScript_(
+              clientSideScripts.waitForAngular, `Protractor.waitForAngular() ${description}`,
+              rootEl);
+        } catch (err) {
+          console.log('something wrong happened here');
+        }
       }
     };
 
@@ -708,11 +708,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Modules will be registered after existing modules already on the page,
    * so any module registered here will override preexisting modules with the
    * same name.
-   *"both angularJS testability and angular testability are undefined.  This could be either because this is a non-angular page or because your test involves client-side navigation, which can interfere with Protractor's bootstrapping.  S
-   *"both angularJS testability and angular testability are undefined.  This could be either because this is a non-angular page or because your test involves client-side navigation, which can interfere with Protractor's bootstrapping.  S
-   * browser.addMockModule('modName', function() {
-   *   angular.module('modName', []).value('foo', 'bar');
-   * });
    *
    * @param {!string} name The name of the module to load or override.
    * @param {!string|Function} script The JavaScript to load the module.
@@ -769,8 +764,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         this.trackOutstandingTimeouts_);
   }
 
-
-  navigating = false;
   /**
    * @see webdriver.WebDriver.get
    *
@@ -909,7 +902,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     }
 
     const href = await this.executeScriptWithDescription(
-            'return window.location.href', 'Protractor.refresh() - getUrl');
+        'return window.location.href', 'Protractor.refresh() - getUrl');
     return this.get(href, opt_timeout);
   }
 
@@ -998,7 +991,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   async debugger() {
     // jshint debug: true
-    await this.driver.executeScript(clientSideScripts.installInBrowser)
+    await this.driver.executeScript(clientSideScripts.installInBrowser);
     debugger;
   }
 

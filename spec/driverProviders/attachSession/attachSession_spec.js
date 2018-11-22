@@ -1,10 +1,10 @@
-describe('selenium session id', function() {
+describe('selenium session id', () => {
   var URL = '/ng2/#/async';
 
-  beforeEach(function() {
-    browser.get(URL);
+  beforeEach(async () => {
+    await browser.get(URL);
   });
-  it('should be able to use an existing session', function() {
+  it('should be able to use an existing session', () => {
     var increment = $('#increment');
     expect(increment).toBeDefined();
   });

@@ -47,7 +47,6 @@
     "gulp": "^3.9.1",
     "gulp-clang-format": "1.0.23",
     "gulp-tslint": "^7.0.1",
-    "jshint": "^2.9.2",
     "lodash": "^4.5.1",
     "marked": "^0.3.3",
     "mocha": "2.5.3",
