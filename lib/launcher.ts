@@ -6,12 +6,13 @@ import * as fs from 'fs';
 
 import {Config} from './config';
 import {ConfigParser} from './configParser';
-import {ConfigError, ErrorHandler, ProtractorError} from './exitCodes';
+import {ConfigError, ErrorHandler} from './exitCodes';
 import {Logger} from './logger';
 import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
 import {TaskScheduler} from './taskScheduler';
-import * as helper from './util';
+import {runFilenameOrFn_} from './util';
+
 
 let logger = new Logger('launcher');
 let RUNNERS_FAILED_EXIT_CODE = 100;
@@ -107,7 +108,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   logger.debug('Your base url for tests is ' + config.baseUrl);
 
   // Run beforeLaunch
-  await helper.runFilenameOrFn_(config.configDir, config.beforeLaunch);
+  await runFilenameOrFn_(config.configDir, config.beforeLaunch);
   // 1) If getMultiCapabilities is set, resolve that as
   // `multiCapabilities`.
   if (config.getMultiCapabilities && typeof config.getMultiCapabilities === 'function') {
@@ -139,22 +140,11 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
     config.multiCapabilities = [{browserName: 'chrome'}];
   }
 
-  // 3) If we're in `elementExplorer` mode, run only that.
+  // 3) If we're in `elementExplorer` mode, throw an error and exit.
   if (config.elementExplorer || config.framework === 'explorer') {
-    if (config.multiCapabilities.length != 1) {
-      throw new Error('Must specify only 1 browser while using elementExplorer');
-    } else {
-      config.capabilities = config.multiCapabilities[0];
-    }
-    config.framework = 'explorer';
-    try {
-      let runner = new Runner(config);
-      let exitCode = await runner.run();
-      process.exit(exitCode);
-    } catch (err) {
-      logger.error(err);
-      process.exit(1);
-    }
+    const err = new Error('elementExplorer is no longer');
+    logger.error(err);
+    process.exit(1);
   }
 
   // 4) Run tests.
@@ -195,8 +185,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   // Run afterlaunch and exit
   const cleanUpAndExit = async (exitCode: number) => {
     try {
-      let returned =
-          await helper.runFilenameOrFn_(config.configDir, config.afterLaunch, [exitCode]);
+      const returned = await runFilenameOrFn_(config.configDir, config.afterLaunch, [exitCode]);
       if (typeof returned === 'number') {
         process.exit(returned);
       } else {
@@ -208,7 +197,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
     }
   };
 
-  let totalTasks = scheduler.numTasksOutstanding();
+  const totalTasks = scheduler.numTasksOutstanding();
   let forkProcess = false;
   if (totalTasks > 1) {  // Start new processes only if there are >1 tasks.
     forkProcess = true;
@@ -219,35 +208,34 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   }
 
   const createNextTaskRunner = async () => {
-    return new Promise(resolve => {
-      let task = scheduler.nextTask();
+    return new Promise(async (resolve) => {
+      const task = scheduler.nextTask();
       if (task) {
-        let taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
-        taskRunner.run()
-            .then(async (result) => {
-              if (result.exitCode && !result.failedCount) {
-                logger.error(
-                    'Runner process exited unexpectedly with error code: ' + result.exitCode);
-              }
-              taskResults_.add(result);
-              task.done();
-              createNextTaskRunner();
-              // If all tasks are finished
-              if (scheduler.numTasksOutstanding() === 0) {
-                resolve();
-              }
-              logger.info(scheduler.countActiveTasks() + ' instance(s) of WebDriver still running');
-            })
-            .catch(async (err: Error) => {
-              const errorCode = ErrorHandler.parseError(err);
-              logger.error('Error:', (err as any).stack || err.message || err);
-              await cleanUpAndExit(errorCode ? errorCode : RUNNERS_FAILED_EXIT_CODE);
-            });
+        const taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
+        try {
+          const result = await taskRunner.run();
+          if (result.exitCode && !result.failedCount) {
+            logger.error('Runner process exited unexpectedly with error code: ' + result.exitCode);
+          }
+          taskResults_.add(result);
+          task.done();
+          createNextTaskRunner();
+          // If all tasks are finished
+          if (scheduler.numTasksOutstanding() === 0) {
+            resolve();
+          }
+          logger.info(scheduler.countActiveTasks() + ' instance(s) of WebDriver still running');
+        } catch (err) {
+          const errorCode = ErrorHandler.parseError(err);
+          logger.error('Error:', (err as any).stack || err.message || err);
+          await cleanUpAndExit(errorCode ? errorCode : RUNNERS_FAILED_EXIT_CODE);
+        }
       }
     });
   };
 
-  for (let i = 0; i < scheduler.maxConcurrentTasks(); ++i) {
+  const maxConcurrentTasks = scheduler.maxConcurrentTasks();
+  for (let i = 0; i < maxConcurrentTasks; ++i) {
     await createNextTaskRunner();
   }
   logger.info('Running ' + scheduler.countActiveTasks() + ' instances of WebDriver');

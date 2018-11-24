@@ -715,6 +715,10 @@ export interface Config {
   nodeDebug?: boolean;
   debuggerServerPort?: number;
   frameworkPath?: string;
+
+  /**
+   * Deprecated: Element explorer is no longer supported.
+   */
   elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];

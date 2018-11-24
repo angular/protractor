@@ -1,15 +1,15 @@
 import {EventEmitter} from 'events';
-import {promise as wdpromise, Session} from 'selenium-webdriver';
+// TODO(cnishina): remove when selenium webdriver is upgraded.
+import {promise as wdpromise} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {buildDriverProvider, DriverProvider} from './driverProviders';
-import {ConfigError} from './exitCodes';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
 import {protractor} from './ptor';
-import * as helper from './util';
+import {joinTestLogs, runFilenameOrFn_} from './util';
 
 declare let global: any;
 declare let process: any;
@@ -35,7 +35,7 @@ export class Runner extends EventEmitter {
   plugins_: Plugins;
   restartPromise: Promise<any>;
   frameworkUsesAfterEach: boolean;
-  ready_?: wdpromise.Promise<void>;
+  ready_?: Promise<void>;
 
   constructor(config: Config) {
     super();
@@ -47,19 +47,15 @@ export class Runner extends EventEmitter {
 
     if (config.nodeDebug) {
       process['_debugProcess'](process.pid);
-      let flow = wdpromise.controlFlow();
-
-      this.ready_ = flow.execute(() => {
-                          let nodedebug =
-                              require('child_process').fork('debug', ['localhost:5858']);
-                          process.on('exit', function() {
-                            nodedebug.kill('SIGTERM');
-                          });
-                          nodedebug.on('exit', function() {
-                            process.exit(1);
-                          });
-                        }, 'start the node debugger').then(() => {
-        return flow.timeout(1000, 'waiting for debugger to attach');
+      const nodedebug = require('child_process').fork('debug', ['localhost:5858']);
+      process.on('exit', () => {
+        nodedebug.kill('SIGTERM');
+      });
+      nodedebug.on('exit', () => {
+        process.exit(1);
+      });
+      this.ready_ = new Promise(resolve => {
+        setTimeout(resolve, 1000);
       });
     }
 
@@ -99,7 +95,7 @@ export class Runner extends EventEmitter {
           ' Protractor CLI flag checks. ');
     }
     return this.plugins_.onPrepare().then(() => {
-      return helper.runFilenameOrFn_(this.config_.configDir, this.preparer_);
+      return runFilenameOrFn_(this.config_.configDir, this.preparer_);
     });
   }
 
@@ -144,8 +140,8 @@ export class Runner extends EventEmitter {
    * @param {int} Standard unix exit code
    */
   async exit_(exitCode: number): Promise<number> {
-    let returned =
-        await helper.runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode]);
+    const returned =
+        await runFilenameOrFn_(this.config_.configDir, this.config_.onCleanUp, [exitCode]);
     if (typeof returned === 'number') {
       return returned;
     } else {
@@ -347,6 +343,7 @@ export class Runner extends EventEmitter {
       throw new Error('Spec patterns did not match any files.');
     }
 
+    // TODO(selenium4): Remove when selenium is upgraded.
     if (this.config_.SELENIUM_PROMISE_MANAGER != null) {
       (wdpromise as any).USE_PROMISE_MANAGER = this.config_.SELENIUM_PROMISE_MANAGER;
     }
@@ -366,7 +363,7 @@ export class Runner extends EventEmitter {
     browser_ = this.createBrowser(plugins);
     this.setupGlobals_(browser_);
     try {
-      let session = await browser_.ready.then(browser_.getSession);
+      const session = await browser_.ready.then(browser_.getSession);
       logger.debug(
           'WebDriver session successfully started with capabilities ' +
           util.inspect(session.getCapabilities()));
@@ -438,7 +435,7 @@ export class Runner extends EventEmitter {
     await plugins.teardown();
 
     // 7) Teardown
-    results = helper.joinTestLogs(results, plugins.getResults());
+    results = joinTestLogs(results, plugins.getResults());
     this.emit('testsDone', results);
     testPassed = results.failedCount === 0;
     if (this.driverprovider_.updateJob) {
