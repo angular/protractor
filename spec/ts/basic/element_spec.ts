@@ -1,6 +1,4 @@
 // Based off of spec/basic/elements_spec.js
-import * as q from 'q';
-
 import {$, browser, by, element, ElementArrayFinder, ElementFinder, promise as ppromise, WebElement} from '../../..';
 
 describe('ElementFinder', () => {
