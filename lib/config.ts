@@ -717,7 +717,8 @@ export interface Config {
   frameworkPath?: string;
 
   /**
-   * Deprecated: Element explorer is no longer supported.
+   * Deprecated: Element explorer depends on the WebDriver control flow, and
+   * thus is no longer supported.
    */
   elementExplorer?: any;
   debug?: boolean;

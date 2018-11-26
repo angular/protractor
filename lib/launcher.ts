@@ -6,9 +6,8 @@ import * as fs from 'fs';
 
 import {Config} from './config';
 import {ConfigParser} from './configParser';
-import {ConfigError, ErrorHandler} from './exitCodes';
+import {ConfigError, ErrorHandler, ProtractorError} from './exitCodes';
 import {Logger} from './logger';
-import {Runner} from './runner';
 import {TaskRunner} from './taskRunner';
 import {TaskScheduler} from './taskScheduler';
 import {runFilenameOrFn_} from './util';
@@ -142,7 +141,9 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
 
   // 3) If we're in `elementExplorer` mode, throw an error and exit.
   if (config.elementExplorer || config.framework === 'explorer') {
-    const err = new Error('elementExplorer is no longer');
+    const err = new Error(
+        'Deprecated: Element explorer depends on the ' +
+        'WebDriver control flow, and thus is no longer supported.');
     logger.error(err);
     process.exit(1);
   }
@@ -150,27 +151,28 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   // 4) Run tests.
   let scheduler = new TaskScheduler(config);
 
-  // process.on('uncaughtException', (exc: (Error|string)) => {
-  //   let e = (exc instanceof Error) ? exc : new Error(exc);
-  //   if (config.ignoreUncaughtExceptions) {
-  //     // This can be a sign of a bug in the test framework, that it may
-  //     // not be handling WebDriver errors properly. However, we don't
-  //     // want these errors to prevent running the tests.
-  //     logger.warn('Ignoring uncaught error ' + exc);
-  //     return;
-  //   }
+  process.on('uncaughtException', (exc: (Error|string)) => {
+    let e = (exc instanceof Error) ? exc : new Error(exc);
+    if (config.ignoreUncaughtExceptions) {
+      // This can be a sign of a bug in the test framework, that it may
+      // not be handling WebDriver errors properly. However, we don't
+      // want these errors to prevent running the tests.
+      logger.warn('Ignoring uncaught error ' + exc);
+      return;
+    }
+    logger.error(e.message);
+    logger.error(e.stack);
+    if (e instanceof ProtractorError) {
+      let protractorError = e as ProtractorError;
+      process.exit(protractorError.code);
+    } else {
+      process.exit(1);
+    }
+  });
 
-  //   let errorCode = ErrorHandler.parseError(e);
-  //   if (errorCode) {
-  //     let protractorError = e as ProtractorError;
-  //     ProtractorError.log(logger, errorCode, protractorError.message, protractorError.stack);
-  //     process.exit(errorCode);
-  //   } else {
-  //     logger.error(e.message);
-  //     logger.error(e.stack);
-  //     process.exit(ProtractorError.CODE);
-  //   }
-  // });
+  process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => {
+    logger.warn('Unhandled rejection at:', p, 'reason:', reason);
+  });
 
   process.on('exit', (code: number) => {
     if (code) {
