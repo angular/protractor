@@ -256,10 +256,9 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
     exitCode = 1;
   }
   await cleanUpAndExit(exitCode);
-  // Start `scheduler.maxConcurrentTasks()` workers for handling tasks in
+  // Start `const maxConcurrentTasks` workers for handling tasks in
   // the beginning. As a worker finishes a task, it will pick up the next
-  // task
-  // from the scheduler's queue until all tasks are gone.
+  // task from the scheduler's queue until all tasks are gone.
 
 };
 

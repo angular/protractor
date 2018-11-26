@@ -440,10 +440,8 @@ export class Runner extends EventEmitter {
     testPassed = results.failedCount === 0;
     if (this.driverprovider_.updateJob) {
       await this.driverprovider_.updateJob({'passed': testPassed});
-      await this.driverprovider_.teardownEnv();
-    } else {
-      await this.driverprovider_.teardownEnv();
     }
+    await this.driverprovider_.teardownEnv();
 
     // 8) Let plugins do final cleanup
     await plugins.postResults();
