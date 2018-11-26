@@ -53,8 +53,14 @@ export class Sauce extends DriverProvider {
    *     ready to test.
    */
   protected setupDriverEnv(): q.Promise<any> {
-    let deferred = q.defer();
+    const deferred = q.defer();
+    const protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
+    const auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
+    const sauceSeleniumAddress =
+        this.config_.sauceSeleniumAddress || 'ondemand.saucelabs.com:443/wd/hub';
+    this.config_.seleniumAddress = auth + sauceSeleniumAddress;
     this.sauceServer_ = new SauceLabs({
+      hostname: sauceSeleniumAddress.split(':').shift().split('/').shift().slice(9),
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent,
@@ -63,11 +69,6 @@ export class Sauce extends DriverProvider {
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
     this.config_.capabilities['build'] = this.config_.sauceBuild;
-    let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
-    let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
-    this.config_.seleniumAddress = auth +
-        (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
-                                             'ondemand.saucelabs.com:443/wd/hub');
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.
