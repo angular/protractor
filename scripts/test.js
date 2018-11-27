@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var path = require('path');
+const path = require('path');
 
-var Executor = require('./test/test_util').Executor;
+const Executor = require('./test/test_util').Executor;
 
-var passingTests = [
+const passingTests = [
   'node built/cli.js spec/basicConf.js',
   // 'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
