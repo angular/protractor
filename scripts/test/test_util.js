@@ -70,10 +70,10 @@ class CommandlineTest {
     try {
 
       let exitCode = await new Promise((resolve, reject) => {
-        if (!this.assertExitCodeOnly_) {
-          this.command_ = this.command_ + ' --resultJsonOutputFile ' + testOutputPath;
+        if (!this.assertExitCodeOnly) {
+          this.command = `${this.command} --resultJsonOutputFile ${testOutputPath}`;
         }
-        const args = this.command_.split(/\s/);
+        const args = this.command.split(/\s/);
         const test_process = child_process.spawn(args[0], args.slice(1));
 
         const processData = (data) => {
@@ -97,7 +97,7 @@ class CommandlineTest {
       });
       
       if (this.expectedExitCode_ !== exitCode) {
-        flushAndFail('expecting exit code: ' + this.expectedExitCode_ +
+        flushAndFail('expecting exit code: ' + this.expectedExitCode +
               ', actual: ' + exitCode);
       }
 
@@ -108,7 +108,7 @@ class CommandlineTest {
       // Skip the rest if we are only verify exit code.
       // Note: we're expecting a file populated by '--resultJsonOutputFile' after
       //   this point.
-      if (this.assertExitCodeOnly_) {
+      if (this.assertExitCodeOnly) {
         return;
       }
 
@@ -126,7 +126,7 @@ class CommandlineTest {
         });
       });
 
-      this.expectedErrors_.forEach((expectedError) => {
+      this.expectedErrors.forEach((expectedError) => {
         let found = false;
         for (let i = 0; i < actualErrors.length; ++i) {
           var actualError = actualErrors[i];
@@ -170,15 +170,15 @@ class CommandlineTest {
         flushAndFail('failed with ' + actualErrors.length + ' unexpected failures');
       }
 
-      if (this.expectedMinTestDuration_
-          && duration < this.expectedMinTestDuration_) {
+      if (this.expectedMinTestDuration
+          && duration < this.expectedMinTestDuration) {
             flushAndFail('expecting test min duration: ' +
-              this.expectedMinTestDuration_ + ', actual: ' + duration);
+              this.expectedMinTestDuration + ', actual: ' + duration);
       }
-      if (this.expectedMaxTestDuration_
-          && duration > this.expectedMaxTestDuration_) {
+      if (this.expectedMaxTestDuration
+          && duration > this.expectedMaxTestDuration) {
             flushAndFail('expecting test max duration: ' +
-              this.expectedMaxTestDuration_ + ', actual: ' + duration);
+              this.expectedMaxTestDuration + ', actual: ' + duration);
       }
     } finally {
       try {
@@ -208,7 +208,7 @@ exports.Executor = function() {
   this.runTests = async function(i, logFile, failed) {
     if (i < tests.length) {
       try {
-        console.log('running: ' + tests[i].command_);
+        console.log('running: ' + tests[i].command);
         if (logFile) {
           tests[i].setTestLogFile(logFile);
         }
