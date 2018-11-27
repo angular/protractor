@@ -96,7 +96,7 @@ class CommandlineTest {
         });
       });
       
-      if (this.expectedExitCode_ !== exitCode) {
+      if (this.expectedExitCode !== exitCode) {
         flushAndFail('expecting exit code: ' + this.expectedExitCode +
               ', actual: ' + exitCode);
       }
