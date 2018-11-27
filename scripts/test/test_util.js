@@ -60,7 +60,6 @@ class CommandlineTest {
     const start = new Date().getTime();
     const testOutputPath = `test_output_${start}.tmp`;
     let output = '';
-    let exitCode = 'exitCode is not define';
 
     const flushAndFail = (errorMsg) => {
       process.stdout.write(output);
@@ -86,13 +85,17 @@ class CommandlineTest {
     test_process.stdout.on('data', processData);
     test_process.stderr.on('data', processData);
 
-    test_process.on('error', (error) => {
-      exitCode = error;
-    });
-
-    test_process.on('exit', (exit) => {
-      exitCode = exit;
-    });
+    const runningTestProcess = () => {
+      return new Promise((resolve, reject) => {
+        test_process.on('error', (error) => {
+          reject(error);
+        });
+        test_process.on('exit', (exitCode) => {
+          resolve(exitCode);
+        });
+      });
+    };
+    const exitCode = await runningTestProcess();
 
     if (this.expectedExitCode !== exitCode) {
       flushAndFail('expecting exit code: ' + this.expectedExitCode +
