@@ -1,4 +1,6 @@
 {
+  "strict": false,
+  "esversion": 6,
   "predef": [
     "protractor",
     "browser",
