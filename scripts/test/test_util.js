@@ -216,7 +216,7 @@ module.exports = class Executor {
         console.log('\n>>> \0o33[1;32mpass\0o33[0m');
       } catch (error) {
         failed = true;
-        console.log('\n>>> \0o33[1;31mfail: ' + err.toString() + '\0o33[0m');
+        console.log('\n>>> \0o33[1;31mfail: ' + error.toString() + '\0o33[0m');
       }
     }
 
