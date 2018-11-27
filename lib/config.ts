@@ -723,6 +723,11 @@ export interface Config {
   nodeDebug?: boolean;
   debuggerServerPort?: number;
   frameworkPath?: string;
+
+  /**
+   * Deprecated: Element explorer depends on the WebDriver control flow, and
+   * thus is no longer supported.
+   */
   elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];
