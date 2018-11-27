@@ -1,7 +1,6 @@
-import {By, error as wderror, ILocation, ISize, promise as wdpromise, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {By, error as wderror, WebElement, WebElementPromise} from 'selenium-webdriver';
 
 import {ElementHelper, ProtractorBrowser} from './browser';
-import {IError} from './exitCodes';
 import {isProtractorLocator, Locator} from './locators';
 import {Logger} from './logger';
 import {falseIfMissing} from './util';
@@ -81,9 +80,8 @@ let WEB_ELEMENT_FUNCTIONS = [
  */
 export class ElementArrayFinder extends WebdriverWebElement {
   constructor(
-      public browser_: ProtractorBrowser,
-      public getWebElements: () => wdpromise.Promise<WebElement[]> = null, public locator_?: any,
-      public actionResults_: wdpromise.Promise<any> = null) {
+      public browser_: ProtractorBrowser, public getWebElements: () => Promise<WebElement[]> = null,
+      public locator_?: any, public actionResults_: Promise<any> = null) {
     super();
 
     // TODO(juliemr): might it be easier to combine this with our docs and just
@@ -154,37 +152,33 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @returns {ElementArrayFinder}
    */
   all(locator: Locator): ElementArrayFinder {
-    let ptor = this.browser_;
-    let getWebElements = (): wdpromise.Promise<WebElement[]> => {
+    const ptor = this.browser_;
+    const getWebElements = async(): Promise<WebElement[]> => {
       if (this.getWebElements === null) {
         // This is the first time we are looking for an element
-        return ptor.waitForAngular('Locator: ' + locator)
-            .then((): wdpromise.Promise<WebElement[]> => {
-              if (isProtractorLocator(locator)) {
-                return locator.findElementsOverride(ptor.driver, null, ptor.rootEl);
-              } else {
-                return ptor.driver.findElements(locator);
-              }
-            });
-      } else {
-        return this.getWebElements().then((parentWebElements: WebElement[]) => {
-          // For each parent web element, find their children and construct
-          // a list of Promise<List<child_web_element>>
-          let childrenPromiseList = parentWebElements.map((parentWebElement: WebElement) => {
-            return isProtractorLocator(locator) ?
-                locator.findElementsOverride(ptor.driver, parentWebElement, ptor.rootEl) :
-                parentWebElement.findElements(locator);
-          });
+        await ptor.waitForAngular('Locator: ' + locator);
 
-          // Resolve the list of Promise<List<child_web_elements>> and merge
-          // into a single list
-          return wdpromise.all<WebElement[]>(childrenPromiseList)
-              .then((resolved: WebElement[][]) => {
-                return resolved.reduce((childrenList, resolvedE) => {
-                  return childrenList.concat(resolvedE);
-                }, []);
-              });
+        if (isProtractorLocator(locator)) {
+          return locator.findElementsOverride(ptor.driver, null, ptor.rootEl);
+        } else {
+          return ptor.driver.findElements(locator);
+        }
+      } else {
+        const parentWebElements = await this.getWebElements();
+        // For each parent web element, find their children and construct
+        // a list of Promise<List<child_web_element>>
+        const childrenPromiseList = parentWebElements.map((parentWebElement: WebElement) => {
+          return isProtractorLocator(locator) ?
+              locator.findElementsOverride(ptor.driver, parentWebElement, ptor.rootEl) :
+              parentWebElement.findElements(locator);
         });
+
+        // Resolve the list of Promise<List<child_web_elements>> and merge
+        // into a single list
+        const resolved = await Promise.all(childrenPromiseList);
+        return resolved.reduce((childrenList, resolvedE) => {
+          return childrenList.concat(resolvedE);
+        }, []);
       }
     };
     return new ElementArrayFinder(this.browser_, getWebElements, locator);
@@ -220,39 +214,35 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *   });
    * }).first().click();
    *
-   * @param {function(ElementFinder, number): webdriver.WebElement.Promise}
+   * @param {function(ElementFinder, number): boolean|Promise<boolean>}
    * filterFn
    *     Filter function that will test if an element should be returned.
    *     filterFn can either return a boolean or a promise that resolves to a
-   * boolean
+   *     boolean.
    * @returns {!ElementArrayFinder} A ElementArrayFinder that represents an
    * array
    *     of element that satisfy the filter function.
    */
-  filter(
-      filterFn: (element: ElementFinder, index?: number) => boolean |
-          wdpromise.Promise<boolean>): ElementArrayFinder {
-    let getWebElements = (): wdpromise.Promise<WebElement[]> => {
-      return this.getWebElements().then((parentWebElements: WebElement[]) => {
-        let list = parentWebElements.map((parentWebElement: WebElement, index: number) => {
-          let elementFinder =
-              ElementFinder.fromWebElement_(this.browser_, parentWebElement, this.locator_);
-
-          return filterFn(elementFinder, index);
-        });
-        return wdpromise.all(list).then((resolvedList: any) => {
-          return parentWebElements.filter((parentWebElement: WebElement, index: number) => {
-            return resolvedList[index];
-          });
-        });
+  filter(filterFn: (element: ElementFinder, index?: number) => boolean | Promise<boolean>):
+      ElementArrayFinder {
+    const getWebElements = async(): Promise<WebElement[]> => {
+      const parentWebElements = await this.getWebElements();
+      const list = parentWebElements.map((parentWebElement: WebElement, index: number) => {
+        let elementFinder =
+            ElementFinder.fromWebElement_(this.browser_, parentWebElement, this.locator_);
+        return filterFn(elementFinder, index);
+      });
+      const resolvedList = await Promise.all(list);
+      return parentWebElements.filter((_: WebElement, index: number) => {
+        return resolvedList[index];
       });
     };
     return new ElementArrayFinder(this.browser_, getWebElements, this.locator_);
   }
 
   /**
-   * Get an element within the ElementArrayFinder by index. The index starts at 0.
-   * Negative indices are wrapped (i.e. -i means ith element from last)
+   * Get an element within the ElementArrayFinder by index. The index starts at
+   * 0. Negative indices are wrapped (i.e. -i means ith element from last)
    * This does not actually retrieve the underlying element.
    *
    * @alias element.all(locator).get(index)
@@ -274,23 +264,23 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * expect(list.get(0).getText()).toBe('First');
    * expect(list.get(1).getText()).toBe('Second');
    *
-   * @param {number|webdriver.promise.Promise} index Element index.
+   * @param {number|Promise} index Element index.
    * @returns {ElementFinder} finder representing element at the given index.
    */
-  get(index: number|wdpromise.Promise<number>): ElementFinder {
-    let getWebElements = (): wdpromise.Promise<WebElement[]> => {
-      return wdpromise.all<any>([index, this.getWebElements()]).then(([i, parentWebElements]) => {
-        if (i < 0) {
-          i += parentWebElements.length;
-        }
-        if (i < 0 || i >= parentWebElements.length) {
-          throw new wderror.NoSuchElementError(
-              'Index out of bound. Trying to access element at index: ' + index +
-              ', but there are only ' + parentWebElements.length + ' elements that match ' +
-              'locator ' + this.locator_.toString());
-        }
-        return [parentWebElements[i]];
-      });
+  get(indexPromise: number|Promise<number>): ElementFinder {
+    const getWebElements = async(): Promise<WebElement[]> => {
+      let index = await indexPromise;
+      const parentWebElements = await this.getWebElements();
+      if (index < 0) {
+        index += parentWebElements.length;
+      }
+      if (index < 0 || index >= parentWebElements.length) {
+        throw new wderror.NoSuchElementError(
+            `Index out of bound. Trying to access element at index: ` +
+            `${index}, but there are only ${parentWebElements.length} ` +
+            `elements that match locator ${this.locator_.toString()}`);
+      }
+      return [parentWebElements[index]];
     };
     return new ElementArrayFinder(this.browser_, getWebElements, this.locator_).toElementFinder_();
   }
@@ -414,21 +404,20 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * let list = $$('.items li');
    * expect(list.count()).toBe(3);
    *
-   * @returns {!webdriver.promise.Promise} A promise which resolves to the
+   * @returns {!Promise} A promise which resolves to the
    *     number of elements matching the locator.
    */
-  count(): wdpromise.Promise<number> {
-    return this.getWebElements().then(
-        (arr: WebElement[]) => {
-          return arr.length;
-        },
-        (err: Error) => {
-          if (err instanceof wderror.NoSuchElementError) {
-            return 0;
-          } else {
-            throw err;
-          }
-        });
+  async count(): Promise<number> {
+    try {
+      const arr = await this.getWebElements();
+      return arr.length;
+    } catch (err) {
+      if (err instanceof wderror.NoSuchElementError) {
+        return 0;
+      } else {
+        throw err;
+      }
+    }
   }
 
   /**
@@ -441,10 +430,9 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @returns {Promise<boolean>}
    */
-  isPresent(): wdpromise.Promise<boolean> {
-    return this.count().then((count) => {
-      return count > 0;
-    });
+  async isPresent(): Promise<boolean> {
+    const count = await this.count();
+    return count > 0;
   }
 
   /**
@@ -479,17 +467,17 @@ export class ElementArrayFinder extends WebdriverWebElement {
   // map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
   private applyAction_(actionFn: (value: WebElement, index: number, array: WebElement[]) => any):
       ElementArrayFinder {
-    let callerError = new Error();
+    const callerError = new Error();
     let actionResults = this.getWebElements()
-                            .then((arr: any) => wdpromise.all(arr.map(actionFn)))
+                            .then((arr: any) => Promise.all(arr.map(actionFn)))
                             .then(
                                 (value: any) => {
-                                  return {passed: true, value: value};
+                                  return {passed: true, value};
                                 },
                                 (error: any) => {
                                   return {passed: false, value: error};
                                 });
-    let getWebElements = () => actionResults.then(() => this.getWebElements());
+    const getWebElements = () => actionResults.then(() => this.getWebElements());
     actionResults = actionResults.then((result: {passed: boolean, value: any}) => {
       if (result.passed) {
         return result.value;
@@ -511,14 +499,13 @@ export class ElementArrayFinder extends WebdriverWebElement {
   /**
    * Represents the ElementArrayFinder as an array of ElementFinders.
    *
-   * @returns {Array.<ElementFinder>} Return a promise, which resolves to a list
-   *     of ElementFinders specified by the locator.
+   * @returns {Promise<ElementFinder[]>} Return a promise, which resolves to a
+   *   list of ElementFinders specified by the locator.
    */
-  asElementFinders_(): wdpromise.Promise<ElementFinder[]> {
-    return this.getWebElements().then((arr: WebElement[]) => {
-      return arr.map((webElem: WebElement) => {
-        return ElementFinder.fromWebElement_(this.browser_, webElem, this.locator_);
-      });
+  async asElementFinders_(): Promise<ElementFinder[]> {
+    const arr = await this.getWebElements();
+    return arr.map((webElem: WebElement) => {
+      return ElementFinder.fromWebElement_(this.browser_, webElem, this.locator_);
     });
   }
 
@@ -549,14 +536,13 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @param {function(Array.<ElementFinder>)} fn
    * @param {function(Error)} errorFn
    *
-   * @returns {!webdriver.promise.Promise} A promise which will resolve to
+   * @returns {!Promise} A promise which will resolve to
    *     an array of ElementFinders represented by the ElementArrayFinder.
    */
-  then<T>(
-      fn?: (value: ElementFinder[]|any[]) => T | wdpromise.IThenable<T>,
-      errorFn?: (error: any) => any): wdpromise.Promise<T> {
+  then<T>(fn?: (value: ElementFinder[]|any[]) => T | Promise<T>, errorFn?: (error: any) => any):
+      Promise<T> {
     if (this.actionResults_) {
-      return this.actionResults_.then(fn, errorFn);
+      return this.actionResults_.then(fn, errorFn) as Promise<T>;
     } else {
       return this.asElementFinders_().then(fn, errorFn);
     }
@@ -593,14 +579,12 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @param {function(ElementFinder)} fn Input function
    *
-   * @returns {!webdriver.promise.Promise} A promise that will resolve when the
+   * @returns {!Promise} A promise that will resolve when the
    *     function has been called on all the ElementFinders. The promise will
    *     resolve to null.
    */
-  each(fn: (elementFinder?: ElementFinder, index?: number) => any): wdpromise.Promise<any> {
-    return this.map(fn).then((): any => {
-      return null;
-    });
+  async each(fn: (elementFinder?: ElementFinder, index?: number) => any): Promise<any> {
+    return await this.map(fn);
   }
 
   /**
@@ -647,19 +631,18 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @param {function(ElementFinder, number)} mapFn Map function that
    *     will be applied to each element.
-   * @returns {!webdriver.promise.Promise} A promise that resolves to an array
+   * @returns {!Promise} A promise that resolves to an array
    *     of values returned by the map function.
    */
-  map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T | any):
-      wdpromise.Promise<T[]> {
-    return this.asElementFinders_().then<T[]>((arr: ElementFinder[]) => {
-      let list = arr.map((elementFinder?: ElementFinder, index?: number) => {
-        let mapResult = mapFn(elementFinder, index);
-        // All nested arrays and objects will also be fully resolved.
-        return wdpromise.fullyResolved(mapResult) as wdpromise.Promise<T>;
-      });
-      return wdpromise.all(list);
+  async map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T | any): Promise<T[]> {
+    const arr = await this.asElementFinders_();
+
+    const list = arr.map(async (elementFinder?: ElementFinder, index?: number) => {
+      let mapResult = mapFn(elementFinder, index);
+      // All nested arrays and objects will also be fully resolved.
+      return await mapResult;
     });
+    return Promise.all(list);
   };
 
   /**
@@ -701,18 +684,15 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     reduceFn Reduce function that reduces every element into a single
    * value.
    * @param {*} initialValue Initial value of the accumulator.
-   * @returns {!webdriver.promise.Promise} A promise that resolves to the final
+   * @returns {!Promise} A promise that resolves to the final
    *     value of the accumulator.
    */
-  reduce(reduceFn: Function, initialValue: any): wdpromise.Promise<any> {
-    let valuePromise = wdpromise.when(initialValue);
-    return this.asElementFinders_().then((arr: ElementFinder[]) => {
-      return arr.reduce((valuePromise: any, elementFinder: ElementFinder, index: number) => {
-        return valuePromise.then((value: any) => {
-          return reduceFn(value, elementFinder, index, arr);
-        });
-      }, valuePromise);
-    });
+  async reduce(reduceFn: Function, initialValue: any): Promise<any> {
+    const valuePromise = await initialValue;
+    const arr = await this.asElementFinders_();
+    return arr.reduce(async (valuePromise: any, elementFinder: ElementFinder, index: number) => {
+      return reduceFn(await valuePromise, elementFinder, index, arr);
+    }, valuePromise);
   }
 
   /**
@@ -739,7 +719,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *     will be returned as a WebElement.
    */
   evaluate(expression: string): ElementArrayFinder {
-    let evaluationFn = (webElem: WebElement) => {
+    const evaluationFn = (webElem: WebElement) => {
       return webElem.getDriver().executeScript(clientSideScripts.evaluate, webElem, expression);
     };
     return this.applyAction_(evaluationFn);
@@ -761,7 +741,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * allowed.
    */
   allowAnimations(value: boolean): ElementArrayFinder {
-    let allowAnimationsTestFn = (webElem: WebElement) => {
+    const allowAnimationsTestFn = (webElem: WebElement) => {
       return webElem.getDriver().executeScript(clientSideScripts.allowAnimations, webElem, value);
     };
     return this.applyAction_(allowAnimationsTestFn);
@@ -817,8 +797,8 @@ export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
   then?:
-      (fn: (value: any) => any | wdpromise.IThenable<any>,
-       errorFn?: (error: any) => any) => wdpromise.Promise<any> = null;
+      (fn: (value: any) => any | Promise<any>,
+       errorFn?: (error: any) => any) => Promise<any> = null;
 
   constructor(public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
     super();
@@ -831,34 +811,32 @@ export class ElementFinder extends WebdriverWebElement {
     // has action results.
     if (this.parentElementArrayFinder.actionResults_) {
       // Access the underlying actionResult of ElementFinder.
-      this.then =
-          (fn: (value: any) => any | wdpromise.IThenable<any>, errorFn?: (error: any) => any) => {
-            return this.elementArrayFinder_.then((actionResults: any) => {
-              if (!fn) {
-                return actionResults[0];
-              }
-              return fn(actionResults[0]);
-            }, errorFn);
-          };
+      this.then = (fn: (value: any) => any | Promise<any>, errorFn?: (error: any) => any) => {
+        return this.elementArrayFinder_.then((actionResults: any) => {
+          if (!fn) {
+            return actionResults[0];
+          }
+          return fn(actionResults[0]);
+        }, errorFn);
+      };
     }
 
     // This filter verifies that there is only 1 element returned by the
     // elementArrayFinder. It will warn if there are more than 1 element and
     // throw an error if there are no elements.
-    let getWebElements = (): wdpromise.Promise<WebElement[]> => {
-      return elementArrayFinder.getWebElements().then((webElements: WebElement[]) => {
-        if (webElements.length === 0) {
-          throw new wderror.NoSuchElementError(
-              'No element found using locator: ' + elementArrayFinder.locator().toString());
-        } else {
-          if (webElements.length > 1) {
-            logger.warn(
-                'more than one element found for locator ' +
-                elementArrayFinder.locator().toString() + ' - the first result will be used');
-          }
-          return [webElements[0]];
+    const getWebElements = async(): Promise<WebElement[]> => {
+      const webElements = await elementArrayFinder.getWebElements();
+      if (webElements.length === 0) {
+        throw new wderror.NoSuchElementError(
+            'No element found using locator: ' + elementArrayFinder.locator().toString());
+      } else {
+        if (webElements.length > 1) {
+          logger.warn(
+              'more than one element found for locator ' + elementArrayFinder.locator().toString() +
+              ' - the first result will be used');
         }
-      });
+        return [webElements[0]];
+      }
     };
 
     // Store a copy of the underlying elementArrayFinder, but with the more
@@ -878,8 +856,8 @@ export class ElementFinder extends WebdriverWebElement {
 
   static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator?: Locator):
       ElementFinder {
-    let getWebElements = () => {
-      return wdpromise.when([webElem]);
+    const getWebElements = () => {
+      return Promise.resolve([webElem]);
     };
     return new ElementArrayFinder(browser, getWebElements, locator).toElementFinder_();
   }
@@ -921,10 +899,10 @@ export class ElementFinder extends WebdriverWebElement {
    * browser.driver.findElement(by.css('.parent'));
    * browser.findElement(by.css('.parent'));
    *
-   * @returns {webdriver.WebElementPromise}
+   * @returns {webdriver.WebElement}
    */
   getWebElement(): WebElementPromise {
-    let id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
+    const id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
       return parentWebElements[0];
     });
     return new WebElementPromise(this.browser_.driver, id);
@@ -1083,18 +1061,20 @@ export class ElementFinder extends WebdriverWebElement {
    * // Element not present.
    * expect(element(by.binding('notPresent')).isPresent()).toBe(false);
    *
-   * @returns {webdriver.promise.Promise<boolean>} which resolves to whether
+   * @returns {Promise<boolean>} which resolves to whether
    *     the element is present on the page.
    */
-  isPresent(): wdpromise.Promise<boolean> {
-    return this.parentElementArrayFinder.getWebElements().then((arr: any[]) => {
+  async isPresent(): Promise<boolean> {
+    try {
+      const arr = await this.parentElementArrayFinder.getWebElements();
       if (arr.length === 0) {
         return false;
       }
-      return arr[0].isEnabled().then(() => {
-        return true;  // is present, whether it is enabled or not
-      }, falseIfMissing);
-    }, falseIfMissing);
+      // is present, whether it is enabled or not
+      return await arr[0].isEnabled();
+    } catch (err) {
+      return falseIfMissing(err);
+    }
   }
 
   /**
@@ -1114,7 +1094,7 @@ export class ElementFinder extends WebdriverWebElement {
    * @returns {webdriver.promise.Promise<boolean>} which resolves to whether
    *     the subelement is present on the page.
    */
-  isElementPresent(subLocator: Locator): wdpromise.Promise<boolean> {
+  isElementPresent(subLocator: Locator): Promise<boolean> {
     if (!subLocator) {
       throw new Error(
           'SubLocator is not supplied as a parameter to ' +
@@ -1160,11 +1140,11 @@ export class ElementFinder extends WebdriverWebElement {
    * @returns {!webdriver.promise.Promise.<boolean>} A promise that will be
    *     resolved to whether the two WebElements are equal.
    */
-  equals(element: ElementFinder|WebElement): wdpromise.Promise<any> {
+  equals(element: ElementFinder|WebElement): Promise<any> {
     return WebElement.equals(
-        this.getWebElement(),
-        (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
-                                         element as WebElement);
+               this.getWebElement(),
+               (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
+                                                element as WebElement) as Promise<any>;
   }
 }
 
@@ -1187,7 +1167,7 @@ export class ElementFinder extends WebdriverWebElement {
  * @returns {ElementFinder} which identifies the located
  *     {@link webdriver.WebElement}
  */
-export let build$ = (element: ElementHelper, by: typeof By) => {
+export const build$ = (element: ElementHelper, by: typeof By) => {
   return (selector: string) => {
     return element(by.css(selector));
   };
@@ -1218,7 +1198,7 @@ export let build$ = (element: ElementHelper, by: typeof By) => {
  * @returns {ElementArrayFinder} which identifies the
  *     array of the located {@link webdriver.WebElement}s.
  */
-export let build$$ = (element: ElementHelper, by: typeof By) => {
+export const build$$ = (element: ElementHelper, by: typeof By) => {
   return (selector: string) => {
     return element.all(by.css(selector));
   };

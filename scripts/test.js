@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const path = require('path');
 
-const Executor = require('./test/test_util');
+const Executor = require('./test/test_util').Executor;
 
 const passingTests = [
   'node built/cli.js spec/basicConf.js',
