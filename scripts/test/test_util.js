@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const child_process = require('child_process');
+const fs = require('fs');
 
 class CommandlineTest {
   constructor(command) {
@@ -66,83 +67,83 @@ class CommandlineTest {
       throw new Error(errorMsg);
     };
 
-    if (!this.isExitCode) {
-      this.command = this.command + ' --resultJsonOutputFile ' + testOutputPath;
-    }
-    const args = this.command.split(/\s/);
-    let test_process;
+    try {
 
-    test_process = child_process.spawn(args[0], args.slice(1));
+      let exitCode = await new Promise((resolve, reject) => {
+        if (!this.assertExitCodeOnly_) {
+          this.command_ = this.command_ + ' --resultJsonOutputFile ' + testOutputPath;
+        }
+        const args = this.command_.split(/\s/);
+        const test_process = child_process.spawn(args[0], args.slice(1));
 
-    const processData = (data) => {
-      process.stdout.write('.');
-      output += data;
-      if (this.testLogStream) {
-        this.testLogStream.write(data);
-      }
-    };
+        const processData = (data) => {
+          process.stdout.write('.');
+          output += data;
+          if (this.testLogStream) {
+            this.testLogStream.write(data);
+          }
+        };
 
-    test_process.stdout.on('data', processData);
-    test_process.stderr.on('data', processData);
+        test_process.stdout.on('data', processData);
+        test_process.stderr.on('data', processData);
 
-    const runningTestProcess = () => {
-      return new Promise((resolve, reject) => {
-        test_process.on('error', (error) => {
-          reject(error);
+        test_process.on('error', (err) => {
+          reject(err);
         });
-        test_process.on('exit', (exitCode) => {
+
+        test_process.on('exit', function(exitCode) {
           resolve(exitCode);
         });
       });
-    };
-    const exitCode = await runningTestProcess();
+      
+      if (this.expectedExitCode_ !== exitCode) {
+        flushAndFail('expecting exit code: ' + this.expectedExitCode_ +
+              ', actual: ' + exitCode);
+      }
 
-    if (this.expectedExitCode !== exitCode) {
-      flushAndFail('expecting exit code: ' + this.expectedExitCode +
-        ', actual: ' + exitCode);
-    }
+      if (this.testLogStream) {
+        this.testLogStream.end();
+      }
 
-    if (this.testLogStream) {
-      this.testLogStream.end();
-    }
+      // Skip the rest if we are only verify exit code.
+      // Note: we're expecting a file populated by '--resultJsonOutputFile' after
+      //   this point.
+      if (this.assertExitCodeOnly_) {
+        return;
+      }
 
-    // Skip the rest if we are only verify exit code.
-    // Note: we're expecting a file populated by '--resultJsonOutputFile' after
-    //   this point.
-    if (!this.isExitCode) {
       const raw_data = fs.readFileSync(testOutputPath);
       const testOutput = JSON.parse(raw_data);
 
       let actualErrors = [];
       let duration = 0;
-      testOutput.forEach((specResult) => {
+      testOutput.forEach(function(specResult) {
         duration += specResult.duration;
-        specResult.assertions.forEach((assertion) => {
+        specResult.assertions.forEach(function(assertion) {
           if (!assertion.passed) {
             actualErrors.push(assertion);
           }
         });
       });
 
-      this.expectedErrors.forEach((expectedError) => {
+      this.expectedErrors_.forEach((expectedError) => {
         let found = false;
-        let i;
-        for (i = 0; i < actualErrors.length; ++i) {
-          const actualError = actualErrors[i];
+        for (let i = 0; i < actualErrors.length; ++i) {
+          var actualError = actualErrors[i];
 
           // if expected message is defined and messages don't match
           if (expectedError.message) {
             if (!actualError.errorMsg ||
-              !actualError.errorMsg.match(new RegExp(expectedError.message))) {
-              continue;
-            }
+                !actualError.errorMsg.match(new RegExp(expectedError.message))) {
+                  continue;
+                }
           }
           // if expected stackTrace is defined and stackTraces don't match
           if (expectedError.stackTrace) {
             if (!actualError.stackTrace ||
-              !actualError.stackTrace.match(new RegExp(expectedError.stackTrace))) {
-              continue;
-            }
+                !actualError.stackTrace.match(new RegExp(expectedError.stackTrace))) {
+                  continue;
+                }
           }
           found = true;
           break;
@@ -169,18 +170,22 @@ class CommandlineTest {
         flushAndFail('failed with ' + actualErrors.length + ' unexpected failures');
       }
 
-      if (this.expectedMinTestDuration && duration < this.expectedMinTestDuration) {
-        flushAndFail('expecting test min duration: ' + this.expectedMinTestDuration + ', actual: ' + duration);
+      if (this.expectedMinTestDuration_
+          && duration < this.expectedMinTestDuration_) {
+            flushAndFail('expecting test min duration: ' +
+              this.expectedMinTestDuration_ + ', actual: ' + duration);
       }
-      if (this.expectedMaxTestDuration && duration > this.expectedMaxTestDuration) {
-        flushAndFail('expecting test max duration: ' + this.expectedMaxTestDuration + ', actual: ' + duration);
+      if (this.expectedMaxTestDuration_
+          && duration > this.expectedMaxTestDuration_) {
+            flushAndFail('expecting test max duration: ' +
+              this.expectedMaxTestDuration_ + ', actual: ' + duration);
       }
-    }
-
-    try {
-      fs.unlinkSync(testOutputPath);
-    } catch (err) {
-      // don't do anything
+    } finally {
+      try {
+        fs.unlinkSync(testOutputPath);
+      } catch (err) {
+        // don't do anything
+      }
     }
   }
 }
@@ -192,35 +197,37 @@ class CommandlineTest {
  *   the flag '--resultJsonOutputFile', unless only exitCode is being tested.
  *   For now, this means protractor tests (jasmine/mocha).
  */
-module.exports = class Executor {
-  constructor() {
-    this.tests = [];
-  }
-
-  addCommandlineTest(command) {
-    const test = new CommandlineTest(command);
-    this.tests.push(test);
+exports.Executor = function() {
+  let tests = [];
+  this.addCommandlineTest = (command) => {
+    let test = new CommandlineTest(command);
+    tests.push(test);
     return test;
-  }
+  };
 
-  async execute(logFile) {
-    let failed = false;
-
-    for (let test of this.tests) {
+  this.runTests = async function(i, logFile, failed) {
+    if (i < tests.length) {
       try {
-        console.log('running: ' + test.command);
+        console.log('running: ' + tests[i].command_);
         if (logFile) {
-          test.setTestLogFile(logFile);
+          tests[i].setTestLogFile(logFile);
         }
-        await test.run();
+        await tests[i].run();
         console.log('\n>>> \033[1;32mpass\033[0m');
-      } catch (error) {
+      } catch (err) {
         failed = true;
-        console.log('\n>>> \033[1;31mfail: ' + error.toString() + '\033[0m');
+        console.log('\n>>> \033[1;31mfail: ' + err.toString() + '\033[0m');
+      } finally {
+        this.runTests(i + 1, logFile, failed);
       }
+    } else {
+      console.log('Summary: ' + (failed ? 'fail' : 'pass'));
+      process.exit(failed ? 1 : 0);
     }
+  };
 
-    console.log('Summary: ' + (failed ? 'fail' : 'pass'));
-    process.exit(failed ? 1 : 0);
-  }
+  this.execute = (logFile) => {
+    let failed = false;
+    this.runTests(0, logFile, failed);
+  };
 };
