@@ -154,5 +154,5 @@ passingTests.forEach((passing_test) => {
 if (process.env['CIRCLE_ARTIFACTS']) {
   executor.execute(path.join(process.env['CIRCLE_ARTIFACTS'], 'test_log.txt')).then();
 } else {
-  executor.execute().then();
+  executor.execute();
 }
