@@ -213,10 +213,10 @@ module.exports = class Executor {
           test.setTestLogFile(logFile);
         }
         await test.run();
-        console.log('\n>>> \0o33[1;32mpass\0o33[0m');
+        console.log('\n>>> \033[1;32mpass\033[0m');
       } catch (error) {
         failed = true;
-        console.log('\n>>> \0o33[1;31mfail: ' + error.toString() + '\0o33[0m');
+        console.log('\n>>> \033[1;31mfail: ' + error.toString() + '\033[0m');
       }
     }
 
