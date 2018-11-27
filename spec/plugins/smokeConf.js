@@ -4,6 +4,7 @@ var env = require('../environment.js');
 // Tests the (potential) edge case of exactly one plugin being used
 exports.config = {
   mockSelenium: true,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 

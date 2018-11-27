@@ -5,7 +5,7 @@ const Executor = require('./test/test_util').Executor;
 
 const passingTests = [
   'node built/cli.js spec/basicConf.js',
-  // 'node built/cli.js spec/basicConf.js --useBlockingProxy',
+  'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
   'node built/cli.js spec/altRootConf.js',
   'node built/cli.js spec/inferRootConf.js',
@@ -21,7 +21,7 @@ const passingTests = [
   'node built/cli.js spec/suitesConf.js --suite okmany',
   'node built/cli.js spec/suitesConf.js --suite okspec',
   'node built/cli.js spec/suitesConf.js --suite okmany,okspec',
-  // 'node built/cli.js spec/plugins/smokeConf.js',
+  'node built/cli.js spec/plugins/smokeConf.js',
   'node built/cli.js spec/plugins/multiPluginConf.js',
   'node built/cli.js spec/plugins/jasminePostTestConf.js',
   'node built/cli.js spec/plugins/mochaPostTestConf.js',
@@ -37,7 +37,7 @@ const passingTests = [
   'node built/cli.js spec/controlLockConf.js',
   'node built/cli.js spec/customFramework.js',
   'node built/cli.js spec/noGlobalsConf.js',
-  // 'node built/cli.js spec/angular2Conf.js',
+  'node built/cli.js spec/angular2Conf.js',
   'node built/cli.js spec/hybridConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
