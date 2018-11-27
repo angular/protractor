@@ -60,56 +60,53 @@ class CommandlineTest {
     const start = new Date().getTime();
     const testOutputPath = `test_output_${start}.tmp`;
     let output = '';
+    let exitCode = 'exitCode is not define';
 
     const flushAndFail = (errorMsg) => {
       process.stdout.write(output);
       throw new Error(errorMsg);
     };
 
-    return new Promise((resolve, reject) => {
-      if (!this.isExitCode) {
-        this.command = this.command + ' --resultJsonOutputFile ' + testOutputPath;
-      }
-      let args = this.command.split(/\s/);
-      let test_process;
+    if (!this.isExitCode) {
+      this.command = this.command + ' --resultJsonOutputFile ' + testOutputPath;
+    }
+    const args = this.command.split(/\s/);
+    let test_process;
 
-      test_process = child_process.spawn(args[0], args.slice(1));
+    test_process = child_process.spawn(args[0], args.slice(1));
 
-      const processData = (data) => {
-        process.stdout.write('.');
-        output += data;
-        if (this.testLogStream) {
-          this.testLogStream.write(data);
-        }
-      };
-
-      test_process.stdout.on('data', processData);
-      test_process.stderr.on('data', processData);
-
-      test_process.on('error', (err) => {
-        reject(err);
-      });
-
-      test_process.on('exit', (exitCode) => {
-        resolve(exitCode);
-      });
-    }).then((exitCode) => {
-      if (this.expectedExitCode !== exitCode) {
-        flushAndFail('expecting exit code: ' + this.expectedExitCode +
-          ', actual: ' + exitCode);
-      }
-
+    const processData = (data) => {
+      process.stdout.write('.');
+      output += data;
       if (this.testLogStream) {
-        this.testLogStream.end();
+        this.testLogStream.write(data);
       }
+    };
 
-      // Skip the rest if we are only verify exit code.
-      // Note: we're expecting a file populated by '--resultJsonOutputFile' after
-      //   this point.
-      if (this.isExitCode) {
-        return;
-      }
+    test_process.stdout.on('data', processData);
+    test_process.stderr.on('data', processData);
 
+    test_process.on('error', (error) => {
+      exitCode = error;
+    });
+
+    test_process.on('exit', (exit) => {
+      exitCode = exit;
+    });
+
+    if (this.expectedExitCode !== exitCode) {
+      flushAndFail('expecting exit code: ' + this.expectedExitCode +
+        ', actual: ' + exitCode);
+    }
+
+    if (this.testLogStream) {
+      this.testLogStream.end();
+    }
+
+    // Skip the rest if we are only verify exit code.
+    // Note: we're expecting a file populated by '--resultJsonOutputFile' after
+    //   this point.
+    if (!this.isExitCode) {
       const raw_data = fs.readFileSync(testOutputPath);
       const testOutput = JSON.parse(raw_data);
 
@@ -175,13 +172,13 @@ class CommandlineTest {
       if (this.expectedMaxTestDuration && duration > this.expectedMaxTestDuration) {
         flushAndFail('expecting test max duration: ' + this.expectedMaxTestDuration + ', actual: ' + duration);
       }
-    }).finally(() => {
-      try {
-        fs.unlinkSync(testOutputPath);
-      } catch (err) {
-        // don't do anything
-      }
-    });
+    }
+
+    try {
+      fs.unlinkSync(testOutputPath);
+    } catch (err) {
+      // don't do anything
+    }
   }
 }
 
