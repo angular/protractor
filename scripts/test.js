@@ -55,9 +55,9 @@ const passingTests = [
   // 'node spec/install/test.js'
 ];
 
-var executor = new Executor();
+const executor = new Executor();
 
-passingTests.forEach(function(passing_test) {
+passingTests.forEach((passing_test) => {
   executor.addCommandlineTest(passing_test)
       .assertExitCodeOnly();
 });
