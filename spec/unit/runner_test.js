@@ -2,69 +2,70 @@ var Runner = require('../../built/runner').Runner;
 var Logger = require('../../built/logger').Logger,
     WriteTo = require('../../built/logger').WriteTo;
 
-describe('the Protractor runner', function() {
-  beforeAll(function() {
+describe('the Protractor runner', () => {
+  beforeAll(() => {
     Logger.writeTo = WriteTo.NONE;
   });
 
-  afterAll(function() {
+  afterAll(() => {
     Logger.writeTo = WriteTo.CONSOLE;
   });
-  it('should export its config', function() {
-    var config = {
+  it('should export its config', () => {
+    const config = {
       foo: 'bar'
     };
 
-    var runner = new Runner(config);
+    const runner = new Runner(config);
 
     expect(runner.getConfig()).toEqual(config);
   });
 
-  it('should run', function(done) {
-    var config = {
+  it('should run', async () => {
+    const config = {
       mockSelenium: true,
       specs: ['*.js'],
       framework: 'debugprint'
     };
-    var exitCode;
-    var runner = new Runner(config);
+    let exitCode;
+    const runner = new Runner(config);
     runner.exit_ = function(exit) {
       exitCode = exit;
     };
 
-    runner.run().then(function() {
-      expect(exitCode).toEqual(0);
-      done();
-    });
+    await runner.run()
+    expect(exitCode).toEqual(0);
   });
 
-  it('should fail with no specs', function() {
-    var config = {
+  it('should fail with no specs', async (done) => {
+    const config = {
       mockSelenium: true,
       specs: [],
       framework: 'debugprint'
     };
-    var exitCode;
-    Runner.prototype.exit_ = function(exit) {
-      exitCode = exit;
-    };
-    var runner = new Runner(config);
 
-    expect(function() {
-      runner.run();
-    }).toThrow();
+    const runner = new Runner(config);
+
+    try {
+      await runner.run();
+      done.fail('expected error when no specs are defined');
+    } catch (err) {
+      done();
+    }
   });
 
-  it('should fail when no custom framework is defined', function(done) {
-    var config = {
+  it('should fail when no custom framework is defined', async (done) => {
+    const config = {
       mockSelenium: true,
       specs: ['*.js'],
       framework: 'custom'
     };
 
-    var runner = new Runner(config);
-    runner.run().then(function() {
+    const runner = new Runner(config);
+    try {
+      await runner.run();
       done.fail('expected error when no custom framework is defined');
-    }, done);
+    } catch (err) {
+      done();
+    }
   });
 });
