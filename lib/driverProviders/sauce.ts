@@ -4,7 +4,6 @@
  * it down, and setting up the driver correctly.
  */
 
-import * as q from 'q';
 import {Session, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 

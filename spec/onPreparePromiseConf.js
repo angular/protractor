@@ -1,7 +1,6 @@
 // Configuration using a function in onPrepare to set a parameter before
 // testing.
 const env = require('./environment.js');
-var q = require('q');
 
 // The main suite of Protractor tests.
 exports.config = {
