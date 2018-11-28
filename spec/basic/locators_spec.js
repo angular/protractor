@@ -317,7 +317,7 @@ describe('locators', () => {
     it('should find elements with text-transform style', async() => {
       expect(await element(by.cssContainingText('#transformedtext div',
           'Uppercase')).getAttribute('id')).toBe('textuppercase');
-      expect(element(await by.cssContainingText('#transformedtext div',
+      expect(await element(by.cssContainingText('#transformedtext div',
           'Lowercase')).getAttribute('id')).toBe('textlowercase');
       expect(await element(by.cssContainingText('#transformedtext div',
           'capitalize')).getAttribute('id')).toBe('textcapitalize');
