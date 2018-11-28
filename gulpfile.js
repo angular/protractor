@@ -41,7 +41,7 @@ gulp.task('tslint', function() {
 });
 
 gulp.task('lint', function(done) {
-  runSequence('tslint', 'jshint', 'format:enforce', done);
+  runSequence('tslint', 'format:enforce', done);
 });
 
 // prevent contributors from using the wrong version of node
@@ -59,21 +59,13 @@ gulp.task('checkVersion', function(done) {
   }
 });
 
-gulp.task('built:copy', function(done) {
+gulp.task('built:copy', function() {
   return gulp.src(['lib/**/*.js'])
       .pipe(gulp.dest('built/'));
-  done();
 });
 
 gulp.task('webdriver:update', function(done) {
   runSpawn(done, 'node', ['bin/webdriver-manager', 'update']);
-});
-
-gulp.task('jshint', function(done) {
-  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', '-c',
-      '.jshintrc', 'lib', 'spec', 'scripts',
-      '--exclude=lib/selenium-webdriver/**/*.js,lib/webdriver-js-extender/**/*.js,' +
-      'spec/dependencyTest/*.js,spec/install/**/*.js']);
 });
 
 gulp.task('format:enforce', function() {
