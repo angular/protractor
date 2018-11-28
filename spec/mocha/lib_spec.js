@@ -33,7 +33,7 @@ describe('protractor library', () => {
     this.slow(6000);
     
     await browser.get('index.html');
-    expect(browser.getTitle()).to.eventually.equal('My AngularJS App');
+    expect(await browser.getTitle()).to.equal('My AngularJS App');
   });
 
   describe('with async tests', () => {

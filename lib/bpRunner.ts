@@ -1,5 +1,4 @@
 import {ChildProcess, fork} from 'child_process';
-import * as q from 'q';
 
 import {Config} from './config';
 import {Logger} from './logger';
@@ -15,7 +14,7 @@ export class BlockingProxyRunner {
   constructor(private config: Config) {}
 
   start() {
-    return q.Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.checkSupportedConfig();
 
       let args = [
