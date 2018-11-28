@@ -34,36 +34,35 @@ export function filterStackTrace(text: string): string {
  * @param {Array.<object>}} args The args to pass into filenameOrFn.
  * @return {Promise} A promise that will resolve when filenameOrFn completes.
  */
-export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
-  return new Promise(async (resolve) => {
-    if (filenameOrFn && !(typeof filenameOrFn === 'string' || typeof filenameOrFn === 'function')) {
-      throw new Error('filenameOrFn must be a string or function');
-    }
+export async function runFilenameOrFn_(
+    configDir: string, filenameOrFn: any, args?: any[]): Promise<any> {
+  if (filenameOrFn && !(typeof filenameOrFn === 'string' || typeof filenameOrFn === 'function')) {
+    throw new Error('filenameOrFn must be a string or function');
+  }
 
-    if (typeof filenameOrFn === 'string') {
-      filenameOrFn = require(path.resolve(configDir, filenameOrFn));
-    }
-    if (typeof filenameOrFn === 'function') {
-      let results;
-      try {
-        results = await filenameOrFn.apply(null, args);
-      } catch (err) {
-        if (typeof err === 'string') {
-          err = new Error(err);
-        } else {
-          err = err as Error;
-          if (!err.stack) {
-            err.stack = new Error().stack;
-          }
+  if (typeof filenameOrFn === 'string') {
+    filenameOrFn = require(path.resolve(configDir, filenameOrFn));
+  }
+  if (typeof filenameOrFn === 'function') {
+    let results;
+    try {
+      results = await filenameOrFn.apply(null, args);
+    } catch (err) {
+      if (typeof err === 'string') {
+        err = new Error(err);
+      } else {
+        err = err as Error;
+        if (!err.stack) {
+          err.stack = new Error().stack;
         }
-        err.stack = exports.filterStackTrace(err.stack);
-        throw err;
       }
-      resolve(results);
-    } else {
-      resolve(undefined);
+      err.stack = exports.filterStackTrace(err.stack);
+      throw err;
     }
-  });
+    return results;
+  } else {
+    return undefined;
+  }
 }
 
 /**

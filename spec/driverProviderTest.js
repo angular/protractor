@@ -48,7 +48,8 @@ testDriverProvider(new Direct(chromeConfig)).
     then(() => {
       console.log('direct.dp with chrome working!');
     }, (err) => {
-      console.log('direct.dp with chrome failed with', err);
+      console.error('direct.dp with chrome failed with', err);
+      throw err;
     });
 
 const firefoxConfig = {
@@ -60,7 +61,8 @@ testDriverProvider(new Direct(firefoxConfig)).
     then(() => {
       console.log('direct.dp with firefox working!');
     }, (err) => {
-      console.log('direct.dp with firefox failed with', err);
+      console.error('direct.dp with firefox failed with', err);
+      throw err;
     });
 
 const hostedConfig = {
@@ -73,7 +75,8 @@ testDriverProvider(new Hosted(hostedConfig)).
     then(() => {
       console.log('hosted.dp working!');
     }, (err) => {
-      console.log('hosted.dp failed with', err);
+      console.error('hosted.dp failed with', err);
+      throw err;
     });
 
 const hostedPromisedConfig = {
@@ -86,7 +89,8 @@ testDriverProvider(new Hosted(hostedPromisedConfig)).
     then(() => {
       console.log('hosted.dp with promises working!');
     }, (err) => {
-      console.log('hosted.dp with promises failed with', err);
+      console.error('hosted.dp with promises failed with', err);
+      throw err;
     });
 
 const localConfig = {
@@ -99,7 +103,8 @@ testDriverProvider(new Local(localConfig)).
     then(() => {
       console.log('local.dp working!');
     }, (err) => {
-      console.log('local.dp failed with', err);
+      console.error('local.dp failed with', err);
+      throw err;
     });
 
 if (argv.sauceUser && argv.sauceKey) {
@@ -115,7 +120,8 @@ if (argv.sauceUser && argv.sauceKey) {
       then(() => {
         console.log('sauce.dp working!');
       }, (err) => {
-        console.log('sauce.dp failed with', err);
+        console.error('sauce.dp failed with', err);
+        throw err;
       });
 }
 
@@ -133,6 +139,7 @@ if (argv.browserstackUser && argv.browserstackKey) {
       then(() => {
         console.log('browserstack.dp working!');
       }, (err) => {
-        console.log('browserstack.dp failed with', err);
+        console.error('browserstack.dp failed with', err);
+        throw err;
       });
 }
