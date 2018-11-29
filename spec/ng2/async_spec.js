@@ -73,7 +73,7 @@ describe('async angular2 application', () => {
           7000);
       await timeout.$('.cancel').click();
 
-      const text = timeout.$('.val').getText();
+      const text = await timeout.$('.val').getText();
       await browser.driver.sleep(3000);
       expect(await timeout.$('.val').getText()).toEqual(text);
     });
