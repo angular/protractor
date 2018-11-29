@@ -44,7 +44,13 @@ describe('the Protractor runner', () => {
     };
 
     const runner = new Runner(config);
-    expect(await runner.run()).toThrowError();
+    let errMessage = 'No error found';
+    try {
+      await runner.run()
+    } catch (err) {
+      errMessage = err.message;
+    }
+    expect(errMessage).not.toBe('No error found');
   });
 
   it('should fail when no custom framework is defined', async () => {
@@ -55,6 +61,12 @@ describe('the Protractor runner', () => {
     };
 
     const runner = new Runner(config);
-    expect(await runner.run()).toThrowError();
+    let errMessage = 'No error found';
+    try {
+      await runner.run()
+    } catch (err) {
+      errMessage = err.message;
+    }
+    expect(errMessage).not.toBe('No error found');
   });
 });
