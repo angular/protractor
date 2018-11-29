@@ -7,15 +7,15 @@ const child_process = require('child_process');
 
 // Delete session method to be used at the end of the test as well as
 // when the tests fail.
-const deleteSession = async (sessionId, err) => {
-  await new Promise(resolve => {
+const deleteSession = (sessionId, err) => {
+  return new Promise(resolve => {
     const deleteOptions = {
       hostname: 'localhost',
       port: 4444,
       path: '/wd/hub/session/' + sessionId,
       method: 'DELETE'
     };
-    var req = http.request(deleteOptions, res => {
+    const req = http.request(deleteOptions, res => {
       res.on('end', () => {
         if (err) {
           throw err;
@@ -111,7 +111,7 @@ const run = async () => {
       res.on('data', (chunk) => {    
         state = JSON.parse(chunk.toString()).state;
       });
-      res.on('end', function() {
+      res.on('end', () => {
         if (state === 'success') {
           resolve();
         }
