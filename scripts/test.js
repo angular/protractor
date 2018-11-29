@@ -38,22 +38,19 @@ const passingTests = [
   'node built/cli.js spec/controlLockConf.js',
   'node built/cli.js spec/customFramework.js',
   'node built/cli.js spec/noGlobalsConf.js',
-  'node built/cli.js spec/angular2Conf.js',
+  // 'node built/cli.js spec/angular2Conf.js',
   'node built/cli.js spec/hybridConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
   'node built/cli.js spec/built/noCFPluginConf.js',
   // //'node scripts/driverProviderAttachSession.js',
   // 'node scripts/errorTest.js',
-  // // Interactive Element Explorer tasks
-  // 'node scripts/interactive_tests/interactive_test.js',
-  // 'node scripts/interactive_tests/with_base_url.js',
   // // Unit tests
   // 'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
-  // // Dependency tests
-  // 'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
-  // // Typings tests
-  // 'node spec/install/test.js'
+  // Dependency tests
+  'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
+  // Typings tests
+  'node spec/install/test.js'
 ];
 
 const executor = new Executor();
