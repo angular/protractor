@@ -36,7 +36,7 @@ describe('the Protractor runner', () => {
     expect(exitCode).toEqual(0);
   });
 
-  it('should fail with no specs', async (done) => {
+  it('should fail with no specs', async () => {
     const config = {
       mockSelenium: true,
       specs: [],
@@ -44,16 +44,10 @@ describe('the Protractor runner', () => {
     };
 
     const runner = new Runner(config);
-
-    try {
-      await runner.run();
-      done.fail('expected error when no specs are defined');
-    } catch (err) {
-      done();
-    }
+    expect(await runner.run()).toThrowError();
   });
 
-  it('should fail when no custom framework is defined', async (done) => {
+  it('should fail when no custom framework is defined', async () => {
     const config = {
       mockSelenium: true,
       specs: ['*.js'],
@@ -61,11 +55,6 @@ describe('the Protractor runner', () => {
     };
 
     const runner = new Runner(config);
-    try {
-      await runner.run();
-      done.fail('expected error when no custom framework is defined');
-    } catch (err) {
-      done();
-    }
+    expect(await runner.run()).toThrowError();
   });
 });
