@@ -43,7 +43,7 @@ const passingTests = [
   'node built/cli.js spec/built/noCFBasicConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
   'node built/cli.js spec/built/noCFPluginConf.js',
-  // //'node scripts/driverProviderAttachSession.js',
+  'node scripts/driverProviderAttachSession.js',
   // 'node scripts/errorTest.js',
   // // Unit tests
   // 'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
