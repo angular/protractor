@@ -3,7 +3,7 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
-import {Builder, Session, WebDriver} from 'selenium-webdriver';
+import {Builder, WebDriver} from 'selenium-webdriver';
 
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
