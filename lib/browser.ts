@@ -215,19 +215,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * Initialized to `false` by the runner.
    *
-   * This property is deprecated - please use waitForAngularEnabled instead.
+   * ignoreSynchornization is deprecated.
+   *
+   * Please use waitForAngularEnabled instead.
    *
    * @deprecated
    * @type {boolean}
    */
-  set ignoreSynchronization(value) {
-    this.waitForAngularEnabled(!value);
-  }
-
-  get ignoreSynchronization() {
-    return this.internalIgnoreSynchronization;
-  }
-
   private internalIgnoreSynchronization: boolean;
 
   /**
@@ -414,7 +408,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       }
       this.internalIgnoreSynchronization = !enabled;
     }
-    return !this.ignoreSynchronization;
+    return !this.internalIgnoreSynchronization;
   }
 
   /**
@@ -607,7 +601,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   async waitForAngular(opt_description?: string): Promise<any> {
     let description = opt_description ? ' - ' + opt_description : '';
-    if (this.ignoreSynchronization) {
+    if (!await this.waitForAngularEnabled()) {
       return true;
     }
 
@@ -930,15 +924,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
             }
           }
         })
-        .then(() => {
+        .then(async () => {
           // Reset bpClient sync
           if (this.bpClient) {
-            return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
+            return this.bpClient.setWaitEnabled(await this.waitForAngularEnabled());
           }
         })
-        .then(() => {
+        .then(async () => {
           // Run Plugins
-          if (!this.ignoreSynchronization) {
+          if (await this.waitForAngularEnabled()) {
             return this.plugins_.onPageStable(this);
           }
         })
@@ -955,17 +949,14 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to start.
    */
-  refresh(opt_timeout?: number) {
-    if (this.ignoreSynchronization) {
+  async refresh(opt_timeout?: number) {
+    if (!await this.waitForAngularEnabled()) {
       return this.driver.navigate().refresh();
     }
 
-    return this
-        .executeScriptWithDescription(
-            'return window.location.href', 'Protractor.refresh() - getUrl')
-        .then((href: string) => {
-          return this.get(href, opt_timeout);
-        });
+    const href = await this.executeScriptWithDescription(
+        'return window.location.href', 'Protractor.refresh() - getUrl');
+    return this.get(href, opt_timeout);
   }
 
   /**
