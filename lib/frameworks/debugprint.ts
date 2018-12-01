@@ -1,7 +1,8 @@
-var util = require('util'),
-    Logger = require('../logger').Logger;
+import { Logger } from '../logger';
+import { Runner } from '../runner';
+import * as util from 'util';
 
-var logger = new Logger('debugger');
+const logger = new Logger('debugger');
 
 /**
  * A debug framework which does not actually run any tests, just spits
@@ -11,9 +12,9 @@ var logger = new Logger('debugger');
  * @param {Array} specs Array of Directory Path Strings.
  * @return {Promise} Promise resolved with the test results
  */
-exports.run = (runner, specs) => {
+export const run = (runner: Runner, specs: Array<string>) => {
   return new Promise(resolve => {
-    logger.info('Resolved spec files: ' + util.inspect(specs));
+    logger.info(`Resolved spec files: ${util.inspect(specs)}`);
     resolve({
       failedCount: 0
     });

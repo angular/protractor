@@ -385,7 +385,7 @@ export class Runner extends EventEmitter {
       frameworkPath = './frameworks/mocha.js';
     } else if (this.config_.framework === 'debugprint') {
       // Private framework. Do not use.
-      frameworkPath = './frameworks/debugprint.js';
+      frameworkPath = './frameworks/debugprint.ts';
     } else if (this.config_.framework === 'explorer') {
       // Private framework. Do not use.
       frameworkPath = './frameworks/explorer.js';
