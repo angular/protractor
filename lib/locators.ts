@@ -1,4 +1,4 @@
-import {By, ByHash, promise as wdpromise, WebDriver, WebElement} from 'selenium-webdriver';
+import {By, ByHash, WebDriver, WebElement} from 'selenium-webdriver';
 
 let clientSideScripts = require('./clientsidescripts');
 

@@ -6,8 +6,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import {Capabilities, WebDriver} from 'selenium-webdriver';
-import {Driver as ChromeDriver, ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
-import {Driver as FirefoxDriver} from 'selenium-webdriver/firefox';
+import {ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
 
 import {Config} from '../config';
 import {BrowserError} from '../exitCodes';

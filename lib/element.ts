@@ -73,7 +73,7 @@ let WEB_ELEMENT_FUNCTIONS = [
  *    that returns a list of the underlying Web Elements.
  * @param {webdriver.Locator} locator The most relevant locator. It is only
  *    used for error reporting and ElementArrayFinder.locator.
- * @param {Array.<webdriver.promise.Promise>} opt_actionResults An array
+ * @param {Array<Promise>} opt_actionResults An array
  *    of promises which will be retrieved with then. Resolves to the latest
  *    action result, or null if no action has been called.
  * @returns {ElementArrayFinder}
@@ -1091,7 +1091,7 @@ export class ElementFinder extends WebdriverWebElement {
    * @see ElementFinder.isPresent
    *
    * @param {webdriver.Locator} subLocator Locator for element to look for.
-   * @returns {webdriver.promise.Promise<boolean>} which resolves to whether
+   * @returns {Promise<boolean>} which resolves to whether
    *     the subelement is present on the page.
    */
   isElementPresent(subLocator: Locator): Promise<boolean> {
@@ -1137,7 +1137,7 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * @param {!ElementFinder|!webdriver.WebElement} The element to compare to.
    *
-   * @returns {!webdriver.promise.Promise.<boolean>} A promise that will be
+   * @returns {!Promise<boolean>} A promise that will be
    *     resolved to whether the two WebElements are equal.
    */
   equals(element: ElementFinder|WebElement): Promise<any> {
