@@ -1,7 +1,7 @@
-describe('single failure spec2', function() {
-  it('should fail expectation', function() {
-    browser.get('index.html');
-    var greeting = element(by.binding('greeting'));
-    expect(greeting.getText()).toEqual('INTENTIONALLY INCORRECT');
+describe('single failure spec2', () => {
+  it('should fail expectation', async () => {
+    await browser.get('index.html');
+    const greeting = element(by.binding('greeting'));
+    expect(await greeting.getText()).toEqual('INTENTIONALLY INCORRECT');
   });
 });
