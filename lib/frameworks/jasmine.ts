@@ -119,7 +119,7 @@ export const run = async (runner: Runner, specs: Array<string>) => {
   // Filter specs to run based on jasmineNodeOpts.grep and jasmineNodeOpts.invert.
   jasmine.getEnv().specFilter = (spec) => {
     const grepMatch = !jasmineNodeOpts || !jasmineNodeOpts.grep ||
-      spec.getFullName().match(new RegExp(jasmineNodeOpts.grep)) != null;
+        spec.getFullName().match(new RegExp(jasmineNodeOpts.grep)) != null;
     const invertGrep = !!(jasmineNodeOpts && jasmineNodeOpts.invertGrep);
     if (grepMatch !== invertGrep) {
       return true;
