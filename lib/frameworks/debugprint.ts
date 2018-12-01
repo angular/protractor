@@ -1,6 +1,6 @@
+import * as util from 'util';
 import {Logger} from '../logger';
 import {Runner} from '../runner';
-import * as util from 'util';
 
 const logger = new Logger('debugger');
 
