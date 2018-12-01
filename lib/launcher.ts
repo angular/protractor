@@ -221,7 +221,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
           }
           taskResults_.add(result);
           task.done();
-          createNextTaskRunner();
+          await createNextTaskRunner();
           // If all tasks are finished
           if (scheduler.numTasksOutstanding() === 0) {
             resolve();
@@ -232,6 +232,8 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
           logger.error('Error:', (err as any).stack || err.message || err);
           await cleanUpAndExit(errorCode ? errorCode : RUNNERS_FAILED_EXIT_CODE);
         }
+      } else {
+        resolve();
       }
     });
   };
