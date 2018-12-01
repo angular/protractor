@@ -30,10 +30,7 @@ export interface Assertion {
   stackTrace?: string;
 }
 
-export const enum Status {
-  PASSED = 'passed',
-    FAILED = 'failed'
-}
+export const enum Status {PASSED = 'passed', FAILED = 'failed'}
 
 export class RunnerReporter {
   public testResult: Array<Entry>;
@@ -63,7 +60,7 @@ export class RunnerReporter {
       category: result.fullName.slice(0, -result.description.length).trim()
     };
 
-    switch(result.status) {
+    switch (result.status) {
       case Status.PASSED: {
         this.emitter.emit('testPass', specInfo);
         break;
@@ -82,9 +79,7 @@ export class RunnerReporter {
     };
 
     if (result.failedExpectations.length === 0) {
-      entry.assertions.push({
-        passed: true
-      });
+      entry.assertions.push({passed: true});
     }
 
     result.failedExpectations.forEach((item: FailedExpectation) => {
@@ -123,8 +118,7 @@ export const run = async (runner: Runner, specs: Array<string>) => {
 
   // Filter specs to run based on jasmineNodeOpts.grep and jasmineNodeOpts.invert.
   jasmine.getEnv().specFilter = (spec) => {
-    const grepMatch = !jasmineNodeOpts ||
-      !jasmineNodeOpts.grep ||
+    const grepMatch = !jasmineNodeOpts || !jasmineNodeOpts.grep ||
       spec.getFullName().match(new RegExp(jasmineNodeOpts.grep)) != null;
     const invertGrep = !!(jasmineNodeOpts && jasmineNodeOpts.invertGrep);
     if (grepMatch !== invertGrep) {
@@ -155,10 +149,7 @@ export const run = async (runner: Runner, specs: Array<string>) => {
         if (originalOnComplete) {
           await originalOnComplete();
         }
-        resolve({
-          failedCount: reporter.failedCount,
-          specResults: reporter.testResult
-        });
+        resolve({failedCount: reporter.failedCount, specResults: reporter.testResult});
       } catch (err) {
         reject(err);
       }
