@@ -933,7 +933,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         '`browser.getLocationAbsUrl()` is deprecated, please use `browser.getCurrentUrl` instead.');
     await this.waitForAngular();
     const rootEl = await this.angularAppRoot();
-    await this.executeScriptWithDescription(
+    return await this.executeScriptWithDescription(
         clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl);
   }
 
