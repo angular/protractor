@@ -1,5 +1,5 @@
-describe('timeout spec', function() {
-  it('should timeout due to jasmine spec limit', function() {
-    browser.get('index.html#/form');
+describe('timeout spec', () => {
+  it('should timeout due to jasmine spec limit', async () => {
+    await browser.get('index.html#/form');
   }, 1);
 });

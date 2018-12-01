@@ -16,17 +16,17 @@ env:
   matrix:
     - JOB=full
     - JOB=smoke
-    # - JOB=bstack
+    - JOB=bstack
 
 matrix:
   allow_failures:
     - env: "JOB=smoke"
-#     - env: "JOB=bstack"
+    - env: "JOB=bstack"
   exclude:
     - env: JOB=smoke
       node_js: "9"
-#     - env: JOB=bstack
-#       node_js: "8"
+    - env: JOB=bstack
+      node_js: "9"
 
 addons:
   apt:

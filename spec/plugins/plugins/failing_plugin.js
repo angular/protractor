@@ -6,7 +6,7 @@ module.exports = {
     self.addFailure('from setup');
   },
 
-  teardown: function() {
+  teardown: async function() {
     await new Promise(resolve => {
       setTimeout(resolve, 100);
     });
