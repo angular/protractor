@@ -12,7 +12,6 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
-    "@types/node": "^6.0.46",
     "@types/q": "^0.0.32",
     "@types/selenium-webdriver": "^3.0.0",
     "blocking-proxy": "^1.0.0",
@@ -30,6 +29,7 @@
     "webdriver-manager": "^12.0.6"
   },
   "devDependencies": {
+    "@types/node": "^6.0.46",
     "@types/chalk": "^0.4.28",
     "@types/glob": "^5.0.29",
     "@types/jasmine": "^2.5.47",
