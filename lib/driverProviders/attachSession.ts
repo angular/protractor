@@ -3,8 +3,7 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
-import * as q from 'q';
-import {promise as wdpromise, WebDriver} from 'selenium-webdriver';
+import {WebDriver} from 'selenium-webdriver';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -22,13 +21,12 @@ export class AttachSession extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): q.Promise<any> {
+  protected async setupDriverEnv(): Promise<any> {
     logger.info('Using the selenium server at ' + this.config_.seleniumAddress);
     logger.info('Using session id - ' + this.config_.seleniumSessionId);
-    return q(undefined);
   }
 
   /**
@@ -40,7 +38,7 @@ export class AttachSession extends DriverProvider {
   getNewDriver(): WebDriver {
     const httpClient = new http.HttpClient(this.config_.seleniumAddress);
     const executor = new http.Executor(httpClient);
-    const newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId);
+    const newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId, null);
     this.drivers_.push(newDriver);
     return newDriver;
   }
@@ -50,7 +48,5 @@ export class AttachSession extends DriverProvider {
    *
    * @public
    */
-  quitDriver(): wdpromise.Promise<void> {
-    return wdpromise.when(undefined);
-  }
+  async quitDriver(): Promise<void> {}
 }

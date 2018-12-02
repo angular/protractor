@@ -1,5 +1,3 @@
-import {WebDriver} from 'selenium-webdriver';
-
 import {PluginConfig} from './plugins';
 
 export interface Config {
@@ -229,12 +227,6 @@ export interface Config {
    * firefox in the default locations.
    */
   firefoxPath?: string;
-
-  // ---- 8. To re-use an existing WebDriver object ---------------------------
-
-  // This would not appear in a configuration file. Instead a configuration
-  // object would be created that includes an existing webdriver.
-  seleniumWebDriver?: WebDriver;
 
   // ---------------------------------------------------------------------------
   // ----- What tests to run ---------------------------------------------------
@@ -723,6 +715,11 @@ export interface Config {
   nodeDebug?: boolean;
   debuggerServerPort?: number;
   frameworkPath?: string;
+
+  /**
+   * Deprecated: Element explorer depends on the WebDriver control flow, and
+   * thus is no longer supported.
+   */
   elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];

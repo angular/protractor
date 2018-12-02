@@ -8,19 +8,19 @@ var WriteTo = require('../../../built/logger').WriteTo;
 var Local = require('../../../built/driverProviders').Local;
 var webdriver, file;
 
-describe('local connect', function() {
-  beforeEach(function() {
+describe('local connect', () => {
+  beforeEach(() => {
     ProtractorError.SUPRESS_EXIT_CODE = true;
     Logger.setWrite(WriteTo.NONE);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ProtractorError.SUPRESS_EXIT_CODE = false;
     Logger.setWrite(WriteTo.CONSOLE);
   });
 
-  describe('without the selenium standalone jar', function() {
-    it('should throw an error jar file is not present', function() {
+  describe('without the selenium standalone jar', () => {
+    it('should throw an error jar file is not present', async () => {
       var config = {
         capabilities: { browserName: 'chrome' },
         seleniumServerJar: '/foo/bar/selenium.jar'
@@ -28,7 +28,7 @@ describe('local connect', function() {
       var errorFound = false;
       try {
         webdriver = new Local(config);
-        webdriver.setupEnv();
+        await webdriver.setupEnv();
       } catch(e) {
         errorFound = true;
         expect(e.code).toBe(BrowserError.CODE);
@@ -37,8 +37,8 @@ describe('local connect', function() {
     });
   });
 
-  describe('with the selenium standalone jar', function() {
-    it('should throw an error if the jar file does not work', function() {
+  describe('with the selenium standalone jar', () => {
+    it('should throw an error if the jar file does not work', async () => {
       var jarFile = '';
       beforeEach(function() {
         // add files to selenium folder
@@ -54,7 +54,7 @@ describe('local connect', function() {
         }
       });
 
-      it('should throw an error if the selenium sever jar cannot be used', function() {
+      it('should throw an error if the selenium sever jar cannot be used', () => {
         var config = {
           capabilities: { browserName: 'foobar explorer' },
           seleniumServerJar: jarFile
@@ -73,7 +73,7 @@ describe('local connect', function() {
   });
 
   describe('binary does not exist', () => {
-    it('should throw an error if the update-config.json does not exist', () => {
+    it('should throw an error if the update-config.json does not exist', async () => {
       spyOn(fs, 'readFileSync').and.callFake(() => { return null; });
       var config = {
         capabilities: { browserName: 'chrome' },
@@ -82,7 +82,7 @@ describe('local connect', function() {
       var errorFound = false;
       try {
         webdriver = new Local(config);
-        webdriver.setupDriverEnv();
+        await webdriver.setupDriverEnv();
       } catch(e) {
         errorFound = true;
         expect(e.code).toBe(BrowserError.CODE);

@@ -3,6 +3,7 @@ var env = require('./environment.js');
 // A small suite to make sure the mocha framework works.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'mocha',
 

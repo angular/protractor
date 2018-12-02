@@ -1,6 +1,6 @@
-describe('protractor control flow', function() {
-  it('should not deadlock', function() {
-    browser.driver.wait(function() {
+describe('protractor control flow', () => {
+  it('should not deadlock', async() => {
+    await browser.driver.wait(() => {
       return true;
     }, 1000);
     expect(true).toEqual(true);

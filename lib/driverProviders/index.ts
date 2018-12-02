@@ -8,7 +8,6 @@ export * from './mock';
 export * from './sauce';
 export * from './testObject';
 export * from './kobiton';
-export * from './useExistingWebDriver';
 
 
 import {AttachSession} from './attachSession';
@@ -21,7 +20,6 @@ import {Mock} from './mock';
 import {Sauce} from './sauce';
 import {TestObject} from './testObject';
 import {Kobiton} from './kobiton';
-import {UseExistingWebDriver} from './useExistingWebDriver';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -34,9 +32,6 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
   if (config.directConnect) {
     driverProvider = new Direct(config);
     logWarnings('directConnect', config);
-  } else if (config.seleniumWebDriver) {
-    driverProvider = new UseExistingWebDriver(config);
-    logWarnings('useExistingWebDriver', config);
   } else if (config.seleniumAddress) {
     if (config.seleniumSessionId) {
       driverProvider = new AttachSession(config);
@@ -113,9 +108,6 @@ export let logWarnings = (providerType: string, config: Config): void => {
   }
   if ('mock' !== providerType && config.mockSelenium) {
     warnList.push('mockSelenium');
-  }
-  if ('useExistingWebDriver' !== providerType && config.seleniumWebDriver) {
-    warnList.push('seleniumWebDriver');
   }
   if (warnList.length !== 0) {
     logger.warn(warnInto + warnList.join(', '));

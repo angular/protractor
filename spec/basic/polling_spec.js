@@ -3,59 +3,55 @@
  * when using applications which poll with $http or $timeout.
  * A better solution is to switch to the angular $interval service if possible.
  */
-describe('synchronizing with pages that poll', function() {
-  beforeEach(function() {
-    browser.get('index.html#/polling');
+describe('synchronizing with pages that poll', () => {
+  beforeEach(async () => {
+    await browser.get('index.html#/polling');
   });
 
-  it('avoids timeouts using ignoreSynchronization', function() {
-    var startButton = element(by.id('pollstarter'));
+  it('avoids timeouts using waitForAngularEnabled set to false', async () => {
+    const startButton = element(by.id('pollstarter'));
+    
+    const count = element(by.binding('count'));
+    expect(await count.getText()).toEqual('0');
 
-    var count = element(by.binding('count'));
-    expect(count.getText()).toEqual('0');
-
-    startButton.click();
+    await startButton.click();
 
     // Turn this on to see timeouts.
-    browser.ignoreSynchronization = true;
+    await browser.waitForAngularEnabled(false);
 
-    count.getText().then(function(text) {
-      expect(text).toBeGreaterThan(-1);
-    });
+    const textBefore = await count.getText();
+    expect(textBefore).toBeGreaterThan(-1);
 
-    browser.sleep(2000);
+    await browser.sleep(2000);
 
-    count.getText().then(function(text) {
-      expect(text).toBeGreaterThan(1);
-    });
+    const textAfter = await count.getText();
+    expect(textAfter).toBeGreaterThan(1);
   });
 
-  it('avoids timeouts using waitForAngularEnabled', function() {
-    var startButton = element(by.id('pollstarter'));
+  it('avoids timeouts using waitForAngularEnabled', async () => {
+    const startButton = element(by.id('pollstarter'));
 
-    var count = element(by.binding('count'));
-    expect(count.getText()).toEqual('0');
+    const count = element(by.binding('count'));
+    expect(await count.getText()).toEqual('0');
 
-    startButton.click();
+    await startButton.click();
 
     // Turn this off to see timeouts.
-    browser.waitForAngularEnabled(false);
+    await browser.waitForAngularEnabled(false);
 
-    expect(browser.waitForAngularEnabled()).toBeFalsy();
+    expect(await browser.waitForAngularEnabled()).toBeFalsy();
 
-    count.getText().then(function(text) {
-        expect(text).toBeGreaterThan(-1);
-    });
+    const textBefore = await count.getText();
+    expect(textBefore).toBeGreaterThan(-1);
 
-    browser.sleep(2000);
+    await browser.sleep(2000);
 
-    count.getText().then(function(text) {
-        expect(text).toBeGreaterThan(1);
-    });
+    const textAfter = await count.getText();
+    expect(textAfter).toBeGreaterThan(1);
   });
 
-  afterEach(function() {
+  afterEach(async () => {
     // Remember to turn it back on when you're done!
-    browser.waitForAngularEnabled(true);
+    await browser.waitForAngularEnabled(true);
   });
 });

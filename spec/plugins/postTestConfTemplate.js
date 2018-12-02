@@ -1,8 +1,9 @@
 var env = require('../environment.js');
 
-module.exports = function(framework) {
+module.exports = (framework) => {
   return {
     mockSelenium: true,
+    SELENIUM_PROMISE_MANAGER: false,
 
     framework: framework,
 

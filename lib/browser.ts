@@ -1,9 +1,8 @@
 import {BPClient} from 'blocking-proxy';
-import {ActionSequence, By, Capabilities, Command as WdCommand, FileDetector, ICommandName, Navigation, Options, promise as wdpromise, Session, TargetLocator, TouchSequence, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {By, Command as WdCommand, ICommandName, Navigation, promise as wdpromise, Session, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 import * as url from 'url';
 import {extend as extendWD, ExtendedWebDriver} from 'webdriver-js-extender';
 
-import {DebugHelper} from './debugger';
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
 import {IError} from './exitCodes';
 import {ProtractorExpectedConditions} from './expectedConditions';
@@ -193,24 +192,18 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * this method is called use the new app root. Pass nothing to get a promise that
    * resolves to the value of the selector.
    *
-   * @param {string|webdriver.promise.Promise<string>} value The new selector.
+   * @param {string|webdriver.promise.Promise<string>} valuePromise The new selector.
    * @returns A promise that resolves with the value of the selector.
    */
-  angularAppRoot(value: string|wdpromise.Promise<string> = null): wdpromise.Promise<string> {
-    return this.driver.controlFlow().execute(() => {
-      if (value != null) {
-        return wdpromise.when(value).then((value: string) => {
-          this.internalRootEl = value;
-          if (this.bpClient) {
-            const bpCommandPromise = this.bpClient.setWaitParams(value);
-            // Convert to webdriver promise as best as possible
-            return wdpromise.when(bpCommandPromise as any).then(() => this.internalRootEl);
-          }
-          return this.internalRootEl;
-        });
+  async angularAppRoot(valuePromise: string|wdpromise.Promise<string> = null): Promise<string> {
+    if (valuePromise != null) {
+      const value = await valuePromise;
+      this.internalRootEl = value;
+      if (this.bpClient) {
+        await this.bpClient.setWaitParams(value);
       }
-      return wdpromise.when(this.internalRootEl);
-    }, `Set angular root selector to ${value}`);
+    }
+    return this.internalRootEl;
   }
 
   /**
@@ -315,11 +308,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   ng12Hybrid: boolean;
 
-  /**
-   * A helper that manages debugging tests.
-   */
-  debugHelper: DebugHelper;
-
   // This index type allows looking up methods by name so we can do mixins.
   [key: string]: any;
 
@@ -364,7 +352,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     this.getPageTimeout = DEFAULT_GET_PAGE_TIMEOUT;
     this.params = {};
     this.resetUrl = DEFAULT_RESET_URL;
-    this.debugHelper = new DebugHelper(this);
 
     let ng12Hybrid_ = false;
     Object.defineProperty(this, 'ng12Hybrid', {
@@ -417,23 +404,17 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Call waitForAngularEnabled() without passing a value to read the current
    * state without changing it.
    */
-  waitForAngularEnabled(enabled: boolean|wdpromise.Promise<boolean> = null):
-      wdpromise.Promise<boolean> {
-    if (enabled != null) {
-      const ret = this.driver.controlFlow().execute(() => {
-        return wdpromise.when(enabled).then((enabled: boolean) => {
-          if (this.bpClient) {
-            logger.debug('Setting waitForAngular' + !enabled);
-            const bpCommandPromise = this.bpClient.setWaitEnabled(enabled);
-            // Convert to webdriver promise as best as possible
-            return wdpromise.when(bpCommandPromise as any).then(() => enabled);
-          }
-        });
-      }, `Set proxy synchronization enabled to ${enabled}`);
+  async waitForAngularEnabled(enabledPromise: boolean|wdpromise.Promise<boolean> = null):
+      Promise<boolean> {
+    if (enabledPromise != null) {
+      const enabled = await enabledPromise;
+      if (this.bpClient) {
+        logger.debug('Setting waitForAngular' + !enabled);
+        await this.bpClient.setWaitEnabled(enabled);
+      }
       this.internalIgnoreSynchronization = !enabled;
-      return ret;
     }
-    return wdpromise.when(!this.ignoreSynchronization);
+    return !this.ignoreSynchronization;
   }
 
   /**
@@ -602,15 +583,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @template T
    */
   private executeAsyncScript_(script: string|Function, description: string, ...scriptArgs: any[]):
-      wdpromise.Promise<any> {
+      Promise<any> {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
     return this.driver.schedule(
-        new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
-            .setParameter('script', script)
-            .setParameter('args', scriptArgs),
-        description);
+               new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
+                   .setParameter('script', script)
+                   .setParameter('args', scriptArgs),
+               description) as Promise<any>;
   }
 
   /**
@@ -624,116 +605,90 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @returns {!webdriver.promise.Promise} A promise that will resolve to the
    *    scripts return value.
    */
-  waitForAngular(opt_description?: string): wdpromise.Promise<any> {
+  async waitForAngular(opt_description?: string): Promise<any> {
     let description = opt_description ? ' - ' + opt_description : '';
     if (this.ignoreSynchronization) {
-      return this.driver.controlFlow().execute(() => {
-        return true;
-      }, 'Ignore Synchronization Protractor.waitForAngular()');
+      return true;
     }
 
-    let runWaitForAngularScript: () => wdpromise.Promise<any> = () => {
+    let runWaitForAngularScript = async(): Promise<any> => {
       if (this.plugins_.skipAngularStability() || this.bpClient) {
-        return this.driver.controlFlow().execute(() => {
-          return wdpromise.when(null);
-        }, 'bpClient or plugin stability override');
+        return null;
       } else {
-        // Need to wrap this so that we read rootEl in the control flow, not synchronously.
-        return this.angularAppRoot().then((rootEl: string) => {
-          return this.executeAsyncScript_(
-              clientSideScripts.waitForAngular, 'Protractor.waitForAngular()' + description,
-              rootEl);
-        });
+        let rootEl = await this.angularAppRoot();
+        return this.executeAsyncScript_(
+            clientSideScripts.waitForAngular, `Protractor.waitForAngular() ${description}`, rootEl);
       }
     };
 
-    return runWaitForAngularScript()
-        .then((browserErr: Function) => {
-          if (browserErr) {
-            throw new Error(
-                'Error while waiting for Protractor to ' +
-                'sync with the page: ' + JSON.stringify(browserErr));
+    try {
+      let browserErr = await runWaitForAngularScript();
+      if (browserErr) {
+        throw new Error(
+            'Error while waiting for Protractor to ' +
+            'sync with the page: ' + JSON.stringify(browserErr));
+      }
+      await this.plugins_.waitForPromise(this);
+
+      await this.driver.wait(async () => {
+        let results = await this.plugins_.waitForCondition(this);
+        return results.reduce((x, y) => x && y, true);
+      }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
+    } catch (err) {
+      let timeout: RegExpExecArray;
+      if (/asynchronous script timeout/.test(err.message)) {
+        // Timeout on Chrome
+        timeout = /-?[\d\.]*\ seconds/.exec(err.message);
+      } else if (/Timed out waiting for async script/.test(err.message)) {
+        // Timeout on Firefox
+        timeout = /-?[\d\.]*ms/.exec(err.message);
+      } else if (/Timed out waiting for an asynchronous script/.test(err.message)) {
+        // Timeout on Safari
+        timeout = /-?[\d\.]*\ ms/.exec(err.message);
+      }
+      if (timeout) {
+        let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
+            `${timeout}. This may be because the current page is not an Angular ` +
+            `application. Please see the FAQ for more details: ` +
+            `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
+        if (description.indexOf(' - Locator: ') == 0) {
+          errMsg += '\nWhile waiting for element with locator' + description;
+        }
+        let pendingTimeoutsPromise: wdpromise.Promise<any>;
+        if (this.trackOutstandingTimeouts_) {
+          pendingTimeoutsPromise = this.executeScriptWithDescription(
+              'return window.NG_PENDING_TIMEOUTS',
+              'Protractor.waitForAngular() - getting pending timeouts' + description);
+        } else {
+          pendingTimeoutsPromise = wdpromise.when({});
+        }
+        let pendingHttpsPromise = this.executeScriptWithDescription(
+            clientSideScripts.getPendingHttpRequests,
+            'Protractor.waitForAngular() - getting pending https' + description,
+            this.internalRootEl);
+
+        let arr = await Promise.all([pendingTimeoutsPromise, pendingHttpsPromise]);
+
+        let pendingTimeouts = arr[0] || [];
+        let pendingHttps = arr[1] || [];
+
+        let key: string, pendingTasks: string[] = [];
+        for (key in pendingTimeouts) {
+          if (pendingTimeouts.hasOwnProperty(key)) {
+            pendingTasks.push(' - $timeout: ' + pendingTimeouts[key]);
           }
-        })
-        .then(
-            () => {
-              return this.driver.controlFlow()
-                  .execute(
-                      () => {
-                        return this.plugins_.waitForPromise(this);
-                      },
-                      'Plugins.waitForPromise()')
-                  .then(() => {
-                    return this.driver.wait(() => {
-                      return this.plugins_.waitForCondition(this).then((results: boolean[]) => {
-                        return results.reduce((x, y) => x && y, true);
-                      });
-                    }, this.allScriptsTimeout, 'Plugins.waitForCondition()');
-                  });
-            },
-            (err: Error) => {
-              let timeout: RegExpExecArray;
-              if (/asynchronous script timeout/.test(err.message)) {
-                // Timeout on Chrome
-                timeout = /-?[\d\.]*\ seconds/.exec(err.message);
-              } else if (/Timed out waiting for async script/.test(err.message)) {
-                // Timeout on Firefox
-                timeout = /-?[\d\.]*ms/.exec(err.message);
-              } else if (/Timed out waiting for an asynchronous script/.test(err.message)) {
-                // Timeout on Safari
-                timeout = /-?[\d\.]*\ ms/.exec(err.message);
-              }
-              if (timeout) {
-                let errMsg = `Timed out waiting for asynchronous Angular tasks to finish after ` +
-                    `${timeout}. This may be because the current page is not an Angular ` +
-                    `application. Please see the FAQ for more details: ` +
-                    `https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular`;
-                if (description.indexOf(' - Locator: ') == 0) {
-                  errMsg += '\nWhile waiting for element with locator' + description;
-                }
-                let pendingTimeoutsPromise: wdpromise.Promise<any>;
-                if (this.trackOutstandingTimeouts_) {
-                  pendingTimeoutsPromise = this.executeScriptWithDescription(
-                      'return window.NG_PENDING_TIMEOUTS',
-                      'Protractor.waitForAngular() - getting pending timeouts' + description);
-                } else {
-                  pendingTimeoutsPromise = wdpromise.when({});
-                }
-                let pendingHttpsPromise = this.executeScriptWithDescription(
-                    clientSideScripts.getPendingHttpRequests,
-                    'Protractor.waitForAngular() - getting pending https' + description,
-                    this.internalRootEl);
-
-                return wdpromise.all([pendingTimeoutsPromise, pendingHttpsPromise])
-                    .then(
-                        (arr: any[]) => {
-                          let pendingTimeouts = arr[0] || [];
-                          let pendingHttps = arr[1] || [];
-
-                          let key: string, pendingTasks: string[] = [];
-                          for (key in pendingTimeouts) {
-                            if (pendingTimeouts.hasOwnProperty(key)) {
-                              pendingTasks.push(' - $timeout: ' + pendingTimeouts[key]);
-                            }
-                          }
-                          for (key in pendingHttps) {
-                            pendingTasks.push(' - $http: ' + pendingHttps[key].url);
-                          }
-                          if (pendingTasks.length) {
-                            errMsg += '. \nThe following tasks were pending:\n';
-                            errMsg += pendingTasks.join('\n');
-                          }
-                          err.message = errMsg;
-                          throw err;
-                        },
-                        () => {
-                          err.message = errMsg;
-                          throw err;
-                        });
-              } else {
-                throw err;
-              }
-            });
+        }
+        for (key in pendingHttps) {
+          pendingTasks.push(' - $http: ' + pendingHttps[key].url);
+        }
+        if (pendingTasks.length) {
+          errMsg += '. \nThe following tasks were pending:\n';
+          errMsg += pendingTasks.join('\n');
+        }
+        err.message = errMsg;
+      }
+      throw err;
+    }
   }
 
   /**
@@ -856,13 +811,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to
    *     start.
    */
-  get(destination: string, timeout = this.getPageTimeout) {
+  async get(destination: string, timeout = this.getPageTimeout) {
     destination = this.baseUrl.indexOf('file://') === 0 ? this.baseUrl + destination :
                                                           url.resolve(this.baseUrl, destination);
-    if (this.ignoreSynchronization) {
-      return this.driver.get(destination)
-          .then(() => this.driver.controlFlow().execute(() => this.plugins_.onPageLoad(this)))
-          .then(() => null);
+    if (!await this.waitForAngularEnabled()) {
+      await this.driver.get(destination);
+      await this.plugins_.onPageLoad(this);
+      return;
     }
 
     let msg = (str: string) => {
@@ -978,16 +933,14 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         .then(() => {
           // Reset bpClient sync
           if (this.bpClient) {
-            return this.driver.controlFlow().execute(() => {
-              return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
-            });
+            return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
           }
         })
         .then(() => {
           // Run Plugins
-          return this.driver.controlFlow().execute(() => {
+          if (!this.ignoreSynchronization) {
             return this.plugins_.onPageStable(this);
-          });
+          }
         })
         .then(() => null);
   }
@@ -1076,118 +1029,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         .then(
             (rootEl) => this.executeScriptWithDescription(
                 clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl));
-  }
-
-  /**
-   * Adds a task to the control flow to pause the test and inject helper
-   * functions
-   * into the browser, so that debugging may be done in the browser console.
-   *
-   * This should be used under node in debug mode, i.e. with
-   * protractor debug <configuration.js>
-   *
-   * @example
-   * While in the debugger, commands can be scheduled through webdriver by
-   * entering the repl:
-   *   debug> repl
-   *   > element(by.input('user')).sendKeys('Laura');
-   *   > browser.debugger();
-   *   Press Ctrl + c to leave debug repl
-   *   debug> c
-   *
-   * This will run the sendKeys command as the next task, then re-enter the
-   * debugger.
-   */
-  debugger() {
-    // jshint debug: true
-    return this.driver.executeScript(clientSideScripts.installInBrowser)
-        .then(() => wdpromise.controlFlow().execute(() => {
-          debugger;
-        }, 'add breakpoint to control flow'));
-  }
-
-  /**
-   * See browser.explore().
-   */
-  enterRepl(opt_debugPort?: number) {
-    return this.explore(opt_debugPort);
-  }
-
-  /**
-   * Beta (unstable) explore function for entering the repl loop from
-   * any point in the control flow. Use browser.explore() in your test.
-   * Does not require changes to the command line (no need to add 'debug').
-   * Note, if you are wrapping your own instance of Protractor, you must
-   * expose globals 'browser' and 'protractor' for pause to work.
-   *
-   * @example
-   * element(by.id('foo')).click();
-   * browser.explore();
-   * // Execution will stop before the next click action.
-   * element(by.id('bar')).click();
-   *
-   * @param {number=} opt_debugPort Optional port to use for the debugging
-   * process
-   */
-  explore(opt_debugPort?: number) {
-    let debuggerClientPath = __dirname + '/debugger/clients/explorer.js';
-    let onStartFn = (firstTime: boolean) => {
-      logger.info();
-      if (firstTime) {
-        logger.info('------- Element Explorer -------');
-        logger.info(
-            'Starting WebDriver debugger in a child process. Element ' +
-            'Explorer is still beta, please report issues at ' +
-            'github.com/angular/protractor');
-        logger.info();
-        logger.info('Type <tab> to see a list of locator strategies.');
-        logger.info('Use the `list` helper function to find elements by strategy:');
-        logger.info('  e.g., list(by.binding(\'\')) gets all bindings.');
-        logger.info();
-      }
-    };
-    this.debugHelper.initBlocking(debuggerClientPath, onStartFn, opt_debugPort);
-  }
-
-  /**
-   * Beta (unstable) pause function for debugging webdriver tests. Use
-   * browser.pause() in your test to enter the protractor debugger from that
-   * point in the control flow.
-   * Does not require changes to the command line (no need to add 'debug').
-   * Note, if you are wrapping your own instance of Protractor, you must
-   * expose globals 'browser' and 'protractor' for pause to work.
-   *
-   * @example
-   * element(by.id('foo')).click();
-   * browser.pause();
-   * // Execution will stop before the next click action.
-   * element(by.id('bar')).click();
-   *
-   * @param {number=} opt_debugPort Optional port to use for the debugging
-   * process
-   */
-  pause(opt_debugPort?: number): wdpromise.Promise<any> {
-    if (this.debugHelper.isAttached()) {
-      logger.info('Encountered browser.pause(), but debugger already attached.');
-      return wdpromise.when(true);
-    }
-    let debuggerClientPath = __dirname + '/debugger/clients/wddebugger.js';
-    let onStartFn = (firstTime: boolean) => {
-      logger.info();
-      logger.info('Encountered browser.pause(). Attaching debugger...');
-      if (firstTime) {
-        logger.info();
-        logger.info('------- WebDriver Debugger -------');
-        logger.info(
-            'Starting WebDriver debugger in a child process. Pause is ' +
-            'still beta, please report issues at github.com/angular/protractor');
-        logger.info();
-        logger.info('press c to continue to the next webdriver command');
-        logger.info('press ^D to detach debugger and resume code execution');
-        logger.info();
-      }
-    };
-    this.debugHelper.init(debuggerClientPath, onStartFn, opt_debugPort);
   }
 
   /**
