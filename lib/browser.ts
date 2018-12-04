@@ -104,7 +104,7 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
  * @extends {webdriver_extensions.ExtendedWebDriver}
  * @param {webdriver.WebDriver} webdriver
  * @param {string=} opt_baseUrl A base URL to run get requests against.
- * @param {string|webdriver.promise.Promise<string>=} opt_rootElement  Selector element that has an
+ * @param {string|Promise<string>=} opt_rootElement  Selector element that has an
  *     ng-app in scope.
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
@@ -188,14 +188,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * 'body' but if your ng-app is on a subsection of the page it may be
    * a subelement.
    *
-   * The change will be made within WebDriver's control flow, so that commands after
-   * this method is called use the new app root. Pass nothing to get a promise that
-   * resolves to the value of the selector.
-   *
-   * @param {string|webdriver.promise.Promise<string>} valuePromise The new selector.
+   * @param {string|Promise<string>} valuePromise The new selector.
    * @returns A promise that resolves with the value of the selector.
    */
-  async angularAppRoot(valuePromise: string|wdpromise.Promise<string> = null): Promise<string> {
+  async angularAppRoot(valuePromise: string|Promise<string> = null): Promise<string> {
     if (valuePromise != null) {
       const value = await valuePromise;
       this.internalRootEl = value;
@@ -215,19 +211,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * Initialized to `false` by the runner.
    *
-   * This property is deprecated - please use waitForAngularEnabled instead.
+   * ignoreSynchornization is deprecated.
+   *
+   * Please use waitForAngularEnabled instead.
    *
    * @deprecated
    * @type {boolean}
    */
-  set ignoreSynchronization(value) {
-    this.waitForAngularEnabled(!value);
-  }
-
-  get ignoreSynchronization() {
-    return this.internalIgnoreSynchronization;
-  }
-
   private internalIgnoreSynchronization: boolean;
 
   /**
@@ -252,9 +242,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * Set by the runner.
    *
-   * @type {webdriver.promise.Promise.<ProtractorBrowser>}
+   * @type {Promise<ProtractorBrowser>}
    */
-  ready: wdpromise.Promise<ProtractorBrowser>;
+  ready: Promise<ProtractorBrowser>;
 
   /*
    * Set by the runner.
@@ -312,9 +302,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   [key: string]: any;
 
   constructor(
-      webdriverInstance: WebDriver, opt_baseUrl?: string,
-      opt_rootElement?: string|wdpromise.Promise<string>, opt_untrackOutstandingTimeouts?: boolean,
-      opt_blockingProxyUrl?: string) {
+      webdriverInstance: WebDriver, opt_baseUrl?: string, opt_rootElement?: string|Promise<string>,
+      opt_untrackOutstandingTimeouts?: boolean, opt_blockingProxyUrl?: string) {
     super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
@@ -404,8 +393,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Call waitForAngularEnabled() without passing a value to read the current
    * state without changing it.
    */
-  async waitForAngularEnabled(enabledPromise: boolean|wdpromise.Promise<boolean> = null):
-      Promise<boolean> {
+  async waitForAngularEnabled(enabledPromise: boolean|Promise<boolean> = null): Promise<boolean> {
     if (enabledPromise != null) {
       const enabled = await enabledPromise;
       if (this.bpClient) {
@@ -414,7 +402,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       }
       this.internalIgnoreSynchronization = !enabled;
     }
-    return !this.ignoreSynchronization;
+    return !this.internalIgnoreSynchronization;
   }
 
   /**
@@ -424,10 +412,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * Set by the runner.
    *
-   * @returns {webdriver.promise.Promise} A promise which resolves to the
+   * @returns {Promise} A promise which resolves to the
    * capabilities object.
    */
-  getProcessedConfig(): wdpromise.Promise<any> {
+  getProcessedConfig(): Promise<any> {
     return null;
   }
 
@@ -435,11 +423,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Fork another instance of browser for use in interactive tests.
    *
    * @example
-   * // Running with control flow enabled
-   * var fork = browser.forkNewDriverInstance();
-   * fork.get('page1'); // 'page1' gotten by forked browser
-   *
-   * // Running with control flow disabled
    * var forked = await browser.forkNewDriverInstance().ready;
    * await forked.get('page1'); // 'page1' gotten by forked browser
    *
@@ -464,33 +447,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * When restarting a forked browser, it is the caller's job to overwrite references to the old
    * instance.
    *
-   * This function behaves slightly differently depending on if the webdriver control flow is
-   * enabled.  If the control flow is enabled, the global `browser` object is synchronously
-   * replaced. If the control flow is disabled, the global `browser` is replaced asynchronously
-   * after the old driver quits.
-   *
    * Set by the runner.
    *
    * @example
-   * // Running against global browser, with control flow enabled
-   * browser.get('page1');
-   * browser.restart();
-   * browser.get('page2'); // 'page2' gotten by restarted browser
-   *
-   * // Running against global browser, with control flow disabled
+   * // Running against global browser
    * await browser.get('page1');
    * await browser.restart();
    * await browser.get('page2'); // 'page2' gotten by restarted browser
    *
-   * // Running against forked browsers, with the control flow enabled
-   * // In this case, you may prefer `restartSync` (documented below)
-   * var forked = browser.forkNewDriverInstance();
-   * fork.get('page1');
-   * fork.restart().then(function(fork) {
-   *   fork.get('page2'); // 'page2' gotten by restarted fork
-   * });
-   *
-   * // Running against forked browsers, with the control flow disabled
+   * // Running against forked browsers
    * var forked = await browser.forkNewDriverInstance().ready;
    * await fork.get('page1');
    * fork = await fork.restart();
@@ -503,33 +468,10 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * });
    * browser.restart();
    *
-   * @returns {webdriver.promise.Promise<ProtractorBrowser>} A promise resolving to the restarted
+   * @returns {Promise<ProtractorBrowser>} A promise resolving to the restarted
    *   browser
    */
-  restart(): wdpromise.Promise<ProtractorBrowser> {
-    return;
-  }
-
-  /**
-   * Like `restart`, but instead of returning a promise resolving to the new browser instance,
-   * returns the new browser instance directly.  Can only be used when the control flow is enabled.
-   *
-   * @example
-   * // Running against global browser
-   * browser.get('page1');
-   * browser.restartSync();
-   * browser.get('page2'); // 'page2' gotten by restarted browser
-   *
-   * // Running against forked browsers
-   * var forked = browser.forkNewDriverInstance();
-   * fork.get('page1');
-   * fork = fork.restartSync();
-   * fork.get('page2'); // 'page2' gotten by restarted fork
-   *
-   * @throws {TypeError} Will throw an error if the control flow is not enabled
-   * @returns {ProtractorBrowser} The restarted browser
-   */
-  restartSync(): ProtractorBrowser {
+  restart(): Promise<ProtractorBrowser> {
     return;
   }
 
@@ -552,21 +494,22 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description of the command for debugging.
    * @param {...*} var_args The arguments to pass to the script.
-   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
+   * @returns {!Promise<T>} A promise that will resolve to
    * the scripts return value.
    * @template T
    */
   public executeScriptWithDescription(
-      script: string|Function, description: string, ...scriptArgs: any[]): wdpromise.Promise<any> {
+      script: string|Function, description: string, ...scriptArgs: any[]): Promise<any> {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
 
+    // TODO(selenium4): fix promise cast.
     return this.driver.schedule(
-        new Command(CommandName.EXECUTE_SCRIPT)
-            .setParameter('script', script)
-            .setParameter('args', scriptArgs),
-        description);
+               new Command(CommandName.EXECUTE_SCRIPT)
+                   .setParameter('script', script)
+                   .setParameter('args', scriptArgs),
+               description) as Promise<any>;
   }
 
   /**
@@ -577,7 +520,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * @param {!(string|Function)} script The script to execute.
    * @param {string} description A description for debugging purposes.
    * @param {...*} var_args The arguments to pass to the script.
-   * @returns {!webdriver.promise.Promise.<T>} A promise that will resolve to
+   * @returns {!Promise<T>} A promise that will resolve to
    * the
    *    scripts return value.
    * @template T
@@ -602,12 +545,12 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @param {string=} opt_description An optional description to be added
    *     to webdriver logs.
-   * @returns {!webdriver.promise.Promise} A promise that will resolve to the
+   * @returns {!Promise} A promise that will resolve to the
    *    scripts return value.
    */
   async waitForAngular(opt_description?: string): Promise<any> {
     let description = opt_description ? ' - ' + opt_description : '';
-    if (this.ignoreSynchronization) {
+    if (!await this.waitForAngularEnabled()) {
       return true;
     }
 
@@ -654,13 +597,13 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         if (description.indexOf(' - Locator: ') == 0) {
           errMsg += '\nWhile waiting for element with locator' + description;
         }
-        let pendingTimeoutsPromise: wdpromise.Promise<any>;
+        let pendingTimeoutsPromise: Promise<any>;
         if (this.trackOutstandingTimeouts_) {
           pendingTimeoutsPromise = this.executeScriptWithDescription(
               'return window.NG_PENDING_TIMEOUTS',
               'Protractor.waitForAngular() - getting pending timeouts' + description);
         } else {
-          pendingTimeoutsPromise = wdpromise.when({});
+          pendingTimeoutsPromise = Promise.resolve();
         }
         let pendingHttpsPromise = this.executeScriptWithDescription(
             clientSideScripts.getPendingHttpRequests,
@@ -704,20 +647,20 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   /**
    * Waits for Angular to finish rendering before searching for elements.
    * @see webdriver.WebDriver.findElements
-   * @returns {!webdriver.promise.Promise} A promise that will be resolved to an
+   * @returns {!Promise} A promise that will be resolved to an
    *     array of the located {@link webdriver.WebElement}s.
    */
-  findElements(locator: Locator): wdpromise.Promise<WebElement[]> {
+  findElements(locator: Locator): Promise<WebElement[]> {
     return this.element.all(locator).getWebElements();
   }
 
   /**
    * Tests if an element is present on the page.
    * @see webdriver.WebDriver.isElementPresent
-   * @returns {!webdriver.promise.Promise} A promise that will resolve to whether
+   * @returns {!Promise} A promise that will resolve to whether
    *     the element is present on the page.
    */
-  isElementPresent(locatorOrElement: Locator|WebElement|ElementFinder): wdpromise.Promise<any> {
+  isElementPresent(locatorOrElement: Locator|WebElement|ElementFinder): Promise<any> {
     let element: ElementFinder;
     if (locatorOrElement instanceof ElementFinder) {
       element = locatorOrElement;
@@ -824,125 +767,97 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       return 'Protractor.get(' + destination + ') - ' + str;
     };
 
-    return this.driver.controlFlow()
-        .execute(() => {
-          return wdpromise.when(null);
-        })
-        .then(() => {
-          if (this.bpClient) {
-            return this.driver.controlFlow().execute(() => {
-              return this.bpClient.setWaitEnabled(false);
-            });
-          }
-        })
-        .then(() => {
-          // Go to reset url
-          return this.driver.get(this.resetUrl);
-        })
-        .then(() => {
-          // Set defer label and navigate
-          return this.executeScriptWithDescription(
-              'window.name = "' + DEFER_LABEL + '" + window.name;' +
-                  'window.location.replace("' + destination + '");',
-              msg('reset url'));
-        })
-        .then(() => {
-          // We need to make sure the new url has loaded before
-          // we try to execute any asynchronous scripts.
-          return this.driver.wait(() => {
-            return this.executeScriptWithDescription('return window.location.href;', msg('get url'))
-                .then(
-                    (url: any) => {
-                      return url !== this.resetUrl;
-                    },
-                    (err: IError) => {
-                      if (err.code == 13 || err.name === 'JavascriptError') {
-                        // Ignore the error, and continue trying. This is
-                        // because IE driver sometimes (~1%) will throw an
-                        // unknown error from this execution. See
-                        // https://github.com/angular/protractor/issues/841
-                        // This shouldn't mask errors because it will fail
-                        // with the timeout anyway.
-                        return false;
-                      } else {
-                        throw err;
-                      }
-                    });
-          }, timeout, 'waiting for page to load for ' + timeout + 'ms');
-        })
-        .then(() => {
-          // Run Plugins
-          return this.driver.controlFlow().execute(() => {
-            return this.plugins_.onPageLoad(this);
-          });
-        })
-        .then(() => {
-          // Make sure the page is an Angular page.
-          return this
-              .executeAsyncScript_(
-                  clientSideScripts.testForAngular, msg('test for angular'),
-                  Math.floor(timeout / 1000), this.ng12Hybrid)
-              .then(
-                  (angularTestResult: {ver: number, message: string}) => {
-                    let angularVersion = angularTestResult.ver;
-                    if (!angularVersion) {
-                      let message = angularTestResult.message;
-                      logger.error(`Could not find Angular on page ${destination} : ${message}`);
-                      throw new Error(
-                          `Angular could not be found on the page ${destination}. ` +
-                          `If this is not an Angular application, you may need to turn off waiting for Angular.
-                          Please see 
-                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load`);
-                    }
-                    return angularVersion;
-                  },
-                  (err: Error) => {
-                    throw new Error('Error while running testForAngular: ' + err.message);
-                  });
-        })
-        .then((angularVersion) => {
-          // Load Angular Mocks
-          if (angularVersion === 1) {
-            // At this point, Angular will pause for us until angular.resumeBootstrap is called.
-            let moduleNames: string[] = [];
-            let modulePromise: wdpromise.Promise<void> = wdpromise.when(null);
-            for (const {name, script, args} of this.mockModules_) {
-              moduleNames.push(name);
-              let executeScriptArgs = [script, msg('add mock module ' + name), ...args];
-              modulePromise = modulePromise.then(
-                  () => this.executeScriptWithDescription.apply(this, executeScriptArgs)
-                            .then(null, (err: Error) => {
-                              throw new Error(
-                                  'Error while running module script ' + name + ': ' + err.message);
-                            }));
-            }
+    if (this.bpClient) {
+      await this.bpClient.setWaitEnabled(false);
+    }
+    // Go to reset url
+    await this.driver.get(this.resetUrl);
 
-            return modulePromise.then(
-                () => this.executeScriptWithDescription(
-                    'window.__TESTABILITY__NG1_APP_ROOT_INJECTOR__ = ' +
-                        'angular.resumeBootstrap(arguments[0]);',
-                    msg('resume bootstrap'), moduleNames));
-          } else {
-            // TODO: support mock modules in Angular2. For now, error if someone
-            // has tried to use one.
-            if (this.mockModules_.length > 1) {
-              throw 'Trying to load mock modules on an Angular v2+ app is not yet supported.';
-            }
-          }
-        })
-        .then(() => {
-          // Reset bpClient sync
-          if (this.bpClient) {
-            return this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
-          }
-        })
-        .then(() => {
-          // Run Plugins
-          if (!this.ignoreSynchronization) {
-            return this.plugins_.onPageStable(this);
-          }
-        })
-        .then(() => null);
+    // Set defer label and navigate
+    await this.executeScriptWithDescription(
+        'window.name = "' + DEFER_LABEL + '" + window.name;' +
+            'window.location.replace("' + destination + '");',
+        msg('reset url'));
+
+    // We need to make sure the new url has loaded before
+    // we try to execute any asynchronous scripts.
+    await this.driver.wait(() => {
+      return this.executeScriptWithDescription('return window.location.href;', msg('get url'))
+          .then(
+              (url: any) => {
+                return url !== this.resetUrl;
+              },
+              (err: IError) => {
+                if (err.code == 13 || err.name === 'JavascriptError') {
+                  // Ignore the error, and continue trying. This is
+                  // because IE driver sometimes (~1%) will throw an
+                  // unknown error from this execution. See
+                  // https://github.com/angular/protractor/issues/841
+                  // This shouldn't mask errors because it will fail
+                  // with the timeout anyway.
+                  return false;
+                } else {
+                  throw err;
+                }
+              });
+    }, timeout, 'waiting for page to load for ' + timeout + 'ms');
+
+    // Run Plugins
+    await this.plugins_.onPageLoad(this);
+
+    let angularVersion: number;
+    try {
+      // Make sure the page is an Angular page.
+      const angularTestResult: {ver: number, message: string} = await this.executeAsyncScript_(
+          clientSideScripts.testForAngular, msg('test for angular'), Math.floor(timeout / 1000),
+          this.ng12Hybrid);
+      angularVersion = angularTestResult.ver;
+
+      if (!angularVersion) {
+        let message = angularTestResult.message;
+        logger.error(`Could not find Angular on page ${destination} : ${message}`);
+        throw new Error(
+            `Angular could not be found on the page ${destination}. ` +
+            `If this is not an Angular application, you may need to turn off waiting for Angular.
+            Please see
+            https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load`);
+      }
+    } catch (err) {
+      throw new Error('Error while running testForAngular: ' + err.message);
+    }
+
+    // Load Angular Mocks
+    if (angularVersion === 1) {
+      // At this point, Angular will pause for us until angular.resumeBootstrap is called.
+      let moduleNames: string[] = [];
+      for (const {name, script, args} of this.mockModules_) {
+        moduleNames.push(name);
+        let executeScriptArgs = [script, msg('add mock module ' + name), ...args];
+        await this.executeScriptWithDescription.apply(this, executeScriptArgs)
+            .then(null, (err: Error) => {
+              throw new Error('Error while running module script ' + name + ': ' + err.message);
+            });
+      }
+
+      await this.executeScriptWithDescription(
+          'window.__TESTABILITY__NG1_APP_ROOT_INJECTOR__ = ' +
+              'angular.resumeBootstrap(arguments[0]);',
+          msg('resume bootstrap'), moduleNames);
+    } else {
+      // TODO: support mock modules in Angular2. For now, error if someone
+      // has tried to use one.
+      if (this.mockModules_.length > 1) {
+        throw 'Trying to load mock modules on an Angular v2+ app is not yet supported.';
+      }
+    }
+
+    // Reset bpClient sync
+    if (this.bpClient) {
+      await this.bpClient.setWaitEnabled(!this.internalIgnoreSynchronization);
+    }
+
+    // Run Plugins
+    await this.plugins_.onPageStable(this);
   }
 
   /**
@@ -955,17 +870,14 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to start.
    */
-  refresh(opt_timeout?: number) {
-    if (this.ignoreSynchronization) {
+  async refresh(opt_timeout?: number) {
+    if (!await this.waitForAngularEnabled()) {
       return this.driver.navigate().refresh();
     }
 
-    return this
-        .executeScriptWithDescription(
-            'return window.location.href', 'Protractor.refresh() - getUrl')
-        .then((href: string) => {
-          return this.get(href, opt_timeout);
-        });
+    const href = await this.executeScriptWithDescription(
+        'return window.location.href', 'Protractor.refresh() - getUrl');
+    return this.get(href, opt_timeout);
   }
 
   /**
@@ -988,22 +900,17 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *     .toBe('http://angular.github.io/protractor/#/api');
    *
    * @param {string} url In page URL using the same syntax as $location.url()
-   * @returns {!webdriver.promise.Promise} A promise that will resolve once
+   * @returns {!Promise} A promise that will resolve once
    *    page has been changed.
    */
-  setLocation(url: string): wdpromise.Promise<any> {
-    return this.waitForAngular()
-        .then(() => this.angularAppRoot())
-        .then(
-            (rootEl) =>
-                this.executeScriptWithDescription(
-                        clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url)
-                    .then((browserErr: Error) => {
-                      if (browserErr) {
-                        throw 'Error while navigating to \'' + url +
-                            '\' : ' + JSON.stringify(browserErr);
-                      }
-                    }));
+  async setLocation(url: string): Promise<any> {
+    await this.waitForAngular();
+    const rootEl = await this.angularAppRoot();
+    const browserErr = await this.executeScriptWithDescription(
+        clientSideScripts.setLocation, 'Protractor.setLocation()', rootEl, url);
+    if (browserErr) {
+      throw 'Error while navigating to \'' + url + '\' : ' + JSON.stringify(browserErr);
+    }
   }
 
   /**
@@ -1018,17 +925,16 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * browser.get('http://angular.github.io/protractor/#/api');
    * expect(browser.getLocationAbsUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
-   * @returns {webdriver.promise.Promise<string>} The current absolute url from
+   * @returns {Promise<string>} The current absolute url from
    * AngularJS.
    */
-  getLocationAbsUrl(): wdpromise.Promise<any> {
+  async getLocationAbsUrl(): Promise<any> {
     logger.warn(
         '`browser.getLocationAbsUrl()` is deprecated, please use `browser.getCurrentUrl` instead.');
-    return this.waitForAngular()
-        .then(() => this.angularAppRoot())
-        .then(
-            (rootEl) => this.executeScriptWithDescription(
-                clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl));
+    await this.waitForAngular();
+    const rootEl = await this.angularAppRoot();
+    return await this.executeScriptWithDescription(
+        clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl);
   }
 
   /**

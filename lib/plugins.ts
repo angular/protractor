@@ -117,8 +117,8 @@ export interface ProtractorPlugin {
 
   /**
    * This is called inside browser.get() directly after angular is done
-   * bootstrapping/synchronizing.  If `browser.ignoreSynchronization` is `true`,
-   * this will not be called.
+   * bootstrapping/synchronizing.  If `await browser.waitForAngularEnabled()`
+   * is `false`, this will not be called.
    *
    * @param {ProtractorBrowser} browser The browser instance which is loading a page.
    *
