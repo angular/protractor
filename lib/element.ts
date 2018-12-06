@@ -55,23 +55,21 @@ let WEB_ELEMENT_FUNCTIONS = [
  * </ul>
  *
  * @example
- * element.all(by.css('.items li')).then(function(items) {
- *   expect(items.length).toBe(3);
- *   expect(items[0].getText()).toBe('First');
- * });
+ * const items = await element.all(by.css('.items li'));
+ * expect(items.length).toBe(3);
+ * expect(await items[0].getText()).toBe('First');
  *
  * // Or using the shortcut $$() notation instead of element.all(by.css()):
  *
- * $$('.items li').then(function(items) {
- *   expect(items.length).toBe(3);
- *   expect(items[0].getText()).toBe('First');
- * });
+ * const items = await $$('.items li');
+ * expect(items.length).toBe(3);
+ * expect(await items[0].getText()).toBe('First');
  *
  * @constructor
  * @param {ProtractorBrowser} browser A browser instance.
  * @param {function(): Array.<webdriver.WebElement>} getWebElements A function
  *    that returns a list of the underlying Web Elements.
- * @param {webdriver.Locator} locator The most relevant locator. It is only
+ * @param {Locator} locator The most relevant locator. It is only
  *    used for error reporting and ElementArrayFinder.locator.
  * @param {Array<Promise>} opt_actionResults An array
  *    of promises which will be retrieved with then. Resolves to the latest
@@ -132,23 +130,23 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @example
    * let foo = element.all(by.css('.parent')).all(by.css('.foo'));
-   * expect(foo.getText()).toEqual(['1a', '2a']);
+   * expect(await foo.getText()).toEqual(['1a', '2a']);
    * let baz = element.all(by.css('.parent')).all(by.css('.baz'));
-   * expect(baz.getText()).toEqual(['1b']);
+   * expect(await baz.getText()).toEqual(['1b']);
    * let nonexistent = element.all(by.css('.parent'))
    *   .all(by.css('.NONEXISTENT'));
-   * expect(nonexistent.getText()).toEqual(['']);
+   * expect(await nonexistent.getText()).toEqual(['']);
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
    * let foo = $$('.parent').$$('.foo');
-   * expect(foo.getText()).toEqual(['1a', '2a']);
+   * expect(await foo.getText()).toEqual(['1a', '2a']);
    * let baz = $$('.parent').$$('.baz');
-   * expect(baz.getText()).toEqual(['1b']);
+   * expect(await baz.getText()).toEqual(['1b']);
    * let nonexistent = $$('.parent').$$('.NONEXISTENT');
-   * expect(nonexistent.getText()).toEqual(['']);
+   * expect(await nonexistent.getText()).toEqual(['']);
    *
-   * @param {webdriver.Locator} subLocator
+   * @param {Locator} locator
    * @returns {ElementArrayFinder}
    */
   all(locator: Locator): ElementArrayFinder {
@@ -200,22 +198,19 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * </ul>
    *
    * @example
-   * element.all(by.css('.items li')).filter(function(elem, index) {
-   *   return elem.getText().then(function(text) {
-   *     return text === 'Third';
-   *   });
-   * }).first().click();
+   * await element.all(by.css('.items li'))
+   *   .filter(async (elem, index) => await elem.getText() === 'Third')
+   *   .first()
+   *   .click();
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
-   * $$('.items li').filter(function(elem, index) {
-   *   return elem.getText().then(function(text) {
-   *     return text === 'Third';
-   *   });
-   * }).first().click();
+   * await $$('.items li')
+   *   .filter(async (elem, index) => await elem.getText() === 'Third')
+   *   .first()
+   *   .click();
    *
-   * @param {function(ElementFinder, number): boolean|Promise<boolean>}
-   * filterFn
+   * @param {function(ElementFinder, number): boolean|Promise<boolean>} filterFn
    *     Filter function that will test if an element should be returned.
    *     filterFn can either return a boolean or a promise that resolves to a
    *     boolean.
@@ -255,16 +250,16 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @example
    * let list = element.all(by.css('.items li'));
-   * expect(list.get(0).getText()).toBe('First');
-   * expect(list.get(1).getText()).toBe('Second');
+   * expect(await list.get(0).getText()).toBe('First');
+   * expect(await list.get(1).getText()).toBe('Second');
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
    * let list = $$('.items li');
-   * expect(list.get(0).getText()).toBe('First');
-   * expect(list.get(1).getText()).toBe('Second');
+   * expect(await list.get(0).getText()).toBe('First');
+   * expect(await list.get(1).getText()).toBe('Second');
    *
-   * @param {number|Promise} index Element index.
+   * @param {number|Promise} indexPromise Element index.
    * @returns {ElementFinder} finder representing element at the given index.
    */
   get(indexPromise: number|Promise<number>): ElementFinder {
@@ -299,12 +294,12 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @example
    * let first = element.all(by.css('.items li')).first();
-   * expect(first.getText()).toBe('First');
+   * expect(await first.getText()).toBe('First');
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
    * let first = $$('.items li').first();
-   * expect(first.getText()).toBe('First');
+   * expect(await first.getText()).toBe('First');
    *
    * @returns {ElementFinder} finder representing the first matching element
    */
@@ -326,12 +321,12 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @example
    * let last = element.all(by.css('.items li')).last();
-   * expect(last.getText()).toBe('Third');
+   * expect(await last.getText()).toBe('Third');
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
    * let last = $$('.items li').last();
-   * expect(last.getText()).toBe('Third');
+   * expect(await last.getText()).toBe('Third');
    *
    * @returns {ElementFinder} finder representing the last matching element
    */
@@ -353,16 +348,16 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @example
    * // The following two blocks of code are equivalent.
    * let list = element.all(by.css('.count span'));
-   * expect(list.count()).toBe(2);
-   * expect(list.get(0).getText()).toBe('First');
-   * expect(list.get(1).getText()).toBe('Second');
+   * expect(await list.count()).toBe(2);
+   * expect(await list.get(0).getText()).toBe('First');
+   * expect(await list.get(1).getText()).toBe('Second');
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
    * let list = $$('.count span');
-   * expect(list.count()).toBe(2);
-   * expect(list.get(0).getText()).toBe('First');
-   * expect(list.get(1).getText()).toBe('Second');
+   * expect(await list.count()).toBe(2);
+   * expect(await list.get(0).getText()).toBe('First');
+   * expect(await list.get(1).getText()).toBe('Second');
    *
    * @param {string} selector a css selector
    * @returns {ElementArrayFinder} which identifies the
@@ -397,12 +392,12 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * @example
    * let list = element.all(by.css('.items li'));
-   * expect(list.count()).toBe(3);
+   * expect(await list.count()).toBe(3);
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
    * let list = $$('.items li');
-   * expect(list.count()).toBe(3);
+   * expect(await list.count()).toBe(3);
    *
    * @returns {!Promise} A promise which resolves to the
    *     number of elements matching the locator.
@@ -426,7 +421,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * @alias element.all(locator).isPresent()
    *
    * @example
-   * expect($('.item').isPresent()).toBeTruthy();
+   * expect(await $('.item').isPresent()).toBeTruthy();
    *
    * @returns {Promise<boolean>}
    */
@@ -448,7 +443,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * // returns by.css('#ID1')
    * $$('#ID1').filter(filterFn).get(0).click().locator();
    *
-   * @returns {webdriver.Locator}
+   * @returns {Locator}
    */
   locator(): Locator {
     return this.locator_;
@@ -523,15 +518,13 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * </ul>
    *
    * @example
-   * element.all(by.css('.items li')).then(function(arr) {
-   *   expect(arr.length).toEqual(3);
-   * });
+   * const arr = await element.all(by.css('.items li'));
+   * expect(arr.length).toEqual(3);
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
-   * $$('.items li').then(function(arr) {
-   *   expect(arr.length).toEqual(3);
-   * });
+   * const arr = $$('.items li');
+   * expect(arr.length).toEqual(3);
    *
    * @param {function(Array.<ElementFinder>)} fn
    * @param {function(Error)} errorFn
@@ -561,20 +554,16 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * </ul>
    *
    * @example
-   * element.all(by.css('.items li')).each(function(element, index) {
+   * await element.all(by.css('.items li')).each(async (element, index) => {
    *   // Will print 0 First, 1 Second, 2 Third.
-   *   element.getText().then(function (text) {
-   *     console.log(index, text);
-   *   });
+   *   console.log(index, await element.getText());
    * });
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
-   * $$('.items li').each(function(element, index) {
+   * $$('.items li').each(async (element, index) => {
    *   // Will print 0 First, 1 Second, 2 Third.
-   *   element.getText().then(function (text) {
-   *     console.log(index, text);
-   *   });
+   *   console.log(index, await element.getText());
    * });
    *
    * @param {function(ElementFinder)} fn Input function
@@ -601,13 +590,14 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * </ul>
    *
    * @example
-   * let items = element.all(by.css('.items li')).map(function(elm, index) {
-   *   return {
-   *     index: index,
-   *     text: elm.getText(),
-   *     class: elm.getAttribute('class')
-   *   };
-   * });
+   * let items = await element.all(by.css('.items li'))
+   *   .map(async (elm, index) => {
+   *     return {
+   *       index: index,
+   *       text: await elm.getText(),
+   *       class: await elm.getAttribute('class')
+   *     };
+   *   });
    * expect(items).toEqual([
    *   {index: 0, text: 'First', class: 'one'},
    *   {index: 1, text: 'Second', class: 'two'},
@@ -616,11 +606,11 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
-   * let items = $$('.items li').map(function(elm, index) {
+   * let items = await $$('.items li').map(async (elm, index) => {
    *   return {
    *     index: index,
-   *     text: elm.getText(),
-   *     class: elm.getAttribute('class')
+   *     text: await elm.getText(),
+   *     class: await elm.getAttribute('class')
    *   };
    * });
    * expect(items).toEqual([
@@ -662,21 +652,15 @@ export class ElementArrayFinder extends WebdriverWebElement {
    * </ul>
    *
    * @example
-   * let value = element.all(by.css('.items li')).reduce(function(acc, elem) {
-   *   return elem.getText().then(function(text) {
-   *     return acc + text + ' ';
-   *   });
-   * }, '');
+   * let value = await element.all(by.css('.items li'))
+   *   .reduce(async (acc, elem) => acc + (await elem.getText()) + ' ', '');
    *
    * expect(value).toEqual('First Second Third ');
    *
    * // Or using the shortcut $$() notation instead of element.all(by.css()):
    *
-   * let value = $$('.items li').reduce(function(acc, elem) {
-   *   return elem.getText().then(function(text) {
-   *     return acc + text + ' ';
-   *   });
-   * }, '');
+   * let value = await $$('.items li')
+   *   .reduce(async (acc, elem) => acc + (await elem.getText()) + ' ', '');
    *
    * expect(value).toEqual('First Second Third ');
    *
@@ -774,17 +758,17 @@ export class ElementArrayFinder extends WebdriverWebElement {
  *
  * @example
  * // Find element with {{scopelet}} syntax.
- * element(by.binding('person.name')).getText().then(function(name) {
- *   expect(name).toBe('Foo');
- * });
+ * const name = await element(by.binding('person.name')).getText();
+ * expect(name).toBe('Foo');
  *
  * // Find element with ng-bind="scopelet" syntax.
- * expect(element(by.binding('person.email')).getText()).toBe('foo@bar.com');
+ * const email = await element(by.binding('person.email')).getText();
+ * expect(email).toBe('foo@bar.com');
  *
  * // Find by model.
  * let input = element(by.model('person.name'));
- * input.sendKeys('123');
- * expect(input.getAttribute('value')).toBe('Foo123');
+ * await input.sendKeys('123');
+ * expect(await input.getAttribute('value')).toBe('Foo123');
  *
  * @constructor
  * @extends {webdriver.WebElement}
@@ -876,7 +860,7 @@ export class ElementFinder extends WebdriverWebElement {
   /**
    * @see ElementArrayFinder.prototype.locator
    *
-   * @returns {webdriver.Locator}
+   * @returns {Locator}
    */
   locator(): any {
     return this.elementArrayFinder_.locator();
@@ -929,7 +913,7 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * let items = $('.parent').all(by.tagName('li'));
    *
-   * @param {webdriver.Locator} subLocator
+   * @param {Locator} subLocator
    * @returns {ElementArrayFinder}
    */
   all(subLocator: Locator): ElementArrayFinder {
@@ -952,26 +936,26 @@ export class ElementFinder extends WebdriverWebElement {
    * // Chain 2 element calls.
    * let child = element(by.css('.parent')).
    *     element(by.css('.child'));
-   * expect(child.getText()).toBe('Child text\n555-123-4567');
+   * expect(await child.getText()).toBe('Child text\n555-123-4567');
    *
    * // Chain 3 element calls.
    * let triple = element(by.css('.parent')).
    *     element(by.css('.child')).
    *     element(by.binding('person.phone'));
-   * expect(triple.getText()).toBe('555-123-4567');
+   * expect(await triple.getText()).toBe('555-123-4567');
    *
    * // Or using the shortcut $() notation instead of element(by.css()):
    *
    * // Chain 2 element calls.
    * let child = $('.parent').$('.child');
-   * expect(child.getText()).toBe('Child text\n555-123-4567');
+   * expect(await child.getText()).toBe('Child text\n555-123-4567');
    *
    * // Chain 3 element calls.
    * let triple = $('.parent').$('.child').
    *     element(by.binding('person.phone'));
-   * expect(triple.getText()).toBe('555-123-4567');
+   * expect(await triple.getText()).toBe('555-123-4567');
    *
-   * @param {webdriver.Locator} subLocator
+   * @param {Locator} subLocator
    * @returns {ElementFinder}
    */
   element(subLocator: Locator): ElementFinder {
@@ -1022,24 +1006,24 @@ export class ElementFinder extends WebdriverWebElement {
    * // Chain 2 element calls.
    * let child = element(by.css('.parent')).
    *     $('.child');
-   * expect(child.getText()).toBe('Child text\n555-123-4567');
+   * expect(await child.getText()).toBe('Child text\n555-123-4567');
    *
    * // Chain 3 element calls.
    * let triple = element(by.css('.parent')).
    *     $('.child').
    *     element(by.binding('person.phone'));
-   * expect(triple.getText()).toBe('555-123-4567');
+   * expect(await triple.getText()).toBe('555-123-4567');
    *
    * // Or using the shortcut $() notation instead of element(by.css()):
    *
    * // Chain 2 element calls.
    * let child = $('.parent').$('.child');
-   * expect(child.getText()).toBe('Child text\n555-123-4567');
+   * expect(await child.getText()).toBe('Child text\n555-123-4567');
    *
    * // Chain 3 element calls.
    * let triple = $('.parent').$('.child').
    *     element(by.binding('person.phone'));
-   * expect(triple.getText()).toBe('555-123-4567');
+   * expect(await triple.getText()).toBe('555-123-4567');
    *
    * @param {string} selector A css selector
    * @returns {ElementFinder}
@@ -1056,10 +1040,10 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * @example
    * // Element exists.
-   * expect(element(by.binding('person.name')).isPresent()).toBe(true);
+   * expect(await element(by.binding('person.name')).isPresent()).toBe(true);
    *
    * // Element not present.
-   * expect(element(by.binding('notPresent')).isPresent()).toBe(false);
+   * expect(await element(by.binding('notPresent')).isPresent()).toBe(false);
    *
    * @returns {Promise<boolean>} which resolves to whether
    *     the element is present on the page.
@@ -1090,7 +1074,7 @@ export class ElementFinder extends WebdriverWebElement {
    *
    * @see ElementFinder.isPresent
    *
-   * @param {webdriver.Locator} subLocator Locator for element to look for.
+   * @param {Locator} subLocator Locator for element to look for.
    * @returns {Promise<boolean>} which resolves to whether
    *     the subelement is present on the page.
    */
@@ -1135,7 +1119,7 @@ export class ElementFinder extends WebdriverWebElement {
   /**
    * Compares an element to this one for equality.
    *
-   * @param {!ElementFinder|!webdriver.WebElement} The element to compare to.
+   * @param {!ElementFinder|!webdriver.WebElement} element The element to compare to.
    *
    * @returns {!Promise<boolean>} A promise that will be
    *     resolved to whether the two WebElements are equal.
@@ -1161,7 +1145,7 @@ export class ElementFinder extends WebdriverWebElement {
  *
  * @example
  * let item = $('.count .two');
- * expect(item.getText()).toBe('Second');
+ * expect(await item.getText()).toBe('Second');
  *
  * @param {string} selector A css selector
  * @returns {ElementFinder} which identifies the located
@@ -1187,12 +1171,12 @@ export const build$ = (element: ElementHelper, by: typeof By) => {
  * @example
  * // The following protractor expressions are equivalent.
  * let list = element.all(by.css('.count span'));
- * expect(list.count()).toBe(2);
+ * expect(await list.count()).toBe(2);
  *
  * list = $$('.count span');
- * expect(list.count()).toBe(2);
- * expect(list.get(0).getText()).toBe('First');
- * expect(list.get(1).getText()).toBe('Second');
+ * expect(await list.count()).toBe(2);
+ * expect(await list.get(0).getText()).toBe('First');
+ * expect(await list.get(1).getText()).toBe('Second');
  *
  * @param {string} selector a css selector
  * @returns {ElementArrayFinder} which identifies the
