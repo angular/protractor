@@ -14,6 +14,10 @@ import {Logger} from '../logger';
 import {DriverProvider} from './driverProvider';
 
 const SauceLabs = require('saucelabs');
+const SAUCE_REGIONS:{[key: string]: string} = {
+    'us': '', // default endpoint
+    'eu': 'eu-central-1.'
+};
 
 let logger = new Logger('sauce');
 export class Sauce extends DriverProvider {
@@ -55,6 +59,7 @@ export class Sauce extends DriverProvider {
   protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
     this.sauceServer_ = new SauceLabs({
+      hostname: this.getSauceEndpoint(this.config_.sauceRegion),
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent,
@@ -81,5 +86,19 @@ export class Sauce extends DriverProvider {
         this.config_.seleniumAddress.replace(/\/\/.+@/, '//'));
     deferred.resolve();
     return deferred.promise;
+  }
+
+    /**
+     * Get the Sauce Labs endpoint
+     * @private
+     * @param {string} region
+     * @return {string} The endpoint that needs to be used
+     */
+  private getSauceEndpoint(region:string): string{
+      const dc = region ?
+          typeof SAUCE_REGIONS[region] !== 'undefined' ?
+              SAUCE_REGIONS[region] : (region + '.')
+          : '';
+      return `${dc}saucelabs.com`;
   }
 }
