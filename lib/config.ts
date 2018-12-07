@@ -101,13 +101,14 @@ export interface Config {
   /**
    * The address of a proxy server to use for communicating to Sauce Labs rest APIs via the
    * saucelabs node module. For example, the Sauce Labs Proxy can be setup with: sauceProxy:
-   * eu: eu-central-1
+   * 'http://localhost:3128'
    */
   sauceProxy?: string;
   /**
    * If you run your tests on SauceLabs you can specify the region you want to run your tests
-   * in via the `region` property. Available short handles for regions are:
-   * 'http://localhost:3128'
+   * in via the `sauceRegion` property. Available short handles for regions are:
+   * us: us-west-1 (default)
+   * eu: eu-central-1
    */
   sauceRegion?: string;
 
