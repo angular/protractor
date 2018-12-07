@@ -104,13 +104,6 @@ export interface Config {
    * 'http://localhost:3128'
    */
   sauceProxy?: string;
-  /**
-   * If you run your tests on SauceLabs you can specify the region you want to run your tests
-   * in via the `sauceRegion` property. Available short handles for regions are:
-   * us: us-west-1 (default)
-   * eu: eu-central-1
-   */
-  sauceRegion?: string;
 
   /**
    * The proxy address that browser traffic will go through which is tied to the browser session.
@@ -142,6 +135,13 @@ export interface Config {
    * ignored. The tests will be run remotely using Sauce Labs.
    */
   sauceKey?: string;
+  /**
+    * If you run your tests on SauceLabs you can specify the region you want to run your tests
+    * in via the `sauceRegion` property. Available short handles for regions are:
+    * us: us-west-1 (default)
+    * eu: eu-central-1
+    */
+  sauceRegion?: string;
   /**
    * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com.
    * This is needed if your computer is behind a corporate proxy.
