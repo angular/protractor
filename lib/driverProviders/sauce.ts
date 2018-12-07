@@ -88,12 +88,12 @@ export class Sauce extends DriverProvider {
     return deferred.promise;
   }
 
-    /**
-     * Get the Sauce Labs endpoint
-     * @private
-     * @param {string} region
-     * @return {string} The endpoint that needs to be used
-     */
+  /**
+    * Get the Sauce Labs endpoint
+    * @private
+    * @param {string} region
+    * @return {string} The endpoint that needs to be used
+    */
   private getSauceEndpoint(region:string): string{
       const dc = region ?
           typeof SAUCE_REGIONS[region] !== 'undefined' ?
