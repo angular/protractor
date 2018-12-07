@@ -136,11 +136,11 @@ export interface Config {
    */
   sauceKey?: string;
   /**
-    * If you run your tests on SauceLabs you can specify the region you want to run your tests
-    * in via the `sauceRegion` property. Available short handles for regions are:
-    * us: us-west-1 (default)
-    * eu: eu-central-1
-    */
+   * If you run your tests on SauceLabs you can specify the region you want to run your tests
+   * in via the `sauceRegion` property. Available short handles for regions are:
+   * us: us-west-1 (default)
+   * eu: eu-central-1
+   */
   sauceRegion?: string;
   /**
    * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com.

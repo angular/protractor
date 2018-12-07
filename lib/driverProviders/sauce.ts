@@ -14,9 +14,9 @@ import {Logger} from '../logger';
 import {DriverProvider} from './driverProvider';
 
 const SauceLabs = require('saucelabs');
-const SAUCE_REGIONS:{[key: string]: string} = {
-    'us': '', // default endpoint
-    'eu': 'eu-central-1.'
+const SAUCE_REGIONS: {[key: string]: string} = {
+  'us': '',  // default endpoint
+  'eu': 'eu-central-1.'
 };
 
 let logger = new Logger('sauce');
@@ -71,8 +71,9 @@ export class Sauce extends DriverProvider {
     let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
     let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
     this.config_.seleniumAddress = auth +
-        (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
-                                             `ondemand.${this.getSauceEndpoint(this.config_.sauceRegion)}:443/wd/hub`);
+        (this.config_.sauceSeleniumAddress ?
+             this.config_.sauceSeleniumAddress :
+             `ondemand.${this.getSauceEndpoint(this.config_.sauceRegion)}:443/wd/hub`);
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.
@@ -89,16 +90,15 @@ export class Sauce extends DriverProvider {
   }
 
   /**
-    * Get the Sauce Labs endpoint
-    * @private
-    * @param {string} region
-    * @return {string} The endpoint that needs to be used
-    */
-  private getSauceEndpoint(region:string): string{
-      const dc = region ?
-          typeof SAUCE_REGIONS[region] !== 'undefined' ?
-              SAUCE_REGIONS[region] : (region + '.')
-          : '';
-      return `${dc}saucelabs.com`;
+   * Get the Sauce Labs endpoint
+   * @private
+   * @param {string} region
+   * @return {string} The endpoint that needs to be used
+   */
+  private getSauceEndpoint(region: string): string {
+    const dc = region ?
+        typeof SAUCE_REGIONS[region] !== 'undefined' ? SAUCE_REGIONS[region] : (region + '.') :
+        '';
+    return `${dc}saucelabs.com`;
   }
 }
