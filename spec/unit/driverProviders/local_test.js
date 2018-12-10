@@ -38,37 +38,21 @@ describe('local connect', () => {
   });
 
   describe('with the selenium standalone jar', () => {
-    it('should throw an error if the jar file does not work', async () => {
+    it('should throw an error if the selenium sever jar cannot be used', () => {
       var jarFile = '';
-      beforeEach(function() {
-        // add files to selenium folder
-        file = 'selenium.jar';
-        jarFile = path.resolve(os.tmpdir(), file);
-        fs.openSync(jarFile, 'w');
-      });
-
-      afterEach(function() {
-        try {
-          fs.unlinkSync(jarFile);
-        } catch(e) {
-        }
-      });
-
-      it('should throw an error if the selenium sever jar cannot be used', () => {
-        var config = {
-          capabilities: { browserName: 'foobar explorer' },
-          seleniumServerJar: jarFile
-        };
-        var errorFound = false;
-        try {
-          webdriver = new Local(config);
-          webdriver.getNewDriver();
-        } catch(e) {
-          errorFound = true;
-          expect(e.code).toBe(BrowserError.CODE);
-        }
-        expect(errorFound).toBe(true);
-      });
+      var config = {
+        capabilities: { browserName: 'foobar explorer' },
+        seleniumServerJar: jarFile
+      };
+      var errorFound = false;
+      try {
+        webdriver = new Local(config);
+        webdriver.getNewDriver();
+      } catch(e) {
+        errorFound = true;
+        expect(e.code).toBe(BrowserError.CODE);
+      }
+      expect(errorFound).toBe(true);
     });
   });
 

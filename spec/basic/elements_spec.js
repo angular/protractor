@@ -289,7 +289,7 @@ describe('ElementArrayFinder', () => {
       return text.indexOf('dog') > -1;
     };
     await browser.get('index.html#/form');
-    const value = element.all(by.css('#animals ul li')).filter(isDog).
+    const value = element.all(by.css('#animals ul li')).filter(await isDog).
         reduce(async(currentValue, elem, index, elemArr) => {
           const text = await elem.getText();
           return currentValue + index + '/' + elemArr.length + ': ' +
@@ -341,7 +341,7 @@ describe('ElementArrayFinder', () => {
   it('should count all elements', async() => {
     await browser.get('index.html#/form');
 
-    element.all(by.model('color')).count().then((num) => {
+    await element.all(by.model('color')).count().then((num) => {
       expect(num).toEqual(3);
     });
 
@@ -420,7 +420,7 @@ describe('ElementArrayFinder', () => {
     const colorList = element.all(by.model('color'));
     await browser.get('index.html#/form');
 
-    colorList.each(async(colorElement) => {
+    await colorList.each(async(colorElement) => {
       expect(await colorElement.getText()).not.toEqual('purple');
     });
   });
@@ -429,12 +429,12 @@ describe('ElementArrayFinder', () => {
     await browser.get('index.html#/form');
     const rows = element.all(by.css('.rowlike'));
 
-    rows.each(async(row) => {
+    await rows.each(async(row) => {
       const input = row.element(by.css('.input'));
       expect(await input.getAttribute('value')).toEqual('10');
     });
 
-    rows.each(async(row) => {
+    await rows.each(async(row) => {
       const input = row.element(by.css('input'));
       expect(await input.getAttribute('value')).toEqual('10');
     });

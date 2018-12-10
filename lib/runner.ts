@@ -403,9 +403,9 @@ export class Runner extends EventEmitter {
 
     if (this.config_.restartBrowserBetweenTests) {
       // TODO(sjelin): replace with warnings once `afterEach` support is required
-      let restartDriver = () => {
+      let restartDriver = async () => {
         if (!this.frameworkUsesAfterEach) {
-          this.restartPromise = Promise.resolve(browser_.restart());
+          this.restartPromise = await browser_.restart();
         }
       };
       this.on('testPass', restartDriver);
