@@ -13,7 +13,6 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "@types/node": "^6.0.46",
-    "@types/selenium-webdriver": "^3.0.0",
     "blocking-proxy": "^1.0.0",
     "browserstack": "^1.5.1",
     "chalk": "^1.1.3",
@@ -29,7 +28,7 @@
   "devDependencies": {
     "@types/chalk": "^0.4.28",
     "@types/glob": "^5.0.29",
-    "@types/jasmine": "^2.5.47",
+    "@types/jasmine": "^3.3.1",
     "@types/loglevel": "^1.5.3",
     "@types/minimatch": "^2.0.28",
     "@types/minimist": "^1.1.28",
