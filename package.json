@@ -13,7 +13,6 @@
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
     "@types/node": "^6.0.46",
-    "@types/selenium-webdriver": "^3.0.0",
     "blocking-proxy": "^1.0.0",
     "browserstack": "^1.5.1",
     "chalk": "^1.1.3",
