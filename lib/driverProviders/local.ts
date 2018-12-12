@@ -7,16 +7,14 @@
  * so that we only start the local selenium once per entire launch.
  */
 import * as fs from 'fs';
-import * as path from 'path';
+import {SeleniumServer} from 'selenium-webdriver/remote';
+import {ChromeDriver, GeckoDriver, SeleniumServer as WdmSeleniumServer} from 'webdriver-manager-replacement';
 
 import {Config} from '../config';
 import {BrowserError, ConfigError} from '../exitCodes';
 import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
-
-const SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-const remote = require('selenium-webdriver/remote');
 
 let logger = new Logger('local');
 
@@ -37,14 +35,9 @@ export class Local extends DriverProvider {
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
       try {
-        let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-        let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-        this.config_.seleniumServerJar = updateConfig.standalone.last;
+        this.config_.seleniumServerJar = new WdmSeleniumServer().getBinaryPath();
       } catch (err) {
-        throw new BrowserError(
-            logger,
-            'No update-config.json found.' +
-                ' Run \'webdriver-manager update\' to download binaries.');
+        throw new BrowserError(logger, 'Run \'webdriver-manager update\' to download binaries.');
       }
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
@@ -60,14 +53,9 @@ export class Local extends DriverProvider {
             'location used by webdriver-manager');
 
         try {
-          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-          this.config_.chromeDriver = updateConfig.chrome.last;
+          this.config_.chromeDriver = new ChromeDriver().getBinaryPath();
         } catch (err) {
-          throw new BrowserError(
-              logger,
-              'No update-config.json found. ' +
-                  'Run \'webdriver-manager update\' to download binaries.');
+          throw new BrowserError(logger, 'Run \'webdriver-manager update\' to download binaries.');
         }
       }
 
@@ -91,14 +79,9 @@ export class Local extends DriverProvider {
             'location used by webdriver-manager');
 
         try {
-          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-          this.config_.geckoDriver = updateConfig.gecko.last;
+          this.config_.geckoDriver = new GeckoDriver().getBinaryPath();
         } catch (err) {
-          throw new BrowserError(
-              logger,
-              'No update-config.json found. ' +
-                  'Run \'webdriver-manager update\' to download binaries.');
+          throw new BrowserError(logger, 'Run \'webdriver-manager update\' to download binaries.');
         }
       }
 
@@ -152,7 +135,7 @@ export class Local extends DriverProvider {
       serverConf.jvmArgs.push('-Dwebdriver.gecko.driver=' + this.config_.geckoDriver);
     }
 
-    this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
+    this.server_ = new SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
     // start local server, grab hosted address, and resolve promise
     const url = await this.server_.start(this.config_.seleniumServerStartTimeout);
