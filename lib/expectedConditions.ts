@@ -45,7 +45,7 @@ import {falseIfMissing, passBoolean} from './util';
  * @constructor
  */
 export class ProtractorExpectedConditions {
-  constructor(public browser: ProtractorBrowser){};
+  constructor(public browser: ProtractorBrowser) {}
 
   /**
    * Negates the result of a promise.
@@ -351,7 +351,7 @@ export class ProtractorExpectedConditions {
    */
   presenceOf(elementFinder: ElementFinder): Function {
     return elementFinder.isPresent.bind(elementFinder);
-  };
+  }
 
   /**
    * An expectation for checking that an element is not attached to the DOM
