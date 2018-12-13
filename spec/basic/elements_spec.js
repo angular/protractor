@@ -162,16 +162,16 @@ describe('ElementFinder', () => {
     expect(successful).toEqual(false);
   });
 
-  // it('should be returned from a helper without infinite loops', async() => {
-  //   await browser.get('index.html#/form');
-  //   const helperPromise = protractor.promise.when(true).then(() => {
-  //     return element(by.binding('greeting'));
-  //   });
+  it('should be returned from a helper without infinite loops', async() => {
+    await browser.get('index.html#/form');
+    const helperPromise = Promise.resolve(true).then(() => {
+      return element(by.binding('greeting'));
+    });
 
-  //   await helperPromise.then(async(finalResult) => {
-  //     expect(await finalResult.getText()).toEqual('Hiya');
-  //   });
-  // });
+    await helperPromise.then(async(finalResult) => {
+      expect(await finalResult.getText()).toEqual('Hiya');
+    });
+  });
 
   it('should be usable in WebDriver functions', async() => {
     await browser.get('index.html#/form');
@@ -191,21 +191,14 @@ describe('ElementFinder', () => {
 
   });
 
-  fit('should check equality correctly', async() => {
+  it('should check equality correctly', async() => {
     await browser.get('index.html#/form');
 
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
-    console.log(await usernameInput.getAttribute('value'));
 
-    const val = await usernameInput.getWebElement();
-    const val2 = await usernameInput.getWebElement();
-    expect(await WebElement.equals(val, val)).toBe(true);
-    expect(await WebElement.equals(val, val2)).toBe(true);
-    // expect(await usernameInput.equals(usernameInput)).toEqual(true);
-    expect
-    // console.log(await usernameInput.equals(usernameInput));
-    // expect(await usernameInput.equals(name)).toEqual(false);
+    expect(await usernameInput.equals(usernameInput)).toEqual(true);
+    expect(await usernameInput.equals(name)).toEqual(false);
   });
 });
 
@@ -429,7 +422,7 @@ describe('ElementArrayFinder', () => {
     const colorList = element.all(by.model('color'));
     await browser.get('index.html#/form');
 
-    colorList.each(async(colorElement) => {
+    await colorList.each(async(colorElement) => {
       expect(await colorElement.getText()).not.toEqual('purple');
     });
   });
@@ -438,12 +431,12 @@ describe('ElementArrayFinder', () => {
     await browser.get('index.html#/form');
     const rows = element.all(by.css('.rowlike'));
 
-    rows.each(async(row) => {
+    await rows.each(async(row) => {
       const input = row.element(by.css('.input'));
       expect(await input.getAttribute('value')).toEqual('10');
     });
 
-    rows.each(async(row) => {
+    await rows.each(async(row) => {
       const input = row.element(by.css('input'));
       expect(await input.getAttribute('value')).toEqual('10');
     });
