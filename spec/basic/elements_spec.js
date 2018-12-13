@@ -1,3 +1,5 @@
+const {WebElement} = require('selenium-webdriver');
+
 describe('ElementFinder', () => {
   beforeEach(async() => {
     // Clear everything between each test.
@@ -162,7 +164,7 @@ describe('ElementFinder', () => {
 
   it('should be returned from a helper without infinite loops', async() => {
     await browser.get('index.html#/form');
-    const helperPromise = protractor.promise.when(true).then(() => {
+    const helperPromise = Promise.resolve(true).then(() => {
       return element(by.binding('greeting'));
     });
 
@@ -385,11 +387,11 @@ describe('ElementArrayFinder', () => {
 
   it('should get an element from an array by promise index', async() => {
     const colorList = element.all(by.model('color'));
-    const index = protractor.promise.fulfilled(1);
+    const index = Promise.resolve(1);
 
     await browser.get('index.html#/form');
 
-    expect(await colorList.get(index).getAttribute('value')).toEqual('green');
+    expect(await colorList.get(await index).getAttribute('value')).toEqual('green');
   });
 
   it('should get an element from an array using negative indices', async() => {
