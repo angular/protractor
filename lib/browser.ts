@@ -72,7 +72,7 @@ function ptorMixin(to: any, from: any, fnName: string, setupFn?: Function) {
     }
     return run();
   };
-};
+}
 
 export interface ElementHelper extends Function {
   (locator: Locator): ElementFinder;
@@ -96,7 +96,7 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
   };
 
   return element;
-};
+}
 
 /**
  * @alias browser
@@ -725,7 +725,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   getRegisteredMockModules(): Array<string|Function> {
     return this.mockModules_.map(module => module.script);
-  };
+  }
 
   /**
    * Add the base mock modules used for all Protractor tests.

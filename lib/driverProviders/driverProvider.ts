@@ -96,7 +96,7 @@ export abstract class DriverProvider {
    * Default update job method.
    * @return a promise
    */
-  async updateJob(update: any): Promise<any>{};
+  async updateJob(update: any): Promise<any> {}
 
   /**
    * Default setup environment method, common to all driver providers.
@@ -106,7 +106,7 @@ export abstract class DriverProvider {
     if (this.config_.useBlockingProxy && !this.config_.blockingProxyUrl) {
       await this.bpRunner.start();
     }
-  };
+  }
 
   /**
    * Set up environment specific to a particular driver provider. Overridden
