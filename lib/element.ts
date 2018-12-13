@@ -1142,13 +1142,12 @@ export class ElementFinder extends WebdriverWebElement {
    */
   async equals(element: ElementFinder|WebElement): Promise<boolean> {
     const a = await this.getWebElement();
-    console.log(a instanceof WebElement);
-    console.log(await a.getId());
     const b = (element as any).getWebElement ? await(element as ElementFinder).getWebElement() :
                                                element as WebElement;
-    console.log(b instanceof WebElement);
-    console.log(await b.getId());
-    return WebElement.equals(a, b);
+    // TODO(selenium4): Use `return WebElement.equals(a, b);` when
+    // https://github.com/SeleniumHQ/selenium/pull/6749 is fixed.
+    return a.getDriver()
+      .executeScript('return arguments[0] === arguments[1]', a, b);
   }
 }
 
