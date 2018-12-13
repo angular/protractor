@@ -505,11 +505,11 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     }
 
     // TODO(selenium4): fix promise cast.
-    return this.driver.schedule(
-               new Command(CommandName.EXECUTE_SCRIPT)
-                   .setParameter('script', script)
-                   .setParameter('args', scriptArgs),
-               description) as Promise<any>;
+    // TODO(selenium4): schedule does not exist on driver. Should use execute instead.
+    return (this.driver as any)
+        .execute(new Command(CommandName.EXECUTE_SCRIPT)
+                     .setParameter('script', script)
+                     .setParameter('args', scriptArgs));
   }
 
   /**
@@ -527,14 +527,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   private executeAsyncScript_(script: string|Function, description: string, ...scriptArgs: any[]):
       Promise<any> {
+    // TODO(selenium4): decide what to do with description.
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
-    return this.driver.schedule(
-               new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
-                   .setParameter('script', script)
-                   .setParameter('args', scriptArgs),
-               description) as Promise<any>;
+    // TODO(selenium4): fix typings. driver.execute should exist
+    return (this.driver as any)
+        .execute(new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
+                     .setParameter('script', script)
+                     .setParameter('args', scriptArgs));
   }
 
   /**

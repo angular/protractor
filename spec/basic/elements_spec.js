@@ -1,3 +1,5 @@
+const {WebElement} = require('selenium-webdriver');
+
 describe('ElementFinder', () => {
   beforeEach(async() => {
     // Clear everything between each test.
@@ -160,16 +162,16 @@ describe('ElementFinder', () => {
     expect(successful).toEqual(false);
   });
 
-  it('should be returned from a helper without infinite loops', async() => {
-    await browser.get('index.html#/form');
-    const helperPromise = protractor.promise.when(true).then(() => {
-      return element(by.binding('greeting'));
-    });
+  // it('should be returned from a helper without infinite loops', async() => {
+  //   await browser.get('index.html#/form');
+  //   const helperPromise = protractor.promise.when(true).then(() => {
+  //     return element(by.binding('greeting'));
+  //   });
 
-    await helperPromise.then(async(finalResult) => {
-      expect(await finalResult.getText()).toEqual('Hiya');
-    });
-  });
+  //   await helperPromise.then(async(finalResult) => {
+  //     expect(await finalResult.getText()).toEqual('Hiya');
+  //   });
+  // });
 
   it('should be usable in WebDriver functions', async() => {
     await browser.get('index.html#/form');
@@ -189,14 +191,21 @@ describe('ElementFinder', () => {
 
   });
 
-  it('should check equality correctly', async() => {
+  fit('should check equality correctly', async() => {
     await browser.get('index.html#/form');
 
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
+    console.log(await usernameInput.getAttribute('value'));
 
-    expect(await usernameInput.equals(usernameInput)).toEqual(true);
-    expect(await usernameInput.equals(name)).toEqual(false);
+    const val = await usernameInput.getWebElement();
+    const val2 = await usernameInput.getWebElement();
+    expect(await WebElement.equals(val, val)).toBe(true);
+    expect(await WebElement.equals(val, val2)).toBe(true);
+    // expect(await usernameInput.equals(usernameInput)).toEqual(true);
+    expect
+    // console.log(await usernameInput.equals(usernameInput));
+    // expect(await usernameInput.equals(name)).toEqual(false);
   });
 });
 
@@ -385,11 +394,11 @@ describe('ElementArrayFinder', () => {
 
   it('should get an element from an array by promise index', async() => {
     const colorList = element.all(by.model('color'));
-    const index = protractor.promise.fulfilled(1);
+    const index = Promise.resolve(1);
 
     await browser.get('index.html#/form');
 
-    expect(await colorList.get(index).getAttribute('value')).toEqual('green');
+    expect(await colorList.get(await index).getAttribute('value')).toEqual('green');
   });
 
   it('should get an element from an array using negative indices', async() => {
