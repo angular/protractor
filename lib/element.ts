@@ -310,7 +310,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   first(): ElementFinder {
     return this.get(0);
-  };
+  }
 
   /**
    * Get the last matching element for the ElementArrayFinder. This does not
@@ -643,7 +643,7 @@ export class ElementArrayFinder extends WebdriverWebElement {
       return await mapResult;
     });
     return Promise.all(list);
-  };
+  }
 
   /**
    * Apply a reduce function against an accumulator and every element found
