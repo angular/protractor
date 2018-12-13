@@ -98,7 +98,7 @@ export class ProtractorBy extends WebdriverBy {
         }
       };
     };
-  };
+  }
 
   /**
    * Find an element by text binding. Does a partial match, so any elements
@@ -143,7 +143,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.binding("' + bindingDescriptor + '")';
       }
     };
-  };
+  }
 
   /**
    * Find an element by exact binding.
@@ -177,7 +177,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.exactBinding("' + bindingDescriptor + '")';
       }
     };
-  };
+  }
 
   /**
    * Find an element by ng-model expression.
@@ -207,7 +207,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.model("' + model + '")';
       }
     };
-  };
+  }
 
   /**
    * Find a button by text.
@@ -234,7 +234,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.buttonText("' + searchText + '")';
       }
     };
-  };
+  }
 
   /**
    * Find a button by partial text.
@@ -261,7 +261,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.partialButtonText("' + searchText + '")';
       }
     };
-  };
+  }
 
   // Generate either by.repeater or by.exactRepeater
   private byRepeaterInner(exact: boolean, repeatDescriptor: string): ProtractorLocator {
@@ -448,7 +448,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.cssContainingText("' + cssSelector + '", "' + searchText + '")';
       }
     };
-  };
+  }
 
   /**
    * Find an element by ng-options expression.
@@ -482,7 +482,7 @@ export class ProtractorBy extends WebdriverBy {
         return 'by.option("' + optionsDescriptor + '")';
       }
     };
-  };
+  }
 
   /**
    * Find an element by css selector within the Shadow DOM.
@@ -509,5 +509,5 @@ export class ProtractorBy extends WebdriverBy {
     // TODO(julie): syntax will change from /deep/ to >>> at some point.
     // When that is supported, switch it here.
     return By.css('* /deep/ ' + selector);
-  };
+  }
 }
