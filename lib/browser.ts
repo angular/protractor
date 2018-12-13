@@ -21,7 +21,7 @@ const DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
 const DEFAULT_RESET_URL = 'data:text/html,<html></html>';
 const DEFAULT_GET_PAGE_TIMEOUT = 10000;
 
-let logger = new Logger('protractor');
+let logger = new Logger('browser');
 
 // TODO(cnishina): either remove for loop entirely since this does not export anything
 // the user might need since everything is composed (with caveat that this could be a

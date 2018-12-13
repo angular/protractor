@@ -1146,8 +1146,7 @@ export class ElementFinder extends WebdriverWebElement {
                                                element as WebElement;
     // TODO(selenium4): Use `return WebElement.equals(a, b);` when
     // https://github.com/SeleniumHQ/selenium/pull/6749 is fixed.
-    return a.getDriver()
-      .executeScript('return arguments[0] === arguments[1]', a, b);
+    return a.getDriver().executeScript('return arguments[0] === arguments[1]', a, b);
   }
 }
 
