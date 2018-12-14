@@ -5,21 +5,20 @@ var Chrome = require('selenium-webdriver/chrome');
 var Firefox = require('selenium-webdriver/firefox');
 var SeleniumError = require('selenium-webdriver').error;
 var Remote = require('selenium-webdriver/remote');
-var Testing = require('selenium-webdriver/testing');
 
 var WEBDRIVER = {
-  staticFunctions: ['attachToSession', 'createSession'],
+  staticFunctions: ['createSession'],
 
   instanceFunctions: ['actions', 'wait', 'sleep', 'getCurrentUrl', 'getTitle',
-    'takeScreenshot', 'getSession', 'getCapabilities', 'quit', 'touchActions',
-    'executeAsyncScript', 'call', 'wait', 'getWindowHandle',
+    'takeScreenshot', 'getSession', 'getCapabilities', 'quit', 
+    'executeAsyncScript', 'wait', 'getWindowHandle',
     'getAllWindowHandles', 'getPageSource', 'close', 'get', 'findElement',
     'findElements', 'manage', 'navigate', 'switchTo']
 };
 
 var WEBELEMENT = {
   instanceFunctions: ['getDriver', 'getId', 'findElement', 'click', 'sendKeys', 'getTagName',
-    'getCssValue', 'getAttribute', 'getText', 'getSize', 'getLocation', 'isEnabled', 'isSelected',
+    'getCssValue', 'getAttribute', 'getText', 'getRect', 'isEnabled', 'isSelected',
     'submit', 'clear', 'isDisplayed', 'takeScreenshot']
 };
 var BY = {
@@ -34,9 +33,6 @@ var CHROME = {
 };
 var FIREFOX = {
   staticFunction: 'Driver'
-};
-var TESTING = {
-  instanceFunctions: ['after', 'afterEach', 'before', 'beforeEach', 'it', 'xit']
 };
 
 describe('selenium-webdriver dependency', function() {
@@ -115,15 +111,5 @@ describe('selenium-webdriver dependency', function() {
     it('should have a SeleniumServer function', function() {
       expect(typeof Remote['SeleniumServer'] == 'function').toBe(true);
     });
-  });
-  describe('require("selenium-webdriver/testing")', function() {
-
-    it('should have functions', function() {
-      for (var pos in TESTING.instanceFunctions) {
-        var func = TESTING.instanceFunctions[pos];
-        expect(typeof Testing[func] == 'function').toBe(true);
-      }
-    });
-
   });
 });
