@@ -3,7 +3,7 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
-import {WebDriver} from 'selenium-webdriver';
+import {Session, WebDriver} from 'selenium-webdriver';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -38,7 +38,10 @@ export class AttachSession extends DriverProvider {
   getNewDriver(): WebDriver {
     const httpClient = new http.HttpClient(this.config_.seleniumAddress);
     const executor = new http.Executor(httpClient);
-    const newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId, null);
+    const session = new Session(this.config_.seleniumSessionId, null);
+
+    // const newDriver = WebDriver.attachToSession(executor, this.config_.seleniumSessionId, null);
+    const newDriver = new WebDriver(session, executor);
     this.drivers_.push(newDriver);
     return newDriver;
   }
