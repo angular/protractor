@@ -32,6 +32,8 @@ jobs:
       - restore_cache:
           key: node_modules-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
+      - run: google-chrome --version
+
       - run:
           name: NPM Install
           command: |
