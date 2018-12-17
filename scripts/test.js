@@ -117,40 +117,40 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/mochaFailureConf.j
       stacktrace: 'mocha_failure_spec.js:11:20'
     }]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf.js')
-    .expectExitCode(1)
-    .expectErrors([
-      {message: 'Expected true to be false'},
-      {message: 'from setup'},
-      {message: 'from postTest passing'},
-      {message: 'from postTest failing'},
-      {message: 'from teardown'}
-    ]);
+// executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf.js')
+//     .expectExitCode(1)
+//     .expectErrors([
+//       {message: 'Expected true to be false'},
+//       {message: 'from setup'},
+//       {message: 'from postTest passing'},
+//       {message: 'from postTest failing'},
+//       {message: 'from teardown'}
+//     ]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
-    .expectExitCode(1)
-    .expectErrors([
-      {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-      {message: 'The following tasks were pending:[\\s\\S]*' +
-                '- \\$timeout: function\\(\\) {[\\s\\S]*' +
-                  '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' +
-                '*}'}
-    ]);
+// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
+//     .expectExitCode(1)
+//     .expectErrors([
+//       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
+//       {message: 'The following tasks were pending:[\\s\\S]*' +
+//                 '- \\$timeout: function\\(\\) {[\\s\\S]*' +
+//                   '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' +
+//                 '*}'}
+//     ]);
 
-executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
-                            '--untrackOutstandingTimeouts true')
-    .expectExitCode(1)
-    .expectErrors([
-      {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-      {message: 'While waiting for element with locator - ' +
-                'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
-    ]);
+// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
+//                             '--untrackOutstandingTimeouts true')
+//     .expectExitCode(1)
+//     .expectErrors([
+//       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
+//       {message: 'While waiting for element with locator - ' +
+//                 'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
+//     ]);
 
-executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
-    .expectExitCode(1)
-    .expectErrors([
-      {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
-    ]);
+// executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
+//     .expectExitCode(1)
+//     .expectErrors([
+//       {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
+//     ]);
 
 // If we're running on CircleCI, save stdout and stderr from the test run to a log file.
 if (process.env['CIRCLE_ARTIFACTS']) {
