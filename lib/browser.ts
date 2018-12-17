@@ -747,8 +747,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * the wrapped webdriver directly.
    *
    * @example
-   * browser.get('https://angularjs.org/');
-   * expect(browser.getCurrentUrl()).toBe('https://angularjs.org/');
+   * await browser.get('https://angularjs.org/');
+   * expect(await browser.getCurrentUrl()).toBe('https://angularjs.org/');
    *
    * @param {string} destination Destination URL.
    * @param {number=} opt_timeout Number of milliseconds to wait for Angular to
@@ -894,9 +894,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Browse to another page using in-page navigation.
    *
    * @example
-   * browser.get('http://angular.github.io/protractor/#/tutorial');
-   * browser.setLocation('api');
-   * expect(browser.getCurrentUrl())
+   * await browser.get('http://angular.github.io/protractor/#/tutorial');
+   * await browser.setLocation('api');
+   * expect(await browser.getCurrentUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
    *
    * @param {string} url In page URL using the same syntax as $location.url()
@@ -922,8 +922,8 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @deprecated Please use `browser.getCurrentUrl()`
    * @example
-   * browser.get('http://angular.github.io/protractor/#/api');
-   * expect(browser.getLocationAbsUrl())
+   * await browser.get('http://angular.github.io/protractor/#/api');
+   * expect(await browser.getLocationAbsUrl())
    *     .toBe('http://angular.github.io/protractor/#/api');
    * @returns {Promise<string>} The current absolute url from
    * AngularJS.
