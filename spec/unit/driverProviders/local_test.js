@@ -1,12 +1,12 @@
-var fs = require('fs'),
+const fs = require('fs'),
     os = require('os'),
     path = require('path');
-var BrowserError = require('../../../built/exitCodes').BrowserError;
-var ProtractorError = require('../../../built/exitCodes').ProtractorError;
-var Logger = require('../../../built/logger').Logger;
-var WriteTo = require('../../../built/logger').WriteTo;
-var Local = require('../../../built/driverProviders').Local;
-var webdriver, file;
+const BrowserError = require('../../../built/exitCodes').BrowserError;
+const ProtractorError = require('../../../built/exitCodes').ProtractorError;
+const Logger = require('../../../built/logger').Logger;
+const WriteTo = require('../../../built/logger').WriteTo;
+const Local = require('../../../built/driverProviders').Local;
+let webdriver, file;
 
 describe('local connect', () => {
   beforeEach(() => {
@@ -21,11 +21,11 @@ describe('local connect', () => {
 
   describe('without the selenium standalone jar', () => {
     it('should throw an error jar file is not present', async () => {
-      var config = {
+      const config = {
         capabilities: { browserName: 'chrome' },
         seleniumServerJar: '/foo/bar/selenium.jar'
       };
-      var errorFound = false;
+      let errorFound = false;
       try {
         webdriver = new Local(config);
         await webdriver.setupEnv();
@@ -38,16 +38,16 @@ describe('local connect', () => {
   });
 
   describe('with the selenium standalone jar', () => {
-    it('should throw an error if the selenium sever jar cannot be used', () => {
-      var jarFile = '';
-      var config = {
+    it('should throw an error if the selenium sever jar cannot be used', async () => {
+      let jarFile = '';
+      const config = {
         capabilities: { browserName: 'foobar explorer' },
         seleniumServerJar: jarFile
       };
-      var errorFound = false;
+      let errorFound = false;
       try {
         webdriver = new Local(config);
-        webdriver.getNewDriver();
+        await webdriver.getNewDriver();
       } catch(e) {
         errorFound = true;
         expect(e.code).toBe(BrowserError.CODE);
@@ -59,11 +59,11 @@ describe('local connect', () => {
   describe('binary does not exist', () => {
     it('should throw an error if the update-config.json does not exist', async () => {
       spyOn(fs, 'readFileSync').and.callFake(() => { return null; });
-      var config = {
+      const config = {
         capabilities: { browserName: 'chrome' },
         openSync: fs.openSync
       };
-      var errorFound = false;
+      let errorFound = false;
       try {
         webdriver = new Local(config);
         await webdriver.setupDriverEnv();
