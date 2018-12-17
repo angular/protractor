@@ -16,30 +16,28 @@ import {falseIfMissing, passBoolean} from './util';
  *
  *
  * @example
- * var EC = protractor.ExpectedConditions;
- * var button = $('#xyz');
- * var isClickable = EC.elementToBeClickable(button);
+ * const EC = protractor.ExpectedConditions;
+ * const button = $('#xyz');
+ * const isClickable = EC.elementToBeClickable(button);
  *
- * browser.get(URL);
- * browser.wait(isClickable, 5000); //wait for an element to become clickable
- * button.click();
+ * await browser.get(URL);
+ * await browser.wait(isClickable, 5000); //wait for an element to become clickable
+ * await button.click();
  *
  * // You can define your own expected condition, which is a function that
  * // takes no parameter and evaluates to a promise of a boolean.
- * var urlChanged = function() {
- *   return browser.getCurrentUrl().then(function(url) {
- *     return url === 'http://www.angularjs.org';
- *   });
- * };
+ * const urlChanged = async () => {
+ *   return await browser.getCurrentUrl() === 'http://www.angularjs.org';
+ * }
  *
  * // You can customize the conditions with EC.and, EC.or, and EC.not.
  * // Here's a condition to wait for url to change, $('abc') element to contain
  * // text 'bar', and button becomes clickable.
- * var condition = EC.and(urlChanged, EC.textToBePresentInElement($('abc'),
+ * const condition = EC.and(urlChanged, EC.textToBePresentInElement($('abc'),
  * 'bar'), isClickable);
- * browser.get(URL);
- * browser.wait(condition, 5000); //wait for condition to be true.
- * button.click();
+ * await browser.get(URL);
+ * await browser.wait(condition, 5000); //wait for condition to be true.
+ * await button.click();
  *
  * @alias ExpectedConditions
  * @constructor
@@ -51,10 +49,10 @@ export class ProtractorExpectedConditions {
    * Negates the result of a promise.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
-   * var titleIsNotFoo = EC.not(EC.titleIs('Foo'));
+   * const EC = protractor.ExpectedConditions;
+   * const titleIsNotFoo = EC.not(EC.titleIs('Foo'));
    * // Waits for title to become something besides 'foo'.
-   * browser.wait(titleIsNotFoo, 5000);
+   * await browser.wait(titleIsNotFoo, 5000);
    *
    * @alias ExpectedConditions.not
    * @param {!function} expectedCondition
@@ -102,14 +100,14 @@ export class ProtractorExpectedConditions {
    * at the first expected condition that evaluates to false.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
-   * var titleContainsFoo = EC.titleContains('Foo');
-   * var titleIsNotFooBar = EC.not(EC.titleIs('FooBar'));
+   * const EC = protractor.ExpectedConditions;
+   * const titleContainsFoo = EC.titleContains('Foo');
+   * const titleIsNotFooBar = EC.not(EC.titleIs('FooBar'));
    * // Waits for title to contain 'Foo', but is not 'FooBar'
-   * browser.wait(EC.and(titleContainsFoo, titleIsNotFooBar), 5000);
+   * await browser.wait(EC.and(titleContainsFoo, titleIsNotFooBar), 5000);
    *
    * @alias ExpectedConditions.and
-   * @param {Array.<Function>} fns An array of expected conditions to 'and'
+   * @param {Array.<Function>} args An array of expected conditions to 'and'
    * together.
    *
    * @returns {!function} An expected condition that returns a promise which
@@ -125,13 +123,13 @@ export class ProtractorExpectedConditions {
    *
    * @alias ExpectedConditions.or
    * @example
-   * var EC = protractor.ExpectedConditions;
-   * var titleContainsFoo = EC.titleContains('Foo');
-   * var titleContainsBar = EC.titleContains('Bar');
+   * const EC = protractor.ExpectedConditions;
+   * const titleContainsFoo = EC.titleContains('Foo');
+   * const titleContainsBar = EC.titleContains('Bar');
    * // Waits for title to contain either 'Foo' or 'Bar'
-   * browser.wait(EC.or(titleContainsFoo, titleContainsBar), 5000);
+   * await browser.wait(EC.or(titleContainsFoo, titleContainsBar), 5000);
    *
-   * @param {Array.<Function>} fns An array of expected conditions to 'or'
+   * @param {Array.<Function>} args An array of expected conditions to 'or'
    * together.
    *
    * @returns {!function} An expected condition that returns a promise which
@@ -145,9 +143,9 @@ export class ProtractorExpectedConditions {
    * Expect an alert to be present.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for an alert pops up.
-   * browser.wait(EC.alertIsPresent(), 5000);
+   * await browser.wait(EC.alertIsPresent(), 5000);
    *
    * @alias ExpectedConditions.alertIsPresent
    * @returns {!function} An expected condition that returns a promise
@@ -175,9 +173,9 @@ export class ProtractorExpectedConditions {
    * can click it.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'abc' to be clickable.
-   * browser.wait(EC.elementToBeClickable($('#abc')), 5000);
+   * await browser.wait(EC.elementToBeClickable($('#abc')), 5000);
    *
    * @alias ExpectedConditions.elementToBeClickable
    * @param {!ElementFinder} elementFinder The element to check
@@ -196,9 +194,9 @@ export class ProtractorExpectedConditions {
    * element. Returns false if the elementFinder does not find an element.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'abc' to contain the text 'foo'.
-   * browser.wait(EC.textToBePresentInElement($('#abc'), 'foo'), 5000);
+   * await browser.wait(EC.textToBePresentInElement($('#abc'), 'foo'), 5000);
    *
    * @alias ExpectedConditions.textToBePresentInElement
    * @param {!ElementFinder} elementFinder The element to check
@@ -223,9 +221,9 @@ export class ProtractorExpectedConditions {
    * value. Returns false if the elementFinder does not find an element.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'myInput' to contain the input 'foo'.
-   * browser.wait(EC.textToBePresentInElementValue($('#myInput'), 'foo'), 5000);
+   * await browser.wait(EC.textToBePresentInElementValue($('#myInput'), 'foo'), 5000);
    *
    * @alias ExpectedConditions.textToBePresentInElementValue
    * @param {!ElementFinder} elementFinder The element to check
@@ -248,9 +246,9 @@ export class ProtractorExpectedConditions {
    * substring.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the title to contain 'foo'.
-   * browser.wait(EC.titleContains('foo'), 5000);
+   * await browser.wait(EC.titleContains('foo'), 5000);
    *
    * @alias ExpectedConditions.titleContains
    * @param {!string} title The fragment of title expected
@@ -270,9 +268,9 @@ export class ProtractorExpectedConditions {
    * An expectation for checking the title of a page.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the title to be 'foo'.
-   * browser.wait(EC.titleIs('foo'), 5000);
+   * await browser.wait(EC.titleIs('foo'), 5000);
    *
    * @alias ExpectedConditions.titleIs
    * @param {!string} title The expected title, which must be an exact match.
@@ -293,9 +291,9 @@ export class ProtractorExpectedConditions {
    * substring.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the URL to contain 'foo'.
-   * browser.wait(EC.urlContains('foo'), 5000);
+   * await browser.wait(EC.urlContains('foo'), 5000);
    *
    * @alias ExpectedConditions.urlContains
    * @param {!string} url The fragment of URL expected
@@ -315,9 +313,9 @@ export class ProtractorExpectedConditions {
    * An expectation for checking the URL of a page.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the URL to be 'foo'.
-   * browser.wait(EC.urlIs('foo'), 5000);
+   * await browser.wait(EC.urlIs('foo'), 5000);
    *
    * @alias ExpectedConditions.urlIs
    * @param {!string} url The expected URL, which must be an exact match.
@@ -339,9 +337,9 @@ export class ProtractorExpectedConditions {
    * This is the opposite of 'stalenessOf'.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'abc' to be present on the dom.
-   * browser.wait(EC.presenceOf($('#abc')), 5000);
+   * await browser.wait(EC.presenceOf($('#abc')), 5000);
    *
    * @alias ExpectedConditions.presenceOf
    * @param {!ElementFinder} elementFinder The element to check
@@ -358,9 +356,9 @@ export class ProtractorExpectedConditions {
    * of a page. This is the opposite of 'presenceOf'.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'abc' to be no longer present on the dom.
-   * browser.wait(EC.stalenessOf($('#abc')), 5000);
+   * await browser.wait(EC.stalenessOf($('#abc')), 5000);
    *
    * @alias ExpectedConditions.stalenessOf
    * @param {!ElementFinder} elementFinder The element to check
@@ -380,9 +378,9 @@ export class ProtractorExpectedConditions {
    * of 'invisibilityOf'.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'abc' to be visible on the dom.
-   * browser.wait(EC.visibilityOf($('#abc')), 5000);
+   * await browser.wait(EC.visibilityOf($('#abc')), 5000);
    *
    * @alias ExpectedConditions.visibilityOf
    * @param {!ElementFinder} elementFinder The element to check
@@ -401,9 +399,9 @@ export class ProtractorExpectedConditions {
    * present on the DOM. This is the opposite of 'visibilityOf'.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'abc' to be no longer visible on the dom.
-   * browser.wait(EC.invisibilityOf($('#abc')), 5000);
+   * await browser.wait(EC.invisibilityOf($('#abc')), 5000);
    *
    * @alias ExpectedConditions.invisibilityOf
    * @param {!ElementFinder} elementFinder The element to check
@@ -419,9 +417,9 @@ export class ProtractorExpectedConditions {
    * An expectation for checking the selection is selected.
    *
    * @example
-   * var EC = protractor.ExpectedConditions;
+   * const EC = protractor.ExpectedConditions;
    * // Waits for the element with id 'myCheckbox' to be selected.
-   * browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
+   * await browser.wait(EC.elementToBeSelected($('#myCheckbox')), 5000);
    *
    * @alias ExpectedConditions.elementToBeSelected
    * @param {!ElementFinder} elementFinder The element to check
