@@ -286,8 +286,9 @@ export class Runner extends EventEmitter {
     browser_.restart = async () => {
       // Note: because tests are not paused at this point, any async
       // calls here are not guaranteed to complete before the tests resume.
+      const restartedBrowser = await replaceBrowser();
       await this.driverprovider_.quitDriver(browser_.driver);
-      return await replaceBrowser();
+      return restartedBrowser;
     };
 
     return browser_;
