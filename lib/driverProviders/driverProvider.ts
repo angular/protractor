@@ -7,7 +7,10 @@ import {Builder, WebDriver} from 'selenium-webdriver';
 
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
+import {BrowserError} from '../exitCodes';
+import {Logger} from '../logger';
 
+let logger = new Logger('driverProvider');
 export abstract class DriverProvider {
   drivers_: WebDriver[];
   config_: Config;
@@ -60,8 +63,7 @@ export abstract class DriverProvider {
     try {
       newDriver = await builder.build();
     } catch (e) {
-      e.code = 135;
-      throw e;
+      throw new BrowserError(logger, (e as Error).message);
     }
     this.drivers_.push(newDriver);
     return newDriver;
