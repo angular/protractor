@@ -19,8 +19,8 @@ exports.config = {
   // Plugin patterns are relative to this directory.
   plugins: [{
     inline: {
-      setup: function() {
-        browser.ignoreSynchronization = true;
+      setup: async function() {
+        await browser.waitForAngularEnabled(false);
       },
       onPageLoad: async function() {
         return await new Promise(resolve => {
@@ -32,7 +32,7 @@ exports.config = {
       },
       onPageStable: function() {
         this.addFailure('onPageStable should not have ran when ' +
-            'browser.ignoreSynchronization is true.');
+            'await browser.waitForAngularEnabled() is false.');
       },
       teardown: function() {
         if (protractor.ON_PAGE_LOAD) {

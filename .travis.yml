@@ -36,13 +36,13 @@ addons:
       - g++-4.8
 
 before_install:
-  - g++-4.8 --version
+  - travis_wait g++-4.8 --version
 
 before_script:
   - npm run install_testapp
   - npm run pretest
   - mkdir -p $LOGS_DIR
-  - ./scripts/travis_setup.sh
+  - travis_wait ./scripts/travis_setup.sh
 
 
 script:

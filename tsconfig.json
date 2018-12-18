@@ -16,6 +16,7 @@
     "website",
     "scripts",
     "exampleTypescript",
-    "spec/**/*"
+    "spec/**/*",
+    "typings"
   ]
 }
