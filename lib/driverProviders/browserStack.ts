@@ -3,7 +3,7 @@
  * It is responsible for setting up the account object, tearing
  * it down, and setting up the driver correctly.
  */
-import {Session, WebDriver} from 'selenium-webdriver';
+import {WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {Config} from '../config';
