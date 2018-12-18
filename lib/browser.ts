@@ -238,7 +238,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Resolved when the browser is ready for use.  Resolves to the browser, so
    * you can do:
    *
-   *   forkedBrowser = await browser.forkNewDriverInstance().ready;
+   *   forkedBrowser = await browser.forkNewDriverInstance();
    *
    * Set by the runner.
    *
@@ -359,22 +359,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         ng12Hybrid_ = ng12Hybrid;
       }
     });
-    this.ready = this.angularAppRoot(opt_rootElement || '')
-                     .then(() => {
-                       return this.driver.getSession();
-                     })
-                     .then((session: Session) => {
-                       // Internet Explorer does not accept data URLs, which are the default
-                       // reset URL for Protractor.
-                       // Safari accepts data urls, but SafariDriver fails after one is used.
-                       // PhantomJS produces a "Detected a page unload event" if we use data urls
-                       let browserName = session.getCapabilities().get('browserName');
-                       if (browserName === 'internet explorer' || browserName === 'safari' ||
-                           browserName === 'phantomjs' || browserName === 'MicrosoftEdge') {
-                         this.resetUrl = 'about:blank';
-                       }
-                       return this;
-                     });
 
     this.trackOutstandingTimeouts_ = !opt_untrackOutstandingTimeouts;
     this.mockModules_ = [];
@@ -423,7 +407,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Fork another instance of browser for use in interactive tests.
    *
    * @example
-   * var forked = await browser.forkNewDriverInstance().ready;
+   * var forked = await browser.forkNewDriverInstance();
    * await forked.get('page1'); // 'page1' gotten by forked browser
    *
    * @param {boolean=} useSameUrl Whether to navigate to current url on creation
@@ -433,8 +417,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @returns {ProtractorBrowser} A browser instance.
    */
-  forkNewDriverInstance(useSameUrl?: boolean, copyMockModules?: boolean, copyConfigUpdates = true):
-      ProtractorBrowser {
+  async forkNewDriverInstance(
+      useSameUrl?: boolean, copyMockModules?: boolean,
+      copyConfigUpdates = true): Promise<ProtractorBrowser> {
     return null;
   }
 
@@ -456,7 +441,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * await browser.get('page2'); // 'page2' gotten by restarted browser
    *
    * // Running against forked browsers
-   * var forked = await browser.forkNewDriverInstance().ready;
+   * var forked = await browser.forkNewDriverInstance();
    * await fork.get('page1');
    * fork = await fork.restart();
    * await fork.get('page2'); // 'page2' gotten by restarted fork

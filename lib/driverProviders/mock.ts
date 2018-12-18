@@ -38,7 +38,7 @@ export class Mock extends DriverProvider {
    * @override
    * @return webdriver instance
    */
-  getNewDriver(): WebDriver {
+  async getNewDriver(): Promise<WebDriver> {
     let mockSession = new Session('test_session_id', {});
     let newDriver = new WebDriver(mockSession, new MockExecutor());
     this.drivers_.push(newDriver);
