@@ -5,4 +5,4 @@
  * @param {Runner} runner The current Protractor Runner.
  * @param {Array} specs Array of Directory Path Strings.
  */
-exports.run = require('../../built/lib/frameworks/jasmine.js').run;
+exports.run = require('../../built/frameworks/jasmine').run;
