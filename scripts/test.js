@@ -50,10 +50,7 @@ const passingTests = [
   // Dependency tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
   // Typings tests
-<<<<<<< HEAD
-=======
-  // TODO(selenium4): not sure why this does not work.
->>>>>>> deps(selenium): upgrade to selenium 4
+  // TODO(selenium4): consider rewriting this test.
   // 'node spec/install/test.js'
 ];
 

@@ -489,7 +489,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       script = 'return (' + script + ').apply(null, arguments);';
     }
 
-    // TODO(selenium4): fix promise cast.
     // TODO(selenium4): schedule does not exist on driver. Should use execute instead.
     return (this.driver as any)
         .execute(new Command(CommandName.EXECUTE_SCRIPT)

@@ -171,7 +171,6 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   });
 
   process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => {
-    // let e = new Error();
     if (reason.stack.match('angular testability are undefined') ||
         reason.stack.match('angular is not defined')) {
       logger.warn(
