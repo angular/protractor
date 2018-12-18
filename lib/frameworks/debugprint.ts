@@ -1,6 +1,7 @@
 import * as util from 'util';
 import {Logger} from '../logger';
 import {Runner} from '../runner';
+import {RunResults} from '../taskRunner';
 
 const logger = new Logger('debugger');
 
@@ -12,7 +13,7 @@ const logger = new Logger('debugger');
  * @param {Array} specs Array of Directory Path Strings.
  * @return {Promise} Promise resolved with the test results
  */
-export const run = (runner: Runner, specs: Array<string>) => {
+export const run = (runner: Runner, specs: Array<string>): Promise<RunResults> => {
   return new Promise(resolve => {
     logger.info(`Resolved spec files: ${util.inspect(specs)}`);
     resolve({failedCount: 0});
