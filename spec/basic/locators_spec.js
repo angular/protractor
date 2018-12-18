@@ -10,23 +10,6 @@ describe('locators', () => {
       expect(await greeting.getText()).toEqual('Hiya');
     });
 
-    // TODO(selenium4): fix/remove xit after removing jasminewd
-    xit('should allow custom expectations to expect an element', async() => {
-      jasmine.addMatchers({
-        toHaveText: () => {
-          return {
-            compare: async(actual, expected) => {
-              return {
-                pass: (await actual.getText()) === expected
-              };
-            }
-          };
-        }
-      });
-
-      expect(await element(by.binding('greeting'))).toHaveText('Hiya');
-    });
-
     it('should find a binding by partial match', async() => {
       const greeting = element(by.binding('greet'));
 
