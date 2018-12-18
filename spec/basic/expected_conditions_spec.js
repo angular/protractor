@@ -177,7 +177,7 @@ describe('expected conditions', () => {
   describe('for forked browsers', () => {
     // ensure that we can run EC on forked browser instances
     it('should have alertIsPresent', async () => {
-      const browser2 = await browser.forkNewDriverInstance().ready;
+      const browser2 = await browser.forkNewDriverInstance();
       await browser2.get('index.html#/form');
       const EC2 = browser2.ExpectedConditions;
       const alertIsPresent = EC2.alertIsPresent();

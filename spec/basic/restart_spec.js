@@ -4,7 +4,6 @@ describe('browser.restart', () => {
     await browser.restart();
 
     await browser.waitForAngularEnabled(false);
-    console.log(await browser.waitForAngularEnabled());
     // Get a non-angular page. It shouldn't fail if waitForAngularEnabled
     // is turned off.
     await browser.get('https://google.com/');
