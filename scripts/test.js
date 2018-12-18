@@ -50,7 +50,7 @@ const passingTests = [
   // Dependency tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
   // Typings tests
-  'node spec/install/test.js'
+  // 'node spec/install/test.js'
 ];
 
 const executor = new Executor();

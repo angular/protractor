@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
 // TODO(cnishina): remove when selenium webdriver is upgraded.
-import {promise as wdpromise} from 'selenium-webdriver';
+import {promise as wdpromise, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
@@ -53,9 +53,6 @@ export class Runner extends EventEmitter {
       });
       nodedebug.on('exit', () => {
         process.exit(1);
-      });
-      this.ready_ = new Promise(resolve => {
-        setTimeout(resolve, 1000);
       });
     }
 
@@ -206,9 +203,9 @@ export class Runner extends EventEmitter {
    * @return {Protractor} a protractor instance.
    * @public
    */
-  createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): any {
+  async createBrowser(plugins: any, parentBrowser?: ProtractorBrowser): Promise<any> {
     let config = this.config_;
-    let driver = this.driverprovider_.getNewDriver();
+    let driver = await this.driverprovider_.getNewDriver();
 
     let blockingProxyUrl: string;
     if (config.useBlockingProxy) {
@@ -258,58 +255,40 @@ export class Runner extends EventEmitter {
       browser_.ng12Hybrid = initProperties.ng12Hybrid;
     }
 
-    browser_.ready =
-        browser_.ready
-            .then(() => {
-              return browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
-            })
-            .then(() => {
-              return driver.manage().timeouts().setScriptTimeout(
-                  initProperties.allScriptsTimeout || 0);
-            })
-            .then(() => {
-              return browser_;
-            });
+    await browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
+    await driver.manage().timeouts().setScriptTimeout(initProperties.allScriptsTimeout || 0);
 
     browser_.getProcessedConfig = () => {
       return Promise.resolve(config);
     };
 
-    browser_.forkNewDriverInstance =
-        (useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true) => {
-          let newBrowser = this.createBrowser(plugins);
-          if (copyMockModules) {
-            newBrowser.mockModules_ = browser_.mockModules_;
-          }
-          if (useSameUrl) {
-            newBrowser.ready = newBrowser.ready
-                                   .then(() => {
-                                     return browser_.driver.getCurrentUrl();
-                                   })
-                                   .then((url: string) => {
-                                     return newBrowser.get(url);
-                                   })
-                                   .then(() => {
-                                     return newBrowser;
-                                   });
-          }
-          return newBrowser;
-        };
+    browser_.forkNewDriverInstance = async(
+        useSameUrl: boolean, copyMockModules: boolean, copyConfigUpdates = true): Promise<any> => {
+      let newBrowser = await this.createBrowser(plugins);
+      if (copyMockModules) {
+        newBrowser.mockModules_ = browser_.mockModules_;
+      }
+      if (useSameUrl) {
+        const currentUrl = await browser_.driver.getCurrentUrl();
+        await newBrowser.get(currentUrl);
+      }
+      return newBrowser;
+    };
 
-    let replaceBrowser = () => {
-      let newBrowser = browser_.forkNewDriverInstance(false, true);
+    let replaceBrowser = async () => {
+      let newBrowser = await browser_.forkNewDriverInstance(false, true);
       if (browser_ === protractor.browser) {
         this.setupGlobals_(newBrowser);
       }
       return newBrowser;
     };
 
-    browser_.restart = () => {
+    browser_.restart = async () => {
       // Note: because tests are not paused at this point, any async
       // calls here are not guaranteed to complete before the tests resume.
-      return this.driverprovider_.quitDriver(browser_.driver)
-          .then(replaceBrowser)
-          .then(newBrowser => newBrowser.ready);
+      const restartedBrowser = await replaceBrowser();
+      await this.driverprovider_.quitDriver(browser_.driver);
+      return restartedBrowser;
     };
 
     return browser_;
@@ -352,18 +331,15 @@ export class Runner extends EventEmitter {
       this.config_.useBlockingProxy = true;
     }
 
-    // 0) Wait for debugger
-    await Promise.resolve(this.ready_);
-
     // 1) Setup environment
     // noinspection JSValidateTypes
     await this.driverprovider_.setupEnv();
 
     // 2) Create a browser and setup globals
-    browser_ = this.createBrowser(plugins);
+    browser_ = await this.createBrowser(plugins);
     this.setupGlobals_(browser_);
     try {
-      const session = await browser_.ready.then(browser_.getSession);
+      const session = await browser_.getSession();
       logger.debug(
           'WebDriver session successfully started with capabilities ' +
           util.inspect(session.getCapabilities()));
@@ -403,9 +379,9 @@ export class Runner extends EventEmitter {
 
     if (this.config_.restartBrowserBetweenTests) {
       // TODO(sjelin): replace with warnings once `afterEach` support is required
-      let restartDriver = () => {
+      let restartDriver = async () => {
         if (!this.frameworkUsesAfterEach) {
-          this.restartPromise = Promise.resolve(browser_.restart());
+          this.restartPromise = await browser_.restart();
         }
       };
       this.on('testPass', restartDriver);

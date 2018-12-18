@@ -47,7 +47,7 @@ describe('Browser', () => {
 
   it('should be able to fork', async() => {
     await browser.get('index.html');
-    newBrowser = await browser.forkNewDriverInstance().ready;
+    newBrowser = await browser.forkNewDriverInstance();
     expect(newBrowser).not.toEqual(browser);
     expect(newBrowser.driver).not.toEqual(browser.driver);
     expect(await newBrowser.driver.getCurrentUrl()).toEqual('data:,');
@@ -55,7 +55,7 @@ describe('Browser', () => {
 
   it('should be able to navigate to same url on fork', async() => {
     await browser.get('index.html');
-    newBrowser = await browser.forkNewDriverInstance(true).ready;
+    newBrowser = await browser.forkNewDriverInstance(true);
     expect(await newBrowser.driver.getCurrentUrl()).toMatch('index.html#/form');
   });
 
@@ -68,7 +68,7 @@ describe('Browser', () => {
     browser.addMockModule('mockModule', mockModule);
     await browser.get('index.html');
 
-    newBrowser = await browser.forkNewDriverInstance(true, true).ready;
+    newBrowser = await browser.forkNewDriverInstance(true, true);
     expect(await newBrowser.element(by.css('[app-version]')).getText())
         .toEqual('2');
   });
@@ -85,7 +85,7 @@ describe('Browser', () => {
       await p0.clearMessages();
 
       // Any additional browsers can be instantiated via browser.forkNewDriverInstance().
-      newBrowser = await browser.forkNewDriverInstance(true).ready;
+      newBrowser = await browser.forkNewDriverInstance(true);
       p1 = new Person('p1', newBrowser);
       await p1.openApp();
       await p1.login();
