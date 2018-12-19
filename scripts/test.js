@@ -50,6 +50,7 @@ const passingTests = [
   // Dependency tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
   // Typings tests
+  // TODO(selenium4): consider rewriting this test.
   // 'node spec/install/test.js'
 ];
 
