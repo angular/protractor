@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+const env = require('./environment.js');
 
 // Tests for an Angular app where ng-app is not on the body.
 exports.config = {
@@ -9,7 +9,7 @@ exports.config = {
 
   // Spec patterns are relative to this config.
   specs: [
-    'altRoot/*_spec.js'
+    'built/altRoot/*_spec.js'
   ],
 
   capabilities: env.capabilities,
