@@ -3,14 +3,14 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": false,
-    "declaration": false,
-    "noImplicitAny": false,
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": false,
+    "noImplicitAny": true,
     "types": ["node", "jasmine"],
-    "outDir": "tmp"
+    "outDir": "tmp/"
   },
   "exclude": [
-    "node_modules",
-    "typings/globals"
+    "node_modules"
   ]
 }

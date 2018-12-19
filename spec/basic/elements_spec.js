@@ -1,3 +1,5 @@
+const {WebElement} = require('selenium-webdriver');
+
 describe('ElementFinder', () => {
   beforeEach(async() => {
     // Clear everything between each test.
@@ -162,7 +164,7 @@ describe('ElementFinder', () => {
 
   it('should be returned from a helper without infinite loops', async() => {
     await browser.get('index.html#/form');
-    const helperPromise = protractor.promise.when(true).then(() => {
+    const helperPromise = Promise.resolve(true).then(() => {
       return element(by.binding('greeting'));
     });
 
@@ -289,7 +291,7 @@ describe('ElementArrayFinder', () => {
       return text.indexOf('dog') > -1;
     };
     await browser.get('index.html#/form');
-    const value = element.all(by.css('#animals ul li')).filter(isDog).
+    const value = element.all(by.css('#animals ul li')).filter(await isDog).
         reduce(async(currentValue, elem, index, elemArr) => {
           const text = await elem.getText();
           return currentValue + index + '/' + elemArr.length + ': ' +
@@ -341,7 +343,7 @@ describe('ElementArrayFinder', () => {
   it('should count all elements', async() => {
     await browser.get('index.html#/form');
 
-    element.all(by.model('color')).count().then((num) => {
+    await element.all(by.model('color')).count().then((num) => {
       expect(num).toEqual(3);
     });
 
@@ -385,11 +387,11 @@ describe('ElementArrayFinder', () => {
 
   it('should get an element from an array by promise index', async() => {
     const colorList = element.all(by.model('color'));
-    const index = protractor.promise.fulfilled(1);
+    const index = Promise.resolve(1);
 
     await browser.get('index.html#/form');
 
-    expect(await colorList.get(index).getAttribute('value')).toEqual('green');
+    expect(await colorList.get(await index).getAttribute('value')).toEqual('green');
   });
 
   it('should get an element from an array using negative indices', async() => {
@@ -420,7 +422,7 @@ describe('ElementArrayFinder', () => {
     const colorList = element.all(by.model('color'));
     await browser.get('index.html#/form');
 
-    colorList.each(async(colorElement) => {
+    await colorList.each(async(colorElement) => {
       expect(await colorElement.getText()).not.toEqual('purple');
     });
   });
@@ -429,12 +431,12 @@ describe('ElementArrayFinder', () => {
     await browser.get('index.html#/form');
     const rows = element.all(by.css('.rowlike'));
 
-    rows.each(async(row) => {
+    await rows.each(async(row) => {
       const input = row.element(by.css('.input'));
       expect(await input.getAttribute('value')).toEqual('10');
     });
 
-    rows.each(async(row) => {
+    await rows.each(async(row) => {
       const input = row.element(by.css('input'));
       expect(await input.getAttribute('value')).toEqual('10');
     });
@@ -506,7 +508,7 @@ describe('ElementArrayFinder', () => {
 
   it('should filter elements', async() => {
     await browser.get('index.html#/form');
-    
+
     const filteredElements = await element.all(by.css('#animals ul li'))
         .filter(async(elem) => {
       const text = await elem.getText();

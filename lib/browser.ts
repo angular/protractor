@@ -21,7 +21,7 @@ const DEFER_LABEL = 'NG_DEFER_BOOTSTRAP!';
 const DEFAULT_RESET_URL = 'data:text/html,<html></html>';
 const DEFAULT_GET_PAGE_TIMEOUT = 10000;
 
-let logger = new Logger('protractor');
+let logger = new Logger('browser');
 
 // TODO(cnishina): either remove for loop entirely since this does not export anything
 // the user might need since everything is composed (with caveat that this could be a
@@ -238,7 +238,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Resolved when the browser is ready for use.  Resolves to the browser, so
    * you can do:
    *
-   *   forkedBrowser = await browser.forkNewDriverInstance().ready;
+   *   forkedBrowser = await browser.forkNewDriverInstance();
    *
    * Set by the runner.
    *
@@ -359,22 +359,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
         ng12Hybrid_ = ng12Hybrid;
       }
     });
-    this.ready = this.angularAppRoot(opt_rootElement || '')
-                     .then(() => {
-                       return this.driver.getSession();
-                     })
-                     .then((session: Session) => {
-                       // Internet Explorer does not accept data URLs, which are the default
-                       // reset URL for Protractor.
-                       // Safari accepts data urls, but SafariDriver fails after one is used.
-                       // PhantomJS produces a "Detected a page unload event" if we use data urls
-                       let browserName = session.getCapabilities().get('browserName');
-                       if (browserName === 'internet explorer' || browserName === 'safari' ||
-                           browserName === 'phantomjs' || browserName === 'MicrosoftEdge') {
-                         this.resetUrl = 'about:blank';
-                       }
-                       return this;
-                     });
 
     this.trackOutstandingTimeouts_ = !opt_untrackOutstandingTimeouts;
     this.mockModules_ = [];
@@ -423,7 +407,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Fork another instance of browser for use in interactive tests.
    *
    * @example
-   * var forked = await browser.forkNewDriverInstance().ready;
+   * var forked = await browser.forkNewDriverInstance();
    * await forked.get('page1'); // 'page1' gotten by forked browser
    *
    * @param {boolean=} useSameUrl Whether to navigate to current url on creation
@@ -433,8 +417,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    *
    * @returns {ProtractorBrowser} A browser instance.
    */
-  forkNewDriverInstance(useSameUrl?: boolean, copyMockModules?: boolean, copyConfigUpdates = true):
-      ProtractorBrowser {
+  async forkNewDriverInstance(
+      useSameUrl?: boolean, copyMockModules?: boolean,
+      copyConfigUpdates = true): Promise<ProtractorBrowser> {
     return null;
   }
 
@@ -456,7 +441,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * await browser.get('page2'); // 'page2' gotten by restarted browser
    *
    * // Running against forked browsers
-   * var forked = await browser.forkNewDriverInstance().ready;
+   * var forked = await browser.forkNewDriverInstance();
    * await fork.get('page1');
    * fork = await fork.restart();
    * await fork.get('page2'); // 'page2' gotten by restarted fork
@@ -504,12 +489,11 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
       script = 'return (' + script + ').apply(null, arguments);';
     }
 
-    // TODO(selenium4): fix promise cast.
-    return this.driver.schedule(
-               new Command(CommandName.EXECUTE_SCRIPT)
-                   .setParameter('script', script)
-                   .setParameter('args', scriptArgs),
-               description) as Promise<any>;
+    // TODO(selenium4): schedule does not exist on driver. Should use execute instead.
+    return (this.driver as any)
+        .execute(new Command(CommandName.EXECUTE_SCRIPT)
+                     .setParameter('script', script)
+                     .setParameter('args', scriptArgs));
   }
 
   /**
@@ -527,14 +511,15 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    */
   private executeAsyncScript_(script: string|Function, description: string, ...scriptArgs: any[]):
       Promise<any> {
+    // TODO(selenium4): decide what to do with description.
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
-    return this.driver.schedule(
-               new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
-                   .setParameter('script', script)
-                   .setParameter('args', scriptArgs),
-               description) as Promise<any>;
+    // TODO(selenium4): fix typings. driver.execute should exist
+    return (this.driver as any)
+        .execute(new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
+                     .setParameter('script', script)
+                     .setParameter('args', scriptArgs));
   }
 
   /**

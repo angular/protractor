@@ -7,7 +7,10 @@ import {Builder, WebDriver} from 'selenium-webdriver';
 
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
+import {BrowserError} from '../exitCodes';
+import {Logger} from '../logger';
 
+let logger = new Logger('driverProvider');
 export abstract class DriverProvider {
   drivers_: WebDriver[];
   config_: Config;
@@ -42,7 +45,7 @@ export abstract class DriverProvider {
    * @public
    * @return webdriver instance
    */
-  getNewDriver() {
+  async getNewDriver() {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
       builder =
@@ -56,7 +59,12 @@ export abstract class DriverProvider {
     if (this.config_.disableEnvironmentOverrides === true) {
       builder.disableEnvironmentOverrides();
     }
-    let newDriver = builder.build() as WebDriver;
+    let newDriver: WebDriver;
+    try {
+      newDriver = await builder.build();
+    } catch (e) {
+      throw new BrowserError(logger, (e as Error).message);
+    }
     this.drivers_.push(newDriver);
     return newDriver;
   }
@@ -72,6 +80,7 @@ export abstract class DriverProvider {
     if (driverIndex >= 0) {
       this.drivers_.splice(driverIndex, 1);
       try {
+        await driver.close();
         await driver.quit();
       } catch (err) {
         // This happens when Protractor keeps track of all the webdrivers
