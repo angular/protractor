@@ -11,23 +11,13 @@ class TestUtils {
   };
 };
 
-function install() {
-  rimraf.sync(path.resolve(__dirname, 'node_modules'));
-  var options = {cwd: __dirname};
-  var output = TestUtils.runCommand('npm', ['install'], options);
-  if (output && output[1]) {
-    console.log(output[1].toString());
-  } else {
-    throw new Error('Something went wrong in function install.')
-  }
-}
-
 function tsc() {
+  rimraf.sync(path.resolve(__dirname, 'tmp'));
   var options = {cwd: __dirname};
   var output = TestUtils.runCommand('npm', ['run', 'tsc'], options);
   if (output && output[1]) {
     var options = {cwd: path.resolve('.')};
-    console.log(output[1].toString());
+    console.log(output[2].toString());
     if (output[1].toString().indexOf('error') >= 0) {
       throw new Error('tsc failed.');
     }
@@ -50,6 +40,8 @@ function test(file) {
         var failures = line.split(' specs, ')[1].charAt(0);
         if (failures !== '0') {
           throw new Error('Failed with ' + failures + ' failure(s).');
+        } else {
+          console.log('must have passed?');
         }
       }
     }
@@ -58,7 +50,6 @@ function test(file) {
   }
 }
 
-install();
 tsc();
-test('tmp/conf.js');
-test('tmp/typescript_conf.js');
+// test('tmp/conf.js');
+// test('tmp/typescript_conf.js');

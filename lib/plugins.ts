@@ -117,8 +117,8 @@ export interface ProtractorPlugin {
 
   /**
    * This is called inside browser.get() directly after angular is done
-   * bootstrapping/synchronizing.  If `browser.ignoreSynchronization` is `true`,
-   * this will not be called.
+   * bootstrapping/synchronizing.  If `await browser.waitForAngularEnabled()`
+   * is `false`, this will not be called.
    *
    * @param {ProtractorBrowser} browser The browser instance which is loading a page.
    *
@@ -310,7 +310,7 @@ export class Plugins {
         this.pluginObjs.push(pluginObj);
       });
     }
-  };
+  }
 
   /**
    * Adds properties to a plugin's object
@@ -398,7 +398,7 @@ export class Plugins {
     this.printPluginResults(results.specResults);
     this.resultsReported = true;
     return results;
-  };
+  }
 
   /**
    * Returns true if any loaded plugin has skipAngularStability enabled.
@@ -408,7 +408,7 @@ export class Plugins {
   skipAngularStability() {
     const result = this.pluginObjs.some(pluginObj => pluginObj.skipAngularStability);
     return result;
-  };
+  }
 
   /**
    * @see docs/plugins.md#writing-plugins for information on these functions

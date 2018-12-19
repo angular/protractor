@@ -171,7 +171,14 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   });
 
   process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => {
-    logger.warn('Unhandled rejection at:', p, 'reason:', reason);
+    if (reason.stack.match('angular testability are undefined') ||
+        reason.stack.match('angular is not defined')) {
+      logger.warn(
+          'Unhandled promise rejection error: This is usually occurs ' +
+          'when a browser.get call is made and a previous async call was ' +
+          'not awaited');
+    }
+    logger.warn(p);
   });
 
   process.on('exit', (code: number) => {
@@ -221,7 +228,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
           }
           taskResults_.add(result);
           task.done();
-          createNextTaskRunner();
+          await createNextTaskRunner();
           // If all tasks are finished
           if (scheduler.numTasksOutstanding() === 0) {
             resolve();
@@ -232,6 +239,8 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
           logger.error('Error:', (err as any).stack || err.message || err);
           await cleanUpAndExit(errorCode ? errorCode : RUNNERS_FAILED_EXIT_CODE);
         }
+      } else {
+        resolve();
       }
     });
   };
