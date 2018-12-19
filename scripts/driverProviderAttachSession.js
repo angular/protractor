@@ -64,7 +64,7 @@ const run = async () => {
       path: '/wd/hub/sessions',
       method: 'GET'
     };
-    
+
     let values = [];
     const req = http.request(checkOptions, (res) => {
       res.on('data', (chunk) => {
@@ -83,6 +83,10 @@ const run = async () => {
           throw new Error('The selenium session was not created.');
         }
       });
+      res.on('error', (err) => {
+        console.log(err);
+        process.exit(1);
+      });
     });
     req.end();
   });
@@ -94,7 +98,8 @@ const run = async () => {
   console.log(runProtractor.stdout.toString());
   if (runProtractor.status !== 0) {
     const e = new Error('Protractor did not run properly.');
-    deleteSession(sessionId, e);
+    await deleteSession(sessionId, e);
+    process.exit(1);
   }
 
   // 4. After the protractor test completes, check to see that the session still
@@ -108,7 +113,7 @@ const run = async () => {
     };
     const req = http.request(checkOptions, (res) => {
       let state = '';
-      res.on('data', (chunk) => {    
+      res.on('data', (chunk) => {
         state = JSON.parse(chunk.toString()).state;
       });
       res.on('end', () => {
@@ -120,12 +125,16 @@ const run = async () => {
           deleteSession(sessionId, e);
         }
       });
+      res.on('error', (err) => {
+        console.log(err);
+        process.exit(1);
+      });
     });
     req.end();
   });
 
   // 5. Delete the selenium session.
-  await deleteSession(sessionId); 
+  await deleteSession(sessionId);
 }
 
 run().then();

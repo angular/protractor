@@ -9,7 +9,7 @@ describe('local driver provider', () => {
 
   it('should get a forked instance, and find an element', async() => {
     await browser.get(URL);
-    const browser2 = await browser.forkNewDriverInstance().ready;
+    const browser2 = await browser.forkNewDriverInstance();
     await browser2.get(URL);
     const increment = browser2.$('#increment');
     expect(await increment.isPresent()).toBeDefined();

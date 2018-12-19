@@ -1124,11 +1124,13 @@ export class ElementFinder extends WebdriverWebElement {
    * @returns {!Promise<boolean>} A promise that will be
    *     resolved to whether the two WebElements are equal.
    */
-  equals(element: ElementFinder|WebElement): Promise<any> {
-    return WebElement.equals(
-               this.getWebElement(),
-               (element as any).getWebElement ? (element as ElementFinder).getWebElement() :
-                                                element as WebElement) as Promise<any>;
+  async equals(element: ElementFinder|WebElement): Promise<boolean> {
+    const a = await this.getWebElement();
+    const b = (element as any).getWebElement ? await(element as ElementFinder).getWebElement() :
+                                               element as WebElement;
+    // TODO(selenium4): Use `return WebElement.equals(a, b);` when
+    // https://github.com/SeleniumHQ/selenium/pull/6749 is fixed.
+    return a.getDriver().executeScript('return arguments[0] === arguments[1]', a, b);
   }
 }
 
