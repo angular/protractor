@@ -99,14 +99,15 @@ export interface Config {
    */
   seleniumSessionId?: string;
   /**
-   * The address of a proxy server to use for communicating to Sauce Labs rest APIs via the
+   * The address of a proxy server to use for communicating to Sauce Labs REST APIs via the
    * saucelabs node module. For example, the Sauce Labs Proxy can be setup with: sauceProxy:
    * 'http://localhost:3128'
    */
   sauceProxy?: string;
 
   /**
-   * The proxy address that browser traffic will go through which is tied to the browser session.
+   * The proxy address that WebDriver (e.g. Selenium commands) traffic will go through
+   * which is tied to the browser session.
    */
   webDriverProxy?: string;
 
@@ -136,13 +137,13 @@ export interface Config {
    */
   sauceKey?: string;
   /**
-   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com.
+   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com APIs.
    * This is needed if your computer is behind a corporate proxy.
    *
    * To match sauce agent implementation, use
    * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
-   * to generate the agent or use webDriverProxy as an alternative. If a
-   * webDriverProxy is provided, the sauceAgent will be overridden.
+   * to generate the agent or use sauceProxy as an alternative. If a
+   * sauceProxy is provided, the sauceAgent will be overridden.
    */
   sauceAgent?: any;
   /**
