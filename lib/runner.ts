@@ -256,7 +256,9 @@ export class Runner extends EventEmitter {
     }
 
     await browser_.waitForAngularEnabled(initProperties.waitForAngularEnabled);
-    await driver.manage().timeouts().setScriptTimeout(initProperties.allScriptsTimeout || 0);
+    // TODO(selenium4): Options does not have a setScriptTimeout method.
+    await(driver.manage() as any).setTimeouts({script: initProperties.allScriptsTimeout || 0});
+
 
     browser_.getProcessedConfig = () => {
       return Promise.resolve(config);

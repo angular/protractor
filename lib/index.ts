@@ -6,7 +6,8 @@ import {PluginConfig, ProtractorPlugin} from './plugins';
 import {Ptor} from './ptor';
 
 // Re-export selenium-webdriver types.
-export {ActionSequence, Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+// TODO(selenium4): Actions class typings missing. ActionSequence is deprecated.
+export {/*Actions,*/ Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 // Re-export public types.
 export {ElementHelper, ProtractorBrowser} from './browser';
 export {Config} from './config';
