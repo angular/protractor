@@ -7,12 +7,12 @@ import {Runner} from './runner';
 import {TaskLogger} from './taskLogger';
 
 export interface RunResults {
-  taskId: number;
-  specs: Array<string>;
-  capabilities: any;
-  failedCount: number;
-  exitCode: number;
-  specResults: Array<any>;
+  taskId?: number;
+  specs?: Array<string>;
+  capabilities?: any;
+  failedCount?: number;
+  exitCode?: number;
+  specResults?: Array<any>;
 }
 
 /**
