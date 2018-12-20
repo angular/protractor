@@ -1,8 +1,9 @@
-const EC = protractor.ExpectedConditions;
-
 describe('expected conditions', () => {
+  let EC = null;
+
   beforeEach(async () => {
     await browser.get('index.html#/form');
+    EC = protractor.ExpectedConditions;
   });
 
   it('should have alertIsPresent', async () => {
