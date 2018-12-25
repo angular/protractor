@@ -107,12 +107,12 @@ gulp.task('compile_to_es5', function(done) {
 });
 
 gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', done);
+  runSequence('checkVersion', 'tsc', 'built:copy', done);
 });
 
 gulp.task('pretest', function(done) {
   runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec',  done);
+    ['webdriver:update', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec',  done);
 });
 
 gulp.task('default',['prepublish']);

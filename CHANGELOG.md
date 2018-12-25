@@ -1,3 +1,36 @@
+# 5.4.2
+
+## Features
+
+- ([db1b638](https://github.com/angular/protractor/commit/db1b6381d463c7cecf11dece2bf9412fecbd6f4d))
+  feat(saucelabs): add sauceRegion support for eu datacenters (#5083)
+
+  This change allows user to define the backend region from sauce via the `sauceRegion` property,
+  e.g.
+
+  ```js
+     sauceUser: process.env.SAUCE_USERNAME,
+     sauceKey: process.env.SAUCE_ACCESS_KEY,
+     sauceRegion: 'eu',
+  ```
+   Will run the test against `https://ondemand.eu-central-1.saucelabs.com:443/wd/hub/.`
+
+  ```js
+     sauceUser: process.env.SAUCE_USERNAME,
+     sauceKey: process.env.SAUCE_ACCESS_KEY,
+     sauceRegion: 'us',
+
+     // the default
+     sauceUser: process.env.SAUCE_USERNAME,
+     sauceKey: process.env.SAUCE_ACCESS_KEY,
+  ```
+   Will run the test against https://ondemand.saucelabs.com:443/wd/hub/
+
+##  Fixes
+
+- ([f5dbe13](https://github.com/angular/protractor/commit/f5dbe13ad6755ae812627d8056527e351db8b34c))
+  fix(deps): @types/node is now a dev dependency
+
 # 5.4.1
 
 ## Features
