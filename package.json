@@ -22,7 +22,7 @@
     "selenium-webdriver": "^4.0.0-alpha.1",
     "source-map-support": "~0.4.0",
     "webdriver-js-extender": "2.1.0",
-    "webdriver-manager-replacement": "^1.1.1"
+    "webdriver-manager": "13.0.0-beta"
   },
   "devDependencies": {
     "@types/node": "^6.0.46",
