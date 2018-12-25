@@ -1,3 +1,120 @@
+# 6.0.0-beta
+
+Selenium 4 removes the control flow and most of these changes are based on those changes. To see the full list of changes, please refer to selenium-webdriver's [CHANGELOG](https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md)
+
+## Breaking changes
+
+- Control flow is removed and you should use async await to run your tests.
+- Other control flow related items:
+  - debugger, explore and element explorer have been removed
+  - jasminewd is no longer a dependency
+- ignoreSynchronization has been deprecated and you should use `waitForAngularEnabled`
+- Types for selenium-webdriver are currently in the types/ directory and are not complete. We are still missing some type definitions for selenium 4.
+- Actions API in selenium-webdriver have changed and they will break your test. Also we have not exported it yet since the type definitions are not complete.
+
+## Features
+
+- ([8420cfa](https://github.com/angular/protractor/commit/8420cfa10fa5e32b037db933d40e84726a895f3c))
+  chore(debugprint): convert debugprint to TypeScript (#5074)
+
+- ([1e12445](https://github.com/angular/protractor/commit/1e124454d2926a9d2328c1a4516186f533b42b71))
+  chore(browser): remove timing issues with restart and fork (#5085)
+
+  - remove .ready since forking should automatically return a browser
+  - getNewDriver should return a promised WebDriver that can be awaited
+  - fix interaction tests and local driver tests
+  - update unit tests for async await due to getNewDriver fix
+   closes #5031
+- ([d6bbf09](https://github.com/angular/protractor/commit/d6bbf09af0220f683ac7db51ade5cada45876776))
+  chore(elementexplorer): remove explorer bin file (#5094)
+
+  closes #5092
+
+- ([0c325c5](https://github.com/angular/protractor/commit/0c325c56f0aef3b0016890b074938db875ae7a62))
+  chore(ignoreSynchornization): clean up to use waitForAngularEnabled (#5071)
+
+
+- ([591653d](https://github.com/angular/protractor/commit/591653d46b390d5b16087b5fb5b65cc680090fed))
+  chore(debugger): remove debugger and explore methods (#5070)
+
+- ([0541775](https://github.com/angular/protractor/commit/0541775980f0314fc36590eae1791f478588b619))
+  chore(promises): remove q promises and webdriver promises (#5052)
+
+  - remove q promises and webdriver promises from the runner, launcher, plugins, and taskRunner
+  - add deprecated message to element explorer.
+  - add unhandledRejection
+  - update browser versions used in travis tests
+
+- ([7ca7df2](https://github.com/angular/protractor/commit/7ca7df2708b847b9d002bef6d1ed0fe075154aeb))
+  chore(promises): clean up driver providers and browser control flow (#5034)
+
+  Driver providers and tests:
+
+  - Use native promises over q promises in driver providers
+  - Remove driverProviderUseExistingWebDriver since the generation of the selenium server is already
+  accomplished when providing a selenium address in driverProvider.ts. Also clean up docs and tests.
+
+  - Enabled the driverProviderLocal tests
+  - Clean up JSDocs for q.promise
+   Basic lib spec:
+
+  - Remove auto unwrap test for a WebElement. Reference PR #3471
+   Browser:
+
+  - Remove control flow from waitForAngularEnabled, waitForAngular, and angularAppRoot in the
+  Browser class.
+
+## Dependencies
+
+- ([93930ff](https://github.com/angular/protractor/commit/93930fff33e94942c8ff6c6c8089dcd70acd6b7b))
+  deps(jasmine): upgrade jasmine 3.3 (#5102)
+
+- ([373ba02](https://github.com/angular/protractor/commit/373ba029420a5f3f0c05bbb8f739f9fd96ac598b))
+   deps(selenium): upgrade to selenium 4 (#5095)
+
+  - elements workaround for WebElement.equals
+  - added a better unhandled rejection warning message in the launcher
+ control flow)bal function wrappers for mocha (these wrappers went away with
+  - fix the attach to session driver provider
+   Typing exported from Protractor:
+
+  - removed ActionSequence and EventEmitter (actions is currently missing)
+  - removed promise.Promise
+ fulfilled, filter, whener, delayed, createFlow, controlFlow, all,
+   Typings exported from WebDriver:
+
+  - removed attachToSession
+  - removed WebDriver instance methods: touchActions, call
+  - removed WebElement getSize and getLocation for getRect
+  - removed redefined global vars for testing
+  - In the typings, we are missing Options.setScriptTimeout method. This should not impact users
+  unless they are using the driver.manage() method.
+   Tests:
+
+  - fix element equals test
+  - add missing 'await' in colorList test that is causing unhandled promise rejections.
+  - remove control flow related tests
+  - disable the install test. Installing from "file:../../" is not working.
+  - fix the attach to session driver provider test to exit with a 1 if errors are encountered
+
+- ([736bbf7](https://github.com/angular/protractor/commit/736bbf7df04b36d1d0fcc7383be2022aa14234b0))
+  deps(latest): upgrade to the gulp and typescript (#5089)
+
+  * deps(latest): upgrade to the gulp and typescript
+
+  - add in @types/loglevel and @types/yargs for webdriver-manager
+  - upgrade tslint clean up for tslint
+ supported by gulpp 4 and remove run sequence since this feature is
+  - remove compile to es5
+
+- ([658a1fb](https://github.com/angular/protractor/commit/658a1fb3020ce6a2316113cbbb6f84e513158c82))
+  deps(webdriver-manager): use replacement (#5088)
+
+ publish a beta release of use webdriver-manager-replacement until we
+  webdriver-manager
+   closes #5087
+
+
 # 5.4.2
 
 ## Features
