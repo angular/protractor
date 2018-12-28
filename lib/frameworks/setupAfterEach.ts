@@ -1,3 +1,10 @@
+import {Runner} from '../runner';
+import * as path from 'path'
+
+export interface Hooks {
+  afterEach: () => Promise<void>
+}
+
 /**
  * Setup afterEach hook for jasmine/mocha tests.
  *
@@ -7,23 +14,19 @@
  * file is not prematurely executed.
  */
 
-var path = require('path');
-
 // Queried by `protractor_internal_afterEach_setup_spec.js` for the `afterEach` hook
-var hooks = {
+export const hooks: Hooks = {
   afterEach: null
 };
 
-exports.hooks = hooks;
-
 /**
- * Setup `runner.afterEach` to be called after every spec. 
+ * Setup `runner.afterEach` to be called after every spec.
  *
  * @param {Runner} runner The current Protractor Runner.
  * @param {Array} specs Array of Directory Path Strings.  Must be a reference to the same array
  *   instance used by the framework
  */
-exports.setup = function(runner, specs) {
+export const setup = function(runner: Runner, specs: Array<string>) {
   hooks.afterEach = runner.afterEach.bind(runner);
   specs.push(path.resolve(__dirname, '__protractor_internal_afterEach_setup_spec.js'));
 };
