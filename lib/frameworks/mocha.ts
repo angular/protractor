@@ -1,16 +1,17 @@
+import {Runner} from '../runner';
+
 /**
  * Execute the Runner's test cases through Mocha.
  *
  * @param {Runner} runner The current Protractor Runner.
  * @param {Array} specs Array of Directory Path Strings.
- * @return {q.Promise} Promise resolved with the test results
  */
-exports.run = (runner, specs) => {
+export const run = async (runner: Runner, specs: Array<string>) => {
   const Mocha = require('mocha');
   const mocha = new Mocha(runner.getConfig().mochaOpts);
 
   // Add hooks for afterEach
-  require('./setupAfterEach').setup(runner, specs);
+  await require('./setupAfterEach').setup(runner, specs);
 
   return new Promise(async (resolve, reject) => {
     mocha.loadFiles();
