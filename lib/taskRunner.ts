@@ -10,7 +10,7 @@ export interface RunResults {
   taskId?: number;
   specs?: Array<string>;
   capabilities?: any;
-  failedCount: number;
+  failedCount?: number;
   exitCode?: number;
   specResults?: Array<any>;
 }
