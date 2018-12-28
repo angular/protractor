@@ -28,10 +28,7 @@ export const run = async (runner: Runner, specs: Array<string>) => {
           if (runner.getConfig().onComplete) {
             await runner.getConfig().onComplete();
           }
-          resolve({
-            failedCount: failures,
-            specResults: testResult
-          });
+          resolve({failedCount: failures, specResults: testResult});
         } catch (err) {
           reject(err);
         }
@@ -43,13 +40,8 @@ export const run = async (runner: Runner, specs: Array<string>) => {
           category: test.fullTitle().slice(0, -test.title.length).trim()
         };
         runner.emit('testPass', testInfo);
-        testResult.push({
-          description: test.title,
-          assertions: [{
-            passed: true
-          }],
-          duration: test.duration
-        });
+        testResult.push(
+          {description: test.title, assertions: [{passed: true}], duration: test.duration});
       });
 
       mochaRunner.on('fail', (test) => {
@@ -60,11 +52,7 @@ export const run = async (runner: Runner, specs: Array<string>) => {
         runner.emit('testFail', testInfo);
         testResult.push({
           description: test.title,
-          assertions: [{
-            passed: false,
-            errorMsg: test.err.message,
-            stackTrace: test.err.stack
-          }],
+          assertions: [{passed: false, errorMsg: test.err.message, stackTrace: test.err.stack}],
           duration: test.duration
         });
       });
