@@ -41,7 +41,7 @@ export const run = async (runner: Runner, specs: Array<string>) => {
         };
         runner.emit('testPass', testInfo);
         testResult.push(
-          {description: test.title, assertions: [{passed: true}], duration: test.duration});
+            {description: test.title, assertions: [{passed: true}], duration: test.duration});
       });
 
       mochaRunner.on('fail', (test) => {
