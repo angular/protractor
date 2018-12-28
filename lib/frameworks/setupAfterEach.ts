@@ -1,8 +1,8 @@
 import {Runner} from '../runner';
-import * as path from 'path'
+import * as path from 'path';
 
 export interface Hooks {
-  afterEach: () => Promise<void>
+  afterEach: () => Promise<void>;
 }
 
 /**
