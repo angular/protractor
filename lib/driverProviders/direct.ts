@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import {Capabilities, WebDriver} from 'selenium-webdriver';
 import {Driver as DriverForChrome, ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
 import {Driver as DriverForFirefox, ServiceBuilder as FirefoxServiceBuilder} from 'selenium-webdriver/firefox';
-import {ChromeDriver, GeckoDriver} from 'webdriver-manager-replacement';
+import {ChromeDriver, GeckoDriver} from 'webdriver-manager';
 
 import {Config} from '../config';
 import {BrowserError} from '../exitCodes';
