@@ -59,11 +59,10 @@ export class ProtractorExpectedConditions {
    *
    * @returns {!function} An expected condition that returns the negated value.
    */
-  not(expectedCondition: Function): Function {
-    return (): Function => {
-      return expectedCondition().then((bool: boolean): boolean => {
-        return !bool;
-      });
+  not(expectedCondition: Function): (() => Promise<boolean>) {
+    return async(): Promise<boolean> => {
+      const bool = await expectedCondition();
+      return !bool;
     };
   }
 
@@ -78,20 +77,19 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical chain.
    */
-  logicalChain_(defaultRet: boolean, fns: Array<Function>): Function {
+  logicalChain_(defaultRet: boolean, fns: Array<Function>): (() => Promise<boolean>) {
     let self = this;
-    return (): boolean => {
+    return async(): Promise<boolean> => {
       if (fns.length === 0) {
         return defaultRet;
       }
-      let fn = fns[0];
-      return fn().then((bool: boolean): boolean => {
-        if (bool === defaultRet) {
-          return self.logicalChain_(defaultRet, fns.slice(1))();
-        } else {
-          return !defaultRet;
-        }
-      });
+      const fn = fns[0];
+      const bool = await fn();
+      if (bool === defaultRet) {
+        return self.logicalChain_(defaultRet, fns.slice(1))();
+      } else {
+        return !defaultRet;
+      }
     };
   }
 
@@ -113,7 +111,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical and.
    */
-  and(...args: Function[]): Function {
+  and(...args: Function[]): (() => Promise<boolean>) {
     return this.logicalChain_(true, args);
   }
 
@@ -135,7 +133,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise which
    *     evaluates to the result of the logical or.
    */
-  or(...args: Function[]): Function {
+  or(...args: Function[]): (() => Promise<boolean>) {
     return this.logicalChain_(false, args);
   }
 
@@ -151,20 +149,18 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether an alert is present.
    */
-  alertIsPresent(): Function {
-    return () => {
-      return this.browser.driver.switchTo().alert().then(
-          ():
-              boolean => {
-                return true;
-              },
-          (err: any) => {
-            if (err instanceof wderror.NoSuchAlertError) {
-              return false;
-            } else {
-              throw err;
-            }
-          });
+  alertIsPresent(): (() => Promise<boolean>) {
+    return async(): Promise<boolean> => {
+      try {
+        await this.browser.driver.switchTo().alert();
+        return true;
+      } catch (e) {
+        if (e instanceof wderror.NoSuchAlertError) {
+          return false;
+        } else {
+          throw e;
+        }
+      }
     };
   }
 
@@ -183,7 +179,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is clickable.
    */
-  elementToBeClickable(elementFinder: ElementFinder): Function {
+  elementToBeClickable(elementFinder: ElementFinder): (() => Promise<boolean>) {
     return this.and(this.visibilityOf(elementFinder), () => {
       return elementFinder.isEnabled().then(passBoolean, falseIfMissing);
     });
@@ -205,13 +201,16 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element.
    */
-  textToBePresentInElement(elementFinder: ElementFinder, text: string): Function {
-    let hasText = () => {
-      return elementFinder.getText().then((actualText: string): boolean => {
+  textToBePresentInElement(elementFinder: ElementFinder, text: string): (() => Promise<boolean>) {
+    let hasText = async () => {
+      try {
+        const actualText = await elementFinder.getText();
         // MSEdge does not properly remove newlines, which causes false
         // negatives
         return actualText.replace(/\r?\n|\r/g, '').indexOf(text) > -1;
-      }, falseIfMissing);
+      } catch (e) {
+        return falseIfMissing(e);
+      }
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -232,11 +231,15 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the text is present in the element's value.
    */
-  textToBePresentInElementValue(elementFinder: ElementFinder, text: string): Function {
-    let hasText = () => {
-      return elementFinder.getAttribute('value').then((actualText: string): boolean => {
+  textToBePresentInElementValue(elementFinder: ElementFinder, text: string):
+      (() => Promise<boolean>) {
+    let hasText = async () => {
+      try {
+        const actualText = await elementFinder.getAttribute('value');
         return actualText.indexOf(text) > -1;
-      }, falseIfMissing);
+      } catch (e) {
+        return falseIfMissing(e);
+      }
     };
     return this.and(this.presenceOf(elementFinder), hasText);
   }
@@ -256,11 +259,10 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the title contains the string.
    */
-  titleContains(title: string): Function {
-    return () => {
-      return this.browser.driver.getTitle().then((actualTitle: string): boolean => {
-        return actualTitle.indexOf(title) > -1;
-      });
+  titleContains(title: string): (() => Promise<boolean>) {
+    return async(): Promise<boolean> => {
+      const actualTitle = await this.browser.driver.getTitle();
+      return actualTitle.indexOf(title) > -1;
     };
   }
 
@@ -278,11 +280,10 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the title equals the string.
    */
-  titleIs(title: string): Function {
-    return () => {
-      return this.browser.driver.getTitle().then((actualTitle: string): boolean => {
-        return actualTitle === title;
-      });
+  titleIs(title: string): (() => Promise<boolean>) {
+    return async(): Promise<boolean> => {
+      const actualTitle = await this.browser.driver.getTitle();
+      return actualTitle === title;
     };
   }
 
@@ -301,11 +302,10 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the URL contains the string.
    */
-  urlContains(url: string): Function {
-    return () => {
-      return this.browser.driver.getCurrentUrl().then((actualUrl: string): boolean => {
-        return actualUrl.indexOf(url) > -1;
-      });
+  urlContains(url: string): (() => Promise<boolean>) {
+    return async(): Promise<boolean> => {
+      const actualUrl = await this.browser.driver.getCurrentUrl();
+      return actualUrl.indexOf(url) > -1;
     };
   }
 
@@ -323,11 +323,10 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the url equals the string.
    */
-  urlIs(url: string): Function {
-    return () => {
-      return this.browser.driver.getCurrentUrl().then((actualUrl: string): boolean => {
-        return actualUrl === url;
-      });
+  urlIs(url: string): (() => Promise<boolean>) {
+    return async(): Promise<boolean> => {
+      const actualUrl = await this.browser.driver.getCurrentUrl();
+      return actualUrl === url;
     };
   }
 
@@ -347,7 +346,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is present.
    */
-  presenceOf(elementFinder: ElementFinder): Function {
+  presenceOf(elementFinder: ElementFinder): (() => Promise<boolean>) {
     return elementFinder.isPresent.bind(elementFinder);
   }
 
@@ -366,7 +365,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is stale.
    */
-  stalenessOf(elementFinder: ElementFinder): Function {
+  stalenessOf(elementFinder: ElementFinder): (() => Promise<boolean>) {
     return this.not(this.presenceOf(elementFinder));
   }
 
@@ -388,7 +387,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is visible.
    */
-  visibilityOf(elementFinder: ElementFinder): Function {
+  visibilityOf(elementFinder: ElementFinder): (() => Promise<boolean>) {
     return this.and(this.presenceOf(elementFinder), () => {
       return elementFinder.isDisplayed().then(passBoolean, falseIfMissing);
     });
@@ -409,7 +408,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is invisible.
    */
-  invisibilityOf(elementFinder: ElementFinder): Function {
+  invisibilityOf(elementFinder: ElementFinder): (() => Promise<boolean>) {
     return this.not(this.visibilityOf(elementFinder));
   }
 
@@ -427,7 +426,7 @@ export class ProtractorExpectedConditions {
    * @returns {!function} An expected condition that returns a promise
    *     representing whether the element is selected.
    */
-  elementToBeSelected(elementFinder: ElementFinder): Function {
+  elementToBeSelected(elementFinder: ElementFinder): (() => Promise<boolean>) {
     return this.and(this.presenceOf(elementFinder), () => {
       return elementFinder.isSelected().then(passBoolean, falseIfMissing);
     });
