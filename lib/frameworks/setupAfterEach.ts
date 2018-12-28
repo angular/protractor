@@ -1,9 +1,7 @@
-import {Runner} from '../runner';
 import * as path from 'path';
+import {Runner} from '../runner';
 
-export interface Hooks {
-  afterEach: () => Promise<void>;
-}
+export interface Hooks { afterEach: () => Promise<void>; }
 
 /**
  * Setup afterEach hook for jasmine/mocha tests.
