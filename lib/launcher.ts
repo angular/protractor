@@ -3,6 +3,7 @@
  * input configuration and launching test runners.
  */
 import * as fs from 'fs';
+import * as path from 'path';
 import * as q from 'q';
 
 import {Config} from './config';
@@ -46,6 +47,13 @@ class TaskResults {
     let jsonOutput = this.results_.reduce((jsonOutput, result) => {
       return jsonOutput.concat(result.specResults);
     }, []);
+
+    // Create directory path if not present
+    (function mkdirp(fpath) {
+      let dirName = path.dirname(fpath);
+      !fs.existsSync(dirName) && mkdirp(dirName) && fs.mkdirSync(dirName);
+      return true;
+    })(path.resolve(filepath));
 
     let json = JSON.stringify(jsonOutput, null, '  ');
     fs.writeFileSync(filepath, json);
