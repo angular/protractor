@@ -33,7 +33,8 @@ export class Experitest extends DriverProvider {
       driver.getSession().then((session: Session) => {
         if (!update.passed) {
           try {
-            driver.executeScript('seetest:client.setReportStatus("Failed", "Failed","No stack trace")');
+            driver.executeScript(
+                'seetest:client.setReportStatus("Failed", "Failed","No stack trace")');
           } catch (e) {
             logger.info('Error updating experitest cloud with test status');
           }
@@ -54,13 +55,10 @@ export class Experitest extends DriverProvider {
   protected setupDriverEnv(): q.Promise<any> {
     let deferred = q.defer();
     this.config_.capabilities['accessKey'] = this.config_.experitestKey;
-    this.config_.seleniumAddress = this.config_.experitestCloudAddress+'/wd/hub';
+    this.config_.seleniumAddress = this.config_.experitestCloudAddress + '/wd/hub';
 
-    logger.info(
-        'Using Experitest cloud server at ' +
-        this.config_.seleniumAddress);
+    logger.info('Using Experitest cloud server at ' + this.config_.seleniumAddress);
     deferred.resolve();
     return deferred.promise;
   }
-
 }

@@ -20,7 +20,7 @@ import {Hosted} from './hosted';
 import {Local} from './local';
 import {Mock} from './mock';
 import {Sauce} from './sauce';
-import {Experitest} from "./experitest";
+import {Experitest} from './experitest';
 import {TestObject} from './testObject';
 import {Kobiton} from './kobiton';
 import {UseExistingWebDriver} from './useExistingWebDriver';
