@@ -124,7 +124,7 @@ export interface Config {
    */
   blockingProxyUrl?: string;
 
-  // ---- 3. To use remote browsers via Experitest -----------------------------
+  // ---- 3. To use remote browsers via Experitest --------------------
 
   /**
    * If the experitestKey is specified, seleniumServerJar will be
