@@ -135,7 +135,7 @@ export interface Config {
   /**
    * Use experitestCloudAddress to customize the URL Protractor
    * uses to connect to Experitest Cloud.
-   * For example 'http://192.168.1.1:8080'
+   * For example 'https://cloud.seetest.io'
    */
   experitestCloudAddress?: string;
 
