@@ -1,7 +1,9 @@
 import {BPClient} from 'blocking-proxy';
-import {By, Command as WdCommand, ICommandName, Navigation, promise as wdpromise, Session, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {By, Navigation, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+import {Command, ICommandName} from 'selenium-webdriver/lib/command';
 import * as url from 'url';
-import {extend as extendWD, ExtendedWebDriver} from 'webdriver-js-extender';
+
+const CommandName = require('selenium-webdriver/lib/command').Name as ICommandName;
 
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
 import {IError} from './exitCodes';
@@ -11,9 +13,6 @@ import {Logger} from './logger';
 import {Plugins} from './plugins';
 
 const clientSideScripts = require('./clientsidescripts');
-// TODO: fix the typings for selenium-webdriver/lib/command
-const Command = require('selenium-webdriver/lib/command').Command as typeof WdCommand;
-const CommandName = require('selenium-webdriver/lib/command').Name as ICommandName;
 
 // jshint browser: true
 
@@ -32,15 +31,6 @@ let logger = new Logger('browser');
 for (let foo in require('selenium-webdriver')) {
   exports[foo] = require('selenium-webdriver')[foo];
 }
-
-
-// Explicitly define types for webdriver.WebDriver and ExtendedWebDriver.
-// We do this because we use composition over inheritance to implement polymorphism, and therefore
-// we don't want to inherit WebDriver's constructor.
-export class AbstractWebDriver {}
-export interface AbstractWebDriver extends WebDriver {}
-export class AbstractExtendedWebDriver extends AbstractWebDriver {}
-export interface AbstractExtendedWebDriver extends ExtendedWebDriver {}
 
 /**
  * Mix a function from one object onto another. The function will still be
@@ -109,7 +99,7 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
-export class ProtractorBrowser extends AbstractExtendedWebDriver {
+export class ProtractorBrowser {
   /**
    * @type {ProtractorBy}
    */
@@ -121,12 +111,11 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   ExpectedConditions: ProtractorExpectedConditions;
 
   /**
-   * The wrapped webdriver instance. Use this to interact with pages that do
-   * not contain Angular (such as a log-in screen).
+   * The browser's WebDriver instance
    *
-   * @type {webdriver_extensions.ExtendedWebDriver}
+   * @type {webdriver.WebDriver}
    */
-  driver: ExtendedWebDriver;
+  driver: WebDriver;
 
   /**
    * The client used to control the BlockingProxy. If unset, BlockingProxy is
@@ -278,8 +267,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * Information about mock modules that will be installed during every
    * get().
    *
-   * @type {Array<{name: string, script: function|string, args:
-   * Array.<string>}>}
+   * @type {Array<{name: string, script: function|string, args: Array.<string>}>}
    */
   mockModules_: {name: string, script: string|Function, args: any[]}[];
 
@@ -304,32 +292,23 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   constructor(
       webdriverInstance: WebDriver, opt_baseUrl?: string, opt_rootElement?: string|Promise<string>,
       opt_untrackOutstandingTimeouts?: boolean, opt_blockingProxyUrl?: string) {
-    super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
     // include functions which are overridden by protractor below.
     let methodsToSync = ['getCurrentUrl', 'getPageSource', 'getTitle'];
-    let extendWDInstance: ExtendedWebDriver;
-    try {
-      extendWDInstance = extendWD(webdriverInstance);
-    } catch (e) {
-      // Probably not a driver that can be extended (e.g. gotten using
-      // `directConnect: true` in the config)
-      extendWDInstance = webdriverInstance as ExtendedWebDriver;
-    }
 
     // Mix all other driver functionality into Protractor.
     Object.getOwnPropertyNames(WebDriver.prototype).forEach(method => {
-      if (!this[method] && typeof(extendWDInstance as any)[method] === 'function') {
+      if (!this[method] && typeof(webdriverInstance as any)[method] === 'function') {
         if (methodsToSync.indexOf(method) !== -1) {
-          ptorMixin(this, extendWDInstance, method, this.waitForAngular.bind(this));
+          ptorMixin(this, webdriverInstance, method, this.waitForAngular.bind(this));
         } else {
-          ptorMixin(this, extendWDInstance, method);
+          ptorMixin(this, webdriverInstance, method);
         }
       }
     });
 
-    this.driver = extendWDInstance;
+    this.driver = webdriverInstance;
     if (opt_blockingProxyUrl) {
       logger.info('Starting BP client for ' + opt_blockingProxyUrl);
       this.bpClient = new BPClient(opt_blockingProxyUrl);
@@ -490,10 +469,9 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     }
 
     // TODO(selenium4): schedule does not exist on driver. Should use execute instead.
-    return (this.driver as any)
-        .execute(new Command(CommandName.EXECUTE_SCRIPT)
-                     .setParameter('script', script)
-                     .setParameter('args', scriptArgs));
+    return this.driver.execute((new Command(CommandName.EXECUTE_SCRIPT) as Command)
+                                   .setParameter('script', script)
+                                   .setParameter('args', scriptArgs));
   }
 
   /**
@@ -620,7 +598,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   }
 
   /**
-   * Waits for Angular to finish rendering before searching for elements.
+   * Waits for Angular to finish renderActionSequenceing before searching for elements.
    * @see webdriver.WebDriver.findElement
    * @returns {!webdriver.WebElementPromise} A promise that will be resolved to
    *      the located {@link webdriver.WebElement}.
@@ -882,7 +860,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
    * await browser.get('http://angular.github.io/protractor/#/tutorial');
    * await browser.setLocation('api');
    * expect(await browser.getCurrentUrl())
-   *     .toBe('http://angular.github.io/protractor/#/api');
+   *     .toBe('http://angular.g../../ithub.io/protractor/#/api');
    *
    * @param {string} url In page URL using the same syntax as $location.url()
    * @returns {!Promise} A promise that will resolve once
@@ -920,19 +898,5 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
     const rootEl = await this.angularAppRoot();
     return await this.executeScriptWithDescription(
         clientSideScripts.getLocationAbsUrl, 'Protractor.getLocationAbsUrl()', rootEl);
-  }
-
-  /**
-   * Determine if the control flow is enabled.
-   *
-   * @returns true if the control flow is enabled, false otherwise.
-   */
-  controlFlowIsEnabled() {
-    if ((wdpromise as any).USE_PROMISE_MANAGER !== undefined) {
-      return (wdpromise as any).USE_PROMISE_MANAGER;
-    } else {
-      // True for old versions of `selenium-webdriver`, probably false in >=5.0.0
-      return !!wdpromise.ControlFlow;
-    }
   }
 }

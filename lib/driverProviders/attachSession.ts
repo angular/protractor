@@ -4,13 +4,11 @@
  *  it down, and setting up the driver correctly.
  */
 import {Session, WebDriver} from 'selenium-webdriver';
+import {Executor, HttpClient} from 'selenium-webdriver/http';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
-
 import {DriverProvider} from './driverProvider';
-
-const http = require('selenium-webdriver/http');
 
 let logger = new Logger('attachSession');
 
@@ -36,9 +34,9 @@ export class AttachSession extends DriverProvider {
    * @return {WebDriver} webdriver instance
    */
   async getNewDriver(): Promise<WebDriver> {
-    const httpClient = new http.HttpClient(this.config_.seleniumAddress);
-    const executor = new http.Executor(httpClient);
-    const session = new Session(this.config_.seleniumSessionId, null);
+    const httpClient: HttpClient = new HttpClient(this.config_.seleniumAddress);
+    const executor: Executor = new Executor(httpClient);
+    const session: Session = new Session(this.config_.seleniumSessionId, null);
 
     const newDriver = new WebDriver(session, executor);
     this.drivers_.push(newDriver);

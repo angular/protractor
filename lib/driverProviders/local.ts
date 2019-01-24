@@ -19,7 +19,7 @@ import {DriverProvider} from './driverProvider';
 let logger = new Logger('local');
 
 export class Local extends DriverProvider {
-  server_: any;
+  server_: SeleniumServer;
   constructor(config: Config) {
     super(config);
     this.server_ = null;

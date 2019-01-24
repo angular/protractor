@@ -21,7 +21,6 @@
     "saucelabs": "^1.5.0",
     "selenium-webdriver": "^4.0.0-alpha.1",
     "source-map-support": "~0.4.0",
-    "webdriver-js-extender": "2.1.0",
     "webdriver-manager": "13.0.0-beta"
   },
   "devDependencies": {

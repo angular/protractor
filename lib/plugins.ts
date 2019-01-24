@@ -1,5 +1,3 @@
-import * as webdriver from 'selenium-webdriver';
-
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {ConfigParser} from './configParser';
@@ -109,11 +107,11 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   * @return {Promise=} Can return a promise, in which case
    *     protractor will wait for the promise to resolve before continuing.  If
    *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageLoad?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
+  onPageLoad?(browser: ProtractorBrowser): void|Promise<void>;
 
   /**
    * This is called inside browser.get() directly after angular is done
@@ -127,11 +125,11 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   * @return {Promise=} Can return a promise, in which case
    *     protractor will wait for the promise to resolve before continuing.  If
    *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageStable?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
+  onPageStable?(browser: ProtractorBrowser): void|Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -146,14 +144,14 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   * @return {Promise=} Can return a promise, in which case
    *     protractor will wait for the promise to resolve before continuing. If the
    *     promise is rejected, a failed assertion is added to the test results, and
    *     protractor will continue onto the next command. If nothing is returned or
    *     something other than a promise is returned, protractor will continue
    *     onto the next command.
    */
-  waitForPromise?(browser: ProtractorBrowser): webdriver.promise.Promise<void>;
+  waitForPromise?(browser: ProtractorBrowser): Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -169,13 +167,13 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise<boolean>|boolean} If truthy, Protractor
+   * @return {Promise<boolean>|boolean} If truthy, Protractor
    *     will continue onto the next command. If falsy, webdriver will
    *     continuously re-run this function until it is truthy.  If a rejected promise
    *     is returned, a failed assertion is added to the test results, and Protractor
    *     will continue onto the next command.
    */
-  waitForCondition?(browser: ProtractorBrowser): webdriver.promise.Promise<boolean>|boolean;
+  waitForCondition?(browser: ProtractorBrowser): Promise<boolean>|boolean;
 
   /**
    * Used to turn off default checks for angular stability
@@ -478,7 +476,7 @@ export class Plugins {
   private pluginFunFactory(funName: string, failReturnVal?: boolean):
       (...args: any[]) => Promise<any[]>;
   private pluginFunFactory(funName: string, failReturnVal?: boolean):
-      (...args: any[]) => webdriver.promise.Promise<any[]>;
+      (...args: any[]) => Promise<any[]>;
   private pluginFunFactory(funName: string, failReturnVal?: boolean) {
     return (...args: any[]) => {
       const promises =

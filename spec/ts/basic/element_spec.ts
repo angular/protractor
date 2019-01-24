@@ -1,5 +1,5 @@
 // Based off of spec/basic/elements_spec.js
-import {$, browser, by, element, ElementArrayFinder, ElementFinder, promise as ppromise, WebElement} from '../../..';
+import {$, browser, by, element, ElementArrayFinder, ElementFinder} from '../../..';
 
 describe('ElementFinder', () => {
   it('should return the same result as browser.findElement', async() => {
@@ -36,12 +36,12 @@ describe('ElementFinder', () => {
     expect(await name.getText()).toEqual('Jane');
   });
 
-  it('should run chained element actions in sequence', async(done: any) => {
+  it('should run chained element actions in sequence', async () => {
     // Testing private methods is bad :(
     let els = new ElementArrayFinder(browser, () => {
-      return Promise.resolve([null as WebElement]);
+      return Promise.resolve([null]);
     });
-    let applyAction_: (actionFn: (value: WebElement, index: number, array: WebElement[]) => any) =>
+    let applyAction_: (actionFn: (value: any, index: number, array: any) => any) =>
         ElementArrayFinder = (ElementArrayFinder as any).prototype.applyAction_;
     let order: string[] = [];
 
@@ -61,11 +61,10 @@ describe('ElementFinder', () => {
     });
 
     await deferredB;
-    setTimeout(async function() {
+    setTimeout(async () => {
       await deferredA;
       await els;
       expect(order).toEqual(['a', 'b']);
-      done();
     }, 100);
   });
 

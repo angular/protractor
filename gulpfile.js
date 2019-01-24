@@ -65,6 +65,11 @@ gulp.task('built:copy', () => {
       .pipe(gulp.dest('built/'));
 });
 
+gulp.task('built:copy:typings', () => {
+  return gulp.src(['lib/selenium-webdriver/**/*.d.ts'])
+      .pipe(gulp.dest('built/selenium-webdriver/'));
+});
+
 gulp.task('webdriver:update', (done) => {
   runSpawn(done, 'node', ['bin/webdriver-manager', 'update']);
 });
@@ -88,7 +93,7 @@ gulp.task('prepublish', gulp.series('checkVersion', 'tsc', 'built:copy'));
 gulp.task('pretest', gulp.series(
   'checkVersion',
   gulp.parallel('webdriver:update', 'tslint', 'format'),
-  'tsc', 'built:copy', 'tsc:spec'));
+  'tsc', 'built:copy', 'built:copy:typings', 'tsc:spec'));
 
 gulp.task('default', gulp.series('prepublish'));
 

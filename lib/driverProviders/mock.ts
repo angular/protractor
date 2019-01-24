@@ -9,7 +9,7 @@ import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 
 export class MockExecutor {
-  execute(command: any): any {}
+  execute(_: any): any {}
 }
 
 export class Mock extends DriverProvider {
@@ -39,8 +39,8 @@ export class Mock extends DriverProvider {
    * @return webdriver instance
    */
   async getNewDriver(): Promise<WebDriver> {
-    let mockSession = new Session('test_session_id', {});
-    let newDriver = new WebDriver(mockSession, new MockExecutor());
+    const mockSession: Session = new Session('test_session_id', {});
+    const newDriver: WebDriver = new WebDriver(mockSession, new MockExecutor());
     this.drivers_.push(newDriver);
     return newDriver;
   }
