@@ -1,13 +1,12 @@
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
-import {Locator, ProtractorBy} from './locators';
+import {ProtractorBy} from './locators';
 import {PluginConfig, ProtractorPlugin} from './plugins';
 import {Ptor} from './ptor';
 
-// Re-export selenium-webdriver types.
-// TODO(selenium4): Actions class typings missing. ActionSequence is deprecated.
-export {/*Actions,*/ Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
+// Re-export selenium-webdriver types from typings directory.
+export {Actions, Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
 // Re-export public types.
 export {ElementHelper, ProtractorBrowser} from './browser';
 export {Config} from './config';
@@ -20,14 +19,13 @@ export {Runner} from './runner';
 export type PluginConfig = PluginConfig;
 export type ProtractorPlugin = ProtractorPlugin;
 
-export let utils = {
+export const utils = {
   firefox: require('selenium-webdriver/firefox'),
   http: require('selenium-webdriver/http'),
   remote: require('selenium-webdriver/remote')
 };
 
-export let Command = require('selenium-webdriver/lib/command').Command;
-export let CommandName = require('selenium-webdriver/lib/command').Name;
+export {Command, Name as CommandName} from 'selenium-webdriver/lib/command';
 
 // Export API instances based on the global Protractor object.
 // We base this on NodeJS `global` because we do not want to mask

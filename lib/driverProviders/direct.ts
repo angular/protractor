@@ -5,8 +5,9 @@
  */
 import * as fs from 'fs';
 import {Capabilities, WebDriver} from 'selenium-webdriver';
-import {Driver as DriverForChrome, ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
-import {Driver as DriverForFirefox, ServiceBuilder as FirefoxServiceBuilder} from 'selenium-webdriver/firefox';
+import {Driver as DriverForChrome, ServiceBuilder as ServiceBuilderForChrome} from 'selenium-webdriver/chrome';
+import {Driver as DriverForFirefox, ServiceBuilder as SerivceBuilderForFirefox} from 'selenium-webdriver/firefox';
+
 import {ChromeDriver, GeckoDriver} from 'webdriver-manager';
 
 import {Config} from '../config';
@@ -73,7 +74,8 @@ export class Direct extends DriverProvider {
                   '. Run \'webdriver-manager update\' to download binaries.');
         }
 
-        let chromeService = new ChromeServiceBuilder(chromeDriverFile).build();
+        const chromeService =
+            (new ServiceBuilderForChrome(chromeDriverFile) as ServiceBuilderForChrome).build();
         driver = await DriverForChrome.createSession(
             new Capabilities(this.config_.capabilities), chromeService);
         break;
@@ -97,7 +99,7 @@ export class Direct extends DriverProvider {
                   '. Run \'webdriver-manager update\' to download binaries.');
         }
 
-        let firefoxService = new FirefoxServiceBuilder(geckoDriverFile).build();
+        let firefoxService = new SerivceBuilderForFirefox(geckoDriverFile).build();
         driver = await DriverForFirefox.createSession(
             new Capabilities(this.config_.capabilities), firefoxService);
         break;
