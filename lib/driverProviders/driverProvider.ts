@@ -4,13 +4,13 @@
  *  it down, and setting up the driver correctly.
  */
 import {Builder, WebDriver} from 'selenium-webdriver';
-
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
 import {BrowserError} from '../exitCodes';
 import {Logger} from '../logger';
 
 let logger = new Logger('driverProvider');
+
 export abstract class DriverProvider {
   drivers_: WebDriver[];
   config_: Config;
@@ -43,9 +43,9 @@ export abstract class DriverProvider {
    * Create a new driver.
    *
    * @public
-   * @return webdriver instance
+   * @return a promise to a webdriver instance
    */
-  async getNewDriver() {
+  async getNewDriver(): Promise<WebDriver> {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
       builder =

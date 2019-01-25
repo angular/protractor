@@ -7,7 +7,16 @@
     "declaration": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "outDir": "built/"
+    "outDir": "built/",
+    "baseUrl": ".",
+    "paths": {
+      "selenium-webdriver": ["lib/selenium-webdriver"],
+      "selenium-webdriver/chrome": ["lib/selenium-webdriver/chrome.d.ts"],
+      "selenium-webdriver/firefox": ["lib/selenium-webdriver/firefox.d.ts"],
+      "selenium-webdriver/http": ["lib/selenium-webdriver/http.d.ts"],
+      "selenium-webdriver/remote": ["lib/selenium-webdriver/remote.d.ts"],
+      "selenium-webdriver/lib/command": ["lib/selenium-webdriver/lib/command.d.ts"]
+    }
   },
   "exclude": [
     "built",
@@ -17,6 +26,6 @@
     "scripts",
     "exampleTypescript",
     "spec/**/*",
-    "typings"
+    "lib/selenium-webdriver]"
   ]
 }

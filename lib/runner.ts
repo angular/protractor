@@ -1,6 +1,4 @@
 import {EventEmitter} from 'events';
-// TODO(cnishina): remove when selenium webdriver is upgraded.
-import {promise as wdpromise, WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {ProtractorBrowser} from './browser';
@@ -322,11 +320,6 @@ export class Runner extends EventEmitter {
 
     if (this.config_.framework !== 'explorer' && !this.config_.specs.length) {
       throw new Error('Spec patterns did not match any files.');
-    }
-
-    // TODO(selenium4): Remove when selenium is upgraded.
-    if (this.config_.SELENIUM_PROMISE_MANAGER != null) {
-      (wdpromise as any).USE_PROMISE_MANAGER = this.config_.SELENIUM_PROMISE_MANAGER;
     }
 
     if (this.config_.webDriverLogDir || this.config_.highlightDelay) {

@@ -4,7 +4,7 @@
  * it down, and setting up the driver correctly.
  */
 
-import {Session, WebDriver} from 'selenium-webdriver';
+import {WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {Config} from '../config';
@@ -33,14 +33,13 @@ export class Sauce extends DriverProvider {
    * @return {Promise} A promise that will resolve when the update is complete.
    */
   updateJob(update: any): Promise<any> {
-    let mappedDrivers = this.drivers_.map((driver: WebDriver) => {
-      driver.getSession().then((session: Session) => {
-        logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
-        this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
-          if (err) {
-            throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
-          }
-        });
+    let mappedDrivers = this.drivers_.map(async (driver: WebDriver) => {
+      const session = await driver.getSession();
+      logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
+      this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
+        if (err) {
+          throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
+        }
       });
     });
     return Promise.all(mappedDrivers);

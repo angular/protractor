@@ -889,7 +889,7 @@ export class ElementFinder extends WebdriverWebElement {
     const id = this.elementArrayFinder_.getWebElements().then((parentWebElements: WebElement[]) => {
       return parentWebElements[0];
     });
-    return new WebElementPromise(this.browser_.driver, id);
+    return new WebElementPromise(this.browser_.driver, id) as WebElementPromise;
   }
 
   /**
