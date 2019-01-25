@@ -968,7 +968,7 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
                         'angular.resumeBootstrap(arguments[0]);',
                     msg('resume bootstrap'), moduleNames));
           } else {
-            // PROPOSAL: Remove the added NG_DEFER_BOOTSTRAP if we are running on Angular
+            // Remove the added NG_DEFER_BOOTSTRAP if we are running on Angular
             this.executeScript('window.name = window.name.replace(' + /^NG_DEFER_BOOTSTRAP!/ + ", '');");
             
             // TODO: support mock modules in Angular2. For now, error if someone
