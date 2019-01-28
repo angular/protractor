@@ -1,3 +1,15 @@
+# 6.0.1-beta
+
+Minor fixes to remove the control flow completely and to prevent random execution order in Jasmine 3.
+
+- ([0a2809e](https://github.com/angular/protractor/commit/0a2809e62f34ed75632c80e1e792214e01eb0afe))
+  chore(types): fix types to use not @types/selenium-webdriver (#5127)
+
+  - Remove the USE_PROMISE_MANAGER test in spec/ts/basic
+  - Remove the check if we are using the control flow or not
+- ([84cdc50](https://github.com/angular/protractor/commit/84cdc50771b23f840bf62cb33f742dff3aaff990))
+  chore(jasmine): prevent random execution order in jasmine 3 (#5126)
+
 # 6.0.0-beta
 
 Selenium 4 removes the control flow and most of these changes are based on those changes. To see the full list of changes, please refer to selenium-webdriver's [CHANGELOG](https://github.com/SeleniumHQ/selenium/blob/master/javascript/node/selenium-webdriver/CHANGES.md)
