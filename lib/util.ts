@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {error as wderror} from 'selenium-webdriver';
+import * as webdriver from 'selenium-webdriver';
 
 let STACK_SUBSTRINGS_TO_FILTER = [
   'node_modules/jasmine/', 'node_modules/selenium-webdriver', 'at Module.', 'at Object.Module.',
@@ -88,8 +88,8 @@ export function joinTestLogs(log1: any, log2: any): any {
  * @return {boolean} false, if it doesn't re-throw the error
  */
 export function falseIfMissing(error: any) {
-  if ((error instanceof wderror.NoSuchElementError) ||
-      (error instanceof wderror.StaleElementReferenceError)) {
+  if ((error instanceof webdriver.error.NoSuchElementError) ||
+      (error instanceof webdriver.error.StaleElementReferenceError)) {
     return false;
   } else {
     throw error;

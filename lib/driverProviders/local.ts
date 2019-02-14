@@ -8,7 +8,7 @@
  */
 import * as fs from 'fs';
 import {SeleniumServer} from 'selenium-webdriver/remote';
-import {ChromeDriver, GeckoDriver, SeleniumServer as WdmSeleniumServer} from 'webdriver-manager-replacement';
+import {ChromeDriver, GeckoDriver, SeleniumServer as WdmSeleniumServer} from 'webdriver-manager';
 
 import {Config} from '../config';
 import {BrowserError, ConfigError} from '../exitCodes';
@@ -19,7 +19,7 @@ import {DriverProvider} from './driverProvider';
 let logger = new Logger('local');
 
 export class Local extends DriverProvider {
-  server_: any;
+  server_: SeleniumServer;
   constructor(config: Config) {
     super(config);
     this.server_ = null;
