@@ -12,7 +12,7 @@ Disabling the Control Flow
 In the future, the control flow is being removed (see
 [SeleniumHQ's github issue](https://github.com/SeleniumHQ/selenium/issues/2969)
 for details).  To disable the control flow in your tests, you can use the
-`SELENIUM_PROMISE_MANAGER: false` [config option](/lib/config.ts#L644).
+`SELENIUM_PROMISE_MANAGER: false` [config option](/lib/config.ts#L714).
 
 Instead of the control flow, you can synchronize your commands
 with promise chaining or the upcoming ES7 feature `async`/`await`.  See
