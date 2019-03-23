@@ -40,7 +40,8 @@ gulp.task('tslint', () => {
 
 gulp.task('format:enforce', () => {
   return gulp.src(['lib/**/*.ts'])
-      .pipe(format.checkFormat('file', clangFormat, {verbose: true, fail: true}));
+      .pipe(format.checkFormat('file', clangFormat,
+      {verbose: true, fail: true}));
 });
 
 gulp.task('lint', gulp.series('tslint', 'format:enforce'));
@@ -71,7 +72,8 @@ gulp.task('built:copy:typings', () => {
 });
 
 gulp.task('webdriver:update', (done) => {
-  runSpawn(done, 'node', ['bin/webdriver-manager', 'update']);
+  runSpawn(done, 'node', ['bin/webdriver-manager', 'update',
+  '--versions.chrome=2.44']);
 });
 
 gulp.task('format', () => {

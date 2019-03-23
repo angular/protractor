@@ -54,8 +54,8 @@ jobs:
           name: Selenium Start
           background: true
           command: |
-            ./node_modules/.bin/webdriver-manager update
-            ./node_modules/.bin/webdriver-manager start
+            ./node_modules/.bin/webdriver-manager update --versions.chrome=2.44
+            ./node_modules/.bin/webdriver-manager start --versions.chrome=2.44
 
       - run:
           name: TestApp Start
