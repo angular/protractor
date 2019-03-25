@@ -10,7 +10,7 @@ import {Runner} from './runner';
 let logger = new Logger('runnerCli');
 
 process.on('message', (m: any) => {
-  if (m.command == 'run') {
+  if (m.command === 'run') {
     if (!m.capabilities) {
       throw new Error('Run message missing capabilities');
     }
