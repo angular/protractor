@@ -9,7 +9,7 @@ import {Runner} from './runner';
 
 let logger = new Logger('runnerCli');
 
-process.on('message', (m: any) => {
+process.on('message', async (m: any) => {
   switch (m.command) {
     case 'run':
       if (!m.capabilities) {
@@ -18,7 +18,7 @@ process.on('message', (m: any) => {
       // Merge in config file options.
       let configParser = new ConfigParser();
       if (m.configFile) {
-        configParser.addFileConfig(m.configFile);
+        await configParser.addFileConfig(m.configFile);
       }
       if (m.additionalConfig) {
         configParser.addConfig(m.additionalConfig);
