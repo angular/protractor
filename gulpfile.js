@@ -90,7 +90,7 @@ gulp.task('tsc:spec', (done) => {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-p', 'ts_spec_config.json']);
 });
 
-gulp.task('prepublish', gulp.series('checkVersion', 'tsc', 'built:copy'));
+gulp.task('prepublish', gulp.series('checkVersion', 'tsc', 'built:copy', 'built:copy:typings'));
 
 gulp.task('pretest', gulp.series(
   'checkVersion',
