@@ -14,10 +14,10 @@ Selenium 4 removes the control flow and most of these changes are based on those
 
 ## Features
 
-- ([8420cfa](https://github.com/angular/protractor/commit/8420cfa10fa5e32b037db933d40e84726a895f3c))
+- ([cf43651](https://github.com/angular/protractor/commit/cf43651bd7719b2811225bd7aa084aca973df1c8))
   chore(debugprint): convert debugprint to TypeScript (#5074)
 
-- ([1e12445](https://github.com/angular/protractor/commit/1e124454d2926a9d2328c1a4516186f533b42b71))
+- ([4672265](https://github.com/angular/protractor/commit/4672265773b415e80554f94bdcc9637340b70c25))
   chore(browser): remove timing issues with restart and fork (#5085)
 
   - remove .ready since forking should automatically return a browser
@@ -25,19 +25,19 @@ Selenium 4 removes the control flow and most of these changes are based on those
   - fix interaction tests and local driver tests
   - update unit tests for async await due to getNewDriver fix
    closes #5031
-- ([d6bbf09](https://github.com/angular/protractor/commit/d6bbf09af0220f683ac7db51ade5cada45876776))
+- ([b4dbcc2](https://github.com/angular/protractor/commit/b4dbcc2621e06fee9768b77d10ca3a3092b4d710))
   chore(elementexplorer): remove explorer bin file (#5094)
 
   closes #5092
 
-- ([0c325c5](https://github.com/angular/protractor/commit/0c325c56f0aef3b0016890b074938db875ae7a62))
+- ([3b8f263](https://github.com/angular/protractor/commit/3b8f263d744a5e0f2e07abdeaf77ade24ec43ed1))
   chore(ignoreSynchornization): clean up to use waitForAngularEnabled (#5071)
 
 
-- ([591653d](https://github.com/angular/protractor/commit/591653d46b390d5b16087b5fb5b65cc680090fed))
+- ([ffa3519](https://github.com/angular/protractor/commit/ffa35196751766028feb7cda38cf4d43ead2a6f7))
   chore(debugger): remove debugger and explore methods (#5070)
 
-- ([0541775](https://github.com/angular/protractor/commit/0541775980f0314fc36590eae1791f478588b619))
+- ([c9db3f3](https://github.com/angular/protractor/commit/c9db3f377c52a4cdd917c9b9d1e69808969ddf15))
   chore(promises): remove q promises and webdriver promises (#5052)
 
   - remove q promises and webdriver promises from the runner, launcher, plugins, and taskRunner
@@ -45,7 +45,7 @@ Selenium 4 removes the control flow and most of these changes are based on those
   - add unhandledRejection
   - update browser versions used in travis tests
 
-- ([7ca7df2](https://github.com/angular/protractor/commit/7ca7df2708b847b9d002bef6d1ed0fe075154aeb))
+- ([e22065c](https://github.com/angular/protractor/commit/e22065ca6c91c6f49f9bbebcdc6351bdeb6e61ec))
   chore(promises): clean up driver providers and browser control flow (#5034)
 
   Driver providers and tests:
@@ -66,10 +66,10 @@ Selenium 4 removes the control flow and most of these changes are based on those
 
 ## Dependencies
 
-- ([93930ff](https://github.com/angular/protractor/commit/93930fff33e94942c8ff6c6c8089dcd70acd6b7b))
+- ([96ae17c](https://github.com/angular/protractor/commit/96ae17cdd8acf6cd388ddf691453fdbd7e7dd60e))
   deps(jasmine): upgrade jasmine 3.3 (#5102)
 
-- ([373ba02](https://github.com/angular/protractor/commit/373ba029420a5f3f0c05bbb8f739f9fd96ac598b))
+- ([d213aa9](https://github.com/angular/protractor/commit/d213aa9aea2c10efb497202c6ec2aa98e416684c))
    deps(selenium): upgrade to selenium 4 (#5095)
 
   - elements workaround for WebElement.equals
@@ -97,7 +97,7 @@ Selenium 4 removes the control flow and most of these changes are based on those
   - disable the install test. Installing from "file:../../" is not working.
   - fix the attach to session driver provider test to exit with a 1 if errors are encountered
 
-- ([736bbf7](https://github.com/angular/protractor/commit/736bbf7df04b36d1d0fcc7383be2022aa14234b0))
+- ([509f1b2](https://github.com/angular/protractor/commit/509f1b25762c850ba82bc7527684edc8d8b52275))
   deps(latest): upgrade to the gulp and typescript (#5089)
 
   * deps(latest): upgrade to the gulp and typescript
@@ -107,7 +107,7 @@ Selenium 4 removes the control flow and most of these changes are based on those
  supported by gulpp 4 and remove run sequence since this feature is
   - remove compile to es5
 
-- ([658a1fb](https://github.com/angular/protractor/commit/658a1fb3020ce6a2316113cbbb6f84e513158c82))
+- ([2def202](https://github.com/angular/protractor/commit/2def2026de4f68cd5264afca4aa4cb51a9b550a3))
   deps(webdriver-manager): use replacement (#5088)
 
  publish a beta release of use webdriver-manager-replacement until we
