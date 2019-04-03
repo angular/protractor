@@ -67,6 +67,13 @@
         at
         <a href="http://localhost:4444/wd/hub" target="_blank">http://localhost:4444/wd/hub</a>.
       </p>
+      <p>
+        ALTERNATIVE: The <code>webdriver-manager</code> is now designed to update to the latest version of a driver. 
+        If there is a mismatch for example, due to a Chrome release not being out yet, a previous version of Chrome may be required.
+        In this event, please try this command (use whichever browser/driver version the error message requires. 
+        Here, it requires Browser v73):
+      </p>
+      <pre>webdriver-manager update --versions.chrome=73.0.3683.86</pre>
     </div>
   </div>
   <div class="row example">
@@ -104,6 +111,31 @@ describe('angularjs homepage todo list', function() {
   });
 });
 </code></pre>
+<p>
+        ALTERNATIVE: Recent changes in Protractor 6.x are designed to take advantage of the JavaScript Asynchronous mode using async/await. 
+        You must modify your spec file code to take account of this change or you will receive an error. I recommend to new and
+        existing users that they please review the "Using async/await" page under the "Reference" drop-down above. Timing issues will
+        take on greater importance now. Kindly note the location of "async" and "await" within the code below.
+</p>        
+<pre><code class="lang-js">
+describe('angularjs homepage todo list', function() {
+  it('should add a todo', async function() {
+    await browser.get('https://angularjs.org');
+
+    await element(by.model('todoList.todoText')).sendKeys('write first protractor test');
+    await element(by.css('[value="add"]')).click();
+
+    var todoList = element.all(by.repeater('todo in todoList.todos'));
+    expect(await todoList.count()).toEqual(3);
+    expect(await todoList.get(2).getText()).toEqual('write first protractor test');
+
+    // You wrote your first test, cross it off the list
+    await todoList.get(2).element(by.css('input')).click();
+    var completedAmount = element.all(by.css('.done-true'));
+    expect(await completedAmount.count()).toEqual(2);
+  });
+});
+</code></pre>        
       </div>
       <p>
         The <code>describe</code> and <code>it</code> syntax is from the Jasmine
