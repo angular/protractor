@@ -48,7 +48,7 @@ Chrome options are nested in the `chromeOptions` object. A full list of options 
 ```javascript
 capabilities: {
   'browserName': 'chrome',
-  'chromeOptions': {
+  'goog:chromeOptions': {
     'args': ['show-fps-counter=true']
   }
 },
