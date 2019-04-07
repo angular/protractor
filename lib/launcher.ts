@@ -55,8 +55,7 @@ class TaskResults {
     let processFailures = this.totalProcessFailures();
     this.results_.forEach((result: any) => {
       let capabilities = result.capabilities;
-      let shortName = (capabilities.browserName) ? capabilities.browserName : '';
-      shortName = (capabilities.logName) ?
+      let shortName = (capabilities.logName) ?
           capabilities.logName :
           (capabilities.browserName) ? capabilities.browserName : '';
       shortName += (capabilities.version) ? capabilities.version : '';
