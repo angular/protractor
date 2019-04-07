@@ -10,28 +10,6 @@ jobs:
     steps:
       - checkout
 
-      - run:
-          name: Install Dependencies
-          command: |
-            sudo apt-get update
-            sudo apt-get install python-pip tcpdump
-
-            # Have to update firefox, default is ESR.
-            sudo pip install --upgrade pip
-            sudo pip install mozdownload mozinstall
-            mozdownload --version latest --destination firefox.tar.bz2
-            mozinstall firefox.tar.bz2
-            sudo cp -R firefox/* /opt/firefox/
-
-            # Latest chrome is already installed in the default container.
-            # curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            # sudo dpkg -i google-chrome.deb
-            # sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-            # rm google-chrome.deb
-
-      - restore_cache:
-          key: node_modules-{{ .Branch }}-{{ checksum "package-lock.json" }}
-
       - run: google-chrome --version
 
       - run:

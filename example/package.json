@@ -1,22 +1,18 @@
 {
-  "name": "example-typescript",
+  "name": "example-javascript",
   "version": "1.0.0",
-  "description": "a typescript example",
+  "description": "a javascript example",
   "author": "",
   "license": "MIT",
   "scripts": {
     "debug": "node --inspect-brk ./node_modules/.bin/protractor conf.js",
-    "pretest": "npm run tsc && npm run webdriver-update",
+    "pretest": "npm run webdriver-update",
     "test": "protractor conf.js",
-    "tsc": "tsc",
     "webdriver-update": "webdriver-manager update --standalone=false --gecko=false"
   },
   "dependencies": {
-    "@types/jasmine": "^3.3.12",
     "jasmine": "^3.3.1",
-    "protractor": "file:../",
-    "ts-node": "^8.0.3",
-    "typescript": "^3.4.1"
+    "protractor": "file:../"
   },
   "devDependencies": {}
 }
