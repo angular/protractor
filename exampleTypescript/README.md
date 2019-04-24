@@ -10,22 +10,21 @@ There are two examples in this directory:
 
 * Simple Protractor example
   * Similar to the [github protractor example](https://github.com/angular/protractor/tree/master/example)
-  * Files `conf.ts` and `spec.ts`
+  * Files `conf.js` and `spec.ts`
 * Page objects example
   * Follows the [protractortest.org page objects example](http://www.protractortest.org/#/page-objects)
-  * Files `confPageObjects.ts`, `specPageObjects.ts`, and `angularPage.ts`
+  * Files `conf.js`, `specPageObjects.ts`, and `angularPage.ts`
 
 ## File organization
 
 ```
 exampleTypescript/
 |- node_modules/       // downloaded node modules
-|- tmp/                // compiled javascript output
 |
 |- .gitignore          // since typescript produces javascript, we should not
 |                      // commit javascript to the repo
 |- angularPage.ts      // page object example
-|- confPageObjects.ts  // configuration for the page objects example
+|- conf.js             // configuration file
 |- package.json        // node dependencies for the project
 |- README.md           // this file
 |- spec.ts             // spec for the simple protractor example

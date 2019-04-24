@@ -1,17 +1,17 @@
-describe('local driver provider', function() {
-  var URL = '/ng2/#/async';
+describe('local driver provider', () => {
+  const URL = '/ng2/#/async';
 
-  it('should get a page and find an element', function() {
-    browser.get(URL);
-    var increment = $('#increment');
-    expect(increment).toBeDefined();
+  it('should get a page and find an element', async() => {
+    await browser.get(URL);
+    const increment = $('#increment');
+    expect(await increment.isPresent()).toBeDefined();
   });
 
-  it('should get a forked instance, and find an element', function() {
-    browser.get(URL);
-    var browser2 = browser.forkNewDriverInstance();
-    browser2.get(URL);
-    var increment = browser2.$('#increment');
-    expect(increment).toBeDefined();
+  it('should get a forked instance, and find an element', async() => {
+    await browser.get(URL);
+    const browser2 = await browser.forkNewDriverInstance();
+    await browser2.get(URL);
+    const increment = browser2.$('#increment');
+    expect(await increment.isPresent()).toBeDefined();
   });
 });

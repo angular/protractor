@@ -13,7 +13,7 @@ Each file details the adapter for one test framework. Each file must export a
  * @return {Promise.<Object>} Promise resolved with the test results.  See
  *   "Requirements" section for details.
  */
-export let run: (runner: Protractor.Runner, specs: string) => Promise<Object>
+export let run: (runner: Protractor.Runner, specs: string[]) => Promise<Object>
 ```
 
 Requirements

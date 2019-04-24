@@ -1,0 +1,18 @@
+{
+  "name": "example-javascript",
+  "version": "1.0.0",
+  "description": "a javascript example",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "debug": "node --inspect-brk ./node_modules/.bin/protractor conf.js",
+    "pretest": "npm run webdriver-update",
+    "test": "protractor conf.js",
+    "webdriver-update": "webdriver-manager update --standalone=false --gecko=false"
+  },
+  "dependencies": {
+    "jasmine": "^3.3.1",
+    "protractor": "file:../"
+  },
+  "devDependencies": {}
+}

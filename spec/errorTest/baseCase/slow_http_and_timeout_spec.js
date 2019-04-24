@@ -1,27 +1,27 @@
-describe('slow asynchronous events', function() {
-  beforeEach(function() {
-    browser.get('index.html#/async');
+describe('slow asynchronous events', () => {
+  beforeEach(async () => {
+    await browser.get('index.html#/async');
   });
 
-  it('waits for http calls', function() {
-    var status = element(by.binding('slowHttpStatus'));
-    var button = element(by.css('[ng-click="slowHttp()"]'));
+  it('waits for http calls', async () => {
+    const status = element(by.binding('slowHttpStatus'));
+    const button = element(by.css('[ng-click="slowHttp()"]'));
 
-    expect(status.getText()).toEqual('not started');
+    expect(await status.getText()).toEqual('not started');
 
-    button.click();
+    await button.click();
 
-    expect(status.getText()).toEqual('done');
+    expect(await status.getText()).toEqual('done');
   });
 
-  it('waits for $timeout', function() {
-    var status = element(by.binding('slowAngularTimeoutStatus'));
-    var button = element(by.css('[ng-click="slowAngularTimeout()"]'));
+  it('waits for $timeout', async () => {
+    const status = element(by.binding('slowAngularTimeoutStatus'));
+    const button = element(by.css('[ng-click="slowAngularTimeout()"]'));
 
-    expect(status.getText()).toEqual('not started');
+    expect(await status.getText()).toEqual('not started');
 
-    button.click();
+    await button.click();
 
-    expect(status.getText()).toEqual('done');
+    expect(await status.getText()).toEqual('done');
   });
 });

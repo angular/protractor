@@ -1,29 +1,27 @@
-var q = require('q');
-
 module.exports = {
-  setup: function() {
-    var self = this;
-    return q.delay(100).then(function() {
-      self.addSuccess();
+  setup: async function() {
+    await new Promise(resolve => {
+      setTimeout(resolve, 100);
     });
+    this.addSuccess();
   },
 
-  teardown: function() {
-    var self = this;
-    return q.delay(100).then(function() {
-      self.addSuccess();
+  teardown: async function() {
+    await new Promise(resolve => {
+      setTimeout(resolve, 100);
     });
+    this.addSuccess();
   },
 
   postResults: function() {
     // This function should cause no failures.
   },
 
-  postTest: function() {
-    var self = this;
-    return q.delay(100).then(function() {
-      self.addSuccess();
+  postTest: async function() {
+    await new Promise(resolve => {
+      setTimeout(resolve, 100);
     });
+    this.addSuccess();
   },
 
   name: 'some plugin name'

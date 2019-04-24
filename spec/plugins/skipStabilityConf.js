@@ -3,6 +3,7 @@ var env = require('../environment.js');
 // Verifies that plugins can change skipAngularStability on the fly.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 

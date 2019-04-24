@@ -1,11 +1,11 @@
-describe('no protractor at all', function() {
-  it('should still do normal tests', function() {
+describe('no protractor at all', () => {
+  it('should still do normal tests', () => {
     expect(true).toBe(true);
   });
 });
 
-describe('protractor library', function() {
-  it('should expose the correct global variables', function() {
+describe('protractor library', () => {
+  it('should expose the correct global variables', () => {
     expect(protractor).toBeDefined();
     expect(browser).toBeDefined();
     expect(by).toBeDefined();
@@ -13,45 +13,40 @@ describe('protractor library', function() {
     expect(element).toBeDefined();
     expect($).toBeDefined();
     expect(DartObject).toBeDefined();
-    var obj = {};
-    var dartProxy = new DartObject(obj);
+    const obj = {};
+    const dartProxy = new DartObject(obj);
     expect(dartProxy.o === obj).toBe(true);
   });
 
   it('should export other webdriver classes onto the global protractor',
-      function() {
-        expect(protractor.ActionSequence).toBeDefined();
+      () => {
+        // TODO(selenium4): Actions API missing from typings.
+        // expect(protractor.Actions).toBeDefined();
         expect(protractor.Key.RETURN).toEqual('\uE006');
       });
 
-  it('should export custom parameters to the protractor instance', function() {
+  it('should export custom parameters to the protractor instance', () => {
     expect(browser.params.login).toBeDefined();
     expect(browser.params.login.user).toEqual('Jane');
     expect(browser.params.login.password).toEqual('1234');
   });
 
   it('should allow a mix of using protractor and using the driver directly',
-      function() {
-        browser.get('index.html');
-        expect(browser.getCurrentUrl()).toMatch('#/form');
+      async() => {
+    await browser.get('index.html');
+    expect(await browser.getCurrentUrl()).toMatch('#/form');
 
-        browser.driver.findElement(protractor.By.linkText('repeater')).click();
-        expect(browser.driver.getCurrentUrl()).toMatch('#/repeater');
+    await browser.driver.findElement(protractor.By.linkText('repeater')).click();
+    expect(await browser.driver.getCurrentUrl()).toMatch('#/repeater');
 
-        browser.navigate().back();
-        expect(browser.driver.getCurrentUrl()).toMatch('#/form');
-      });
-
-  it('should unwrap WebElements', function() {
-    browser.get('index.html');
-    var ptorEl = element(by.binding('greet'));
-    browser.executeScript('', ptorEl); // Will crash if element isn't unwrapped
+    await browser.navigate().back();
+    expect(await browser.driver.getCurrentUrl()).toMatch('#/form');
   });
 
-  it('should have access to the processed config block', function() {
-    function containsMatching(arr, string) {
-      var contains = false;
-      for (var i = 0; i < arr.length; ++i) {
+  it('should have access to the processed config block', async() => {
+    let containsMatching = (arr, string) => {
+      let contains = false;
+      for (let i = 0; i < arr.length; ++i) {
         if (arr[i].indexOf(string) !== -1) {
           contains = true;
         }
@@ -59,20 +54,19 @@ describe('protractor library', function() {
       return contains;
     }
 
-    browser.getProcessedConfig().then(function(config) {
-      expect(config.params.login).toBeDefined();
-      expect(config.params.login.user).toEqual('Jane');
-      expect(config.params.login.password).toEqual('1234');
-      expect(containsMatching(config.specs, 'lib_spec.js')).toBe(true);
-      expect(config.capabilities).toBeDefined();
-    });
+    const config = await browser.getProcessedConfig();
+    expect(config.params.login).toBeDefined();
+    expect(config.params.login.user).toEqual('Jane');
+    expect(config.params.login.password).toEqual('1234');
+    expect(containsMatching(config.specs, 'lib_spec.js')).toBe(true);
+    expect(config.capabilities).toBeDefined();
   });
 
-  it('should allow adding custom locators', function() {
-    var findMenuItem = function() {
-      var itemName = arguments[0];
-      var menu = document.querySelectorAll('.menu li');
-      for (var i = 0; i < menu.length; ++i) {
+  it('should allow adding custom locators', async() => {
+    let findMenuItem = () => {
+      const itemName = arguments[0];
+      const menu = document.querySelectorAll('.menu li');
+      for (const i = 0; i < menu.length; ++i) {
         if (menu[i].textContent == itemName) {
           return [menu[i]];
         }
@@ -83,17 +77,17 @@ describe('protractor library', function() {
 
     expect(by.menuItem).toBeDefined();
 
-    browser.get('index.html');
-    expect(element(by.menuItem('repeater')).isPresent());
-    expect(element(by.menuItem('repeater')).getText()).toEqual('repeater');
+    await browser.get('index.html');
+    expect(await element(by.menuItem('repeater')).isPresent());
+    expect(await element(by.menuItem('repeater')).getText()).toEqual('repeater');
   });
 
-  it('should allow adding custom varargs locators', function() {
-    var findMenuItemWithName = function() {
-      var css = arguments[0];
-      var itemName = arguments[1];
-      var menu = document.querySelectorAll(css);
-      for (var i = 0; i < menu.length; ++i) {
+  it('should allow adding custom varargs locators', async() => {
+    let findMenuItemWithName = function() {
+      const css = arguments[0];
+      const itemName = arguments[1];
+      const menu = document.querySelectorAll(css);
+      for (const i = 0; i < menu.length; ++i) {
         if (menu[i].textContent == itemName) {
           return [menu[i]];
         }
@@ -104,30 +98,27 @@ describe('protractor library', function() {
 
     expect(by.menuItemWithName).toBeDefined();
 
-    browser.get('index.html');
-    expect(element(by.menuItemWithName('.menu li', 'repeater')).isPresent());
-    expect(element(by.menuItemWithName('.menu li', 'repeater')).getText()).
-        toEqual('repeater');
+    await browser.get('index.html');
+    expect(await element(by.menuItemWithName('.menu li', 'repeater')).isPresent());
+    expect(await element(by.menuItemWithName('.menu li', 'repeater')).getText())
+        .toEqual('repeater');
   });
 
-  describe('helper functions', function() {
-    it('should get the absolute URL', function() {
-      browser.get('index.html');
-      expect(browser.getLocationAbsUrl()).
-          toMatch('/form');
+  describe('helper functions', () => {
+    it('should get the absolute URL', async() => {
+      await browser.get('index.html');
+      expect(await browser.getLocationAbsUrl()).toMatch('/form');
 
-      element(by.linkText('repeater')).click();
-      expect(browser.getLocationAbsUrl()).
-          toMatch('/repeater');
+      await element(by.linkText('repeater')).click();
+      expect(await browser.getLocationAbsUrl()).toMatch('/repeater');
     });
 
-    it('should navigate to another url with setLocation', function() {
-      browser.get('index.html');
+    it('should navigate to another url with setLocation', async() => {
+      await browser.get('index.html');
 
-      browser.setLocation('/repeater');
+      await browser.setLocation('/repeater');
 
-      expect(browser.getLocationAbsUrl()).
-          toMatch('/repeater');
+      expect(await browser.getLocationAbsUrl()).toMatch('/repeater');
     });
   });
 });

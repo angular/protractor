@@ -13,9 +13,10 @@ describe('require(\'protractor\')', () => {
     });
 
     it('should have selenium-webdriver functions defined', () => {
-      var seleniumFunctions = ['ActionSequence', 'Builder',
-        'Capabilities', 'Command', 'EventEmitter', 'FileDetector',
-        'Session', 'WebDriver', 'WebElement', 'WebElementPromise'];
+      // TODO(selenium4): Update Actions when it is in typings. ActionSequence and EventEmitter is deprecated.
+      var seleniumFunctions = [/*'Actions', */'Builder',
+        'Capabilities', 'Command', 'FileDetector', 'Session', 'WebDriver',
+        'WebElement', 'WebElementPromise'];
       for (var pos in seleniumFunctions) {
         var propertyObj = seleniumFunctions[pos];
         expect(typeof protractor[propertyObj]).toEqual('function');
@@ -31,10 +32,6 @@ describe('require(\'protractor\')', () => {
     });
 
 
-    it('should have selenium-webdriver promise.Promise', function() {
-      expect(typeof protractor['promise']['Promise']).toEqual('function');
-    });
-
     describe('browser class', () => {
       it('should have static variables defined', () => {
         var staticVariables = ['By'];
@@ -48,8 +45,7 @@ describe('require(\'protractor\')', () => {
 
   describe('promise namespace', () => {
     it('should have functions defined (spot check)', () => {
-      var promiseFunctions = ['Promise', 'defer', 'delayed', 'createFlow',
-        'controlFlow', 'all', 'fulfilled', 'filter', 'when' ]
+      var promiseFunctions = ['delayed', 'filter'];
       for (var pos in promiseFunctions) {
         var property = promiseFunctions[pos];
         expect(typeof protractor.promise[property]).toEqual('function');

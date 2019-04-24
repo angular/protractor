@@ -5,12 +5,10 @@
     "moduleResolution": "node",
     "inlineSourceMap": true,
     "declaration": false,
-    "noImplicitAny": false,
-    "outDir": "tmp"
+    "noImplicitAny": false
   },
   "exclude": [
     "node_modules",
-    "asyncAwait",
     "plugins.ts"
   ]
 }
