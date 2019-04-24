@@ -31,7 +31,7 @@ checkLogs(output, messages);
 runProtractor = spawn('node',
     ['bin/protractor', 'spec/errorTest/browserStackAuthentication.js']);
 output = runProtractor.stdout.toString();
-messages = ['WebDriverError: Invalid username or password',
+messages = ['Invalid username or password',
     'Process exited with error code ' + exitCodes.BrowserError.CODE];
 checkLogs(output, messages);
 

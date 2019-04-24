@@ -1,8 +1,9 @@
-var env = require('../environment.js');
+const env = require('../environment.js');
 
 exports.config = {
   browserstackUser: 'foobar',
   browserstackKey: 'foobar',
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 

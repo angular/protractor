@@ -1,34 +1,34 @@
-var fs = require('fs'),
+const fs = require('fs'),
     os = require('os'),
     path = require('path');
-var BrowserError = require('../../../built/exitCodes').BrowserError;
-var ProtractorError = require('../../../built/exitCodes').ProtractorError;
-var Logger = require('../../../built/logger').Logger;
-var WriteTo = require('../../../built/logger').WriteTo;
-var Local = require('../../../built/driverProviders').Local;
-var webdriver, file;
+const BrowserError = require('../../../built/exitCodes').BrowserError;
+const ProtractorError = require('../../../built/exitCodes').ProtractorError;
+const Logger = require('../../../built/logger').Logger;
+const WriteTo = require('../../../built/logger').WriteTo;
+const Local = require('../../../built/driverProviders').Local;
+let webdriver, file;
 
-describe('local connect', function() {
-  beforeEach(function() {
+describe('local connect', () => {
+  beforeEach(() => {
     ProtractorError.SUPRESS_EXIT_CODE = true;
     Logger.setWrite(WriteTo.NONE);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     ProtractorError.SUPRESS_EXIT_CODE = false;
     Logger.setWrite(WriteTo.CONSOLE);
   });
 
-  describe('without the selenium standalone jar', function() {
-    it('should throw an error jar file is not present', function() {
-      var config = {
+  describe('without the selenium standalone jar', () => {
+    it('should throw an error jar file is not present', async () => {
+      const config = {
         capabilities: { browserName: 'chrome' },
         seleniumServerJar: '/foo/bar/selenium.jar'
       };
-      var errorFound = false;
+      let errorFound = false;
       try {
         webdriver = new Local(config);
-        webdriver.setupEnv();
+        await webdriver.setupEnv();
       } catch(e) {
         errorFound = true;
         expect(e.code).toBe(BrowserError.CODE);
@@ -37,52 +37,36 @@ describe('local connect', function() {
     });
   });
 
-  describe('with the selenium standalone jar', function() {
-    it('should throw an error if the jar file does not work', function() {
-      var jarFile = '';
-      beforeEach(function() {
-        // add files to selenium folder
-        file = 'selenium.jar';
-        jarFile = path.resolve(os.tmpdir(), file);
-        fs.openSync(jarFile, 'w');
-      });
-
-      afterEach(function() {
-        try {
-          fs.unlinkSync(jarFile);
-        } catch(e) {
-        }
-      });
-
-      it('should throw an error if the selenium sever jar cannot be used', function() {
-        var config = {
-          capabilities: { browserName: 'foobar explorer' },
-          seleniumServerJar: jarFile
-        };
-        var errorFound = false;
-        try {
-          webdriver = new Local(config);
-          webdriver.getNewDriver();
-        } catch(e) {
-          errorFound = true;
-          expect(e.code).toBe(BrowserError.CODE);
-        }
-        expect(errorFound).toBe(true);
-      });
+  describe('with the selenium standalone jar', () => {
+    it('should throw an error if the selenium sever jar cannot be used', async () => {
+      let jarFile = '';
+      const config = {
+        capabilities: { browserName: 'foobar explorer' },
+        seleniumServerJar: jarFile
+      };
+      let errorFound = false;
+      try {
+        webdriver = new Local(config);
+        await webdriver.getNewDriver();
+      } catch(e) {
+        errorFound = true;
+        expect(e.code).toBe(BrowserError.CODE);
+      }
+      expect(errorFound).toBe(true);
     });
   });
 
   describe('binary does not exist', () => {
-    it('should throw an error if the update-config.json does not exist', () => {
+    it('should throw an error if the update-config.json does not exist', async () => {
       spyOn(fs, 'readFileSync').and.callFake(() => { return null; });
-      var config = {
+      const config = {
         capabilities: { browserName: 'chrome' },
         openSync: fs.openSync
       };
-      var errorFound = false;
+      let errorFound = false;
       try {
         webdriver = new Local(config);
-        webdriver.setupDriverEnv();
+        await webdriver.setupDriverEnv();
       } catch(e) {
         errorFound = true;
         expect(e.code).toBe(BrowserError.CODE);

@@ -3,6 +3,7 @@ var env = require('./environment.js');
 // Test having two browsers interacting with each other.
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 

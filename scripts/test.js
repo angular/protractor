@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var path = require('path');
+const path = require('path');
 
-var Executor = require('./test/test_util').Executor;
+const Executor = require('./test/test_util').Executor;
 
-var passingTests = [
+const passingTests = [
   'node built/cli.js spec/basicConf.js',
   'node built/cli.js spec/basicConf.js --useBlockingProxy',
   'node built/cli.js spec/multiConf.js',
@@ -31,6 +31,7 @@ var passingTests = [
   'node built/cli.js spec/interactionConf.js',
   'node built/cli.js spec/directConnectConf.js',
   'node built/cli.js spec/restartBrowserBetweenTestsConf.js',
+  'node spec/driverProviderTest.js',
   'node built/cli.js spec/driverProviderLocalConf.js',
   'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
   'node built/cli.js spec/getCapabilitiesConf.js',
@@ -42,24 +43,20 @@ var passingTests = [
   'node built/cli.js spec/built/noCFBasicConf.js',
   'node built/cli.js spec/built/noCFBasicConf.js --useBlockingProxy',
   'node built/cli.js spec/built/noCFPluginConf.js',
-  //'node scripts/driverProviderAttachSession.js',
-  'node built/cli.js spec/driverProviderUseExistingWebDriver.js',
-  'node built/cli.js spec/driverProviderUseExistingWebDriver.js --useBlockingProxy',
+  'node scripts/driverProviderAttachSession.js',
   'node scripts/errorTest.js',
-  // Interactive Element Explorer tasks
-  'node scripts/interactive_tests/interactive_test.js',
-  'node scripts/interactive_tests/with_base_url.js',
   // Unit tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/unit_test.json',
   // Dependency tests
   'node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=scripts/dependency_test.json',
   // Typings tests
-  'node spec/install/test.js'
+  // TODO(selenium4): consider rewriting this test.
+  // 'node spec/install/test.js'
 ];
 
-var executor = new Executor();
+const executor = new Executor();
 
-passingTests.forEach(function(passing_test) {
+passingTests.forEach((passing_test) => {
   executor.addCommandlineTest(passing_test)
       .assertExitCodeOnly();
 });
@@ -72,7 +69,7 @@ passingTests.forEach(function(passing_test) {
 executor.addCommandlineTest('node built/cli.js spec/errorTest/singleFailureConf.js')
     .expectExitCode(1)
     .expectErrors({
-      stackTrace: 'single_failure_spec1.js:5:32'
+      stackTrace: 'single_failure_spec1.js:5:38'
     });
 
 // assert timeout works
@@ -94,63 +91,63 @@ executor.addCommandlineTest('node built/cli.js spec/errorTest/multiFailureConf.j
     .expectExitCode(1)
     .expectErrors([{
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
-      stacktrace: 'single_failure_spec1.js:5:32'
+      stacktrace: 'single_failure_spec1.js:5:38'
     }, {
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
-      stacktrace: 'single_failure_spec2.js:5:32'
+      stacktrace: 'single_failure_spec2.js:5:38'
     }]);
 
 executor.addCommandlineTest('node built/cli.js spec/errorTest/shardedFailureConf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
-      stacktrace: 'single_failure_spec1.js:5:32'
+      stacktrace: 'single_failure_spec1.js:5:38'
     }, {
       message: 'Expected \'Hiya\' to equal \'INTENTIONALLY INCORRECT\'.',
-      stacktrace: 'single_failure_spec2.js:5:32'
+      stacktrace: 'single_failure_spec2.js:5:38'
     }]);
 
 executor.addCommandlineTest('node built/cli.js spec/errorTest/mochaFailureConf.js')
     .expectExitCode(1)
     .expectErrors([{
       message: 'expected \'My AngularJS App\' to equal \'INTENTIONALLY INCORRECT\'',
-      stacktrace: 'mocha_failure_spec.js:11:20'
+      stacktrace: 'mocha_failure_spec.js:11:41'
     }]);
 
-// executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf.js')
-//     .expectExitCode(1)
-//     .expectErrors([
-//       {message: 'Expected true to be false'},
-//       {message: 'from setup'},
-//       {message: 'from postTest passing'},
-//       {message: 'from postTest failing'},
-//       {message: 'from teardown'}
-//     ]);
+executor.addCommandlineTest('node built/cli.js spec/errorTest/pluginsFailingConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'Expected true to be false'},
+      {message: 'from setup'},
+      {message: 'from postTest passing'},
+      {message: 'from postTest failing'},
+      {message: 'from teardown'}
+    ]);
 
-// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
-//     .expectExitCode(1)
-//     .expectErrors([
-//       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-//       {message: 'The following tasks were pending:[\\s\\S]*' +
-//                 '- \\$timeout: function\\(\\) {[\\s\\S]*' +
-//                   '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' +
-//                 '*}'}
-//     ]);
+executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
+      {message: 'The following tasks were pending:[\\s\\S]*' +
+                '- \\$timeout: function\\(\\) {[\\s\\S]*' +
+                  '\\$scope\\.slowAngularTimeoutStatus = \'done\';[\\s\\S]' +
+                '*}'}
+    ]);
 
-// executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
-//                             '--untrackOutstandingTimeouts true')
-//     .expectExitCode(1)
-//     .expectErrors([
-//       {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
-//       {message: 'While waiting for element with locator - ' +
-//                 'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
-//     ]);
+executor.addCommandlineTest('node built/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
+                            '--untrackOutstandingTimeouts true')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'The following tasks were pending[\\s\\S]*\\$http: slowcall'},
+      {message: 'While waiting for element with locator - ' +
+                'Locator: by.binding\\(\\"slowAngularTimeoutStatus\\"\\)$'}
+    ]);
 
-// executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
-//     .expectExitCode(1)
-//     .expectErrors([
-//       {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
-//     ]);
+executor.addCommandlineTest('node built/cli.js spec/angular2TimeoutConf.js')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'Timed out waiting for asynchronous Angular tasks to finish'},
+    ]);
 
 // If we're running on CircleCI, save stdout and stderr from the test run to a log file.
 if (process.env['CIRCLE_ARTIFACTS']) {

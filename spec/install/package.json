@@ -10,17 +10,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@types/jasmine": "^2.5.38",
-    "@types/selenium-webdriver": "^2.53.39",
-    "protractor": "file:../../",
-    "q": "^1.4.1",
-    "rimraf": "^2.5.4",
-    "selenium-webdriver": "^3.0.1",
-    "typescript": "^2.1.3"
+    "rimraf": "^2.5.4"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.47",
-    "@types/jasminewd2": "^2.0.0",
-    "@types/q": "0.0.32"
+    "jasmine": "^2.8.0",
+    "protractor": "file:../../",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "typescript": "^3.2.2"
   }
 }

@@ -6,17 +6,17 @@
 // Editors like Microsoft Visual Studio Code will have autocomplete and
 // description hints.
 //
-// To run this example, first transpile it to javascript with `npm run tsc`,
-// then run `protractor conf.js`.
-import {Config} from 'protractor';
-
-export let config: Config = {
+// To run this example, run `protractor conf.js`.
+exports.config = {
   framework: 'jasmine',
   capabilities: {
     browserName: 'chrome'
   },
-  specs: [ 'spec.js' ],
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  specs: [
+    'spec.js',
+    'specPageObjects.js'
+  ],
+  directConnect: true,
 
   // You could set no globals to true to avoid jQuery '$' and protractor '$'
   // collisions on the global namespace.

@@ -1,6 +1,5 @@
 import * as child_process from 'child_process';
 import {EventEmitter} from 'events';
-import * as q from 'q';
 
 import {Config} from './config';
 import {ConfigParser} from './configParser';
@@ -8,12 +7,12 @@ import {Runner} from './runner';
 import {TaskLogger} from './taskLogger';
 
 export interface RunResults {
-  taskId: number;
-  specs: Array<string>;
-  capabilities: any;
-  failedCount: number;
-  exitCode: number;
-  specResults: Array<any>;
+  taskId?: number;
+  specs?: Array<string>;
+  capabilities?: any;
+  failedCount?: number;
+  exitCode?: number;
+  specResults?: Array<any>;
 }
 
 /**
@@ -37,12 +36,12 @@ export class TaskRunner extends EventEmitter {
 
   /**
    * Sends the run command.
-   * @return {q.Promise} A promise that will resolve when the task finishes
+   * @return {Promise} A promise that will resolve when the task finishes
    *     running. The promise contains the following parameters representing the
    *     result of the run:
    *       taskId, specs, capabilities, failedCount, exitCode, specResults
    */
-  public run(): q.Promise<any> {
+  public async run(): Promise<any> {
     let runResults: RunResults = {
       taskId: this.task.taskId,
       specs: this.task.specs,
@@ -65,61 +64,59 @@ export class TaskRunner extends EventEmitter {
     config.specs = this.task.specs;
 
     if (this.runInFork) {
-      let deferred = q.defer();
+      return new Promise((resolve, reject) => {
+        let childProcess = child_process.fork(
+            __dirname + '/runnerCli.js', process.argv.slice(2), {cwd: process.cwd(), silent: true});
+        let taskLogger = new TaskLogger(this.task, childProcess.pid);
 
-      let childProcess = child_process.fork(
-          __dirname + '/runnerCli.js', process.argv.slice(2), {cwd: process.cwd(), silent: true});
-      let taskLogger = new TaskLogger(this.task, childProcess.pid);
+        // stdout pipe
+        childProcess.stdout.on('data', (data: string) => {
+          taskLogger.log(data);
+        });
 
-      // stdout pipe
-      childProcess.stdout.on('data', (data: string) => {
-        taskLogger.log(data);
+        // stderr pipe
+        childProcess.stderr.on('data', (data: string) => {
+          taskLogger.log(data);
+        });
+
+        childProcess
+            .on('message',
+                (m: any) => {
+                  if (config.verboseMultiSessions) {
+                    taskLogger.peek();
+                  }
+                  switch (m.event) {
+                    case 'testPass':
+                      process.stdout.write('.');
+                      break;
+                    case 'testFail':
+                      process.stdout.write('F');
+                      break;
+                    case 'testsDone':
+                      runResults.failedCount = m.results.failedCount;
+                      runResults.specResults = m.results.specResults;
+                      break;
+                  }
+                })
+            .on('error',
+                (err: any) => {
+                  taskLogger.flush();
+                  reject(err);
+                })
+            .on('exit', (code: number) => {
+              taskLogger.flush();
+              runResults.exitCode = code;
+              resolve(runResults);
+            });
+
+        childProcess.send({
+          command: 'run',
+          configFile: this.configFile,
+          additionalConfig: this.additionalConfig,
+          capabilities: this.task.capabilities,
+          specs: this.task.specs
+        });
       });
-
-      // stderr pipe
-      childProcess.stderr.on('data', (data: string) => {
-        taskLogger.log(data);
-      });
-
-      childProcess
-          .on('message',
-              (m: any) => {
-                if (config.verboseMultiSessions) {
-                  taskLogger.peek();
-                }
-                switch (m.event) {
-                  case 'testPass':
-                    process.stdout.write('.');
-                    break;
-                  case 'testFail':
-                    process.stdout.write('F');
-                    break;
-                  case 'testsDone':
-                    runResults.failedCount = m.results.failedCount;
-                    runResults.specResults = m.results.specResults;
-                    break;
-                }
-              })
-          .on('error',
-              (err: any) => {
-                taskLogger.flush();
-                deferred.reject(err);
-              })
-          .on('exit', (code: number) => {
-            taskLogger.flush();
-            runResults.exitCode = code;
-            deferred.resolve(runResults);
-          });
-
-      childProcess.send({
-        command: 'run',
-        configFile: this.configFile,
-        additionalConfig: this.additionalConfig,
-        capabilities: this.task.capabilities,
-        specs: this.task.specs
-      });
-
-      return deferred.promise;
     } else {
       let runner = new Runner(config);
 
@@ -128,10 +125,9 @@ export class TaskRunner extends EventEmitter {
         runResults.specResults = results.specResults;
       });
 
-      return runner.run().then((exitCode: number) => {
-        runResults.exitCode = exitCode;
-        return runResults;
-      });
+      const exitCode = await runner.run();
+      runResults.exitCode = exitCode;
+      return runResults;
     }
   }
 }

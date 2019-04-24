@@ -1,37 +1,35 @@
-describe('angularjs homepage', function() {
-  it('should greet the named user', function() {
-    browser.get('http://www.angularjs.org');
+describe('angularjs homepage', () => {
+  it('should greet the named user', async () => {
+    await browser.get('http://www.angularjs.org');
 
-    element(by.model('yourName')).sendKeys('Julie');
-
-    var greeting = element(by.binding('yourName'));
-
-    expect(greeting.getText()).toEqual('Hello Julie!');
+    await element(by.model('yourName')).sendKeys('Julie');
+    const greeting = element(by.binding('yourName'));
+    expect(await greeting.getText()).toEqual('Hello Julie!');
   });
 
-  describe('todo list', function() {
-    var todoList;
+  describe('todo list', () => {
+    let todoList;
 
-    beforeEach(function() {
-      browser.get('http://www.angularjs.org');
-
+    beforeEach(async () => {
+      await browser.get('http://www.angularjs.org');
       todoList = element.all(by.repeater('todo in todoList.todos'));
     });
 
-    it('should list todos', function() {
-      expect(todoList.count()).toEqual(2);
-      expect(todoList.get(1).getText()).toEqual('build an AngularJS app');
+    it('should list todos', async () => {
+      expect(await todoList.count()).toEqual(2);
+      expect(await todoList.get(1).getText()).toEqual('build an AngularJS app');
     });
 
-    it('should add a todo', function() {
-      var addTodo = element(by.model('todoList.todoText'));
-      var addButton = element(by.css('[value="add"]'));
+    it('should add a todo', async () => {
+      const addTodo = element(by.model('todoList.todoText'));
+      const addButton = element(by.css('[value="add"]'));
 
-      addTodo.sendKeys('write a protractor test');
-      addButton.click();
+      await addTodo.sendKeys('write a protractor test');
+      await addButton.click();
 
-      expect(todoList.count()).toEqual(3);
-      expect(todoList.get(2).getText()).toEqual('write a protractor test');
+      expect(await todoList.count()).toEqual(3);
+      expect(await todoList.get(2).getText())
+        .toEqual('write a protractor test');
     });
   });
 });

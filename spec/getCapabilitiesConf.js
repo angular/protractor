@@ -1,8 +1,8 @@
-var env = require('./environment.js');
-var q = require('q');
+const env = require('./environment.js');
 
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   // Spec patterns are relative to this directory.
   specs: [
@@ -10,15 +10,15 @@ exports.config = {
   ],
 
   framework: 'debugprint',
-  getMultiCapabilities: function() {
-    var deferred = q.defer();
+  getMultiCapabilities: async function() {
     // Wait for a server to be ready or get capabilities asynchronously.
-    setTimeout(function() {
-      deferred.resolve([{
-        'browserName': 'firefox'
-      }]);
-    }, 1000);
-    return deferred.promise;
+    return await new Promise(resolve => {
+      setTimeout(() => {
+        resolve([{
+          'browserName': 'firefox'
+        }]);
+      }, 1000);
+    });
   },
 
   baseUrl: env.baseUrl + '/ng1/'

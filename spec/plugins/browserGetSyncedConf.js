@@ -1,9 +1,9 @@
-var env = require('../environment.js'),
-    q = require('q');
+const env = require('../environment.js');
 
 // Make sure that borwser-related plugin hooks work with browser sync on
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -19,20 +19,26 @@ exports.config = {
   // Plugin patterns are relative to this directory.
   plugins: [{
     inline: {
-      onPageLoad: function() {
-        return q.delay(5000).then(function() {
-          protractor.ON_PAGE_LOAD = true;
+      onPageLoad: async function() {
+        return await new Promise(resolve => {
+          setTimeout(() => {
+            protractor.ON_PAGE_LOAD = true;
+            resolve();
+          }, 5000);
         });
       },
-      onPageStable: function() {
+      onPageStable: async function() {
         if (protractor.ON_PAGE_LOAD) {
           this.addSuccess();
         } else {
           this.addFailure(
               'onPageLoad did not finish before onPageStable began');
         }
-        return q.delay(5000).then(function() {
-          protractor.ON_PAGE_SYNC = true;
+        return await new Promise(resolve => {
+          setTimeout(() => {
+            protractor.ON_PAGE_SYNC = true;
+            resolve();
+          }, 5000);
         });
       },
       teardown: function() {
