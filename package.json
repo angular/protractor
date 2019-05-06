@@ -32,6 +32,7 @@
     "@types/minimist": "^1.1.28",
     "@types/node": "^6.0.46",
     "@types/optimist": "^0.0.29",
+    "@types/selenium-webdriver": "^4.0.0",
     "@types/yargs": "^12.0.1",
     "body-parser": "^1.18.3",
     "chai": "~3.5.0",
