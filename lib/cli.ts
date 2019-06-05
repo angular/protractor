@@ -55,6 +55,8 @@ let allowedNames = [
   'kobitonKey',
   'testobjectUser',
   'testobjectKey',
+  'lambdaUsername',
+  'lambdaAccessKey',
   'directConnect',
   'firefoxPath',
   'noGlobals',

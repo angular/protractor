@@ -8,6 +8,7 @@ export * from './mock';
 export * from './sauce';
 export * from './testObject';
 export * from './kobiton';
+export * from './lambdaTest';
 
 
 import {AttachSession} from './attachSession';
@@ -20,6 +21,7 @@ import {Mock} from './mock';
 import {Sauce} from './sauce';
 import {TestObject} from './testObject';
 import {Kobiton} from './kobiton';
+import {LambdaTest} from './lambdaTest';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -52,6 +54,9 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
   } else if (config.sauceUser && config.sauceKey) {
     driverProvider = new Sauce(config);
     logWarnings('sauce', config);
+  } else if (config.lambdaUsername && config.lambdaAccessKey) {
+    driverProvider = new LambdaTest(config);
+    logWarnings('lambdaTest', config);
   } else if (config.seleniumServerJar) {
     driverProvider = new Local(config);
     logWarnings('local', config);
@@ -102,6 +107,12 @@ export let logWarnings = (providerType: string, config: Config): void => {
   }
   if ('sauce' !== providerType && config.sauceKey) {
     warnList.push('sauceKey');
+  }
+  if ('lambdaTest' !== providerType && config.lambdaUsername) {
+    warnList.push('lambdaUsername');
+  }
+  if ('lambdaTest' !== providerType && config.lambdaAccessKey) {
+    warnList.push('lambdaAccessKey');
   }
   if ('local' !== providerType && config.seleniumServerJar) {
     warnList.push('seleniumServerJar');
