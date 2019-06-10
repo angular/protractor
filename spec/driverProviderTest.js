@@ -8,6 +8,7 @@
  * - if you want to test saucelabs, test with --sauceUser and --sauceKey
  * - if you want to test browserstack driverProvider, test with 
      --browserstackUser and --browserstackKey
+ * - if you want to test experitest, test with --experitestKey and --experitestCloudAddress
  * You should verify that there are no lingering processes when these tests
  * complete.
  */
@@ -20,6 +21,7 @@ const Hosted = require('../built/driverProviders/hosted').Hosted;
 const Local = require('../built/driverProviders/local').Local;
 const Sauce = require('../built/driverProviders/sauce').Sauce;
 const BrowserStack = require('../built/driverProviders/browserStack').BrowserStack;
+const Experitest = require('../built/driverProviders/experitest').Experitest;
 
 const testDriverProvider = async (driverProvider) => {
   await driverProvider.setupEnv();
@@ -142,4 +144,21 @@ if (argv.browserstackUser && argv.browserstackKey) {
         console.error('browserstack.dp failed with', err);
         throw err;
       });
+}
+
+if (argv.experitestKey && argv.experitestCloudAddress) {
+    const experitestConfig = {
+        experitestKey: argv.experitestKey,
+        experitestCloudAddress: argv.experitestCloudAddress,
+        capabilities: {
+            'browserName': 'chrome',
+        }
+    };
+    testDriverProvider(new Experitest(experitestConfig)).
+    then(function() {
+        console.log('experitest.dp working!');
+    }, function(err) {
+        console.log('experitest.dp failed with ' + err);
+        throw err;
+    });
 }
