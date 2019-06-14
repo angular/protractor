@@ -50,7 +50,7 @@ export class LambdaTest extends DriverProvider {
   protected async setupDriverEnv(): Promise<any> {
     this.config_.capabilities['user'] = this.config_.lambdaUsername;
     this.config_.capabilities['accessKey'] = this.config_.lambdaAccessKey;
-    this.config_.seleniumAddress = 'http://hub.lambdatest.com/wd/hub';
+    this.config_.seleniumAddress = 'https://hub.lambdatest.com/wd/hub';
     this.lambdaAutomationClient = lambdaRestClient.AutomationClient(
         {username: this.config_.lambdaUsername, accessKey: this.config_.lambdaAccessKey});
 
