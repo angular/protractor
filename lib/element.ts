@@ -13,9 +13,8 @@ export class WebdriverWebElement {}
 export interface WebdriverWebElement extends WebElement { [key: string]: any; }
 
 let WEB_ELEMENT_FUNCTIONS = [
-  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getSize',
-  'getLocation', 'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId',
-  'takeScreenshot'
+  'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getRect',
+  'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'takeScreenshot'
 ];
 
 /**
