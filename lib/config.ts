@@ -303,12 +303,6 @@ export interface Config {
    *   browserName: 'chrome',
    *   name: 'Unnamed Job',
    *   logName: 'Chrome - English',
-   *   count: 1,
-   *   shardTestFiles: false,
-   *   maxInstances: 1,
-   *   specs: ['spec/chromeOnlySpec.js'],
-   *   exclude: ['spec/doNotRunInChromeSpec.js'],
-   *   seleniumAddress: 'http://localhost:4444/wd/hub'
    * }
    */
   capabilities?: {
@@ -331,41 +325,6 @@ export interface Config {
      */
     logName?: string;
 
-    /**
-     * Number of times to run this set of capabilities (in parallel, unless
-     * limited by maxSessions). Default is 1.
-     */
-    count?: number;
-
-    /**
-     * If this is set to be true, specs will be sharded by file (i.e. all
-     * files to be run by this set of capabilities will run in parallel).
-     * Default is false.
-     */
-    shardTestFiles?: boolean;
-
-    /**
-     * Maximum number of browser instances that can run in parallel for this
-     * set of capabilities. This is only needed if shardTestFiles is true.
-     * Default is 1.
-     */
-    maxInstances?: number;
-
-    /**
-     * Additional spec files to be run on this capability only.
-     */
-    specs?: string[];
-
-    /**
-     * Spec files to be excluded on this capability only.
-     */
-    exclude?: string[];
-
-    /**
-     * Optional: override global seleniumAddress on this capability only.
-     */
-    seleniumAddress?: string;
-
     // Optional: Additional third-party specific capabilities can be
     // specified here.
     // For a list of BrowserStack specific capabilities, visit
@@ -378,6 +337,26 @@ export interface Config {
    * If this is specified, capabilities will be ignored.
    */
   multiCapabilities?: Array<any>;
+
+  /**
+   * Maximum number of browser instances that can run in parallel for this
+   * set of capabilities. This is only needed if shardTestFiles is true.
+   * Default is 1.
+   */
+  maxInstances?: number;
+
+  /**
+   * If this is set to be true, specs will be sharded by file (i.e. all
+   * files to be run by this set of capabilities will run in parallel).
+   * Default is false.
+   */
+  shardTestFiles?: boolean;
+
+  /**
+   * Number of times to run this set of capabilities (in parallel, unless
+   * limited by maxSessions). Default is 1.
+   */
+  count?: number;
 
   /**
    * If you need to resolve multiCapabilities asynchronously (i.e. wait for
