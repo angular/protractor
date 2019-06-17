@@ -329,6 +329,11 @@ export interface Config {
     // specified here.
     // For a list of BrowserStack specific capabilities, visit
     // https://www.browserstack.com/automate/capabilities
+
+
+    // Optional : Additional SauceLabs configuration can be specified here
+    // For list of BrowserStack specific capabilities, visit
+    // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   };
 
   /**
