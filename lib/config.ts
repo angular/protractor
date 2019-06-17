@@ -332,7 +332,7 @@ export interface Config {
 
 
     // Optional : Additional SauceLabs configuration can be specified here
-    // For list of BrowserStack specific capabilities, visit
+    // For list of SauceLabs specific capabilities, visit
     // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   };
 
