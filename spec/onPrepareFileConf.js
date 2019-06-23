@@ -1,9 +1,10 @@
-var env = require('./environment.js');
+const env = require('./environment.js');
 
 // Configuration using a string in onPrepare to load a file with code to
 // execute once before tests.
 exports.config = {
   mockSelenium: true,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 

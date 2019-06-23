@@ -3,11 +3,13 @@
  *  It is responsible for setting up the account object, tearing
  *  it down, and setting up the driver correctly.
  */
-import * as q from 'q';
-import {Builder, promise as wdpromise, Session, WebDriver} from 'selenium-webdriver';
-
+import {Builder, WebDriver} from 'selenium-webdriver';
 import {BlockingProxyRunner} from '../bpRunner';
 import {Config} from '../config';
+import {BrowserError} from '../exitCodes';
+import {Logger} from '../logger';
+
+let logger = new Logger('driverProvider');
 
 export abstract class DriverProvider {
   drivers_: WebDriver[];
@@ -41,9 +43,9 @@ export abstract class DriverProvider {
    * Create a new driver.
    *
    * @public
-   * @return webdriver instance
+   * @return a promise to a webdriver instance
    */
-  getNewDriver() {
+  async getNewDriver(): Promise<WebDriver> {
     let builder: Builder;
     if (this.config_.useBlockingProxy) {
       builder =
@@ -57,7 +59,12 @@ export abstract class DriverProvider {
     if (this.config_.disableEnvironmentOverrides === true) {
       builder.disableEnvironmentOverrides();
     }
-    let newDriver = builder.build();
+    let newDriver: WebDriver;
+    try {
+      newDriver = await builder.build();
+    } catch (e) {
+      throw new BrowserError(logger, (e as Error).message);
+    }
     this.drivers_.push(newDriver);
     return newDriver;
   }
@@ -68,81 +75,62 @@ export abstract class DriverProvider {
    * @public
    * @param webdriver instance
    */
-  quitDriver(driver: WebDriver): wdpromise.Promise<void> {
+  async quitDriver(driver: WebDriver): Promise<void> {
     let driverIndex = this.drivers_.indexOf(driver);
     if (driverIndex >= 0) {
       this.drivers_.splice(driverIndex, 1);
-    }
-
-    if (driver.getSession() === undefined) {
-      return wdpromise.when(undefined);
-    } else {
-      return driver.getSession()
-          .then<void>((session_: Session) => {
-            if (session_) {
-              return driver.quit();
-            }
-          })
-          .catch<void>(function(err: Error) {});
+      try {
+        await driver.close();
+        await driver.quit();
+      } catch (err) {
+        // This happens when Protractor keeps track of all the webdrivers
+        // created and calls quit. If a user calls driver.quit, then this will
+        // throw an error. This catch will swallow the error.
+      }
     }
   }
-
 
   /**
    * Quits an array of drivers and returns a q promise instead of a webdriver one
    *
    * @param drivers {webdriver.WebDriver[]} The webdriver instances
    */
-  static quitDrivers(provider: DriverProvider, drivers: WebDriver[]): q.Promise<void> {
-    let deferred = q.defer<void>();
-    wdpromise
-        .all(drivers.map((driver: WebDriver) => {
-          return provider.quitDriver(driver);
-        }))
-        .then(
-            () => {
-              deferred.resolve();
-            },
-            () => {
-              deferred.resolve();
-            });
-    return deferred.promise;
+  static async quitDrivers(provider: DriverProvider, drivers: WebDriver[]): Promise<void> {
+    await Promise.all(drivers.map((driver: WebDriver) => {
+      return provider.quitDriver(driver);
+    }));
   }
 
   /**
    * Default update job method.
    * @return a promise
    */
-  updateJob(update: any): q.Promise<any> {
-    return q.fcall(function() {});
-  };
+  async updateJob(update: any): Promise<any> {}
 
   /**
    * Default setup environment method, common to all driver providers.
    */
-  setupEnv(): q.Promise<any> {
-    let driverPromise = this.setupDriverEnv();
+  async setupEnv(): Promise<any> {
+    await this.setupDriverEnv();
     if (this.config_.useBlockingProxy && !this.config_.blockingProxyUrl) {
-      // TODO(heathkit): If set, pass the webDriverProxy to BP.
-      return driverPromise.then(() => this.bpRunner.start());
+      await this.bpRunner.start();
     }
-    return driverPromise;
-  };
+  }
 
   /**
    * Set up environment specific to a particular driver provider. Overridden
    * by each driver provider.
    */
-  protected abstract setupDriverEnv(): q.Promise<any>;
+  protected async abstract setupDriverEnv(): Promise<any>;
 
   /**
    * Teardown and destroy the environment and do any associated cleanup.
    * Shuts down the drivers.
    *
    * @public
-   * @return {q.Promise<any>} A promise which will resolve when the environment is down.
+   * @return {Promise<any>} A promise which will resolve when the environment is down.
    */
-  teardownEnv(): q.Promise<any> {
-    return DriverProvider.quitDrivers(this, this.drivers_);
+  async teardownEnv(): Promise<any> {
+    await DriverProvider.quitDrivers(this, this.drivers_);
   }
 }

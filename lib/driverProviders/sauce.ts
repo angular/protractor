@@ -4,8 +4,7 @@
  * it down, and setting up the driver correctly.
  */
 
-import * as q from 'q';
-import {Session, WebDriver} from 'selenium-webdriver';
+import {WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
 import {Config} from '../config';
@@ -14,6 +13,10 @@ import {Logger} from '../logger';
 import {DriverProvider} from './driverProvider';
 
 const SauceLabs = require('saucelabs');
+const SAUCE_REGIONS: {[key: string]: string} = {
+  'us': '',  // default endpoint
+  'eu': 'eu-central-1.'
+};
 
 let logger = new Logger('sauce');
 export class Sauce extends DriverProvider {
@@ -27,34 +30,30 @@ export class Sauce extends DriverProvider {
    * Hook to update the sauce job.
    * @public
    * @param {Object} update
-   * @return {q.promise} A promise that will resolve when the update is complete.
+   * @return {Promise} A promise that will resolve when the update is complete.
    */
-  updateJob(update: any): q.Promise<any> {
-    let deferredArray = this.drivers_.map((driver: WebDriver) => {
-      let deferred = q.defer();
-      driver.getSession().then((session: Session) => {
-        logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
-        this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
-          if (err) {
-            throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
-          }
-          deferred.resolve();
-        });
+  updateJob(update: any): Promise<any> {
+    let mappedDrivers = this.drivers_.map(async (driver: WebDriver) => {
+      const session = await driver.getSession();
+      logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
+      this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
+        if (err) {
+          throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
+        }
       });
-      return deferred.promise;
     });
-    return q.all(deferredArray);
+    return Promise.all(mappedDrivers);
   }
 
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): q.Promise<any> {
-    let deferred = q.defer();
+  protected async setupDriverEnv(): Promise<any> {
     this.sauceServer_ = new SauceLabs({
+      hostname: this.getSauceEndpoint(this.config_.sauceRegion),
       username: this.config_.sauceUser,
       password: this.config_.sauceKey,
       agent: this.config_.sauceAgent,
@@ -66,8 +65,9 @@ export class Sauce extends DriverProvider {
     let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
     let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
     this.config_.seleniumAddress = auth +
-        (this.config_.sauceSeleniumAddress ? this.config_.sauceSeleniumAddress :
-                                             'ondemand.saucelabs.com:443/wd/hub');
+        (this.config_.sauceSeleniumAddress ?
+             this.config_.sauceSeleniumAddress :
+             `ondemand.${this.getSauceEndpoint(this.config_.sauceRegion)}:443/wd/hub`);
 
     // Append filename to capabilities.name so that it's easier to identify
     // tests.
@@ -79,7 +79,18 @@ export class Sauce extends DriverProvider {
     logger.info(
         'Using SauceLabs selenium server at ' +
         this.config_.seleniumAddress.replace(/\/\/.+@/, '//'));
-    deferred.resolve();
-    return deferred.promise;
+  }
+
+  /**
+   * Get the Sauce Labs endpoint
+   * @private
+   * @param {string} region
+   * @return {string} The endpoint that needs to be used
+   */
+  private getSauceEndpoint(region: string): string {
+    const dc = region ?
+        typeof SAUCE_REGIONS[region] !== 'undefined' ? SAUCE_REGIONS[region] : (region + '.') :
+        '';
+    return `${dc}saucelabs.com`;
   }
 }

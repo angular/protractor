@@ -1,4 +1,7 @@
-*.js
+plugins.js
+spec.js
+specPageObjects.js
+angularPage.js
+*.d.ts
 node_modules
-tmp/
-!asyncAwait/*.js
+package-lock.json

@@ -1,186 +1,188 @@
 // Based off of spec/basic/elements_spec.js
-import * as q from 'q';
+import {$, browser, by, element, ElementArrayFinder, ElementFinder} from '../../..';
 
-import {$, $$, browser, by, By, element, ElementArrayFinder, ElementFinder, ExpectedConditions, promise as ppromise, WebElement} from '../../..';
-
-describe('ElementFinder', function() {
-  it('should return the same result as browser.findElement', async function() {
+describe('ElementFinder', () => {
+  it('should return the same result as browser.findElement', async() => {
     await browser.get('index.html#/form');
     const nameByElement = element(by.binding('username'));
 
-    await expect(nameByElement.getText())
-        .toEqual(browser.findElement(by.binding('username')).getText());
+    expect(await nameByElement.getText())
+        .toEqual(await browser.findElement(by.binding('username')).getText());
   });
 
-  it('should wait to grab the WebElement until a method is called', async function() {
+  it('should wait to grab the WebElement until a method is called', async() => {
     // These should throw no error before a page is loaded.
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
 
     await browser.get('index.html#/form');
 
-    await expect(name.getText()).toEqual('Anon');
+    expect(await name.getText()).toEqual('Anon');
 
     await usernameInput.clear();
     await usernameInput.sendKeys('Jane');
-    await expect(name.getText()).toEqual('Jane');
+    expect(await name.getText()).toEqual('Jane');
   });
 
-  it('should chain element actions', async function() {
+  it('should chain element actions', async() => {
     await browser.get('index.html#/form');
 
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
 
-    await expect(name.getText()).toEqual('Anon');
+    expect(await name.getText()).toEqual('Anon');
 
     await((usernameInput.clear() as any) as ElementFinder).sendKeys('Jane');
-    await expect(name.getText()).toEqual('Jane');
+    expect(await name.getText()).toEqual('Jane');
   });
 
-  it('should run chained element actions in sequence', function(done: any) {
+  it('should run chained element actions in sequence', async () => {
     // Testing private methods is bad :(
     let els = new ElementArrayFinder(browser, () => {
-      return ppromise.when([null as WebElement]);
+      return Promise.resolve([null]);
     });
-    let applyAction_: (actionFn: (value: WebElement, index: number, array: WebElement[]) => any) =>
+    let applyAction_: (actionFn: (value: any, index: number, array: any) => any) =>
         ElementArrayFinder = (ElementArrayFinder as any).prototype.applyAction_;
     let order: string[] = [];
 
-    let deferredA = q.defer<void>();
+    let deferredA: Promise<void>;
     els = applyAction_.call(els, () => {
-      return deferredA.promise.then(() => {
+      deferredA = new Promise<void>(resolve => {
         order.push('a');
+        resolve();
       });
     });
-    let deferredB = q.defer<void>();
+    let deferredB: Promise<void>;
     els = applyAction_.call(els, () => {
-      return deferredB.promise.then(() => {
+      deferredB = new Promise<void>(resolve => {
         order.push('b');
+        resolve();
       });
     });
 
-    deferredB.resolve();
-    setTimeout(async function() {
-      deferredA.resolve();
+    await deferredB;
+    setTimeout(async () => {
+      await deferredA;
       await els;
       expect(order).toEqual(['a', 'b']);
-      done();
     }, 100);
   });
 
-  it('chained call should wait to grab the WebElement until a method is called', async function() {
+  it('chained call should wait to grab the WebElement until a method is called',
+      async() => {
     // These should throw no error before a page is loaded.
-    const reused = element(by.id('baz')).element(by.binding('item.reusedBinding'));
+    const reused = element(by.id('baz'))
+        .element(by.binding('item.reusedBinding'));
 
     await browser.get('index.html#/conflict');
 
-    await expect(reused.getText()).toEqual('Inner: inner');
-    await expect(reused.isPresent()).toBe(true);
+    expect(await reused.getText()).toEqual('Inner: inner');
+    expect(await reused.isPresent()).toBe(true);
   });
 
-  it('should differentiate elements with the same binding by chaining', async function() {
+  it('should differentiate elements with the same binding by chaining',
+      async() => {
     await browser.get('index.html#/conflict');
 
     const outerReused = element(by.binding('item.reusedBinding'));
     const innerReused = element(by.id('baz')).element(by.binding('item.reusedBinding'));
 
-    await expect(outerReused.getText()).toEqual('Outer: outer');
-    await expect(innerReused.getText()).toEqual('Inner: inner');
+    expect(await outerReused.getText()).toEqual('Outer: outer');
+    expect(await innerReused.getText()).toEqual('Inner: inner');
   });
 
-  it('should chain deeper than 2', async function() {
+  it('should chain deeper than 2', async() => {
     // These should throw no error before a page is loaded.
-    const reused =
-        element(by.css('body')).element(by.id('baz')).element(by.binding('item.reusedBinding'));
+    const reused = element(by.css('body')).element(by.id('baz'))
+        .element(by.binding('item.reusedBinding'));
 
     await browser.get('index.html#/conflict');
 
-    await expect(reused.getText()).toEqual('Inner: inner');
+    expect(await reused.getText()).toEqual('Inner: inner');
   });
 
-  it('should allow handling errors', async function() {
+  it('should allow handling errors', async() => {
     await browser.get('index.html#/form');
     try {
       await $('.nopenopenope').getText();
 
       // The above line should have throw an error. Fail.
-      await expect(true).toEqual(false);
+      expect(true).toEqual(false);
     } catch (e) {
-      await expect(true).toEqual(true);
+      expect(true).toEqual(true);
     }
   });
 
-  it('should allow handling chained errors', async function() {
+  it('should allow handling chained errors', async() => {
     await browser.get('index.html#/form');
     try {
       await $('.nopenopenope').$('furthernope').getText();
 
       // The above line should have throw an error. Fail.
-      await expect(true).toEqual(false);
+      expect(true).toEqual(false);
     } catch (e) {
-      await expect(true).toEqual(true);
+      expect(true).toEqual(true);
     }
   });
 
-  it('should keep a reference to the original locator', async function() {
+  it('should keep a reference to the original locator', async() => {
     await browser.get('index.html#/form');
 
     const byCss = by.css('body');
     const byBinding = by.binding('greet');
 
-    await expect(element(byCss).locator()).toEqual(byCss);
-    await expect(element(byBinding).locator()).toEqual(byBinding);
+    expect(await element(byCss).locator()).toEqual(byCss);
+    expect(await element(byBinding).locator()).toEqual(byBinding);
   });
 
-  it('should propagate exceptions', async function() {
+  it('should propagate exceptions', async() => {
     await browser.get('index.html#/form');
 
     const invalidElement = element(by.binding('INVALID'));
     const successful = invalidElement.getText().then(
         function() {
           return true;
-        } as any as (() => ppromise.Promise<void>),
+        } as any as (() => Promise<boolean>),
         function() {
           return false;
-        } as any as (() => ppromise.Promise<void>));
-    await expect(successful).toEqual(false);
+        } as any as (() => Promise<boolean>));
+    expect(await successful).toEqual(false);
   });
 
-  it('should be returned from a helper without infinite loops', async function() {
+  it('should be returned from a helper without infinite loops', async() => {
     await browser.get('index.html#/form');
-    const helperPromise = ppromise.when(true).then(function() {
+    const helperPromise = Promise.resolve(true).then(() => {
       return element(by.binding('greeting'));
     });
 
-    await helperPromise.then(async function(finalResult: ElementFinder) {
-      await expect(finalResult.getText()).toEqual('Hiya');
-    } as any as (() => ppromise.Promise<void>));
+    await helperPromise.then(async(finalResult: ElementFinder) => {
+      expect(await finalResult.getText()).toEqual('Hiya');
+    });
   });
 
-  it('should be usable in WebDriver functions', async function() {
+  it('should be usable in WebDriver functions', async() => {
     await browser.get('index.html#/form');
     const greeting = element(by.binding('greeting'));
     await browser.executeScript('arguments[0].scrollIntoView', greeting);
   });
 
-  it('should allow null as success handler', async function() {
+  it('should allow null as success handler', async() => {
     await browser.get('index.html#/form');
 
     const name = element(by.binding('username'));
 
-    await expect(name.getText()).toEqual('Anon');
-    await expect(name.getText().then(null, function() {})).toEqual('Anon');
+    expect(await name.getText()).toEqual('Anon');
+    expect(await name.getText().then(null, function() {})).toEqual('Anon');
 
   });
 
-  it('should check equality correctly', async function() {
+  it('should check equality correctly', async() => {
     await browser.get('index.html#/form');
 
     const usernameInput = element(by.model('username'));
     const name = element(by.binding('username'));
 
-    await expect(usernameInput.equals(usernameInput)).toEqual(true);
-    await expect(usernameInput.equals(name)).toEqual(false);
+    expect(await usernameInput.equals(usernameInput)).toEqual(true);
+    expect(await usernameInput.equals(name)).toEqual(false);
   });
 });

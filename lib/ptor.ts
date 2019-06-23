@@ -2,6 +2,7 @@ import * as webdriver from 'selenium-webdriver';
 import * as chrome from 'selenium-webdriver/chrome';
 import * as firefox from 'selenium-webdriver/firefox';
 import * as http from 'selenium-webdriver/http';
+import * as command from 'selenium-webdriver/lib/command';
 import * as remote from 'selenium-webdriver/remote';
 
 import {ElementHelper, ProtractorBrowser} from './browser';
@@ -34,7 +35,7 @@ export class Ptor {
   ProtractorExpectedConditions = require('./expectedConditions').ProtractorExpectedConditions;
 
   // Export selenium webdriver.
-  ActionSequence = webdriver.ActionSequence;
+  Actions = webdriver.Actions;
   Browser = webdriver.Browser;
   Builder = webdriver.Builder;
   Button = webdriver.Button;
@@ -51,8 +52,8 @@ export class Ptor {
   logging = webdriver.logging;
   promise = webdriver.promise;
   until = webdriver.until;
-  Command = require('selenium-webdriver/lib/command').Command;
-  CommandName = require('selenium-webdriver/lib/command').Name;
+  Command = command.Command;
+  CommandName = command.Name;
   utils = {firefox: firefox, http: http, remote: remote, chrome: chrome};
 }
 

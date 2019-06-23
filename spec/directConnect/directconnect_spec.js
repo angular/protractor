@@ -1,14 +1,14 @@
-describe('direct connect', function() {
-  it('should instantiate and run', function() {
-    var usernameInput = element(by.model('username'));
-    var name = element(by.binding('username'));
+describe('direct connect', () => {
+  it('should instantiate and run', async() => {
+    const usernameInput = element(by.model('username'));
+    const name = element(by.binding('username'));
 
-    browser.get('index.html#/form');
+    await browser.get('index.html#/form');
 
-    expect(name.getText()).toEqual('Anon');
+    expect(await name.getText()).toEqual('Anon');
 
-    usernameInput.clear();
-    usernameInput.sendKeys('Jane');
-    expect(name.getText()).toEqual('Jane');
+    await usernameInput.clear();
+    await usernameInput.sendKeys('Jane');
+    expect(await name.getText()).toEqual('Jane');
   });
 });

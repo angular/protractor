@@ -1,7 +1,7 @@
-describe('configuration with no globals', function() {
-  var URL = '/ng2/#/async';
+describe('configuration with no globals', () => {
+  const URL = '/ng2/#/async';
 
-  it('should have objects belonging to protractor namespace', function() {
+  it('should have objects belonging to protractor namespace', () => {
     expect(typeof protractor).toEqual('object');
     expect(typeof protractor.browser).toEqual('object');
     expect(typeof protractor.$).toEqual('function');
@@ -11,7 +11,7 @@ describe('configuration with no globals', function() {
     expect(typeof protractor.By).toEqual('object');
   });
 
-  it('should not have other globals', function() {
+  it('should not have other globals', () => {
     expect(typeof browser).toEqual('undefined');
     expect(typeof $).toEqual('undefined');
     expect(typeof $$).toEqual('undefined');
@@ -20,11 +20,11 @@ describe('configuration with no globals', function() {
     expect(typeof By).toEqual('undefined');
   });
 
-  it('should be able to use methods under the protractor namespace', function() {
-    protractor.browser.get(URL);
-    var increment = protractor.$('#increment');
+  it('should be able to use methods under the protractor namespace', async () => {
+    await protractor.browser.get(URL);
+    const increment = protractor.$('#increment');
     expect(typeof increment).toEqual('object');
-    increment.$('.action').click();
-    expect(increment.$('.val').getText()).toEqual('1');
+    await increment.$('.action').click();
+    expect(await increment.$('.val').getText()).toEqual('1');
   });
 });

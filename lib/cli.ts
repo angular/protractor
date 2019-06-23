@@ -50,6 +50,7 @@ let allowedNames = [
   'sauceSeleniumAddress',
   'browserstackUser',
   'browserstackKey',
+  'browserstackProxy',
   'kobitonUser',
   'kobitonKey',
   'testobjectUser',
@@ -200,7 +201,7 @@ function processFilePatterns_(list: string): Array<string> {
   return list.split(',').map(function(spec) {
     return path.resolve(process.cwd(), spec);
   });
-};
+}
 
 if (argv.specs) {
   argv.specs = processFilePatterns_(<string>argv.specs);

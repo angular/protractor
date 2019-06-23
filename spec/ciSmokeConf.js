@@ -5,13 +5,16 @@ var env = require('./environment.js');
 exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
   specs: [
-    'basic/locators_spec.js',
-    'basic/mockmodule_spec.js',
-    'basic/synchronize_spec.js'
+    // TODO(selenium4): revert back. For now just put on lib_spec.js
+    // 'basic/locators_spec.js',
+    // 'basic/mockmodule_spec.js',
+    // 'basic/synchronize_spec.js'
+    'basic/lib_spec.js'
   ],
 
   // Two latest versions of IE, and Safari.

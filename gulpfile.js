@@ -1,32 +1,29 @@
 'use strict';
 
-var gulp = require('gulp');
-var clangFormat = require('clang-format');
-var gulpFormat = require('gulp-clang-format');
-var runSequence = require('run-sequence');
-var spawn = require('child_process').spawn;
-var spawnSync = require('child_process').spawnSync;
-var tslint = require('gulp-tslint');
-var fs = require('fs');
-var path = require('path');
-var glob = require('glob');
-var semver = require('semver');
+const gulp = require('gulp');
+const format = require('gulp-clang-format');
+const clangFormat = require('clang-format');
+const spawn = require('child_process').spawn;
+const tslint = require('gulp-tslint');
+const fs = require('fs');
+const path = require('path');
+const semver = require('semver');
 
-var runSpawn = function(done, task, opt_arg, opt_io) {
+const runSpawn = (done, task, opt_arg, opt_io) => {
   opt_arg = typeof opt_arg !== 'undefined' ? opt_arg : [];
-  var stdio = 'inherit';
+  const stdio = 'inherit';
   if (opt_io === 'ignore') {
     stdio = 'ignore';
   }
-  var child = spawn(task, opt_arg, {stdio: stdio});
-  var running = false;
-  child.on('close', function() {
+  const child = spawn(task, opt_arg, {stdio: stdio});
+  let running = false;
+  child.on('close', () => {
     if (!running) {
       running = true;
       done();
     }
   });
-  child.on('error', function() {
+  child.on('error', () => {
     if (!running) {
       console.error('gulp encountered a child error');
       running = true;
@@ -35,21 +32,26 @@ var runSpawn = function(done, task, opt_arg, opt_io) {
   });
 };
 
-gulp.task('tslint', function() {
+gulp.task('tslint', () => {
   return gulp.src(['lib/**/*.ts', 'spec/**/*.ts', '!spec/install/**/*.ts'])
-      .pipe(tslint()).pipe(tslint.report());
+      .pipe(tslint())
+      .pipe(tslint.report());
 });
 
-gulp.task('lint', function(done) {
-  runSequence('tslint', 'jshint', 'format:enforce', done);
+gulp.task('format:enforce', () => {
+  return gulp.src(['lib/**/*.ts'])
+      .pipe(format.checkFormat('file', clangFormat,
+      {verbose: true, fail: true}));
 });
+
+gulp.task('lint', gulp.series('tslint', 'format:enforce'));
 
 // prevent contributors from using the wrong version of node
-gulp.task('checkVersion', function(done) {
+gulp.task('checkVersion', (done) => {
   // read minimum node on package.json
-  var packageJson = JSON.parse(fs.readFileSync(path.resolve('package.json')));
-  var protractorVersion = packageJson.version;
-  var nodeVersion = packageJson.engines.node;
+  const packageJson = JSON.parse(fs.readFileSync(path.resolve('package.json')));
+  const protractorVersion = packageJson.version;
+  const nodeVersion = packageJson.engines.node;
 
   if (semver.satisfies(process.version, nodeVersion)) {
     done();
@@ -59,60 +61,41 @@ gulp.task('checkVersion', function(done) {
   }
 });
 
-gulp.task('built:copy', function(done) {
+gulp.task('built:copy', () => {
   return gulp.src(['lib/**/*.js'])
       .pipe(gulp.dest('built/'));
-  done();
 });
 
-gulp.task('webdriver:update', function(done) {
-  runSpawn(done, 'node', ['bin/webdriver-manager', 'update']);
+gulp.task('built:copy:typings', () => {
+  return gulp.src(['lib/selenium-webdriver/**/*.d.ts'])
+      .pipe(gulp.dest('built/selenium-webdriver/'));
 });
 
-gulp.task('jshint', function(done) {
-  runSpawn(done, 'node', ['node_modules/jshint/bin/jshint', '-c',
-      '.jshintrc', 'lib', 'spec', 'scripts',
-      '--exclude=lib/selenium-webdriver/**/*.js,lib/webdriver-js-extender/**/*.js,' +
-      'spec/dependencyTest/*.js,spec/install/**/*.js']);
+gulp.task('webdriver:update', (done) => {
+  runSpawn(done, 'node', ['bin/webdriver-manager', 'update',
+  '--versions.chrome=2.44']);
 });
 
-gulp.task('format:enforce', function() {
-  var format = require('gulp-clang-format');
-  var clangFormat = require('clang-format');
-  return gulp.src(['lib/**/*.ts']).pipe(
-    format.checkFormat('file', clangFormat, {verbose: true, fail: true}));
+gulp.task('format', () => {
+  return gulp.src(['lib/**/*.ts'], { base: '.' })
+      .pipe(format.format('file', clangFormat))
+      .pipe(gulp.dest('.'));
 });
 
-gulp.task('format', function() {
-  var format = require('gulp-clang-format');
-  var clangFormat = require('clang-format');
-  return gulp.src(['lib/**/*.ts'], { base: '.' }).pipe(
-    format.format('file', clangFormat)).pipe(gulp.dest('.'));
-});
-
-gulp.task('tsc', function(done) {
+gulp.task('tsc', (done) => {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc']);
 });
 
-gulp.task('tsc:spec', function(done) {
+gulp.task('tsc:spec', (done) => {
   runSpawn(done, 'node', ['node_modules/typescript/bin/tsc', '-p', 'ts_spec_config.json']);
 });
 
-gulp.task('tsc:es5', function(done) {
-  runSpawn(done, './scripts/compile_to_es5.sh');
-});
+gulp.task('prepublish', gulp.series('checkVersion', 'tsc', 'built:copy'));
 
-gulp.task('compile_to_es5', function(done) {
-  runSequence('checkVersion', 'tsc:es5', 'built:copy', done);
-});
+gulp.task('pretest', gulp.series(
+  'checkVersion',
+  gulp.parallel('webdriver:update', 'tslint', 'format'),
+  'tsc', 'built:copy', 'built:copy:typings', 'tsc:spec'));
 
-gulp.task('prepublish', function(done) {
-  runSequence('checkVersion', 'jshint', 'tsc', 'built:copy', done);
-});
+gulp.task('default', gulp.series('prepublish'));
 
-gulp.task('pretest', function(done) {
-  runSequence('checkVersion',
-    ['webdriver:update', 'jshint', 'tslint', 'format'], 'tsc', 'built:copy', 'tsc:spec',  done);
-});
-
-gulp.task('default',['prepublish']);
