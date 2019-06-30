@@ -850,14 +850,12 @@ export class ProtractorBrowser {
    *
    * Method calls location.reload function of browsers
    */
-  reload() {
-    if (this.ignoreSynchronization) {
+  async reload() {
+    if (!await this.waitForAngularEnabled()) {
       return this.driver.navigate().refresh();
     }
     
-    return this
-        .executeScriptWithDescription(
-            'return location.reload()', 'Protractor reload page');
+    return this.executeScriptWithDescription('return location.reload()', 'Protractor reload page');
   }
 
   /**
