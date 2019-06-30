@@ -12,7 +12,12 @@ exports.config = {
 
   // Spec patterns are relative to the current working directory when
   // protractor is called.
-  specs: ['example_spec.js'],
+  specs: [
+    'example_spec.js',
+    'angular_material/input_spec.js',
+    'angular_material/mat_paginator_spec.js'
+
+  ],
 
   // Options to be passed to Jasmine.
   jasmineNodeOpts: {

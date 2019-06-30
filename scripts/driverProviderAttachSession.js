@@ -2,105 +2,139 @@
 
 'use strict';
 
-var http = require('http'),
-    spawn = require('child_process').spawnSync;
+const http = require('http');
+const child_process = require('child_process');
 
-var sessionId = '';
-
-// 1. Create a new selenium session.
-var postData = JSON.stringify(
-  {'desiredCapabilities': {'browserName': 'firefox'}});
-var createOptions = {
-  hostname: 'localhost',
-  port: 4444,
-  path: '/wd/hub/session',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Length': Buffer.byteLength(postData)
-  }
-};
-var req = http.request(createOptions, function(res) {
-  res.on('data', setBody);
-  res.on('end', checkSession);
-});
-req.write(postData);
-req.end();
-
-// 2. After making the request to create a selenium session, read the selenium
-// session id.
-var setBody = function(chunk) {
-  var body = chunk.toString();
-  sessionId = JSON.parse(body).sessionId;
-};
-
-// 3. After getting the session id, verify that the selenium session exists.
-// If the session exists, run the protractor test.
-var checkSession = function() {
-  var checkOptions = {
-    hostname: 'localhost',
-    port: 4444,
-    path: '/wd/hub/session/' + sessionId,
-    method: 'GET'
-  };
-  var state = '';
-  var req = http.request(checkOptions, function(res) {
-    res.on('data', function(chunk) {
-      state = JSON.parse(chunk.toString()).state;
-    });
-    res.on('end', function() {
-      if (state === 'success') {
-        var runProtractor = spawn('node',
-            ['bin/protractor', 'spec/driverProviderAttachSessionConf.js',
-            '--seleniumSessionId=' + sessionId]);
-        console.log(runProtractor.stdout.toString());
-        if (runProtractor.status !== 0) {
-          throw new Error('Protractor did not run properly.');
+// Delete session method to be used at the end of the test as well as
+// when the tests fail.
+const deleteSession = (sessionId, err) => {
+  return new Promise(resolve => {
+    const deleteOptions = {
+      hostname: 'localhost',
+      port: 4444,
+      path: '/wd/hub/session/' + sessionId,
+      method: 'DELETE'
+    };
+    const req = http.request(deleteOptions, res => {
+      res.on('end', () => {
+        if (err) {
+          throw err;
         }
-      }
-      else {
-        throw new Error('The selenium session was not created.');
-      }
-      checkStoppedSession();
+        resolve();
+      });
     });
+    req.end();
   });
-  req.end();
 };
 
-// 4. After the protractor test completes, check to see that the session still
-// exists. If we can find the session, delete it.
-var checkStoppedSession = function() {
-  var checkOptions = {
-    hostname: 'localhost',
-    port: 4444,
-    path: '/wd/hub/session/' + sessionId,
-    method: 'GET'
-  };
-  var state = '';
-  var req = http.request(checkOptions, function(res) {
-    res.on('data', function(chunk) {
-      state = JSON.parse(chunk.toString()).state;
-    });
-    res.on('end', function() {
-      if (state === 'success') {
-        deleteSession();
+const run = async () => {
+  // 1. Create a new selenium session.
+  const sessionId = await new Promise(resolve => {
+    const postData = JSON.stringify(
+      {'desiredCapabilities': {'browserName': 'chrome'}});
+    const createOptions = {
+      hostname: '127.0.0.1',
+      port: 4444,
+      path: '/wd/hub/session',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(postData)
       }
-      else {
-        throw new Error('The selenium session should still exist.');
-      }
+    };
+    let body = '';
+    const req = http.request(createOptions, (res) => {
+      res.on('data', (data) => {
+        body = JSON.parse(data.toString());
+      });
+      res.on('end', () => {
+        resolve(body.sessionId);
+      });
     });
+    req.write(postData);
+    req.end();
   });
-  req.end();
-};
 
-// 5. Delete the selenium session.
-var deleteSession = function() {
-  var deleteOptions = {
-    hostname: 'localhost',
-    port: 4444,
-    path: '/wd/hub/session/' + sessionId,
-    method: 'DELETE'
-  };
-  var req = http.request(deleteOptions);
-  req.end();
-};
+  await new Promise(resolve => {
+    // 2. After getting the session id, verify that the selenium session exists.
+    // If the session exists, run the protractor test.
+    const checkOptions = {
+      hostname: '127.0.0.1',
+      port: 4444,
+      path: '/wd/hub/sessions',
+      method: 'GET'
+    };
+    
+    let values = [];
+    const req = http.request(checkOptions, (res) => {
+      res.on('data', (chunk) => {
+        values = JSON.parse(chunk.toString())['value'];
+      });
+      res.on('end', () => {
+        let found = false;
+        for (let value of values) {
+          if (value['id'] === sessionId) {
+            found = true;
+          }
+        }
+        if (found) {
+          resolve();
+        } else {
+          throw new Error('The selenium session was not created.');
+        }
+      });
+      res.on('error', (err) => {
+        console.log(err);
+        process.exit(1);
+      });
+    });
+    req.end();
+  });
+
+  // 3. Run Protractor and attach to the session.
+  const runProtractor = child_process.spawnSync('node',
+      ['bin/protractor', 'spec/driverProviderAttachSessionConf.js',
+      '--seleniumSessionId=' + sessionId]);
+  console.log(runProtractor.stdout.toString());
+  if (runProtractor.status !== 0) {
+    const e = new Error('Protractor did not run properly.');
+    await deleteSession(sessionId, e);
+    process.exit(1);
+  }
+
+  // 4. After the protractor test completes, check to see that the session still
+  // exists. If we can find the session, delete it.
+  await new Promise(resolve => {
+    const checkOptions = {
+      hostname: '127.0.0.1',
+      port: 4444,
+      path: '/wd/hub/session/' + sessionId,
+      method: 'GET'
+    };
+    const req = http.request(checkOptions, (res) => {
+      let state = '';
+      res.on('data', (chunk) => {    
+        state = JSON.parse(chunk.toString()).state;
+      });
+      res.on('end', () => {
+        if (state === 'success') {
+          resolve();
+        }
+        else {
+          const e = new Error('The selenium session should still exist.');
+          deleteSession(sessionId, e);
+        }
+      });
+      res.on('error', (err) => {
+        console.log(err);
+        process.exit(1);
+      });
+    });
+    req.end();
+  });
+
+  // 5. Delete the selenium session.
+  await deleteSession(sessionId); 
+}
+
+run().then();

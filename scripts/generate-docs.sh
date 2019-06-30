@@ -105,8 +105,8 @@ echo "Transfering files to gh-pages..."
 cd ".."
 git branch -D gh-pages
 git pull -f https://github.com/angular/protractor.git gh-pages:gh-pages
-git checkout gh-pages
 git reset --hard
+git checkout gh-pages
 cp -r website/build/* .
 git add -A
 git commit -m "chore(website): automatic docs update for ${VERSION}"

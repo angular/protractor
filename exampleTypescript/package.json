@@ -5,20 +5,20 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "debug": "node --inspect-brk ./node_modules/.bin/protractor conf.js",
+    "pretest": "npm run tsc && npm run webdriver-update",
+    "test": "protractor conf.js",
     "tsc": "tsc",
-    "pretest": "npm run tsc",
-    "test": "protractor tmp/conf.js",
-    "debug": "node --inspect --debug-brk ./node_modules/.bin/protractor asyncAwait/conf.js"
+    "webdriver-update": "webdriver-manager update --standalone=false --gecko=false"
   },
   "dependencies": {
-    "@types/jasmine": "2.5.41",
-    "@types/jasminewd2": "^2.0.0",
-    "jasmine": "^2.4.1",
+    "@types/jasmine": "^3.3.12",
+    "jasmine": "^3.3.1",
     "protractor": "file:../",
-    "typescript": "~2.0.0"
+    "ts-node": "^8.0.3",
+    "typescript": "^3.4.1"
   },
   "devDependencies": {
-    "@types/jasminewd2": "^2.0.0",
-    "ts-node": "^3.0.2"
+    "@types/selenium-webdriver": "^4.0.0"
   }
 }

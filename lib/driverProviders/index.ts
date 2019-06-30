@@ -6,6 +6,8 @@ export * from './hosted';
 export * from './local';
 export * from './mock';
 export * from './sauce';
+export * from './testObject';
+export * from './kobiton';
 
 
 import {AttachSession} from './attachSession';
@@ -16,6 +18,8 @@ import {Hosted} from './hosted';
 import {Local} from './local';
 import {Mock} from './mock';
 import {Sauce} from './sauce';
+import {TestObject} from './testObject';
+import {Kobiton} from './kobiton';
 
 import {Config} from '../config';
 import {Logger} from '../logger';
@@ -36,6 +40,12 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
       driverProvider = new Hosted(config);
       logWarnings('hosted', config);
     }
+  } else if (config.testobjectUser && config.testobjectKey) {
+    driverProvider = new TestObject(config);
+    logWarnings('testObject', config);
+  } else if (config.kobitonUser && config.kobitonKey) {
+    driverProvider = new Kobiton(config);
+    logWarnings('kobiton', config);
   } else if (config.browserstackUser && config.browserstackKey) {
     driverProvider = new BrowserStack(config);
     logWarnings('browserStack', config);
@@ -68,6 +78,18 @@ export let logWarnings = (providerType: string, config: Config): void => {
   }
   if ('attachSession' !== providerType && config.seleniumSessionId) {
     warnList.push('seleniumSessionId');
+  }
+  if ('testObject' !== providerType && config.testObjectUser) {
+    warnList.push('testobjectUser');
+  }
+  if ('testObject' !== providerType && config.testObjectKey) {
+    warnList.push('testobjectKey');
+  }
+  if ('kobitonUser' !== providerType && config.kobitonUser) {
+    warnList.push('kobitonUser');
+  }
+  if ('kobitonKey' !== providerType && config.kobitonKey) {
+    warnList.push('kobitonKey');
   }
   if ('browserStack' !== providerType && config.browserstackUser) {
     warnList.push('browserstackUser');

@@ -7,8 +7,8 @@
  * so that we only start the local selenium once per entire launch.
  */
 import * as fs from 'fs';
-import * as path from 'path';
-import * as q from 'q';
+import {SeleniumServer} from 'selenium-webdriver/remote';
+import {ChromeDriver, GeckoDriver, SeleniumServer as WdmSeleniumServer} from 'webdriver-manager';
 
 import {Config} from '../config';
 import {BrowserError, ConfigError} from '../exitCodes';
@@ -16,15 +16,10 @@ import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
 
-const SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
-const SeleniumChrome = require('webdriver-manager/built/lib/binaries/chrome_driver').ChromeDriver;
-const SeleniumStandAlone = require('webdriver-manager/built/lib/binaries/standalone').StandAlone;
-const remote = require('selenium-webdriver/remote');
-
 let logger = new Logger('local');
 
 export class Local extends DriverProvider {
-  server_: any;
+  server_: SeleniumServer;
   constructor(config: Config) {
     super(config);
     this.server_ = null;
@@ -40,14 +35,9 @@ export class Local extends DriverProvider {
           'Attempting to find the SeleniumServerJar in the default ' +
           'location used by webdriver-manager');
       try {
-        let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-        let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-        this.config_.seleniumServerJar = updateConfig.standalone.last;
+        this.config_.seleniumServerJar = new WdmSeleniumServer().getBinaryPath();
       } catch (err) {
-        throw new BrowserError(
-            logger,
-            'No update-config.json found.' +
-                ' Run \'webdriver-manager update\' to download binaries.');
+        throw new BrowserError(logger, 'Run \'webdriver-manager update\' to download binaries.');
       }
     }
     if (!fs.existsSync(this.config_.seleniumServerJar)) {
@@ -63,14 +53,9 @@ export class Local extends DriverProvider {
             'location used by webdriver-manager');
 
         try {
-          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-          this.config_.chromeDriver = updateConfig.chrome.last;
+          this.config_.chromeDriver = new ChromeDriver().getBinaryPath();
         } catch (err) {
-          throw new BrowserError(
-              logger,
-              'No update-config.json found. ' +
-                  'Run \'webdriver-manager update\' to download binaries.');
+          throw new BrowserError(logger, 'Run \'webdriver-manager update\' to download binaries.');
         }
       }
 
@@ -94,14 +79,9 @@ export class Local extends DriverProvider {
             'location used by webdriver-manager');
 
         try {
-          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-          this.config_.geckoDriver = updateConfig.gecko.last;
+          this.config_.geckoDriver = new GeckoDriver().getBinaryPath();
         } catch (err) {
-          throw new BrowserError(
-              logger,
-              'No update-config.json found. ' +
-                  'Run \'webdriver-manager update\' to download binaries.');
+          throw new BrowserError(logger, 'Run \'webdriver-manager update\' to download binaries.');
         }
       }
 
@@ -122,10 +102,10 @@ export class Local extends DriverProvider {
   /**
    * Configure and launch (if applicable) the object's environment.
    * @public
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  setupDriverEnv(): q.Promise<any> {
+  async setupDriverEnv(): Promise<any> {
     this.addDefaultBinaryLocs_();
     logger.info('Starting selenium standalone server...');
 
@@ -151,40 +131,17 @@ export class Local extends DriverProvider {
     if (this.config_.chromeDriver) {
       serverConf.jvmArgs.push('-Dwebdriver.chrome.driver=' + this.config_.chromeDriver);
     }
+    if (this.config_.geckoDriver) {
+      serverConf.jvmArgs.push('-Dwebdriver.gecko.driver=' + this.config_.geckoDriver);
+    }
 
-    this.server_ = new remote.SeleniumServer(this.config_.seleniumServerJar, serverConf);
+    this.server_ = new SeleniumServer(this.config_.seleniumServerJar, serverConf);
 
-    let deferred = q.defer();
     // start local server, grab hosted address, and resolve promise
-    this.server_.start(this.config_.seleniumServerStartTimeout)
-        .then((url: string) => {
-          logger.info('Selenium standalone server started at ' + url);
-          return this.server_.address();
-        })
-        .then((address: string) => {
-          this.config_.seleniumAddress = address;
-          deferred.resolve();
-        })
-        .catch((err: string) => {
-          deferred.reject(err);
-        });
+    const url = await this.server_.start(this.config_.seleniumServerStartTimeout);
 
-    return deferred.promise;
-  }
-
-  /**
-   * Teardown and destroy the environment and do any associated cleanup.
-   * Shuts down the drivers and server.
-   *
-   * @public
-   * @override
-   * @return {q.promise} A promise which will resolve when the environment
-   *     is down.
-   */
-  teardownEnv(): q.Promise<any> {
-    return super.teardownEnv().then(() => {
-      logger.info('Shutting down selenium standalone server.');
-      return this.server_.stop();
-    });
+    logger.info('Selenium standalone server started at ' + url);
+    const address = await this.server_.address();
+    this.config_.seleniumAddress = address;
   }
 }

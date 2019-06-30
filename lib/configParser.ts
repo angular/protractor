@@ -14,6 +14,13 @@ try {
   // Intentionally blank - ignore if coffee-script is not available.
 }
 
+// CoffeeScript lost the hyphen in the module name a long time ago, all new version are named this:
+try {
+  require('coffeescript').register();
+} catch (e) {
+  // Intentionally blank - ignore if coffeescript is not available.
+}
+
 // LiveScript is required here to enable config files written in LiveScript.
 try {
   require('LiveScript');

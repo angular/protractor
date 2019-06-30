@@ -1,14 +1,15 @@
-describe('browser.restart', function() {
-  it('doesn\'t break ignoreSynchronization', function() {
-    browser.get('index.html#/polling');
-    browser.restart();
+describe('browser.restart', () => {
+  it(`doesn't break waitForAngularEnabled set to false`, async () => {
+    await browser.get('index.html#/polling');
+    await browser.restart();
 
-    browser.ignoreSynchronization = true;
-    // Get a non-angular page. It shouldn't fail if ignoreSynchronization is on.
-    browser.get('https://google.com/');
+    await browser.waitForAngularEnabled(false);
+    // Get a non-angular page. It shouldn't fail if waitForAngularEnabled
+    // is turned off.
+    await browser.get('https://google.com/');
   });
 
-  afterAll(function() {
-    browser.ignoreSynchronization = false;
+  afterAll(async () => {
+    await browser.waitForAngularEnabled(true);
   });
 });

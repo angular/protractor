@@ -50,6 +50,11 @@ let allowedNames = [
   'sauceSeleniumAddress',
   'browserstackUser',
   'browserstackKey',
+  'browserstackProxy',
+  'kobitonUser',
+  'kobitonKey',
+  'testobjectUser',
+  'testobjectKey',
   'directConnect',
   'firefoxPath',
   'noGlobals',
@@ -96,6 +101,7 @@ let allowedNames = [
   'frameworkPath',
   'elementExplorer',
   'debug',
+  'logLevel',
   'disableChecks',
   'browser',
   'name',
@@ -130,7 +136,8 @@ let optimistOptions: any = {
     troubleshoot: 'Turn on troubleshooting output',
     elementExplorer: 'Interactively test Protractor commands',
     debuggerServerPort: 'Start a debugger server at specified port instead of repl',
-    disableChecks: 'disable cli checks'
+    disableChecks: 'Disable cli checks',
+    logLevel: 'Define Protractor log level [ERROR, WARN, INFO, DEBUG]'
   },
   aliases: {
     browser: 'capabilities.browserName',
@@ -194,7 +201,7 @@ function processFilePatterns_(list: string): Array<string> {
   return list.split(',').map(function(spec) {
     return path.resolve(process.cwd(), spec);
   });
-};
+}
 
 if (argv.specs) {
   argv.specs = processFilePatterns_(<string>argv.specs);

@@ -1,18 +1,9 @@
-import * as q from 'q';
-import * as webdriver from 'selenium-webdriver';
-
 import {ProtractorBrowser} from './browser';
 import {Config} from './config';
 import {ConfigParser} from './configParser';
 import {Logger} from './logger';
-import {protractor} from './ptor';
 
 let logger = new Logger('plugins');
-
-export enum PromiseType {
-  Q,
-  WEBDRIVER
-}
 
 export interface PluginConfig {
   path?: string;
@@ -40,10 +31,10 @@ export interface ProtractorPlugin {
 
   /**
    * This is called before the test have been run but after the test framework has
-   * been set up.  Analogous to a config file's `onPreare`.
+   * been set up.  Analogous to a config file's `onPrepare`.
    *
    * Very similar to using `setup`, but allows you to access framework-specific
-   * variables/funtions (e.g. `jasmine.getEnv().addReporter()`).
+   * variables/functions (e.g. `jasmine.getEnv().addReporter()`).
    *
    * @this {Object} bound to module.exports.
    *
@@ -100,7 +91,7 @@ export interface ProtractorPlugin {
    *
    * @return {Promise=} Can return a promise, in which case protractor will wait
    *     for the promise to resolve before outputting test results.  Protractor
-   *     will *not* wait before executing the next test, however.  If the promise
+   *     will *not* wait before executing the next test; however, if the promise
    *     is rejected, a failed assertion is added to the test results.
    */
   postTest?(passed: boolean, testInfo: any): void|Promise<void>;
@@ -116,16 +107,16 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   * @return {Promise=} Can return a promise, in which case
    *     protractor will wait for the promise to resolve before continuing.  If
    *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageLoad?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
+  onPageLoad?(browser: ProtractorBrowser): void|Promise<void>;
 
   /**
    * This is called inside browser.get() directly after angular is done
-   * bootstrapping/synchronizing.  If `browser.ignoreSynchronization` is `true`,
-   * this will not be called.
+   * bootstrapping/synchronizing.  If `await browser.waitForAngularEnabled()`
+   * is `false`, this will not be called.
    *
    * @param {ProtractorBrowser} browser The browser instance which is loading a page.
    *
@@ -134,11 +125,11 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   * @return {Promise=} Can return a promise, in which case
    *     protractor will wait for the promise to resolve before continuing.  If
    *     the promise is rejected, a failed assertion is added to the test results.
    */
-  onPageStable?(browser: ProtractorBrowser): void|webdriver.promise.Promise<void>;
+  onPageStable?(browser: ProtractorBrowser): void|Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -153,14 +144,14 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise=} Can return a promise, in which case
+   * @return {Promise=} Can return a promise, in which case
    *     protractor will wait for the promise to resolve before continuing. If the
    *     promise is rejected, a failed assertion is added to the test results, and
    *     protractor will continue onto the next command. If nothing is returned or
    *     something other than a promise is returned, protractor will continue
    *     onto the next command.
    */
-  waitForPromise?(browser: ProtractorBrowser): webdriver.promise.Promise<void>;
+  waitForPromise?(browser: ProtractorBrowser): Promise<void>;
 
   /**
    * Between every webdriver action, Protractor calls browser.waitForAngular() to
@@ -176,13 +167,13 @@ export interface ProtractorPlugin {
    * @throws {*} If this function throws an error, a failed assertion is added to
    *     the test results.
    *
-   * @return {webdriver.promise.Promise<boolean>|boolean} If truthy, Protractor
+   * @return {Promise<boolean>|boolean} If truthy, Protractor
    *     will continue onto the next command. If falsy, webdriver will
    *     continuously re-run this function until it is truthy.  If a rejected promise
    *     is returned, a failed assertion is added to the test results, and Protractor
    *     will continue onto the next command.
    */
-  waitForCondition?(browser: ProtractorBrowser): webdriver.promise.Promise<boolean>|boolean;
+  waitForCondition?(browser: ProtractorBrowser): Promise<boolean>|boolean;
 
   /**
    * Used to turn off default checks for angular stability
@@ -317,7 +308,7 @@ export class Plugins {
         this.pluginObjs.push(pluginObj);
       });
     }
-  };
+  }
 
   /**
    * Adds properties to a plugin's object
@@ -405,7 +396,7 @@ export class Plugins {
     this.printPluginResults(results.specResults);
     this.resultsReported = true;
     return results;
-  };
+  }
 
   /**
    * Returns true if any loaded plugin has skipAngularStability enabled.
@@ -415,20 +406,20 @@ export class Plugins {
   skipAngularStability() {
     const result = this.pluginObjs.some(pluginObj => pluginObj.skipAngularStability);
     return result;
-  };
+  }
 
   /**
    * @see docs/plugins.md#writing-plugins for information on these functions
    */
-  setup = this.pluginFunFactory('setup', PromiseType.Q);
-  onPrepare = this.pluginFunFactory('onPrepare', PromiseType.Q);
-  teardown = this.pluginFunFactory('teardown', PromiseType.Q);
-  postResults = this.pluginFunFactory('postResults', PromiseType.Q);
-  postTest = this.pluginFunFactory('postTest', PromiseType.Q);
-  onPageLoad = this.pluginFunFactory('onPageLoad', PromiseType.WEBDRIVER);
-  onPageStable = this.pluginFunFactory('onPageStable', PromiseType.WEBDRIVER);
-  waitForPromise = this.pluginFunFactory('waitForPromise', PromiseType.WEBDRIVER);
-  waitForCondition = this.pluginFunFactory('waitForCondition', PromiseType.WEBDRIVER, true);
+  setup = this.pluginFunFactory('setup');
+  onPrepare = this.pluginFunFactory('onPrepare');
+  teardown = this.pluginFunFactory('teardown');
+  postResults = this.pluginFunFactory('postResults');
+  postTest = this.pluginFunFactory('postTest');
+  onPageLoad = this.pluginFunFactory('onPageLoad');
+  onPageStable = this.pluginFunFactory('onPageStable');
+  waitForPromise = this.pluginFunFactory('waitForPromise');
+  waitForCondition = this.pluginFunFactory('waitForCondition', true);
 
   /**
    * Calls a function from a plugin safely.  If the plugin's function throws an
@@ -439,18 +430,15 @@ export class Plugins {
    * @param {Object} pluginObj The plugin object containing the function to be run
    * @param {string} funName The name of the function we want to run
    * @param {*[]} args The arguments we want to invoke the function with
-   * @param {PromiseType} promiseType The type of promise (WebDriver or Q) that
-   *    should be used
    * @param {boolean} resultsReported If the results have already been reported
    * @param {*} failReturnVal The value to return if the function fails
    *
-   * @return {webdriver.promise.Promise|Q.Promise} A promise which resolves to the
+   * @return {Promise} A promise which resolves to the
    *     function's return value
    */
   private safeCallPluginFun(
-      pluginObj: ProtractorPlugin, funName: string, args: any[], promiseType: PromiseType,
-      failReturnVal: any): q.Promise<any>|Promise<any>|webdriver.promise.Promise<any> {
-    const resolver = (done: (result: any) => void) => {
+      pluginObj: ProtractorPlugin, funName: string, args: any[], failReturnVal: any): Promise<any> {
+    const resolver = async (done: (result: any) => void) => {
       const logError = (e: any) => {
         if (this.resultsReported) {
           this.printPluginResults([{
@@ -468,47 +456,33 @@ export class Plugins {
         done(failReturnVal);
       };
       try {
-        const result = (pluginObj as any)[funName].apply(pluginObj, args);
-        if (webdriver.promise.isPromise(result)) {
-          (result as PromiseLike<any>).then(done, logError);
-        } else {
-          done(result);
-        }
+        const result = await(pluginObj as any)[funName].apply(pluginObj, args);
+        done(result);
       } catch (e) {
         logError(e);
       }
     };
-    if (promiseType == PromiseType.Q) {
-      return q.Promise(resolver);
-    } else if (protractor.browser.controlFlowIsEnabled()) {
-      return new webdriver.promise.Promise(resolver);
-    } else {
-      return new Promise(resolver);
-    }
+    return new Promise(resolver);
   }
 
   /**
    * Generates the handler for a plugin function (e.g. the setup() function)
    *
    * @param {string} funName The name of the function to make a handler for
-   * @param {PromiseType} promiseType The type of promise (WebDriver or Q) that should be used
    * @param {boolean=} failReturnVal The value that the function should return if the plugin crashes
    *
    * @return The handler
    */
-  private pluginFunFactory(funName: string, promiseType: PromiseType.Q, failReturnVal?: boolean):
-      (...args: any[]) => q.Promise<any[]>;
-  private pluginFunFactory(
-      funName: string, promiseType: PromiseType.WEBDRIVER,
-      failReturnVal?: boolean): (...args: any[]) => webdriver.promise.Promise<any[]>;
-  private pluginFunFactory(funName: string, promiseType: PromiseType, failReturnVal?: boolean) {
+  private pluginFunFactory(funName: string, failReturnVal?: boolean):
+      (...args: any[]) => Promise<any[]>;
+  private pluginFunFactory(funName: string, failReturnVal?: boolean):
+      (...args: any[]) => Promise<any[]>;
+  private pluginFunFactory(funName: string, failReturnVal?: boolean) {
     return (...args: any[]) => {
       const promises =
           this.pluginObjs.filter(pluginObj => typeof(pluginObj as any)[funName] === 'function')
-              .map(
-                  pluginObj =>
-                      this.safeCallPluginFun(pluginObj, funName, args, promiseType, failReturnVal));
-      return promiseType == PromiseType.Q ? q.all(promises) : webdriver.promise.all(promises);
+              .map(pluginObj => this.safeCallPluginFun(pluginObj, funName, args, failReturnVal));
+      return Promise.all(promises);
     };
   }
 }

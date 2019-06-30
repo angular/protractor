@@ -4,19 +4,17 @@
  *  it down, and setting up the driver correctly.
  */
 import * as fs from 'fs';
-import * as path from 'path';
-import * as q from 'q';
 import {Capabilities, WebDriver} from 'selenium-webdriver';
-import {Driver as ChromeDriver, ServiceBuilder as ChromeServiceBuilder} from 'selenium-webdriver/chrome';
-import {Driver as FirefoxDriver} from 'selenium-webdriver/firefox';
+import {Driver as DriverForChrome, ServiceBuilder as ServiceBuilderForChrome} from 'selenium-webdriver/chrome';
+import {Driver as DriverForFirefox, ServiceBuilder as SerivceBuilderForFirefox} from 'selenium-webdriver/firefox';
+
+import {ChromeDriver, GeckoDriver} from 'webdriver-manager';
 
 import {Config} from '../config';
 import {BrowserError} from '../exitCodes';
 import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
-
-const SeleniumConfig = require('webdriver-manager/built/lib/config').Config;
 
 let logger = new Logger('direct');
 export class Direct extends DriverProvider {
@@ -26,10 +24,10 @@ export class Direct extends DriverProvider {
 
   /**
    * Configure and launch (if applicable) the object's environment.
-   * @return {q.promise} A promise which will resolve when the environment is
+   * @return {Promise} A promise which will resolve when the environment is
    *     ready to test.
    */
-  protected setupDriverEnv(): q.Promise<any> {
+  protected async setupDriverEnv(): Promise<any> {
     switch (this.config_.capabilities.browserName) {
       case 'chrome':
         logger.info('Using ChromeDriver directly...');
@@ -43,7 +41,6 @@ export class Direct extends DriverProvider {
             'browserName ' + this.config_.capabilities.browserName +
                 ' is not supported with directConnect.');
     }
-    return q.fcall(function() {});
   }
 
   /**
@@ -53,7 +50,7 @@ export class Direct extends DriverProvider {
    * @override
    * @return webdriver instance
    */
-  getNewDriver(): WebDriver {
+  async getNewDriver(): Promise<WebDriver> {
     let driver: WebDriver;
 
     switch (this.config_.capabilities.browserName) {
@@ -63,14 +60,10 @@ export class Direct extends DriverProvider {
           chromeDriverFile = this.config_.chromeDriver;
         } else {
           try {
-            let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-            let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-            chromeDriverFile = updateConfig.chrome.last;
+            chromeDriverFile = new ChromeDriver().getBinaryPath();
           } catch (e) {
             throw new BrowserError(
-                logger,
-                'Could not find update-config.json. ' +
-                    'Run \'webdriver-manager update\' to download binaries.');
+                logger, 'Run \'webdriver-manager update\' to download binaries.');
           }
         }
 
@@ -81,35 +74,34 @@ export class Direct extends DriverProvider {
                   '. Run \'webdriver-manager update\' to download binaries.');
         }
 
-        let chromeService = new ChromeServiceBuilder(chromeDriverFile).build();
-        // driver = ChromeDriver.createSession(new Capabilities(this.config_.capabilities),
-        // chromeService);
-        // TODO(ralphj): fix typings
-        driver =
-            require('selenium-webdriver/chrome')
-                .Driver.createSession(new Capabilities(this.config_.capabilities), chromeService);
+        const chromeService =
+            (new ServiceBuilderForChrome(chromeDriverFile) as ServiceBuilderForChrome).build();
+        driver = await DriverForChrome.createSession(
+            new Capabilities(this.config_.capabilities), chromeService);
         break;
       case 'firefox':
         let geckoDriverFile: string;
-        try {
-          let updateJson = path.resolve(SeleniumConfig.getSeleniumDir(), 'update-config.json');
-          let updateConfig = JSON.parse(fs.readFileSync(updateJson).toString());
-          geckoDriverFile = updateConfig.gecko.last;
-        } catch (e) {
-          throw new BrowserError(
-              logger,
-              'Could not find update-config.json. ' +
-                  'Run \'webdriver-manager update\' to download binaries.');
+        if (this.config_.geckoDriver) {
+          geckoDriverFile = this.config_.geckoDriver;
+        } else {
+          try {
+            geckoDriverFile = new GeckoDriver().getBinaryPath();
+          } catch (e) {
+            throw new BrowserError(
+                logger, 'Run \'webdriver-manager update\' to download binaries.');
+          }
         }
 
-        // TODO (mgiambalvo): Turn this into an import when the selenium typings are updated.
-        const FirefoxServiceBuilder = require('selenium-webdriver/firefox').ServiceBuilder;
+        if (!fs.existsSync(geckoDriverFile)) {
+          throw new BrowserError(
+              logger,
+              'Could not find geckodriver at ' + geckoDriverFile +
+                  '. Run \'webdriver-manager update\' to download binaries.');
+        }
 
-        let firefoxService = new FirefoxServiceBuilder(geckoDriverFile).build();
-        // TODO(mgiambalvo): Fix typings.
-        driver =
-            require('selenium-webdriver/firefox')
-                .Driver.createSession(new Capabilities(this.config_.capabilities), firefoxService);
+        let firefoxService = new SerivceBuilderForFirefox(geckoDriverFile).build();
+        driver = await DriverForFirefox.createSession(
+            new Capabilities(this.config_.capabilities), firefoxService);
         break;
       default:
         throw new BrowserError(

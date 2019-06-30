@@ -1,9 +1,9 @@
-var env = require('../environment.js'),
-    q = require('q');
+const env = require('../environment.js');
 
 // Make sure that borwser-related plugin hooks work with browser sync off
 exports.config = {
   seleniumAddress: env.seleniumAddress,
+  SELENIUM_PROMISE_MANAGER: false,
 
   framework: 'jasmine',
 
@@ -19,17 +19,20 @@ exports.config = {
   // Plugin patterns are relative to this directory.
   plugins: [{
     inline: {
-      setup: function() {
-        browser.ignoreSynchronization = true;
+      setup: async function() {
+        await browser.waitForAngularEnabled(false);
       },
-      onPageLoad: function() {
-        return q.delay(5000).then(function() {
-          protractor.ON_PAGE_LOAD = true;
+      onPageLoad: async function() {
+        return await new Promise(resolve => {
+          setTimeout(() => {
+            protractor.ON_PAGE_LOAD = true;
+            resolve();
+          }, 5000);
         });
       },
       onPageStable: function() {
         this.addFailure('onPageStable should not have ran when ' +
-            'browser.ignoreSynchronization is true.');
+            'await browser.waitForAngularEnabled() is false.');
       },
       teardown: function() {
         if (protractor.ON_PAGE_LOAD) {

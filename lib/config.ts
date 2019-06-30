@@ -97,14 +97,15 @@ export interface Config {
    */
   seleniumSessionId?: string;
   /**
-   * The address of a proxy server to use for communicating to Sauce Labs rest APIs via the
+   * The address of a proxy server to use for communicating to Sauce Labs REST APIs via the
    * saucelabs node module. For example, the Sauce Labs Proxy can be setup with: sauceProxy:
    * 'http://localhost:3128'
    */
   sauceProxy?: string;
 
   /**
-   * The proxy address that browser traffic will go through which is tied to the browser session.
+   * The proxy address that WebDriver (e.g. Selenium commands) traffic will go through
+   * which is tied to the browser session.
    */
   webDriverProxy?: string;
 
@@ -134,13 +135,20 @@ export interface Config {
    */
   sauceKey?: string;
   /**
-   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com.
+   * If you run your tests on SauceLabs you can specify the region you want to run your tests
+   * in via the `sauceRegion` property. Available short handles for regions are:
+   * us: us-west-1 (default)
+   * eu: eu-central-1
+   */
+  sauceRegion?: string;
+  /**
+   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com APIs.
    * This is needed if your computer is behind a corporate proxy.
    *
    * To match sauce agent implementation, use
    * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
-   * to generate the agent or use webDriverProxy as an alternative. If a
-   * webDriverProxy is provided, the sauceAgent will be overridden.
+   * to generate the agent or use sauceProxy as an alternative. If a
+   * sauceProxy is provided, the sauceAgent will be overridden.
    */
   sauceAgent?: any;
   /**
@@ -158,11 +166,41 @@ export interface Config {
    * Use sauceSeleniumAddress if you need to customize the URL Protractor
    * uses to connect to sauce labs (for example, if you are tunneling selenium
    * traffic through a sauce connect tunnel). Default is
-   * ondemand.saucelabs.com:80/wd/hub
+   * ondemand.saucelabs.com:443/wd/hub
    */
   sauceSeleniumAddress?: string;
 
-  // ---- 4. To use remote browsers via BrowserStack ---------------------------
+  // ---- 4. To use remote browsers via TestObject ---------------------------
+
+  /**
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  testobjectUser?: string;
+  /**
+   * If testobjectUser and testobjectKey are specified, kobitonUser, kobitonKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  testobjectKey?: string;
+
+  // ---- 5. To use remote browsers via Kobiton ---------------------------
+
+  /**
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserstackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  kobitonUser?: string;
+  /**
+   * If kobitonUser and kobitonKey are specified, testobjectUser, testojbectKey, browserStackUser,
+   * browserStackKey and seleniumServerJar will be ignored. The tests will be run remotely using
+   * TestObject.
+   */
+  kobitonKey?: string;
+
+  // ---- 6. To use remote browsers via BrowserStack ---------------------------
 
   /**
    * If browserstackUser and browserstackKey are specified, seleniumServerJar
@@ -175,7 +213,14 @@ export interface Config {
    */
   browserstackKey?: string;
 
-  // ---- 5. To connect directly to Drivers ------------------------------------
+  /**
+   * Proxy server to be used for connecting to BrowserStack APIs
+   * e.g. "http://proxy.example.com:1234".
+   * This should be used when you are behind a proxy server.
+   */
+  browserstackProxy?: string;
+
+  // ---- 7. To connect directly to Drivers ------------------------------------
 
   /**
    * If true, Protractor will connect directly to the browser Drivers
@@ -535,6 +580,13 @@ export interface Config {
    */
   highlightDelay?: number;
 
+  /**
+   * Protractor log level
+   *
+   * default: INFO
+   */
+  logLevel?: 'ERROR'|'WARN'|'INFO'|'DEBUG';
+
   // ---------------------------------------------------------------------------
   // ----- The test framework
   // --------------------------------------------------
@@ -671,6 +723,11 @@ export interface Config {
   nodeDebug?: boolean;
   debuggerServerPort?: number;
   frameworkPath?: string;
+
+  /**
+   * Deprecated: Element explorer depends on the WebDriver control flow, and
+   * thus is no longer supported.
+   */
   elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];

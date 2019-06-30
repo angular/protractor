@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11-browsers
+        environment:
+          # Fix issue with selenium-server in containers.
+          # See http://github.com/SeleniumHQ/docker-selenium/issues/87
+          DBUS_SESSION_BUS_ADDRESS: /dev/null
+    steps:
+      - checkout
+
+      - run: google-chrome --version
+
+      - run:
+          name: NPM Install
+          command: |
+            npm i
+            cd testapp && npm i
+
+      - save_cache:
+          key: node_modules-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
+            - "testapp/node_modules"
+
+      - run:
+          name: Lint
+          command: ./node_modules/.bin/gulp lint
+
+      - run:
+          name: Selenium Start
+          background: true
+          command: |
+            ./node_modules/.bin/webdriver-manager update --versions.chrome=2.44
+            ./node_modules/.bin/webdriver-manager start --versions.chrome=2.44
+
+      - run:
+          name: TestApp Start
+          background: true
+          command: |
+            npm start
+
+      # Seems like the new circleci container no longer permits packet introspection on lo, even for root.
+      # - run:
+      #    name: Extra tcp logging for BlockingProxy
+      #    background: true
+      #    command: sudo tcpdump -i lo 'tcp && dst localhost' -w $CIRCLE_ARTIFACTS/localdump.pcap
+
+      - run:
+          name: Test
+          command: npm test

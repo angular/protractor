@@ -1,8 +1,8 @@
 language: node_js
 sudo: false
 node_js:
-  - "6"
-  - "7"
+  - "9"
+  - "10"
 
 env:
   global:
@@ -24,9 +24,9 @@ matrix:
     - env: "JOB=bstack"
   exclude:
     - env: JOB=smoke
-      node_js: "7"
+      node_js: "9"
     - env: JOB=bstack
-      node_js: "7"
+      node_js: "9"
 
 addons:
   apt:
@@ -36,13 +36,14 @@ addons:
       - g++-4.8
 
 before_install:
-  - g++-4.8 --version
+  - travis_wait g++-4.8 --version
 
 before_script:
   - npm run install_testapp
   - npm run pretest
   - mkdir -p $LOGS_DIR
-  - ./scripts/travis_setup.sh
+  - travis_wait ./scripts/travis_setup.sh
+
 
 script:
   - ./scripts/testserver.sh
