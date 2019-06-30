@@ -854,7 +854,7 @@ export class ProtractorBrowser {
     if (!await this.waitForAngularEnabled()) {
       return this.driver.navigate().refresh();
     }
-    
+
     return this.executeScriptWithDescription('return location.reload()', 'Protractor reload page');
   }
 
