@@ -5,14 +5,14 @@ import {isProtractorLocator, Locator} from './locators';
 import {Logger} from './logger';
 import {falseIfMissing} from './util';
 
-let clientSideScripts = require('./clientsidescripts');
+const clientSideScripts = require('./clientsidescripts');
 
-let logger = new Logger('element');
+const logger = new Logger('element');
 
 export class WebdriverWebElement {}
 export interface WebdriverWebElement extends WebElement { [key: string]: any; }
 
-let WEB_ELEMENT_FUNCTIONS = [
+const WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getRect',
   'isEnabled', 'isSelected', 'submit', 'clear', 'isDisplayed', 'getId', 'takeScreenshot'
 ];

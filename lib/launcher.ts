@@ -91,7 +91,7 @@ let taskResults_ = new TaskResults();
  * @param {string=} configFile
  * @param {Object=} additionalConfig
  */
-let initFn = async function(configFile: string, additionalConfig: Config) {
+const initFn = async function(configFile: string, additionalConfig: Config) {
   let configParser = new ConfigParser();
   if (configFile) {
     configParser.addFileConfig(configFile);
@@ -270,4 +270,4 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
 
 };
 
-export let init = initFn;
+export const init = initFn;
