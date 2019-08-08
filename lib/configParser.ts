@@ -48,7 +48,8 @@ export class ConfigParser {
       noGlobals: false,
       plugins: [],
       skipSourceMapSupport: false,
-      ng12Hybrid: false
+      ng12Hybrid: false,
+      forkAllProcesses: false
     };
   }
 

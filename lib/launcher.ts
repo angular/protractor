@@ -213,6 +213,8 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
       throw new ConfigError(
           logger, 'Cannot run in debug mode with multiCapabilities, count > 1, or sharding');
     }
+  } else if (config.forkAllProcesses) {  // Start new process if forkAllProcesses is true
+    forkProcess = true;
   }
 
   const createNextTaskRunner = async () => {

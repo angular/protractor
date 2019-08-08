@@ -731,4 +731,13 @@ export interface Config {
   elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];
+  /**
+   * Allows Protractor to fork process for all test specs even for only
+   * one test spec. This will allow for uniform output format of the logs
+   * for any combination of test suites or test specs.
+   * Defaults to `false`
+   *
+   * @type {boolean}
+   */
+  forkAllProcesses?: boolean;
 }
