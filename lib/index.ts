@@ -2,7 +2,7 @@ import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
 import {ProtractorBy} from './locators';
-import {PluginConfig, ProtractorPlugin} from './plugins';
+export {PluginConfig, ProtractorPlugin} from './plugins';
 import {Ptor} from './ptor';
 
 // Re-export selenium-webdriver types from typings directory.
@@ -15,9 +15,6 @@ export {ProtractorExpectedConditions} from './expectedConditions';
 export {Locator, ProtractorBy} from './locators';
 export {Ptor} from './ptor';
 export {Runner} from './runner';
-
-export type PluginConfig = PluginConfig;
-export type ProtractorPlugin = ProtractorPlugin;
 
 export const utils = {
   firefox: require('selenium-webdriver/firefox'),
