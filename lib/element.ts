@@ -80,17 +80,6 @@ export class ElementArrayFinder extends WebdriverWebElement {
       public browser_: ProtractorBrowser, public getWebElements: () => Promise<WebElement[]> = null,
       public locator_?: any, public actionResults_: Promise<any> = null) {
     super();
-
-    // TODO(juliemr): might it be easier to combine this with our docs and just
-    // wrap each one explicity with its own documentation?
-    WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
-      this[fnName] = (...args: any[]) => {
-        let actionFn = (webElem: any) => {
-          return webElem[fnName].apply(webElem, args);
-        };
-        return this.applyAction_(actionFn);
-      };
-    });
   }
 
   /**
@@ -730,6 +719,16 @@ export class ElementArrayFinder extends WebdriverWebElement {
     return this.applyAction_(allowAnimationsTestFn);
   }
 }
+// TODO(juliemr): might it be easier to combine this with our docs and just
+// wrap each one explicity with its own documentation?
+WEB_ELEMENT_FUNCTIONS.forEach((fnName) => {
+  ElementArrayFinder.prototype[fnName] = function (...args: any[]) {
+      let actionFn = (webElem: any) => {
+          return webElem[fnName].apply(webElem, args);
+      };
+      return this.applyAction_(actionFn);
+  };
+});
 
 /**
  * The ElementFinder simply represents a single element of an
@@ -827,14 +826,6 @@ export class ElementFinder extends WebdriverWebElement {
     this.elementArrayFinder_ = new ElementArrayFinder(
         this.browser_, getWebElements, elementArrayFinder.locator(),
         elementArrayFinder.actionResults_);
-
-    WEB_ELEMENT_FUNCTIONS.forEach((fnName: string) => {
-      (this)[fnName] = (...args: any[]) => {
-        return (this.elementArrayFinder_)[fnName]
-            .apply(this.elementArrayFinder_, args)
-            .toElementFinder_();
-      };
-    });
   }
 
   static fromWebElement_(browser: ProtractorBrowser, webElem: WebElement, locator?: Locator):
@@ -1132,6 +1123,13 @@ export class ElementFinder extends WebdriverWebElement {
     return a.getDriver().executeScript('return arguments[0] === arguments[1]', a, b);
   }
 }
+WEB_ELEMENT_FUNCTIONS.forEach((fnName) => {
+  (ElementFinder.prototype)[fnName] = function (...args: any[]) {
+      return (this.elementArrayFinder_)[fnName]
+          .apply(this.elementArrayFinder_, args)
+          .toElementFinder_();
+  };
+});
 
 /**
  * Shortcut for querying the document directly with css.
