@@ -72,7 +72,6 @@ gulp lint
 
 Most of the code is written in TypeScript, with the exception of a few js files.
 
-`lib/debugger` is for element explorer, `browser.pause` and `browser.explore`.
 `lib/driverProviders` controls how WebDriver instances are created.
 `lib/frameworks` contains adapters for test frameworks such as Jasmine and Mocha.
 `lib/selenium-webdriver` and `lib/webdriver-js-extender` are used ONLY for API documentation generation.
