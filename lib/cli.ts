@@ -44,7 +44,6 @@ let allowedNames = [
   'blockingProxyUrl',
   'sauceUser',
   'sauceKey',
-  'sauceAgent',
   'sauceBuild',
   'sauceSeleniumUseHttp',
   'sauceSeleniumAddress',

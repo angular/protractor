@@ -456,7 +456,7 @@ export class Plugins {
         done(failReturnVal);
       };
       try {
-        const result = await(pluginObj as any)[funName].apply(pluginObj, args);
+        const result = await (pluginObj as any)[funName].apply(pluginObj, args);
         done(result);
       } catch (e) {
         logError(e);
@@ -480,7 +480,7 @@ export class Plugins {
   private pluginFunFactory(funName: string, failReturnVal?: boolean) {
     return (...args: any[]) => {
       const promises =
-          this.pluginObjs.filter(pluginObj => typeof(pluginObj as any)[funName] === 'function')
+          this.pluginObjs.filter(pluginObj => typeof (pluginObj as any)[funName] === 'function')
               .map(pluginObj => this.safeCallPluginFun(pluginObj, funName, args, failReturnVal));
       return Promise.all(promises);
     };

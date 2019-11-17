@@ -1,6 +1,6 @@
 import {Config} from 'protractor';
 
-var env = require('../../environment');
+const env = require('../../environment');
 
 export let config: Config = {
   seleniumAddress: env.seleniumAddress,

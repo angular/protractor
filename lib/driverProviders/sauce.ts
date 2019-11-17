@@ -4,6 +4,7 @@
  * it down, and setting up the driver correctly.
  */
 
+import SauceLabs from 'saucelabs';
 import {WebDriver} from 'selenium-webdriver';
 import * as util from 'util';
 
@@ -11,12 +12,6 @@ import {Config} from '../config';
 import {Logger} from '../logger';
 
 import {DriverProvider} from './driverProvider';
-
-const SauceLabs = require('saucelabs');
-const SAUCE_REGIONS: {[key: string]: string} = {
-  'us': '',  // default endpoint
-  'eu': 'eu-central-1.'
-};
 
 let logger = new Logger('sauce');
 export class Sauce extends DriverProvider {
@@ -53,11 +48,11 @@ export class Sauce extends DriverProvider {
    */
   protected async setupDriverEnv(): Promise<any> {
     this.sauceServer_ = new SauceLabs({
-      hostname: this.getSauceEndpoint(this.config_.sauceRegion),
-      username: this.config_.sauceUser,
-      password: this.config_.sauceKey,
-      agent: this.config_.sauceAgent,
-      proxy: this.config_.sauceProxy
+      region: this.config_.sauceRegion,
+      user: this.config_.sauceUser,
+      key: this.config_.sauceKey,
+      proxy: this.config_.sauceProxy,
+
     });
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
@@ -87,10 +82,7 @@ export class Sauce extends DriverProvider {
    * @param {string} region
    * @return {string} The endpoint that needs to be used
    */
-  private getSauceEndpoint(region: string): string {
-    const dc = region ?
-        typeof SAUCE_REGIONS[region] !== 'undefined' ? SAUCE_REGIONS[region] : (region + '.') :
-        '';
-    return `${dc}saucelabs.com`;
+  private getSauceEndpoint(region: 'us'|'eu'|'us-west-1'|'eu-central-1' = 'us'): string {
+    return region === 'us' ? 'saucelabs.com' : `${region}.saucelabs.com`;
   }
 }

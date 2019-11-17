@@ -16,7 +16,7 @@ export class WebdriverBy {
   tagName: (tagName: string) => By = By.tagName;
   xpath: (xpath: string) => By = By.xpath;
 }
-export type WebDriverLocator = By | ByHash | Function;
+export type WebDriverLocator = By|ByHash|Function;
 
 // Protractor locator strategy
 export interface ProtractorLocator {
@@ -26,10 +26,10 @@ export interface ProtractorLocator {
   column?: (index: string) => Locator;
   toString?: () => string;
 }
-export type Locator = ProtractorLocator | WebDriverLocator;
+export type Locator = ProtractorLocator|WebDriverLocator;
 
 export function isProtractorLocator(x: Locator): x is ProtractorLocator {
-  return x && (typeof(x as any).findElementsOverride === 'function');
+  return x && (typeof (x as any).findElementsOverride === 'function');
 }
 
 /**

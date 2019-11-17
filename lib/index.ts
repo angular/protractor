@@ -1,3 +1,7 @@
+import * as seleniumFirefox from 'selenium-webdriver/firefox';
+import * as seleniumHttp from 'selenium-webdriver/http';
+import * as seleniumRemote from 'selenium-webdriver/remote';
+
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';
@@ -17,9 +21,9 @@ export {Ptor} from './ptor';
 export {Runner} from './runner';
 
 export const utils = {
-  firefox: require('selenium-webdriver/firefox'),
-  http: require('selenium-webdriver/http'),
-  remote: require('selenium-webdriver/remote')
+  firefox: seleniumFirefox,
+  http: seleniumHttp,
+  remote: seleniumRemote
 };
 
 export {Command, Name as CommandName} from 'selenium-webdriver/lib/command';

@@ -66,7 +66,6 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
 };
 
 export let logWarnings = (providerType: string, config: Config): void => {
-
   let warnInto = 'Using driver provider ' + providerType +
       ', but also found extra driver provider parameter(s): ';
   let warnList: string[] = [];

@@ -140,17 +140,7 @@ export interface Config {
    * us: us-west-1 (default)
    * eu: eu-central-1
    */
-  sauceRegion?: string;
-  /**
-   * Use sauceAgent if you need custom HTTP agent to connect to saucelabs.com APIs.
-   * This is needed if your computer is behind a corporate proxy.
-   *
-   * To match sauce agent implementation, use
-   * [HttpProxyAgent](https://github.com/TooTallNate/node-http-proxy-agent)
-   * to generate the agent or use sauceProxy as an alternative. If a
-   * sauceProxy is provided, the sauceAgent will be overridden.
-   */
-  sauceAgent?: any;
+  sauceRegion?: 'us'|'eu'|'us-west-1'|'eu-central-1';
   /**
    * Use sauceBuild if you want to group test capabilites by a build ID
    */

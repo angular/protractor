@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
+    "declarationMap": true,
     "removeComments": false,
     "noImplicitAny": true,
     "outDir": "built/",
@@ -18,6 +19,6 @@
     "scripts",
     "exampleTypescript",
     "spec/**/*",
-    "lib/selenium-webdriver]"
+    "lib/selenium-webdriver"
   ]
 }

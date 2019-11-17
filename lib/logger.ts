@@ -1,23 +1,8 @@
+import {gray as printGray, red as printRed, yellow as printYellow} from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
+
 import {Config} from './config';
-
-// Will use chalk if chalk is available to add color to console logging
-let chalk: any;
-let printRed: Function;
-let printYellow: Function;
-let printGray: Function;
-
-try {
-  chalk = require('chalk');
-  printRed = chalk.red;
-  printYellow = chalk.yellow;
-  printGray = chalk.gray;
-} catch (e) {
-  printRed = printYellow = printGray = (msg: any) => {
-    return msg;
-  };
-}
 
 export enum LogLevel {
   ERROR,

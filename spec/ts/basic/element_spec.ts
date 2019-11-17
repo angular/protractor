@@ -172,7 +172,7 @@ describe('ElementFinder', () => {
     const name = element(by.binding('username'));
 
     expect(await name.getText()).toEqual('Anon');
-    expect(await name.getText().then(null, function() {})).toEqual('Anon');
+    expect(await name.getText().then(null)).toEqual('Anon');
 
   });
 

@@ -1,9 +1,7 @@
 import {BPClient} from 'blocking-proxy';
 import {By, Navigation, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
-import {Command, ICommandName} from 'selenium-webdriver/lib/command';
+import {Command, Name as CommandName} from 'selenium-webdriver/lib/command';
 import * as url from 'url';
-
-const CommandName = require('selenium-webdriver/lib/command').Name as ICommandName;
 
 import {build$, build$$, ElementArrayFinder, ElementFinder} from './element';
 import {IError} from './exitCodes';
@@ -11,6 +9,8 @@ import {ProtractorExpectedConditions} from './expectedConditions';
 import {Locator, ProtractorBy} from './locators';
 import {Logger} from './logger';
 import {Plugins} from './plugins';
+
+export * from 'selenium-webdriver';
 
 const clientSideScripts = require('./clientsidescripts');
 
@@ -21,16 +21,6 @@ const DEFAULT_RESET_URL = 'data:text/html,<html></html>';
 const DEFAULT_GET_PAGE_TIMEOUT = 10000;
 
 let logger = new Logger('browser');
-
-// TODO(cnishina): either remove for loop entirely since this does not export anything
-// the user might need since everything is composed (with caveat that this could be a
-// potential breaking change) or export the types with `export * from 'selenium-webdriver'`;
-/*
- * Mix in other webdriver functionality to be accessible via protractor.
- */
-for (let foo in require('selenium-webdriver')) {
-  exports[foo] = require('selenium-webdriver')[foo];
-}
 
 /**
  * Mix a function from one object onto another. The function will still be
@@ -299,7 +289,7 @@ export class ProtractorBrowser {
 
     // Mix all other driver functionality into Protractor.
     Object.getOwnPropertyNames(WebDriver.prototype).forEach(method => {
-      if (!this[method] && typeof(webdriverInstance as any)[method] === 'function') {
+      if (!this[method] && typeof (webdriverInstance as any)[method] === 'function') {
         if (methodsToSync.indexOf(method) !== -1) {
           ptorMixin(this, webdriverInstance, method, this.waitForAngular.bind(this));
         } else {

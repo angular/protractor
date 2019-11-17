@@ -9,6 +9,7 @@ import {Config} from '../config';
 import {DriverProvider} from './driverProvider';
 
 export class MockExecutor {
+  defineCommand(_name: string, _method: string, _path: string): void {}
   execute(_: any): any {}
 }
 

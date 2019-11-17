@@ -169,7 +169,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
     }
   });
 
-  process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => {
+  process.on('unhandledRejection', (reason: Error|any, p: Promise<any>) => {
     if (reason.stack.match('angular testability are undefined') ||
         reason.stack.match('angular is not defined')) {
       logger.warn(
@@ -267,7 +267,6 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   // Start `const maxConcurrentTasks` workers for handling tasks in
   // the beginning. As a worker finishes a task, it will pick up the next
   // task from the scheduler's queue until all tasks are gone.
-
 };
 
 export let init = initFn;

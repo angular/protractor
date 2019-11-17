@@ -10,7 +10,9 @@ let clientSideScripts = require('./clientsidescripts');
 let logger = new Logger('element');
 
 export class WebdriverWebElement {}
-export interface WebdriverWebElement extends WebElement { [key: string]: any; }
+export interface WebdriverWebElement extends WebElement {
+  [key: string]: any;
+}
 
 let WEB_ELEMENT_FUNCTIONS = [
   'click', 'sendKeys', 'getTagName', 'getCssValue', 'getAttribute', 'getText', 'getRect',
@@ -1125,7 +1127,7 @@ export class ElementFinder extends WebdriverWebElement {
    */
   async equals(element: ElementFinder|WebElement): Promise<boolean> {
     const a = await this.getWebElement();
-    const b = (element as any).getWebElement ? await(element as ElementFinder).getWebElement() :
+    const b = (element as any).getWebElement ? await (element as ElementFinder).getWebElement() :
                                                element as WebElement;
     // TODO(selenium4): Use `return WebElement.equals(a, b);` when
     // https://github.com/SeleniumHQ/selenium/pull/6749 is fixed.
