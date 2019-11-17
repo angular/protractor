@@ -26,9 +26,8 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '79',
-    'chromedriver-version': '79.0.3945.16',
-    'platform': 'OS X 10.11'
+    'version': 'latest',
+    'platform': 'macOS 10.14'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
