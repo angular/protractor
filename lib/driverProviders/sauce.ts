@@ -82,7 +82,8 @@ export class Sauce extends DriverProvider {
    * @param {string} region
    * @return {string} The endpoint that needs to be used
    */
-  private getSauceEndpoint(region: 'us'|'eu'|'us-west-1'|'us-east-1'|'eu-central-1' = 'us'): string {
+  private getSauceEndpoint(region: 'us'|'eu'|'us-west-1'|'us-east-1'|'eu-central-1' = 'us'):
+      string {
     if (region === 'eu') {
       region = 'eu-central-1';
     }
