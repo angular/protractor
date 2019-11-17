@@ -96,6 +96,7 @@ export interface Config {
    * completed. Ignored if seleniumAddress is null.
    */
   seleniumSessionId?: string;
+
   /**
    * The address of a proxy server to use for communicating to Sauce Labs REST APIs via the
    * saucelabs node module. For example, the Sauce Labs Proxy can be setup with: sauceProxy:
@@ -159,6 +160,12 @@ export interface Config {
    * ondemand.saucelabs.com:443/wd/hub
    */
   sauceSeleniumAddress?: string;
+
+  /**
+   * Use headless testing.
+   * Forces endpoint to 'us-east-1'
+   */
+  sauceHeadless?: boolean;
 
   // ---- 4. To use remote browsers via TestObject ---------------------------
 

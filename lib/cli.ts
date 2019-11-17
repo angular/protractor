@@ -47,6 +47,7 @@ let allowedNames = [
   'sauceBuild',
   'sauceSeleniumUseHttp',
   'sauceSeleniumAddress',
+  'sauceHeadless',
   'browserstackUser',
   'browserstackKey',
   'browserstackProxy',

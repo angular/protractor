@@ -52,7 +52,7 @@ export class Sauce extends DriverProvider {
       user: this.config_.sauceUser,
       key: this.config_.sauceKey,
       proxy: this.config_.sauceProxy,
-
+      headless: this.config_.sauceHeadless
     });
     this.config_.capabilities['username'] = this.config_.sauceUser;
     this.config_.capabilities['accessKey'] = this.config_.sauceKey;
@@ -82,9 +82,13 @@ export class Sauce extends DriverProvider {
    * @param {string} region
    * @return {string} The endpoint that needs to be used
    */
-  private getSauceEndpoint(region: 'us'|'eu'|'us-west-1'|'eu-central-1' = 'us'): string {
+  private getSauceEndpoint(region: 'us'|'eu'|'us-west-1'|'us-east-1'|'eu-central-1' = 'us'): string {
     if (region === 'eu') {
       region = 'eu-central-1';
+    }
+    if (this.config_.sauceHeadless) {
+      // per https://wiki.saucelabs.com/display/DOCS/Getting+Started+with+Sauce+Headless
+      region = 'us-east-1';
     }
     return region === 'us' ? 'saucelabs.com' : `${region}.saucelabs.com`;
   }
