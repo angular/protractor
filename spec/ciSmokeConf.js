@@ -26,15 +26,15 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': '55',
-    'chromedriver-version': '2.27',
+    'version': '79',
+    'chromedriver-version': '79.0.3945.16',
     'platform': 'OS X 10.11'
   }, {
     'browserName': 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'Protractor smoke tests',
-    'version': 'beta'
+    'version': 'latest'
   }, {
     // TODO: Add Safari 10 once Saucelabs gets Selenium 3
     'browserName': 'safari',
