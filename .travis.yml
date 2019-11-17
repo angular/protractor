@@ -4,6 +4,16 @@ node_js:
   - "8"
   - "12"
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+  sauce_connect:
+    username: "angular-ci"
+    access_key: "9b988f434ff8-fbca-8aa4-4ae3-35442987"
+
 env:
   global:
     - SAUCE_USERNAME=angular-ci
@@ -27,16 +37,6 @@ matrix:
       node_js: "12"
     - env: JOB=bstack
       node_js: "12"
-
-addons:
-  sauce_connect:
-    username: "angular-ci"
-    access_key: "9b988f434ff8-fbca-8aa4-4ae3-35442987"
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
 
 before_install:
   - travis_wait g++-4.8 --version
