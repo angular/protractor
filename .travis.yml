@@ -6,8 +6,6 @@ node_js:
 
 env:
   global:
-    - SAUCE_USERNAME=angular-ci
-    - SAUCE_ACCESS_KEY=9b988f434ff8-fbca-8aa4-4ae3-35442987
     - BROWSER_STACK_USERNAME=angularteam1
     - BROWSER_STACK_ACCESS_KEY=BWCd4SynLzdDcv8xtzsB
     - LOGS_DIR=/tmp/protractor-build/logs
@@ -29,7 +27,9 @@ matrix:
       node_js: "12"
 
 addons:
-  sauce_connect: true
+  sauce_connect:
+    username: "angular-ci"
+    access_key: "9b988f434ff8-fbca-8aa4-4ae3-35442987"
   apt:
     sources:
       - ubuntu-toolchain-r-test
