@@ -53,7 +53,7 @@ describe('Protractor Demo App', function() {
 });
 ```
 
-The `describe` and `it` syntax is from the Jasmine framework. `browser` is a global created by Protractor, which is used for browser-level commands such as navigation with `browser.get`.
+The `describe`, `it` and `expect` syntax is from the Jasmine framework. `browser` is a global created by Protractor, which is used for browser-level commands such as navigation with `browser.get`.
 
 Now create the configuration file. Copy the following into conf.js:
 
