@@ -1,0 +1,76 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.14-browsers
+        environment:
+          # Fix issue with selenium-server in containers.
+          # See http://github.com/SeleniumHQ/docker-selenium/issues/87
+          DBUS_SESSION_BUS_ADDRESS: /dev/null
+          # Chrome v74 is the last version that works perfectly with Protractor.
+          CHROME_REVISION: 638880
+          CHROMEDRIVER_VERSION: 74.0.3729.6
+          # To find this revision number:
+          # 1. Find the exact chrome version you want: https://en.wikipedia.org/wiki/Google_Chrome_version_history
+          # 2. Put that version in this tool: https://omahaproxy.appspot.com/
+          # 3. Take the bumber from "Branch Base Position"
+          # 4. Look for the closest number to that revision in the snapshots: https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/
+          # CHROME 74 - 638880
+          # CHROME 75 - 652421 
+          # CHROME 79 - 706915
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install python-pip openjdk-8-jdk tcpdump
+
+            # Install a specific version of Chrome (not latest)
+            sudo rm -rf /opt/google
+            sudo rm /usr/local/bin/chromedriver
+            wget -q -O chrome.zip https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64/${CHROME_REVISION}/chrome-linux.zip 
+            unzip chrome.zip
+            rm chrome.zip
+            sudo ln -sf ${PWD}/chrome-linux/chrome /usr/bin/chromium 
+            sudo ln -sf /usr/bin/chromium /usr/bin/chromium-browser 
+            sudo groupadd -r chrome && sudo useradd -r -g chrome -G audio,video chrome 
+            sudo mkdir -p /home/chrome/reports 
+            sudo chown -R chrome:chrome /home/chrome 
+
+      - restore_cache:
+          key: node_modules-{{ .Branch }}-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: NPM Install
+          command: |
+            npm i
+            cd testapp && npm i
+
+      - save_cache:
+          key: node_modules-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
+            - "testapp/node_modules"
+
+      - run:
+          name: Lint
+          command: ./node_modules/.bin/gulp lint
+
+      - run:
+          name: Selenium Start
+          background: true
+          command: |
+            ./node_modules/.bin/webdriver-manager update --versions.standalone=3.141.59 --versions.chrome=${CHROMEDRIVER_VERSION} --versions.gecko=v0.26.0
+            sudo cp ./node_modules/webdriver-manager/selenium/chromedriver_${CHROMEDRIVER_VERSION} /usr/local/bin/chromedriver
+            ./node_modules/.bin/webdriver-manager start --versions.standalone=3.141.59 --versions.chrome=${CHROMEDRIVER_VERSION} --versions.gecko=v0.26.0
+
+      - run:
+          name: TestApp Start
+          background: true
+          command: |
+            npm start
+
+      - run:
+          name: Test
+          command: npm test
