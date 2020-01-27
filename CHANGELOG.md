@@ -1,3 +1,9 @@
+# 5.4.3
+
+## Fixes
+
+  fix(index.ts): Fix exports to unbreak TypeScript 3.7 build
+
 # 5.4.2
 
 ## Features
