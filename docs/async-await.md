@@ -44,7 +44,7 @@ describe('angularjs homepage', function() {
 
 As you can see, the syntax is almost the same with TypeScript async/await.
 
-1.  We need wrap our asynchronous function with “async”.
+1.  We need to wrap our asynchronous function with “async”.
 1.  We can add “await” keyword to each operation that we want our program to
     wait for.
 
