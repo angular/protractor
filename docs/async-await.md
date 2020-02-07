@@ -51,7 +51,7 @@ As you can see, the syntax is almost the same with TypeScript async/await.
     **Note:** Never forget to add “await” keyword in an async function, it
     may bring some unexpected problem (e.g. your test might fail silently and
     always be reported as passed).
-1.  Don’t forget to turn off control_flow, you cannot use a mix of `async`/`await` and the control flow:
+1.  Don’t forget to turn off control flow, you cannot use a mix of `async`/`await` and the control flow:
 `async`/`await` causes the control flow to become unreliable (see
 [github issue]( https://github.com/SeleniumHQ/selenium/issues/3037)).  So if you
 `async`/`await` anywhere in a spec, you should use the
