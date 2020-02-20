@@ -43,12 +43,12 @@ You may need to install a separate binary to run another browser, such as IE or 
 Adding Chrome-Specific Options
 ------------------------------
 
-Chrome options are nested in the `chromeOptions` object. A full list of options is at the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/capabilities) site. For example, to show an FPS counter in the upper right, your configuration would look like this:
+Chrome options are nested in the `goog:chromeOptions` object. A full list of options is at the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/capabilities) site. For example, to show an FPS counter in the upper right, your configuration would look like this:
 
 ```javascript
 capabilities: {
   'browserName': 'chrome',
-  'chromeOptions': {
+  'goog:chromeOptions': {
     'args': ['show-fps-counter=true']
   }
 },
@@ -149,7 +149,7 @@ on the commandline like this `--window-size=800,600`.
 capabilities: {
   browserName: 'chrome',
 
-  chromeOptions: {
+  'goog:chromeOptions': {
      args: [ "--headless", "--disable-gpu", "--window-size=800,600" ]
    }
 }
