@@ -1,6 +1,6 @@
 {
   "strict": false,
-  "esversion": 6,
+  "esversion": 8,
   "predef": [
     "protractor",
     "browser",
