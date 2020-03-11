@@ -663,9 +663,8 @@ export class ElementArrayFinder extends WebdriverWebElement {
    *
    * expect(value).toEqual('First Second Third ');
    *
-   * @param {function(number, ElementFinder, number, Array.<ElementFinder>)}
-   *     reduceFn Reduce function that reduces every element into a single
-   * value.
+   * @param {function(number, ElementFinder, number, Array.<ElementFinder>)} reduceFn
+   *  Reduce function that reduces every element into a single value.
    * @param {*} initialValue Initial value of the accumulator.
    * @returns {!Promise} A promise that resolves to the final
    *     value of the accumulator.
@@ -1149,7 +1148,8 @@ export class ElementFinder extends WebdriverWebElement {
  * let item = $('.count .two');
  * expect(await item.getText()).toBe('Second');
  *
- * @param {string} selector A css selector
+ * @param {ElementHelper} element element to use selector on
+ * @param {string} by A css selector
  * @returns {ElementFinder} which identifies the located
  *     {@link webdriver.WebElement}
  */
@@ -1180,7 +1180,8 @@ export const build$ = (element: ElementHelper, by: typeof By) => {
  * expect(await list.get(0).getText()).toBe('First');
  * expect(await list.get(1).getText()).toBe('Second');
  *
- * @param {string} selector a css selector
+ * @param {ElementHelper} element element to use selector on
+ * @param {string} by a css selector
  * @returns {ElementArrayFinder} which identifies the
  *     array of the located {@link webdriver.WebElement}s.
  */
