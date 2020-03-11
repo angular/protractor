@@ -1053,8 +1053,9 @@ export class ElementFinder extends WebdriverWebElement {
       if (arr.length === 0) {
         return false;
       }
-      // is present, whether it is enabled or not
-      return await arr[0].isEnabled();
+      // Calling any method forces a staleness check
+      await arr[0].isEnabled();
+      return true;
     } catch (err) {
       return falseIfMissing(err);
     }
