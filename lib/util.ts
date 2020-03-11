@@ -31,7 +31,7 @@ export function filterStackTrace(text: string): string {
 /**
  * Internal helper for abstraction of polymorphic filenameOrFn properties.
  * @param {object} filenameOrFn The filename or function that we will execute.
- * @param {Array.<object>}} args The args to pass into filenameOrFn.
+ * @param {Array.<object>} args The args to pass into filenameOrFn.
  * @return {Promise} A promise that will resolve when filenameOrFn completes.
  */
 export async function runFilenameOrFn_(
@@ -82,7 +82,7 @@ export function joinTestLogs(log1: any, log2: any): any {
  * Returns false if an error indicates a missing or stale element, re-throws
  * the error otherwise
  *
- * @param {*} The error to check
+ * @param {*} error The error to check
  * @throws {*} The error it was passed if it doesn't indicate a missing or stale
  *   element
  * @return {boolean} false, if it doesn't re-throw the error

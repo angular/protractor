@@ -83,7 +83,7 @@ export class Logger {
 
   /**
    * Log INFO
-   * @param ...msgs multiple arguments to be logged.
+   * @param msgs multiple arguments to be logged.
    */
   info(...msgs: any[]): void {
     this.log_(LogLevel.INFO, msgs);
@@ -91,7 +91,7 @@ export class Logger {
 
   /**
    * Log DEBUG
-   * @param ...msgs multiple arguments to be logged.
+   * @param msgs multiple arguments to be logged.
    */
   debug(...msgs: any[]): void {
     this.log_(LogLevel.DEBUG, msgs);
@@ -99,7 +99,7 @@ export class Logger {
 
   /**
    * Log WARN
-   * @param ...msgs multiple arguments to be logged.
+   * @param msgs multiple arguments to be logged.
    */
   warn(...msgs: any[]): void {
     this.log_(LogLevel.WARN, msgs);
@@ -107,7 +107,7 @@ export class Logger {
 
   /**
    * Log ERROR
-   * @param ...msgs multiple arguments to be logged.
+   * @param msgs multiple arguments to be logged.
    */
   error(...msgs: any[]): void {
     this.log_(LogLevel.ERROR, msgs);
@@ -221,6 +221,7 @@ export class Logger {
   /**
    * Get the identifier of the logger as '/<id>'
    * @param logLevel The log level of the message.
+   * @param id not used yet
    * @param writeTo The enum for where to write the logs.
    * @return The string of the formatted id
    */
@@ -239,6 +240,7 @@ export class Logger {
   /**
    * Get the log level formatted with the first letter. For info, it is I.
    * @param logLevel The log level of the message.
+   * @param id not used yet
    * @param writeTo The enum for where to write the logs.
    * @return The string of the formatted log level
    */
