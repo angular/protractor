@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 var optimist = require('optimist');
 var path = require('path');
 var env = require('../../spec/environment.js');
@@ -54,14 +54,14 @@ var testMiddleware = function(req, res, next) {
         res.status(400).send('must specify query');
       }
     } else if (req.method === 'POST') {
-      if (req.body.key == 'newChatMessage') {
-        if (!storage['chatMessages']) {
-          storage['chatMessages'] = [];
+      if (req.body.key === 'newChatMessage') {
+        if (!storage.chatMessages) {
+          storage.chatMessages = [];
         }
-        storage['chatMessages'].push(req.body.value);
+        storage.chatMessages.push(req.body.value);
         res.sendStatus(200);
-      } else if (req.body.key == 'clearChatMessages') {
-        storage['chatMessages'] = [];
+      } else if (req.body.key === 'clearChatMessages') {
+        storage.chatMessages = [];
         res.sendStatus(200);
       } else {
         res.status(400).send('Unknown command');
