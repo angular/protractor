@@ -68,6 +68,14 @@ export class Logger {
     if (opt_logFile) {
       logFile = opt_logFile;
     }
+
+    // if fd already opened, close it
+    // need it for windows, https://stackoverflow.com/a/20801823/2519073
+    if (typeof Logger.fd === 'number') {
+      fs.closeSync(Logger.fd);
+      Logger.fd = void 0;
+    }
+
     Logger.writeTo = writeTo;
     if (Logger.writeTo == WriteTo.FILE || Logger.writeTo == WriteTo.BOTH) {
       Logger.fd = fs.openSync(path.resolve(logFile), 'a');
