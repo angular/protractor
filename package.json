@@ -19,7 +19,7 @@
     "jasmine": "^3.3.1",
     "optimist": "~0.6.0",
     "saucelabs": "^1.5.0",
-    "selenium-webdriver": "^4.0.0-alpha.1",
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "source-map-support": "~0.4.0",
     "webdriver-manager": "13.0.0"
   },
