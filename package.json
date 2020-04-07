@@ -12,6 +12,7 @@
   ],
   "author": "Julie Ralph <ju.ralph@gmail.com>",
   "dependencies": {
+    "@lambdatest/node-rest-client": "^1.0.0",
     "blocking-proxy": "^1.0.0",
     "browserstack": "^1.5.1",
     "chalk": "^1.1.3",

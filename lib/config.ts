@@ -17,7 +17,9 @@ export interface Config {
   // 3. sauceUser/sauceKey - to use remote Selenium Servers via Sauce Labs.
   // 4. browserstackUser/browserstackKey - to use remote Selenium Servers via
   // BrowserStack.
-  // 5. directConnect - to connect directly to the browser Drivers.
+  // 5. lambdaUsername/lambdaAccessKey - to use remote Selenium Servers via
+  // Lambdatest.
+  // 6. directConnect - to connect directly to the browser Drivers.
   //    This option is only available for Firefox and Chrome.
   //
   // ---- 1. To start a standalone Selenium Server locally ---------------------
@@ -220,7 +222,22 @@ export interface Config {
    */
   browserstackProxy?: string;
 
-  // ---- 7. To connect directly to Drivers ------------------------------------
+  // ---- 7. To use remote browsers via LambdaTest ---------------------------
+
+  /**
+   * If lambdaUsername and lambdaAccessKey are specified, kobitonUser, kobitonKey, testobjectUser,
+   * testojbectKey, browserstackUser, browserStackKey and seleniumServerJar will be ignored. The
+   * tests will be run remotely using LambdaTest.
+   */
+  lambdaUsername?: string;
+  /**
+   * If lambdaUsername and lambdaAccessKey are specified, kobitonUser, kobitonKey, testobjectUser,
+   * testojbectKey, browserStackUser, browserStackKey and seleniumServerJar will be ignored. The
+   * tests will be run remotely using LambdaTest.
+   */
+  lambdaAccessKey?: string;
+
+  // ---- 8. To connect directly to Drivers ------------------------------------
 
   /**
    * If true, Protractor will connect directly to the browser Drivers

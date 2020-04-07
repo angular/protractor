@@ -8,6 +8,8 @@
  * - if you want to test saucelabs, test with --sauceUser and --sauceKey
  * - if you want to test browserstack driverProvider, test with 
      --browserstackUser and --browserstackKey
+ * - if you want to test LambdaTest, test with --lambdaUsername and
+     --lambdaAccessKey    
  * You should verify that there are no lingering processes when these tests
  * complete.
  */
@@ -20,6 +22,7 @@ const Hosted = require('../built/driverProviders/hosted').Hosted;
 const Local = require('../built/driverProviders/local').Local;
 const Sauce = require('../built/driverProviders/sauce').Sauce;
 const BrowserStack = require('../built/driverProviders/browserStack').BrowserStack;
+const LambdaTest = require('../built/driverProviders/lambdaTest').LambdaTest;
 
 const testDriverProvider = async (driverProvider) => {
   await driverProvider.setupEnv();
@@ -140,6 +143,25 @@ if (argv.browserstackUser && argv.browserstackKey) {
         console.log('browserstack.dp working!');
       }, (err) => {
         console.error('browserstack.dp failed with', err);
+        throw err;
+      });
+}
+
+if (argv.lambdaUsername && argv.lambdaAccessKey) {
+  const lambdatestConfig = {
+    lambdaUsername: argv.lambdaUsername,
+    lambdaAccessKey: argv.lambdaAccessKey,
+    capabilities: {
+      build: 'protractor-LambdaTest-spec',
+      name: 'protractor-LambdaTest-spec',
+      browserName: 'chrome',
+    }
+  };
+  testDriverProvider(new LambdaTest(lambdatestConfig)).
+      then(() => {
+        console.log('lambdatest.dp working!');
+      }, (err) => {
+        console.error('lambdatest.dp failed with', err);
         throw err;
       });
 }

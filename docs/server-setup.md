@@ -55,13 +55,13 @@ To connect to a running instance of a standalone Selenium Server, set this optio
 
  - `seleniumAddress` -  Connect to a running instance of a standalone Selenium Server. The address will be a URL.
 
-Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser`, `browserstackKey`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set seleniumAddress, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser`, `browserstackKey`, `sauceUser`, `sauceKey`, `lambdaUsername` and `lambdaAccessKey` will be ignored.
 
 
 Remote Selenium Server
 ----------------------
 
-To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) , [Sauce Labs](http://www.saucelabs.com) and [TestObject](https://www.testobject.com).
+To run your tests against a remote Selenium Server, you will need an account with a service that hosts the server (and the browser drivers). Protractor has built in support for [BrowserStack](https://www.browserstack.com) , [Sauce Labs](http://www.saucelabs.com) and [TestObject](https://www.testobject.com) , [TestObject](https://www.testobject.com) and [LambdaTest](https://www.lambdatest.com).
 
 **Using TestObject as remote Selenium Server**
 
@@ -69,7 +69,7 @@ In your config file, set these options:
  - `testobjectUser` -  The username for your TestObject account.
  - `testobjectKey` -  The key for your TestObject account.
 
-Please note that if you set `testobjectUser` and `testobjectKey`, the settings for `kobitonUser`, `kobitonKey`, `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set `testobjectUser` and `testobjectKey`, the settings for `kobitonUser`, `kobitonKey`, `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser`, `sauceKey`, `lambdaUsername` and `lambdaAccessKey` will be ignored.
 
 **Using Kobiton as remote Selenium Server**
 
@@ -77,7 +77,7 @@ In your config file, set these options:
  - `kobitonUser` -  The username for your Kobiton account.
  - `kobitonKey` -  The API key from your Kobiton account.
 
-Please note that if you set `kobitonUser` and `kobitonKey`, the settings for `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set `kobitonUser` and `kobitonKey`, the settings for `browserstackUser`, `browserstackKey`, `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser`, `sauceKey`, `lambdaUsername` and `lambdaAccessKey` will be ignored.
 
 **Using BrowserStack as remote Selenium Server**
 
@@ -85,7 +85,7 @@ In your config file, set these options:
  - `browserstackUser` -  The username for your BrowserStack account.
  - `browserstackKey` -  The key for your BrowserStack account.
 
-Please note that if you set `browserstackUser` and `browserstackKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser` and `sauceKey` will be ignored.
+Please note that if you set `browserstackUser` and `browserstackKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `sauceUser`, `sauceKey`, `lambdaUsername` and `lambdaAccessKey` will be ignored.
 
 You can optionally set the `name` property in a capability in order to give the jobs a name on the server.  Otherwise they will just be allotted a random hash.
 
@@ -95,10 +95,17 @@ In your config file, set these options:
  - `sauceUser` -  The username for your Sauce Labs account.
  - `sauceKey` -  The key for your Sauce Labs account.
 
-Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser` and `browserstackKey` will be ignored.
+Please note that if you set `sauceUser` and `sauceKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `browserstackUser`, `browserstackKey`, `lambdaUsername` and `lambdaAccessKey` will be ignored.
 
 You can optionally set the `name` property in a capability in order to give the jobs a name on the server.  Otherwise they will just be called `Unnamed Job`.
 
+**Using LambdaTest as remote Selenium Server**
+
+In your config file, set these options:
+ - `lambdaUsername` - The username for your LambdaTest account.
+ - `lambdaAccessKey` - The access key for your LambdaTest account.
+
+Please note that if you set `lambdaUsername` and `lambdaAccessKey`, the settings for `seleniumServerJar`, `seleniumPort`, `seleniumArgs`, `testobjectUser`, `testobjectKey`, `sauceUser`, `sauceKey`, `browserstackUser`, `browserstackKey`, `kobitonUser` and `kobitonKey` will be ignored.
 
 Connecting Directly to Browser Drivers
 --------------------------------------

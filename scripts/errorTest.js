@@ -35,6 +35,14 @@ messages = ['Invalid username or password',
     'Process exited with error code ' + exitCodes.BrowserError.CODE];
 checkLogs(output, messages);
 
+// assert authentication error for LambdaTest
+runProtractor = spawn('node', ['bin/protractor', 'spec/errorTest/lambdaTestAuthentication.js']);
+output = runProtractor.stdout.toString();
+messages = [
+  'Unauthorized, either Username or AccessKey is invalid', 'Process exited with error code ' + exitCodes.BrowserError.CODE
+];
+checkLogs(output, messages);
+
 
 // assert there is no capabilities in the config
 runProtractor = spawn('node',
