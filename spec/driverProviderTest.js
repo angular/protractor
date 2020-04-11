@@ -12,7 +12,7 @@
  * complete.
  */
 
-const argv = require('optimist').argv;
+const argv = require('yargs').argv;
 const env = require('./environment');
 
 const Direct = require('../built/driverProviders/direct').Direct;

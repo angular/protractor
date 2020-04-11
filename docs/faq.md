@@ -187,12 +187,13 @@ is complete before continuing.
 
 How do I switch off an option in the CLI?
 -----------------------------------------
-i.e. `webdriver-manager update --chrome=false` does not work. 
-This has to do with the way `optimist` parses command line args. In order to pass a false value, do one of the following:
+This has to do with the way `yargs` parses command line args. In order to pass a false value, do one of the following:
 
 1) `webdriver-manager update --chrome=0`
 
-2) `webdriver-manager update --no-chrome` (see https://github.com/substack/node-optimist#negate-fields)
+2) `webdriver-manager update --chrome=false`
+
+3) `webdriver-manager update --no-chrome` (see https://github.com/yargs/yargs/blob/HEAD/docs/tricks.md#negate)
 
 Why does Protractor fail when I decorate $timeout?
 --------------------------------------------------
