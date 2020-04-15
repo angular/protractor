@@ -42,7 +42,7 @@ before_script:
   - npm run install_testapp
   - npm run pretest
   - mkdir -p $LOGS_DIR
-  - travis_wait ./scripts/travis_setup.sh
+  - scripts/travis_setup.sh
 
 
 script:
