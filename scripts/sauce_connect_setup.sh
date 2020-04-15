@@ -12,13 +12,14 @@ set -e
 # before_script:
 #   - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
 
-CONNECT_URL="https://saucelabs.com/downloads/sc-4.4.1-linux.tar.gz"
+CONNECT_DOWNLOAD="sc-4.5.4-linux.tar.gz"
+CONNECT_URL="https://saucelabs.com/downloads/${CONNECT_DOWNLOAD}"
 CONNECT_DIR="/tmp/sauce-connect-$RANDOM"
-CONNECT_DOWNLOAD="sc-4.4.1-linux.tar.gz"
 
-CONNECT_LOG="$LOGS_DIR/sauce-connect"
-CONNECT_STDOUT="$LOGS_DIR/sauce-connect.stdout"
-CONNECT_STDERR="$LOGS_DIR/sauce-connect.stderr"
+# Log files are not used for now
+# CONNECT_LOG="$LOGS_DIR/sauce-connect"
+# CONNECT_STDOUT="$LOGS_DIR/sauce-connect.stdout"
+# CONNECT_STDERR="$LOGS_DIR/sauce-connect.stderr"
 
 # Get Connect and start it
 mkdir -p $CONNECT_DIR
@@ -42,14 +43,11 @@ if [ ! -z "$BROWSER_PROVIDER_READY_FILE" ]; then
 fi
 
 
-echo "Starting Sauce Connect in the background, logging into:"
-echo "  $CONNECT_LOG"
-echo "  $CONNECT_STDOUT"
-echo "  $CONNECT_STDERR"
-sauce-connect/bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY $ARGS \
-  2> $CONNECT_STDERR 1> $CONNECT_STDOUT &
+echo "Starting Sauce Connect in the background, args:"
+echo "  $ARGS"
+sauce-connect/bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY $ARGS &
 
-# If you need to debug sauce connect, use the full output like so:
-#
-# sauce-connect/bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY $ARGS \
-#   --logfile $CONNECT_LOG 2> $CONNECT_STDERR 1> $CONNECT_STDOUT &
+# If you need to debug sauce connect, use the --doctor flag.
+# It will print diagnostic messages but will not start a tunnel.
+# See https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy+Debugging+and+Diagnostics+with+--doctor+flag
+# sauce-connect/bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY --doctor $ARGS
