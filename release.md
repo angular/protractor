@@ -44,6 +44,11 @@ Say the previous release was 0.0.J, the current release is 0.0.K, and the next r
 
  - Verify that the changelog and tags look sane on github
 
+ - Login to the wombot NPM proxy
+```sh
+npm login --registry https://wombat-dressing-room.appspot.com
+ ```
+
  - NPM publish
 
  - Update the website. Run `./scripts/generate-docs.sh`, then switch to the `gh-pages` branch, edit the commit message with `git commit --amend`, and push the new website.
