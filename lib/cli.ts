@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import * as optimist from 'optimist';
 import * as path from 'path';
+import * as yargs from 'yargs';
 
 /**
  * The command line interface for interacting with the Protractor runner.
@@ -115,7 +115,7 @@ let allowedNames = [
   'stackTrace'
 ];
 
-let optimistOptions: any = {
+let yargsOptions: any = {
   describes: {
     help: 'Print Protractor help menu',
     version: 'Print Protractor version',
@@ -153,30 +153,33 @@ let optimistOptions: any = {
   strings: {'capabilities.tunnel-identifier': ''}
 };
 
-optimist.usage(
+yargs.usage(
     'Usage: protractor [configFile] [options]\n' +
     'configFile defaults to protractor.conf.js\n' +
     'The [options] object will override values from the config file.\n' +
     'See the reference config for a full list of options.');
-for (let key of Object.keys(optimistOptions.describes)) {
-  optimist.describe(key, optimistOptions.describes[key]);
+for (let key of Object.keys(yargsOptions.describes)) {
+  yargs.describe(key, yargsOptions.describes[key]);
 }
-for (let key of Object.keys(optimistOptions.aliases)) {
-  optimist.alias(key, optimistOptions.aliases[key]);
+for (let key of Object.keys(yargsOptions.aliases)) {
+  yargs.alias(key, yargsOptions.aliases[key]);
 }
-for (let key of Object.keys(optimistOptions.strings)) {
-  optimist.string(key);
+for (let key of Object.keys(yargsOptions.strings)) {
+  yargs.string(key);
 }
-optimist.check(function(arg: any) {
+
+yargs.check(function(arg: any) {
   if (arg._.length > 1) {
     throw new Error('Error: more than one config file specified');
   }
+
+  return true;
 });
 
-let argv: any = optimist.parse(args);
+let argv: any = yargs.parse(args);
 
 if (argv.help) {
-  optimist.showHelp();
+  yargs.showHelp();
   process.exit(0);
 }
 
@@ -233,7 +236,7 @@ if (!configFile && !argv.elementExplorer && args.length < 3) {
   console.log(
       '**you must either specify a configuration file ' +
       'or at least 3 options. See below for the options:\n');
-  optimist.showHelp();
+  yargs.showHelp();
   process.exit(1);
 }
 
