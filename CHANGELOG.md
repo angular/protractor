@@ -1,3 +1,9 @@
+# 5.4.4
+
+## Fixes
+
+- fix: security prototype pollution
+
 # 5.4.3
 
 ## Fixes
