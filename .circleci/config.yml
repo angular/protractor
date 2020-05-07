@@ -2,14 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:6.14-browsers
+      - image: circleci/node:10.16-browsers
         environment:
           # Fix issue with selenium-server in containers.
           # See http://github.com/SeleniumHQ/docker-selenium/issues/87
           DBUS_SESSION_BUS_ADDRESS: /dev/null
-          # Chrome v74 is the last version that works perfectly with Protractor.
-          CHROME_REVISION: 638880
-          CHROMEDRIVER_VERSION: 74.0.3729.6
+          CHROME_REVISION: 652421
+          CHROMEDRIVER_VERSION: 75.0.3770.90
           # To find this revision number:
           # 1. Find the exact chrome version you want: https://en.wikipedia.org/wiki/Google_Chrome_version_history
           # 2. Put that version in this tool: https://omahaproxy.appspot.com/
