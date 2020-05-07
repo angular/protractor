@@ -6,7 +6,6 @@
   "rules": {
     "no-duplicate-imports": true,
     "no-duplicate-variable": true,
-    "no-jasmine-focus": true,
     "no-var-keyword": true,
     "semicolon": [true],
     "variable-name": [true, "ban-keywords"],
