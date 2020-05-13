@@ -6,7 +6,11 @@ Protractor [![Build Status](https://travis-ci.org/angular/protractor.svg?branch=
 Compatibility
 -------------
 
-Protractor 5 is compatible with nodejs v6 and newer.
+Protractor 5 is compatible with Nodejs v6 and v8 only.
+
+Protractor 6 has been deprecated.
+
+Protractor 7 is compatible with Nodejs v10, v12, and newer.
 
 Protractor works with AngularJS versions greater than 1.0.6/1.1.4, and is compatible with Angular applications. Note that for Angular apps, the `binding` and `model` locators are not supported. We recommend using `by.css`.
 
