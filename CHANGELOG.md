@@ -1,3 +1,34 @@
+# 7.0.0
+
+- ([9d2e18e](https://github.com/angular/protractor/commit/9d2e18e10d82a97bee58193968f22be6cd1f04e9))
+  refactor: use console.log instead of util.puts
+
+  utils.puts is no longer available in Node.JS 12
+
+- ([c281157](https://github.com/angular/protractor/commit/c28115755d4de5c2ad4c43fc11feab26a928982f))
+  refactor: remove debugger and explore methods
+
+  BREAKING CHANGE: Debugger and explore methods are not compatable with Node 8+. Use `debugger`
+  keyword instead. See: https://goo.gl/MvWqFh
+
+- ([7cdb978](https://github.com/angular/protractor/commit/7cdb978fca5ae3f5ed95a535ea39b9ee91fb6d2d))
+  build: update several dev packages that have security issues
+
+- ([8e82835](https://github.com/angular/protractor/commit/8e82835024463cdb17813d19589be0e66bac7992))
+  build: update webdriver-manager
+
+- ([a1fe5f2](https://github.com/angular/protractor/commit/a1fe5f2ad05ab55b1dafd429f0c31fea27ec3e5b))
+  ci: update tests to run on Node 10 and 12
+
+- ([3fc9220](https://github.com/angular/protractor/commit/3fc9220189a59750226328a837b42802d18e503a))
+  fix: prototype Pollution vulnerability through outdated yargs package
+
+  BREAKING CHANGE:
+
+  Node.Js version 6 and 8 are no longer supported. Please update to Node.Js 10+
+
+  Closes #5431
+
 # 5.4.4
 
 ## Fixes

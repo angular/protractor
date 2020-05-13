@@ -1,7 +1,7 @@
 {
   "name": "protractor",
   "description": "Webdriver E2E test wrapper for Angular.",
-  "version": "5.4.4",
+  "version": "7.0.0",
   "homepage": "https://github.com/angular/protractor",
   "keywords": [
     "angular",
