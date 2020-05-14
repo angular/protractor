@@ -97,9 +97,7 @@ let allowedNames = [
   'mockSelenium',
   'v8Debug',
   'nodeDebug',
-  'debuggerServerPort',
   'frameworkPath',
-  'elementExplorer',
   'debug',
   'logLevel',
   'disableChecks',
@@ -134,8 +132,6 @@ let yargsOptions: any = {
     framework: 'Test framework to use: jasmine, mocha, or custom',
     resultJsonOutputFile: 'Path to save JSON test result',
     troubleshoot: 'Turn on troubleshooting output',
-    elementExplorer: 'Interactively test Protractor commands',
-    debuggerServerPort: 'Start a debugger server at specified port instead of repl',
     disableChecks: 'Disable cli checks',
     logLevel: 'Define Protractor log level [ERROR, WARN, INFO, DEBUG]'
   },
@@ -148,7 +144,6 @@ let yargsOptions: any = {
     build: 'capabilities.build',
     grep: 'jasmineNodeOpts.grep',
     'invert-grep': 'jasmineNodeOpts.invertGrep',
-    explorer: 'elementExplorer'
   },
   strings: {'capabilities.tunnel-identifier': ''}
 };
@@ -232,7 +227,7 @@ if (!configFile) {
   }
 }
 
-if (!configFile && !argv.elementExplorer && args.length < 3) {
+if (!configFile && args.length < 3) {
   console.log(
       '**you must either specify a configuration file ' +
       'or at least 3 options. See below for the options:\n');

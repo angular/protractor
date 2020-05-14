@@ -300,13 +300,6 @@ export class ProtractorBrowser extends AbstractExtendedWebDriver {
   mockModules_: {name: string, script: string|Function, args: any[]}[];
 
   /**
-   * If specified, start a debugger server at specified port instead of repl
-   * when running element explorer.
-   * @public {number}
-   */
-  public debuggerServerPort: number;
-
-  /**
    * If true, Protractor will interpret any angular apps it comes across as
    * hybrid angular1/angular2 apps.
    *

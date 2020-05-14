@@ -729,9 +729,7 @@ export interface Config {
   mockSelenium?: boolean;
   v8Debug?: any;
   nodeDebug?: boolean;
-  debuggerServerPort?: number;
   frameworkPath?: string;
-  elementExplorer?: any;
   debug?: boolean;
   unknownFlags_?: string[];
 }
