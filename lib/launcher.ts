@@ -109,7 +109,10 @@ let initFn = function(configFile: string, additionalConfig: Config) {
 
   // Run beforeLaunch
   helper.runFilenameOrFn_(config.configDir, config.beforeLaunch)
-      .then(() => {
+      .then((configFromBeforeLaunch) => {
+        if (configFromBeforeLaunch) {
+          configParser.addConfig(configFromBeforeLaunch);
+        }
 
         return q
             .Promise<any>((resolve: Function, reject: Function) => {
@@ -246,7 +249,7 @@ let initFn = function(configFile: string, additionalConfig: Config) {
         let createNextTaskRunner = () => {
           let task = scheduler.nextTask();
           if (task) {
-            let taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
+            let taskRunner = new TaskRunner(config, task, forkProcess);
             taskRunner.run()
                 .then((result) => {
                   if (result.exitCode && !result.failedCount) {
