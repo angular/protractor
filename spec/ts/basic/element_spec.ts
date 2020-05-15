@@ -186,3 +186,28 @@ describe('ElementFinder', function() {
     await expect(usernameInput.equals(name)).toEqual(false);
   });
 });
+
+describe('ElementArrayFinder', function() {
+  it('should be able to invoke #map on many elements', async () => {
+    // running map callbacks concurrently would crash webdriver as it can't handle
+    // concurrent requests (at least no with Crome on MacOS)
+    await browser.get('index.html#/form');
+    await element.all(by.css('*')).map(elem => elem.getText().then(_ => {}));
+    // no real expectation, the real target is that we get here without exceptions
+  });
+
+  it('should invoke ElementArrayFinder.map callbacks sequentially', async () => {
+    await browser.get('index.html#/form');
+    let running = 0;
+    let highwater = 0;
+    await element.all(by.css('*')).map(elem => Promise.resolve()
+      .then(() => {
+        running++;
+        highwater = Math.max(running, highwater);
+        return new Promise(resolve => setTimeout(resolve, 1));
+      })
+      .then(() => {running--;})
+    );
+    expect(highwater).toEqual(1);
+  });
+});

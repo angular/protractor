@@ -652,13 +652,17 @@ export class ElementArrayFinder extends WebdriverWebElement {
    */
   map<T>(mapFn: (elementFinder?: ElementFinder, index?: number) => T | any):
       wdpromise.Promise<T[]> {
-    return this.asElementFinders_().then<T[]>((arr: ElementFinder[]) => {
-      let list = arr.map((elementFinder?: ElementFinder, index?: number) => {
-        let mapResult = mapFn(elementFinder, index);
-        // All nested arrays and objects will also be fully resolved.
-        return wdpromise.fullyResolved(mapResult) as wdpromise.Promise<T>;
+    const finders = this.asElementFinders_();
+    // execute mapFn one-at-a-time to prevent concurrent webdriver requests
+    return finders.then(arr => {
+      let promise = finders.then(() => []);
+      arr.forEach((elementFinder, index) => {
+        promise = promise.then(result => {
+          const mapResult = wdpromise.fullyResolved(mapFn(elementFinder, index));
+          return mapResult.then(mr => result.concat([mr]));
+        });
       });
-      return wdpromise.all(list);
+      return promise;
     });
   };
 
