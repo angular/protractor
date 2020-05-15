@@ -373,6 +373,22 @@ describe('locators', function() {
           expect(found[0].getText()).toBe('UPPERCASE');
         });
     });
+
+    it('should find elements by css with exactMatch as true', function() {
+      element.all(by.cssContainingText('h4', 'Text',true)).then(function(arr) {
+        expect(arr.length).toEqual(1);
+        expect(arr[0].getText()).toBe('Text');
+      });
+    });
+
+    it('should find elements by css with exactMatch as false', function() {
+      element.all(by.cssContainingText('h4', 'Text',false)).then(function(arr) {
+        expect(arr.length).toEqual(2);
+        expect(arr[0].getText()).toBe('Text');
+        expect(arr[1].getText()).toBe('Textarea');
+      });
+    });
+
   });
 
   describe('by options', function() {

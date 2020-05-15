@@ -408,27 +408,34 @@ export class ProtractorBy extends WebdriverBy {
    * <ul>
    *   <li class="pet">Dog</li>
    *   <li class="pet">Cat</li>
+   *   <li class="pet">JS Cat</li>
    * </ul>
    *
    * @example
    * // Returns the li for the dog, but not cat.
    * var dog = element(by.cssContainingText('.pet', 'Dog'));
    *
+   * // Returns the li for the Cat, but not JS Cat.
+   * var cat = element(by.cssContainingText('.pet', 'Cat', true));
+   *
    * @param {string} cssSelector css selector
    * @param {string|RegExp} searchString text search
+   * @param {boolean} exactMatch match type
    * @returns {ProtractorLocator} location strategy
    */
-  cssContainingText(cssSelector: string, searchText: string|RegExp): ProtractorLocator {
+  cssContainingText(cssSelector: string, searchText: string|RegExp, exactMatch: boolean):
+      ProtractorLocator {
     searchText = (searchText instanceof RegExp) ? '__REGEXP__' + searchText.toString() : searchText;
     return {
       findElementsOverride: (driver: WebDriver, using: WebElement, rootSelector: string):
                                 wdpromise.Promise<WebElement[]> => {
         return driver.findElements(By.js(
-            clientSideScripts.findByCssContainingText, cssSelector, searchText, using,
+            clientSideScripts.findByCssContainingText, cssSelector, searchText, exactMatch, using,
             rootSelector));
       },
       toString: (): string => {
-        return 'by.cssContainingText("' + cssSelector + '", "' + searchText + '")';
+        return 'by.cssContainingText("' + cssSelector + '", "' + searchText + '", "' + exactMatch +
+            '")';
       }
     };
   };
