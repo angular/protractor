@@ -116,7 +116,11 @@ export class Direct extends DriverProvider {
         // TODO (mgiambalvo): Turn this into an import when the selenium typings are updated.
         const FirefoxServiceBuilder = require('selenium-webdriver/firefox').ServiceBuilder;
 
-        let firefoxService = new FirefoxServiceBuilder(geckoDriverFile).build();
+        let firefoxService = null;
+        if (this.config_.capabilities.marionette) {
+          firefoxService = new FirefoxServiceBuilder(geckoDriverFile).build();
+        }
+
         // TODO(mgiambalvo): Fix typings.
         driver =
             require('selenium-webdriver/firefox')
