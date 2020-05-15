@@ -48,6 +48,8 @@ let allowedNames = [
   'sauceBuild',
   'sauceSeleniumUseHttp',
   'sauceSeleniumAddress',
+  'experitestKey',
+  'experitestCloudAddress',
   'browserstackUser',
   'browserstackKey',
   'browserstackProxy',

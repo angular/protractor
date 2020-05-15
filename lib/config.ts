@@ -124,6 +124,21 @@ export interface Config {
    */
   blockingProxyUrl?: string;
 
+  // ---- 3. To use remote browsers via Experitest --------------------
+
+  /**
+   * If the experitestKey is specified, seleniumServerJar will be
+   * ignored. The tests will be run remotely using Experitest Cloud.
+   */
+  experitestKey?: string;
+
+  /**
+   * Use experitestCloudAddress to customize the URL Protractor
+   * uses to connect to Experitest Cloud.
+   * For example 'https://cloud.seetest.io'
+   */
+  experitestCloudAddress?: string;
+
   // ---- 3. To use remote browsers via Sauce Labs -----------------------------
 
   /**
