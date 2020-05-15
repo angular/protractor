@@ -220,6 +220,33 @@ export class ProtractorExpectedConditions {
 
   /**
    * An expectation for checking if the given text is present in the element’s
+   * attribute. Returns false if the elementFinder does not find an element.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'myInput' to contain the input 'foo'.
+   * browser.wait(EC.textToBePresentInElementAttribute($('#myInput'), 'foo', 'class'), 5000);
+   *
+   * @alias ExpectedConditions.textToBePresentInElementAttribute
+   * @param {!ElementFinder} elementFinder The element to check
+   * @param {!string} text The text to verify against
+   * @param {!string} attribute The attribute to check
+   *
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the text is present in the element's attribute.
+   */
+  textToBePresentInElementAttribute(elementFinder: ElementFinder, text: string, attribute: string):
+      Function {
+    let hasText = () => {
+      return elementFinder.getAttribute(attribute).then((actualText: string): boolean => {
+        return actualText.indexOf(text) > -1;
+      }, falseIfMissing);
+    };
+    return this.and(this.presenceOf(elementFinder), hasText);
+  }
+
+  /**
+   * An expectation for checking if the given text is present in the element’s
    * value. Returns false if the elementFinder does not find an element.
    *
    * @example
@@ -235,12 +262,7 @@ export class ProtractorExpectedConditions {
    *     representing whether the text is present in the element's value.
    */
   textToBePresentInElementValue(elementFinder: ElementFinder, text: string): Function {
-    let hasText = () => {
-      return elementFinder.getAttribute('value').then((actualText: string): boolean => {
-        return actualText.indexOf(text) > -1;
-      }, falseIfMissing);
-    };
-    return this.and(this.presenceOf(elementFinder), hasText);
+    return this.textToBePresentInElementAttribute(elementFinder, text, 'value');
   }
 
   /**
