@@ -383,12 +383,16 @@ export class Runner extends EventEmitter {
     // 0) Wait for debugger
     return q(this.ready_)
         .then(() => {
-          // 1) Setup environment
+          // 1) Permit plugins to modify the runtime configuration.
+          return plugins.initialize(this.config_);
+        })
+        .then(() => {
+          // 2) Setup environment
           // noinspection JSValidateTypes
           return this.driverprovider_.setupEnv();
         })
         .then(() => {
-          // 2) Create a browser and setup globals
+          // 3) Create a browser and setup globals
           browser_ = this.createBrowser(plugins);
           this.setupGlobals_(browser_);
           return browser_.ready.then(browser_.getSession)
@@ -402,11 +406,11 @@ export class Runner extends EventEmitter {
                     logger.error('Unable to start a WebDriver session.');
                     throw err;
                   });
-          // 3) Setup plugins
+          // 4) Setup plugins
         })
         .then(() => {
           return plugins.setup();
-          // 4) Execute test cases
+          // 5) Execute test cases
         })
         .then(() => {
           // Do the framework setup here so that jasmine and mocha globals are
@@ -461,16 +465,16 @@ export class Runner extends EventEmitter {
           logger.debug('Running with spec files ' + this.config_.specs);
 
           return require(frameworkPath).run(this, this.config_.specs);
-          // 5) Wait for postTest plugins to finish
+          // 6) Wait for postTest plugins to finish
         })
         .then((testResults: any) => {
           results = testResults;
           return q.all(pluginPostTestPromises);
-          // 6) Teardown plugins
+          // 7) Teardown plugins
         })
         .then(() => {
           return plugins.teardown();
-          // 7) Teardown
+          // 8) Teardown
         })
         .then(() => {
           results = helper.joinTestLogs(results, plugins.getResults());
@@ -483,11 +487,11 @@ export class Runner extends EventEmitter {
           } else {
             return this.driverprovider_.teardownEnv();
           }
-          // 8) Let plugins do final cleanup
+          // 9) Let plugins do final cleanup
         })
         .then(() => {
           return plugins.postResults();
-          // 9) Exit process
+          // 10) Exit process
         })
         .then(() => {
           let exitCode = testPassed ? 0 : 1;

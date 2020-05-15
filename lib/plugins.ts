@@ -24,6 +24,24 @@ export interface PluginConfig {
 
 export interface ProtractorPlugin {
   /**
+   * Set up the protractor runtime before the webdriver session has been started.
+   * Use this method if you'd like to dynamically change the browser capabilities,
+   * multiCapabilites, plugin list, or other parameters.
+   *
+   * Note that if you use this method to inject other plugins, you will have to
+   * carefully manage their own initialize() invocations.
+   *
+   * @this {Object} bound to module.exports.
+   *
+   * @throws {*} If this function throws an error, the process will exit.
+   *
+   * @return {Promise=} Can return a promise, in which case protractor will wait
+   *     for the promise to resolve before continuing.  If the promise is
+   *     rejected, the process will exit.
+   */
+  initialize?(config: Config): void|Promise<void>;
+
+  /**
    * Sets up plugins before tests are run. This is called after the WebDriver
    * session has been started, but before the test framework has been set up.
    *
@@ -420,6 +438,7 @@ export class Plugins {
   /**
    * @see docs/plugins.md#writing-plugins for information on these functions
    */
+  initialize = this.pluginFunFactory('initialize', PromiseType.Q);
   setup = this.pluginFunFactory('setup', PromiseType.Q);
   onPrepare = this.pluginFunFactory('onPrepare', PromiseType.Q);
   teardown = this.pluginFunFactory('teardown', PromiseType.Q);
