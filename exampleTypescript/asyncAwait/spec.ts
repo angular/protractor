@@ -6,7 +6,6 @@ describe('async function', function() {
     await browser.get('http://www.angularjs.org');
     let todoList = element.all(by.repeater('todo in todoList.todos'));
     if ((await todoList.count()) > 1) {
-      debugger
       expect((await todoList.get(1).getText())).toEqual('build an AngularJS app');
     }
   });
