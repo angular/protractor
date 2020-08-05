@@ -107,7 +107,7 @@ First, this is how you can take a screenshot:
 ```javascript
 browser.takeScreenshot().then(function(png) {
   var stream = fs.createWriteStream("/tmp/screenshot.png");
-  stream.write(new Buffer(png, 'base64'));
+  stream.write(Buffer.from(png, 'base64'));
   stream.end();
 });
 ```
