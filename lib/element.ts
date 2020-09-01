@@ -816,9 +816,6 @@ export class ElementArrayFinder extends WebdriverWebElement {
 export class ElementFinder extends WebdriverWebElement {
   parentElementArrayFinder: ElementArrayFinder;
   elementArrayFinder_: ElementArrayFinder;
-  then?:
-      (fn: (value: any) => any | wdpromise.IThenable<any>,
-       errorFn?: (error: any) => any) => wdpromise.Promise<any> = null;
 
   constructor(public browser_: ProtractorBrowser, elementArrayFinder: ElementArrayFinder) {
     super();
