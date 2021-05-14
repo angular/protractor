@@ -46,16 +46,18 @@ export function runFilenameOrFn_(configDir: string, filenameOrFn: any, args?: an
     }
     if (typeof filenameOrFn === 'function') {
       let results = when(filenameOrFn.apply(null, args), null, (err) => {
-        if (typeof err === 'string') {
-          err = new Error(err);
-        } else {
-          err = err as Error;
-          if (!err.stack) {
-            err.stack = new Error().stack;
+        if(err){
+          if (typeof err === 'string') {
+            err = new Error(err);
+          } else {
+            err = err as Error;
+            if (!err.stack) {
+              err.stack = new Error().stack;
+            }
           }
+          err.stack = exports.filterStackTrace(err.stack);
+          throw err;  
         }
-        err.stack = exports.filterStackTrace(err.stack);
-        throw err;
       });
       resolvePromise(results);
     } else {
