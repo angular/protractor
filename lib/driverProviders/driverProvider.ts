@@ -121,7 +121,7 @@ export abstract class DriverProvider {
    * Set up environment specific to a particular driver provider. Overridden
    * by each driver provider.
    */
-  protected async abstract setupDriverEnv(): Promise<any>;
+  protected abstract setupDriverEnv(): Promise<any>;
 
   /**
    * Teardown and destroy the environment and do any associated cleanup.

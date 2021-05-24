@@ -216,7 +216,7 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   }
 
   const createNextTaskRunner = async () => {
-    return new Promise(async (resolve) => {
+    return new Promise<void>(async (resolve) => {
       const task = scheduler.nextTask();
       if (task) {
         const taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
