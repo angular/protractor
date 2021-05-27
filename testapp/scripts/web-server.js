@@ -27,8 +27,7 @@ var main = function() {
   testApp.use(bodyParser.json());
   testApp.use(testMiddleware);
   testApp.listen(port);
-  util.puts(["Starting express web server in", testAppDir ,"on port", port].
-      join(" "));
+  console.log("Starting express web server in", testAppDir ,"on port", port);
 };
 
 var storage = {};
