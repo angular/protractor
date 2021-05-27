@@ -1,13 +1,16 @@
-version: 2
+version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.1.0
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11-browsers
+      - image: cimg/node:14.17.0-browsers
         environment:
           # Fix issue with selenium-server in containers.
           # See http://github.com/SeleniumHQ/docker-selenium/issues/87
           DBUS_SESSION_BUS_ADDRESS: /dev/null
     steps:
+      - browser-tools/install-browser-tools
       - checkout
 
       - run: google-chrome --version
