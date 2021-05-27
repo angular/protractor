@@ -216,38 +216,36 @@ let initFn = async function(configFile: string, additionalConfig: Config) {
   }
 
   const createNextTaskRunner = async () => {
-    return new Promise(async (resolve) => {
-      const task = scheduler.nextTask();
-      if (task) {
-        const taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
-        try {
-          const result = await taskRunner.run();
-          if (result.exitCode && !result.failedCount) {
-            logger.error('Runner process exited unexpectedly with error code: ' + result.exitCode);
-          }
-          taskResults_.add(result);
-          task.done();
-          await createNextTaskRunner();
-          // If all tasks are finished
-          if (scheduler.numTasksOutstanding() === 0) {
-            resolve();
-          }
-          logger.info(scheduler.countActiveTasks() + ' instance(s) of WebDriver still running');
-        } catch (err) {
-          const errorCode = ErrorHandler.parseError(err);
-          logger.error('Error:', (err as any).stack || err.message || err);
-          await cleanUpAndExit(errorCode ? errorCode : RUNNERS_FAILED_EXIT_CODE);
+    const task = scheduler.nextTask();
+    if (task) {
+      const taskRunner = new TaskRunner(configFile, additionalConfig, task, forkProcess);
+      try {
+        const result = await taskRunner.run();
+        if (result.exitCode && !result.failedCount) {
+          logger.error('Runner process exited unexpectedly with error code: ' + result.exitCode);
         }
-      } else {
-        resolve();
+        taskResults_.add(result);
+        task.done();
+        await createNextTaskRunner();
+        // If all tasks are finished
+        if (scheduler.numTasksOutstanding() === 0) {
+          return;
+        }
+        logger.info(scheduler.countActiveTasks() + ' instance(s) of WebDriver still running');
+      } catch (err) {
+        const errorCode = ErrorHandler.parseError(err);
+        logger.error('Error:', (err as any).stack || err.message || err);
+        await cleanUpAndExit(errorCode ? errorCode : RUNNERS_FAILED_EXIT_CODE);
       }
-    });
+    }
   };
 
   const maxConcurrentTasks = scheduler.maxConcurrentTasks();
+  const tasks = [];
   for (let i = 0; i < maxConcurrentTasks; ++i) {
-    await createNextTaskRunner();
+    tasks.push(createNextTaskRunner());
   }
+  await Promise.all(tasks);
   logger.info('Running ' + scheduler.countActiveTasks() + ' instances of WebDriver');
 
   // By now all runners have completed.
