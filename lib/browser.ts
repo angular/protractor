@@ -493,11 +493,10 @@ export class ProtractorBrowser {
     if (typeof script === 'function') {
       script = 'return (' + script + ').apply(null, arguments);';
     }
-    // TODO(selenium4): fix typings. driver.execute should exist
-    return (this.driver as any)
-        .execute(new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
-                     .setParameter('script', script)
-                     .setParameter('args', scriptArgs));
+
+    return this.driver.execute(new Command(CommandName.EXECUTE_ASYNC_SCRIPT)
+                                   .setParameter('script', script)
+                                   .setParameter('args', scriptArgs));
   }
 
   /**
