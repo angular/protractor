@@ -32,7 +32,7 @@ export class BlockingProxyRunner {
       logger.info('Starting BlockingProxy with args: ' + args.toString());
       this.bpProcess
           .on('message',
-              (data) => {
+              (data: any) => {
                 this.port = data['port'];
                 resolve(data['port']);
               })
