@@ -648,6 +648,11 @@ export interface Config {
      * Set the randomization seed if randomization is turned on
      */
     seed?: string,
+    /**
+     * Enables failFast option in jasmine, which stops the execution of the suite whether the first
+     * spec is failed.
+     */
+    stopOnSpecFailure?: boolean,
   };
 
   /**
