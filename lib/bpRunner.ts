@@ -28,7 +28,11 @@ export class BlockingProxyRunner {
       if (this.config.highlightDelay) {
         args.push('--highlightDelay', this.config.highlightDelay.toString());
       }
-      this.bpProcess = fork(BP_PATH, args, {silent: true});
+
+      // Prevent BP process from trying to allocate the same port for inspector as the main process
+      let execArgv = process.execArgv.filter(arg => !/^(--inspect|--debug)(-brk)?(?!=0)/.test(arg));
+
+      this.bpProcess = fork(BP_PATH, args, {execArgv, silent: true});
       logger.info('Starting BlockingProxy with args: ' + args.toString());
       this.bpProcess
           .on('message',

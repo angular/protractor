@@ -34,6 +34,7 @@ const passingTests = [
   'node spec/driverProviderTest.js',
   'node built/cli.js spec/driverProviderLocalConf.js',
   'node built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
+  'node --inspect built/cli.js spec/driverProviderLocalConf.js --useBlockingProxy',
   'node built/cli.js spec/getCapabilitiesConf.js',
   'node built/cli.js spec/controlLockConf.js',
   'node built/cli.js spec/customFramework.js',
