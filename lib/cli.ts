@@ -150,7 +150,13 @@ let yargsOptions: any = {
     'invert-grep': 'jasmineNodeOpts.invertGrep',
     explorer: 'elementExplorer'
   },
-  strings: {'capabilities.tunnel-identifier': ''}
+  strings: {'capabilities.tunnel-identifier': ''},
+  boolean: [
+    'useBlockingProxy', 'sauceSeleniumUseHttp', 'noGlobals', 'directConnect',
+    'verboseMultiSessions', 'restartBrowserBetweenTests', 'untrackOutstandingTimeouts',
+    'ignoreUncaughtExceptions', 'invertGrep', 'skipSourceMapSupport', 'disableEnvironmentOverrides',
+    'ng12Hybrid', 'disableChecks', 'troubleshoot', 'mockSelenium', 'nodeDebug', 'debug'
+  ]
 };
 
 yargs.usage(
@@ -175,6 +181,7 @@ yargs.check(function(arg: any) {
 
   return true;
 });
+optimist.boolean(optimistOptions.boolean);
 
 let argv: any = yargs.parse(args);
 
