@@ -112,7 +112,8 @@ let allowedNames = [
   'grep',
   'invert-grep',
   'explorer',
-  'stackTrace'
+  'stackTrace',
+  'SELENIUM_PROMISE_MANAGER'
 ];
 
 let yargsOptions: any = {
