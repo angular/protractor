@@ -1,6 +1,6 @@
 const env = require('../environment.js');
 
-// Make sure that borwser-related plugin hooks work with browser sync off
+// Make sure that browser-related plugin hooks work with browser sync off
 exports.config = {
   seleniumAddress: env.seleniumAddress,
   SELENIUM_PROMISE_MANAGER: false,
