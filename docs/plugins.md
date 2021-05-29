@@ -161,3 +161,5 @@ plugins please report them to the corresponding plugin developer.
 * [Ng-apimock](https://github.com/mdasberg/ng-apimock): this plugin adds the ability to use scenario based api mocking for local development and protractor testing for both AngularJS and Angular applications.
 
 * [protractor-cucumber-steps](https://github.com/Marketionist/protractor-cucumber-steps): This plugin provides Cucumber steps (step definitions) written with Protractor for end-to-end tests.
+
+* [protractor-react-selector](https://github.com/abhinaba-ghosh/protractor-react-selector): protractor-react-selector is a lightweight plugin to help you to locate web elements in your REACT app using component, props and states. It queries VirtualDOM in order to retrieve the web elements.
