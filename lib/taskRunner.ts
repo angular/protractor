@@ -54,7 +54,7 @@ export class TaskRunner extends EventEmitter {
 
     let configParser = new ConfigParser();
     if (this.configFile) {
-      configParser.addFileConfig(this.configFile);
+      await configParser.addFileConfig(this.configFile);
     }
     if (this.additionalConfig) {
       configParser.addConfig(this.additionalConfig);

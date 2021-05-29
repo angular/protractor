@@ -18,11 +18,11 @@ describe('the config parser', function() {
       Logger.writeTo = WriteTo.CONSOLE;
     });
 
-    it('should throw an error if the file is not found', function() {
+    it('should throw an error if the file is not found', async function() {
       var config = new ConfigParser();
       var errorFound = false;
       try {
-        config.addFileConfig('foobar.js');
+        await config.addFileConfig('foobar.js');
       } catch (err) {
         errorFound = true;
         expect(err.code).toEqual(ConfigError.CODE);
@@ -31,11 +31,11 @@ describe('the config parser', function() {
       expect(errorFound).toBe(true);
     });
 
-    it('should throw an error if the file does not have export config', function() {
+    it('should throw an error if the file does not have export config', async function() {
       var config = new ConfigParser();
       var errorFound = false;
       try {
-        config.addFileConfig(path.resolve('./spec/environment.js'));
+        await config.addFileConfig(path.resolve('./spec/environment.js'));
       } catch (err) {
         errorFound = true;
         expect(err.code).toEqual(ConfigError.CODE);
@@ -75,10 +75,22 @@ describe('the config parser', function() {
     expect(config.rootElement).toEqual('.mydiv');
   });
 
-  it('should merge in config from a file', function() {
-    var config = new ConfigParser().
-        addFileConfig(__dirname + '/data/config.js').
+  it('should merge in config from a file', async function() {
+    var config = (await (new ConfigParser().
+        addFileConfig(__dirname + '/data/config.js'))).
         getConfig();
+
+    expect(config.rootElement).toEqual('.mycontainer');
+    expect(config.onPrepare.indexOf(
+      path.normalize('/spec/unit/data/foo/bar.js'))).not.toEqual(-1);
+    expect(config.specs.length).toEqual(1);
+    expect(config.specs[0]).toEqual('fakespec[AB].js');
+  });
+
+  it('should merge in config from a file that returns a promise', async function() {
+    var config = (await new ConfigParser().
+      addFileConfig(__dirname + '/data/async-config.js')).
+      getConfig();
 
     expect(config.rootElement).toEqual('.mycontainer');
     expect(config.onPrepare.indexOf(
@@ -127,9 +139,9 @@ describe('the config parser', function() {
       expect(specs[1].indexOf(path.normalize('unit/data/fakespecB.js'))).not.toEqual(-1);
     });
 
-    it('should resolve relative to the config file dir', function() {
-      var config = new ConfigParser().
-          addFileConfig(__dirname + '/data/config.js').
+    it('should resolve relative to the config file dir', async function() {
+      var config = (await (new ConfigParser().
+          addFileConfig(__dirname + '/data/config.js'))).
           getConfig();
       var specs = ConfigParser.resolveFilePatterns(
           config.specs, false, config.configDir);

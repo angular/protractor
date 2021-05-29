@@ -1,5 +1,7 @@
 import {PluginConfig} from './plugins';
 
+// Config can either be exported as a config object ( exports.config = { /* config */ } )
+// or as a promise ( exports.config = new Promise((resolve, reject) => { resolve(config)  }))
 export interface Config {
   [key: string]: any;
 

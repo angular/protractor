@@ -94,7 +94,7 @@ let taskResults_ = new TaskResults();
 let initFn = async function(configFile: string, additionalConfig: Config) {
   let configParser = new ConfigParser();
   if (configFile) {
-    configParser.addFileConfig(configFile);
+    await configParser.addFileConfig(configFile);
   }
   if (additionalConfig) {
     configParser.addConfig(additionalConfig);

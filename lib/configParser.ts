@@ -138,7 +138,7 @@ export class ConfigParser {
    * @public
    * @param {String} filename
    */
-  public addFileConfig(filename: string): ConfigParser {
+  public async addFileConfig(filename: string): Promise<ConfigParser> {
     if (!filename) {
       return this;
     }
@@ -146,6 +146,9 @@ export class ConfigParser {
     let fileConfig: any;
     try {
       fileConfig = require(filePath).config;
+      if (fileConfig && fileConfig.then) {
+        fileConfig = await fileConfig;
+      }
     } catch (e) {
       throw new ConfigError(logger, 'failed loading configuration file ' + filename, e);
     }
