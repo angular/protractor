@@ -245,6 +245,31 @@ export class ProtractorExpectedConditions {
   }
 
   /**
+   * An expectation for checking if the given text changes in the
+   * element. Returns false if the elementFinder does not find an element.
+   *
+   * @example
+   * var EC = protractor.ExpectedConditions;
+   * // Waits for the element with id 'abc' to not contain the text 'foo'.
+   * browser.wait(EC.elementTextChanges($('#abc'), 'foo'), 5000);
+   *
+   * @alias ExpectedConditions.elementTextChanges
+   * @param {!ElementFinder} elementFinder The element to check
+   * @param {!string} text The text to differ against
+   *
+   * @returns {!function} An expected condition that returns a promise
+   *     representing whether the text has changed in the element.
+   */
+  elementTextChanges(elementFinder: ElementFinder, previousText: string): Function {
+    let hasChanged = () => {
+      return elementFinder.getText().then((actualText: string): boolean => {
+        return previousText !== actualText;
+      }, falseIfMissing);
+    };
+    return this.and(this.presenceOf(elementFinder), hasChanged);
+  }
+
+  /**
    * An expectation for checking that the title contains a case-sensitive
    * substring.
    *
