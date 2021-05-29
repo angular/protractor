@@ -103,7 +103,7 @@ You can optionally set the `name` property in a capability in order to give the 
 Connecting Directly to Browser Drivers
 --------------------------------------
 
-Protractor can test directly against Chrome and Firefox without using a Selenium Server. To use this, in your config file set `directConnect: true`.
+Protractor can test directly against Chrome and Firefox(below version 51) without using a Selenium Server. To use this, in your config file set `directConnect: true`.
 
  - `directConnect: true` -  Your test script communicates directly Chrome Driver or Firefox Driver, bypassing any Selenium Server. If this is true, settings for `seleniumAddress` and `seleniumServerJar` will be ignored. If you attempt to use a browser other than Chrome or Firefox an error will be thrown.
 
