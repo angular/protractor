@@ -35,7 +35,7 @@ export class Sauce extends DriverProvider {
   updateJob(update: any): Promise<any> {
     let mappedDrivers = this.drivers_.map(async (driver: WebDriver) => {
       const session = await driver.getSession();
-      logger.info('SauceLabs results available at http://saucelabs.com/jobs/' + session.getId());
+      logger.info('SauceLabs results available at https://saucelabs.com/jobs/' + session.getId());
       this.sauceServer_.updateJob(session.getId(), update, (err: Error) => {
         if (err) {
           throw new Error('Error updating Sauce pass/fail status: ' + util.inspect(err));
