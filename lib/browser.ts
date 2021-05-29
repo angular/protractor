@@ -844,6 +844,21 @@ export class ProtractorBrowser {
   }
 
   /**
+   * @see webdriver.WebDriver.refresh
+   *
+   * Makes a reload of the current page.
+   *
+   * Method calls location.reload function of browsers
+   */
+  async reload() {
+    if (!await this.waitForAngularEnabled()) {
+      return this.driver.navigate().refresh();
+    }
+
+    return this.executeScriptWithDescription('return location.reload()', 'Protractor reload page');
+  }
+
+  /**
    * Mixin navigation methods back into the navigation object so that
    * they are invoked as before, i.e. driver.navigate().refresh()
    */
