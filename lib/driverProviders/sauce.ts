@@ -59,9 +59,13 @@ export class Sauce extends DriverProvider {
       agent: this.config_.sauceAgent,
       proxy: this.config_.sauceProxy
     });
-    this.config_.capabilities['username'] = this.config_.sauceUser;
-    this.config_.capabilities['accessKey'] = this.config_.sauceKey;
-    this.config_.capabilities['build'] = this.config_.sauceBuild;
+
+    // Avoid unexpected behavior if users set build capability as supposed,
+    // but don't break legacy code using config_.sauceBuild.
+    if (!this.config_.capabilities['build'] && this.config_.sauceBuild) {
+      this.config_.capabilities['build'] = this.config_.sauceBuild;
+    }
+
     let protocol = this.config_.sauceSeleniumUseHttp ? 'http://' : 'https://';
     let auth = protocol + this.config_.sauceUser + ':' + this.config_.sauceKey + '@';
     this.config_.seleniumAddress = auth +
