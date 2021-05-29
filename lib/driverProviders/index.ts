@@ -6,6 +6,7 @@ export * from './hosted';
 export * from './local';
 export * from './mock';
 export * from './sauce';
+export * from './experitest';
 export * from './testObject';
 export * from './kobiton';
 
@@ -18,6 +19,7 @@ import {Hosted} from './hosted';
 import {Local} from './local';
 import {Mock} from './mock';
 import {Sauce} from './sauce';
+import {Experitest} from './experitest';
 import {TestObject} from './testObject';
 import {Kobiton} from './kobiton';
 
@@ -52,6 +54,9 @@ export let buildDriverProvider = (config: Config): DriverProvider => {
   } else if (config.sauceUser && config.sauceKey) {
     driverProvider = new Sauce(config);
     logWarnings('sauce', config);
+  } else if (config.experitestKey && config.experitestCloudAddress) {
+    driverProvider = new Experitest(config);
+    logWarnings('experitest', config);
   } else if (config.seleniumServerJar) {
     driverProvider = new Local(config);
     logWarnings('local', config);
@@ -102,6 +107,12 @@ export let logWarnings = (providerType: string, config: Config): void => {
   }
   if ('sauce' !== providerType && config.sauceKey) {
     warnList.push('sauceKey');
+  }
+  if ('experitest' !== providerType && config.experitestKey) {
+    warnList.push('experitestKey');
+  }
+  if ('experitest' !== providerType && config.experitestCloudAddress) {
+    warnList.push('experitestCloudAddress');
   }
   if ('local' !== providerType && config.seleniumServerJar) {
     warnList.push('seleniumServerJar');
