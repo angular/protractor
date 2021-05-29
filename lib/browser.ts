@@ -807,6 +807,13 @@ export class ProtractorBrowser {
               'angular.resumeBootstrap(arguments[0]);',
           msg('resume bootstrap'), moduleNames);
     } else {
+      // Remove the added NG_DEFER_BOOTSTRAP if we are running on Angular
+      await this.executeScriptWithDescription(
+          'window.name = window.name.replace(' +
+              /^NG_DEFER_BOOTSTRAP!/ +
+              ', \'\');',
+          msg('cleaning DEFER_BOOTSTRAP'));
+
       // TODO: support mock modules in Angular2. For now, error if someone
       // has tried to use one.
       if (this.mockModules_.length > 1) {
