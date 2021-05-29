@@ -77,7 +77,8 @@ export class BrowserStack extends DriverProvider {
   protected async setupDriverEnv(): Promise<any> {
     this.config_.capabilities['browserstack.user'] = this.config_.browserstackUser;
     this.config_.capabilities['browserstack.key'] = this.config_.browserstackKey;
-    this.config_.seleniumAddress = 'http://hub.browserstack.com/wd/hub';
+    let protocol = this.config_.browserstackUseHttps ? 'https://' : 'http://';
+    this.config_.seleniumAddress = protocol + 'hub.browserstack.com/wd/hub';
 
     this.browserstackClient = BrowserstackClient.createAutomateClient({
       username: this.config_.browserstackUser,
