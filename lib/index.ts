@@ -1,3 +1,4 @@
+import {WebDriver} from 'selenium-webdriver';
 import {ElementHelper, ProtractorBrowser} from './browser';
 import {ElementArrayFinder, ElementFinder} from './element';
 import {ProtractorExpectedConditions} from './expectedConditions';

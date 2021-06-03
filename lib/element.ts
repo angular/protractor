@@ -1050,11 +1050,12 @@ export class ElementFinder extends WebdriverWebElement {
   async isPresent(): Promise<boolean> {
     try {
       const arr = await this.parentElementArrayFinder.getWebElements();
-      if (arr.length === 0) {
+      if (!arr.length) {
         return false;
       }
-      // is present, whether it is enabled or not
-      return await arr[0].isEnabled();
+
+      await arr[0].isEnabled();
+      return true;
     } catch (err) {
       return falseIfMissing(err);
     }
