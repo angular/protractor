@@ -41,7 +41,7 @@ function registerGlobal(name: string) {
       exports, name, {get: () => exports.protractor ? exports.protractor[name] : undefined});
 }
 
-export declare let browser: ProtractorBrowser&WebDriver;
+export declare let browser: ProtractorBrowser;
 export declare let $: (search: string) => ElementFinder;
 export declare let $$: (search: string) => ElementArrayFinder;
 export declare let element: ElementHelper;

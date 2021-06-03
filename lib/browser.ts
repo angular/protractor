@@ -89,6 +89,14 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
 }
 
 /**
+ * Cust types for Protractor browser so users can access for both Protractor and vanilla Selenium
+ * driver implementation
+ */
+export class AbstractWebDriver {}
+export interface AbstractWebDriver extends WebDriver {}
+export class AbstractExtendedWebDriver extends AbstractWebDriver {}
+
+/**
  * @alias browser
  * @constructor
  * @extends {webdriver_extensions.ExtendedWebDriver}
@@ -99,7 +107,7 @@ function buildElementHelper(browser: ProtractorBrowser): ElementHelper {
  * @param {boolean=} opt_untrackOutstandingTimeouts Whether Protractor should
  *     stop tracking outstanding $timeouts.
  */
-export class ProtractorBrowser {
+export class ProtractorBrowser extends AbstractExtendedWebDriver {
   /**
    * @type {ProtractorBy}
    */
@@ -292,6 +300,7 @@ export class ProtractorBrowser {
   constructor(
       webdriverInstance: WebDriver, opt_baseUrl?: string, opt_rootElement?: string|Promise<string>,
       opt_untrackOutstandingTimeouts?: boolean, opt_blockingProxyUrl?: string) {
+    super();
     // These functions should delegate to the webdriver instance, but should
     // wait for Angular to sync up before performing the action. This does not
     // include functions which are overridden by protractor below.
