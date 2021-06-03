@@ -74,7 +74,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=8.8.x"
+    "node": ">=12"
   },
   "version": "6.0.0",
   "publishConfig": {
