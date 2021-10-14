@@ -25,7 +25,7 @@
     "saucelabs": "^1.5.0",
     "selenium-webdriver": "3.6.0",
     "source-map-support": "~0.4.0",
-    "webdriver-js-extender": "2.1.0",
+    "webdriver-js-extender": "2.2.0",
     "webdriver-manager": "^12.1.7",
     "yargs": "^15.3.1"
   },
