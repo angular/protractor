@@ -303,12 +303,7 @@ export interface Config {
    *   browserName: 'chrome',
    *   name: 'Unnamed Job',
    *   logName: 'Chrome - English',
-   *   count: 1,
-   *   shardTestFiles: false,
-   *   maxInstances: 1,
-   *   specs: ['spec/chromeOnlySpec.js'],
    *   exclude: ['spec/doNotRunInChromeSpec.js'],
-   *   seleniumAddress: 'http://localhost:4444/wd/hub'
    * }
    */
   capabilities?: {
