@@ -2,8 +2,7 @@
 
 var express = require('express');
 var bodyParser = require('body-parser')
-var optimist = require('optimist');
-var util = require('util');
+var yargs = require('yargs');
 var path = require('path');
 var env = require('../../spec/environment.js');
 
@@ -12,7 +11,7 @@ var DEFAULT_PORT = process.env.HTTP_PORT || env.webServerDefaultPort;
 var testAppDir = path.resolve(__dirname, '..');
 var defaultAngular = require(path.resolve(testAppDir, 'ng1/lib/angular_version.js'));
 
-var argv = optimist.describe('port', 'port').
+var argv = yargs.describe('port', 'port').
     default('port', DEFAULT_PORT).
     describe('ngversion', 'version of AngularJS to use').
     default('ngversion', defaultAngular).
@@ -27,7 +26,7 @@ var main = function() {
   testApp.use(bodyParser.json());
   testApp.use(testMiddleware);
   testApp.listen(port);
-  util.puts(["Starting express web server in", testAppDir ,"on port", port].
+  console.log(["Starting express web server in", testAppDir ,"on port", port].
       join(" "));
 };
 

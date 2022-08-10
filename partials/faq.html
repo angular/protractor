@@ -122,10 +122,10 @@ but it&#39;s interrupted by the reload.</p>
 <p>You may need to insert a <code ng-non-bindable>browser.wait</code> condition to make sure the load
 is complete before continuing.</p>
 <h2 id="how-do-i-switch-off-an-option-in-the-cli-" class="anchored"><div><a href="#{{path}}#how-do-i-switch-off-an-option-in-the-cli-">&#x1f517;</a>How do I switch off an option in the CLI?</div></h2>
-<p>i.e. <code ng-non-bindable>webdriver-manager update --chrome=false</code> does not work. 
-This has to do with the way <code ng-non-bindable>optimist</code> parses command line args. In order to pass a false value, do one of the following:</p>
+<p>This has to do with the way <code ng-non-bindable>yargs</code> parses command line args. In order to pass a false value, do one of the following:</p>
 <p>1) <code ng-non-bindable>webdriver-manager update --chrome=0</code></p>
-<p>2) <code ng-non-bindable>webdriver-manager update --no-chrome</code> (see <a href="https://github.com/substack/node-optimist#negate-fields">https://github.com/substack/node-optimist#negate-fields</a>)</p>
+<p>2) <code ng-non-bindable>webdriver-manager update --chrome=false</code></p>
+<p>3) <code ng-non-bindable>webdriver-manager update --no-chrome</code> (see <a href="https://github.com/yargs/yargs/blob/HEAD/docs/tricks.md#negate">https://github.com/yargs/yargs/blob/HEAD/docs/tricks.md#negate</a>)</p>
 <h2 id="why-does-protractor-fail-when-i-decorate-timeout-" class="anchored"><div><a href="#{{path}}#why-does-protractor-fail-when-i-decorate-timeout-">&#x1f517;</a>Why does Protractor fail when I decorate $timeout?</div></h2>
 <p>Protractor tracks outstanding $timeouts by default, and reports them in the error message if Protractor fails to synchronize with Angular in time.</p>
 <p>However, in order to do this Protractor needs to decorate $timeout. This means if your app decorates $timeout, you must turn off this behavior for Protractor. To do so pass in the &#39;untrackOutstandingTimeouts&#39; flag. </p>

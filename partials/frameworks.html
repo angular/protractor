@@ -20,13 +20,13 @@ var expect = chai.expect;
 <pre><code class="lang-js">expect(myElement.getText()).to.eventually.equal(&#39;some text&#39;);
 </code></pre>
 <p>Finally, set the &#39;framework&#39; property to &#39;mocha&#39;, either by adding <code ng-non-bindable>framework: &#39;mocha&#39;</code> to the config file or by adding <code ng-non-bindable>--framework=mocha</code> to the command line.</p>
-<p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="https://github.com/angular/protractor/blob/5.4.1/spec/mochaConf.js">config file</a> with mochaOpts:</p>
+<p>Options for Mocha such as &#39;reporter&#39; and &#39;slow&#39; can be given in the <a href="https://github.com/angular/protractor/blob/5.4.4/spec/mochaConf.js">config file</a> with mochaOpts:</p>
 <pre><code class="lang-js">mochaOpts: {
   reporter: &quot;spec&quot;,
   slow: 3000
 }
 </code></pre>
-<p>For a full example, see Protractor’s own test: <a href="https://github.com/angular/protractor/blob/5.4.1/spec/mocha/lib_spec.js">/spec/mocha/lib_spec.js</a>.</p>
+<p>For a full example, see Protractor’s own test: <a href="https://github.com/angular/protractor/blob/5.4.4/spec/mocha/lib_spec.js">/spec/mocha/lib_spec.js</a>.</p>
 <h2 id="using-cucumber" class="anchored"><div><a href="#{{path}}#using-cucumber">&#x1f517;</a>Using Cucumber</div></h2>
 <p><em>Note: Cucumber is no longer included by default as of version <code ng-non-bindable>3.0</code>. You can integrate Cucumber with Protractor with the <code ng-non-bindable>custom</code> framework option. For more information, see the <a href="https://github.com/mattfritz/protractor-cucumber-framework">Protractor Cucumber Framework site</a> or the <a href="https://github.com/cucumber/cucumber-js">Cucumber GitHub site</a>.</em></p>
 <p>If you would  like to use the Cucumber test framework, download the dependencies with npm. Cucumber should be installed in the same place as Protractor - so if protractor was installed globally, install Cucumber with -g.</p>
@@ -87,4 +87,4 @@ exports.config = {
 <p>Specifying either <code ng-non-bindable>cucumberOpts</code> or <code ng-non-bindable>mochaOpts</code> in your Protractor configuration will make Serenity/JS infer that it should delegate the execution to <a href="https://github.com/cucumber/cucumber-js">Cucumber</a> or <a href="https://mochajs.org/">Mocha</a>, respectively.</p>
 <p>To learn more, <a href="http://serenity-js.org/">visit the project website</a> or <a href="http://serenity-js.org/from-scripts-to-serenity/readme.html">follow the tutorial</a>.</p>
 <h2 id="using-a-custom-framework" class="anchored"><div><a href="#{{path}}#using-a-custom-framework">&#x1f517;</a>Using a Custom Framework</div></h2>
-<p>Check section <a href="https://github.com/angular/protractor/blob/5.4.1/lib/frameworks/README.md">Framework Adapters for Protractor</a> specifically <a href="https://github.com/angular/protractor/blob/5.4.1/lib/frameworks/README.md#custom-frameworks">Custom Frameworks</a></p>
+<p>Check section <a href="https://github.com/angular/protractor/blob/5.4.4/lib/frameworks/README.md">Framework Adapters for Protractor</a> specifically <a href="https://github.com/angular/protractor/blob/5.4.4/lib/frameworks/README.md#custom-frameworks">Custom Frameworks</a></p>
