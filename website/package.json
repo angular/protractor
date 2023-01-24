@@ -29,5 +29,8 @@
     "prestart": "npm install && npm run prepublish",
     "start": "gulp liveReload",
     "test": "node run-tests.js"
+  },
+  "volta": {
+    "node": "8.17.0"
   }
 }
