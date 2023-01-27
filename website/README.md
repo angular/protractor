@@ -18,7 +18,9 @@ and point your browser to: [localhost:8080](http://localhost:8080/)
 If you're using a Apple Silicon Mac (M1 / M2 / etc) the project will likely struggle to build
 due to mismatched dependencies and version (Node + Dgeni + Gulp, etc). 
 
-We're working on cleaning up the process, but in the meantime the following should build dependencies as needed:
+We're working on cleaning up the process, but in the meantime the following script should build dependencies as needed
+so that you can continue working. We recommend using [volta](https://volta.sh/) for managing your Node version, but 
+the same principal should be applicable with `n` or `nvm` as well.
 ```shell
 # First: fix website folder with dgeni
 pushd website
@@ -33,7 +35,10 @@ npm i
 npx gulp
 ```
 
-Once completed, you should be able to run the docs via `npm run website`
+Once completed, you should be able to run the docs via 
+```shell
+npm run website
+```
 ## How to run the tests
 
 The website includes 3 types of tests:
