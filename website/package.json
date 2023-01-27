@@ -32,5 +32,8 @@
   },
   "volta": {
     "node": "8.17.0"
+  },
+  "dependencies": {
+    "fsevents": "^2.3.2"
   }
 }
