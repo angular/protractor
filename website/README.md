@@ -5,22 +5,35 @@ Generates the documentation for the protractor website.
 
 ## How to run
 
+From the root of the project, on a fresh clone: 
 ```shell
-npm run compile_to_es5
-cd website/
-npm install
-npm run build
+npm i
+npx gulp
+npm run website
 ```
 
-Then copy all the files from the `build` directory to the gh-pages branch.
-If you want to run the website locally then run the following command:
+and point your browser to: [localhost:8080](http://localhost:8080/)
 
+### Mac OS X Users
+If you're using a Apple Silicon Mac (M1 / M2 / etc) the project will likely struggle to build
+due to mismatched dependencies and version (Node + Dgeni + Gulp, etc). 
+
+We're working on cleaning up the process, but in the meantime the following should build dependencies as needed:
 ```shell
-npm start
+# First: fix website folder with dgeni
+pushd website
+volta pin node@10   
+npm i -s fsevents@latest    
+volta pin node@8
+npx gulp dgeni  
+popd
+
+# Second: run the main gulp compilation
+npm i
+npx gulp
 ```
 
-And point your browser to: [localhost:8080](http://localhost:8080/)
-
+Once completed, you should be able to run the docs via `npm run website`
 ## How to run the tests
 
 The website includes 3 types of tests:
