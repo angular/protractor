@@ -70,6 +70,7 @@
     "start": "cd testapp && npm start",
     "test": "node scripts/test.js",
     "tsc": "tsc",
+    "clean": "rm -rf node_modules website/node_modules",
     "website": "cd website && npm start",
     "compile_to_es5": "gulp compile_to_es5"
   },
