@@ -6,7 +6,8 @@ Generates the documentation for the protractor website.
 ## How to run
 
 ```shell
-npm run compile_to_es5
+npm i
+npm run build
 cd website/
 npm install
 npm run build
@@ -16,10 +17,29 @@ Then copy all the files from the `build` directory to the gh-pages branch.
 If you want to run the website locally then run the following command:
 
 ```shell
-npm start
+npm run website
 ```
 
 And point your browser to: [localhost:8080](http://localhost:8080/)
+
+
+### Build Failures on Apple Silicon / Arm64
+
+Some of the nested dependencies do not have compatible binaries for newer architectures. This generally presents as a fatal failure like the following: 
+```
+#
+# Fatal error in , line 0
+# Check failed: !value_obj->IsJSReceiver() || value_obj->IsTemplateInfo().
+#
+#
+#
+#FailureMessage Object: 0x306a626c0
+```
+
+Eventually the project should migrate to Gulp 5 / Node 18+ to solve this issue, but in the meantime a simple workaround is: 
+1. `cd website`
+2. `npm i && npm run arm64_repair`
+3. `npx gulp liveReload` (to avoid the `prestart` script)
 
 ## How to run the tests
 

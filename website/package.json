@@ -23,11 +23,18 @@
     "marked": "^0.3.3"
   },
   "scripts": {
+    "arm64_repair": "npx npm-force-resolutions; npm i",
     "build": "gulp",
     "clean": "gulp clean",
     "prepublish": "bower install",
     "prestart": "npm install && npm run prepublish",
     "start": "gulp liveReload",
     "test": "node run-tests.js"
+  },
+  "resolutions": {
+    "chokidar": "^3.5.3"
+  },
+  "volta": {
+    "node": "10.24.1"
   }
 }
