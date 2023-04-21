@@ -9,6 +9,10 @@ angular.module('protractorApp').config(function($routeProvider) {
         controller: 'ApiCtrl',
         reloadOnSearch: false
       }).
+      when('/project-status', {
+        templateUrl: 'partials/status.html',
+        controller: 'MarkdownCtrl'
+      }).
       when('/style-guide', {
         templateUrl: 'partials/style-guide.html',
         controller: 'MarkdownCtrl'

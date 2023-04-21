@@ -76,11 +76,13 @@
     "pretest": "gulp pretest",
     "start": "cd testapp && npm start",
     "test": "node scripts/test.js",
-    "website": "cd website && npm start",
-    "compile_to_es5": "gulp compile_to_es5"
+    "website": "cd website && npm start"
   },
   "license": "MIT",
   "engines": {
     "node": ">=10.13.x"
+  },
+  "volta": {
+    "node": "10.24.1"
   }
 }
