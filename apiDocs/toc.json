@@ -5459,11 +5459,14 @@
         "tagName": "param",
         "description": "The function to execute.",
         "startingLine": 238,
-        "typeExpression": "function(...): (T|promise.Promise<T>)",
+        "typeExpression": "function(...*): (T|promise.Promise<T>)",
         "type": {
           "type": "FunctionType",
           "params": [
-            ""
+            {
+              "type": "AllLiteral",
+              "repeatable": true
+            }
           ],
           "result": {
             "type": "TypeUnion",
@@ -5489,10 +5492,10 @@
           }
         },
         "typeList": [
-          "function(...): (T|promise.Promise<T>)"
+          "function(...*): (T|promise.Promise<T>)"
         ],
         "name": "fn",
-        "paramString": "function(...): (T&#124;promise.Promise&lt;T&gt;)"
+        "paramString": "function(...*): (T&#124;promise.Promise&lt;T&gt;)"
       },
       {
         "tagDef": {

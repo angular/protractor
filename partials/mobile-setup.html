@@ -100,6 +100,7 @@ Starting express web server in /workspace/protractor/testapp on port 8000
 
   baseUrl: &#39;http://localhost:8000&#39;
 };
+
 </code></pre>
 <p><em>Note the following:</em></p>
 <ul>
@@ -112,7 +113,7 @@ Starting express web server in /workspace/protractor/testapp on port 8000
 <ul>
 <li>Install Java SDK (&gt;1.6) and configure JAVA_HOME (Important: make sure it&#39;s not pointing to JRE).</li>
 <li>Follow <a href="http://spring.io/guides/gs/android/">http://spring.io/guides/gs/android/</a> to install and set up Android developer environment. Do not set up Android Virtual Device as instructed here.</li>
-<li>From commandline, &#39;android avd&#39; and then follow Selendroid&#39;s recommendation (<a href="http://selendroid.io/setup.html#androidDevices">http://selendroid.io/setup.html#androidDevices</a>). Take note of the emulator accelerator. Here&#39;s an example:</li>
+<li>From commandline, &#39;android avd&#39; and then follow Selendroid&#39;s recommendation (<a href="http://selendroid.io/setup.html#androidDevices)">http://selendroid.io/setup.html#androidDevices)</a>. Take note of the emulator accelerator. Here&#39;s an example:</li>
 </ul>
 <pre><code class="lang-shell">&gt; android list avd
 Available Android Virtual Devices:
@@ -144,7 +145,7 @@ HAX is working and emulator runs in fast virt mode
 ...
 </code></pre>
 <ul>
-<li>Once selendroid is started, you should be able to go to &quot;<a href="http://localhost:4444/wd/hub/status">http://localhost:4444/wd/hub/status</a>&quot; and see your device there:</li>
+<li>Once selendroid is started, you should be able to go to &quot;<a href="http://localhost:4444/wd/hub/status&quot;">http://localhost:4444/wd/hub/status&quot;</a> and see your device there:</li>
 </ul>
 <pre><code class="lang-javascript">{&quot;value&quot;:{&quot;os&quot;:{&quot;name&quot;:&quot;Mac OS X&quot;,&quot;arch&quot;:&quot;x86_64&quot;,&quot;version&quot;:&quot;10.9.2&quot;},&quot;build&quot;:{&quot;browserName&quot;:&quot;selendroid&quot;,&quot;version&quot;:&quot;0.9.0&quot;},&quot;supportedDevices&quot;:[{&quot;emulator&quot;:true,&quot;screenSize&quot;:&quot;WVGA800&quot;,&quot;avdName&quot;:&quot;Hank&quot;,&quot;androidTarget&quot;:&quot;ANDROID19&quot;}],&quot;supportedApps&quot;:[{&quot;mainActivity&quot;:&quot;io.selendroid.androiddriver.WebViewActivity&quot;,&quot;appId&quot;:&quot;io.selendroid.androiddriver:0.9.0&quot;,&quot;basePackage&quot;:&quot;io.selendroid.androiddriver&quot;}]},&quot;status&quot;:0}
 </code></pre>
@@ -170,7 +171,7 @@ HAX is working and emulator runs in fast virt mode
 <li>browserName is &#39;android&#39;</li>
 <li>baseUrl is 10.0.2.2 instead of localhost because it is used to access the localhost of the host machine in the android emulator</li>
 </ul>
-<h2 id="using-wd-and-wd-bridge-" class="anchored"><div><a href="#{{path}}#using-wd-and-wd-bridge-">&#x1f517;</a>Using <code ng-non-bindable>wd</code> and <code ng-non-bindable>wd-bridge</code></div></h2>
+<h2 id="using-wd-and-wd-bridge" class="anchored"><div><a href="#{{path}}#using-wd-and-wd-bridge">&#x1f517;</a>Using <code ng-non-bindable>wd</code> and <code ng-non-bindable>wd-bridge</code></div></h2>
 <p>As of version 5.1.0, Protractor uses <code ng-non-bindable>webdriver-js-extender</code> to provide all the
 mobile commands you should need (see the API page for details).  However, if you
 prefer <code ng-non-bindable>wd</code>, you can access it via <code ng-non-bindable>wd-bridge</code>.  First, install both <code ng-non-bindable>wd</code> and
