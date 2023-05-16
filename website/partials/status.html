@@ -1,0 +1,47 @@
+<div class="lh-1-5">
+    <h1 class="mb-50">Project Status</h1>
+
+    <h2>Is Protractor actively maintained?</h2>
+    <div ng-hide="isEOL">
+      <p>
+        Although active development on Protractor ended in December of 2022, the project will continue to be supported under <strong>Long Term Support</strong> and will continue to receive critical security &amp; compatibility fixes via the community through August 2023. This is important as there are many actively developed projects still benefiting from their existing code coverage, and we anticipate Protractor to continue functioning well into the future.
+      </p>
+      <p>
+        In short: Protractor's current status is <strong>Long Term Support</strong> and <strong>will End Of Life in September 2023</strong>.
+      </p>
+    </div>
+
+    <div ng-show="isEOL">
+      <p>
+        Although active development on Protractor ended in December of 2022, the project continued to be supported under <strong>Long Term Support</strong> with critical security &amp; compatibility fixes via the community through August 2023.
+      </p>
+      <p>
+        As of September 2023, Protractor's status is officially <strong>End Of Life</strong>.
+      </p>
+    </div>
+
+    <h2>What does End Of Life mean?</h2>
+    The packages will remain accessible on GitHub, npm, Bower, and Release archive for the foreseeable future. This website will also remain here indefinitely. The project will be archived on GitHub and remain accessible indefinitely, but will no longer be open to issues / comments / etc.
+
+    <h2>Support After August 2023</h2>
+    <p ng-hide="isEOL || isEOCS">
+      For those who need continued support after August 2023, a community team at <a href="https://www.herodevs.com" target="_blank">HeroDevs</a> is committed to secure free access to their <a href="https://www.herodevs.com/support/protractor" target="_blank">Never Ending Support For Protractor</a> product for the entire community through August 2024, after which commercial licenses will be available to those who continue to depend on the value that existing Protractor tests provide.
+    </p>
+    <p ng-show="isEOL && !isEOCS">
+      A community team at <a href="https://www.herodevs.com" target="_blank">HeroDevs</a> is now providing free access to their <a href="https://www.herodevs.com/support/protractor" target="_blank">Never Ending Support For Protractor</a> product for the entire community through August 2024, after which commercial licenses will be available to those who continue to depend on the value that existing Protractor tests provide.
+    </p>
+    <p ng-show="isEOL && isEOCS">
+      After providing free access to their <a href="https://www.herodevs.com/support/protractor" target="_blank">Never Ending Support For Protractor</a> through August 2024, <a href="https://www.herodevs.com" target="_blank">HeroDevs</a> now offers their fully supported version of Protractor to anyone that continues to depend on the value that their existing test coverage provides.
+    </p>
+
+    <h2>Protractor Migration Options</h2>
+
+        <p ng-show="isEOL">
+
+              For those looking to <em>easily</em> migrate Protractor tests at low cost, Google has partnered with
+          <a href="https://www.qualitylogic.com/testing-services/protractor-conversion-services/" target="_blank">QualityLogic</a> to <em>automatically</em> migrate tests to other popular test automation frameworks like Cypress and Playwright. QualityLogic includes human review to ensure accuracy and correctness with all migrated tests.
+
+        </p>
+
+    See our <a href="https://blog.angular.io/the-state-of-end-to-end-testing-with-angular-d175f751cb9c" target="_blank">State of end-to-end Testing with Angular</a> post to learn more.
+  </div>
